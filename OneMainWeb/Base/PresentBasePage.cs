@@ -73,7 +73,7 @@ namespace OneMainWeb
 
         public PresentBasePage()
         {
-            customModulesFolder = ConfigurationManager.AppSettings["customModulesFolder"];
+            customModulesFolder = "site_specific/custom_modules";
             // main language setup.
             if (SiteMap.CurrentNode != null)
             {

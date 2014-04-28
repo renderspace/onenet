@@ -24,10 +24,6 @@ namespace One.Net.BLL
 
         public BNewsLtr()
         {
-            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["emailTemplatesFolder"]))
-            {
-                throw new ConfigurationErrorsException("Missing emailTemplatesFolder setting in web.config");
-            }
         }
 
         public BONewsLtr GetNewsletter(int newsletterId)
@@ -141,7 +137,7 @@ namespace One.Net.BLL
                     {
                         BONewsLtr newsletter = GetNewsletter(newsletterId);
 
-                        newsletter.ConfirmationTemplate.TemplateSourceDirectory = ConfigurationManager.AppSettings["emailTemplatesFolder"];
+                        newsletter.ConfirmationTemplate.TemplateSourceDirectory = "site_specific/email_templates";
                         newsletter.ConfirmationTemplate.Extension = ".tpl";
                         newsletter.ConfirmationTemplate.PhysicalApplicationPath = AppDomain.CurrentDomain.BaseDirectory;
                         

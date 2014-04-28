@@ -372,16 +372,16 @@ namespace OneMainWeb.adm
                         ConfigurationHelper.AddConnectionString(sm, siteName, "MsSqlConnectionStringCustom", ";pooling=true");
                         ConfigurationHelper.AddConnectionString(sm, siteName, "Bamboo", ";pooling=true");
 
-                        ConfigurationHelper.AddAppSetting(sm, siteName, "aspxTemplatesFolder", "site_specific/" + siteSpecificName + "/aspx_templates");
+                        ConfigurationHelper.AddAppSetting(sm, siteName, "aspxTemplatesFolder", "site_specific/aspx_templates");
                         ConfigurationHelper.AddAppSetting(sm, siteName, "WebSiteId", website.Id.ToString());
-                        ConfigurationHelper.AddAppSetting(sm, siteName, "customModulesFolder", "site_specific/" + siteSpecificName + "/custom_modules");
-                        ConfigurationHelper.AddAppSetting(sm, siteName, "emailTemplatesFolder", "site_specific/" + siteSpecificName + "/email_templates");
+                        ConfigurationHelper.AddAppSetting(sm, siteName, "customModulesFolder", "site_specific/custom_modules");
+                        ConfigurationHelper.AddAppSetting(sm, siteName, "emailTemplatesFolder", "site_specific/email_templates");
 
                         sm.CommitChanges();
 
-                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "CustomRedir", "destinationUrl", "~/site_specific/" + siteSpecificName + "/$1", "^/(?!_files)(_.*)+");
-                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "RobotsRedir", "destinationUrl", "~/site_specific/" + siteSpecificName + "/robots.txt", "^/robots.txt");
-                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "FavicoRedir", "destinationUrl", "~/site_specific/" + siteSpecificName + "/favicon.ico", "^/favicon.ico");
+                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "CustomRedir", "destinationUrl", "~/site_specific/$1", "^/(?!_files)(_.*)+");
+                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "RobotsRedir", "destinationUrl", "~/site_specific/robots.txt", "^/robots.txt");
+                        ConfigurationHelper.AddUrlRewriting(sm, siteName, "FavicoRedir", "destinationUrl", "~/site_specific/favicon.ico", "^/favicon.ico");
                     }
 
                     GridViewWebsitesLoad(true);
