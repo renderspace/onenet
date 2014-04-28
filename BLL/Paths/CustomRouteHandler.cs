@@ -17,7 +17,7 @@ namespace One.Net.BLL.Paths
 
         public CustomRouteHandler(string virtualPath)
         {
-            CustomRouteHandler.templatesPath = ConfigurationManager.AppSettings["aspxTemplatesFolder"];
+            CustomRouteHandler.templatesPath =  "site_specific/aspx_templates";
             this.VirtualPath = virtualPath;
         }
 

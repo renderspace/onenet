@@ -151,7 +151,7 @@ namespace One.Net.BLL.Web
             BOSetting setting = Settings[settingName];
             if (!setting.Type.Equals("String"))
             {
-                throw new ApplicationException("not a String setting; probably error in database");
+                throw new ApplicationException("not a String setting; probably error in database " + settingName);
             }
             return setting.Value;
         }

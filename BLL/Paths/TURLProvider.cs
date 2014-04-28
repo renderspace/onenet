@@ -23,11 +23,7 @@ namespace One.Net.BLL
         public TRewriteRule()
         {
             log.Debug("~TRewriteRule");
-            templatesPath = ConfigurationManager.AppSettings["aspxTemplatesFolder"];
-            if (String.IsNullOrEmpty(templatesPath))
-            {
-                throw new ConfigurationErrorsException("Missing aspxTemplatesFolder web.config setting.");
-            }
+            templatesPath = "site_specific/aspx_templates";
         }
 
         private SiteMapNode AnalyseUrl(string reqUrl)
