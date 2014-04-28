@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using One.Net.BLL;
 using One.Net.BLL.Web;
+using One.Net.BLL.WebControls;
 
 namespace OneMainWeb.CommonModules
 {
@@ -39,6 +41,10 @@ namespace OneMainWeb.CommonModules
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            PagerArticles.Visible = ShowPager;
+            PagerArticles.RecordsPerPage = RecordsPerPage;
+            PagerArticles.SelectedPage = 1;
+
             if (Request[REQUEST_DATE] != null)
             {
                 string reqDate = Request[REQUEST_DATE];
@@ -67,8 +73,36 @@ namespace OneMainWeb.CommonModules
 
            var articles = articleB.ListArticles(regulars, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
 
+           if (Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID] != null)
+           {
+               PagerArticles.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID]);
+           }
+
            RepeaterArticles.DataSource = articles;
            RepeaterArticles.DataBind();
+
+           PagerArticles.TotalRecords = articles.AllRecords;
+           PagerArticles.DetermineData();
+        }
+
+        protected void RepeaterArticles_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.DataItem != null)
+            {
+                var SectionTeaser = e.Item.FindControl("SectionTeaser") as HtmlGenericControl;
+                var Header1 = e.Item.FindControl("Header1") as HtmlGenericControl;
+                var SectionHtml = e.Item.FindControl("SectionHtml") as HtmlGenericControl;
+                var H1Title = e.Item.FindControl("H1Title") as HtmlGenericControl;
+                var H2SubTitle = e.Item.FindControl("H2SubTitle") as HtmlGenericControl;
+                var DivReadon = e.Item.FindControl("DivReadon") as HtmlGenericControl;
+
+                H1Title.Visible = ShowTitle;
+                H2SubTitle.Visible = ShowSubTitle;
+                Header1.Visible = ShowTitle || ShowSubTitle;
+                SectionTeaser.Visible = ShowTeaser;
+                SectionHtml.Visible = ShowHtml;
+                //DivReadon.Visible = Show
+            }
         }
     }
 }

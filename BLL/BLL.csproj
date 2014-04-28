@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MsSqlDBUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\library\MsSqlDBUtility\bin\Release\MsSqlDBUtility.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -201,10 +205,6 @@
     <ProjectReference Include="..\..\..\codeplex_one_cron\trunk\One.Cron.API\One.Cron.API.csproj">
       <Project>{97484946-3aef-46a8-ad6e-036458d9fe6e}</Project>
       <Name>One.Cron.API</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\library\MsSqlDBUtility\MsSqlDBUtility.csproj">
-      <Project>{68a5f1dd-6364-44e2-8cbf-d29985bbe2e8}</Project>
-      <Name>MsSqlDBUtility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

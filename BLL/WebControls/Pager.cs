@@ -225,14 +225,7 @@ namespace One.Net.BLL.WebControls
         public override void RenderBeginTag(HtmlTextWriter writer)
         {
             writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(containerClass) ? "pager" : containerClass);
-            writer.RenderBeginTag(HtmlTextWriterTag.Div);
-            //base.RenderBeginTag(writer);
-        }
-
-        public override void RenderEndTag(HtmlTextWriter writer)
-        {
-            writer.RenderEndTag();
-            //base.RenderEndTag(writer);
+            writer.RenderBeginTag("section");
         }
 
         protected override void RenderContents(HtmlTextWriter writer)
@@ -273,18 +266,23 @@ namespace One.Net.BLL.WebControls
 
                     if (i != SelectedPage)
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "norp" + cssClassBuilder);
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "" + cssClassBuilder);
                         writer.RenderBeginTag(HtmlTextWriterTag.Li);
                         writer.AddAttribute(HtmlTextWriterAttribute.Href, pagerUrlBuilder.ToString());
                         writer.RenderBeginTag(HtmlTextWriterTag.A);
                     }
                     if (i == SelectedPage)
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "selp" + cssClassBuilder);
-                        writer.RenderBeginTag(HtmlTextWriterTag.Span);
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "current" + cssClassBuilder);
+                        writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                        writer.RenderBeginTag(HtmlTextWriterTag.Em);
                     }
 
                     writer.Write(i);
+                    if (i == SelectedPage)
+                    {
+                        writer.RenderEndTag();
+                    }    
 
                     writer.RenderEndTag();
 
@@ -293,6 +291,26 @@ namespace One.Net.BLL.WebControls
                         writer.RenderEndTag();
                     }
                 }
+
+                /*
+                 * 
+                 * <li class="first"><span>&laquo;</span></li>	
+		        <li class="previous"><span>&lsaquo;</span></li>		
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "next");
+                writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                writer.AddAttribute(HtmlTextWriterAttribute.Href, "");
+                writer.RenderBeginTag(HtmlTextWriterTag.A);
+                writer.Write("&rsaquo;");
+                writer.RenderEndTag();
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "last");
+                writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                writer.AddAttribute(HtmlTextWriterAttribute.Href, "");
+                writer.RenderBeginTag(HtmlTextWriterTag.A);
+                writer.Write("&raquo;");
+                writer.RenderEndTag(); */
+
                 writer.RenderEndTag();
                 
             }

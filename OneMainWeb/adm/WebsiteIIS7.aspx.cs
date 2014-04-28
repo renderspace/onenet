@@ -351,7 +351,7 @@ namespace OneMainWeb.adm
 
                     if (!IISHelper.AppPoolExists(sm, appPoolName))
                     {
-                        IISHelper.CreateNewAppPool(sm, appPoolName, "v4.0");
+                        IISHelper.CreateNewAppPool(sm, appPoolName, "v4.5");
                     }
 
                     if (!string.IsNullOrEmpty(appPoolName))
