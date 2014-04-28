@@ -69,13 +69,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\library\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
+    <Reference Include="MsSqlDBUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\library\MsSqlDBUtility\bin\Release\MsSqlDBUtility.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="One.Net.BLL, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\BLL\bin\Release\One.Net.BLL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -770,10 +770,6 @@
     <Folder Include="App_GlobalResources\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\library\MsSqlDBUtility\MsSqlDBUtility.csproj">
-      <Project>{68a5f1dd-6364-44e2-8cbf-d29985bbe2e8}</Project>
-      <Name>MsSqlDBUtility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{3ec05cc8-a433-482a-86e3-aa01f9519a01}</Project>
       <Name>BLL</Name>

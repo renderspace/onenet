@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C55BF
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlDBUtility", "..\library\MsSqlDBUtility\MsSqlDBUtility.csproj", "{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "One.Cron.API", "..\..\codeplex_one_cron\trunk\One.Cron.API\One.Cron.API.csproj", "{97484946-3AEF-46A8-AD6E-036458D9FE6E}"
 EndProject
 Global
@@ -45,16 +43,6 @@ Global
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Release|.NET.ActiveCfg = Release|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{68A5F1DD-6364-44E2-8CBF-D29985BBE2E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
