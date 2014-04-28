@@ -8,7 +8,7 @@ using One.Net.BLL.Scaffold;
 
 namespace OneMainWeb.adm
 {
-    public partial class Scaffold : System.Web.UI.Page
+    public partial class Scaffold : OneBasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

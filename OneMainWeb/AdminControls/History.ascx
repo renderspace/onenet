@@ -1,6 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="History.ascx.cs" Inherits="OneMainWeb.AdminControls.History" %>
 
-
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <asp:PlaceHolder id="PlaceHolderHistory" runat="server">
     <div class="instanceAllSettings">
         <asp:PlaceHolder ID="PlaceHolderCollapsed" Visible="true" runat="server">

@@ -14,11 +14,9 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Renderspace d.o.o.")]
 [assembly: AssemblyProduct("One.Net")]
-[assembly: AssemblyCopyright("Copyright 2005")]
+[assembly: AssemblyCopyright("Copyright 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("2.2")]
-//[assembly: AssemblyDelaySign(true)]
-// [assembly: AssemblyKeyFile(@"..\..\..\One.Net.snk")]
+[assembly: AssemblyVersion("2.5")]
 [assembly: AssemblyKeyName("")]

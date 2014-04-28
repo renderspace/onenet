@@ -38,6 +38,13 @@ namespace OneMainWeb.AdminControls
         {
             if (!IsPostBack)
             {
+
+                if (!PhysicalSchema.CheckDatabaseConfiguration())
+                {
+                    this.Visible = false;
+                    return;
+                }
+
                 PlaceHolderList.Visible = true;
                 PlaceHolderSingle.Visible = false;
                 GridViewSortExpression = "id";
