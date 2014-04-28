@@ -18,6 +18,7 @@ using One.Net.BLL.Model.Web;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model;
 using One.Net.BLL.WebConfig;
+using OneMainWeb.Base;
 
 
 namespace OneMainWeb
@@ -335,10 +336,10 @@ var _gaq = _gaq || [];
                         {
                             if (module.PersistFrom <= page.Level && (PublishFlag || !module.PendingDelete))
                             {
-                                Panel p = new Panel();
+                                var p = new Section();
                                 p.CssClass = "mi " + module.Name.ToLower();
-                                //p.ToolTip = "ModuleID: " + module.ModuleId.ToString();
                                 p.CssClass += " mi" + module.Id;
+                                
 
                                 Control control = null;
                                 string relPath = "~/CommonModules/" + module.ModuleSource;
