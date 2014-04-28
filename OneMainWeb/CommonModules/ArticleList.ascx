@@ -1,7 +1,6 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ArticleList.ascx.cs" Inherits="OneMainWeb.CommonModules.ArticleList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ArticleList.ascx.cs" Inherits="OneMainWeb.CommonModules.ArticleList" EnableViewState="false" %>
 
-<h1>Mogli bi zamenjat glavni DIV s SECTION</h1>
-<section class="mi articles mi1">	
+
 		<header class="mi-header">
 			<h1>Article List</h1>
 		</header>
@@ -211,5 +210,3 @@
 				<li class="last"><a href="" title="">&raquo;</a></li>							
 			</ul>	
 		</section>
-
-	</section>	

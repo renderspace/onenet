@@ -8,8 +8,6 @@ namespace One.Net.BLL.Web
 {
     public abstract class MModule : UserControl
     {
-        protected enum ModuleModes { Full = 0, List = 1 }
-
         private string extracssclass;
         private int instanceId;
         private int pageId;
@@ -199,37 +197,6 @@ namespace One.Net.BLL.Web
             {
                 throw new ApplicationException("");
             }
-        }
-
-        private void RegisterSubmitEnter()
-        {
-            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "SubmitEnter", @"<script type=""text/javascript"">
-//<![CDATA[
-function submitenter(button,e)
-{
-var keycode;
-if (window.event) keycode = window.event.keyCode;
-else if (e) keycode = e.which;
-else return true;
-
-if (keycode == 13)
-   {
-   button.click();
-   return false;
-   }
-else
-   return true;
-}
-//]]>
-</script>
-");
-        }
-
-        public void SetDefaultButton(TextBox textControl, Control defaultButton)
-        {
-            RegisterSubmitEnter();
-            //textControl.Attributes.Add("onkeydown", "fnTrapKD('" + defaultButton.ClientID + "',event)");
-            textControl.Attributes.Add("onkeydown", "submitenter('" + defaultButton.ClientID + "',event)");
         }
 
         public static string RenderOrder(int idx)
