@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<project name="one.net.build" default="all">
+
+    <target name="build_clean" description="remove all build code">
+        <if test="${directory::exists(build_root)}">
+			<delete dir="${build_root}" />
+		</if>
+	</target>	
+	
+    <target name="build_init">
+		<call target="build_clean" />
+        <mkdir dir="${build_root}" />
+		<mkdir dir="${build_root}\OneMainWeb" />
+		<mkdir dir="${build_root}\OneMainWeb\bin" />		
+    </target>
+
+	<target name="build_config">
+		<echo message="convert.web.config" />
+		<!-- ******************* Include specific property file ******************* -->
+		<if test="${file::exists(source_root + source_one.net_directory + '\' + properties_file_name)}">
+			<include buildfile="${source_root}${source_one.net_directory}\${properties_file_name}" />
+		</if>		
+		<call target="convert.web.config" />
+		<call target="convert.web.sitemap" />
+		<call target="convert.app.config" />
+	</target>	
+
+	<target name="build_BLL" description="">
+		<csc target="library" output="${build_root}OneMainWeb\bin\One.Net.BLL.dll" debug="${debug}">
+			<sources basedir="${source_root}${source_one.net_directory}\">
+				<include name="BLL\**\*.cs" />
+				<exclude name="BLL\**\AssemblyInfo.cs" />
+			</sources>
+			<references basedir="${source_root}">
+				<include name="${source_log4net_directory}\log4net.dll" />
+				<include name="${source_urlrewritingnet_directory}\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="${source_mssqldbutility_directory}\MsSqlDBUtility.dll" />
+			</references>
+		</csc>
+	</target>	
+	
+	<target name="convert.web.config">
+        <copy file="${source_root}${source_one.net_directory}\OneMainWeb\web.config.template" tofile="${build_root}OneMainWeb\web.config" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="APPLOGPATH" value="${log.appLogPath}" />
+					<token key="LOGLEVEL" value="${log.level}" />
+					<token key="DEBUGENABLED" value="${config.debugEnabled}"/>
+					<token key="SITESPECIFICPATH" value="${site.siteSpecificPath}" />
+					<token key="MAINREDIRECTNAME" value="${site.mainRedirectName}" />
+					<token key="WEBSITEID" value="${site.id}" />
+					<token key="PREFFEREDCULTURE" value="${site.PreferredCulture}" />
+                    <token key="PREFFEREDUICULTURE" value="${site.PreferredUICulture}" />
+                    <token key="PUBLISHROLEMAPPING" value="${site.PublishRoleMapping}" />
+                    <token key="PUBLISHFLAG" value="${site.PublishFlag}" />                   
+                    <token key="CONN" value="${config.MsSqlConnectionString}"/>
+					<token key="CONN13" value="${config.MsSqlConnectionString13}"/>
+					<token key="CONNCUSTOM" value="${config.MsSqlConnectionStringCustom}"/>
+					<token key="CONNPROFILE" value="${config.ProfileSqlConnectionString}"/>
+					<token key="CONNCRAWLER" value="${config.MsSqlConnectionStringCrawler}"/>
+					<token key="DEFAULTFROM" value="${site.DefaultFromEmail}"/>
+					<token key="SMTP" value="${site.SMTP}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+	
+	<target name="convert.web.sitemap">
+		<copy file="${source_root}${source_one.net_directory}\OneMainWeb\web.sitemap.template" tofile="${build_root}OneMainWeb\web.sitemap" overwrite="true">
+        </copy>
+    </target>
+	
+	<target name="convert.app.config">
+		<copy file="${source_root}${source_one.net_directory}\OneMaintenance\App.config.template" tofile="${build_root}OneMaintenance\App.config" overwrite="true">
+            <filterchain>
+                <replacetokens>   
+                    <token key="CONN" value="${config.MsSqlConnectionString}"/>
+					<token key="CONN13" value="${config.MsSqlConnectionString13}"/>
+					<token key="CONNCUSTOM" value="${config.MsSqlConnectionStringCustom}"/>
+					<token key="CONNPROFILE" value="${config.ProfileSqlConnectionString}"/>
+				</replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+	
+	<target name="build_one.net">
+
+		<call target="build_BLL" />	
+
+		<wsdl path="${mqueue_path}" namespace="MQueue" 
+		outfile="${source_root}${source_one.net_directory}\OneMainWeb\MQueue.cs" />		
+		
+		<copy todir="${build_root}OneMainWeb\">
+			<fileset basedir="${source_root}${source_one.net_directory}\OneMainWeb">
+				<include name="*.as?x" />
+				<include name="CommonModules\*.as?x" />
+				<include name="AdminControls\*.as?x" />
+				<include name="App_Browsers\**.*" />
+				<include name="Controls\*.as?x" />
+				<include name="adm\*.as?x" />
+				<include name="fckeditor\**.*" />
+				<include name="*.Master" />
+				<include name="Languages\**.xml" />
+				<include name="JavaScript\**.*" />
+				<include name="*.css" />
+				<include name="*.js" />
+				<include name="Utils\**.*" />				
+				<include name="site_specific\${website}\**.*" />					
+				<include name="Res\brisanje.gif" />
+				<include name="Res\colapse.gif" />
+				<include name="Res\expand.gif" />
+				<include name="Res\objava.gif" />
+				<include name="Res\objavljeno.gif" />
+				<include name="Res\one-big-logo.gif" />
+				<include name="Res\one_logo.gif" />
+				<include name="Res\menu.gif" />
+				<include name="Res\exclamation_icon.gif" />
+				<include name="Res\dark-*.gif" />
+				<include name="Res\arrow_icon.gif" />
+				<include name="Res\PlaceHolders\**.*" />			
+				<include name="AdminControls\**.gif" />					
+			</fileset>
+		</copy>
+		
+		<copy todir="${build_root}OneMainWeb\bin" flatten="true">
+			<fileset basedir="${source_root}">
+				<include name="${source_log4net_directory}\log4net.dll" />
+				<include name="${source_mssqldbutility_directory}\MsSqlDBUtility.dll" />
+				<include name="${source_urlrewritingnet_directory}\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="${source_adaptedcssfriendly_directory}\AdaptedCSSFriendly.dll" />
+				<include name="${source_fckeditor_directory}\FredCK.FCKeditorV2.dll" />
+				<include name="${source_twocontrolslibrary_directory}\TwoControlsLibrary.dll" />				
+				<include name="${source_onecrawler_directory}\Crawler.dll" />
+				<include name="${source_ajaxcontroltoolkit_directory}\AjaxControlToolkit.dll" />
+			</fileset>
+		</copy>		
+		
+		<csc target="library" output="${build_root}OneMainWeb\bin\OneMainWeb.dll" debug="${debug}">
+			<sources basedir="${source_root}">
+				<include name="${source_one.net_directory}\OneMainWeb\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\App_Code\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\CommonModules\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\adm\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\AdminControls\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\aspx_templates\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\Controls\*.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\**\AssemblyInfo.cs" />
+				<include name="${source_one.net_directory}\OneMainWeb\Utils\**.cs" />
+			</sources>
+			<resources basedir="${source_root}${source_one.net_directory}/OneMainWeb" dynamicprefix="true" prefix="OneMainWeb" >
+	            <include name="Res\**.gif" />
+				<exclude name="Res\one_logo.gif" />
+				<exclude name="Res\menu.gif" />
+				<exclude name="Res\exclamation_icon.gif" />
+				<exclude name="Res\dark-*.gif" />
+				<exclude name="Res\arrow_icon.gif" />
+				<exclude name="Res\PlaceHolders\**.*" />
+			</resources> 
+			<references basedir="${build_root}OneMainWeb\">
+				<include name="bin\One.Net.BLL.dll" />
+				<include name="bin\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="bin\log4net.dll" />
+				<include name="bin\AdaptedCSSFriendly.dll" />
+				<include name="bin\FredCK.FCKeditorV2.dll" />
+				<include name="bin\TwoControlsLibrary.dll" />
+				<include name="bin\Crawler.dll" />
+				<include name="bin\AjaxControlToolkit.dll" />
+			</references>
+		</csc>		
+	</target>
+</project>

@@ -1,0 +1,2 @@
+<%@ Control EnableViewState="false" Language="C#" AutoEventWireup="true" CodeBehind="Image.ascx.cs" Inherits="OneMainWeb.CommonModules.Image" %>
+<asp:Literal ID="LiteralImageOutput" runat="server"></asp:Literal>

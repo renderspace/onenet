@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+	<resource name="autopublish_label">Objavi takoj</resource>
+	<resource name="autopublish_warning"><![CDATA[ <span class="warning"><img src="/res/exclamation_icon.gif" alt="" /> "Objavi takoj" je vključen.</span>]]></resource>
+	<resource name="subtitle">Podnaslov</resource>
+	<resource name="teaser">Teaser</resource>
+	<resource name="clear_cache">Zbriši cache</resource>
+	<resource name="label_undelete_mi">Prekliči brisanje modula</resource>
+	<resource name="label_delete_instance">Izbriši modul</resource>
+	<resource name="is_selectable">Dovoljeno izbiranje</resource>
+	<resource name="categorised_under_this_category">Vnosi pod to kategorijo</resource>
+	<resource name="insert_succeeded">Nov vnos je bil uspešno shranjen</resource>
+	<resource name="insert_failed_missing_data">Prosimo izpolnite vse obvezne podakte. Nov vnos ni bil shranjen.</resource>
+	<resource name="update_succeeded">Vnos je bil uspešno shranjen</resource>
+	<resource name="update_failed_missing_data">Prosimo izpolnite vse obvezne podakte. Vnos ni bil shranjen.</resource>
+	<resource name="error_saving">Napaka pri shranjevanju.</resource>
+	<resource name="redirectToUrl">Preusmeritev na URL</resource>
+	<resource name="viewGroups">Dovoljenje za ogled strani</resource>
+	<resource name="editGroups">Dovoljenje za urejanje strani</resource>
+	<resource name="requireSSL">Zahtevana varna povezava</resource>
+	<resource name="show_untranslated">Pokaži neprevedeno vsebino</resource>
+	<resource name="clear_preview_cache">Izprazni cache</resource>
+	<resource name="has_children_delete_not_possible">Stran ima podstrani, zato brisanje ni možno.</resource>
+	<resource name="show_pages_without_translation">Pokaži strani brez prevoda</resource>
+	<resource name="enable_structure_editing">Omogoči urejanje strukture</resource>
+	<resource name="enable_menu_group_display">Pokaži skupine menijev</resource>
+	<resource name="expand_tree">Prikaži vse strani v drevesu</resource>
+	<resource name="auto_publish">Objavi takoj</resource>
+	<resource name="enable_delete">Omogoči brisanje</resource>
+	<resource name="inherited">Dedovan modul (urejanje ni možno)</resource>
+	<resource name="l_from">Od</resource>
+	<resource name="l_to">Do</resource>
+	<resource name="l_idx">Zap.št.</resource>
+	<resource name="page_status">Status</resource>
+	<resource name="page_info">Stran</resource>
+	<resource name="label_edit">Uredi</resource>
+	<resource name="new_tc">* Ni vsebine *</resource>
+	<resource name="all_content_published">Objavljeno</resource>
+	<resource name="updated_content_to_be_published">Čaka na objavo</resource>
+	<resource name="new_content_to_be_published">Nova vsebina čaka na objavo</resource>
+	<resource name="page_delete_publish_sucessfull">Dokončno brisanje strani je bilo uspešno.</resource>
+	<resource name="root_page_delete_publish_sucessfull">Dokončno brisanje korenske strani je bilo uspešno.</resource>
+	<resource name="publish_sucessfull">Objava je bila uspešna.</resource>
+	<resource name="save_sucessfull">Vsebina je bila uspešno shranjena.</resource>
+	<resource name="publish_unsucessfull">Objava ni bila uspešna. Stran ni objavljena.</resource>
+	<resource name="trying_to_publish_nonexisting_page">Poizkušali ste objaviti neobstoječo stran.</resource>
+	<resource name="trying_to_add_root_page_to_nonempty_website">Poizkušali ste ustvariti novo korensko stran na spletnem mestu, ki jo že ima.</resource>
+	<resource name="publish_disable_becuase_parent_page_was_never_published">Objavi (najprej objavite nadrejeno stran)</resource>
+	<resource name="label_website_primary_language">Privzeti jezik spletnega mesta</resource>
+	<resource name="content_edit">One.NET - Urejanje vsebine</resource>
+	<resource name="module_structure">One.NET - Urejanje drevesne strukture</resource>
+	<resource name="forms">One.NET - Modul obrazci</resource>
+	<resource name="faqs">One.NET - Modul FAQ</resource>
+	<resource name="articles">One.NET - Modul Članki</resource>
+	<resource name="sub_manager">One.NET - Newsletter prijave</resource>
+	<resource name="events">One.NET - Dogodki</resource>
+	<resource name="dictionary">One.NET - Slovar</resource>
+	<resource name="file_manager">One.NET - Urejevalnik datotek</resource>
+	<resource name="leftContainer"><![CDATA[ <img src="/res/PlaceHolders/leftContainer.gif" alt="leftContainer" title="leftContainer" /> ]]></resource>
+	<resource name="centerContainer"><![CDATA[ <img src="/res/PlaceHolders/centerContainer.gif" alt="centerContainer" title="centerContainer" /> ]]></resource>
+	<resource name="rightContainer"><![CDATA[ <img src="/res/PlaceHolders/rightContainer.gif" alt="rightContainer" title="rightContainer"/> ]]></resource>
+	<resource name="rightMiniContainer"><![CDATA[ <img src="/res/PlaceHolders/rightMiniContainer.gif" alt="rightMiniContainer" title="rightMiniContainer" /> ]]></resource>
+	<resource name="leftMiniContainer"><![CDATA[ <img src="/res/PlaceHolders/leftMiniContainer.gif" alt="leftMiniContainer" title="leftMiniContainer" /> ]]></resource>
+<!-- Itak placeholders -->
+	<resource name="central"><![CDATA[ <img src="/res/PlaceHolders/central.gif" alt="central" title="central"/> ]]></resource>
+	<resource name="header"><![CDATA[ <img src="/res/PlaceHolders/header.gif" alt="header" title="header"/> ]]></resource>
+	<resource name="middle"><![CDATA[ <img src="/res/PlaceHolders/middle.gif" alt="middle" title="middle"/> ]]></resource>
+	<resource name="sidebar"><![CDATA[ <img src="/res/PlaceHolders/sidebar.gif" alt="sidebar" title="sidebar"/> ]]></resource>	
+	<resource name="intro"><![CDATA[ <img src="/res/PlaceHolders/intro.gif" alt="intro" title="intro"/> ]]></resource>	
+	<resource name="bottom"><![CDATA[ <img src="/res/PlaceHolders/bottom.gif" alt="bottom" title="bottom"/> ]]></resource>
+	<resource name="wide"><![CDATA[ <img src="/res/PlaceHolders/wide.gif" alt="wide" title="wide"/> ]]></resource>
+	<resource name="left"><![CDATA[ <img src="/res/PlaceHolders/left.gif" alt="left" title="left"/> ]]></resource>
+	<resource name="right"><![CDATA[ <img src="/res/PlaceHolders/right.gif" alt="right" title="right"/> ]]></resource>
+<!-- Itak placeholders -->
+	<resource name="newsletter">E-novice</resource>
+	<resource name="subscription_filter">Filter</resource>
+	<resource name="started_subscription">Nepotrjene prijave</resource>
+	<resource name="confirmed_subscription">Prijavljeni</resource>
+	<resource name="unsubscribed">Odjavljeni</resource>
+	<resource name="display_subscriptions">Izpiši</resource>
+	<resource name="label_newsletter_subscribers">Število trenutno prijavljenih</resource>
+	<resource name="label_test_email_address">E-naslovi testnih prejemnikov</resource>
+	<resource name="label_selected_template">Izbrana predloga e-novic</resource>
+	<resource name="label_select_template">Izberi predlogo e-novic</resource>
+	<resource name="label_email_subject">Zadeva</resource>
+	<resource name="label_test">Pošlji testno</resource>
+	<resource name="label_send_all">Pošlji vsem</resource>
+	<resource name="subscription_id">Zap.št. prijave</resource>
+	<resource name="email">eMail</resource>
+	<resource name="subscribed">Prijava zahtevana ob</resource>
+	<resource name="confirmed">Prijava potrjena ob</resource>
+	<resource name="add_subpage">Dodaj novo stran</resource>
+	<resource name="page_title">Naslov strani</resource>
+	<resource name="page_template">Predloga strani</resource>
+	<resource name="page_url">URI (link do strani)</resource>
+	<resource name="page_menu_group">Skupina menijev (pozicija menija)</resource>
+	<resource name="page_id">Zaporedna št. strani</resource>
+	<resource name="page_url_name">Imena menijev</resource>
+	<resource name="break_persistance">Ne deduj modulov na tej strani</resource>
+	<resource name="label_website_settings">Nastavitve spletnega mesta</resource>
+	<resource name="label_page_settings">Nastavitve strani</resource>
+	<resource name="label_update_root_par_link_as_blank">URL vstopne strani je bil shranjen kot /</resource>
+	<resource name="label_primary_language_changed">Privzeti jezik spletnega mesta je bil spremenjen</resource>
+	<resource name="label_update_root_par_link_as_language_short_hand">URL vstopne strani je bil shranjen kot /okrajšava_za_jezik</resource>
+	<resource name="label_module_settings">Nastavitve modula</resource>
+	<resource name="edit_structure">Urejanje strukture</resource>
+	<resource name="add_module_instance">Nov modul</resource>
+	<resource name="add_module_instance_button">Dodaj</resource>
+	<resource name="last_changed_date">Zadnjič uredil</resource>
+	<resource name="modules_on_page">Moduli na tej strani</resource>
+	<resource name="module_name">Modul</resource>
+	<resource name="place_holder">Pozicija na strani</resource>
+	<resource name="move_up"> &#9650; </resource>
+	<resource name="move_down"> &#9660; </resource>
+	<resource name="persistency">Dedovanje</resource>
+	<resource name="add_page">Nova stran</resource>
+	<resource name="change_position">Spremeni postavitev modula</resource>
+	<resource name="update">Shrani</resource>
+	<resource name="hide">Skrij</resource>
+	<resource name="show">Pokaži</resource>
+	<resource name="edit">Uredi</resource>
+	<resource name="delete">Zbriši</resource>
+	<resource name="delete_page">Zbriši stran</resource>
+	<resource name="undelete_page">Prekliči brisanje strani</resource>
+	<resource name="publish">Objavi</resource>
+	<resource name="publish_delete">Dokočno zbriši stran (objavi brisanje)</resource>
+	<resource name="label_title">Naslov</resource>
+	<resource name="label_subtitle">Podnaslov</resource>
+	<resource name="label_teaser">Teaser</resource>
+	<resource name="label_html"></resource>
+	<resource name="label_change_module_instance">Izberi pojavitev modula</resource>
+	<resource name="label_save">Shrani</resource>
+	<resource name="revert_to_published">Povrni v objavljeno stanje</resource>
+	<resource name="usefck_label">Uporabi napredni urejevalnik besedila</resource>
+	<resource name="cancel">Prekliči</resource>
+	<resource name="save">Shrani</resource>
+	<resource name="save_close">Shrani in zapri</resource>
+	<resource name="update_close">Shrani in zapri</resource>
+	<resource name="insert">Shrani in zapri</resource>
+	<resource name="insert_close">(novo) Shrani in zapri</resource>
+	<resource name="insert_next">(novo) Shrani in dodaj še enega</resource>
+	<resource name="form_list">Seznam obrazcev</resource>
+	<resource name="single_form">Urejanje obrazca</resource>
+	<resource name="add_form">Pripravi nov obrazec</resource>
+	<resource name="view_aggregate_results">Poglej rezultate</resource>
+	<resource name="copy_as_new">Urejaj kot novo formo</resource>
+	<resource name="form_aggregate_results">Agregatni rezultati</resource>
+	<resource name="all_results">Vsi odgovori</resource>
+	<resource name="single_submission">Odgovor</resource>
+	<resource name="form_overall_trends">Časovna distribucija</resource>
+	<resource name="form_title">Naslov obrazca</resource>
+	<resource name="form_type">Vrsta obrazca</resource>
+	<resource name="form_submission_count">Št. izpolnjenih obrazcev</resource>
+	<resource name="first_form_submission_date">Prvi odgovorjeni obrazec oddan ob:</resource>
+	<resource name="last_form_submission_date">Zadnji odgovorjeni obrazec oddan ob:</resource>
+	<resource name="form_question"></resource>
+	<resource name="question_title">Vprašanje</resource>
+	<resource name="total_answers">Št. odgovorjenih</resource>
+	<resource name="question_answers">Odgovori</resource>
+	<resource name="total_individual_answers">Št.izbranih po posameznem odgovoru</resource> 
+	<resource name="add_new_form">Ime obrazca</resource>
+	<resource name="add_new_form_button">Ustvari</resource>
+	<resource name="add_section">Nova stran z vprašanji</resource>
+	<resource name="add_section_button">Dodaj</resource>
+	<resource name="form_name">Naslov obrazca</resource>
+	<resource name="form_type">Vrsta obrazca</resource>
+	<resource name="form_send_to">Email naslov prejemnika</resource>
+	<resource name="form_send_from">Email naslov pošiljatelja</resource>
+	<resource name="update_form">Začasno shrani obrazec</resource>
+	<resource name="update_section">Začasno shrani stran z vprašanji</resource>
+	<resource name="update_question">Začasno shrani vprašanje z odgovori</resource>
+	<resource name="form_thank_you_note">Besedilo ob končanem obrazcu (zahvala,...)</resource>
+	<resource name="section_name">Naslov strani z vprašanji</resource>
+	<resource name="section_type">Vrsta strani z vprašanji</resource>
+	<resource name="add_question_button">Dodaj</resource>
+	<resource name="add_question">Novo vprašanje</resource>
+	<resource name="question_text">Vprašanje</resource>
+	<resource name="question_description">Opis vprašanja ali dodatna razlaga</resource>
+	<resource name="question_requires_answer">Odgovor na to vprašanje je obvezen</resource>
+	<resource name="user_question_types">Vrsta vprašanja oz. odgovora</resource>
+	<resource name="SingleLineOfText">Odprto enovrstično vprašanje</resource>
+	<resource name="MultiLineText">Odprto večvrstično vprašanje</resource>
+	<resource name="MenuToChooseFrom">Izbira izmed večih možnih odgovorov</resource>
+	<resource name="NumericalValue">Številka</resource>
+	<resource name="DateOrTime">Datum ali ura</resource>
+	<resource name="FileUpload">Datoteka</resource>
+	<resource name="Integer">Celo število</resource>
+	<resource name="Email">Email naslov</resource>
+	<resource name="max_chars">Dovoljeno število znakov</resource>
+	<resource name="number_of_lines_for_editing">Število vrstic</resource>
+	<resource name="maximum_file_size">Največja dovoljena velikost datoteke [kB]</resource>
+	<resource name="allowed_mime_types">Dovoljene vrste datotek</resource>
+	<resource name="type_of_information">Vrsta odgovorov</resource>
+	<resource name="PresentedAsRadio">en odgovor (radio)</resource>
+	<resource name="PresentedAsCheckBox">več odgovorov (checkbox)</resource>
+	<resource name="PresentedAsDropDown">le en odgovor (select)</resource>
+	<resource name="answers_one_per_line">Seznam odgovorov (vsaka vrstica je en možen odgovor)</resource>
+	<resource name="form_id">ID</resource>
+	<resource name="form">Obrazec</resource>
+	<resource name="Questionaire">Vprašalnik</resource>
+	<resource name="Poll">Anketa</resource>
+	<resource name="allow_multiple_submissions">Dovoli večkratno izpolnjevanje</resource>
+	<resource name="allow_modify_in_submission">Omogoči premikanje po straneh ("nazaj")</resource>
+	<resource name="form_submission_count">Število izpolnjenih</resource>
+	<resource name="mark_question_as_deleted">Izbriši vprašanje</resource>
+	<resource name="mark_section_as_deleted">Izbriši stran</resource>
+	<resource name="submission_date">Datum oddaje</resource>
+	<resource name="submission_id">Zap.št. oddaje</resource>
+	<resource name="date_and_time">Datum in čas</resource>
+	<resource name="date">Datum</resource>
+	<resource name="time">Čas</resource>
+	<resource name="totalFormsSubmitted">Število oddanih obrazcev</resource>
+	<resource name="export">Izvozi v Excel</resource>
+	<resource name="export_details">Podatki o izvozu</resource>
+	<resource name="export_date">Datum:</resource>
+	<resource name="export_time">Ura:</resource>
+	<resource name="export_principal">Oseba:</resource>
+	<resource name="form_details">Podatki o obrazcu</resource>
+	<resource name="answer_legend">Legenda</resource>
+	<resource name="label_form_section_idx_question_idx">(stran/zap.št.)</resource>
+	<resource name="label_form_question">Vprašanje</resource>
+	<resource name="label_form_question_total_answers">Število odgovorjenih vprašanj</resource>
+	<resource name="label_form_question_answers">Odgovori</resource>
+	<resource name="label_form_question_total_individual_answers">Število izbranih</resource>
+	<resource name="single_answer">En sam odgovor (odprto vprašanje)</resource>
+	<resource name="open_answer">Odprt odgovor</resource>
+	<resource name="multiple_choice_answer">Možnih več odgovorov</resource>
+	<resource name="export_aggregate_submissions_file_name">obrazec-agregatni_podatki</resource>
+	<resource name="export_open_submissions_file_name">obrazec-vsi_podatki</resource>
+	<resource name="form_submission_id">Zap.št. posredovanega obrazca</resource>
+	<resource name="finished_date">Datum in ura zaključka obrazca</resource>
+	<resource name="view">Poglej</resource>
+	<resource name="percentage_for_all_submissions">% od vseh odgovorov</resource>
+	<resource name="percentage_within_current_question">% znotraj vprašanja</resource>
+	<resource name="question">Vprašanje</resource>
+	<resource name="first_answer_in_menu_is_fake">Prvega odgovora na seznamu ni možno izbrati</resource>
+	<resource name="form_desc">Opis obrazca</resource>
+	<!-- end forms -->
+	<!-- begin submanager -->
+	<resource name="subscription_list">Seznam prijavljenih </resource>
+	<resource name="maintenance">Vzdrževanje</resource>
+	<resource name="date_back_from">Od datuma</resource>
+	<resource name="delete_unconfirmed_subscriptions">Izbriši nepotrjene prijave</resource>
+	<!-- end submanager -->
+	<!-- begin faq -->
+	<resource name="assign">Dodaj &#9658; </resource>
+	<resource name="remove"> &#8592; </resource>
+	<resource name="faq_question">Vprašanje</resource>
+	<resource name="faq_saved">Vprašanje in odgovor sta shranjena.</resource>
+	<resource name="faq_answer">Odgovor</resource>
+	<resource name="view_edit_faq">Urejanje</resource>
+	<resource name="entry_list">Seznam</resource>
+	<resource name="view_edit_categories">Urejanje kategorizacije</resource>
+	<resource name="add_faq">Pripravi nov FAQ</resource>
+	<resource name="faq_categories">Kategorije, ki jim pripada FAQ</resource>
+	<resource name="update_succeeded">Spremembe so shranjene.</resource>
+	<resource name="revert_to_published_succeeded">Povrnitev v objavljeno stanje je bila uspešna.</resource>
+	<resource name="mark_for_deletion_succeeded">Označno za brisanje. Za dokončno brisanje je treba spremembo "objaviti".</resource>
+	<!-- end faq -->
+	<!-- begin articles -->
+	<resource name="article">Članek</resource>
+	<resource name="article_title">Naslov članka</resource>
+	<resource name="article_sub_title">Podnaslov članka</resource>
+	<resource name="article_teaser">Teaser</resource>
+	<resource name="article_html">Vsebina članka</resource>
+	<resource name="display_date">Datum</resource>
+	<resource name="RegularsList">Rubrike</resource>
+	<resource name="status">Status</resource>
+	<resource name="article_list">Seznam člankov</resource>
+	<resource name="view_edit_article">Urejanje članka</resource>
+	<resource name="regular_list">Seznam rubrik</resource>
+	<resource name="view_edit_regular">Urejanje rubrike</resource>
+	<resource name="add_article">Pripravi nov članek</resource>
+	<resource name="insert_new_regular">Nova rubrika</resource>
+	<resource name="add_regular">Dodaj</resource>
+	<resource name="title">Naslov</resource>
+	<resource name="id">ID</resource>
+	<resource name="article_regulars">Rubrike, ki jim pripada članek</resource>
+	<resource name="regular_filter">Rubrika</resource>
+	<resource name="filter_articles">Filtriraj rubrike</resource>
+	<resource name="no_filter">.. izberi rubriko</resource>
+	<resource name="label_no_filter">.. izberi </resource>
+	<resource name="regular_title">Naslov rubrike</resource>
+	<resource name="regular_sub_title">Podnaslov rubrike</resource>
+	<resource name="regular_teaser">Kratek opis rubrike</resource>
+	<resource name="regular_html">Daljši opis rubrike</resource>
+	<!-- end articles -->
+	<!-- end dict -->
+	<resource name="search_keyword">Iskanje po ključni besedi ali prevodu</resource>
+	<resource name="search">Išči</resource>
+	<resource name="dictionary_tab">Slovar</resource>
+	<resource name="dictionary_entry_tab">Ključna beseda</resource>
+	<resource name="keyword">Ključna beseda</resource>
+	<resource name="meaning">Prevod</resource>
+	<resource name="add_dictionary_entry">Dodaj novo ključno besedo</resource>
+	<resource name="new_category">Nova mapa</resource>
+	<resource name="add">Dodaj</resource>
+	<!-- end dict -->
+	<resource name="file_found">Iskana datoteka je v izbrani mapi</resource>
+	<resource name="file_not_found">Iskana datoteka ne obstaja</resource>
+	<resource name="label_select_file">Izberi datoteko</resource>
+	<resource name="file_name">Ime datoteke</resource>
+	<resource name="search_file_id">Iskanje po Id-ju datoteke</resource>
+	<!-- begin events -->
+	<resource name="view_edit_event">Urejanje dogodka</resource>
+	<resource name="add_event">Pripravi nov dogodek</resource>
+	<resource name="event_categories">Kategorizacija dogodka</resource>
+	<resource name="begin_date">Datum in ura dogodka</resource>
+	<resource name="begin_date_full">Datum in ura začetka dogodka</resource>
+	<resource name="end_date">Datum in ura konca dogodka (ali prazno)</resource>
+	<!-- end events -->
+	<!--  -->
+	<resource name="LastChanged">Zadnja sprememba</resource>
+	<resource name="LastChangedBy">Avtor zadnje spremembe</resource>
+	<resource name="page_list">Seznam strani</resource>
+	<resource name="comment_list">Seznam komentarjev</resource>
+	<resource name="faq_list">Seznam FAQ</resource>
+	<resource name="event_list">Seznam dogodkov</resource>
+	<resource name="page">Naslov strani</resource>
+	<resource name="publish_selected">Objavi izbrano</resource>
+	<resource name="successfully_published_n_articles">Objavljeno: {0} člank(ov)</resource>
+	<resource name="successfully_published_n_faqs">Objavljeno: {0} FAQ(jev)</resource>
+	<resource name="successfully_published_n_events">Objavljeno: {0} dogodk(ov)</resource>
+	<resource name="successfully_published_n_pages">Objavljeno: {0} stran(i)</resource>
+	<resource name="failed_to_publish_n_pages">{0} stran(i) ni bilo objavljenih, prosimo poizkusite znova.</resource>
+	<resource name="successfully_published_n_article_comments">Objavljeno {0} komentar(jev)</resource>
+	<resource name="nothing_to_publish">Prosimo izberite vsaj en element za objavo.</resource>
+	<resource name="unpublish_succeeded">Umaknjeno iz objave.</resource>
+	<resource name="publish_succeeded">Objavljeno</resource>
+	<resource name="unpublish">Umakni iz objave</resource>
+	<resource name="sub_title">Podnaslov</resource>
+	<resource name="edit_comment">Urejanje komentarja</resource>
+	<resource name="c_name">Naslov komentarja</resource>
+	<resource name="c_email">eMail</resource>
+	<resource name="comment">Komentar</resource>
+	<resource name="commented_at">Komentar oddan ob</resource>
+	<resource name="selected_ui_culture">Jezik uporabniškega vmesnika</resource>
+	<resource name="change_ui_culture">Spremeni jezik uporabniškega vmesnika</resource>
+	<resource name="unsubscribe">Odjavi</resource>
+	<resource name="display_csl_subscriptions">Izpiši v obliki za [To] polje v Outlook-u</resource>
+	<resource name="start_from_days_ago">Izbriši nepotrjene prijave starejše od [x] dni</resource>
+	<resource name="ui_culture_changed">Jezik uporabniškega vmesnika je bil uspešno spremenjen.</resource>
+	<resource name="form_private_name">Evidenčni opis</resource>
+	<resource name="Finished">Končano</resource>
+	<resource name="import_data">Uvozi podatke</resource>
+	<resource name="list_stores">Seznam trgovin</resource>
+	<resource name="view_edit_store">Urejanje trgovine</resource>
+	<resource name="view_edit_type_of_stores">Urejanje tipov trgovin</resource>
+	<resource name="view_edit_city">Urejanje mest</resource>
+	<resource name="import">Uvozi</resource>
+	<resource name="up"> &#9650; </resource>
+	<resource name="down"> &#9660; </resource>
+	<resource name="categories">Izberi kategorijo</resource>
+	<resource name="filter">Filtriraj</resource>
+	<resource name="mi_website">Spletno mesto</resource>
+	<resource name="mi_content">Urejanje vsebine</resource>
+	<resource name="mi_special_content">Urejanje XHTML vsebine</resource>
+	<resource name="mi_structure">Drevesna struktura</resource>
+	<resource name="mi_publish">Objavljanje</resource>
+	<resource name="mi_modules">Moduli</resource>
+	<resource name="mi_forms">Obrazci</resource>
+	<resource name="mi_faqs">FAQji</resource>
+	<resource name="mi_articles">Članki</resource>
+	<resource name="mi_comments">Komentarji</resource>
+	<resource name="mi_events">Dogodki</resource>
+	<resource name="mi_rss_manager">RSS kanali</resource>
+	<resource name="mi_stores">Prodajna mesta</resource>
+	<resource name="mi_MM_stores">MM Prodajna mesta</resource>
+	<resource name="mi_WeightedQuiz">Kvizi</resource>
+	<resource name="mi_recipes">Recepti</resource>
+	<resource name="mi_KDDAdmin">Obvestila</resource>
+	<resource name="mi_subscription_manager">Pregled prijavljenih</resource>
+	<resource name="mi_settings">Nastavitve</resource>
+	<resource name="mi_dictionary">Slovar</resource>
+	<resource name="mi_file_manager">Urejevalnik datotek</resource>
+	<resource name="mi_file_manager_2">Urejevalnik datotek (CKFINDER)</resource>
+	<resource name="mi_personal_settings">Osebne nastavitve</resource>
+	<resource name="mi_extra">Dodatni / zunanji moduli</resource>
+	<resource name="centerLeftContainer"><![CDATA[ <img src="/res/PlaceHolders/centerLeftContainer.gif" alt="centerLeftContainer" title="centerLeftContainer"/> ]]></resource>
+	<resource name="centerRightContainer"><![CDATA[ <img src="/res/PlaceHolders/centerRightContainer.gif" alt="centerRightContainer" title="centerRightContainer" /> ]]></resource>
+	<resource name="hidden"><![CDATA[ <img src="/res/PlaceHolders/hidden.gif" alt="hidden" title="hidden" /> ]]></resource>
+	<resource name="faq_order_swapped">Vrstni red je zamenjan.</resource>
+	<resource name="sucessively_unsubscribed_sub">Uporabnik je odjavljen.</resource>
+	<resource name="no_rights">Nimate pravic potrebnih za urejanje te strani.</resource>
+	<resource name="allow_blank_answers_in_menu">Dovoli prazna polja</resource>
+	<resource name="timed_publisher">Tempirano objavljanje</resource>
+	<resource name="show_published">Pokaži objavljene vsebine</resource>
+	<resource name="subsystem">Modul</resource>
+	<resource name="fkid">ID vsebine</resource>
+	<resource name="scheduled_at">Objavi ob</resource>
+	<resource name="published_at">Objavljeno ob</resource>
+	<resource name="display">Pokaži</resource>
+	<resource name="schedule">Nastavi čas objave</resource>
+	<resource name="schedule_date">Čas objave</resource>
+	<resource name="from">Od</resource>
+	<resource name="to">Do</resource>
+	<resource name="event">Dogodek</resource>
+	<resource name="faq_scheduled_for_publishing">FAQ je bil postavljen v vrsto za avtomatsko objavljanje vsebin</resource>
+	<resource name="event_scheduled_for_publishing">Dogodek je bil postavljen v vrsto za avtomatsko objavljanje vsebin</resource>
+	<resource name="page_scheduled_for_publishing">Stran je bila postavljena v vrsto za avtomatsko objavljanje vsebin</resource>
+	<resource name="check_temporal_publish_tab_for_review">Seznam je na voljo v zavihku "Tempirano objavljanje"</resource>
+	<resource name="no_root_page">Spletna stran nima korenske strani.</resource>
+	<resource name="no_web_site">Spletno mesto ni izbrano.</resource>
+	<resource name="label_insert_root_par_link_as_blank">Za korensko stran je bil avtomatsko dodeljen naslov /</resource>
+	<resource name="folder_successfully_added">Dodan nov imenik.</resource>
+	<resource name="folder_successfully_updated">Imenik popravljen.</resource>
+	<resource name="move_category">Premakni</resource>
+	<resource name="category_to_move">Premikamo:</resource>
+	<resource name="file_successfully_uploaded">Datoteka prenešena na strežnik.</resource>
+	<resource name="file_successfully_deleted">Datoteka izbrisana.</resource>
+	<resource name="move">Premakni</resource>
+	<resource name="folder_successfully_moved">Mapa je premaknjena</resource>
+	<resource name="folder_successfully_deleted">Mapa je izbrisana</resource>
+	<resource name="file_successfully_updated">Datoteka je popravljena</resource>
+	<resource name="file_successfully_overwritten">Datoteka je spremenjena. Zaporedna številka in ime sta ostala enaka, končnica se je morda spremenila.</resource>
+	<!-- RSS -->
+	<resource name="rss_feed_list">Seznam RSS kanalov</resource>	
+	<resource name="edit_rss_Feed">Uredi kanal</resource>	
+	<resource name="add_rss_feed">Dodaj RSS</resource>	
+	<resource name="link_to_list">Absolutni link do seznama</resource>	
+	<resource name="link_to_single">Absolutni link do posameznega predmeta</resource>	
+	<resource name="providers">Vir</resource>	
+	<resource name="Categories">Kategorije</resource>	
+	<resource name="Type">Tip</resource>	
+	<resource name="Title">Naslov</resource>	
+	<resource name="description">Opis</resource>	
+	<resource name="update_rss_feed">Shrani</resource>	
+	<resource name="update_rss_feed_and_close">Shrani in zapri</resource>	
+	<resource name="add_rss_feed_and_close">Shrani in zapri</resource>	
+	<resource name="assigned_categories">Dodeljene kategorije</resource>
+	<resource name="recipe">Recept</resource>
+	<resource name="category_name">Kategorija</resource>
+	<resource name="mi_KDDAdmin">Obvestila</resource>
+	<resource name="mi_KADContactsAdmin">Kontakti</resource>
+	<resource name="notification">Naslov obvestila</resource>
+	<resource name="article_ShowById">Poišči članek po ID številki ali naslovu:</resource>
+	<resource name="section_desc">Opis sklopa</resource>
+	<resource name="unpublish_page">Umakni iz objave</resource>
+	<resource name="categories_list">Seznam kategorij</resource>
+	<resource name="faq">Vprašanje</resource>
+	<resource name="no_search_results">Iskanje ni vrnilo rezultatov.</resource>
+	<resource name="you_can_get_more_results_if_tick_show_untranslated">Iskanje bo morda vrnilo rezultate, če boste iskali tudi po neprevedeni vsebini. Tovrstno iskanje lahko vključite s pritiskom na "Pokaži neprevedeno vsebino".</resource>
+	<resource name="dict_entry_title">Naslov</resource>
+	<resource name="dict_entry_sub_title">Podnaslov</resource>
+	<resource name="dict_entry_teaser">Teaser</resource>
+	<resource name="dict_entry_html">Vsebina</resource>
+	<resource name="article_saved">Članek je uspešno shranjen.</resource>
+	<resource name="dictionary_entry_saved">Prevod shranjen.</resource>
+	<resource name="dictionary_entry_already_exists">Ključna beseda že obstaja. Če jo želite spreminjati, jo prosim odprite za urejanje v glavnem seznamu.</resource>
+	<resource name="dictionary_entry_not_saved">Prevod ni shranjen.</resource>
+	<resource name="export_subscriptions">Izvozi izbrane prijave</resource>
+	<resource name="principal_saved_by">Lastnik spremembe</resource>
+	<resource name="date_saved">Datum spremembe</resource>
+	<resource name="hide_history">Skrij zgodovino</resource>
+	<resource name="show_history">Pokaži zgodovino sprememb</resource>
+	<resource name="category_filter">Filtriraj po kategoriji</resource>
+	<resource name="filter_events">Filtriraj</resource>
+	<resource name="is_online">Je trenutno prijavljen</resource>
+	<resource name="creation_date">Ustvarjen</resource>
+	<resource name="username">Uporabniško ime</resource>
+	<resource name="user_list">Uporabniki</resource>
+	<resource name="create_user">Ustvari novega uporabnika</resource>
+	<resource name="user_info">Urejanje uporabnika</resource>
+	<resource name="roles">Vloge</resource>
+	<resource name="change_password">Sprememba gesla</resource>
+	<resource name="label_add_role">Dodaj uporabniško vlogo</resource>
+	<resource name="label_add_user">Nov uporabnik</resource>
+	<resource name="add_role">Dodaj vlogo</resource>
+	<resource name="role">Vloga</resource>
+	<resource name="populate_roles">Ustvari manjkajoče uporabniške vloge (za nova spletna mesta)</resource>
+	<resource name="label_user_information">Podatki o uporabniku</resource>
+	<resource name="label_confirm_delete">Ali ste prepričani v brisanje?</resource>
+	<resource name="label_selected_user">Uporabnik, izbran za urejanje</resource>
+	<resource name="nested_comments_not_allowed">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/gnezdenje_komentarjev_ni_dovoljeno" target="_blank">Gnezdenje  komentarjev ni dovoljeno.</a>
+	]]>
+	</resource>
+	<resource name="uppercase_tags_not_allowed">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/oznake_z_velikimi_tiskanimi_crkami_niso_dovoljene" target="_blank">Oznake z velikimi tiskanimi črkami niso dovoljene.</a>
+	]]>
+	</resource>
+	<resource name="missing_alt_in_image_tag">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/atribut_alt_manjka_v_img_oznaki" target="_blank">Atribut alt manjka v &lt;img&gt; oznaki
+	</a>]]>
+	</resource>
+	<resource name="extra_comment_tag_left_on_stack">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/v_vsebini_je_odvecen_komentar_ali_pa_komentar_ni_zakljucen" target="_blank">V vsebini je odvečen komentar ali pa komentar ni zaključen.</a>
+	]]>
+	</resource>
+	<resource name="extra_tag_left_on_stack">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/v_vsebini_je_odvecna_oznaka_ali_pa_oznaka_ni_zakljucena" target="_blank">V vsebini je odvečna oznaka ali pa oznaka ni zaključena.</a>
+	]]>
+	</resource>
+	<resource name="solo_tag_should_be_solo">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/samostojna_oznaka_naj_bo_samostojna" target="_blank">Samostojna oznaka mora biti samostojna (zaključena).</a>
+	]]>
+	</resource>
+	<resource name="missing_closing_of_tag">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/oznaka_ni_zakljucena" target="_blank">Oznaka ni zaključena (manjka zaključek).</a>
+	]]>
+	</resource>
+	<resource name="mismatched_closing_tag">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/oznaka_ni_pravilno_zakljucena" target="_blank">Začetek in konce oznake se ne ujemata.</a>
+	]]>
+	</resource>
+	<resource name="extra__comment_tag_left_on_stack">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/komentar_ni_zakljucen" target="_blank">HTML Komentar ni zaključen.</a>
+	]]>
+	</resource>
+	<resource name="ampersands">
+	<![CDATA[ 
+	<a href="http://prirocnik.renderspace.net/prirocnik/xhtml_validator/nepravilna_uporaba_znaka_andamp" target="_blank">Nepravilna uporaba znaka &amp; (and).</a>
+	]]>
+	</resource>
+	<resource name="errors">Napaka</resource>
+	<resource name="position">Mesto napake</resource>
+	<resource name="label_delete_all_precaution_title">Napaka</resource>
+	<resource name="label_delete_all_precaution_text">Gumb 'Izbris adreme' ni obkljukan</resource>
+	<resource name="label_confirm_delete_subscriptions">Ali ste prepričani?</resource>
+	<resource name="delete_all_subscriptions">Izbriši celotno adremo</resource>
+	<resource name="delete_all_subscriptions_precaution">Dovoli izbris adreme</resource>
+	<resource name="recursive_delete">Izbriši skupaj z vsemi podmapami</resource>
+	<resource name="upload">Prenesi</resource>
+	<resource name="file_upload_failed">Prenos datoteke je bil neuspešen</resource>
+	<resource name="dictionary_import_export_tab">Izvoz in uvoz</resource>
+	<resource name="export_dictionary">Izvozi slovar</resource>
+	<resource name="exported_xml">XML v UTF8 obliki pripravljen za kopiranje v datoteko (priporočamo Notepad++ nastavljen na UTF8)</resource>
+	<resource name="import_dictionary">Uvozi slovar</resource>
+	<resource name="overwrite">Zamenjaj z novim</resource>
+	<resource name="dont_overwrite">Ne zamenjaj</resource>
+	<resource name="xml_to_import">XML za uvoziti (v UTF8 formatu)</resource>
+	<resource name="successfully_import_count">Uvoženih prevodov: </resource>
+	<resource name="fail_import_count">Preskočenih: </resource>
+	<resource name="login">One.NET Prijava </resource>
+	<resource name="sql_edit">One.NET SQL urejevalnik </resource>
+	<resource name="publishing">One.NET Objavljanje </resource>
+	<resource name="special_content">One.NET XHTML urejevalnik </resource>
+	<resource name="comments_editor">One.NET Prijava </resource>
+	<resource name="newsletters">Adrema: </resource>
+	<resource name="emails">Email-i:</resource>
+	<resource name="beginDate">Datum začetka</resource>
+	<resource name="error_loading">Napaka pri inicializaciji RSS sistema</resource>
+	<resource name="item_saved">Shranjeno</resource>
+	<resource name="rss_feeds">One.NET Urejanje RSS kanalov</resource>
+	<resource name="revert_to">Vrni v prikazano stanje</resource>
+	<resource name="content_audit_item">Vsebina spremenjenega vnosa (zgodovina)</resource>
+	<resource name="minimum_one_regular_has_to_be_assigned_to_article">Članek mora pripadati vsaj eni rubriki</resource>
+	<resource name="regular_saved">Rubrika je shranjena.</resource>
+	<resource name="because_of_inactivity_selected_module_was_not_saved">Zaradi daljše neaktivnosti v administrativnem vmesniku spremembe niso bile shranjene.</resource>
+	<resource name="deleted">Izbrisano</resource>
+	<resource name="delete_failed">Brisanje ni bilo uspešno</resource>
+	<resource name="not_writable">Zapisovanje ni možno</resource>
+	<resource name="event_saved">Dogodek je shranjen</resource>
+	<resource name="invalid_data">Napačni podatki</resource>
+	<resource name="rss_configuration_element_missing_from_web_config">V web.config manjkajo nastavitve RSS sistema</resource>
+	<resource name="missing_rssConfiguration_providers_section_from_web_config">V web.config manjka sekcija ponudniki RSS</resource>
+	<resource name="missing_rssConfiguration_providers_from_web_config">V web.config manjka vsebina sekcije ponudniki RSS</resource>
+	<resource name="rss_categories_loading_failed">Napaka pri nalaganjo RSS kategorij.</resource>
+	<resource name="help">Pomoč</resource>
+	<resource name="mi_locations">Lokacija</resource>
+	<resource name="mi_charts">Lestvice</resource>
+	<resource name="mi_authors">Avtorji</resource>
+	<resource name="is_private">Dostopna samo upravnikom</resource>
+	<resource name="mi_product_edit">Izdelki</resource>
+	<resource name="mi_product_category_edit">Kategorija izdelkov</resource>
+	<resource name="mi_recipe_edit">Recepti</resource>
+	<resource name="mi_event_edit">Dogodki</resource>
+  <resource name="mi_users">Uporabniki</resource>
+  <resource name="mi_bamboo_config">Bamboo konfigurator</resource>
+  <resource name="mi_sql_editor">SQL urejevalnik</resource>
+  <resource name="mi_redirects">Preusmeritve</resource>
+  <resource name="mi_website_migrate">Prenos spletnih mest</resource>
+  <resource name="mi_banner_galleries">Galerija - Bannerji</resource>
+  <resource name="mi_bamboo_main">Bamboo</resource>
+  <resource name="mi_author_info">Podatki o avtorju</resource>
+  <resource name="delete_selected_items">Izbriši izbrane predmete</resource>
+  <resource name="export_to_excel">Izvozi v excel</resource>
+  <resource name="add_new_item">Dodaj nov predmet</resource>
+  <resource name="no_configuration_tables_found_do_you_want_to_create_them">Ni konfiguracijski tabel. Jih želite ustvariti?</resource>
+  <resource name="create_config_tables">Ustvari konfiguracijske tabele</resource>
+  <resource name="upload">Naloži</resource>
+  <resource name="save">Shrani</resource>
+  <resource name="cancel">Prekliči</resource>
+  <resource name="delete">Izbriši</resource>
+  <resource name="edit_columns">Uredi stolpce</resource>
+  <resource name="order_by">Razvrsti po:</resource>
+  <resource name="where_condition">Pogoj je</resource>
+  <resource name="name">Ime/Naziv</resource>
+  <resource name="physical_table">Fizična tabela</resource>
+  <resource name="save_changes">Shrani spremembe</resource>
+  <resource name="add_all_columns">Dodaj vse stolpce</resource>
+  <resource name="add_column">Dodaj stolpec</resource>
+  <resource name="add_relationship">Dodaj razmerje</resource>
+  <resource name="friendly_name">Prijazno ime</resource>
+  <resource name="show_on_list">Prikaži na seznamu</resource>
+  <resource name="column_type">Tip stolpca</resource>
+  <resource name="save_and_close_new_item">Shrani in zapri (kot nov vnos)</resource>
+  <resource name="save_and_close">Shrani in zapri</resource>
+  <resource name="execute">Izvedi</resource>
+  <resource name="redirect_list">Seznam preusmeritev</resource>
+  <resource name="redirect_single">Posamična preusmeritev</resource>
+  <resource name="add_redirect">Dodaj preusmeritev</resource>
+  <resource name="from_link">Povezava OD</resource>
+  <resource name="to_link">Povezava DO</resource>
+  <resource name="save_cose"></resource>
+  <resource name="language">Jezik</resource>
+  <resource name="websites">Spletna mesta</resource>
+  <resource name="copy_pages">Kopiraj strani</resource>
+  <resource name="delete_pages">Izbriši strani</resource>
+  <resource name="last_changed_by">Zadnjič uredil</resource>
+  <resource name="last_change_date">Zadnič urejeno</resource>
+  <resource name="empty_websites">Izprazni spletna mesta</resource>
+  <resource name="copy_pages_to_site">Kopiraj strani na spletno mesto</resource>
+  <resource name="selected_page">Izbrana stran</resource>
+  <resource name="selected_page_id">ID izbrane strani</resource>
+  <resource name="delete_node_and_subpages">Izbriši vozlišče in podstrani</resource>
+  <resource name="form_completion_redirect">Preusmeritev po oddaji</resource>
+  <resource name="section_on_client_click">Javascript na gumbu</resource>
+  <resource name="mi_jobs">M Kariera oglasi</resource>
+  <resource name="mi_video">M video</resource>
+  <resource name="mi_mercator_comments">Mercator komentarji</resource>
+  <resource name="mi_classified_ads">Lumpi menjava sličic</resource>
+  <resource name="mi_mercator_holidays_admin">MH aranžmaji</resource>
+  <resource name="mi_mercator_holidays_admin_extra">MH dodatno</resource>
+  <resource name="browser_error">Uporabljate brskalnik, ki ne omogoča optimalne uporabe sistema One.net.<br />
+    <![CDATA[ uporabo sistema One.net naložite drug brskalnik, ki ga podpira One.net oziroma ga posodobite na novejšo različico. Najnovejše različice brezplačnih in odličnih brskalnikov so dostopne na spodnjih povezavah.<br /> ]]>
+  </resource>
+</root>

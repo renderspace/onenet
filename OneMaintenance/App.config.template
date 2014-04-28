@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="DALAssembly" value="One.Net.MsSqlDAL"/>
+    <add key="DALClass" value="One.Net.MsSqlDAL"/>
+  </appSettings>
+  <connectionStrings>
+    <clear/>
+    <add name="MsSqlConnectionString" connectionString="@CONN@;Pooling=true;"/>
+	<add name="MsSqlConnectionString13" connectionString="@CONN13@;Pooling=true;"/>
+	<add name="MsSqlConnectionStringCustom" connectionString="@CONNCUSTOM@;Pooling=true;"/>
+  </connectionStrings>
+</configuration>

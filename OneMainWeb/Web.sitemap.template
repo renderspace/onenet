@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0">
+	<siteMapNode url="" title="" description="" roles="*">
+		<siteMapNode url="" title="$mi_website" description="" roles="*">
+			<siteMapNode url="~/adm/ContentEdit.aspx" title="$mi_content" description="" roles="all, Everyone"/>
+			<siteMapNode url="~/adm/SpecialContentEdit.aspx" title="$mi_special_content" description="" roles="all, Everyone, admin, specialcontent"/>
+			<siteMapNode url="~/adm/Structure.aspx" title="$mi_structure" description="" roles="all, Everyone" />
+			<siteMapNode url="~/adm/Publish.aspx" title="$mi_publish" description="" roles="all, Everyone" />
+		</siteMapNode>
+		<siteMapNode url="" title="$mi_modules" description="" roles="*">
+			<siteMapNode url="adm/Forms.aspx" title="$mi_forms" description="" roles="all, Everyone"/>
+			<siteMapNode url="adm/Faqs.aspx" title="$mi_faqs" description="" roles="all, Everyone"/>
+			<siteMapNode url="adm/Comments.aspx" title="$mi_comments" description="" roles="all, Everyone"/>
+			<siteMapNode url="adm/Articles.aspx" title="$mi_articles" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/Events.aspx" title="$mi_events" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/SubscriptionManager.aspx" title="$mi_subscription_manager" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/AuthorInfo.aspx" title="$mi_author_info" description="" roles="all, Everyone" />			
+		</siteMapNode>
+		<siteMapNode url="" title="$mi_settings" description="" roles="*">
+			<siteMapNode url="adm/dictionary.aspx" title="$mi_dictionary" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/FileManager.aspx" title="$mi_file_manager" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/RssFeeds.aspx" title="$mi_rss_manager" description="" roles="all, Everyone" />
+		</siteMapNode>
+		<siteMapNode url="" title="$mi_extra" description="" roles="*">
+			<siteMapNode url="adm/PersonalSettings.aspx" title="$mi_personal_settings" description="" roles="all, Everyone" />       
+		</siteMapNode>
+	</siteMapNode>
+</siteMap>

@@ -1,0 +1,738 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{872B2B2D-1C88-421C-9C46-C34746CF4E2A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OneMainWeb</RootNamespace>
+    <AssemblyName>OneMainWeb</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>true</UseIISExpress>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AdaptedCSSFriendly, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\AdaptedCSSFriendly\bin\Release\AdaptedCSSFriendly.dll</HintPath>
+    </Reference>
+    <Reference Include="AjaxControlToolkit, Version=1.0.20229.20821, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\AjaxControlToolKit\AjaxControlToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Bamboo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\One.Bamboo\Bamboo\bin\Bamboo.dll</HintPath>
+    </Reference>
+    <Reference Include="Bamboo.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\One.Bamboo\Bamboo.Core\bin\Release\Bamboo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ckfinder\_source\bin\Release\CKFinder.dll</HintPath>
+    </Reference>
+    <Reference Include="Crawler, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\One.Crawler\Crawler\bin\Release\Crawler.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
+    <Reference Include="MsSqlDBUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\MsSqlDBUtility\bin\Release\MsSqlDBUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="One.Net.BLL, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BLL\bin\Release\One.Net.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Activation" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="TwoControlsLibrary, Version=1.0.4268.22720, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\TwoControlLibrary\bin\Release\TwoControlsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UrlRewritingNet.UrlRewriter, Version=2.0.60829.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\library\UrlRewritingNet.UrlRewriter.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="adm\FileManager2.aspx.cs">
+      <DependentUpon>FileManager2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\FileManager2.aspx.designer.cs">
+      <DependentUpon>FileManager2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Website.aspx.cs">
+      <DependentUpon>Website.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Website.aspx.designer.cs">
+      <DependentUpon>Website.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\WebsiteIIS7.aspx.cs">
+      <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\WebsiteIIS7.aspx.designer.cs">
+      <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NajdiSearch.ascx.cs">
+      <DependentUpon>NajdiSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NajdiSearch.ascx.designer.cs">
+      <DependentUpon>NajdiSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NavigatePages.ascx.cs">
+      <DependentUpon>NavigatePages.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NavigatePages.ascx.designer.cs">
+      <DependentUpon>NavigatePages.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Blank.ascx.cs">
+      <DependentUpon>Blank.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\Blank.ascx.designer.cs">
+      <DependentUpon>Blank.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BreadCrumb.cs" />
+    <Compile Include="Controls\DirectoryControl.cs" />
+    <Compile Include="Controls\MenuGroup.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="OneMain.Master.cs">
+      <DependentUpon>OneMain.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OneMain.Master.designer.cs">
+      <DependentUpon>OneMain.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adm\FileManager2.aspx" />
+    <Content Include="adm\Website.aspx" />
+    <Content Include="adm\WebsiteIIS7.aspx" />
+    <Content Include="CommonModules\NajdiSearch.ascx" />
+    <Content Include="CommonModules\NavigatePages.ascx" />
+    <Content Include="Controls\Blank.ascx" />
+    <Content Include="OneMain.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminControls\CategorizationUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\CategoryEditor.ascx.cs">
+      <DependentUpon>CategoryEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\CategoryEditor.ascx.designer.cs">
+      <DependentUpon>CategoryEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\History.ascx.cs">
+      <DependentUpon>History.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\History.ascx.designer.cs">
+      <DependentUpon>History.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\TextContentControl.ascx.cs">
+      <DependentUpon>TextContentControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\TextContentControl.ascx.designer.cs">
+      <DependentUpon>TextContentControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\TreeCategorization.ascx.cs">
+      <DependentUpon>TreeCategorization.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\TreeCategorization.ascx.designer.cs">
+      <DependentUpon>TreeCategorization.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\FileManager.ascx.cs">
+      <DependentUpon>FileManager.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\FileManager.ascx.designer.cs">
+      <DependentUpon>FileManager.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\OneSettings.ascx.cs">
+      <DependentUpon>OneSettings.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\OneSettings.ascx.designer.cs">
+      <DependentUpon>OneSettings.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\Notifier.ascx.cs">
+      <DependentUpon>Notifier.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\Notifier.ascx.designer.cs">
+      <DependentUpon>Notifier.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Articles.aspx.cs">
+      <DependentUpon>Articles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Articles.aspx.designer.cs">
+      <DependentUpon>Articles.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\ContentEdit.aspx.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\ContentEdit.aspx.designer.cs">
+      <DependentUpon>ContentEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Editor.aspx.cs">
+      <DependentUpon>Editor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Editor.aspx.designer.cs">
+      <DependentUpon>Editor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\External.aspx.cs">
+      <DependentUpon>External.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\External.aspx.designer.cs">
+      <DependentUpon>External.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\FileManager.asmx.cs">
+      <DependentUpon>FileManager.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="adm\FlashBrowser.aspx.cs">
+      <DependentUpon>FlashBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\FlashBrowser.aspx.designer.cs">
+      <DependentUpon>FlashBrowser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\ImageBrowser.aspx.cs">
+      <DependentUpon>ImageBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\ImageBrowser.aspx.designer.cs">
+      <DependentUpon>ImageBrowser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Dictionary.aspx.cs">
+      <DependentUpon>Dictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Dictionary.aspx.designer.cs">
+      <DependentUpon>Dictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\FileManager.aspx.cs">
+      <DependentUpon>FileManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\FileManager.aspx.designer.cs">
+      <DependentUpon>FileManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Forms.aspx.cs">
+      <DependentUpon>Forms.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Forms.aspx.designer.cs">
+      <DependentUpon>Forms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\LinkBrowser.aspx.cs">
+      <DependentUpon>LinkBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\LinkBrowser.aspx.designer.cs">
+      <DependentUpon>LinkBrowser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Publish.aspx.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Publish.aspx.designer.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Redirects.aspx.cs">
+      <DependentUpon>Redirects.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Redirects.aspx.designer.cs">
+      <DependentUpon>Redirects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\RssFeeds.aspx.cs">
+      <DependentUpon>RssFeeds.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\RssFeeds.aspx.designer.cs">
+      <DependentUpon>RssFeeds.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\SpecialContentEdit.aspx.cs">
+      <DependentUpon>SpecialContentEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\SpecialContentEdit.aspx.designer.cs">
+      <DependentUpon>SpecialContentEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\SQLEditor.aspx.cs">
+      <DependentUpon>SQLEditor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\SQLEditor.aspx.designer.cs">
+      <DependentUpon>SQLEditor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Structure.aspx.cs">
+      <DependentUpon>Structure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Structure.aspx.designer.cs">
+      <DependentUpon>Structure.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\SubscriptionManager.aspx.cs">
+      <DependentUpon>SubscriptionManager.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\SubscriptionManager.aspx.designer.cs">
+      <DependentUpon>SubscriptionManager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx_templates\2col.aspx.cs">
+      <DependentUpon>2col.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx_templates\2col.aspx.designer.cs">
+      <DependentUpon>2col.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="aspx_templates\2col.Master.cs">
+      <DependentUpon>2col.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="aspx_templates\2col.Master.designer.cs">
+      <DependentUpon>2col.Master</DependentUpon>
+    </Compile>
+    <Compile Include="aspx_templates\TplNewsletter.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Base\OneBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Base\OneHelper.cs" />
+    <Compile Include="Base\PresentBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\Directory.ascx.cs">
+      <DependentUpon>Directory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\Directory.ascx.designer.cs">
+      <DependentUpon>Directory.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\FormSelector.ascx.cs">
+      <DependentUpon>FormSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\FormSelector.ascx.designer.cs">
+      <DependentUpon>FormSelector.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\IFrame.ascx.cs">
+      <DependentUpon>IFrame.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\IFrame.ascx.designer.cs">
+      <DependentUpon>IFrame.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\Image.ascx.cs">
+      <DependentUpon>Image.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\Image.ascx.designer.cs">
+      <DependentUpon>Image.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NewsSubscription.ascx.cs">
+      <DependentUpon>NewsSubscription.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\NewsSubscription.ascx.designer.cs">
+      <DependentUpon>NewsSubscription.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\SpecialContent.ascx.cs">
+      <DependentUpon>SpecialContent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\SpecialContent.ascx.designer.cs">
+      <DependentUpon>SpecialContent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\TextContent.ascx.cs">
+      <DependentUpon>TextContent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\TextContent.ascx.designer.cs">
+      <DependentUpon>TextContent.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\Form.ascx.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\Form.ascx.designer.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Clear.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Clear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Clear.aspx.designer.cs">
+      <DependentUpon>Clear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\MenuGroups.asmx.cs">
+      <DependentUpon>MenuGroups.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\One.asmx.cs">
+      <DependentUpon>One.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\Rss.aspx.cs">
+      <DependentUpon>Rss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utils\Rss.aspx.designer.cs">
+      <DependentUpon>Rss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\TestException.aspx.cs">
+      <DependentUpon>TestException.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utils\TestException.aspx.designer.cs">
+      <DependentUpon>TestException.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebProfile.cs" />
+    <Content Include="AdminControls\Notifier.ascx" />
+    <Content Include="Global.asax" />
+    <Content Include="JavaScript\One.js" />
+    <Content Include="Res\browsers\ch.png" />
+    <Content Include="Res\browsers\ff.png" />
+    <Content Include="Res\browsers\ie.png" />
+    <Content Include="Res\dark-bg-horiz.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Res\dark-bg.gif" />
+    <EmbeddedResource Include="Res\dark-blue-bg.gif" />
+    <EmbeddedResource Include="Res\extend-down.gif">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Res\extend-up.gif">
+    </EmbeddedResource>
+    <Content Include="Res\objava.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\objavljeno.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Utils\MenuGroups.asmx" />
+    <Content Include="Utils\One.asmx" />
+    <Content Include="Utils\TestException.aspx" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.sitemap" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adm\ContentEdit.aspx" />
+    <Content Include="adm\css\one-fm.css" />
+    <Content Include="adm\Forms.aspx" />
+    <Content Include="adm\Structure.aspx" />
+    <Content Include="CommonModules\NewsSubscription.ascx" />
+    <Content Include="CommonModules\TextContent.ascx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminControls\CategoryEditor.ascx" />
+    <Content Include="AdminControls\TreeCategorization.ascx" />
+    <Content Include="AdminControls\FileManager.ascx" />
+    <Content Include="AdminControls\OneSettings.ascx" />
+    <Content Include="adm\Dictionary.aspx" />
+    <Content Include="adm\FileManager.aspx" />
+    <Content Include="aspx_templates\2col.aspx" />
+    <Content Include="aspx_templates\2col.Master" />
+    <Content Include="Res\brisanje.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Res\edit.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adm\Articles.aspx" />
+    <Content Include="adm\ImageBrowser.aspx" />
+    <Content Include="adm\LinkBrowser.aspx" />
+    <Content Include="adm\SubscriptionManager.aspx" />
+    <Content Include="CommonModules\Directory.ascx" />
+    <Content Include="CommonModules\FormSelector.ascx" />
+    <Content Include="CommonModules\IFrame.ascx" />
+    <Content Include="CommonModules\Image.ascx" />
+    <Content Include="Res\arrow_icon.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\exclamation_icon.gif" />
+    <Content Include="Res\menu.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Res\mime_icons\ai.gif" />
+    <EmbeddedResource Include="Res\mime_icons\avi.gif" />
+    <EmbeddedResource Include="Res\mime_icons\cs.gif" />
+    <EmbeddedResource Include="Res\mime_icons\default.icon.gif" />
+    <EmbeddedResource Include="Res\mime_icons\dll.gif" />
+    <EmbeddedResource Include="Res\mime_icons\doc.gif" />
+    <EmbeddedResource Include="Res\mime_icons\exe.gif" />
+    <EmbeddedResource Include="Res\mime_icons\fla.gif" />
+    <EmbeddedResource Include="Res\mime_icons\htm.gif" />
+    <EmbeddedResource Include="Res\mime_icons\html.gif" />
+    <EmbeddedResource Include="Res\mime_icons\js.gif" />
+    <EmbeddedResource Include="Res\mime_icons\mdb.gif" />
+    <EmbeddedResource Include="Res\mime_icons\mp3.gif" />
+    <EmbeddedResource Include="Res\mime_icons\pdf.gif" />
+    <EmbeddedResource Include="Res\mime_icons\ppt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\rdp.gif" />
+    <EmbeddedResource Include="Res\mime_icons\swf.gif" />
+    <EmbeddedResource Include="Res\mime_icons\swt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\txt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\vsd.gif" />
+    <EmbeddedResource Include="Res\mime_icons\xls.gif" />
+    <EmbeddedResource Include="Res\mime_icons\xml.gif" />
+    <EmbeddedResource Include="Res\mime_icons\zip.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\ai.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\avi.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\bmp.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\cs.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\default.icon.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\dll.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\doc.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\exe.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\fla.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\gif.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\htm.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\html.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\jpg.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\js.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\mdb.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\mp3.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\pdf.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\ppt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\rdp.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\swf.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\swt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\txt.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\vsd.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\xls.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\xml.gif" />
+    <EmbeddedResource Include="Res\mime_icons\x16\zip.gif" />
+    <Content Include="Res\one_logo.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\centerContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\leftContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\leftMiniContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\rightContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\rightMiniContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adm\Editor.aspx" />
+    <Content Include="adm\External.aspx" />
+    <Content Include="adm\Publish.aspx" />
+    <Content Include="adm\RssFeeds.aspx" />
+    <Content Include="CommonModules\Form.ascx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Res\one-big-logo.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\centerLeftContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\centerRightContainer.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\placeHolders\hidden.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Res\previewBanner.png" />
+    <Content Include="Utils\Clear.aspx" />
+    <Content Include="Utils\one.css" />
+    <Content Include="Utils\Rss.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AdminControls\History.ascx" />
+    <Content Include="AdminControls\TextContentControl.ascx" />
+    <Content Include="AdminControls\toolbar_close.gif" />
+    <Content Include="adm\FileManager.asmx" />
+    <Content Include="adm\FlashBrowser.aspx" />
+    <Content Include="adm\Redirects.aspx" />
+    <Content Include="adm\SpecialContentEdit.aspx" />
+    <Content Include="adm\SQLEditor.aspx" />
+    <Content Include="App_Browsers\one.browser" />
+    <Content Include="CommonModules\SpecialContent.ascx" />
+    <Content Include="Languages\sl-SI\Resources.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\colapse.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\expand.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Res\Galleriffic.js" />
+    <Content Include="Res\log_in_screen_02.gif" />
+    <Content Include="Res\template1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\template2.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\template3.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Res\template4.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Utils\ck.js" />
+    <Content Include="Utils\default_editor.css" />
+    <EmbeddedResource Include="Res\Sql\1_database.sql.template" />
+    <EmbeddedResource Include="Res\Sql\2_tables.sql.template" />
+    <EmbeddedResource Include="Res\Sql\3_standard_inserts.sql.template" />
+    <EmbeddedResource Include="Res\Sql\4_stored_procedures.sql.template" />
+    <EmbeddedResource Include="Res\Sql\5_security.sql.template" />
+    <EmbeddedResource Include="Res\Sql\1_1_user.sql.template" />
+    <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <None Include="Properties\PublishProfiles\Disk.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AdminExtensions\" />
+    <Folder Include="adm\_images\" />
+    <Folder Include="App_GlobalResources\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

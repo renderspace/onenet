@@ -1,0 +1,20 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="2col.master.cs" Inherits="OneMainWeb.aspx_templates._col" %>
+<%@ Register TagPrefix="Controls" Namespace="OneMainWeb.Controls" Assembly="OneMainWeb" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+<title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+            <h1>2col</h1>
+        
+            <asp:ContentPlaceHolder ID="centerContainer" runat="server">
+            </asp:ContentPlaceHolder>
+        
+            <asp:ContentPlaceHolder ID="rightContainer" runat="server">
+            </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

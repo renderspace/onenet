@@ -1,0 +1,125 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OneMain.master.cs" Inherits="OneMainWeb.OneMain" %>
+<%@ Register Src="~/AdminExtensions/BambooVirtualTables.ascx" TagName="BambooVirtualTables" TagPrefix="uc1" %>
+<%@ Import namespace="One.Net.BLL" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title></title>
+    <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" title="one default" />
+    
+	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/JavaScript/one.js"></script>
+	
+	<script type="text/javascript">
+
+	    if (window.CKEDITOR) {
+	        (function() {
+	            var showCompatibilityMsg = function() {
+	                var env = CKEDITOR.env;
+
+	                var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
+
+	                var browsers =
+			{
+			    gecko: 'Firefox 2.0',
+			    ie: 'Internet Explorer 6.0',
+			    opera: 'Opera 9.5',
+			    webkit: 'Safari 3.0'
+			};
+
+	                var alsoBrowsers = '';
+
+	                for (var key in env) {
+	                    if (browsers[key]) {
+	                        if (env[key])
+	                            html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
+	                        else
+	                            alsoBrowsers += browsers[key] + '+, ';
+	                    }
+	                }
+
+	                alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
+
+	                html += ' It is also compatible with ' + alsoBrowsers + '.';
+
+	                html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
+
+	                var alertsEl = document.getElementById('alerts');
+	                alertsEl && (alertsEl.innerHTML = html);
+	            };
+
+	            var onload = function() {
+	                // Show a friendly compatibility message as soon as the page is loaded,
+	                // for those browsers that are not compatible with CKEditor.
+	                if (!CKEDITOR.env.isCompatible)
+	                    showCompatibilityMsg();
+	            };
+
+	            // Register the onload listener.
+	            if (window.addEventListener)
+	                window.addEventListener('load', onload, false);
+	            else if (window.attachEvent)
+	                window.attachEvent('onload', onload);
+	        })();
+	    }
+	
+	</script>
+	<style type="text/css">
+    	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
+    	.browser-logos { padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="head">
+            <div>
+                <div class="LoginName">
+                    <img src="../res/one_logo.gif" alt="One.NET" style="float: left;" />
+                    <div class="leftpart">
+                        <span class="help"><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false"></asp:Hyperlink></span>
+                        <span class="version"><asp:Literal ID="LiteralAppVersion" runat="server" EnableViewState="false"></asp:Literal></span>
+                        <strong><asp:LoginName ID="LoginName1" runat="server" /></strong> 
+                        <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="RedirectToLoginPage" />
+                    </div>
+                    </div>
+                    <div class="headSelect">
+                        <asp:DropDownList CssClass="headSelect" runat="server" ID="DropDownListWebSiteCombined" AutoPostBack="true" OnSelectedIndexChanged="DropDownListWebSiteCombined_SelectedIndexChanged"></asp:DropDownList>
+                        <asp:Label runat="server" ID="LabelWebSiteDescription" Visible="false"></asp:Label>
+                    </div>
+            </div>
+        </div>
+   <div class="all">
+       <div class="left-col">
+            <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" BackColor="White" ForeColor="Black" ItemWrap="True" StaticDisplayLevels="3" StaticSubMenuIndent="8px" Width="170px" IncludeStyleBlock="false">
+                <LevelSelectedStyles>
+                    <asp:MenuItemStyle Font-Underline="False" />
+                    <asp:MenuItemStyle Font-Underline="False" />
+                    <asp:MenuItemStyle BackColor="#E3E2DA" Font-Underline="False" />
+                </LevelSelectedStyles>
+                <StaticMenuStyle Height="30px" />
+                <LevelMenuItemStyles>
+                    <asp:MenuItemStyle Font-Underline="False" />
+                    <asp:MenuItemStyle Font-Underline="False" />
+                    <asp:MenuItemStyle BackColor="#C3CED8" Font-Underline="False" />
+                </LevelMenuItemStyles>
+                <StaticMenuItemStyle Height="25px" />
+                <DynamicHoverStyle BackColor="#68849E" />
+                <DynamicMenuStyle Height="20px" />
+                <DynamicSelectedStyle BackColor="#E3E2DA" />
+                <DynamicMenuItemStyle Height="20px" />
+            </asp:Menu>
+            <uc1:BambooVirtualTables ID="BambooVirtualTables1" runat="server"></uc1:BambooVirtualTables>
+            <div style="margin-top: 20px; margin-left: 10px;">
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
+            </div>
+        </div>
+        <div class="right-col">
+            <asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
+        </div>
+        <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" />
+    </div>
+    </form>
+</body>
+</html>
