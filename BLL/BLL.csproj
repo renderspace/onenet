@@ -188,8 +188,8 @@
     <Compile Include="WebControls\InputWithButton.cs" />
     <Compile Include="WebControls\LabeledCheckBox.cs" />
     <Compile Include="WebControls\ModalPanel.cs" />
+    <Compile Include="WebControls\Pager.cs" />
     <Compile Include="WebControls\PostbackPager.cs" />
-    <Compile Include="WebControls\ProgressBar.cs" />
     <Compile Include="WebControls\TabularMultiView.cs" />
     <Compile Include="WebControls\TabularView.cs" />
     <Compile Include="WebControls\ValidInput.cs" />
