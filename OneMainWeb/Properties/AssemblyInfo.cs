@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Renderspace d.o.o.")]
 [assembly: AssemblyProduct("One.NET MainWeb")]
-[assembly: AssemblyCopyright("Copyright © Renderspace d.o.o. 2010")]
+[assembly: AssemblyCopyright("Copyright © Renderspace d.o.o. 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,8 +31,8 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.2")]
-[assembly: AssemblyFileVersion("2.2")]
+[assembly: AssemblyVersion("2.5")]
+[assembly: AssemblyFileVersion("2.5")]
 
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.dark-bg-horiz.gif", "image/gif")]
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.dark-bg.gif", "image/gif")]

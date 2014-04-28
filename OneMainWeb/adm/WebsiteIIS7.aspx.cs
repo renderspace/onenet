@@ -28,7 +28,7 @@ using System.Text.RegularExpressions;
 
 namespace OneMainWeb.adm
 {
-    public partial class WebsiteIIS7 : System.Web.UI.Page
+    public partial class WebsiteIIS7 : OneBasePage
     {
         protected static readonly ILog log = LogManager.GetLogger(typeof(WebsiteIIS7));
 

@@ -69,10 +69,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\library\Microsoft.Web.Administration.dll</HintPath>
     </Reference>
-    <Reference Include="MsSqlDBUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\library\MsSqlDBUtility\bin\Release\MsSqlDBUtility.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -185,6 +181,27 @@
     <Compile Include="adm\WebsiteIIS7.aspx.designer.cs">
       <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\ArticleList.ascx.cs">
+      <DependentUpon>ArticleList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\ArticleList.ascx.designer.cs">
+      <DependentUpon>ArticleList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\ArticleSingle.ascx.cs">
+      <DependentUpon>ArticleSingle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\ArticleSingle.ascx.designer.cs">
+      <DependentUpon>ArticleSingle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\CustomWidget.ascx.cs">
+      <DependentUpon>CustomWidget.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\CustomWidget.ascx.designer.cs">
+      <DependentUpon>CustomWidget.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\NajdiSearch.ascx.cs">
       <DependentUpon>NajdiSearch.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -198,6 +215,13 @@
     </Compile>
     <Compile Include="CommonModules\NavigatePages.ascx.designer.cs">
       <DependentUpon>NavigatePages.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\VirtualTable.ascx.cs">
+      <DependentUpon>VirtualTable.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\VirtualTable.ascx.designer.cs">
+      <DependentUpon>VirtualTable.ascx</DependentUpon>
     </Compile>
     <Compile Include="Controls\Blank.ascx.cs">
       <DependentUpon>Blank.ascx</DependentUpon>
@@ -232,8 +256,12 @@
     <Content Include="adm\ScaffoldConfig.aspx" />
     <Content Include="adm\Website.aspx" />
     <Content Include="adm\WebsiteIIS7.aspx" />
+    <Content Include="CommonModules\ArticleList.ascx" />
+    <Content Include="CommonModules\ArticleSingle.ascx" />
+    <Content Include="CommonModules\CustomWidget.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
+    <Content Include="CommonModules\VirtualTable.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
@@ -721,6 +749,7 @@
     <EmbeddedResource Include="Res\Sql\5_security.sql.template" />
     <EmbeddedResource Include="Res\Sql\1_1_user.sql.template" />
     <Content Include="packages.config" />
+    <Content Include="adm\web.config" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Properties\PublishProfiles\Disk.pubxml" />
   </ItemGroup>
@@ -741,6 +770,10 @@
     <Folder Include="App_GlobalResources\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\library\MsSqlDBUtility\MsSqlDBUtility.csproj">
+      <Project>{68a5f1dd-6364-44e2-8cbf-d29985bbe2e8}</Project>
+      <Name>MsSqlDBUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{3ec05cc8-a433-482a-86e3-aa01f9519a01}</Project>
       <Name>BLL</Name>
