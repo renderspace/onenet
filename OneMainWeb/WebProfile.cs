@@ -115,15 +115,6 @@ namespace OneMainWeb {
             }
         }
         
-        public virtual bool EnableDelete {
-            get {
-                return ((bool)(this.GetPropertyValue("EnableDelete")));
-            }
-            set {
-                this.SetPropertyValue("EnableDelete", value);
-            }
-        }
-        
         public virtual bool UseFCK {
             get {
                 return ((bool)(this.GetPropertyValue("UseFCK")));

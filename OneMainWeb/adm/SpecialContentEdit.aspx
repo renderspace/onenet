@@ -1,5 +1,5 @@
 ﻿<%@ Page ValidateRequest="false"  Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SpecialContentEdit.aspx.cs" Inherits="OneMainWeb.adm.SpecialContentEdit" Title="$special_content"  %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Import Namespace="One.Net.BLL"%>

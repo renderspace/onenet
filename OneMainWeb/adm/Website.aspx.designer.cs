@@ -28,7 +28,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// TabularView1 control.
@@ -37,7 +37,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView TabularView1;
+        protected global::One.Net.BLL.WebControls.TabularView TabularView1;
         
         /// <summary>
         /// GridViewWebsites control.
@@ -55,7 +55,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputTitle;
+        protected global::One.Net.BLL.WebControls.Input InputTitle;
         
         /// <summary>
         /// LabelLanguage control.
@@ -91,7 +91,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView TabularView2;
+        protected global::One.Net.BLL.WebControls.TabularView TabularView2;
         
         /// <summary>
         /// treeHolder control.
@@ -145,7 +145,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView TabularView3;
+        protected global::One.Net.BLL.WebControls.TabularView TabularView3;
         
         /// <summary>
         /// treeHolder2 control.
@@ -172,7 +172,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel InfoLabelPageName;
+        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelPageName;
         
         /// <summary>
         /// InfoLabelPageId control.
@@ -181,7 +181,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel InfoLabelPageId;
+        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelPageId;
         
         /// <summary>
         /// ButtonDelete control.

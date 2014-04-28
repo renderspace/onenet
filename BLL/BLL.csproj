@@ -63,6 +63,9 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UrlRewritingNet.UrlRewriter">
+      <HintPath>..\packages\UrlRewritingNet.2.0.6.1\lib\UrlRewritingNet.UrlRewriter.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\BArticle.cs" />
@@ -99,7 +102,6 @@
     <Compile Include="Model\BOForm.cs" />
     <Compile Include="Model\BOInternalContent.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOIntCont.cs" />
-    <Compile Include="Model\BOInternalContentStructures\BOIntContFlash.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOIntContImage.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOImageTemplate.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOIntContLink.cs" />
@@ -156,6 +158,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publisher.cs" />
     <Compile Include="RSSProviderSQL.cs" />
+    <Compile Include="Scaffold\DAL\DbHelper.cs" />
+    <Compile Include="Scaffold\Data.cs" />
+    <Compile Include="Scaffold\Model\EditableItem.cs" />
+    <Compile Include="Scaffold\Model\Relation.cs" />
+    <Compile Include="Scaffold\Model\VirtualColumn.cs" />
+    <Compile Include="Scaffold\Model\VirtualTable.cs" />
+    <Compile Include="Scaffold\PhysicalSchema.cs" />
+    <Compile Include="Scaffold\Schema.cs" />
     <Compile Include="Service\FormService.cs" />
     <Compile Include="Service\IFormService.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />
@@ -166,14 +176,41 @@
     <Compile Include="Utility\OContext.cs" />
     <Compile Include="Utility\ResourceManager.cs" />
     <Compile Include="Utility\StringTool.cs" />
+    <Compile Include="Utility\UrlBuilder.cs" />
     <Compile Include="Utility\XHTMLValidator.cs" />
     <Compile Include="WebConfig\RssConfiguration.cs" />
     <Compile Include="WebConfig\RssConfigProvider.cs" />
     <Compile Include="WebConfig\RssConfigProviderCollection.cs" />
+    <Compile Include="WebControls\CleanDropDownList.cs" />
+    <Compile Include="WebControls\DateEntry.cs" />
+    <Compile Include="WebControls\InfoLabel.cs" />
+    <Compile Include="WebControls\Input.cs" />
+    <Compile Include="WebControls\InputWithButton.cs" />
+    <Compile Include="WebControls\LabeledCheckBox.cs" />
+    <Compile Include="WebControls\ModalPanel.cs" />
+    <Compile Include="WebControls\PostbackPager.cs" />
+    <Compile Include="WebControls\ProgressBar.cs" />
+    <Compile Include="WebControls\TabularMultiView.cs" />
+    <Compile Include="WebControls\TabularView.cs" />
+    <Compile Include="WebControls\ValidInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\codeplex_one_cron\trunk\One.Cron.API\One.Cron.API.csproj">
+      <Project>{97484946-3aef-46a8-ad6e-036458d9fe6e}</Project>
+      <Name>One.Cron.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\library\MsSqlDBUtility\MsSqlDBUtility.csproj">
+      <Project>{68a5f1dd-6364-44e2-8cbf-d29985bbe2e8}</Project>
+      <Name>MsSqlDBUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scaffold\DAL\Scaffold.sql" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

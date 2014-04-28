@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="History.ascx.cs" Inherits="OneMainWeb.AdminControls.History" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 
 <asp:PlaceHolder id="PlaceHolderHistory" runat="server">
     <div class="instanceAllSettings">

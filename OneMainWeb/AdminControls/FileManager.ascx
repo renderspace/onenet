@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="one" TagName="TreeCategorization" Src="~/AdminControls/TreeCategorization.ascx" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="one" TagName="CategoryEditor" Src="~/AdminControls/CategoryEditor.ascx" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="TextContentControl.ascx" %>
 <%@ Import Namespace="One.Net.BLL" %>
 <one:Notifier runat="server" ID="Notifier1" />

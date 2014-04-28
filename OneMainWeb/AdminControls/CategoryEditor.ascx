@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CategoryEditor.ascx.cs" Inherits="OneMainWeb.AdminControls.CategoryEditor" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="TextContentControl.ascx" %>
 
 <one:TextContentControl ID="txtCategory" runat="server" />

@@ -12,9 +12,10 @@ using System.Web.UI.HtmlControls;
 
 using System.ComponentModel;
 
-using TwoControlsLibrary;
+
 using One.Net.BLL;
 using DropDownList=System.Web.UI.WebControls.DropDownList;
+using One.Net.BLL.WebControls;
 
 
 namespace OneMainWeb.AdminControls

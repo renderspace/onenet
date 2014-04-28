@@ -126,7 +126,7 @@ namespace OneMainWeb.AdminControls
                         List<ICategorizable> items = ListCategorizedItems(category.Id.Value);
                         cmdDeleteNode.Visible = category.ChildCount == 0 && items.Count == 0;
 
-                        cmdDeleteNode.Enabled = EnableDelete;
+                        cmdDeleteNode.Enabled = true;
 
                         if (ShowCategorizedItemsGrid)
                         {

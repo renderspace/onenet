@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using One.Net.BLL;
 using System.Threading;
-using TwoControlsLibrary;
+using One.Net.BLL.WebControls;
 
 
 namespace OneMainWeb
@@ -23,9 +23,7 @@ namespace OneMainWeb
                 tabMultiview.Views[0].Selectable = true;
                 tabMultiview.Views[1].Selectable = true;
                 tabMultiview.Views[2].Selectable = true;
-                tabMultiview.Views[3].Selectable = true;
-                tabMultiview.Views[4].Selectable = true;
-
+                
                 tabMultiview.SetActiveIndex(0);
             }
         }
@@ -45,10 +43,6 @@ namespace OneMainWeb
                 articleGridView.DataBind();
             }
             else if (((MultiView)sender).ActiveViewIndex == 3)
-            {
-                eventGridView.DataBind();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 4)
             {
                 publisherGridview.DataBind();
             }
@@ -122,79 +116,6 @@ namespace OneMainWeb
                     break;
             }
         }
-
-        protected void commentGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            string command = e.CommandName;
-
-            switch (command)
-            {
-                case "Schedule":
-                    int ei = Int32.Parse(e.CommandArgument.ToString());
-                    commentGridView.EditIndex = ei;
-                    break;
-                case "Save":
-                    int arg = Int32.Parse(e.CommandArgument.ToString());
-                    DateEntry txtScheduledAt = commentGridView.Rows[arg].FindControl("txtScheduledAt") as DateEntry;
-                    Literal litCommentId1 = commentGridView.Rows[arg].FindControl("litCommentId1") as Literal;
-
-                    if (txtScheduledAt != null && litCommentId1 != null)
-                    {
-                        BOPublisherData data = new BOPublisherData();
-                        data.ScheduledAt = txtScheduledAt.SelectedDate;
-                        data.PublishedAt = null;
-                        data.SubSystem = BOPublisherData.COMMENT_SUBSYSTEM;
-                        data.FkId = Int32.Parse(litCommentId1.Text);
-                        publisherB.Change(data);
-                        Notifier1.Message = ResourceManager.GetString("$comment_scheduled_for_publishing");
-                        commentGridView.EditIndex = -1;
-                    }
-                    break;
-                case "Cancel":
-                    commentGridView.EditIndex = -1;
-                    break;
-            }
-        }
-
-
-
-        protected void eventGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            string command = e.CommandName;
-            switch (command)
-            {
-                case "Schedule":
-                    int ei = Int32.Parse(e.CommandArgument.ToString());
-                    eventGridView.EditIndex = ei;
-                    break;
-                case "Save":
-                    int arg = Int32.Parse(e.CommandArgument.ToString());
-                    DateEntry txtScheduledAt = eventGridView.Rows[arg].FindControl("txtScheduledAt") as DateEntry;
-                    Literal litEventId1 = eventGridView.Rows[arg].FindControl("litEventId1") as Literal;
-
-                    if (txtScheduledAt != null && litEventId1 != null)
-                    {
-                        BOPublisherData data = new BOPublisherData();
-                        data.ScheduledAt = txtScheduledAt.SelectedDate;
-                        data.PublishedAt = null;
-                        data.SubSystem = BOPublisherData.EVENT_SUBSYSTEM;
-                        data.FkId = Int32.Parse(litEventId1.Text);
-                        publisherB.Change(data);
-                        Notifier1.Message = ResourceManager.GetString("$event_scheduled_for_publishing");
-                        eventGridView.EditIndex = -1;
-                    }
-                    break;
-                case "Cancel":
-                    eventGridView.EditIndex = -1;
-                    break;
-            }
-        }
-
-
-
-
-
-
 
         protected void ObjectDataSourceArticleList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
@@ -338,6 +259,8 @@ namespace OneMainWeb
         }
     }
 
+    
+
 
     [Serializable]
     public class UnpublishedArticleDataSource
@@ -374,6 +297,7 @@ namespace OneMainWeb
             return pages;
         }
     }
+
 
     [Serializable]
     public class PublisherDataSource

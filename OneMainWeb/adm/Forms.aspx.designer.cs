@@ -37,7 +37,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// tabListForms control.
@@ -46,7 +46,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListForms;
+        protected global::One.Net.BLL.WebControls.TabularView tabListForms;
         
         /// <summary>
         /// cmdShowAddForm control.
@@ -82,7 +82,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView singleFormTab;
+        protected global::One.Net.BLL.WebControls.TabularView singleFormTab;
         
         /// <summary>
         /// plhAddForm control.
@@ -100,7 +100,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtAddForm;
+        protected global::One.Net.BLL.WebControls.Input txtAddForm;
         
         /// <summary>
         /// cmdAddForm control.
@@ -127,7 +127,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtAddSection;
+        protected global::One.Net.BLL.WebControls.Input txtAddSection;
         
         /// <summary>
         /// cmdAddSection control.
@@ -154,7 +154,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtAddQuestion;
+        protected global::One.Net.BLL.WebControls.Input txtAddQuestion;
         
         /// <summary>
         /// cmdAddQuestion control.
@@ -190,7 +190,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtFormName;
+        protected global::One.Net.BLL.WebControls.Input txtFormName;
         
         /// <summary>
         /// InputFormPrivateName control.
@@ -199,7 +199,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputFormPrivateName;
+        protected global::One.Net.BLL.WebControls.Input InputFormPrivateName;
         
         /// <summary>
         /// txtFormThankYouNote control.
@@ -208,7 +208,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtFormThankYouNote;
+        protected global::One.Net.BLL.WebControls.Input txtFormThankYouNote;
         
         /// <summary>
         /// txtFormDescription control.
@@ -217,7 +217,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtFormDescription;
+        protected global::One.Net.BLL.WebControls.Input txtFormDescription;
         
         /// <summary>
         /// lblFormTypes control.
@@ -280,7 +280,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkAllowMultipleSubmissions;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowMultipleSubmissions;
         
         /// <summary>
         /// chkAllowModifyInSubmission control.
@@ -289,7 +289,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkAllowModifyInSubmission;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowModifyInSubmission;
         
         /// <summary>
         /// txtSendTo control.
@@ -298,7 +298,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.ValidInput txtSendTo;
+        protected global::One.Net.BLL.WebControls.ValidInput txtSendTo;
         
         /// <summary>
         /// InputCompletionRedirect control.
@@ -307,7 +307,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputCompletionRedirect;
+        protected global::One.Net.BLL.WebControls.Input InputCompletionRedirect;
         
         /// <summary>
         /// cmdUpdateForm control.
@@ -334,7 +334,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtSectionName;
+        protected global::One.Net.BLL.WebControls.Input txtSectionName;
         
         /// <summary>
         /// InputSectionDescription control.
@@ -343,7 +343,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputSectionDescription;
+        protected global::One.Net.BLL.WebControls.Input InputSectionDescription;
         
         /// <summary>
         /// InputSectionOnClientClick control.
@@ -352,7 +352,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputSectionOnClientClick;
+        protected global::One.Net.BLL.WebControls.Input InputSectionOnClientClick;
         
         /// <summary>
         /// cmdUpdateSection control.
@@ -397,7 +397,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtQuestionText;
+        protected global::One.Net.BLL.WebControls.Input txtQuestionText;
         
         /// <summary>
         /// txtQuestionDescription control.
@@ -406,7 +406,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtQuestionDescription;
+        protected global::One.Net.BLL.WebControls.Input txtQuestionDescription;
         
         /// <summary>
         /// chkAnswerIsRequired control.
@@ -415,7 +415,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkAnswerIsRequired;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAnswerIsRequired;
         
         /// <summary>
         /// divFrontEndQuestionTypes control.
@@ -460,7 +460,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.ValidInput txtNumberOfRows;
+        protected global::One.Net.BLL.WebControls.ValidInput txtNumberOfRows;
         
         /// <summary>
         /// txtMaxChars control.
@@ -469,7 +469,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.ValidInput txtMaxChars;
+        protected global::One.Net.BLL.WebControls.ValidInput txtMaxChars;
         
         /// <summary>
         /// txtMaximumFileSize control.
@@ -478,7 +478,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.ValidInput txtMaximumFileSize;
+        protected global::One.Net.BLL.WebControls.ValidInput txtMaximumFileSize;
         
         /// <summary>
         /// divAllowedMimeTypes control.
@@ -541,7 +541,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkAllowBlankAnswersInMenu;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowBlankAnswersInMenu;
         
         /// <summary>
         /// chkFirstAnswerIsFake control.
@@ -550,7 +550,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkFirstAnswerIsFake;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkFirstAnswerIsFake;
         
         /// <summary>
         /// txtAnswers control.
@@ -559,7 +559,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtAnswers;
+        protected global::One.Net.BLL.WebControls.Input txtAnswers;
         
         /// <summary>
         /// cmdDeleteQuestion control.
@@ -631,7 +631,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView formAggregateResultsTab;
+        protected global::One.Net.BLL.WebControls.TabularView formAggregateResultsTab;
         
         /// <summary>
         /// cmdExportAggregate control.
@@ -649,7 +649,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblFormTitle;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblFormTitle;
         
         /// <summary>
         /// lblFormType control.
@@ -658,7 +658,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblFormType;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblFormType;
         
         /// <summary>
         /// lblFormSubmissionCount control.
@@ -667,7 +667,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblFormSubmissionCount;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblFormSubmissionCount;
         
         /// <summary>
         /// lblFirstFormSubmissionDate control.
@@ -676,7 +676,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblFirstFormSubmissionDate;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblFirstFormSubmissionDate;
         
         /// <summary>
         /// lblLastFormSubmissionDate control.
@@ -685,7 +685,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblLastFormSubmissionDate;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblLastFormSubmissionDate;
         
         /// <summary>
         /// rptAggregateSections control.
@@ -703,7 +703,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabOverallTrends;
+        protected global::One.Net.BLL.WebControls.TabularView tabOverallTrends;
         
         /// <summary>
         /// cmdExportTrends control.
@@ -748,7 +748,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabAllResults;
+        protected global::One.Net.BLL.WebControls.TabularView tabAllResults;
         
         /// <summary>
         /// cmdExportAll control.
@@ -766,7 +766,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllFormId;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormId;
         
         /// <summary>
         /// lblAllFormTitle control.
@@ -775,7 +775,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllFormTitle;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormTitle;
         
         /// <summary>
         /// lblAllFormType control.
@@ -784,7 +784,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllFormType;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormType;
         
         /// <summary>
         /// lblAllSubmissionCount control.
@@ -793,7 +793,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllSubmissionCount;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllSubmissionCount;
         
         /// <summary>
         /// lblAllFirstSubmissionDate control.
@@ -802,7 +802,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllFirstSubmissionDate;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFirstSubmissionDate;
         
         /// <summary>
         /// lblAllLastSubmissionDate control.
@@ -811,7 +811,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblAllLastSubmissionDate;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblAllLastSubmissionDate;
         
         /// <summary>
         /// submissionGridView control.
@@ -838,7 +838,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabSingleSubmission;
+        protected global::One.Net.BLL.WebControls.TabularView tabSingleSubmission;
         
         /// <summary>
         /// lblSingleFormTitle control.
@@ -847,7 +847,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblSingleFormTitle;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleFormTitle;
         
         /// <summary>
         /// lblSingleFormType control.
@@ -856,7 +856,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblSingleFormType;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleFormType;
         
         /// <summary>
         /// lblSingleSubmissionId control.
@@ -865,7 +865,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblSingleSubmissionId;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleSubmissionId;
         
         /// <summary>
         /// lblSingleSubmissionFinished control.
@@ -874,7 +874,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblSingleSubmissionFinished;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleSubmissionFinished;
         
         /// <summary>
         /// rptSSSections control.

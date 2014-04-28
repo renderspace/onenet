@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using TwoControlsLibrary;
+
 using One.Net.BLL;
 
 using One.Net.BLL.Web;
@@ -77,9 +77,6 @@ namespace OneMainWeb.CommonModules
                     if (o is BOImageTemplate)
                         textContentModel.ImageTemplate = (BOImageTemplate) o;
                 }
-
-                if (textContentModel.RequiredSWFObject)
-                    SwfObject.RegisterSwfObjectJavascript(this.Page, typeof(SwfObject));
             }
             base.OnLoad(e);
         }

@@ -13,9 +13,10 @@ using System.Web.UI.HtmlControls;
 using System.Web.Profile;
 using System.Globalization;
 using System.Threading;
-using TwoControlsLibrary;
+
 using One.Net.BLL;
 using System.Net;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb
 {
@@ -204,9 +205,9 @@ namespace OneMainWeb
                 }
             }
 
-            BambooVirtualTables1.Visible = false;
-            if (Page.User.IsInRole("BambooVirtualTables") || Page.User.IsInRole("admin"))
-                BambooVirtualTables1.Visible = true;
+            VirtualTableList1.Visible = false;
+            if (Page.User.IsInRole("ScaffoldVirtualTables") || Page.User.IsInRole("admin"))
+                VirtualTableList1.Visible = true;
         }
         
         private void CheckWebSiteRole()

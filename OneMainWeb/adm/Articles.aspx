@@ -1,5 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Articles.aspx.cs" Inherits="OneMainWeb.Articles" Title="$articles" ValidateRequest="false" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>
 <%@ Register Src="~/AdminControls/History.ascx" TagName="History" TagPrefix="uc1" %>
@@ -12,7 +12,6 @@
 		<asp:checkbox id="chkAutoPublish" OnCheckedChanged="chkAutoPublish_CheckedChanged" AutoPostBack="true" Runat="server" Text="$autopublish_label" />
 		<asp:checkbox id="chkUseFck" OnCheckedChanged="chkUseFck_CheckedChanged" AutoPostBack="true" Runat="server" Text="$usefck_label" />		
 		<asp:checkbox id="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		
-		<asp:checkbox id="chkEnableDelete" AutoPostBack="true" Runat="server" text="$enable_delete" OnCheckedChanged="chkEnableDelete_CheckedChanged" />
 	</div>
 
 	<two:TabularMultiView ID="tabMultiview" runat="server" OnViewIndexChanged="tabMultiview_OnViewIndexChanged">

@@ -29,7 +29,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// tabListSubscriptions control.
@@ -38,7 +38,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListSubscriptions;
+        protected global::One.Net.BLL.WebControls.TabularView tabListSubscriptions;
         
         /// <summary>
         /// plhNewsletterList control.
@@ -128,7 +128,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtCSV;
+        protected global::One.Net.BLL.WebControls.Input txtCSV;
         
         /// <summary>
         /// plhSubscriptions control.
@@ -164,7 +164,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabMaintenance;
+        protected global::One.Net.BLL.WebControls.TabularView tabMaintenance;
         
         /// <summary>
         /// Label1 control.
@@ -191,7 +191,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.ValidInput txtBackFromDays;
+        protected global::One.Net.BLL.WebControls.ValidInput txtBackFromDays;
         
         /// <summary>
         /// cmdDeleteUnconfirmedSubscriptions control.
@@ -227,7 +227,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabImport;
+        protected global::One.Net.BLL.WebControls.TabularView tabImport;
         
         /// <summary>
         /// LabelNewsletters control.
@@ -254,7 +254,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputEmails;
+        protected global::One.Net.BLL.WebControls.Input InputEmails;
         
         /// <summary>
         /// CmdImport control.

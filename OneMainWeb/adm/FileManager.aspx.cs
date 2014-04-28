@@ -18,9 +18,7 @@ namespace OneMainWeb
             if (!IsPostBack)
             {
                 chkExpandTree.Checked = ExpandTree;
-                CheckBoxEnableDelete.Checked = EnableDelete;
                 filemng2.ExpandTree = ExpandTree;
-                filemng2.EnableDelete = EnableDelete;
             }
         }
 
@@ -29,14 +27,6 @@ namespace OneMainWeb
             ExpandTree = chkExpandTree.Checked;
             filemng2.ExpandTree = ExpandTree;
             filemng2.LoadControls();
-        }
-
-        protected void ChkEnableDelete_CheckedChanged(object seneder, EventArgs e)
-        {
-            EnableDelete = CheckBoxEnableDelete.Checked;
-            filemng2.EnableDelete = EnableDelete;
-            filemng2.LoadControls();
-            filemng2.fileGrid_ForceDataBind();
         }
     }
 }

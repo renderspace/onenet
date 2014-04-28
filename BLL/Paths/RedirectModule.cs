@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using log4net;
 using System.Web;
-using TwoControlsLibrary;
+using One.Net.BLL.Utility;
 
 namespace One.Net.BLL
 {

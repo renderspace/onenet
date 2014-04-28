@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Form.ascx.cs" Inherits="OneMainWeb.CommonModules.Form" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL.Forms" %>
 
@@ -14,17 +14,6 @@
     <asp:Repeater ID="rptPollResults" runat="server" OnItemDataBound="rptPollResults_ItemDataBound">
         <ItemTemplate>
             <div class="question"><span><%# Eval("Question.Title") %></span></div>
-            <asp:Repeater ID="rptPollSubmittedAnswers" runat="server" OnItemDataBound="rptPollSubmittedAnswers_ItemDataBound">
-                <ItemTemplate>
-                    <div class="singlePollAnswer">
-				        <div class="answer"><%# DataBinder.Eval(Container.DataItem, "Answer.Title") %></div>	
-				        <div class="percentage">									
-					        <two:ProgressBar id="progressBar" runat="server" />	
-					        <asp:Label runat="server" ID="LabelPercentage"></asp:Label>
-				        </div>
-				    </div>
-                </ItemTemplate>
-            </asp:Repeater>
         </ItemTemplate>
     </asp:Repeater>
         

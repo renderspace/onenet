@@ -13,8 +13,9 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Threading;
 using System.Reflection;
-using TwoControlsLibrary;
+
 using One.Net.BLL;
+using One.Net.BLL.WebControls;
 
 namespace OneMainWeb.AdminControls
 {
@@ -26,20 +27,12 @@ namespace OneMainWeb.AdminControls
         private bool showSelectLink;
         private string filterExtensions;
         private string containerControlType;
-        private bool enableDelete;
 
         [Bindable(false), Category("Behaviour"), DefaultValue("")]
         public bool ExpandTree
         {
             get { return expandTree; }
             set { expandTree = value; }
-        }
-
-        [Bindable(false), Category("Behaviour"), DefaultValue("")]
-        public bool EnableDelete
-        {
-            get { return enableDelete; }
-            set { enableDelete = value; }
         }
 
         [Bindable(false), Category("Behaviour"), DefaultValue("")]
@@ -87,7 +80,7 @@ namespace OneMainWeb.AdminControls
         {
             SelectedFileIdForMove = -1;
 
-            CmdRecursiveDelete.Enabled = EnableDelete;
+            CmdRecursiveDelete.Enabled = true;
             categorization.ExpandTree = ExpandTree;
 
             categorization.CategoryType = BOFile.FOLDER_CATEGORIZATION_TYPE;
@@ -102,7 +95,6 @@ namespace OneMainWeb.AdminControls
             categoryEditor.ListCategorizedItems = helper.ListCategorizable;
             categoryEditor.ListCategories = fileB.ListFolders;
             categoryEditor.MoveCategory = fileB.MoveFolder;
-            categoryEditor.EnableDelete = EnableDelete;
 
             categorization.LoadControls();
             categoryEditor.SelectedCategory = categorization.SelectedCategory;
@@ -128,10 +120,9 @@ namespace OneMainWeb.AdminControls
         public void LoadControls()
         {
             categorization.ExpandTree = ExpandTree;
-            CmdRecursiveDelete.Enabled = EnableDelete;
+            CmdRecursiveDelete.Enabled = true;
             categorization.LoadControls();
             categorization.TreeDataBind();
-            categoryEditor.EnableDelete = EnableDelete;
             categoryEditor.LoadControls();
         }
 
@@ -501,7 +492,7 @@ namespace OneMainWeb.AdminControls
                     if (fileB.ListFileUses(selectedFile.Id.Value).Count > 0)
                         cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_file_is_linked_confirm_delete") + @"');";
 
-                    cmdDelete.Enabled = EnableDelete;
+                    cmdDelete.Enabled = true;
 
                     Literal litSelectButton = e.Row.Cells[3].FindControl("litSelectButton") as Literal;
                     if (litSelectButton != null)
@@ -578,13 +569,12 @@ namespace OneMainWeb.AdminControls
 
         protected override object SaveControlState()
         {
-            object[] cSThis = new object[6];
+            object[] cSThis = new object[5];
             cSThis[0] = base.SaveControlState();
             cSThis[1] = showSelectLink;
             cSThis[2] = containerControlType;
             cSThis[3] = filterExtensions;
             cSThis[4] = expandTree;
-            cSThis[5] = enableDelete;
             return cSThis;
         }
 
@@ -596,7 +586,6 @@ namespace OneMainWeb.AdminControls
             containerControlType = (string)cSThis[2];
             filterExtensions = (string)cSThis[3];
             expandTree = (bool)cSThis[4];
-            enableDelete = (bool)cSThis[5];
             base.LoadControlState(cSBase);
         }
 

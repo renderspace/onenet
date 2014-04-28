@@ -28,7 +28,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// tabListArticles control.
@@ -37,7 +37,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListArticles;
+        protected global::One.Net.BLL.WebControls.TabularView tabListArticles;
         
         /// <summary>
         /// articleGridView control.
@@ -73,7 +73,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListPages;
+        protected global::One.Net.BLL.WebControls.TabularView tabListPages;
         
         /// <summary>
         /// pageGridView control.
@@ -103,85 +103,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Button PublishPagesButton;
         
         /// <summary>
-        /// tabCommentList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabCommentList;
-        
-        /// <summary>
-        /// commentGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView commentGridView;
-        
-        /// <summary>
-        /// ObjectDataSourceCommentList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceCommentList;
-        
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// tabEventList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabEventList;
-        
-        /// <summary>
-        /// eventGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView eventGridView;
-        
-        /// <summary>
-        /// ObjectDataSourceEventList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceEventList;
-        
-        /// <summary>
-        /// PublishEventsButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PublishEventsButton;
-        
-        /// <summary>
         /// tabPublisher control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabPublisher;
+        protected global::One.Net.BLL.WebControls.TabularView tabPublisher;
         
         /// <summary>
         /// chkPublished control.
@@ -190,7 +118,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.LabeledCheckBox chkPublished;
+        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkPublished;
         
         /// <summary>
         /// cmdDisplay control.
