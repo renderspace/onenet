@@ -1,0 +1,147 @@
+/* charset "utf-8"; */
+/* CSS Document */
+
+/* ACCESSORY */ 
+.min-35 {
+	float: right;
+	height: 35px;
+	width: 1px;
+	border: none;
+}
+
+.minh {
+	float: right;
+	height: 500px;
+	width: 1px;
+	border: none;
+}
+
+/* common */
+body {
+	margin: 0 0 0 0;
+	padding:0 0 0 0;   
+	font-size:70%;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	
+}
+
+a {color: #666666;}
+
+#wrapper { 	float: left; } 
+#treeHolder {
+ overflow: hidden;
+}
+
+.info { font-weight: bold; }
+.importantinfo { font-weight: bold; color:#FF7900; font-size: small; }
+p {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+ul {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+.mg0{color: Black;}
+.mg1{color: Brown;} 
+.mg2{color: Red;} 
+.mg3{color: Blue;} 
+.error{
+	font-size: large;
+	color: Red;
+	display: block;
+	float: left;
+	font-weight: bold;
+}
+.button 
+{
+	background-color: #F2F2ED;
+	/*
+	border: solid 1px;
+	
+*/
+	}
+.rstatus {width: 487px; float: left; background-color: #9E9E98; padding: 5px 5px 5px 5px;}	
+.rstatus .button {float:right; margin-left: 10px; }
+
+
+/* FileManager classes */
+div.hiddensection		{ margin-bottom:5px; background-color:#f3f2ef; height:30px; border : 1px solid #9e9e98; float: left;}
+#left-structure div.hiddensection		{width: 240px; }
+#right-structure div.hiddensection		{width: 530px;}
+
+p.hiddensection			{ float:none; background-image: url(../_images/dark-bg-horiz.gif); background-repeat:repeat-x; background-position: center center; text-align: right; margin: 8px 8px 8px 3px;  }
+p.hiddensection span	{ background-color: #F3F2EF; margin-right: 30px; padding: 0 10px 0 5px; }
+p.hiddensection span a	{ text-decoration: none; }
+
+#left-structure {float: left;  width: 250px; overflow: hidden; margin: 5px 0px 5px 2px;}
+#right-structure  {float: left; width: 540px; overflow: hidden; margin: 5px 5px 5px 3px;}
+
+/* #right-structure {	float: right; width:530px;height : 100%;	margin: 5px 5px 5px 5px;} */
+/* #left-structure{ float: left; width : 30%;height : 100%;margin: 5px 5px 5px 5px;} */
+
+
+div.file-list {border : 1px solid #9e9e98;padding-top : 5px;margin-bottom:5px; position:relative; width:530px; height:414px; overflow-y: scroll; float:left;}
+
+.file-list .file-repeater,
+.file-list .file-repeateralt {float:left; padding: 2px 5px 3px 5px;}
+.file-list .rightbutton {float:right;width: 155px; text-align:right;padding-top:5px;}
+.file-list .leftbutton {float:left;width:345px;}
+.file-list .file-repeater {background-color:#E7E7E7;}
+.file-list .file-repeateralt {background-color:#CECFC6;}
+
+
+
+div.file-details {margin-bottom:5px; border: 1px solid #9e9e98; width: 240px; float: left;padding-bottom:10px;}
+.file-details .fimage {width: 40%; float:left; margin: 3px 3px 3px 3px;} 
+.file-details .fsize {width: 40%; float:right; margin: 3px 3px 3px 3px;}
+.file-details .fname {width: 90%; float:none;margin: 3px 3px 3px 3px;}
+.file-details .fileinput {width: 90%; float:none;margin: 3px 3px 3px 3px;}
+.file-details .fileinput input.txtbx {width:90%;}
+.file-details .fileinput span.chkbx {padding-top:5px;display: block;float:left;width: 99%;}
+.file-details .fileinput .fbtn {width: 95%;padding-top:8px;text-align:right;}
+.file-details .fileinput .fbtn input {float:right;}
+.file-details .fileinput input {float:left;}
+.file-details .fileinput label {margin: 5px 5px 5px 5px; float:left;}
+
+div.file-meta-data {margin-bottom:5px; border: 1px solid #9e9e98; width: 530px;}
+
+#left-structure .file-meta-data .detail {width:252px; float:left; border: 1px solid #9e9e98;}
+#right-structure .file-meta-data .detail {width:528px; float:left; border-bottom: 1px solid #9e9e98;}
+
+.file-meta-data .detail .fileinput {width:80%; float: left;padding: 3px 3px 3px 3px;}
+.file-meta-data .detail .fileinput .finput {width:100%;}
+.file-meta-data .detail .fileinput .finput label {float: left;}
+.file-meta-data .detail .fileinput .finput input {float: right; width:60%; margin: 1px 0px 1px 0px; border: 1px solid #7F9DB9;}
+.file-meta-data .detail .fileinput .finput textarea { float : right; width:60%;margin: 1px 0px 1px 0px; border: 1px solid #7F9DB9;}
+.file-meta-data .detail .buttonright {padding: 3px 0px 10px 0px;width: 81%; float: left;}
+.file-meta-data .detail .buttonright input {float: right;}
+.file-meta-data .fppersons {padding: 4px 3px 5px 3px;float:left;}
+.file-meta-data .fppersons .leftselect {float:left; width:35%;}
+.file-meta-data .fppersons .leftselect select {width:100%;}
+.file-meta-data .fppersons .middleelements {float:left; width:30%;text-align:center;}
+.file-meta-data .fppersons .middleelements select {float:left; width: 90%;margin:17px 0 0 17px;}
+.file-meta-data .fppersons .middleelements input {float:left; border: 1px solid #7F9DB9;}
+.file-meta-data .fppersons .rightselect {float:right; width: 35%; vertical-align:top;}
+.file-meta-data .fppersons .rightselect select {width: 90%; float:right;}
+
+div.folder-data { margin-bottom:5px; border : 1px solid #9e9e98; width: 530px;}
+.folder-data .finput { }
+.folder-data .finput .fin { width: 60%; float:left;padding: 3px 3px 3px 7px;}
+.folder-data .finput .fin input { float : right; width:60%; margin: 1px 0px 1px 0px; border: 1px solid #7F9DB9;}
+.folder-data .finput .fin label { float:left;}
+.folder-data .finput .fbtn { width: 30%; float:right;padding: 3px 3px 3px 7px;}
+.folder-data .finput .fbtn .input { float : right;}
+
+div.desc-small { border-top : 1px solid #9e9e98; border-left : 1px solid #9e9e98;border-right : 1px solid #9e9e98; text-align:left; vertical-align:middle;  background-color:#f3f2ef; height:30px; width: 240px;}
+div.desc-large { border-top : 1px solid #9e9e98; border-left : 1px solid #9e9e98;border-right : 1px solid #9e9e98; text-align:left; vertical-align:middle;  background-color:#f3f2ef; height:30px; width: 530px;}
+
+.desc-small p { padding-top:9px;float:none; background-repeat:repeat-x; background-position: center center; text-align: left; margin: 0px 0px 0px 8px;  }
+.desc-small p span { background-color: #F3F2EF; }
+
+.desc-large p { padding-top:9px;float:none; background-repeat:repeat-x; background-position: center center; text-align: left; margin: 0px 0px 0px 8px;  }
+.desc-large p span {  background-color: #F3F2EF; }
+
+#filewrapper { float: left; width : 800px; height : 600px; background-color:#e2e3da; padding : 5px 5px 15px 5px; display:block; } 
+
+#left-structure .treeHolder { margin-bottom: 5px; float:left;}

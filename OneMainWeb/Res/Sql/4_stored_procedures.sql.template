@@ -1,0 +1,2037 @@
+SET ANSI_NULLS ON
+SET QUOTED_IDENTIFIER ON
+GO
+
+USE [@INITIAL_CATALOG@] 
+GO
+
+CREATE PROCEDURE [dbo].[nextval]
+                 @sequence varchar(100),
+                 @sequence_id INT OUTPUT
+               AS
+
+    set @sequence_id = -1
+
+	UPDATE sequences
+	SET    @sequence_id = sequence_id = sequence_id + 1
+	WHERE  seq = @sequence
+
+	IF (@sequence_id = -1 )
+	RAISERROR (50005,  10, 1, N'Sequence doesn''t exist');
+
+	RETURN @sequence_id
+
+
+GO
+
+
+CREATE PROCEDURE [dbo].[Acc_Str2Number] @str     nvarchar(200),
+                                         @listpos int 
+AS
+BEGIN
+   DECLARE @number  int,
+           @orgstr  nvarchar(200),
+           @sign    smallint,
+           @decimal decimal(10, 0)
+
+   SELECT @orgstr = @str
+
+   IF substring(@str, 1, 1) IN ('-', '+')
+   BEGIN
+      SELECT @sign = CASE substring(@str, 1, 1)
+                         WHEN '-' THEN -1
+                         WHEN '+' THEN 1
+                     END
+      SELECT @str  = substring(@str, 2, len(@str))
+   END
+   ELSE
+      SELECT @sign = 1
+
+   IF @str LIKE '%[0-9]%' AND @str NOT LIKE '%[^0-9]%'
+   BEGIN
+      IF len(@str) <= 9
+         SELECT @number = convert(int, @str)
+      ELSE IF len(@str) = 10
+      BEGIN
+         SELECT @decimal = convert(decimal(10, 0), @str)
+         IF @decimal <= convert(int, 0x7FFFFFFF)
+            SELECT @number = @decimal
+      END
+   END
+
+   IF @number IS NOT NULL
+      INSERT #numbers (listpos, number) VALUES (@listpos, @sign * @number)
+   ELSE
+      RAISERROR('Warning: at position %d, the string "%s" is not an legal integer',
+                 10, -1, @listpos, @orgstr)
+END
+GO
+
+CREATE PROCEDURE [dbo].[Acc_IntList2Table]
+                    @list      ntext
+AS
+BEGIN
+DECLARE @pos      int,
+           @textpos  int,
+           @listpos  int,
+           @chunklen smallint,
+           @str      nvarchar(4000),
+           @tmpstr   nvarchar(4000),
+           @leftover nvarchar(4000)
+
+   SET NOCOUNT ON
+
+   SELECT @textpos = 1, @listpos = 1, @leftover = ''
+   WHILE @textpos <= datalength(@list) / 2
+   BEGIN
+      SELECT @chunklen = 4000 - datalength(@leftover) / 2
+      SELECT @tmpstr = ltrim(@leftover + substring(@list, @textpos, @chunklen))
+      SELECT @textpos = @textpos + @chunklen
+
+      SELECT @pos = charindex(' ', @tmpstr)
+      WHILE @pos > 0
+      BEGIN
+         SELECT @str = rtrim(ltrim(substring(@tmpstr, 1, @pos - 1)))
+         EXEC [Acc_Str2Number] @str, @listpos
+         SELECT @listpos = @listpos + 1
+         SELECT @tmpstr = ltrim(substring(@tmpstr, @pos + 1, len(@tmpstr)))
+         SELECT @pos = charindex(' ', @tmpstr)
+      END
+
+      SELECT @leftover = @tmpstr
+   END
+
+   IF ltrim(rtrim(@leftover)) <> ''
+      EXEC [Acc_Str2Number] @leftover, @listpos
+END
+GO
+
+CREATE PROCEDURE [dbo].[Acc_CharList2Table]
+                    @list      ntext,
+                    @delimiter char(1) = N',' AS
+
+   DECLARE @pos      int,
+           @textpos  int,
+           @chunklen smallint,
+           @tmpstr   nvarchar(4000),
+           @leftover nvarchar(4000),
+           @tmpval   nvarchar(4000)
+
+   SET NOCOUNT ON
+
+   SELECT @textpos = 1, @leftover = ''
+   WHILE @textpos <= datalength(@list) / 2
+   BEGIN
+      SELECT @chunklen = 4000 - datalength(@leftover) / 2
+      SELECT @tmpstr = @leftover + substring(@list, @textpos, @chunklen)
+      SELECT @textpos = @textpos + @chunklen
+
+      SELECT @pos = charindex(@delimiter, @tmpstr)
+
+      WHILE @pos > 0
+      BEGIN
+         SELECT @tmpval = left(@tmpstr, @pos - 1)
+         SELECT @tmpval = ltrim(rtrim(@tmpval))
+
+         if ( len(@tmpval) > 0)
+	         INSERT #strings(str) VALUES (@tmpval)
+         SELECT @tmpstr = substring(@tmpstr, @pos + 1, len(@tmpstr))
+         SELECT @pos = charindex(@delimiter, @tmpstr)
+      END
+
+      SELECT @leftover = @tmpstr
+   END
+
+   if ( len(@leftover) > 0)
+	   INSERT #strings(str) VALUES(ltrim(rtrim(@leftover)))
+
+GO
+
+
+CREATE PROCEDURE [dbo].[ChangeEvent]
+	@publishFlag bit,
+	@changed bit,
+	@contentId int,
+	@markedForDeletion bit,
+	@begin_date datetime,
+	@end_date datetime=null,
+	@locationId int=null,
+	@id int=null output
+AS
+
+	IF ( @id is null )
+	BEGIN
+		EXEC [dbo].[nextval] 'event', @id out		
+
+		INSERT INTO [dbo].[event] ( id, publish, changed, content_fk_id, marked_for_deletion, begin_date, end_date, event_location_fk_id)
+		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @begin_date, @end_date, @locationId)
+	END
+	ELSE
+	BEGIN
+		DECLARE @Exists int
+		SELECT @Exists = count(*) FROM [dbo].[event] WHERE id=@id AND publish=@publishFlag
+
+		IF ( @Exists = 0 )
+		BEGIN
+			INSERT INTO [dbo].[event] ( id, publish, changed, content_fk_id, marked_for_deletion, begin_date, end_date, event_location_fk_id)
+			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @begin_date, @end_date, @locationId)
+		END
+		ELSE
+		BEGIN
+			UPDATE [dbo].[event]
+			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, begin_date = @begin_date, end_date = @end_date, event_location_fk_id=@locationId
+			WHERE id=@id AND publish=@publishFlag
+		END
+	END
+
+GO
+
+CREATE PROCEDURE [dbo].[email_modify] 
+@email varchar(255) = null,
+@emailId int = null output
+AS
+
+	DECLARE @existingId int
+	SELECT @existingId = id FROM email WHERE email=@email
+	
+	if (@existingID IS NULL)
+	BEGIN
+		INSERT INTO email(email, date_added) values (@email, getdate())
+		SET @emailId = @@identity
+	END
+	ELSE
+	BEGIN
+		SET @emailId = @existingID
+	END
+GO
+
+CREATE PROCEDURE [dbo].[newsletter_subscription_get] 
+@email varchar(255)=null,
+@newsletterID int=null,
+@subscriptionID int=null
+AS
+	IF ( @subscriptionID is not null )
+	BEGIN
+		SELECT ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email  FROM newsletter_subscription ns
+		INNER JOIN email e on e.id=ns.email_fk_id 
+		INNER JOIN newsletter n on n.id=ns.newsletter_fk_id
+		where ns.id=@subscriptionID		
+	END
+	ELSE IF (@email is not null and @newsletterID is not null)
+	BEGIN
+		DECLARE @emailID int
+
+		SELECT @emailID=id from email where email=@email
+		
+		SELECT ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email  FROM newsletter_subscription ns
+		INNER JOIN email e on e.id=ns.email_fk_id 
+		where email_fk_id=@emailID and newsletter_fk_id=@newsletterID
+	END
+	
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedArticles]
+	@publishFlag bit,
+	@languageId int,
+	@offSet int = 0,
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@sortByColumn varchar(255) = NULL,
+	@sortOrder varchar(4) = NULL,
+	@regularIds varchar(255)  = NULL,
+	@dateFrom datetime  = NULL,
+	@dateTo datetime = NULL,
+	@showUntranslated bit = 0,
+	@changed bit = null,
+	@debug     bit          = 0
+AS
+BEGIN	
+	CREATE TABLE #regularIDs (regularID int NOT NULL)
+	CREATE TABLE #numbers (listpos int NOT NULL, number  int NOT NULL)
+	EXEC [dbo].[Acc_IntList2Table] @regularIds
+	INSERT #regularIDs  SELECT number FROM #numbers
+	DROP TABLE #numbers	
+
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql = '	SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+				c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
+				a.display_date, a.marked_for_deletion, a.changed, '
+
+	IF (@publishFlag = 0 )
+		SET @sql = @sql + ' ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, '
+	ELSE
+		SET @sql = @sql + ' 1, '
+
+	SELECT @sql = @sql + ' ( select count(ct.id) FROM [dbo].[comments] ct WHERE ct.content_fk_id=a.content_fk_id AND ct.publish=a.publish) commentCount '
+
+	SET @sql = @sql + ' FROM [dbo].[article] a
+		INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
+		INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish
+	'
+
+	IF (@showUntranslated = 0)
+		SELECT @sql = @sql + '	INNER '
+	ELSE	
+		SELECT @sql = @sql + '	LEFT '
+
+	SELECT @sql = @sql + ' JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@xlanguageId '
+
+	SELECT @sql = @sql + ' WHERE a.publish = ' + CAST(@publishFlag AS char(1))
+
+	IF (SELECT COUNT (*) FROM #regularIDs) > 0
+		SELECT @sql = @sql + ' AND ra.regular_fk_id IN (SELECT regularID FROM #regularIDs) ' 
+
+	IF @dateFrom IS NOT NULL             
+		SELECT @sql = @sql + ' AND a.display_date >= @xdateFrom '
+
+	IF @dateTo IS NOT NULL             
+		SELECT @sql = @sql + ' AND a.display_date <= @xdateTo '
+
+	IF @changed IS NOT NULL
+		SELECT @sql = @sql + ' AND a.changed = @xchanged '
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int,
+						 @xdateFrom  datetime,
+						 @xdateTo    datetime,
+						 @xchanged   bit'
+
+	CREATE TABLE #pagingTable
+	(
+		title nvarchar(4000),
+		subtitle nvarchar(255),
+		teaser nvarchar(max),
+		html nvarchar(max),
+		principal_created_by varchar(255),
+		date_created datetime,
+		principal_modified_by varchar(255),
+		date_modified datetime,
+		votes int,
+		score float,
+		article_id int,
+		publish bit,
+		content_id int,
+		display_date datetime, 
+		marked_for_deletion bit, 
+		changed bit, 
+		countPublished int,		
+		commentCount int,		
+		ID int IDENTITY PRIMARY KEY,
+	)
+	
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @languageId, @dateFrom, @dateTo, @changed
+
+	DECLARE @AllRecords int
+	SET @fromRecordIndex = @fromRecordIndex + @offSet
+	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
+	
+
+	SELECT *, @AllRecords
+	FROM #pagingTable pT 
+	WHERE pT.ID between @fromRecordIndex AND @toRecordIndex 
+
+	DROP table #pagingTable
+
+
+END
+
+GO
+
+
+CREATE PROCEDURE [dbo].[ChangeFrequentQuestion]
+	@publishFlag bit,
+	@changed bit,
+	@contentId int,
+	@markedForDeletion bit,
+	@id int=null output
+AS
+
+	IF ( @id is null )
+	BEGIN
+		EXEC [dbo].[nextval] 'frequentquestions', @id out		
+
+		INSERT INTO [dbo].[frequent_questions] ( id, publish, changed, content_fk_id, marked_for_deletion)
+		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion)
+	END
+	ELSE
+	BEGIN
+		DECLARE @Exists int
+		SELECT @Exists = count(*) FROM [dbo].[frequent_questions] WHERE id=@id AND publish=@publishFlag
+
+		IF ( @Exists = 0 )
+		BEGIN
+			INSERT INTO [dbo].[frequent_questions] ( id, publish, changed, content_fk_id, marked_for_deletion)
+			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion)
+		END
+		ELSE
+		BEGIN
+			UPDATE [dbo].[frequent_questions]
+			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion
+			WHERE id=@id AND publish=@publishFlag
+		END
+	END
+
+GO
+
+CREATE PROCEDURE [dbo].[ChangeArticle]
+	@publishFlag bit,
+	@changed bit,
+	@contentId int,
+	@markedForDeletion bit,
+	@displayDate datetime,
+	@id int=null output
+AS
+
+	IF ( @id is null )
+	BEGIN
+		EXEC [dbo].[nextval] 'articles', @id out		
+
+		INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
+		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
+	END
+	ELSE
+	BEGIN
+		DECLARE @Exists int
+		SELECT @Exists = count(*) FROM [dbo].[article] WHERE id=@id AND publish=@publishFlag
+
+		IF ( @Exists = 0 )
+		BEGIN
+			INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
+			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
+		END
+		ELSE
+		BEGIN
+			UPDATE [dbo].[article]
+			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate
+			WHERE id=@id AND publish=@publishFlag
+		END
+	END
+
+GO
+
+CREATE PROC [dbo].[GetMenu_acc_Path]
+(
+     @CurrentNodeID int,
+	 @CurrentNodePublishFlag int
+)
+AS
+BEGIN
+	 -- accessory SP -- DO NOT CALL DIRECTLY
+	 -- this SP doesn't take into account the possibility of "unpublished" parts of the tree
+     SET NOCOUNT ON
+     DECLARE @ParentNodeID int
+
+	 SET @ParentNodeID = -- first upper node
+			(
+				SELECT pages_fk_id
+				FROM pages 
+				WHERE id = @CurrentNodeID AND publish = @CurrentNodePublishFlag AND pages_fk_id!=id
+			)
+	 IF @ParentNodeID IS NOT NULL
+	 BEGIN
+		  -- this should be the table #MenuTempTable created in the GetMenu procedure
+		  INSERT INTO #MenuTempTable    SELECT @ParentNodeID, NULL
+          EXEC [dbo].[GetMenu_acc_Path] @ParentNodeID, @CurrentNodePublishFlag --, @MaxRelDepth, @CurrentRelDepth
+	 END
+END
+
+
+GO
+
+
+CREATE PROC [dbo].[GetMenu_acc_Hierarchy]
+(
+     @RootNodeID int,
+	 @RootNodePublishFlag int,
+	 @LanguageID int,
+	 @MaxRelDepth int,
+	 @CurrentRelDepth int,
+	 @ExpandToLevel int
+	
+)
+AS
+BEGIN
+	 -- accessory SP -- DO NOT CALL DIRECTLY
+	 -- this SP doesn't take into account the possibility of "unpublished" parts of the tree
+     SET NOCOUNT ON
+     DECLARE @NodeID int
+	 DECLARE @Selected int
+
+	 IF (SELECT id FROM #MenuTempTable WHERE  NodeID = @RootNodeID) IS NOT NULL
+		SET @Selected = 1
+	 ELSE 
+		SET @Selected = 0
+
+	 INSERT INTO #tempTable    -- this should be the table #temp created in the GetResults procedure
+		SELECT p.id, p.publish, p.pages_fk_id, p.idx, @CurrentRelDepth, @Selected, menu_group, c.title, p.auth_mask, p.content_fk_id -- REPLICATE ('(-)', @CurrentRelDepth) + ' ' + c.title -- for debug: 
+		FROM pages p
+		LEFT JOIN content_data_store c ON p.content_fk_id=c.content_fk_id AND language_fk_id = @LanguageID
+		WHERE p.id = @RootNodeID AND p.publish = @RootNodePublishFlag AND @CurrentRelDepth != -1 
+	
+	IF @CurrentRelDepth = -1
+		SET @CurrentRelDepth = 0
+
+
+	 IF @CurrentRelDepth >= @MaxRelDepth
+		SET @NodeID = NULL
+	 ELSE
+		SET @NodeID = -- first node
+			(
+				SELECT MIN(id) 
+				FROM pages 
+				WHERE pages_fk_id = @RootNodeID 
+					AND pages_fk_publish = @RootNodePublishFlag 
+					AND id != pages_fk_id
+			)
+
+	 SET @CurrentRelDepth = @CurrentRelDepth + 1
+     WHILE @NodeID IS NOT NULL 
+     BEGIN
+		  IF (SELECT id FROM #MenuTempTable WHERE  NodeID = @NodeID) IS NOT NULL OR @ExpandToLevel > @CurrentRelDepth -- drill down
+			EXEC [dbo].[GetMenu_acc_Hierarchy] @NodeID, @RootNodePublishFlag, @LanguageID, @MaxRelDepth, @CurrentRelDepth, @ExpandToLevel
+		  ELSE 
+			INSERT INTO #tempTable    -- this should be the table #temp created in the GetResults procedure
+				SELECT p.id, p.publish, p.pages_fk_id, p.idx, @CurrentRelDepth, 0, menu_group, c.title, p.auth_mask, p.content_fk_id -- REPLICATE ('(*)', @CurrentRelDepth) + ' ' + c.title -- for debug: 
+				FROM pages p
+				LEFT JOIN content_data_store c ON p.content_fk_id=c.content_fk_id AND language_fk_id = @LanguageID
+				WHERE p.id = @NodeID AND p.publish = @RootNodePublishFlag 
+
+          SET @NodeID = -- next node
+			(	SELECT MIN(id) 
+				FROM pages 
+				WHERE pages_fk_id = @RootNodeID 
+					AND id > @NodeID 
+					AND pages_fk_publish = @RootNodePublishFlag
+			)
+     END
+END
+
+
+
+GO
+
+CREATE PROC [dbo].[GetMenu]
+(
+     @CurrentNodeID int,
+	 @CurrentPublishFlag int,
+	 @LanguageID int,
+	 @MinAbsDepth int,
+	 @MaxAbsDepth int,
+	 @ExpandToLevel int,
+	 @LocalExpand int
+)
+AS
+	DECLARE @StartNodeID int
+	DECLARE @CurrentRelDepth int -- used only for passing info wheather to include root node or not
+	declare @_id char(11)
+	DECLARE @depth int
+	DECLARE @MaxRelDepth int
+	DECLARE @OrigAbsMinDepth int
+	SET @OrigAbsMinDepth = @MinAbsDepth
+
+	CREATE TABLE #MenuTempTable (id int IDENTITY (1, 1) NOT NULL, NodeID int, AbsDepth int) 
+	INSERT INTO #MenuTempTable    SELECT @CurrentNodeID, NULL
+	EXEC  [dbo].[GetMenu_acc_Path] @CurrentNodeID, @CurrentPublishFlag
+
+	SET @depth = 0
+
+	-- add absDepth to our temp table
+		SELECT @_id = max( id ) FROM #MenuTempTable
+		while @_id is not null
+		begin
+			UPDATE #MenuTempTable SET AbsDepth = @depth WHERE id = @_id
+			select @_id = max( id ) from #MenuTempTable where id < @_id
+			SET @depth = @depth + 1
+		end
+	-- end 
+	-- debug:
+	--SELECT * FROM #MenuTempTable
+	
+	IF (@MinAbsDepth > 0) -- [GetMenu_acc_Hierarchy] specific
+	BEGIN
+		SET @MinAbsDepth = @MinAbsDepth - 1
+		SET @CurrentRelDepth = -1	
+		SET @MaxRelDepth = @MaxAbsDepth - @MinAbsDepth
+	END
+	ELSE
+	BEGIN
+		SET @CurrentRelDepth = 0 -- we'll include root level
+		SET @MaxRelDepth = @MaxAbsDepth
+	END
+
+	IF ( (@ExpandToLevel > 0) AND (@LocalExpand = 0))
+	BEGIN
+		SELECT @StartNodeID = (SELECT  TOP 1 NodeID FROM #MenuTempTable ORDER BY AbsDepth)
+		SET @MaxRelDepth = @MaxRelDepth + 1
+	END
+	ELSE
+		SET @StartNodeID = (SELECT NodeID FROM #MenuTempTable WHERE AbsDepth = @MinAbsDepth )
+
+	CREATE TABLE #tempTable (NodeID int, NodePublishFlag int, ParentNodeID int, idx int, RelDepth int, Selected int, menu_group int, Name varchar(200), auth_mask int, contentID int) 
+	EXEC  [dbo].[GetMenu_acc_Hierarchy] @StartNodeID, @CurrentPublishFlag, @LanguageID, @MaxRelDepth, @CurrentRelDepth, @ExpandToLevel	
+
+	IF ( (@ExpandToLevel > 0) AND (@LocalExpand = 0))
+		SELECT * FROM #tempTable WHERE RelDepth >= @OrigAbsMinDepth order by idx
+	ELSE
+		SELECT * FROM #tempTable order by idx
+
+
+	-- if running in SQL manager ('cause otherwise the table doesn't go out of scope):
+	DROP TABLE #tempTable
+	DROP TABLE #MenuTempTable
+
+GO
+CREATE PROC [dbo].[GetPath]
+(
+     @CurrentNodeID int,
+	 @CurrentPublishFlag int,
+	 @LanguageID int
+)
+AS
+
+CREATE TABLE #MenuTempTable (id int IDENTITY (1, 1) NOT NULL, NodeID int, AbsDepth int) 
+INSERT INTO #MenuTempTable    SELECT @CurrentNodeID, NULL
+
+EXEC  [dbo].[GetMenu_acc_Path] @CurrentNodeID, @CurrentPublishFlag
+
+	SELECT m.NodeID, i.par_link, i.par_link_name, p.web_site_fk_id FROM #MenuTempTable m
+		LEFT JOIN int_link i ON i.pages_fk_id=m.NodeID 
+			AND i.pages_fk_publish=@CurrentPublishFlag
+		LEFT JOIN pages p ON i.pages_fk_id=p.id AND i.pages_fk_publish = p.publish
+	WHERE i.language_fk_id = @languageID
+	ORDER BY m.id DESC
+
+DROP TABLE #MenuTempTable
+GO
+
+CREATE PROC [dbo].[ListPageModInstances]
+    (
+         @PageID int,
+	     @LCID int,
+		 @publishFlag int
+    )
+    AS
+
+    DECLARE @currentDepth int
+
+
+    CREATE TABLE #MenuTempTable (id int IDENTITY (1, 1) NOT NULL, NodeID int, AbsDepth int) 
+    INSERT INTO #MenuTempTable    SELECT @PageID, NULL
+
+    EXEC  [dbo].[GetMenu_acc_Path] @PageID, @publishFlag
+
+    SELECT @currentDepth = MAX(id) -1  FROM #MenuTempTable
+
+    SELECT m.NodeID, @currentDepth - m.id + 1 as AbsDepth,
+	    CASE 
+	    WHEN((@currentDepth >= mi.persistent_from) AND 
+		    (@currentDepth <= mi.persistent_to)) OR 
+		    (@currentDepth = @currentDepth - m.id + 1 ) THEN 1
+	    ELSE 0
+	    END as module_visibility, i.par_link, i.par_link_name, 
+		    mi.persistent_from, mi.persistent_to, 
+		mi.id, mi.module_fk_id, mi.idx, @PageID, mod.name, mi.place_holder_fk_id, ph.place_holder_id
+    FROM #MenuTempTable m
+	    LEFT JOIN int_link i ON i.pages_fk_id=m.NodeID 
+		    AND i.pages_fk_publish = @publishFlag
+	    LEFT JOIN pages p ON i.pages_fk_id=p.id AND i.pages_fk_publish = p.publish
+	    RIGHT JOIN module_instance mi ON mi.pages_fk_id = m.NodeID AND mi.pages_fk_publish = @publishFlag
+	    LEFT JOIN module mod ON mi.module_fk_id = mod.id
+		INNER JOIN place_holder ph ON ph.id = mi.place_holder_fk_id
+    WHERE i.language_fk_id = @LCID
+    ORDER BY mi.place_holder_fk_id, mi.idx ASC
+
+    DROP TABLE #MenuTempTable
+
+
+GO
+
+
+
+CREATE PROCEDURE [dbo].[DeletePage] 
+	@Id int,
+	@PublishFlag int
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	CREATE TABLE #DeletePageTempTable (ModuleId int) 
+	INSERT INTO #DeletePageTempTable   
+		SELECT id FROM module_instance 
+			WHERE pages_fk_publish = @PublishFlag AND pages_fk_id = @Id 
+
+	DELETE FROM module_settings
+		WHERE module_instance_fk_pages_fk_publish = @PublishFlag 
+			AND module_instance_fk_id IN (SELECT ModuleId FROM #DeletePageTempTable)
+
+	DROP TABLE #DeletePageTempTable
+
+	DELETE FROM module_instance 
+		WHERE pages_fk_publish = @PublishFlag AND pages_fk_id = @Id 
+	DELETE FROM pages_settings 
+		WHERE pages_fk_publish = @PublishFlag AND pages_fk_id = @Id
+
+	DELETE FROM int_link 
+		WHERE pages_fk_publish = @PublishFlag AND pages_fk_id = @Id
+
+	DECLARE @ContentId int
+	SELECT @ContentId = content_fk_id FROM pages 
+		WHERE pages_fk_publish = @PublishFlag AND pages_fk_id = @Id 
+
+	DELETE FROM content_data_store WHERE content_fk_id = @ContentId
+	DELETE FROM [content] WHERE id = @ContentId
+
+	DELETE FROM pages WHERE id = @Id AND publish = @PublishFlag
+END
+
+
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ChangeWebSiteSetting] 
+	@Id int,
+	@Name varchar(255),
+	@Value varchar(MAX)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @SettingId int
+	SELECT @SettingId = id FROM settings_list WHERE [name] = @Name
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(settings_list_fk_id) FROM [dbo].[web_site_settings]
+		WHERE web_site_fk_id = @Id AND settings_list_fk_id = @SettingId
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[web_site_settings] SET [value] = @Value
+		WHERE web_site_fk_id = @Id AND settings_list_fk_id = @SettingId
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[web_site_settings]
+		(web_site_fk_id,  settings_list_fk_id, [value])
+		VALUES
+		(@Id, @SettingId, @Value)
+	END
+END
+
+
+
+GO
+
+CREATE PROC [dbo].[GetPageFromURI]
+    @PublishFlag int,
+	@URL_prefix nvarchar (100),
+	@URI nvarchar(1000),
+	@Host nvarchar (100),
+	@WebSiteID int = NULL
+AS
+	SET NOCOUNT ON
+
+	DECLARE @PageID int
+	DECLARE @_PageID int
+	DECLARE @Level int
+	SET @Level = 1
+
+	if(@WebSiteID IS NULL)
+	BEGIN
+		SELECT @WebSiteID  = (SELECT TOP 1 web_site_fk_id FROM web_site_url WHERE url = @host AND url_prefix = @URL_prefix)
+	END
+
+	CREATE TABLE #strings (id int IDENTITY (1, 1) NOT NULL, str nvarchar(250) COLLATE Slovenian_CI_AS NOT NULL)
+	EXEC Acc_CharList2Table @URI, '/'
+	
+	-- Get root page based on publish flag and web_site_id
+	SELECT @PageID = (SELECT p.id FROM pages p WHERE p.publish = @PublishFlag AND web_site_fk_id = @WebSiteID AND p.level = 0)
+
+	SET @_PageID = @PageID
+	while (@_PageID IS NOT NULL)
+	BEGIN
+		SELECT @_PageID = (SELECT TOP 1  p.id
+						FROM int_link il
+						LEFT  JOIN pages p ON il.pages_fk_publish = p.publish AND il.pages_fk_id=p.id
+						WHERE p.pages_fk_id = @_PageID AND p.pages_fk_publish = @PublishFlag AND il.par_link  = (SELECT TOP 1 str FROM #strings WHERE id=@Level))
+		SET @PageID = ISNULL (@_PageID, @PageID)
+		--SELECT @_PageID AS debug_page_id
+		SET @Level = @Level + 1
+	END
+
+	SELECT p.id, p.publish, il.language_fk_id, p.web_site_fk_id, p.template_fk_id, p.menu_group, 
+		cds.title AS page_name, p.auth_mask, il.par_link_name, p.level, 
+		t.name AS template_name, t.template_source, t.template_type_fk_id, tt.NAME AS TemplateEnding, @Level AS Level
+	FROM pages p
+	LEFT JOIN int_link il ON il.pages_fk_publish = p.publish AND il.pages_fk_id=p.id
+	LEFT JOIN content_data_store cds ON cds.content_fk_id=p.content_fk_id AND cds.language_fk_id = il.language_fk_id
+	LEFT JOIN template t ON t.id = p.template_fk_id
+	LEFT JOIN template_type tt ON tt.id = t.template_type_fk_id
+	WHERE p.id=@PageID AND p.publish=@PublishFlag AND il.par_link  = (SELECT TOP 1 str FROM #strings WHERE id=@Level-2)
+
+	if @WebSiteID IS NOT NULL
+	BEGIN 
+		SELECT * from web_site_settings WHERE web_site_fk_id = @webSiteID
+		SELECT str FROM #strings WHERE id <= @Level-2 AND id > 1 ORDER BY id
+		SELECT str FROM #strings WHERE id > @Level-2 AND id > 1 ORDER BY id
+	END
+	DROP TABLE #strings
+	
+	SELECT psl.setting_name_keyword as setting_name, st.type_keyword, ISNULL(ps.value, psl.default_value) as setting_value
+	FROM pages_settings_list psl
+	INNER JOIN setting_type st on st.id = psl.setting_type_fk_id
+	LEFT JOIN pages_settings ps ON ps.pages_settings_list_fk_id = psl.id AND ps.pages_fk_id = @PageID AND ps.pages_fk_publish = @PublishFlag
+
+GO
+
+CREATE PROCEDURE [dbo].[ChangePage] 
+	@Id int out,
+	@ParentId int,
+	@PublishFlag int,
+	@Changed int,
+	@Order int,
+	@PendingDelete int, 
+	@MenuGroup int,
+	@BreakPersistance int,
+	@Level int,
+	@ContentId int,
+	@TemplateId int,
+	@WebSiteId int,
+	@redirectToUrl nvarchar(255),
+	@viewGroups varchar(255),
+	@editGroups varchar(255),
+	@requireSSL bit
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(id) FROM pages WHERE id = @Id AND publish = @PublishFlag AND web_site_fk_id = @WebSiteId
+
+	IF (@ParentId < 1)
+		SET @ParentId = NULL
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[pages] SET break_persistence = @BreakPersistance, [level] = @Level, 
+		content_fk_id = @ContentId, template_fk_id = @TemplateId,
+		pages_fk_publish = @PublishFlag, pages_fk_id = @ParentId, changed = @Changed, 
+		menu_group = @MenuGroup, idx = @Order, web_site_fk_id = @WebSiteId, pending_delete = @PendingDelete,
+		redirectToUrl = @redirectToUrl, viewGroups = @viewGroups, editGroups = @editGroups, requireSSL = @requireSSL
+		WHERE id = @Id AND publish = @PublishFlag
+	END
+	ELSE
+	BEGIN
+		IF (@PublishFlag = 0)
+		BEGIN
+			EXEC nextval 'pages', @Id out
+			IF (@Order = 0) 
+			BEGIN
+				SET @Order = @Id
+			END
+		END
+
+		INSERT INTO pages 
+		(id,  break_persistence, level, publish, content_fk_id, template_fk_id,
+		pages_fk_publish, pages_fk_id, changed, menu_group, idx, web_site_fk_id, pending_delete,
+		redirectToUrl, viewGroups, editGroups, requireSSL)
+		VALUES
+		(@Id, @BreakPersistance, @Level, @PublishFlag, @ContentId, @TemplateId,
+		@PublishFlag, @ParentId, @Changed, @MenuGroup, @Order, @WebSiteId, @PendingDelete,
+		@redirectToUrl, @viewGroups, @editGroups, @requireSSL )
+	END
+END
+
+
+
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ChangePageSetting] 
+	@Id int,
+	@PublishFlag int,
+	@Name varchar(255),
+	@Value varchar(MAX)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @SettingId int
+	SELECT @SettingId = id FROM settings_list WHERE [name] = @Name and subsystem='Page'
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(settings_list_fk_id) FROM pages_settings 
+		WHERE pages_fk_id = @Id AND pages_fk_publish = @PublishFlag AND settings_list_fk_id = @SettingId
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[pages_settings] SET [value] = @Value
+		WHERE pages_fk_id = @Id AND pages_fk_publish = @PublishFlag AND settings_list_fk_id = @SettingId
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[pages_settings]
+		(pages_fk_id,  pages_fk_publish, settings_list_fk_id, [value])
+		VALUES
+		(@Id, @PublishFlag, @SettingId, @Value)
+	END
+END
+
+
+
+
+GO
+
+CREATE PROCEDURE [dbo].[ChangeModuleInstance] 
+	@Id int out,
+	@PageID int,
+	@PublishFlag int,
+	@ModuleId int,
+	@Order int,
+	@PersistFrom int,
+	@PersistTo int,
+	@PersistOrder int,
+	@PlaceHolderID int,
+	@Changed int,
+	@PendingDelete int
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(id) FROM module_instance WHERE id = @Id AND pages_fk_publish = @PublishFlag
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[module_instance] SET pages_fk_id = @PageID, module_fk_id = @ModuleId, idx = @Order, 
+		persistent_from = @PersistFrom, persistent_to= @PersistTo,
+		persistence_idx = @PersistOrder, place_holder_fk_id = @PlaceHolderID, changed = @Changed, 
+		pending_delete = @PendingDelete
+		WHERE id = @Id AND pages_fk_publish = @PublishFlag
+	END
+	ELSE
+	BEGIN
+		DECLARE @IdExists int
+		SELECT @IdExists = COUNT(id) FROM module_instance WHERE id = @Id
+		IF (@IdExists < 1)
+			BEGIN
+				EXEC nextval 'moduleinstances', @Id out
+			END
+		INSERT INTO [dbo].[module_instance]  
+		(id,  pages_fk_publish, pages_fk_id, module_fk_id, idx, persistent_from, persistent_to,
+		persistence_idx, place_holder_fk_id, changed, pending_delete)
+		VALUES
+		(@Id, @PublishFlag, @PageID, @ModuleId, @Order, @PersistFrom, @PersistTo,
+		@PersistOrder, @PlaceHolderID, @Changed, @PendingDelete)
+	END
+END
+
+
+
+GO
+
+
+CREATE  PROCEDURE [dbo].[ChangeModuleInstanceSetting]
+	@Id int,
+	@PublishFlag int,
+	@Name varchar(255),
+	@Value varchar(MAX),
+	@SubSystem varchar(255)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @SettingId int
+	SELECT @SettingId = id FROM settings_list WHERE [name] = @Name AND subsystem=@SubSystem
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(module_instance_fk_pages_fk_publish) FROM [dbo].[module_settings]
+		WHERE module_instance_fk_id = @Id AND module_instance_fk_pages_fk_publish = @PublishFlag 
+			AND settings_list_fk_id = @SettingId
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[module_settings] SET [value] = @Value
+		WHERE module_instance_fk_id = @Id AND module_instance_fk_pages_fk_publish = @PublishFlag 
+			 AND settings_list_fk_id = @SettingId
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[module_settings]
+		(module_instance_fk_id,  module_instance_fk_pages_fk_publish, settings_list_fk_id, [value])
+		VALUES
+		(@Id, @PublishFlag, @SettingId, @Value)
+	END
+END
+GO
+
+CREATE PROCEDURE [dbo].[ChangeContent]
+      @title nvarchar(4000),
+      @subtitle nvarchar(255),
+      @teaser ntext,
+      @html ntext,
+      @languageID int,
+      @principal varchar(255),
+      @contentID int = NULL,
+	  @votes int = 0,
+	  @score float = NULL
+AS
+      SET @contentID = (SELECT id FROM content WHERE id = @contentID)
+      IF (
+		(@contentID IS NOT NULL) AND 
+		((SELECT idd 
+			FROM content_data_store 
+			WHERE language_fk_id = @languageID 
+			AND content_fk_id = @contentID) IS NOT NULL))
+      BEGIN
+           UPDATE content_data_store SET  title = @title, subtitle = @subtitle, teaser = @teaser, html = @html WHERE content_fk_id = @contentID AND language_fk_id = @languageID
+           UPDATE content SET date_modified = getdate(),  principal_modified_by = @principal where id = @contentID
+      END
+      ELSE IF (@contentID IS NOT NULL) 
+		BEGIN
+			INSERT INTO content_data_store (title, subtitle, teaser, html, language_fk_id, content_fk_id)
+				VALUES (@title, @subtitle, @teaser, @html, @languageID, @contentID)
+			UPDATE content SET date_modified = getdate(),  principal_modified_by = @principal where id = @contentID
+		END
+	  ELSE 
+      BEGIN
+           IF (@contentID IS NULL)
+           BEGIN
+                INSERT INTO content (date_created, principal_created_by) VALUES (getdate(), @principal)
+                SET @contentID = @@IDENTITY
+           END
+           INSERT INTO content_data_store (title, subtitle, teaser, html, language_fk_id, content_fk_id)
+           VALUES (@title, @subtitle, @teaser, @html, @languageID, @contentID)
+      END
+	  
+	  IF (@score IS NOT NULL)
+			   UPDATE content SET votes = @votes, score = @score
+
+      SELECT @contentID AS content_id
+	  
+GO 
+
+CREATE PROCEDURE [dbo].[Vote]
+  @votedScore int,
+  @contentId int
+AS	
+	IF (@votedScore > 5 OR @votedScore < 1)
+		RAISERROR(50001, 10, 1, N'voted score OUT OF RANGE')
+	
+      SELECT @contentId = id FROM [dbo].[content] WHERE id =  @contentId
+
+	  IF (@contentId IS NOT NULL)
+		BEGIN
+			BEGIN TRANSACTION
+				UPDATE [dbo].[content]  
+					SET 
+						votes = votes + 1, 
+						score = ((votes * ISNULL(score, 0)) + @votedScore) / (votes + 1)
+					WHERE id = @contentId
+			COMMIT
+			SELECT score, votes FROM [dbo].[content] WHERE id =  @contentId
+		END
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ChangeIntLink] 
+	@Id int,
+	@PublishFlag int,
+	@languageID int,
+	@par_link varchar(255),
+	@par_link_name varchar(255)
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(pages_fk_id) FROM [dbo].[int_link] 
+		WHERE pages_fk_id = @Id AND pages_fk_publish = @PublishFlag AND language_fk_id = @languageID
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[int_link] SET par_link = @par_link, par_link_name = @par_link_name
+		WHERE pages_fk_id = @Id AND pages_fk_publish = @PublishFlag AND language_fk_id = @languageID
+	END
+	ELSE
+	BEGIN
+		INSERT INTO [dbo].[int_link]
+		(pages_fk_id,  pages_fk_publish, language_fk_id, par_link, par_link_name)
+		VALUES
+		(@Id, @PublishFlag, @languageID, @par_link, @par_link_name)
+	END
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedNewsletterSubscriptions] 
+@newsletterID int,
+@fromRecordIndex int,
+@toRecordIndex int,
+@subscriptionType int,
+@sortBy varchar(255)=null,
+@sortOrder varchar(255)=null
+AS
+
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql = '	SELECT ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email 
+					FROM [dbo].[newsletter_subscription] ns 
+					INNER JOIN [dbo].[email] e ON e.id=ns.email_fk_id 
+					WHERE ns.newsletter_fk_id=@xnewsletterID '
+
+    if (@subscriptionType = 1)
+	BEGIN
+		SET @sql = @sql + ' AND date_subscribed IS NOT null AND date_confirmed IS null AND date_unsubscribed IS null'
+	END
+        ELSE IF (@subscriptionType = 2)
+	BEGIN
+		SET @sql = @sql + ' AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS null'
+	END
+        ELSE IF (@subscriptionType = 3)
+	BEGIN
+		SET @sql = @sql + ' AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS NOT null'
+	END
+
+	IF @sortBy IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortBy
+	IF @sortBy IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	SELECT @paramlist = '@xnewsletterID int'
+
+	CREATE TABLE #pagingTable 
+	(	
+		TempID int IDENTITY primary key, 
+		id int, 
+		newsletter_fk_id int, 	
+		email_fk_id int, 
+		date_subscribed datetime, 
+		date_unsubscribed datetime, 
+		hash varchar(10), 
+		date_confirmed datetime, 
+		ip_confirmed varchar(15), 
+		email varchar(255)
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist, @newsletterID
+
+	SELECT
+	 id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, email
+	FROM
+		#pagingTable
+	WHERE
+		TempID between @fromRecordIndex AND @toRecordIndex
+
+	SELECT Count(*) SubCount from #pagingTable
+
+	drop table #pagingTable
+
+GO
+
+CREATE PROCEDURE [dbo].[DeleteNewsletterSubscription] 
+	@subscriptionId int
+AS
+BEGIN
+
+	DECLARE @timesSubscribed int
+	DECLARE @emailId int
+
+	SELECT @emailId = email_fk_id FROM newsletter_subscription WHERE id=@subscriptionId
+
+	DELETE FROM newsletter_subscription where id=@subscriptionId
+
+	SELECT @timesSubscribed=count(id) FROM newsletter_subscription WHERE email_fk_id=@emailId
+
+	IF (@timesSubscribed = 0 )
+	BEGIN
+		DELETE FROM email WHERE id=@emailId
+	END
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedFormSubmissions] 
+	@sortBy varchar(255), 
+	@sortDirection varchar(255), 
+	@fromRecordIndex int, 
+	@toRecordIndex int,
+	@formId int 
+AS
+	declare @orderBy varchar(500)
+
+	SET @orderBy = CASE WHEN @sortBy = '' THEN '' ELSE ' ORDER BY ' + @sortBy + ' ' + @sortDirection END
+
+	CREATE TABLE #TempTable
+	(
+		TempID int IDENTITY PRIMARY KEY,
+		submissionId int,
+		dateFinished datetime
+	)
+
+	EXEC ('	INSERT INTO #TempTable (submissionId, dateFinished)
+		SELECT * FROM 
+		(
+			SELECT id, finished
+			FROM [dbo].[nform_submission]
+			WHERE nform_fk_id=' + @formId + '			
+		) [a] ' + @orderBy)
+
+
+	SELECT submissionId, dateFinished
+	FROM
+		#TempTable
+	WHERE
+		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
+
+	select count(*) from #TempTable
+
+	DROP table #TempTable
+GO
+
+CREATE PROCEDURE create_web_site
+	@websiteName varchar(255),
+	@defaultLanguageId int,
+	@principal varchar(255) = 'unknown'
+AS
+BEGIN
+	DECLARE @websiteId int
+	DECLARE @contentId int
+
+	INSERT INTO content (date_created, principal_created_by)
+	values (getdate(), @principal)
+	SET @contentId = SCOPE_IDENTITY()
+
+	insert into content_data_store ( language_fk_id, content_fk_id, title, subtitle, teaser, html)
+	values ( @defaultLanguageId, @contentId, @websiteName, '', '', '')
+
+	insert into web_site ( content_fk_id )
+	values (@contentId)
+	SET @websiteId = SCOPE_IDENTITY()
+	
+	exec ChangeWebSiteSetting @websiteId, 'PrimaryLanguageId', @defaultLanguageId
+	
+	SELECT @websiteId
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[ListPagedPages]
+	@webSiteId int,
+	@publishFlag bit,
+	@languageId int,
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@sortByColumn varchar(255) = NULL,
+	@sortOrder varchar(4) = NULL,
+	@changed bit = null,
+	@debug     bit          = 0
+AS
+BEGIN	
+
+	set ANSI_NULLS ON
+	set QUOTED_IDENTIFIER ON
+
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    'SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+            c.principal_modified_by, c.date_modified, c.votes, c.score, c.id ContentId, p.id PageId, p.pages_fk_id, p.menu_group, p.idx, 
+			t.id TemplateId, t.name, level, pending_delete, changed, 
+            break_persistence, web_site_fk_id, redirectToUrl, [viewGroups], [editGroups], [requireSSL]
+     FROM [dbo].[pages] p	
+     INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id = p.content_fk_id AND cds.language_fk_id = @xlanguageId
+     INNER JOIN [dbo].[content] c ON c.id = p.content_fk_id
+     INNER JOIN [dbo].[template] t ON t.id = p.template_fk_id AND template_type = ''3'' '
+
+	SELECT @sql = @sql + 'WHERE p.publish = @xpublishFlag AND p.web_site_fk_id=@xwebSiteId'
+
+	IF @changed IS NOT NULL
+		SELECT @sql = @sql + ' AND p.changed = @xchanged '
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int,
+						@xwebSiteId int,
+						@xpublishFlag bit,
+						@xchanged bit'
+
+	CREATE TABLE #pagingTable
+	(
+		ID int IDENTITY PRIMARY KEY,
+		Title nvarchar(4000), 
+		SubTitle nvarchar(255),
+        Teaser ntext,
+        Html ntext,
+        PrincipalCreated varchar(255),
+        DateCreated datetime,
+        PrincipalModified varchar(255),
+		DateModified datetime,
+		votes int,
+		score float,
+		ContentId int,
+		PageId int,
+		ParentId int,
+		MenuGroup int,
+		Idx int, 
+		TemplateID int,
+		Template varchar(255), 
+		[Level] int, 
+		PendingDelete bit,
+		Changed bit, 
+		BreakPersistance bit,
+		WebSiteId int,
+		RedirectToUrl nvarchar(255), 
+		[viewGroups] varchar(255), 
+		[editGroups] varchar(255), 
+		[requireSSL] bit
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @languageId, @webSiteId, @publishFlag, @changed
+
+	SELECT Title, SubTitle, Teaser, Html, PrincipalCreated, DateCreated, 
+            PrincipalModified, DateModified, votes, score, ContentId, PageId, ParentId, MenuGroup, Idx, 
+			TemplateId, Template, [Level], PendingDelete, Changed, 
+            BreakPersistance, WebSiteId, RedirectToUrl, [viewGroups], [editGroups], [requireSSL]
+	FROM #pagingTable pT 
+	WHERE pT.ID >= @fromRecordIndex AND pT.ID <= @toRecordIndex
+
+	SELECT COUNT (ID) FROM #pagingTable
+
+	DROP table #pagingTable
+
+END
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedComments]
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@sortByColumn varchar(50)=null,
+	@sortOrder varchar(50)=null,
+	@changed bit=null,
+	@publish bit=null,
+	@contentId int=null,
+	@debug bit=0
+AS
+BEGIN	
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    '	
+		SELECT c.content_fk_id, c.email, c.[name], c.comment, c.commented_at, c.id, c.publish, c.changed, c.marked_for_deletion, ( select count(c2.id) FROM [dbo].[comments] c2 WHERE c2.id=c.id AND c2.publish=1) countPublished, c.title
+		FROM [dbo].[comments] c 
+		WHERE 1=1
+	'
+
+	IF @contentId IS NOT NULL             
+		SELECT @sql = @sql + ' AND content_fk_id = @xcontentId '
+
+	IF @changed IS NOT NULL             
+		SELECT @sql = @sql + ' AND changed = @xchanged '
+
+	IF @publish IS NOT NULL             
+		SELECT @sql = @sql + ' AND publish = @xpublish '
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xcontentId int,
+						 @xpublish bit,
+						 @xchanged bit'
+
+	CREATE TABLE #pagingTable
+	(
+		TempID int IDENTITY PRIMARY KEY,
+		content_fk_id int, 
+		email varchar(255), 
+		[name] nvarchar(255), 
+		comment ntext, 
+		commented_at datetime,
+		commentId int,
+		publish bit,
+		changed bit,
+		marked_for_deletion bit,
+		countPublished int,
+		title nvarchar(255)
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @contentId, @publish, @changed
+
+	SELECT
+	content_fk_id, email, [name], comment, commented_at, commentId, publish, changed, marked_for_deletion, countPublished, title
+	FROM
+		#pagingTable
+	WHERE 
+		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
+
+	select count(*) from #pagingTable
+
+	drop table #pagingTable
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedFrequentQuestions]
+@publishFlag bit,
+	@languageId int,
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@sortByColumn varchar(255) = NULL,
+	@sortOrder varchar(4) = NULL,
+	@categoryIds varchar(255)  = NULL,
+	@showUntranslated bit = 0,
+	@changed bit = NULL,
+	@debug     bit          = 0
+AS
+BEGIN	
+	CREATE TABLE #categoryIDs (categoryID int NOT NULL)
+	CREATE TABLE #numbers (listpos int NOT NULL, number  int NOT NULL)
+	EXEC [dbo].[Acc_IntList2Table] @categoryIds
+	INSERT #categoryIDs  SELECT number FROM #numbers
+	DROP TABLE #numbers
+
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    'SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+		c.principal_modified_by, c.date_modified, c.votes, c.score,
+		f.id, f.publish, f.changed, f.content_fk_id, f.marked_for_deletion, 
+		( select count(fq2.id) FROM [dbo].[frequent_questions] fq2 WHERE fq2.id=f.id AND fq2.publish=1) countPublished,
+		cbt.idx, cbt.ucategories_fk_id
+	FROM [dbo].[frequent_questions] f
+	INNER JOIN [dbo].[content] c ON c.id = f.content_fk_id '
+	
+	IF (@showUntranslated = 0)
+		SELECT @sql = @sql + '	INNER '
+	ELSE	
+		SELECT @sql = @sql + '	LEFT '
+
+	SELECT @sql = @sql + '	JOIN [dbo].[content_data_store] cds ON c.id = cds.content_fk_id 
+		AND cds.language_fk_id = @xlanguageId
+INNER JOIN [dbo].[ucategorie_belongs_to] cbt ON cbt.fkid = f.id AND table_name = ''[dbo].[faq_question]'' '
+
+	SELECT @sql = @sql + 'WHERE publish = ' + CAST(@publishFlag AS char(1))  + ' '
+
+	IF (SELECT COUNT (*) FROM #categoryIDs) > 0
+		SELECT @sql = @sql + 'AND cbt.ucategories_fk_id IN (SELECT categoryID FROM #categoryIDs) ' 
+
+--	SELECT @sql = @sql + 'AND e.begin_date >= [dbo].[DateOnly](getdate()) '
+
+	IF @changed IS NOT NULL             
+		SELECT @sql = @sql + ' AND f.changed = @xchanged '
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int,
+						 @xchanged bit'
+
+	CREATE TABLE #pagingTable
+	(
+		title nvarchar(4000),
+		subtitle nvarchar(255),
+		teaser ntext,
+		html ntext,
+		principal_created_by varchar(255),
+		date_created datetime,
+		principal_modified_by varchar(255),
+		date_modified datetime,
+		votes int,
+		score float,		
+		faq_id int,
+		publish bit,
+		changed bit,
+		content_fk_id int, 
+		marked_for_deletion bit, 
+		countPublished int,
+		idx int,
+		ucategories_fk_id int,
+		ID int IDENTITY PRIMARY KEY
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @languageId, @changed
+
+	DECLARE @AllRecords int
+	SET @fromRecordIndex = @fromRecordIndex
+	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
+	
+	SELECT *, @AllRecords AS AllRecords
+	FROM #pagingTable pT WHERE ID >= @fromRecordIndex AND ID <= @toRecordIndex
+	DROP table #pagingTable
+
+END
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[ListPagedFilteredEvents]
+	@publishFlag bit,
+	@languageId int,
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@showUntranslated bit = 0,
+	@sortByColumn varchar(255) = NULL,
+	@sortOrder varchar(4) = NULL,
+	@categoryIds varchar(255)  = NULL,
+	@changed bit = NULL,
+	@fromDate datetime = null,
+	@toDate datetime = null,
+	@filterSubTitle nvarchar(255) = null,
+	@locationIdFilter int = null,
+	@debug     bit          = 0
+AS
+BEGIN	
+	CREATE TABLE #categoryIDs (categoryID int NOT NULL)
+	CREATE TABLE #numbers (listpos int NOT NULL, number  int NOT NULL)
+	EXEC [dbo].[Acc_IntList2Table] @categoryIds
+	INSERT #categoryIDs  SELECT number FROM #numbers
+	DROP TABLE #numbers
+
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql = '	SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+				c.principal_modified_by, c.date_modified, c.votes, c.score, e.id, e.publish, e.content_fk_id,
+				e.begin_date, e.end_date, e.marked_for_deletion, e.changed, '
+	IF (@publishFlag = 0)
+		SELECT @sql = @sql + ' ( select count(e2.id) FROM [dbo].[event] e2 WHERE e2.id=e.id AND e2.publish=1) countPublished '
+	ELSE
+		SELECT @sql = @sql + ' 1 '
+	
+	SELECT @sql = @sql + ', e.event_location_fk_id location_id, el.lcid location_lcid, el.name location_name '
+	
+	SELECT @sql = @sql + ' FROM [dbo].[event] e
+		INNER JOIN [dbo].[content] c ON c.id=e.content_fk_id
+		INNER JOIN [dbo].[ucategorie_belongs_to] cbt ON cbt.fkid = e.id AND table_name = ''[dbo].[events]'' 
+	'
+	
+	IF (@showUntranslated = 0)
+		SELECT @sql = @sql + '	INNER '
+	ELSE	
+		SELECT @sql = @sql + '	LEFT '
+
+	SELECT @sql = @sql + ' JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@xlanguageId '
+	
+	SELECT @sql = @sql + ' LEFT JOIN [dbo].[event_location] el ON el.id=e.event_location_fk_id '
+
+	SELECT @sql = @sql + ' WHERE publish = ' + CAST(@publishFlag AS char(1))  + ' '
+
+	IF (SELECT COUNT (*) FROM #categoryIDs) > 0
+		SELECT @sql = @sql + 'AND cbt.ucategories_fk_id IN (SELECT categoryID FROM #categoryIDs) ' 
+
+	IF @changed IS NOT NULL             
+		SELECT @sql = @sql + ' AND e.changed = @xchanged '
+
+	IF @fromDate IS NOT NULL             
+		SELECT @sql = @sql + ' AND (YEAR(e.begin_date) = YEAR(@xfromDate) AND MONTH(e.begin_date) = MONTH(@xfromDate) AND DAY(e.begin_date) >= DAY(@xfromDate)) '
+
+	IF @toDate IS NOT NULL             
+		SELECT @sql = @sql + ' AND (YEAR(e.begin_date) = YEAR(@xtoDate) AND MONTH(e.begin_date) = MONTH(@xtoDate) AND DAY(e.begin_date) <= DAY(@xtoDate)) '
+
+	IF @filterSubTitle IS NOT NULL
+		SELECT @sql = @sql + ' AND subtitle LIKE @xfilterSubTitle '
+
+	IF @locationIdFilter IS NOT NULL
+		SELECT @sql = @sql + ' AND e.event_location_fk_id = @xlocationIdFilter '
+		
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int,
+						 @xchanged bit,
+						 @xfromDate datetime,
+						 @xtoDate datetime,
+						 @xfilterSubTitle nvarchar(255),
+						 @xlocationIdFilter int'
+
+	SET @filterSubTitle = '%' + @filterSubTitle + '%'
+
+	CREATE TABLE #pagingTable
+	(
+		title nvarchar(4000),
+		subtitle nvarchar(255),
+		teaser ntext,
+		html ntext,
+		principal_created_by varchar(255),
+		date_created datetime,
+		principal_modified_by varchar(255),
+		date_modified datetime,
+		votes int,
+		score float,
+		event_id int,
+		publish bit,
+		content_id int,
+		begin_date datetime, 
+		end_date datetime, 
+		marked_for_deletion bit, 
+		changed bit, 
+		countPublished int,
+		location_id int, 
+		location_lcid int, 
+		location_name nvarchar(255),
+		ID int IDENTITY PRIMARY KEY
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @languageId, @changed, @fromDate, @toDate, @filterSubTitle, @locationIdFilter
+
+	DECLARE @AllRecords int
+	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
+
+	if (@toRecordIndex = 0)
+	BEGIN
+		SELECT *, @AllRecords
+		FROM #pagingTable pT
+	END
+	ELSE
+	BEGIN
+		SELECT *, @AllRecords
+		FROM #pagingTable pT
+		WHERE pT.ID between @fromRecordIndex AND @toRecordIndex
+	END
+
+	DROP table #pagingTable
+
+END
+
+
+
+
+
+
+
+
+GO
+
+CREATE PROCEDURE [dbo].[ChangeComment]
+	@id int out,
+	@publish bit,
+	@changed bit,
+	@markedForDeletion bit,
+	@contentId int,
+	@comment ntext,
+	@email varchar(255),
+	@name nvarchar(255),
+	@title nvarchar(255),
+	@commentedAt datetime=null
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	if @commentedAt is NULL
+		SET @commentedAt = getdate()
+
+	DECLARE @Exists int
+	SELECT @Exists = COUNT(id) FROM comments WHERE id = @id AND publish = @publish
+
+	IF (@Exists > 0)
+	BEGIN
+		UPDATE [dbo].[comments] 
+			SET	comment=@comment, 
+				[name]=@name,
+				title=@title,
+				email=@email,
+				changed=@changed,
+				marked_for_deletion=@markedForDeletion
+			WHERE id=@id AND publish=@publish
+	END
+	ELSE
+	BEGIN
+		IF (@publish = 0)
+		BEGIN
+			EXEC nextval 'comments', @id out
+		END
+
+		INSERT INTO [dbo].[comments] 
+		(id, publish, content_fk_id, comment, email, [name], changed, marked_for_deletion, commented_at, title) 
+		VALUES 
+		(@id, @publish, @contentId, @comment, @email, @name, @changed, @markedForDeletion, @commentedAt, @title);
+	END
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedForms] 
+@fromRecordIndex int, 
+@toRecordIndex int,
+@includeFormsWithoutTranslation bit,
+@languageId int,
+@sortBy varchar(255)=null, 
+@sortDirection varchar(255)=null, 
+@debug int=0
+AS
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    'SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, 
+			c.date_created, c.principal_modified_by, c.date_modified, c.votes, c.score, 
+			f.content_fk_id, f.id, f.form_type, f.send_to, 
+		(SELECT COUNT(id) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) cnt,
+        (SELECT MIN(finished) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) first_submission_date,
+        (SELECT MAX(finished) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) last_submission_date,
+        allow_multiple_submissions,
+        allow_modify_in_submission
+     FROM [dbo].[nform] f 
+	 INNER JOIN [dbo].[content] c ON c.id=f.content_fk_id '
+
+	if (@includeFormsWithoutTranslation = 1)
+		SELECT @sql = @sql + ' LEFT '
+	ELSE
+		SELECT @sql = @sql + ' INNER '
+
+	SELECT @sql = @sql + ' JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=f.content_fk_id AND cds.language_fk_id=@xlanguageId '
+
+	IF @sortBy IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortBy
+	IF @sortBy IS NOT NULL AND @sortDirection IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortDirection
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int'
+
+	CREATE TABLE #pagingTable
+	(
+		title nvarchar(4000),
+		subtitle nvarchar(255),
+		teaser ntext,
+		html ntext,
+		principal_created_by varchar(255),
+		date_created datetime,
+		principal_modified_by varchar(255),
+		date_modified datetime,
+		votes int,
+		score float,
+		content_fk_id int,
+		id int,
+		form_type varchar(255),
+		send_to nvarchar(1000),
+		submission_count int,
+		first_submission_date datetime,
+		last_submission_date datetime,
+		allow_multiple_submissions bit,
+        allow_modify_in_submission bit,
+		TempID int IDENTITY PRIMARY KEY
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist, @languageId
+
+	DECLARE @AllRecords int
+	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
+
+	SELECT *, @AllRecords
+	FROM
+		#pagingTable
+	WHERE
+		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
+
+	DROP table #pagingTable
+	
+
+GO
+
+CREATE PROCEDURE [dbo].[ChangeUCategorieBelongsTo]
+@categoryId int,
+@tableName varchar(255),
+@fkId int,
+@idx int=null,
+@id int=null
+AS
+BEGIN
+	IF @id is NULL
+	BEGIN
+		INSERT INTO [dbo].[ucategorie_belongs_to]
+		(ucategories_fk_id, fkid, table_name, idx)
+		VALUES 
+		(@categoryID, @fkId, @tableName, -1)	
+
+		SET @id=SCOPE_IDENTITY()
+		UPDATE [dbo].[ucategorie_belongs_to] SET idx=@id WHERE id=@id 		
+	END
+	ELSE
+	BEGIN
+		IF (@idx IS NOT NULL)
+		BEGIN
+			UPDATE [dbo].[ucategorie_belongs_to]
+			SET idx=@idx
+			WHERE id=@id
+		END
+	END
+END
+GO
+
+CREATE PROCEDURE [dbo].[SwapOrderOfCategorizedItems]
+	@categoryId int,
+	@fk1Id int,
+	@fk2Id int
+AS
+BEGIN	
+	DECLARE @order1  int,
+			@order2  int
+
+	BEGIN TRANSACTION
+
+		SELECT TOP(1) @order1 = idx
+			FROM ucategorie_belongs_to 
+			WHERE fkid = @fk1Id AND  ucategories_fk_id = @categoryId
+		SELECT TOP(1) @order2 = idx 
+			FROM ucategorie_belongs_to 
+			WHERE fkid = @fk2Id AND  ucategories_fk_id = @categoryId
+
+		IF @order1 IS NOT NULL AND @order2 IS NOT NULL
+		BEGIN
+			UPDATE ucategorie_belongs_to SET idx = @order2
+				WHERE fkid = @fk1Id AND  ucategories_fk_id = @categoryId
+
+			UPDATE ucategorie_belongs_to SET idx = @order1
+				WHERE fkid = @fk2Id AND  ucategories_fk_id = @categoryId
+		END		
+
+		IF @@ERROR <> 0
+		BEGIN
+			ROLLBACK
+
+			RAISERROR ('Error in deleting employees in DeleteDepartment.', 16, 1)
+			RETURN
+		END
+
+	COMMIT TRANSACTION
+
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedPublisherData]
+	@published bit,
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@sortByColumn varchar(255) = NULL,
+	@sortOrder varchar(4) = NULL,
+	@show_pending bit = 0,
+	@debug bit = 0
+AS
+BEGIN	
+	
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    '	SELECT id, subsystem, fkid, scheduled_at, published_at, [table]
+		FROM [dbo].[publisher]'
+
+	IF (@published = 0)
+		SELECT @sql = @sql + ' WHERE published_at IS NULL'
+	ELSE
+		SELECT @sql = @sql + ' WHERE published_at IS NOT NULL'
+
+	IF (@show_pending != 0 AND @published = 0)
+		SELECT @sql = @sql + ' AND scheduled_at < getdate() '
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF @debug = 1
+		PRINT @sql 
+
+	SELECT @paramlist = ''
+
+	CREATE TABLE #pagingTable
+	(
+		id int, 
+		subsystem varchar(255), 
+		fkid int, 
+		scheduled_at datetime, 
+		published_at datetime,
+		[table] varchar(255),
+		TempID int IDENTITY PRIMARY KEY
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist
+
+	DECLARE @AllRecords int
+	SET @fromRecordIndex = @fromRecordIndex
+	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
+	
+	SELECT *, @AllRecords AS AllRecords
+	FROM #pagingTable pT WHERE TempID between @fromRecordIndex AND @toRecordIndex
+	DROP table #pagingTable
+
+END
+GO
+
+CREATE PROCEDURE [dbo].[ListPagedRssFeeds]
+	@fromRecordIndex int,
+	@toRecordIndex int,
+	@languageId int,
+	@sortByColumn varchar(50)=null,
+	@sortOrder varchar(50)=null,
+	@debug bit=0
+AS
+BEGIN	
+	DECLARE @sql        nvarchar(4000),
+			@paramlist  nvarchar(4000)
+
+	SELECT @sql =
+    '	
+		SELECT rf.id, rf.title, rf.description, rf.type, rf.link_to_list, rf.link_to_single, rf.categories, rf.language_fk_id
+		FROM [dbo].[rss_feeds] rf
+		WHERE 1=1
+	'
+
+	SELECT @sql = @sql + ' AND rf.language_fk_id= @xlanguageId '
+
+
+	IF @sortByColumn IS NOT NULL             
+		SELECT @sql = @sql + ' ORDER BY ' + @sortByColumn
+	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
+		SELECT @sql = @sql + ' ' + @sortOrder
+
+	IF (@debug = 1)
+		PRINT @sql 
+
+	SELECT @paramlist = '@xlanguageId int'
+
+	CREATE TABLE #pagingTable
+	(
+		TempID int IDENTITY PRIMARY KEY,
+		id int, 
+		title nvarchar(255), 
+		description nvarchar(4000), 
+		[type] nvarchar(255), 
+		link_to_list nvarchar(255),
+		link_to_single nvarchar(255),
+		categories nvarchar(255),
+		language_fk_id int
+	)
+
+	INSERT #pagingTable
+		EXEC sp_executesql @sql, @paramlist,     
+                   @languageId
+
+	SELECT id, title, description, [type], link_to_list, link_to_single, categories, language_fk_id
+	FROM
+		#pagingTable
+	WHERE 
+		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
+
+	select count(*) from #pagingTable
+
+	drop table #pagingTable
+END
+GO
+
+CREATE PROCEDURE [dbo].[settings_list_delete_setting]
+	@subSystem varchar(255),
+	@settingName varchar(255)
+AS
+BEGIN
+	DECLARE @settingsListId int
+
+	SELECT @settingsListId=id FROM settings_list
+	WHERE [subsystem]=@subSystem AND [name]=@settingName
+
+	IF (@settingsListId IS NOT NULL)
+	BEGIN
+		DELETE FROM web_site_settings WHERE settings_list_fk_id=@settingsListId
+		DELETE FROM pages_settings WHERE settings_list_fk_id=@settingsListId
+		DELETE FROM module_settings WHERE settings_list_fk_id=@settingsListId
+		DELETE FROM settings_list WHERE id=@settingsListId		
+	END
+END
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id(N'[dbo].[DeletePrefixedSPs]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+BEGIN
+	DROP PROCEDURE [dbo].[DeletePrefixedSPs]
+END
+GO
+
+CREATE PROCEDURE [dbo].[DeletePrefixedSPs]
+@prefix VARCHAR(100)
+AS
+
+	IF (len(@prefix) < 3 )
+		RAISERROR('Prefix too short.', 16, 1)
+	
+	DECLARE @spname varchar(100)
+	DECLARE @occurance int
+
+	DECLARE GETSPNAME CURSOR FOR
+	SELECT 	sysobjects.name
+	FROM  sysobjects
+	WHERE sysobjects.type = 'P' AND sysobjects.category=0
+	ORDER BY sysobjects.name
+
+	OPEN GETSPNAME 
+	FETCH  NEXT FROM GETSPNAME into @spname
+	WHILE @@FETCH_STATUS=0
+	BEGIN
+		SET @occurance = (SELECT CHARINDEX(@prefix,@spname))
+		IF @occurance > 0
+		BEGIN
+			IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id(@spname) AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+			BEGIN
+				EXEC('DROP PROCEDURE [dbo].[' + @spname + ']')
+				PRINT 'Dropped SP:' + @spname
+			END
+		END
+		FETCH  NEXT FROM GETSPNAME into @spname
+	END
+
+	CLOSE GETSPNAME
+	DEALLOCATE GETSPNAME
+GO

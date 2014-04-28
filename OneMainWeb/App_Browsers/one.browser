@@ -1,0 +1,42 @@
+<browsers>
+	<browser refID="Default">
+		<controlAdapters>
+			<adapter controlType="System.Web.UI.WebControls.Menu" adapterType="AdaptedCSSFriendly.MenuAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.GridView" adapterType="AdaptedCSSFriendly.GridViewAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.TreeView" adapterType="AdaptedCSSFriendly.TreeViewAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.RadioButtonList" adapterType="AdaptedCSSFriendly.RadioButtonListAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.CheckBoxList" adapterType="AdaptedCSSFriendly.CheckBoxListAdapter" />
+      <adapter controlType="System.Web.UI.WebControls.ChangePassword" adapterType="AdaptedCSSFriendly.ChangePasswordAdapter" />
+      <adapter controlType="System.Web.UI.WebControls.Login" adapterType="AdaptedCSSFriendly.LoginAdapter" />
+
+			
+			<!-- 
+			<adapter controlType="System.Web.UI.WebControls.FormView" adapterType="CSSAdapters.FormViewAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.ChangePassword" adapterType="CSSAdapters.ChangePasswordAdapter" />
+			
+			<adapter controlType="System.Web.UI.WebControls.CheckBoxList" adapterType="CSSAdapters.CheckBoxListAdapter" />
+			<adapter controlType="System.Web.UI.WebControls.Login" adapterType="CSSAdapters.LoginAdapter" />
+					 -->
+		</controlAdapters>
+	</browser>
+
+	<browser id="W3C_Validator1" parentID="default">
+		<identification>
+			<userAgent match="^W3C_Validator1" />
+		</identification>
+		<capabilities>
+			<capability name="browser"              value="W3C Validator" />
+			<capability name="ecmaScriptVersion"    value="1.2" />
+			<capability name="javascript"           value="true" />
+			<capability name="supportsCss"          value="true" />
+			<capability name="supportsCallback"     value="true" />
+			<capability name="tables"               value="true" />
+			<capability name="tagWriter"            value="System.Web.UI.HtmlTextWriter" />
+			<capability name="w3cdomversion"        value="1.0" />
+		</capabilities>
+	</browser>
+	
+	<!--
+	
+  -->
+</browsers>

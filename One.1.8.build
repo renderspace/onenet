@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+<project name="One.Net.1.8" default="all">
+	
+	<property name="debug" value="true" />
+	<property name="website" value="NONE" />
+	<property name="config.srcprefix" value="./" /> 
+	<property name="nant.settings.currentframework" value="net-3.5" />
+	
+	<if test="${file::exists('local.properties.xml')}">
+        <echo message="--------------------- Loading local.properties.xml" />
+        <include buildfile="local.properties.xml" />
+    </if>
+	
+	<echo message="--------------------- debug: ${debug}" />
+	
+	
+	<target name="all" depends ="clean,BLL,OneMainWeb" />
+	<target name="clean" description="remove all build products">
+		<delete>
+			<fileset>
+				<include name="build/**" />
+			</fileset>
+		</delete>
+	</target>
+	<target name="init">
+		<mkdir dir="${config.srcprefix}build" />
+		<mkdir dir="${config.srcprefix}build/bin" />
+		<mkdir dir="${config.srcprefix}build/build_OneMainWeb" />
+		<mkdir dir="${config.srcprefix}build/build_OneMainWeb/bin" />
+	</target>
+	
+	<target name="config" depends="convert.web.config,convert.web.sitemap,convert.app.config">
+	</target>
+	
+	<target name="convert.web.config">
+        <copy file="${config.srcprefix}OneMainWeb/web.config.template" tofile="${config.srcprefix}OneMainWeb/web.config" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="APPLOGPATH" value="${log.appLogPath}" />
+					<token key="LOGLEVEL" value="${log.level}" />
+					<token key="DEBUGENABLED" value="${config.debugEnabled}"/>
+					<token key="SITESPECIFICPATH" value="${site.siteSpecificPath}" />
+					<token key="MAINREDIRECTNAME" value="${site.mainRedirectName}" />
+					<token key="WEBSITEID" value="${site.id}" />
+					<token key="PREFFEREDCULTURE" value="${site.PreferredCulture}" />
+                    <token key="PREFFEREDUICULTURE" value="${site.PreferredUICulture}" />
+                    <token key="PUBLISHROLEMAPPING" value="${site.PublishRoleMapping}" />
+                    <token key="PUBLISHFLAG" value="${site.PublishFlag}" />                   
+                    <token key="CONN" value="${config.MsSqlConnectionString}"/>
+					<token key="CONN13" value="${config.MsSqlConnectionString13}"/>
+					<token key="CONNCUSTOM" value="${config.MsSqlConnectionStringCustom}"/>
+					<token key="CONNPROFILE" value="${config.ProfileSqlConnectionString}"/>
+					<token key="CONNCRAWLER" value="${config.MsSqlConnectionStringCrawler}"/>
+					<token key="DEFAULTFROM" value="${site.DefaultFromEmail}"/>
+					<token key="SMTP" value="${site.SMTP}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+	
+	<target name="convert.web.sitemap">
+		<copy file="${config.srcprefix}OneMainWeb/web.sitemap.template" tofile="${config.srcprefix}OneMainWeb/web.sitemap" overwrite="true">
+        </copy>
+    </target>
+	
+	<target name="convert.app.config">
+		<copy file="${config.srcprefix}OneMaintenance/App.config.template" tofile="${config.srcprefix}build/App.config" overwrite="true">
+            <filterchain>
+                <replacetokens>   
+                    <token key="CONN" value="${config.MsSqlConnectionString}"/>
+					<token key="CONN13" value="${config.MsSqlConnectionString13}"/>
+					<token key="CONNCUSTOM" value="${config.MsSqlConnectionStringCustom}"/>
+					<token key="CONNPROFILE" value="${config.ProfileSqlConnectionString}"/>
+				</replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+	
+	<target name="tool" depends="init,BLL,convert.app.config" description="">
+		<csc target="exe" output="${config.srcprefix}build\OneTool.exe" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="OneMaintenance\**\*.cs" />
+				<exclude name="OneMaintenance\**\AssemblyInfo.cs" />
+				<exclude name="OneMaintenance\Application.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="build\bin\One.Net.BLL.dll" />
+				<include name="..\..\library\MySql\Mysql.Data.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+			</references>
+		</csc>
+		<copy todir="${config.srcprefix}build\" flatten="true">
+			<fileset basedir="${config.srcprefix}">
+				<include name="build\bin\One.Net.BLL.dll" />
+				<include name="..\..\library\MySql\Mysql.Data.dll" />
+				<include name="..\..\..\log4net.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="BLL" depends="DllBuild">
+		<csc target="library" output="${config.srcprefix}build\bin\One.Net.BLL.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="BLL\**\*.cs" />
+				<exclude name="BLL\**\AssemblyInfo.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="..\..\library\UrlRewritingNet\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\One.Cron.Core.dll" />				
+				<include name="build\bin\One.Cron.API.dll" />						
+				<include name="build\bin\TwoControlsLibrary.dll" />					
+			</references>
+		</csc>
+	</target>
+	
+	<target name="DllBuild">
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\MsSqlDBUtility.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\library\MsSqlDBUtility\*.cs" />
+				<include name="..\..\library\MsSqlDBUtility\**\*.cs" />
+			</sources>
+		</csc>			
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\TwoControlsLibrary.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\library\TwoControlLibrary\*.cs" />
+				<include name="..\..\library\TwoControlLibrary\**\*.cs" />
+			</sources>
+			<resources basedir="${config.srcprefix}..\..\library\TwoControlLibrary" dynamicprefix="true" prefix="TwoControlsLibrary" >
+	            <include name="Res\**.*" />
+			</resources> 				
+		</csc>		
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\AdaptedCSSFriendly.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\library\AdaptedCSSFriendly\*.cs" />
+				<include name="..\..\library\AdaptedCSSFriendly\**\*.cs" />
+			</sources>
+			<resources basedir="${config.srcprefix}..\..\library\AdaptedCSSFriendly" dynamicprefix="true" prefix="AdaptedCSSFriendly" >
+	            <include name="CSS\**.*" />
+	            <include name="JavaScript\**.*" />				
+			</resources> 							
+		</csc>
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\Bamboo.Core.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Bamboo\Bamboo.Core\*.cs" />
+				<include name="..\..\One.Bamboo\Bamboo.Core\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="..\..\..\Newtonsoft.Json.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\One.Net.BLL.dll" />
+			</references>			
+		</csc>		
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\Bamboo.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Bamboo\Bamboo\*.cs" />
+				<include name="..\..\One.Bamboo\Bamboo\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="..\..\..\Newtonsoft.Json.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\Bamboo.Core.dll" />				
+				<include name="build\bin\AdaptedCSSFriendly.dll" />								
+				<include name="build\bin\TwoControlsLibrary.dll" />	
+				<include name="build\bin\One.Net.BLL.dll" />		
+			</references>			
+		</csc>		
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\Crawler.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Crawler\Crawler\*.cs" />
+				<include name="..\..\One.Crawler\Crawler\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+			</references>			
+		</csc>			
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\One.Cron.API.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Cron\One.Cron.API\*.cs" />
+				<include name="..\..\One.Cron\One.Cron.API\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+			</references>			
+		</csc>		
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\One.Cron.Core.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Cron\One.Cron.Core\*.cs" />
+				<include name="..\..\One.Cron\One.Cron.Core\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\One.Cron.API.dll" />					
+			</references>			
+		</csc>	
+		<csc target="exe" define="${define}" output="${config.srcprefix}build\bin\One.Cron.exe" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Cron\One.Cron\*.cs" />
+				<include name="..\..\One.Cron\One.Cron\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\One.Cron.API.dll" />					
+				<include name="build\bin\One.Cron.Core.dll" />	
+				<include name="..\..\library\ServiceDebuggerHelper\bin\Release\ServiceDebuggerHelper.dll" />
+			</references>			
+		</csc>			
+	</target>
+
+	<target name="SearchInterfaceBuild" description="">
+		<csc target="library" define="${define}" output="${config.srcprefix}build\bin\SearchInterface.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="..\..\One.Crawler\SearchInterface\*.cs" />
+				<include name="..\..\One.Crawler\SearchInterface\**\*.cs" />
+			</sources>
+			<references basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="build\bin\MsSqlDBUtility.dll" />
+				<include name="build\bin\TwoControlsLibrary.dll" />												
+				<include name="build\bin\One.Net.BLL.dll" />
+				<include name="build\bin\Crawler.dll" />
+			</references>			
+		</csc>		
+	</target>
+
+	<target name="OneMainWeb" depends="init,BLL,SearchInterfaceBuild" description="">
+		<if test="${website=='NONE'}">
+			<fail message="WebSite Property is not set." />
+		</if>
+		
+		<delete>
+			<fileset basedir="${config.srcprefix}build\build_OneMainWeb">
+				<include name="**\*" />
+			</fileset>
+		</delete>
+
+		<wsdl path="http://195.138.196.140/Crawler/Search.asmx?wsdl" namespace="OneMainWeb.WebServiceCrawler"
+		outfile="${config.srcprefix}OneMainWeb/WebServiceCrawler.cs" />
+		
+		<copy todir="${config.srcprefix}build\build_OneMainWeb">
+			<fileset basedir="${config.srcprefix}OneMainWeb">
+				<include name="*.as?x" />
+				<include name="*.as?x.cs" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${config.srcprefix}build\build_OneMainWeb\bin" flatten="true">
+			<fileset basedir="${config.srcprefix}build\bin">
+				<include name="*.dll" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${config.srcprefix}build\build_OneMainWeb\bin" flatten="true">
+			<fileset basedir="${config.srcprefix}">
+				<include name="..\..\..\log4net.dll" />
+				<include name="..\..\library\UrlRewritingNet\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="..\..\library\AjaxControlToolKit\AjaxControlToolkit.dll" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${config.srcprefix}build\build_OneMainWeb">
+			<fileset basedir="${config.srcprefix}OneMainWeb">
+				<include name="*.config" />
+				<include name="*.sitemap" />
+				<include name="CommonModules\*.as?x" />
+				<include name="AdminControls\*.as?x" />
+				<include name="App_Browsers\**.*" />
+				<include name="Controls\*.as?x" />
+				<include name="adm\*.as?x" />
+				<include name="ckeditor\**.*" />
+				<include name="*.Master" />
+				<include name="Languages\**.xml" />
+				<include name="JavaScript\**.*" />
+				<include name="*.css" />
+				<include name="*.js" />
+				<include name="Utils\**.*" />
+				
+				<include name="site_specific\${website}\**.*" />					
+				
+				<include name="Res\brisanje.gif" />
+				<include name="Res\colapse.gif" />
+				<include name="Res\expand.gif" />
+				<include name="Res\objava.gif" />
+				<include name="Res\objavljeno.gif" />
+				<include name="Res\log_in_screen_02.gif" />
+				<include name="Res\one-big-logo.gif" />
+				<include name="Res\one_logo.gif" />
+				<include name="Res\menu.gif" />
+				<include name="Res\exclamation_icon.gif" />
+				<include name="Res\dark-*.gif" />
+				<include name="Res\arrow_icon.gif" />
+				<include name="Res\PlaceHolders\**.*" />			
+				<include name="AdminControls\**.gif" />	
+				<exclude name="ckfinder\**.*" />				
+				<exclude name="adm\NewFileManager.*" />					
+				<exclude name="adm\FileManager2.*" />	
+				<exclude name="adm\IIS.*" />
+				<exclude name="adm\WebsiteIIS7.*" />
+			</fileset>
+		</copy>
+
+		<echo  message="--------------------- Building OneMainWeb.dll ---------------------" />
+		<csc target="library" output="${config.srcprefix}build\build_OneMainWeb\bin\OneMainWeb.dll" debug="${debug}">
+			<sources basedir="${config.srcprefix}">
+				<include name="OneMainWeb\*.cs" />
+				<include name="OneMainWeb\Base\*.cs" />
+				<include name="OneMainWeb\CommonModules\*.cs" />
+				<include name="OneMainWeb\adm\*.cs" />
+				<include name="OneMainWeb\AdminControls\*.cs" />
+				<include name="OneMainWeb\aspx_templates\*.cs" />
+				<include name="OneMainWeb\Controls\*.cs" />
+				<include name="OneMainWeb\**\AssemblyInfo.cs" />
+				<include name="OneMainWeb\Utils\**.cs" />
+				<exclude name="OneMainWeb\ckfinder\**.*" />				
+				<exclude name="OneMainWeb\adm\NewFileManager.*" />				
+				<exclude name="OneMainWeb\adm\FileManager2.*" />
+				<exclude name="OneMainWeb\adm\IIS.*" />
+				<exclude name="OneMainWeb\adm\WebsiteIIS7.*" />				
+			</sources>
+			<resources basedir="${config.srcprefix}OneMainWeb" dynamicprefix="true" prefix="OneMainWeb" >
+	            <include name="Res\**.gif" />
+				<exclude name="Res\one_logo.gif" />
+				<exclude name="Res\menu.gif" />
+				<exclude name="Res\exclamation_icon.gif" />
+				<exclude name="Res\dark-*.gif" />
+				<exclude name="Res\arrow_icon.gif" />
+				<exclude name="Res\PlaceHolders\**.*" />
+			</resources> 
+			<references basedir="${config.srcprefix}">
+				<include name="build\bin\One.Net.BLL.dll" />
+				<include name="..\..\library\UrlRewritingNet\UrlRewritingNet.UrlRewriter.dll" />
+				<include name="..\..\..\log4net.dll" />
+				<include name="..\..\..\Newtonsoft.Json.dll" />
+				<include name="build\bin\AdaptedCSSFriendly.dll" />
+				<include name="build\bin\TwoControlsLibrary.dll" />
+				<include name="build\bin\Crawler.dll" />
+				<include name="build\bin\Bamboo.dll" />
+				<include name="build\bin\Bamboo.Core.dll" />
+				<include name="..\..\library\AjaxControlToolKit\AjaxControlToolkit.dll" />
+				<include name="C:\WINDOWS\Microsoft.NET\Framework\v3.5.30319\System.Web.ApplicationServices.dll" />
+			</references>
+		</csc>
+	</target>
+</project>
