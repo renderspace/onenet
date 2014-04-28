@@ -55,7 +55,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel InfoLabelLastChange;
+        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelLastChange;
         
         /// <summary>
         /// DropDownListModuleInstances control.
@@ -100,7 +100,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input MainTextBox;
+        protected global::One.Net.BLL.WebControls.Input MainTextBox;
         
         /// <summary>
         /// cmdRevertToPublished control.

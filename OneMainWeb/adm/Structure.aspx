@@ -1,21 +1,16 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Structure.aspx.cs" Inherits="OneMainWeb.adm.Structure" Title="$structure" EnableEventValidation="false" ValidateRequest="false"  %>
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary"  %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <uc1:Notifier ID="Notifier1" runat="server" />
-    
-    <div class="topStructure">
-		<asp:checkbox id="chkEnableDelete" AutoPostBack="true" Runat="server" text="$enable_delete" OnCheckedChanged="chkEnableDelete_CheckedChanged" />
-	</div>	
 	
     <div class="centerStructure structure">
         <asp:checkbox id="chkShowPagesWithoutTranslation" AutoPostBack="true" Runat="server" Text="$show_pages_without_translation" OnCheckedChanged="chkShowPagesWithoutTranslation_CheckedChanged" /><br/>
-	    <asp:checkbox id="chkEnableStructureEditing" AutoPostBack="true" Runat="server"	Text="$enable_structure_editing" OnCheckedChanged="chkEnableStructureEditing_CheckedChanged" /><br/>
 	    <asp:checkbox id="chkExpandTree" AutoPostBack="true" Runat="server"	Text="$expand_tree" OnCheckedChanged="chkExpandTree_CheckedChanged" /><br/>
 	    	    
 	    <div id="divAddChild" runat="server" style="width: 100%;">
@@ -103,7 +98,7 @@
     			    </div>
 		        </fieldset>
 		        <%-- *************************************** Add Page ********************************************* --%>
-		        <asp:PlaceHolder id="divAddInstance" runat="server" Visible="false" EnableViewState="true"	>
+		        <div id="divAddInstance">
 		        <fieldset>
 			        <legend><asp:Literal ID="LiteralAddInstance" runat="server" EnableViewState="false"></asp:Literal></legend>
 			        <div class="select">
@@ -114,7 +109,7 @@
 			            <asp:button	id="cmdAddInstance"	Runat="server" text="$add_module_instance_button" onclick="cmdAddInstance_Click" />
 			        </div>
 		        </fieldset>
-		        </asp:PlaceHolder>					
+		        </div>					
         		
     		    <%-- *************************************** Module instances ********************************************* --%>	
 		        <fieldset class="fieldsetInstances">

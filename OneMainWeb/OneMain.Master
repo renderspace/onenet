@@ -1,5 +1,5 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OneMain.master.cs" Inherits="OneMainWeb.OneMain" %>
-<%@ Register Src="~/AdminExtensions/BambooVirtualTables.ascx" TagName="BambooVirtualTables" TagPrefix="uc1" %>
+<%@ Register TagPrefix="cc2" TagName="VirtualTableList" Src="~/AdminControls/ScaffoldVirtualTableList.ascx" %>
 <%@ Import namespace="One.Net.BLL" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -110,7 +110,7 @@
                 <DynamicSelectedStyle BackColor="#E3E2DA" />
                 <DynamicMenuItemStyle Height="20px" />
             </asp:Menu>
-            <uc1:BambooVirtualTables ID="BambooVirtualTables1" runat="server"></uc1:BambooVirtualTables>
+           <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
             <div style="margin-top: 20px; margin-left: 10px;">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
             </div>

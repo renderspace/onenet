@@ -1,8 +1,8 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OneSettings.ascx.cs" Inherits="OneMainWeb.AdminControls.OneSettings" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ Import Namespace="System.Collections.Generic" %>
-<%@ Import Namespace="One.Net.BLL" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <div class="oneSettings">
     <asp:PlaceHolder ID="plhCollapsed" Visible="true" runat="server">
          <div class="extline">

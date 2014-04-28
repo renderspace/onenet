@@ -8,7 +8,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using One.Net.BLL.Model.Web;
 using WC = System.Web.UI.WebControls;
-using TwoControlsLibrary;
+
 using System.Web.Configuration;
 using System.Web.Profile;
 using System.Globalization;
@@ -62,26 +62,6 @@ namespace OneMainWeb
             set
             {
                 profile.AutoPublish = value;
-                profile.Save();
-            }
-        }
-
-        protected bool EnableDelete
-        {
-            get { return profile.EnableDelete; }
-            set
-            {
-                profile.EnableDelete = value;
-                profile.Save();
-            }
-        }
-
-        protected bool EnableStructureEditing
-        {
-            get { return profile.EnableStructureEditing; }
-            set
-            {
-                profile.EnableStructureEditing = value;
                 profile.Save();
             }
         }

@@ -85,13 +85,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Menu Menu1;
         
         /// <summary>
-        /// BambooVirtualTables1 control.
+        /// VirtualTableList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Bamboo.AdminControls.BambooVirtualTables BambooVirtualTables1;
+        protected global::OneMainWeb.AdminControls.ScaffoldVirtualTableList VirtualTableList1;
         
         /// <summary>
         /// Button1 control.

@@ -14,7 +14,7 @@ using One.Net.BLL.Web;
 using OneMainWeb.AdminControls;
 using One.Net.BLL;
 using One.Net.BLL.Utility;
-using TwoControlsLibrary;
+
 
 namespace OneMainWeb
 {
@@ -53,7 +53,6 @@ namespace OneMainWeb
                 chkAutoPublish.Checked = AutoPublish;
                 CheckboxShowUntranslated.Checked = ShowUntranslated;
                 chkUseFck.Checked = UseCkEditor;
-                chkEnableDelete.Checked = EnableDelete;
 
                 HistoryControl.GetContent = articleDS.GetArticle;
                 HistoryControl.Img1Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-down.gif");
@@ -295,7 +294,7 @@ namespace OneMainWeb
                     cmdUnPublish.Visible = !article.IsNew && !article.MarkedForDeletion && (bool)Context.Items["publish"]; ;
                     cmdPublish.Visible = (article.MarkedForDeletion || article.IsChanged) && (bool)Context.Items["publish"];
                     cmdEdit.Visible = !article.MarkedForDeletion;
-                    cmdDelete.Visible = !article.MarkedForDeletion && EnableDelete;
+                    cmdDelete.Visible = !article.MarkedForDeletion;
                     cmdRevertToPublished.Visible = !article.IsNew && ( article.IsChanged || article.MarkedForDeletion);
                     cmdEditButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
                     //cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_confirm_delete") + @"');";
@@ -597,12 +596,6 @@ namespace OneMainWeb
                 articleB.DeleteRegular(id);
                 regularGridView.DataBind();
             }
-        }
-
-        protected void chkEnableDelete_CheckedChanged(object sender, EventArgs e)
-        {
-            EnableDelete = chkEnableDelete.Checked;
-            articleGridView.DataBind();
         }
     }
 

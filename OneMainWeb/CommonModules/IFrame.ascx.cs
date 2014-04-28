@@ -9,7 +9,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using One.Net.BLL.Web;
-using TwoControlsLibrary;
+using One.Net.BLL.Utility;
+
 
 namespace OneMainWeb.CommonModules
 {

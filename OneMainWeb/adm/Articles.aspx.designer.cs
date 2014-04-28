@@ -49,22 +49,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.CheckBox CheckboxShowUntranslated;
         
         /// <summary>
-        /// chkEnableDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkEnableDelete;
-        
-        /// <summary>
         /// tabMultiview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// tabListArticles control.
@@ -73,7 +64,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListArticles;
+        protected global::One.Net.BLL.WebControls.TabularView tabListArticles;
         
         /// <summary>
         /// cmdAddArticle control.
@@ -91,7 +82,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InputWithButton InputWithButtonShowById;
+        protected global::One.Net.BLL.WebControls.InputWithButton InputWithButtonShowById;
         
         /// <summary>
         /// ddlRegularFilter control.
@@ -100,7 +91,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.DropDownList ddlRegularFilter;
+        protected global::One.Net.BLL.WebControls.CleanDropDownList ddlRegularFilter;
         
         /// <summary>
         /// RegularSource control.
@@ -145,7 +136,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabViewEditArticle;
+        protected global::One.Net.BLL.WebControls.TabularView tabViewEditArticle;
         
         /// <summary>
         /// lbRegulars control.
@@ -199,7 +190,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.DateEntry txtDisplayDate;
+        protected global::One.Net.BLL.WebControls.DateEntry txtDisplayDate;
         
         /// <summary>
         /// TextContentEditor control.
@@ -271,7 +262,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabListRegulars;
+        protected global::One.Net.BLL.WebControls.TabularView tabListRegulars;
         
         /// <summary>
         /// txtNewRegular control.
@@ -280,7 +271,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtNewRegular;
+        protected global::One.Net.BLL.WebControls.Input txtNewRegular;
         
         /// <summary>
         /// cmdAddRegular control.
@@ -316,7 +307,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabViewEditRegular;
+        protected global::One.Net.BLL.WebControls.TabularView tabViewEditRegular;
         
         /// <summary>
         /// TxtRegularContent control.

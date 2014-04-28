@@ -4,11 +4,12 @@ using System.Net;
 
 using One.Net.BLL;
 using One.Net.BLL.Web;
-using TwoControlsLibrary;
+
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {

@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsSubscription.ascx.cs" Inherits="OneMainWeb.CommonModules.NewsSubscription" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Import Namespace="One.Net.BLL"  %>
 
 <% if (ShowModuleTitle ) { %>

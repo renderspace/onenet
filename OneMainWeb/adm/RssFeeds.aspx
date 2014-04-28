@@ -3,7 +3,7 @@
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ Import Namespace="System.Collections.Generic"%>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary"  %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />

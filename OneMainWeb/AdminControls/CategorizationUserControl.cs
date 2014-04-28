@@ -58,7 +58,6 @@ namespace OneMainWeb.AdminControls
         private int nodeCount;
 
         private bool expandTree;
-        private bool enableDelete;
 
         #endregion Variables
 
@@ -205,13 +204,6 @@ namespace OneMainWeb.AdminControls
         }
 
         [Bindable(false), Category("Behaviour"), DefaultValue("")]
-        public bool EnableDelete
-        {
-            get { return enableDelete; }
-            set { enableDelete = value; }
-        }        
-
-        [Bindable(false), Category("Behaviour"), DefaultValue("")]
         public bool ExpandTree
         {
             get { return expandTree; }
@@ -276,7 +268,7 @@ namespace OneMainWeb.AdminControls
 
         protected override object SaveControlState()
         {
-            object[] cSThis = new object[23];
+            object[] cSThis = new object[22];
             object cSBase = base.SaveControlState();
 
             cSThis[0] = cSBase;
@@ -300,8 +292,7 @@ namespace OneMainWeb.AdminControls
             cSThis[18] = moveCategory;
             cSThis[19] = showUntranslated;
             cSThis[20] = expandTree;
-            cSThis[21] = enableDelete;
-            cSThis[22] = showIsPrivate;
+            cSThis[21] = showIsPrivate;
             return cSThis;
         }
 
@@ -330,8 +321,7 @@ namespace OneMainWeb.AdminControls
             moveCategory = (CategoryMover) cSThis[18];
             showUntranslated = (bool) cSThis[19];
             expandTree = (bool)cSThis[20];
-            enableDelete = (bool)cSThis[21];
-            showIsPrivate = (bool)cSThis[22];
+            showIsPrivate = (bool)cSThis[21];
 
             base.LoadControlState(cSBase);
         }

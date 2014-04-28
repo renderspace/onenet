@@ -154,7 +154,7 @@ namespace OneMainWeb.adm
                 {
                     rightSettings.Visible = false;
                     rightSettingsNoAccess.Visible = true;
-                    divAddInstance.Visible = divAddChild.Visible = false;
+                    divAddChild.Visible = false;
                 }
                 else if (selectedPage.HasTranslationInCurrentLanguage)
                 {
@@ -166,8 +166,7 @@ namespace OneMainWeb.adm
                     rightSettings.Visible = true;
                     rightSettingsNoAccess.Visible = false;
 
-                    chkEnableStructureEditing.Checked = divAddChild.Visible = divAddInstance.Visible = EnableStructureEditing;
-                    chkEnableDelete.Checked = ButtonDelete.Visible = EnableDelete;
+                    divAddChild.Visible = true;
 
                     bool hasChildren = webSiteB.ListChildrenIds(selectedPage.Id).Count > 0;
 
@@ -176,13 +175,9 @@ namespace OneMainWeb.adm
                     InfoLabelSelectedPage.Value = selectedPage.Title;
                     ButtonPublish.Enabled = selectedPage.IsChanged && (isPublishable || selectedPage.MarkedForDeletion);
                     ButtonUnPublish.Enabled = !selectedPage.IsNew && !hasChildren;
-                    ButtonDelete.Visible = !selectedPage.MarkedForDeletion && EnableDelete;
+                    ButtonDelete.Visible = !selectedPage.MarkedForDeletion;
                     ButtonUndoDelete.Visible = selectedPage.MarkedForDeletion;
-
-                    if (EnableDelete)
-                    {
-                        ButtonDelete.Enabled = !hasChildren;
-                    }
+                    ButtonDelete.Enabled = !hasChildren;
 
                     InputWithButtonAddSubPage.Enabled = !selectedPage.MarkedForDeletion;
                     ButtonPublish.Text = selectedPage.MarkedForDeletion ? "$publish_delete" : "$publish";
@@ -315,7 +310,6 @@ namespace OneMainWeb.adm
 
                 if (selectedPage.IsRedirected)
                 {
-                    divAddInstance.Visible = false;
                     //RepeaterModuleInstances.Visible = false;
                 }
                 else
@@ -394,7 +388,7 @@ namespace OneMainWeb.adm
                     }
                 }
 
-                deleteButton.Visible = !moduleInstance.IsInherited && !moduleInstance.PendingDelete && EnableDelete;
+                deleteButton.Visible = !moduleInstance.IsInherited && !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete && !moduleInstance.IsInherited;
                 imgButton.Visible = editButton.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
                 if (!moduleInstance.IsInherited && moduleInstance.Name == "TextContent")
@@ -661,12 +655,6 @@ namespace OneMainWeb.adm
             return strReturn;
         }
 
-        protected void chkEnableDelete_CheckedChanged(object sender, EventArgs e)
-        {
-            EnableDelete = chkEnableDelete.Checked;
-            InitializeControls();
-        }
-
         protected void chkShowPagesWithoutTranslation_CheckedChanged(object sender, EventArgs e)
         {
             
@@ -676,12 +664,6 @@ namespace OneMainWeb.adm
         {
             ExpandTree = chkExpandTree.Checked;
             TreeViewState.ExpandTreeView(pageTree, ExpandTree);
-        }
-
-        protected void chkEnableStructureEditing_CheckedChanged(object sender, EventArgs e)
-        {
-            EnableStructureEditing = chkEnableStructureEditing.Checked;
-            InitializeControls();
         }
 
         protected void cmdAddChild_Click(object sender, EventArgs e)

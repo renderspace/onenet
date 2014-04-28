@@ -9,20 +9,21 @@
 		</siteMapNode>
 		<siteMapNode url="" title="$mi_modules" description="" roles="*">
 			<siteMapNode url="adm/Forms.aspx" title="$mi_forms" description="" roles="all, Everyone"/>
-			<siteMapNode url="adm/Faqs.aspx" title="$mi_faqs" description="" roles="all, Everyone"/>
-			<siteMapNode url="adm/Comments.aspx" title="$mi_comments" description="" roles="all, Everyone"/>
 			<siteMapNode url="adm/Articles.aspx" title="$mi_articles" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/Events.aspx" title="$mi_events" description="" roles="all, Everyone" />
 			<siteMapNode url="adm/SubscriptionManager.aspx" title="$mi_subscription_manager" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/AuthorInfo.aspx" title="$mi_author_info" description="" roles="all, Everyone" />			
 		</siteMapNode>
 		<siteMapNode url="" title="$mi_settings" description="" roles="*">
 			<siteMapNode url="adm/dictionary.aspx" title="$mi_dictionary" description="" roles="all, Everyone" />
 			<siteMapNode url="adm/FileManager.aspx" title="$mi_file_manager" description="" roles="all, Everyone" />
 			<siteMapNode url="adm/RssFeeds.aspx" title="$mi_rss_manager" description="" roles="all, Everyone" />
-		</siteMapNode>
-		<siteMapNode url="" title="$mi_extra" description="" roles="*">
-			<siteMapNode url="adm/PersonalSettings.aspx" title="$mi_personal_settings" description="" roles="all, Everyone" />       
-		</siteMapNode>
+      <siteMapNode url="adm/Redirects.aspx" title="$mi_redirects" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/Scaffold.aspx" title="$mi_scaffold" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/ScaffoldConfig.aspx" title="$mi_scaffold_config" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/SQLEditor.aspx" title="$mi_sql" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/Website.aspx" title="$mi_website" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/WebsiteIIS7.aspx" title="$mi_website7" description="" roles="all, Everyone" />
+
+      
+    </siteMapNode>
 	</siteMapNode>
 </siteMap>

@@ -43,29 +43,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdaptedCSSFriendly, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\library\AdaptedCSSFriendly\bin\Release\AdaptedCSSFriendly.dll</HintPath>
-    </Reference>
-    <Reference Include="AjaxControlToolkit, Version=1.0.20229.20821, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\library\AjaxControlToolKit\AjaxControlToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="Bamboo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\One.Bamboo\Bamboo\bin\Bamboo.dll</HintPath>
-    </Reference>
-    <Reference Include="Bamboo.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\One.Bamboo\Bamboo.Core\bin\Release\Bamboo.Core.dll</HintPath>
+    <Reference Include="AdaptedCSSFriendly">
+      <HintPath>..\..\library\AdaptedCSSFriendly\bin\Release\AdaptedCSSFriendly.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ckfinder\_source\bin\Release\CKFinder.dll</HintPath>
-    </Reference>
-    <Reference Include="Crawler, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\One.Crawler\Crawler\bin\Release\Crawler.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -125,22 +108,68 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TwoControlsLibrary, Version=1.0.4268.22720, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\library\TwoControlLibrary\bin\Release\TwoControlsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="UrlRewritingNet.UrlRewriter, Version=2.0.60829.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\library\UrlRewritingNet.UrlRewriter.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminControls\CustomBoundField.cs" />
+    <Compile Include="AdminControls\ScaffoldConfig.ascx.cs">
+      <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldConfig.ascx.designer.cs">
+      <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldDynamicEditor.ascx.cs">
+      <DependentUpon>ScaffoldDynamicEditor.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldDynamicEditor.ascx.designer.cs">
+      <DependentUpon>ScaffoldDynamicEditor.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldMainPagedList.ascx.cs">
+      <DependentUpon>ScaffoldMainPagedList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldMainPagedList.ascx.designer.cs">
+      <DependentUpon>ScaffoldMainPagedList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.cs">
+      <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.designer.cs">
+      <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="adm\FileManager2.aspx.cs">
       <DependentUpon>FileManager2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="adm\FileManager2.aspx.designer.cs">
       <DependentUpon>FileManager2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Publish.aspx.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Publish.aspx.designer.cs">
+      <DependentUpon>Publish.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Scaffold.aspx.cs">
+      <DependentUpon>Scaffold.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Scaffold.aspx.designer.cs">
+      <DependentUpon>Scaffold.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\ScaffoldConfig.aspx.cs">
+      <DependentUpon>ScaffoldConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\ScaffoldConfig.aspx.designer.cs">
+      <DependentUpon>ScaffoldConfig.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\Website.aspx.cs">
       <DependentUpon>Website.aspx</DependentUpon>
@@ -158,12 +187,14 @@
     </Compile>
     <Compile Include="CommonModules\NajdiSearch.ascx.cs">
       <DependentUpon>NajdiSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\NajdiSearch.ascx.designer.cs">
       <DependentUpon>NajdiSearch.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\NavigatePages.ascx.cs">
       <DependentUpon>NavigatePages.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\NavigatePages.ascx.designer.cs">
       <DependentUpon>NavigatePages.ascx</DependentUpon>
@@ -191,7 +222,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminControls\ScaffoldConfig.ascx" />
+    <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
+    <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
+    <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="adm\FileManager2.aspx" />
+    <Content Include="adm\Publish.aspx" />
+    <Content Include="adm\Scaffold.aspx" />
+    <Content Include="adm\ScaffoldConfig.aspx" />
     <Content Include="adm\Website.aspx" />
     <Content Include="adm\WebsiteIIS7.aspx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
@@ -266,13 +304,6 @@
     <Compile Include="adm\ContentEdit.aspx.designer.cs">
       <DependentUpon>ContentEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="adm\Editor.aspx.cs">
-      <DependentUpon>Editor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\Editor.aspx.designer.cs">
-      <DependentUpon>Editor.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\External.aspx.cs">
       <DependentUpon>External.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -325,13 +356,6 @@
     </Compile>
     <Compile Include="adm\LinkBrowser.aspx.designer.cs">
       <DependentUpon>LinkBrowser.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="adm\Publish.aspx.cs">
-      <DependentUpon>Publish.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\Publish.aspx.designer.cs">
-      <DependentUpon>Publish.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\Redirects.aspx.cs">
       <DependentUpon>Redirects.aspx</DependentUpon>
@@ -401,48 +425,56 @@
     </Compile>
     <Compile Include="CommonModules\Directory.ascx.cs">
       <DependentUpon>Directory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\Directory.ascx.designer.cs">
       <DependentUpon>Directory.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\FormSelector.ascx.cs">
       <DependentUpon>FormSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\FormSelector.ascx.designer.cs">
       <DependentUpon>FormSelector.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\IFrame.ascx.cs">
       <DependentUpon>IFrame.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\IFrame.ascx.designer.cs">
       <DependentUpon>IFrame.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\Image.ascx.cs">
       <DependentUpon>Image.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\Image.ascx.designer.cs">
       <DependentUpon>Image.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\NewsSubscription.ascx.cs">
       <DependentUpon>NewsSubscription.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\NewsSubscription.ascx.designer.cs">
       <DependentUpon>NewsSubscription.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\SpecialContent.ascx.cs">
       <DependentUpon>SpecialContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\SpecialContent.ascx.designer.cs">
       <DependentUpon>SpecialContent.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\TextContent.ascx.cs">
       <DependentUpon>TextContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\TextContent.ascx.designer.cs">
       <DependentUpon>TextContent.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\Form.ascx.cs">
       <DependentUpon>Form.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\Form.ascx.designer.cs">
       <DependentUpon>Form.ascx</DependentUpon>
@@ -625,9 +657,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="adm\Editor.aspx" />
     <Content Include="adm\External.aspx" />
-    <Content Include="adm\Publish.aspx" />
     <Content Include="adm\RssFeeds.aspx" />
     <Content Include="CommonModules\Form.ascx" />
     <Content Include="Login.aspx" />
@@ -708,8 +738,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminExtensions\" />
-    <Folder Include="adm\_images\" />
     <Folder Include="App_GlobalResources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{3ec05cc8-a433-482a-86e3-aa01f9519a01}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

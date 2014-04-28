@@ -1,5 +1,5 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SubscriptionManager.aspx.cs" Inherits="OneMainWeb.SubscriptionManager" Title="$sub_manager" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Import Namespace="System.IO" %>
 <%@ Import Namespace="System.Collections.Generic"%>

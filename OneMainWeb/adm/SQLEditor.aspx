@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SQLEditor.aspx.cs" Inherits="OneMainWeb.adm.SQLEditor" Title="$sql_edit" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />

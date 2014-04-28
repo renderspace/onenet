@@ -22,11 +22,9 @@
 	<resource name="clear_preview_cache">Izprazni cache</resource>
 	<resource name="has_children_delete_not_possible">Stran ima podstrani, zato brisanje ni možno.</resource>
 	<resource name="show_pages_without_translation">Pokaži strani brez prevoda</resource>
-	<resource name="enable_structure_editing">Omogoči urejanje strukture</resource>
 	<resource name="enable_menu_group_display">Pokaži skupine menijev</resource>
 	<resource name="expand_tree">Prikaži vse strani v drevesu</resource>
 	<resource name="auto_publish">Objavi takoj</resource>
-	<resource name="enable_delete">Omogoči brisanje</resource>
 	<resource name="inherited">Dedovan modul (urejanje ni možno)</resource>
 	<resource name="l_from">Od</resource>
 	<resource name="l_to">Do</resource>

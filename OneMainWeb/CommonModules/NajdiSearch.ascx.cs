@@ -8,8 +8,9 @@ using One.Net.BLL;
 using One.Net.BLL.Web;
 using System.Net;
 using System.Xml;
-using TwoControlsLibrary;
+
 using log4net;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {

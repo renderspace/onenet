@@ -1,7 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="ContentEdit.aspx.cs" Inherits="OneMainWeb.adm.ContentEdit" Title="$content_edit" ValidateRequest="false" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
-<%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>
 
+<%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ Register Src="~/AdminControls/History.ascx" TagName="History" TagPrefix="uc1" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>

@@ -37,7 +37,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularMultiView tabMultiview;
+        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
         
         /// <summary>
         /// tabDictionary control.
@@ -46,7 +46,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabDictionary;
+        protected global::One.Net.BLL.WebControls.TabularView tabDictionary;
         
         /// <summary>
         /// cmdAddDictionaryEntry control.
@@ -64,7 +64,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel lblMessage;
+        protected global::One.Net.BLL.WebControls.InfoLabel lblMessage;
         
         /// <summary>
         /// InputWithButtonSearch control.
@@ -73,7 +73,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InputWithButton InputWithButtonSearch;
+        protected global::One.Net.BLL.WebControls.InputWithButton InputWithButtonSearch;
         
         /// <summary>
         /// LabelNoResults control.
@@ -100,7 +100,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.PostbackPager TwoPostbackPager1;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
         
         /// <summary>
         /// tabEntry control.
@@ -109,7 +109,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabEntry;
+        protected global::One.Net.BLL.WebControls.TabularView tabEntry;
         
         /// <summary>
         /// infoKeyword control.
@@ -118,7 +118,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.InfoLabel infoKeyword;
+        protected global::One.Net.BLL.WebControls.InfoLabel infoKeyword;
         
         /// <summary>
         /// txtKeyword control.
@@ -127,7 +127,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input txtKeyword;
+        protected global::One.Net.BLL.WebControls.Input txtKeyword;
         
         /// <summary>
         /// txtTextContent control.
@@ -172,7 +172,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.TabularView tabImportExport;
+        protected global::One.Net.BLL.WebControls.TabularView tabImportExport;
         
         /// <summary>
         /// CmdExport control.

@@ -14,7 +14,8 @@ using System.Threading;
 using System.ComponentModel;
 
 using One.Net.BLL;
-using TwoControlsLibrary;
+using One.Net.BLL.WebControls;
+
 
 namespace OneMainWeb.AdminControls
 {

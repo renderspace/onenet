@@ -9,9 +9,11 @@ using System.Text.RegularExpressions;
 using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Forms;
-using TwoControlsLibrary;
+
 using System.IO;
 using System.Text;
+using One.Net.BLL.WebControls;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {
@@ -197,22 +199,6 @@ if(window.jQuery)
 
                 rptPollSubmittedAnswers.DataSource = question.SubmittedAnswers.Values;
                 rptPollSubmittedAnswers.DataBind();
-            }
-        }
-
-        protected void rptPollSubmittedAnswers_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                BOSubmittedAnswer submittedAnswer = e.Item.DataItem as BOSubmittedAnswer;
-                ProgressBar progressBar = e.Item.FindControl("progressBar") as ProgressBar;
-                Label LabelPercentage = e.Item.FindControl("LabelPercentage") as Label;
-
-                progressBar.Percentage = (int)submittedAnswer.Answer.PercentageAnswered;
-                progressBar.Visible = true;
-                progressBar.OuterCssClass = "barTotal";
-                progressBar.InnerCssClass = "barPart";
-                LabelPercentage.Text = string.Format("{0:#0.00'%}", submittedAnswer.Answer.PercentageAnswered);
             }
         }
 

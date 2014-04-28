@@ -1,5 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TreeCategorization.ascx.cs" Inherits="OneMainWeb.AdminControls.TreeCategorization" %>
-<%@ Register TagPrefix="two" Namespace="TwoControlsLibrary" Assembly="TwoControlsLibrary" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 
 	<div id="divAddChild" runat="server" style="width: 100%;">
 	

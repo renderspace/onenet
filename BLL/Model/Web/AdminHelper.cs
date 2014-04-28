@@ -7,13 +7,13 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using WC = System.Web.UI.WebControls;
-using TwoControlsLibrary;
 
 using System.Web.Profile;
 using System.Globalization;
 using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
+using One.Net.BLL.WebControls;
 
 namespace One.Net.BLL.Model.Web
 {
@@ -100,10 +100,10 @@ namespace One.Net.BLL.Model.Web
                             it.Text = ResourceManager.GetString(it.Text, localizationFile);
                     }
                 }
-                else if (ctrl is TwoControlsLibrary.TabularMultiView)
+                else if (ctrl is TabularMultiView)
                 {
-                    TwoControlsLibrary.TabularMultiView mv = ctrl as TwoControlsLibrary.TabularMultiView;
-                    foreach (TwoControlsLibrary.TabularView tv in mv.Views)
+                    TabularMultiView mv = ctrl as TabularMultiView;
+                    foreach (TabularView tv in mv.Views)
                     {
                         if (tv.TabName.StartsWith(translationLabel))
                             tv.TabName = ResourceManager.GetString(tv.TabName, localizationFile);
@@ -124,31 +124,31 @@ namespace One.Net.BLL.Model.Web
                     if (c.RequiredMessage.StartsWith(translationLabel))
                         c.RequiredMessage = ResourceManager.GetString(c.Text, localizationFile);
                 }
-                else if (ctrl is TwoControlsLibrary.Input)
+                else if (ctrl is One.Net.BLL.WebControls.Input)
                 {
-                    TwoControlsLibrary.Input c = ctrl as TwoControlsLibrary.Input;
+                    One.Net.BLL.WebControls.Input c = ctrl as One.Net.BLL.WebControls.Input;
                     if (c.Text.StartsWith(translationLabel))
                         c.Text = ResourceManager.GetString(c.Text, localizationFile);
                     if (c.RequiredMessage.StartsWith(translationLabel))
                         c.RequiredMessage = ResourceManager.GetString(c.RequiredMessage, localizationFile);
                 }
-                else if (ctrl is TwoControlsLibrary.ValidInput)
+                else if (ctrl is ValidInput)
                 {
-                    TwoControlsLibrary.ValidInput c = ctrl as TwoControlsLibrary.ValidInput;
+                    ValidInput c = ctrl as ValidInput;
                     if (c.Text.StartsWith(translationLabel))
                         c.Text = ResourceManager.GetString(c.Text, localizationFile);
                     if (c.RequiredMessage.StartsWith(translationLabel))
                         c.RequiredMessage = ResourceManager.GetString(c.RequiredMessage, localizationFile);
                 }
-                else if (ctrl is TwoControlsLibrary.InfoLabel)
+                else if (ctrl is InfoLabel)
                 {
-                    TwoControlsLibrary.InfoLabel c = ctrl as TwoControlsLibrary.InfoLabel;
+                    InfoLabel c = ctrl as InfoLabel;
                     if (c.Text.StartsWith(translationLabel))
                         c.Text = ResourceManager.GetString(c.Text, localizationFile);
                 }
-                else if (ctrl is TwoControlsLibrary.LabeledCheckBox)
+                else if (ctrl is LabeledCheckBox)
                 {
-                    TwoControlsLibrary.LabeledCheckBox c = ctrl as TwoControlsLibrary.LabeledCheckBox;
+                    LabeledCheckBox c = ctrl as LabeledCheckBox;
                     if (c.Text.StartsWith(translationLabel))
                         c.Text = ResourceManager.GetString(c.Text, localizationFile);
                 }

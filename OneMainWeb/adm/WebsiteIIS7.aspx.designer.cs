@@ -46,7 +46,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputDbServer;
+        protected global::One.Net.BLL.WebControls.Input InputDbServer;
         
         /// <summary>
         /// InputMasterDbUsername control.
@@ -55,7 +55,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputMasterDbUsername;
+        protected global::One.Net.BLL.WebControls.Input InputMasterDbUsername;
         
         /// <summary>
         /// InputMasterDbPassword control.
@@ -64,7 +64,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputMasterDbPassword;
+        protected global::One.Net.BLL.WebControls.Input InputMasterDbPassword;
         
         /// <summary>
         /// InputSqlPhysicalPath control.
@@ -73,7 +73,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputSqlPhysicalPath;
+        protected global::One.Net.BLL.WebControls.Input InputSqlPhysicalPath;
         
         /// <summary>
         /// InputNewDbName control.
@@ -82,7 +82,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputNewDbName;
+        protected global::One.Net.BLL.WebControls.Input InputNewDbName;
         
         /// <summary>
         /// LabelExistingDatabaseName control.
@@ -109,7 +109,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputExistingDbUsername;
+        protected global::One.Net.BLL.WebControls.Input InputExistingDbUsername;
         
         /// <summary>
         /// InputExistingDbPassword control.
@@ -118,7 +118,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputExistingDbPassword;
+        protected global::One.Net.BLL.WebControls.Input InputExistingDbPassword;
         
         /// <summary>
         /// GridViewWebsites control.
@@ -136,7 +136,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputAppPoolName;
+        protected global::One.Net.BLL.WebControls.Input InputAppPoolName;
         
         /// <summary>
         /// InputSiteSpecificName control.
@@ -145,7 +145,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputSiteSpecificName;
+        protected global::One.Net.BLL.WebControls.Input InputSiteSpecificName;
         
         /// <summary>
         /// InputWebSiteName control.
@@ -154,7 +154,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputWebSiteName;
+        protected global::One.Net.BLL.WebControls.Input InputWebSiteName;
         
         /// <summary>
         /// InputHostHeader control.
@@ -163,7 +163,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::TwoControlsLibrary.Input InputHostHeader;
+        protected global::One.Net.BLL.WebControls.Input InputHostHeader;
         
         /// <summary>
         /// LabelLanguage control.
