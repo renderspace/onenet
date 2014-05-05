@@ -13,6 +13,15 @@ namespace OneMainWeb.CommonModules {
     public partial class ArticleList {
         
         /// <summary>
+        /// H2ModuleTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl H2ModuleTitle;
+        
+        /// <summary>
         /// RepeaterArticles control.
         /// </summary>
         /// <remarks>
@@ -20,6 +29,24 @@ namespace OneMainWeb.CommonModules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater RepeaterArticles;
+        
+        /// <summary>
+        /// PanelArchive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelArchive;
+        
+        /// <summary>
+        /// HyperLinkMore control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkMore;
         
         /// <summary>
         /// PagerArticles control.

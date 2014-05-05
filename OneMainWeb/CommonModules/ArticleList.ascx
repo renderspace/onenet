@@ -1,33 +1,28 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ArticleList.ascx.cs" Inherits="OneMainWeb.CommonModules.ArticleList" EnableViewState="false" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
-
-<asp:Repeater runat="server" ID="RepeaterArticles" OnItemDataBound="RepeaterArticles_ItemDataBound" >
+<h2 runat="server" id="H2ModuleTitle" noid="True" visible="false"></h2>
+<asp:Repeater runat="server" ID="RepeaterArticles" OnItemDataBound="RepeaterArticles_ItemDataBound">
     <ItemTemplate>
-		<article class="hentry odd first a1">
-			<header runat="server" id="Header1">
-				<hgroup>
-					 <h1 class="entry-title" id="H1Title" runat="server"><%# Eval("Title") %></h1>
-					 <h2 class="entry-subtitle" id="H2SubTitle" runat="server"><%# Eval("SubTitle") %></h2>
-				</hgroup>
+		<article id="HtmlArticle" runat="server">
+			<header runat="server" id="Header1" noid="True">
+                <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
+			    <h3 class="entry-title" id="H1Title" runat="server" noid="True"><a href="<%# RenderLink(Eval("Id"))  %>"><%# Eval("Title") %></a></h3>
+			    <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"><%# Eval("SubTitle") %></h4>
+                <time class="published" id="Time2" runat="server" noid="True"><%# Eval("DisplayDate") %></time>
 			</header>
-			<footer class="metadata">
-				<time class="published" datetime="2011-11-11" pubdate=""><%# Eval("DisplayDate") %></time>
-			</footer>
-			<section class="entry-summary" runat="server" id="SectionTeaser">
+			<div class="entry-summary" runat="server" id="SectionTeaser" noid="True">
 			    <%# Eval("Teaser") %>
-			</section>	
-			<section class="entry-content" runat="server" id="SectionHtml">
+			</div>	
+			<div class="entry-content" runat="server" id="SectionHtml" noid="True">
 				<%# Eval("Html") %>
-			</section>
-			<div class="readon" id="DivReadon" runat="server">
-				<a href="" title="" class="more">more &raquo; </a>
+			</div>
+			<div class="read-on" id="DivReadon" runat="server" noid="True">
+				<a href="<%# RenderLink(Eval("Id"))  %>" class="more"><%= Translate("article_more") %></a>
 			</div>
 		</article>
     </ItemTemplate>
 </asp:Repeater>		
-	
-<div class="archive">
-	<a href="" title="" class="more">Archive &raquo; </a>
-</div>
-
+<asp:Panel CssClass="archive" runat="server" ID="PanelArchive" Visible="false" noid="True">
+    <asp:HyperLink runat="server" ID="HyperLinkMore"></asp:HyperLink>
+</asp:Panel>
 <two:Pager id="PagerArticles" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	    

@@ -29,11 +29,15 @@ namespace OneMainWeb.CommonModules
         protected int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
         protected bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
         protected bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
+        protected bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
         protected bool ShowTitle { get { return GetBooleanSetting("ShowTitle"); } }
         protected bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
         protected bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
         protected bool ShowHtml { get { return GetBooleanSetting("ShowHtml"); } }
+        protected bool ShowMore { get { return GetBooleanSetting("ShowMore"); } }
+        protected bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
         protected string SingleArticleUri { get { return GetStringSetting("SingleArticleUri"); } }
+        protected string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
         protected int OffSet { get { return GetIntegerSetting("OffSet"); } }
 
 
@@ -44,6 +48,19 @@ namespace OneMainWeb.CommonModules
             PagerArticles.Visible = ShowPager;
             PagerArticles.RecordsPerPage = RecordsPerPage;
             PagerArticles.SelectedPage = 1;
+
+            if (ShowModuleTitle)
+            {
+                H2ModuleTitle.Visible = true;
+                H2ModuleTitle.InnerHtml = Translate("article_list_title");
+            }
+
+            if (!string.IsNullOrWhiteSpace(ArticleListUri))
+            {
+                PanelArchive.Visible = true;
+                HyperLinkMore.NavigateUrl = ArticleListUri;
+                HyperLinkMore.Text = Translate("article_list");
+            }
 
             if (Request[REQUEST_DATE] != null)
             {
@@ -62,7 +79,6 @@ namespace OneMainWeb.CommonModules
             {
                 requestedArticleTextSearch = HttpUtility.UrlDecode(Request[REQUEST_ARTICLE_TEXT_SEARCH]);
             }
-
             
             ListingState listingState =
                     new ListingState(RecordsPerPage, PagerArticles.FirstRecordIndex, SortDescending ? SortDir.Descending : SortDir.Ascending, 
@@ -85,10 +101,17 @@ namespace OneMainWeb.CommonModules
            PagerArticles.DetermineData();
         }
 
+        protected string RenderLink(object articleId)
+        {
+            var aid = int.Parse(articleId.ToString());
+            return SingleArticleUri + "?aid=" + aid.ToString();
+        }
+
         protected void RepeaterArticles_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.DataItem != null)
             {
+                var article = (BOArticle) e.Item.DataItem;
                 var SectionTeaser = e.Item.FindControl("SectionTeaser") as HtmlGenericControl;
                 var Header1 = e.Item.FindControl("Header1") as HtmlGenericControl;
                 var SectionHtml = e.Item.FindControl("SectionHtml") as HtmlGenericControl;
@@ -96,12 +119,24 @@ namespace OneMainWeb.CommonModules
                 var H2SubTitle = e.Item.FindControl("H2SubTitle") as HtmlGenericControl;
                 var DivReadon = e.Item.FindControl("DivReadon") as HtmlGenericControl;
 
+                var Time1 = e.Item.FindControl("Time1") as HtmlGenericControl;
+                var Time2 = e.Item.FindControl("Time2") as HtmlGenericControl;
+                var HtmlArticle = e.Item.FindControl("HtmlArticle") as HtmlGenericControl;
+
                 H1Title.Visible = ShowTitle;
                 H2SubTitle.Visible = ShowSubTitle;
                 Header1.Visible = ShowTitle || ShowSubTitle;
                 SectionTeaser.Visible = ShowTeaser;
                 SectionHtml.Visible = ShowHtml;
-                //DivReadon.Visible = Show
+                DivReadon.Visible = ShowMore;
+                Time1.Visible = ShowDate;
+                Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                Time2.Visible = ShowDateBelowTitle;
+                Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                var id = article.Id.Value;
+                HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
             }
         }
     }

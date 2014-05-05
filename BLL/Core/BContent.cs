@@ -138,9 +138,9 @@ namespace One.Net.BLL
                 string result = "<div class=\"meaning\">";
 
                 if (!string.IsNullOrEmpty(meaning.Title))
-                    result += "<h1>" + meaning.Title + "</h1>";
+                    result += "<h2>" + meaning.Title + "</h2>";
                 if (!string.IsNullOrEmpty(meaning.SubTitle))
-                    result += "<h2>" + meaning.SubTitle + "</h2>";
+                    result += "<h3>" + meaning.SubTitle + "</h3>";
                 if (!string.IsNullOrEmpty(meaning.ProcessedTeaser))
                     result += "<div class=\"teaser\">" + meaning.ProcessedTeaser + "</div>";
                 if (!string.IsNullOrEmpty(meaning.ProcessedHtml))

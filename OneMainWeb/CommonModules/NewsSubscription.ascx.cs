@@ -147,12 +147,9 @@ namespace OneMainWeb.CommonModules
 
             if (!IsPostBack)
             {
-                
-                
                 CmdSubscribe.Text = Translate(CmdSubscribe.Text);
-
+                InputEmail.Attributes.Add("placeholder",  Translate("enter_email"));
                 HideAllControls();
-
                 DisplaySubscribe();
 
                 Action = BNewsLtr.NewsletterAction.Default;
