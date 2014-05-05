@@ -39,6 +39,7 @@ namespace OneMainWeb.CommonModules
         protected string SingleArticleUri { get { return GetStringSetting("SingleArticleUri"); } }
         protected string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
         protected int OffSet { get { return GetIntegerSetting("OffSet"); } }
+        protected string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
 
         #endregion Settings
@@ -132,9 +133,11 @@ namespace OneMainWeb.CommonModules
                 Time1.Visible = ShowDate;
                 Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
                 Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                Time1.InnerHtml = article.DisplayDate.ToString(DateFormatString);
                 Time2.Visible = ShowDateBelowTitle;
                 Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
                 Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
                 var id = article.Id.Value;
                 HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
             }
