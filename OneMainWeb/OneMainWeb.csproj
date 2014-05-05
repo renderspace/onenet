@@ -180,6 +180,7 @@
     <Compile Include="adm\WebsiteIIS7.aspx.designer.cs">
       <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Base\NoIdAdapter.cs" />
     <Compile Include="Base\Section.cs" />
     <Compile Include="CommonModules\ArticleList.ascx.cs">
       <DependentUpon>ArticleList.ascx</DependentUpon>

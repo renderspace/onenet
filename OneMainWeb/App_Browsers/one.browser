@@ -9,6 +9,8 @@
       <adapter controlType="System.Web.UI.WebControls.ChangePassword" adapterType="AdaptedCSSFriendly.ChangePasswordAdapter" />
       <adapter controlType="System.Web.UI.WebControls.Login" adapterType="AdaptedCSSFriendly.LoginAdapter" />
 
+      <adapter controlType="System.Web.UI.WebControls.WebControl" adapterType="OneMainWeb.Base.NoIdAdapter" />
+      <adapter controlType="System.Web.UI.HtmlControls.HtmlControl" adapterType="OneMainWeb.Base.NoIdAdapter" />
 			
 			<!-- 
 			<adapter controlType="System.Web.UI.WebControls.FormView" adapterType="CSSAdapters.FormViewAdapter" />
