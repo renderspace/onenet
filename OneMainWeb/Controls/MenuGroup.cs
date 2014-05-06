@@ -77,11 +77,7 @@ namespace OneMainWeb.Controls
             set { _group = value; }
         }
 
-        public string SpanPosition
-        {
-            get { return _spanPosition; }
-            set { _spanPosition = value.ToLower(); }
-        }
+        public string FirstUlClass { get; set; }
 
         public MenuGroup()
         {
@@ -273,7 +269,7 @@ namespace OneMainWeb.Controls
                             {
                                 //  Render the header only once <ul>
                                 Literal header = new Literal();
-                                header.Text = "\n" + CreateIndentTabs(depth.Value) + "<ul>\n";
+                                header.Text = "\n" + CreateIndentTabs(depth.Value) + "<ul class=\"" + FirstUlClass + "\">";
                                 Controls.Add(header);
                                 headerRendered = true;
                             }
@@ -287,9 +283,7 @@ namespace OneMainWeb.Controls
                             Controls.Add(itemHeader);
 
                             //  Create the data item
-                            Literal item = RenderItem(linkCssClass, title, url, depth.Value, 
-                                dataItemSelected || dataItemChildSelected || dataItemDescendantSelected);
-
+                            Literal item = RenderItem(linkCssClass, title, url);
                             item.ID = "Item" + currentItemId;
 
                             // this is experimental!!
@@ -347,22 +341,10 @@ namespace OneMainWeb.Controls
             }
         }
 
-        protected virtual Literal RenderItem(string linkCssClass, string title, string url, int level, bool dataItemSelected)
+        protected virtual Literal RenderItem(string linkCssClass, string title, string url)
         {
             Literal item = new Literal();
-                            
-            if (SpanPosition == "inner")
-            {
-                item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\"><span>" + title + "</span></a>";
-            }
-            else if ( SpanPosition == "outer")
-            {
-                item.Text = "<span><a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a></span>";
-            }
-            else
-            {
-                item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a>";
-            }
+            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a>";
             return item;
         }
 

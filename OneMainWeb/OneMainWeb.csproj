@@ -720,6 +720,7 @@
     <Content Include="CommonModules\SpecialContent.ascx" />
     <Content Include="Languages\sl-SI\Resources.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Res\colapse.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
