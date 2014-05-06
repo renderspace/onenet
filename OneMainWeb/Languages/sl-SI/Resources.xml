@@ -352,7 +352,7 @@
 	<resource name="filter">Filtriraj</resource>
 	<resource name="mi_website">Spletno mesto</resource>
 	<resource name="mi_content">Urejanje vsebine</resource>
-	<resource name="mi_special_content">Urejanje XHTML vsebine</resource>
+	<resource name="mi_special_content">Urejanje HTML vsebine</resource>
 	<resource name="mi_structure">Drevesna struktura</resource>
 	<resource name="mi_publish">Objavljanje</resource>
 	<resource name="mi_modules">Moduli</resource>
@@ -541,7 +541,7 @@
 	<resource name="login">One.NET Prijava </resource>
 	<resource name="sql_edit">One.NET SQL urejevalnik </resource>
 	<resource name="publishing">One.NET Objavljanje </resource>
-	<resource name="special_content">One.NET XHTML urejevalnik </resource>
+	<resource name="special_content">One.NET HTML urejevalnik </resource>
 	<resource name="comments_editor">One.NET Prijava </resource>
 	<resource name="newsletters">Adrema: </resource>
 	<resource name="emails">Email-i:</resource>
