@@ -14,15 +14,7 @@ namespace OneMainWeb.adm
         {
             if (!IsPostBack)
             {
-
-                if (PhysicalSchema.CheckDatabaseConfiguration())
-                {
-                    PlaceHolderControls.Visible = true;
-                }
-                else
-                {
-                    PlaceHolderConfig.Visible = true;
-                }
+                MultiView1.ActiveViewIndex = PhysicalSchema.CheckDatabaseConfiguration() ? 0 : 1;
             }
         }
 

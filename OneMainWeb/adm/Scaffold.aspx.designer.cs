@@ -13,13 +13,22 @@ namespace OneMainWeb.adm {
     public partial class Scaffold {
         
         /// <summary>
-        /// PlaceHolderControls control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderControls;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
+        
+        /// <summary>
+        /// View1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// MainPagedList1 control.
@@ -31,13 +40,13 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.ScaffoldMainPagedList MainPagedList1;
         
         /// <summary>
-        /// PlaceHolderConfig control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderConfig;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// Label1 control.

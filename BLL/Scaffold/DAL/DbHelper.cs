@@ -19,6 +19,8 @@ namespace One.Net.BLL.Scaffold.DAL
         {
             switch (dbTypeId)
             {
+                case -5:
+                    return typeof(long);
                 case -1:    // text
                     return typeof(string);
                 case -7:    // bit
@@ -31,8 +33,12 @@ namespace One.Net.BLL.Scaffold.DAL
                     return typeof(double);
                 case 4:     // int
                     return typeof(int);
-                case 11:     // int
+                /*case -9:
+                    return typeof(DateTime);*/
+                case 11:
                     return typeof(DateTime);
+                case -10:
+                    return typeof(string); // ntext 
                 default:
                     return typeof(string);
             }
