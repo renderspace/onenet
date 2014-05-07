@@ -58,15 +58,13 @@ namespace OneMainWeb.AdminControls
         {
             if (!IsPostBack)
             {
-                if (PhysicalSchema.CheckDatabaseConfiguration())
-                {
-                    if (Request[REQUEST_VIRTUAL_TABLE_ID] != null)
-                        VirtualTableId = FormatTool.GetInteger(Request[REQUEST_VIRTUAL_TABLE_ID]);
+                if (Request[REQUEST_VIRTUAL_TABLE_ID] != null)
+                    VirtualTableId = FormatTool.GetInteger(Request[REQUEST_VIRTUAL_TABLE_ID]);
 
-                    PostbackPager1.SelectedPage = 1;
-                    PostbackPager1.RecordsPerPage = 20;
-                    GridViewItemsDataBind();
-                }
+                PostbackPager1.SelectedPage = 1;
+                PostbackPager1.RecordsPerPage = 20;
+                GridViewItemsDataBind();
+                MultiView1.ActiveViewIndex = 0;
             }
         }
         

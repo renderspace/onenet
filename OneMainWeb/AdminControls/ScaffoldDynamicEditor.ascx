@@ -1,11 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ScaffoldDynamicEditor.ascx.cs" Inherits="OneMainWeb.AdminControls.ScaffoldDynamicEditor" %>
 
-    <script type="text/javascript" src="/JavaScript/jquery-1.3.2.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.bgiframe.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.autocomplete.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script> 
-    <script type="text/javascript" src="/JavaScript/additional-methods.js"></script> 
-
 <asp:Literal ID="LiteralJQuery" runat="server" EnableViewState="false"></asp:Literal>		
 <div class="DynamicEditor">
     <asp:Literal ID="LiteralResultsDebug" runat="server" EnableViewState="false"></asp:Literal>
