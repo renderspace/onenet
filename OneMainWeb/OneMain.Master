@@ -116,7 +116,18 @@
                 <DynamicSelectedStyle BackColor="#E3E2DA" />
                 <DynamicMenuItemStyle Height="20px" />
             </asp:Menu>
-           <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
+           <div class="cc-m-Vertical">
+               <ul class="cc-m">
+                    <li>
+                        <ul>
+                                <li class="cc-m-with-child cc-m-child-sel">
+                                    <span class="cc-m-NonLink cc-m-child-sel">Table</span>
+                                        <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
+                                    </li>
+                            </ul>
+                    </li>
+                </ul>
+            </div>
             <div style="margin-top: 20px; margin-left: 10px;">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
             </div>
