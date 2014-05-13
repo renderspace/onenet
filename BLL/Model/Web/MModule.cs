@@ -131,7 +131,7 @@ namespace One.Net.BLL.Web
 
         public List<int> GetIntegerListSetting(string settingName)
         {
-            if (!Settings.ContainsKey(settingName))
+            if (Settings == null || !Settings.ContainsKey(settingName))
                 return new List<int>();
 
             BOSetting setting = Settings[settingName];
@@ -143,10 +143,10 @@ namespace One.Net.BLL.Web
         }
 
 
-        public string GetStringSetting(string settingName)
+        public string GetStringSetting(string settingName, string defaultValue = "")
         {
-            if (!Settings.ContainsKey(settingName))
-                return "";
+            if (Settings == null || !Settings.ContainsKey(settingName))
+                return defaultValue;
 
             BOSetting setting = Settings[settingName];
             if (!setting.Type.Equals("String"))
