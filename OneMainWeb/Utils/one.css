@@ -2,7 +2,7 @@ body { font-family: Verdana; font-size: 80%; margin: 0; padding: 0; }
 
 div {float:left}
 
-.all {width: 995px;}
+.all {width: 100%;}
 .head {width: 100%; color: #FFF; overflow:hidden; background-color: #1A1A1A; border-bottom: 2px solid #FFFFFF; padding: 5px 0 5px 0; }
 .head div  { margin: 0 10px 0 10px; width:980px;}
 
@@ -14,16 +14,17 @@ div {float:left}
 .head .headSelect span {float: right; }
 .head .headSelect input {float: right; }
 
-.left-col {width: 178px; overflow:hidden; }
-.right-col { width: 782px; min-height: 600px; background-color: #E3E2DA; padding: 13px 13px 13px 13px; float: left; overflow:hidden; }
+.left-col {width:15%; overflow:hidden; }
+.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 3%; float: left; overflow:hidden; }
 .right-col table {clear:both;}
+.right-col table td {vertical-align:top;}
 
 .notifier {
- width: 758px;
+ width: 98%;
  float: left; 
  overflow: hidden;
- margin: 10px 13px 16px 0;
- padding: 10px 10px 10px 10px; 
+ margin: 10px 0;
+ padding: 1%; 
  font-size: 110%;
 }
 .err  {
@@ -120,7 +121,7 @@ a {color: #000;  font-size: 90%;}
 .inputwithbutton label {width: 49%; float: left; margin-top: 3px; overflow: hidden; }
 .inputwithbutton span { float: left; width: 2%;  }
 
-.centerStructure .fmFiles { width:270px; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
+.centerStructure .fmFiles { width:100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
 .centerStructure .fmFiles input { float:right; margin-right: 10px; margin-bottom: 7px; }
 .centerStructure .fmFiles input.leftButton { width: auto; float:right; }
 
@@ -147,11 +148,11 @@ a {color: #000;  font-size: 90%;}
 .pageproperties .input input{width:230px;}
 .pageproperties .checkbox label{float:left;}
 .pageproperties .checkbox input{float:right;margin:0 222px 0 0;}
-.input textarea { width: 99%; float: right; border: 1px solid #7B9EBD; }
+.input textarea { width: 100%; float: left; border: 1px solid #7B9EBD; }
 .input label {width: 48%; float: left; margin-top: 3px;}
 .formEditor .input label{width:33%;} 
 .formEditor .checkbox input{float:right;margin:0 220px 0 0;}
-.input span { float: left; width: 2%;  }
+.input span { float: left; width: 10px;  }
 .centerStructure .input label {width: 90%; float: left; margin-top: 3px; overflow: hidden; margin-left: 5px; }
 .centerStructure .input input { width: 240px; float: left; border: 1px solid #7B9EBD; margin-left: 5px; }
 .centerStructure .addbutton { float: right; margin-right: 20px; }
@@ -231,8 +232,8 @@ a {color: #000;  font-size: 90%;}
 
 .pageproperties .save {width:468px;}
 .mainEditor .contentEntry .save {width:100%;float:none ! important;min-height:24px;}
-.centerFull .contentEntry .save {width: 758px;}
-.centerFull .contentEntry .textcontentcontrol {width: 758px;}
+.centerFull .contentEntry .save {width: 100%;text-align:left;}
+.centerFull .contentEntry .textcontentcontrol {width:100%;}
 .propertyArea .save {padding:0 0 10px;border:none;}
 .instanceAllSettings .save 
 {
@@ -243,16 +244,16 @@ a {color: #000;  font-size: 90%;}
 }
 .topStructure 
 {
-    width: 761px;
+    width:98%;
     overflow: hidden;
     background-color: #9e9e98;
     color: #FFFFFF;
-    padding: 6px 10px 6px 10px;
+    padding:1%;
     margin-bottom: 13px;
 }
 fieldset {margin:0;padding:0;}
-.centerStructure {  width: 270px; overflow: hidden; margin: 0; color: #FFFFFF; background-color: #9e9e98; padding-top: 6px; margin-top: 15px; margin-bottom: 15px; }
-.centerFull {clear:both; padding:0; width: 780px; float: left; overflow: hidden; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
+.centerStructure {  width: 22%; overflow: hidden; margin: 0; color: #FFFFFF; background-color: #9e9e98; padding-top: 6px; margin-top: 15px; margin-bottom: 15px; }
+.centerFull {clear:both; padding:0; width: 100%; float: left; overflow: hidden; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
 .centerFull { color: #333333; }
 
 .fmPopUp { padding: 0px 10px 10px 10px; width: 788px; float: left;height:508px; overflow-y: scroll; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
@@ -260,16 +261,16 @@ fieldset {margin:0;padding:0;}
 .fmPopUp .warning {clear:both;}
 .fmPopUp .fmFiles {text-indent:10px;}
 
-.searchFull { padding: 10px 10px 10px 10px; width: 760px; float: left; overflow: hidden; background-color: #9e9e98; margin: 0px 0 0px 0; color: #FFFFFF;}
+.searchFull { padding:1%; width: 98%; float: left; overflow: hidden; background-color: #9e9e98; margin: 0px 0 0px 0; color: #FFFFFF;}
 .searchFull .input label {width:35%;}
 
-.searchSmall { padding: 10px 10px 10px 10px; width: 477px; float: left; overflow: hidden; background-color: #9e9e98; margin: 0px 0 0px 0; color: #FFFFFF; }
+.searchSmall {}
 .searchSmall { color: #FFFFFF; }
 
-.mainEditor { width: 497px; float: right;overflow: hidden; margin: 0;  background-color: #CECDC6; margin-top: 15px; margin-bottom: 15px; }
-.contentEntry { background-color: #F7F3EF; border: 1px solid #9C9E9C; padding: 10px 10px 10px 10px;}
-.mainEditor .contentEntry { width: 475px;}
-.centerFull .contentEntry { width: 758px; padding: 10px 10px 10px 10px; margin:0;}
+.mainEditor { width:76%; float: right;overflow: hidden; margin: 0;  background-color: #CECDC6; margin-top: 15px; margin-bottom: 15px; }
+.contentEntry { background-color: #F7F3EF;  padding:2%; width: 96%;}
+.mainEditor .contentEntry {}
+.centerFull .contentEntry {margin:0;}
 
 /*dreveska */
 
@@ -339,15 +340,15 @@ fieldset legend {padding:7px 0 10px;}
 .pageproperties { padding-bottom: 10px; }
 
 div.instancePosition {background-color: #E4E4E0;   }
-.instancePosition table {width: 450px; margin: 0 10px 0 10px;}
+.instancePosition table {width:100%; margin:0;}
 .instancePosition  table td {padding:0 3px;}
 
 div.instanceAllSettings { float:left;margin-bottom: 0;width:100%;}
 div.instanceAllSettings input.sbutton {margin: 0 0 10px 305px;}
 div.instanceAllSettings div{ float:left; }
 fieldset div.statusBars { float:left;}
-div.instanceAllSettings table {float:left;width:450px;}
-div.instanceAllSettings div { float:left;}
+div.instanceAllSettings table {float:left;width:100%;}
+div.instanceAllSettings div { float:left;width:100%;}
 div.instanceAllSettings div div.save input{ float: right;}
 
 
@@ -395,7 +396,7 @@ div.extline span{margin-right: 30px; padding: 0 10px 0 10px; }
 .publishButtons {width: 100px; text-align: center;}
 .publishButtons img { margin: 5px 0 5px 0;}
 
-div.biggv { color: #000000; border: 1px solid #9e9e98; width: 758px; padding:10px; background-color: #F7F3EF; margin:0;}
+div.biggv { color: #000000; width: 98%; padding:1%; background-color: #F7F3EF; margin:0;}
 .biggv table {width: 100%; border-collapse: collapse; }
 .biggv table thead th { background-color: #9e9e98; font-size: 120%; padding: 5px 5px 5px 5px; margin: 5px; color: #ffffff; border-right: 1px solid #F3F2EF; }
 .biggv table thead th a { color: #ffffff; }
@@ -410,21 +411,22 @@ div.biggv { color: #000000; border: 1px solid #9e9e98; width: 758px; padding:10p
 
 div.cc-gv{display:block;float:left;width:100%;}
 .right-col .cc-gv table {width:100%;margin:10px 0;}
-.right-col .cc-gv table th{background:#9E9E98;border-right:1px solid #fff;padding:5px;margin:5px;color: #ffffff;font-size:120%;}
+.right-col .cc-gv table th{background:#9E9E98;border-right:1px solid #fff;padding:5px;color: #ffffff;font-size:120%;}
 .right-col .cc-gv table th a {color:#fff;}
 .right-col .cc-gv table td { background-color: #D5D5D2; border-bottom: 5px solid #F3F2EF; padding:10px;}
 .right-col .listing {width:100%;}
 .right-col ul.cc-m {padding-left:15px;}
 
-.DynamicEditor .field {float:left;width:100%;}
-.DynamicEditor .field label {float:left; width:100%;}
+.DynamicEditor .field {float:left;width:100%;border-bottom:1px solid #9C9E9C;margin:0 0 20px;padding:0 0 20px;}
+.DynamicEditor .field:last-of-type {border:none;}
+.DynamicEditor .field label {float:left; width:15%;}
 .DynamicEditor .field span.label {float:left;width:50%;}
 .DynamicEditor .field textarea {float:left;display:block;width:100%;min-height:80px;}
 .DynamicEditor .field select{width:434px;float:left;display:block;}
-.DynamicEditor .field input {margin-right:10px;}
-.DynamicEditor .save {width:434px;}
+.DynamicEditor .field input {margin-right:10px;float:left;}
+.DynamicEditor .save {width:100%;text-align:left;}
 
-div.smallgv {color: #000000; border: 1px solid #9e9e98; width: 475px; padding: 10px 10px 10px 10px; background-color: #F7F3EF; margin: 15px 0px 15px 0px;}
+div.smallgv {color: #000000;  width:96%; padding:2%; background-color: #F7F3EF; margin: 15px 0px 15px 0px;}
 .smallgv table {width: 100%; border-collapse: collapse; }
 .smallgv table thead th { background-color: #9e9e98; font-size: 120%; padding: 5px 5px 5px 5px; margin: 5px; color: #ffffff; border-right: 1px solid #F3F2EF; border-bottom: 8px solid #F3F2EF; }
 .smallgv table thead th a { color: #ffffff; }
@@ -740,7 +742,7 @@ padding:10px;	 }
 .radiobuttonlist div {float:none;clear:both;}
 .checkboxlist .checkList div {clear:both;}
 
-.role_list {width:99%;padding: 25px 0 15px 1%;}
+.role_list {width:100%;padding: 25px 0 15px 1%;}
 .role_list div {width:49%;padding-bottom: 2px;}
 
 .PasswordPanel {float:left;display:block; width:100%; margin:3px 0;clear:both;}
@@ -760,10 +762,10 @@ padding:10px;	 }
 
 .ck {width:100%;margin-bottom:10px;}
 .ck div {float:none;}
-.ck textarea {width: 99%; float: right; border: 1px solid #7B9EBD; }
-.ck .cke_skin_kama {float:left;width: 99%;}
+.ck textarea {width: 100%; float: left; border: 1px solid #7B9EBD; }
+.ck .cke_skin_kama {float:left;width: 100%;}
 .ck .cke_toolbox {float:none;}
-.ck .cke_wrapper {float:left;width:98%;}
+.ck .cke_wrapper {float:left;width:100%;}
 .cke_skin_kama div {float:none;}
 .ck .cke_dialog_tabs,
 .ck .cke_dialog_body {float:none;}
