@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0">
 	<siteMapNode url="" title="" description="" roles="*">
-		<siteMapNode url="" title="$mi_website" description="" roles="*">
-			<siteMapNode url="~/adm/ContentEdit.aspx" title="$mi_content" description="" roles="all, Everyone"/>
-			<siteMapNode url="~/adm/SpecialContentEdit.aspx" title="$mi_special_content" description="" roles="all, Everyone, admin, specialcontent"/>
-			<siteMapNode url="~/adm/Structure.aspx" title="$mi_structure" description="" roles="all, Everyone" />
-			<siteMapNode url="~/adm/Publish.aspx" title="$mi_publish" description="" roles="all, Everyone" />
+		<siteMapNode url="" title="Website" description="" roles="*">
+			<siteMapNode url="~/adm/ContentEdit.aspx" title="Content" description="" roles="all, Everyone"/>
+			<siteMapNode url="~/adm/SpecialContentEdit.aspx" title="Special content" description="" roles="all, Everyone, admin, specialcontent"/>
+			<siteMapNode url="~/adm/Structure.aspx" title="Tree structure" description="" roles="all, Everyone" />
+			<siteMapNode url="~/adm/Publish.aspx" title="Publishing" description="" roles="all, Everyone" />
 		</siteMapNode>
-		<siteMapNode url="" title="$mi_modules" description="" roles="*">
-			<siteMapNode url="adm/Forms.aspx" title="$mi_forms" description="" roles="all, Everyone"/>
-			<siteMapNode url="adm/Articles.aspx" title="$mi_articles" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/SubscriptionManager.aspx" title="$mi_subscription_manager" description="" roles="all, Everyone" />
+		<siteMapNode url="" title="Modules" description="" roles="*">
+			<siteMapNode url="adm/Forms.aspx" title="Forms" description="" roles="all, Everyone"/>
+			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="all, Everyone" />
 		</siteMapNode>
-		<siteMapNode url="" title="$mi_settings" description="" roles="*">
-			<siteMapNode url="adm/dictionary.aspx" title="$mi_dictionary" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/FileManager.aspx" title="$mi_file_manager" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/RssFeeds.aspx" title="$mi_rss_manager" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/Redirects.aspx" title="$mi_redirects" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/Scaffold.aspx" title="$mi_scaffold" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/ScaffoldConfig.aspx" title="$mi_scaffold_config" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/SQLEditor.aspx" title="$mi_sql" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/Website.aspx" title="$mi_website" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/WebsiteIIS7.aspx" title="$mi_website7" description="" roles="all, Everyone" />
-
-      
+		<siteMapNode url="" title="Settings" description="" roles="*">
+			<siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/FileManager.aspx" title="File manager" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/Redirects.aspx" title="Redirects" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Everyone" />
+      <siteMapNode url="adm/WebsiteIIS7.aspx" title="Website manager" description="" roles="all, Everyone" />
     </siteMapNode>
 	</siteMapNode>
 </siteMap>
