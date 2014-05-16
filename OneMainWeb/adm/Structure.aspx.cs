@@ -26,22 +26,15 @@ namespace OneMainWeb.adm
         protected void Page_Load(object sender, EventArgs e)
         {
             LiteralLegend.Text = ResourceManager.GetString("$page_info");
-            cmdEdit.Text = ResourceManager.GetString("$edit");
             LiteralNoAccess.Text = ResourceManager.GetString("$no_rights");
-            LiteralAddInstance.Text = ResourceManager.GetString("$edit_structure");
             LiteralModulesOnPage.Text = ResourceManager.GetString("$modules_on_page");
 
-            pageTree_DataBind();                
+            pageTree_DataBind();
 
             if (!IsPostBack)
             {
-                ButtonPublish.Visible = (bool)Context.Items["publish"];
-                ButtonUnPublish.Visible = (bool)Context.Items["publish"];
-
                 Page.Title = ResourceManager.GetString("$module_structure");
-
                 ddlModuleTypes_DataBind();
-              
                 InitializeControls();
             }
         }
@@ -54,9 +47,7 @@ namespace OneMainWeb.adm
 
         private void pageTree_DataBind()
         {
-            int currentExpandLevel = 0;
-            if (ExpandTree)
-                currentExpandLevel = 10;
+            int currentExpandLevel = 10;
 
             if (pageTree.Nodes.Count > 0)
                 pageTree.Nodes.Clear();
@@ -107,27 +98,21 @@ namespace OneMainWeb.adm
             if (TempWebSite == null)
             {
                 // no website selected has no root
-                PlaceHolderControls.Visible = false;
-                PlaceHolderAddRootPage.Visible = false;
-                PlaceHolderAddWebSite.Visible = true;
-                divAddChild.Visible = false;
+                MultiView1.ActiveViewIndex = 3;
+                PanelAddSubPage.Visible = false;
                 return;
             }
             else if (!RootNodeID.HasValue)
             {
                 // selected website has no root
-                PlaceHolderControls.Visible = false;
-                PlaceHolderAddRootPage.Visible = true;
-                PlaceHolderAddWebSite.Visible = false;
-                divAddChild.Visible = true;
+                MultiView1.ActiveViewIndex = 2;
+                PanelAddSubPage.Visible = true;
                 return;
             }
             else
             {
-                PlaceHolderControls.Visible = true;
-                PlaceHolderAddRootPage.Visible = false;
-                PlaceHolderAddWebSite.Visible = false;
-                divAddChild.Visible = true;
+                MultiView1.ActiveViewIndex = 1;
+                PanelAddSubPage.Visible = true;
             }
 
             if (SelectedPageId < 1)
@@ -137,55 +122,34 @@ namespace OneMainWeb.adm
             }
 
             selectedPage = webSiteB.GetPage(SelectedPageId);
-            
+
             if (selectedPage != null)
             {
                 cmdMovePageDown.Visible = true;
                 cmdMovePageUp.Visible = true;
 
-                bool isPublishable = true;
-                if (!selectedPage.IsRoot)
-                {
-                    BOPage parentPage = webSiteB.GetPage(selectedPage.ParentId.Value);
-                    isPublishable = !parentPage.IsNew;
-                }
-
+                MultiView1.ActiveViewIndex = 1;
                 if (!selectedPage.IsEditabledByCurrentPrincipal)
                 {
-                    rightSettings.Visible = false;
-                    rightSettingsNoAccess.Visible = true;
-                    divAddChild.Visible = false;
+                    MultiView1.ActiveViewIndex = 0;
+                    PanelAddSubPage.Visible = false;
                 }
                 else if (selectedPage.HasTranslationInCurrentLanguage)
                 {
                     BOWebSite webSite = webSiteB.Get(SelectedWebSiteId);
+                    TextBoxUri.Visible = SelectedPageId != RootNodeID;
 
-                    InfoLabelPrimaryLanguage.Visible = SelectedPageId == RootNodeID;
-                    TwoInputUrl1.Visible = SelectedPageId != RootNodeID;
-
-                    rightSettings.Visible = true;
-                    rightSettingsNoAccess.Visible = false;
-
-                    divAddChild.Visible = true;
-
-                    bool hasChildren = webSiteB.ListChildrenIds(selectedPage.Id).Count > 0;
-
-                    InfoLabelLastChange.Value = selectedPage.LastChanged + ", " + selectedPage.LastChangedBy;
+                    LabelChanged.Text = selectedPage.LastChanged + ", " + selectedPage.LastChangedBy;
                     TwoInputTitle.Value = selectedPage.Title;
-                    InfoLabelSelectedPage.Value = selectedPage.Title;
-                    ButtonPublish.Enabled = selectedPage.IsChanged && (isPublishable || selectedPage.MarkedForDeletion);
-                    ButtonUnPublish.Enabled = !selectedPage.IsNew && !hasChildren;
+                    ButtonPublish.Visible = selectedPage.IsChanged;
+                    ButtonUnPublish.Visible = !selectedPage.IsNew;
                     ButtonDelete.Visible = !selectedPage.MarkedForDeletion;
                     ButtonUndoDelete.Visible = selectedPage.MarkedForDeletion;
-                    ButtonDelete.Enabled = !hasChildren;
 
-                    InputWithButtonAddSubPage.Enabled = !selectedPage.MarkedForDeletion;
+                    PanelAddSubPage.Visible = PanelAddSubPage.Visible && !selectedPage.MarkedForDeletion;
+
                     ButtonPublish.Text = selectedPage.MarkedForDeletion ? "$publish_delete" : "$publish";
                     ButtonUnPublish.Text = "$unpublish_page";
-                    if (!isPublishable && !selectedPage.MarkedForDeletion)
-                    {
-                        ButtonPublish.Text = "$publish_disable_becuase_parent_page_was_never_published";
-                    }
                     ImagePageStatus.Visible = true;
                     if (selectedPage.MarkedForDeletion)
                     {
@@ -200,32 +164,29 @@ namespace OneMainWeb.adm
                         ImagePageStatus.ImageUrl = "/Res/objavljeno.gif";
                     }
 
-                    TwoInputUrl1.Value = selectedPage.ParLink;
-                    InfoLabelUrl.Value = selectedPage.URI;
+                    LabelUriPart.Text = selectedPage.ParentURI;
+                    TextBoxUri.Text = selectedPage.ParLink;
 
                     DropDownListMenuGroups.Items.Clear();
                     PanelMenuGroups.Visible = false;
                     TwoInputMenuGroup.Visible = true;
 
-                    InfoLabelMenuGroup.Value = TwoInputMenuGroup.Value = selectedPage.MenuGroup.ToString();
+                    TwoInputMenuGroup.Value = selectedPage.MenuGroup.ToString();
                     BOSetting MenuGroupListSetting = null;
-                    if ( webSite.Settings.TryGetValue("MenuGroupList", out MenuGroupListSetting))
+                    if (webSite.Settings.TryGetValue("MenuGroupList", out MenuGroupListSetting))
                     {
                         List<int> menugroupIds = StringTool.SplitStringToIntegers(MenuGroupListSetting.Value);
-                        if ( menugroupIds.Count > 0)
+                        if (menugroupIds.Count > 0)
                         {
                             PanelMenuGroups.Visible = true;
                             TwoInputMenuGroup.Visible = false;
                             DropDownListMenuGroups.DataSource = menugroupIds;
                             DropDownListMenuGroups.DataBind();
 
-                            if ( menugroupIds.Contains(selectedPage.MenuGroup))
+                            if (menugroupIds.Contains(selectedPage.MenuGroup))
                                 DropDownListMenuGroups.SelectedValue = selectedPage.MenuGroup.ToString();
                         }
                     }
-
-                    InfoLabelSelectedPageId.Value = SelectedPageId.ToString();
-
                     ddlPageTemplate_DataBind();
 
                     ListItem selItem = ddlPageTemplate.Items.FindByValue(selectedPage.Template.Id.ToString());
@@ -233,27 +194,9 @@ namespace OneMainWeb.adm
                     {
                         selItem.Selected = true;
                     }
-                    InfoLabelTemplate.Value = selectedPage.Template.Name;
-
-                    InfoLabelBreakPersistance.Value = selectedPage.BreakPersistance.ToString();
-                    InfoLabelBreakPersistance.Visible = selectedPage.BreakPersistance;
                     LabeledCheckBoxBreakPersistance.Checked = selectedPage.BreakPersistance;
 
                     InputRedirectToUrl.Value = selectedPage.RedirectToUrl;
-                    InfoLabelRedirectToUrl.Visible = selectedPage.RedirectToUrl.Length > 0;
-                    InfoLabelRedirectToUrl.Value = selectedPage.RedirectToUrl;
-
-                    InfoLabelView.Value = selectedPage.FrontEndRequireGroupList;
-                    InfoLabelView.Visible = selectedPage.FrontEndRequireGroupList.Length > 0;
-                    InputView.Value = selectedPage.FrontEndRequireGroupList;
-
-                    InfoLabelEdit.Value = selectedPage.EditRequireGroupList;
-                    InfoLabelEdit.Visible = selectedPage.EditRequireGroupList.Length > 0;
-                    InputEdit.Value = selectedPage.EditRequireGroupList;
-
-                    InfoLabelSSL.Value = selectedPage.RequireSSL.ToString();
-                    InfoLabelSSL.Visible = selectedPage.RequireSSL;
-                    LabeledCheckBoxSSL.Checked = selectedPage.RequireSSL;
 
                     if (selectedPage.ParentId.HasValue)
                     {
@@ -274,47 +217,19 @@ namespace OneMainWeb.adm
                         }
                     }
 
-//                    OneSettingsPageSettings.Settings = selectedPage.Settings;
+                    //                    OneSettingsPageSettings.Settings = selectedPage.Settings;
                     OneSettingsPageSettings.ItemId = selectedPage.Id;
                     OneSettingsPageSettings.Mode = AdminControls.OneSettings.SettingMode.Page;
-                    OneSettingsPageSettings.Collapse();
                     OneSettingsPageSettings.LoadSettingsControls(selectedPage.Settings);
-					OneSettingsPageSettings.LoadSettings();
+                    OneSettingsPageSettings.LoadSettings();
 
                     if (SelectedPageId == RootNodeID)
                     {
-//                        OneSettingsWebSite.Settings = webSite.Settings;
-                        OneSettingsWebSite.ItemId = webSite.Id;
-                        OneSettingsWebSite.Visible = true;
-                        OneSettingsWebSite.Collapse();
-                        OneSettingsWebSite.LoadSettingsControls(webSite.Settings);
                         cmdMovePageDown.Visible = false;
                         cmdMovePageUp.Visible = false;
-                        try 
-                        {
-                            CultureInfo cu = new CultureInfo( webSite.PrimaryLanguageId );
-                            InfoLabelPrimaryLanguage.Value = cu.DisplayName;
-                        }
-                        catch {}
-                        
                     }
-                    else
-                    {
-                        OneSettingsWebSite.Visible = false;
-                    }
-
-                    chkExpandTree.Checked = ExpandTree;
 
                     RepeaterModuleInstances_DataBind();
-                }
-
-                if (selectedPage.IsRedirected)
-                {
-                    //RepeaterModuleInstances.Visible = false;
-                }
-                else
-                {
-                    RepeaterModuleInstances.Visible = true;
                 }
             }
         }
@@ -331,7 +246,7 @@ namespace OneMainWeb.adm
 
         private void ddlPageTemplate_DataBind()
         {
-            ddlPageTemplate.DataSource = webSiteB.ListTemplates("3");
+            ddlPageTemplate.DataSource = BWebsite.ListTemplates("3");
             ddlPageTemplate.DataTextField = "Name";
             ddlPageTemplate.DataValueField = "Id";
             ddlPageTemplate.DataBind();
@@ -349,10 +264,6 @@ namespace OneMainWeb.adm
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
             // for textcontentedit
             Control editButton = e.Item.FindControl("cmdEdit");
-            ImageButton imgButton = (ImageButton)e.Item.FindControl("cmdEditButton");
-
-            imgButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
-
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
             Control undeleteButton = e.Item.FindControl("cmdUndeleteInstance");
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");
@@ -373,7 +284,7 @@ namespace OneMainWeb.adm
                 cmdMoveDown.Visible = !moduleInstance.IsInherited;
 
                 // hide cmdMoveUp/cmdMoveDown, if there is no module instance above/below current instance respectively.
-                for ( int i=0; i < currentPlaceHolder.ModuleInstances.Count; i++)
+                for (int i = 0; i < currentPlaceHolder.ModuleInstances.Count; i++)
                 {
                     if (currentPlaceHolder.ModuleInstances[i].Id == moduleInstance.Id)
                     {
@@ -390,9 +301,9 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.IsInherited && !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete && !moduleInstance.IsInherited;
-                imgButton.Visible = editButton.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                editButton.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
                 if (!moduleInstance.IsInherited && moduleInstance.Name == "TextContent")
-                { 
+                {
                     BOInternalContent textContentModel = textContentB.GetTextContent(moduleInstance.Id);
                     if (textContentModel != null && textContentModel.IsComplete)
                     {
@@ -402,24 +313,24 @@ namespace OneMainWeb.adm
                         string postfix = (distinctName.Length >= 20) ? "..." : "";
                         LabelModuleDistinctName.Text = distinctName.Substring(0, distinctName.Length < 20 ? distinctName.Length : 20) + postfix;
                     }
-                    else 
+                    else
                     {
                         LabelModuleDistinctName.Visible = true;
                         LabelModuleDistinctName.Text = "$new_tc";
                     }
                 }
-                
+
                 AdminControls.OneSettings moduleSettings = e.Item.FindControl("moduleSettings") as AdminControls.OneSettings;
-                
+
                 if (moduleSettings != null)
                 {
                     moduleSettings.Visible = !moduleInstance.IsInherited;
-//                    moduleSettings.Settings = moduleInstance.Settings;
+                    //                    moduleSettings.Settings = moduleInstance.Settings;
                     moduleSettings.Mode = AdminControls.OneSettings.SettingMode.Module;
                     moduleSettings.ItemId = moduleInstance.Id;
                     moduleSettings.LoadSettingsControls(moduleInstance.Settings);
                 }
-                               
+
                 lblPlaceHolder.Text = "$" + currentPlaceHolder.Name;
                 DropDownList ddlPlaceHolder = e.Item.FindControl("ddlPlaceHolder") as DropDownList;
                 DropDownList ddlPersistentFromDGrid = (DropDownList)e.Item.FindControl("ddlPersistentFromDGrid");
@@ -433,7 +344,7 @@ namespace OneMainWeb.adm
                     ddlPlaceHolder.DataTextField = "name";
                     ddlPlaceHolder.DataValueField = "id";
                     ddlPlaceHolder.SelectedValue = moduleInstance.PlaceHolderId.ToString();
-                    ddlPlaceHolder.DataBind();                    
+                    ddlPlaceHolder.DataBind();
 
                     int maxLevel = 6;
                     ddlPersistentToDGrid.Items.Clear();
@@ -564,7 +475,7 @@ namespace OneMainWeb.adm
 
                             if (moduleInstance.PageId == SelectedPageId && moduleInstance.PlaceHolderId > 0)
                                 webSiteB.ChangeModuleInstance(moduleInstance);
-                            
+
                             pageTree_DataBind();
                             break;
                         }
@@ -573,47 +484,9 @@ namespace OneMainWeb.adm
             }
         }
 
-        public string PrepareParLink(string parLink)
-        {
-            return CleanStringForUrl((parLink.ToLower()).Replace(" ", "_")); ;
-        }
 
-        /// <summary>
-        /// Replaces out all characters not appropriate for URL's.
-        /// Also it replaces some like blank space with underscore (_)
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static string CleanStringForUrl(string str)
-        {
-            string answer = str.ToLower(CultureInfo.InvariantCulture);
-            answer = answer.Replace("š", "s");
-            answer = answer.Replace("ž", "z");
-            answer = answer.Replace("ć", "c");
-            answer = answer.Replace("č", "c");
-            answer = answer.Replace("đ", "d");
 
-            answer = answer.Replace("Š", "S");
-            answer = answer.Replace("Ž", "Z");
-            answer = answer.Replace("Č", "C");
-            answer = answer.Replace("Ć", "C");
-            answer = answer.Replace("Ð", "D");
-
-            answer = answer.Replace("/", "-");
-            answer = answer.Replace(" ", "-");
-            answer = answer.Replace("?", "");
-            answer = answer.Replace(",", "");
-            answer = answer.Replace(":", "-");
-            answer = answer.Replace(".", "-");
-            answer = answer.Replace(";", "-");
-            answer = answer.Replace("&", "and");
-            answer = answer.Replace("#", "no");
-            answer = answer.Replace("\"", "-");
-            answer = answer.Replace("*", "-");
-            return answer;
-        }
-
-        protected string RenderModuleName(object _Changed, object _PendingDelete)
+        protected string RenderModuleName(object _Changed, object _PendingDelete, object name, object id)
         {
             string strExtension = string.Empty;
             if (FormatTool.GetBoolean(_PendingDelete))
@@ -629,13 +502,14 @@ namespace OneMainWeb.adm
                 strExtension = "/Res/objavljeno.gif";
             }
             strExtension = "<img src='" + strExtension + "' alt='' />";
-            return strExtension;
+
+            return ResourceManager.GetString("$" + name.ToString()) + " " + strExtension + " [" + id.ToString() + "]";
         }
 
         protected string RenderPageStatus()
         {
             string strReturn = string.Empty;
-            
+
             BOPage page = webSiteB.GetPage(SelectedPageId);
             if (page != null)
             {
@@ -655,111 +529,39 @@ namespace OneMainWeb.adm
             return strReturn;
         }
 
-        protected void chkShowPagesWithoutTranslation_CheckedChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        protected void chkExpandTree_CheckedChanged(object sender, EventArgs e)
-        {
-            ExpandTree = chkExpandTree.Checked;
-            TreeViewState.ExpandTreeView(pageTree, ExpandTree);
-        }
 
         protected void cmdAddChild_Click(object sender, EventArgs e)
         {
-
-            BOPage parentPageModel = webSiteB.GetPage(SelectedPageId);
-            BOWebSite site = webSiteB.Get(SelectedWebSiteId);
-            
-            if (site.PrimaryLanguageId < 1)
+            var result = webSiteB.AddSubPage(TextBoxSubPage.Text, SelectedWebSiteId, SelectedPageId);
+            switch (result)
             {
-                site.PrimaryLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                case BWebsite.AddSubPageResult.Ok:
+                    TextBoxSubPage.Text = "";
+                    break;
+                case BWebsite.AddSubPageResult.NoTemplates:
+                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Message = "There are no availible templates in the database!";
+                    break;
+                case BWebsite.AddSubPageResult.OkRootPage:
+                    Notifier1.Message = "$label_insert_root_par_link_as_blank";
+                    TextBoxSubPage.Text = "";
+                    break;
+                case BWebsite.AddSubPageResult.PartialLinkExistsOnThisLevel:
+                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Message = "This child page cannot be added because the page URL already exists at this level under this parent page!";
+                    break;
+                case BWebsite.AddSubPageResult.PartialLinkNotValid:
+                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Message = "This URL cannot be updated because it contains invalid characters! Valid characters are a to z, A to Z and 0 to 9";
+                    break;
+                case BWebsite.AddSubPageResult.TriedToAddRootPageToNonEmptySite:
+                    Notifier1.Warning = "$trying_to_add_root_page_to_nonempty_website";
+                    break;
             }
 
-            int newOrder = 0;
-            string newParLink = "";
-            bool validParLinkExpression = true;
-            string originalRequestedPageName = InputWithButtonAddSubPage.Value;
-            InputWithButtonAddSubPage.Value = "";
-
-            if (parentPageModel != null) // Not root
-            {
-                newParLink = PrepareParLink(originalRequestedPageName);
-                validParLinkExpression = webSiteB.ValidateParLinkSyntax(newParLink);
-                // determine page order
-                List<BOPage> pages = webSiteB.ListChildrenPages(parentPageModel.Id);
-                if (pages != null && pages.Count > 0)
-                {
-                    newOrder = pages[pages.Count - 1].Order + 1;
-                }
-            }
-            else 
-            {
-                SelectedPageId = -1;
-            }
-            bool validParLink = webSiteB.ValidateParLinkAgainstDB(SelectedPageId == -1 ? (int?)null : SelectedPageId, -1, newParLink, SelectedWebSiteId);
-
-            if (validParLink && validParLinkExpression)
-            {
-
-                if (SelectedPageId == -1)
-                {
-                    // adding root page
-                    // check if there are no existing pages on this website
-                    if (webSiteB.GetSiteStructure(SelectedWebSiteId).Count == 0)
-                    {
-                        newParLink = string.Empty;
-                        Notifier1.Message = "$label_insert_root_par_link_as_blank";
-                    }
-                    else
-                    {
-                        Notifier1.Warning = "$trying_to_add_root_page_to_nonempty_website";
-                        return;
-                    }
-                }
-
-                List<BOTemplate> templateData = webSiteB.ListTemplates("3");
-                int templateID = 1;
-                if (templateData.Count == 0)
-                {
-                    templateID = templateData[0].Id.Value;
-                }
-
-                var page = new BOPage
-                               {
-                                   Title = originalRequestedPageName,
-                                   Template = new BOTemplate {Id = templateID},
-                                   PublishFlag = false,
-                                   LanguageId = Thread.CurrentThread.CurrentCulture.LCID,
-                                   MenuGroup = 0,
-                                   WebSiteId = SelectedWebSiteId,
-                                   BreakPersistance = false,
-                                   ParLink = newParLink,
-                                   Order = newOrder
-                               };
-
-                if (SelectedPageId > 0)
-                {
-                    page.ParentId = SelectedPageId;
-                }
-
-                webSiteB.ChangePage(page);
-                OneSiteMapProvider.ReloadSiteMap();
-                pageTree_DataBind();
-                InitializeControls();
-                treeHolder.Visible = rightSettings.Visible = (pageTree.Nodes.Count != 0);
-            }
-            else if (!validParLink)
-            {
-                Notifier1.Warning = "$unsucessfull_add_page";
-                Notifier1.Message = "This child page cannot be added because the page URL already exists at this level under this parent page!";
-            }
-            else if (!validParLinkExpression)
-            {
-                Notifier1.Warning = "$unsucessfull_add_page";
-                Notifier1.Message = "This URL cannot be updated because it contains invalid characters! Valid characters are a to z, A to Z and 0 to 9";
-            }	
+            pageTree_DataBind();
+            InitializeControls();
+            MultiView1.Visible = (pageTree.Nodes.Count != 0);
         }
 
         public void pageTree_SelectedNodeChanged(object sender, EventArgs e)
@@ -773,7 +575,7 @@ namespace OneMainWeb.adm
         private static void ExpandLoop(TreeNode node)
         {
             node.Expand();
-            if ( node.Parent != null )
+            if (node.Parent != null)
                 ExpandLoop(node.Parent);
         }
 
@@ -791,26 +593,26 @@ namespace OneMainWeb.adm
 
         protected void cmdDelete_Click(object sender, EventArgs e)
         {
-            BOPage currentPageModel = webSiteB.GetPage(SelectedPageId);
-
-            if (currentPageModel != null)
+            var result = webSiteB.DeletePageById(SelectedPageId);
+            switch (result)
             {
-                if ( webSiteB.ListChildrenPages(currentPageModel.Id).Count == 0)
-                {
-                    webSiteB.DeletePage(SelectedPageId);
-
-                    if (currentPageModel.IsRoot)
-                    {
-                        SelectedPageId = -1;
-                        RootNodeID = null;
-                    }
-
+                case BWebsite.DeletePageByIdResult.DeletedRoot:
+                    SelectedPageId = -1;
+                    RootNodeID = null;
                     pageTree_DataBind();
                     InitializeControls();
-                }
-                else
+                    break;
+                case BWebsite.DeletePageByIdResult.Deleted:
+                    pageTree_DataBind();
+                    InitializeControls();
+                    break;
+                case BWebsite.DeletePageByIdResult.HasChildren:
                     Notifier1.Warning = ResourceManager.GetString("$has_children_delete_not_possible");
-            }	
+                    break;
+                case BWebsite.DeletePageByIdResult.Error:
+                    Notifier1.Warning = ResourceManager.GetString("$delete_page_error");
+                    break;
+            }
         }
 
         protected void cmdSave_Click(object sender, EventArgs e)
@@ -829,18 +631,14 @@ namespace OneMainWeb.adm
                     menuGroupID = FormatTool.GetInteger(TwoInputMenuGroup.Value);
                 int selectedTemplateID = FormatTool.GetInteger(ddlPageTemplate.SelectedValue);
 
-                string editGroups = InputEdit.Value;
-                string viewGroups = InputView.Value;
-                bool requiredSSL = LabeledCheckBoxSSL.Checked;
-
                 if (!page.IsRoot)
                 {
                     int parentPageID = page.ParentId.Value;
-                    string newParLink = CleanStringForUrl(TwoInputUrl1.Value);
+                    string newParLink = BWebsite.CleanStringForUrl(TextBoxUri.Text);
 
                     // check whether new par_link already exists in system
                     bool validParLink = webSiteB.ValidateParLinkAgainstDB(parentPageID, SelectedPageId, newParLink, SelectedWebSiteId);
-                    
+
                     if (validParLink || page.ParLink == newParLink || SelectedPageId == parentPageID)
                     {
                         page.MenuGroup = menuGroupID;
@@ -849,9 +647,6 @@ namespace OneMainWeb.adm
                         page.ParLink = newParLink;
                         page.BreakPersistance = breakPersistance;
                         page.RedirectToUrl = redirectToUrl;
-                        page.EditRequireGroupList = editGroups;
-                        page.FrontEndRequireGroupList = viewGroups;
-                        page.RequireSSL = requiredSSL;
                         webSiteB.ChangePage(page);
                     }
                     else if (!validParLink)
@@ -862,18 +657,16 @@ namespace OneMainWeb.adm
                 else  // page.IsRoot
                 {
                     var site = webSiteB.Get(SelectedWebSiteId);
-                    
+
                     page.MenuGroup = menuGroupID;
                     page.Template = new BOTemplate { Id = selectedTemplateID };
                     page.Title = TwoInputTitle.Value;
                     page.ParLink = ""; // page.IsRoot
                     page.BreakPersistance = breakPersistance;
                     page.RedirectToUrl = redirectToUrl;
-                    page.EditRequireGroupList = editGroups;
-                    page.FrontEndRequireGroupList = viewGroups;
-                    page.RequireSSL = requiredSSL;
                     webSiteB.ChangePage(page);
                 }
+                OneSettingsPageSettings.Save();
                 InitializeControls();
                 pageTree_DataBind();
             }
@@ -921,31 +714,34 @@ namespace OneMainWeb.adm
         {
             int selectedModuleID = FormatTool.GetInteger(ddlModuleTypes.SelectedItem.Value);
             List<BOPlaceHolder> placeHolderData = webSiteB.ListPlaceHolders();
-            int selectedPlaceHolder = placeHolderData[0].Id.Value;
+            if (placeHolderData.Count < 1)
+                return;
 
-            if (SelectedPageId >= 0 && selectedModuleID >= 0 && selectedPlaceHolder >= 0)
+            int selectedPlaceHolder = placeHolderData[0].Id.Value;
+            var result = webSiteB.AddModulesInstance(SelectedPageId, selectedPlaceHolder, selectedModuleID);
+            if (result)
             {
-                BOModuleInstance moduleInstance = new BOModuleInstance();
-                moduleInstance.PageId = SelectedPageId;
-                moduleInstance.PublishFlag = false;
-                moduleInstance.PendingDelete = false;
-                moduleInstance.Changed = true;
-                moduleInstance.ModuleId = selectedModuleID;
-                moduleInstance.Order = -1;
-                moduleInstance.PlaceHolderId = selectedPlaceHolder;
-                moduleInstance.PersistFrom = 0;
-                moduleInstance.PersistTo = 0;
-                webSiteB.ChangeModuleInstance(moduleInstance);
                 InitializeControls();
                 pageTree_DataBind();
-            }	
+            }
         }
 
         protected void ButtonPublish_Click(object sender, EventArgs e)
         {
             BOPage publishingPage = webSiteB.GetPage(SelectedPageId);
+
             if (publishingPage != null)
             {
+                if (!publishingPage.IsRoot)
+                {
+                    BOPage parentPage = webSiteB.GetPage(publishingPage.ParentId.Value);
+                    if (parentPage.IsNew)
+                    {
+                        Notifier1.Warning = "$publish_parent_first";
+                        return;
+                    }
+                }
+
                 if (webSiteB.PublishPage(SelectedPageId))
                 {
                     if (publishingPage.MarkedForDeletion && !publishingPage.IsRoot)
@@ -970,7 +766,7 @@ namespace OneMainWeb.adm
             }
             else
             {
-                Notifier1.ExceptionName= "$trying_to_publish_nonexisting_page";
+                Notifier1.ExceptionName = "$trying_to_publish_nonexisting_page";
             }
             InitializeControls();
             pageTree_DataBind();
@@ -979,9 +775,17 @@ namespace OneMainWeb.adm
         protected void ButtonUnPublish_Click(object sender, EventArgs e)
         {
             BOPage publishingPage = webSiteB.GetPage(SelectedPageId);
-            
+
             if (!publishingPage.IsNew)
             {
+                bool hasChildren = webSiteB.ListChildrenIds(SelectedPageId).Count > 0;
+                if (hasChildren)
+                {
+                    Notifier1.Warning = "$unpublish_unsuccessfull_because_page_has_children";
+                    return;
+                }
+
+
                 if (webSiteB.UnPublishPage(SelectedPageId))
                 {
                     Notifier1.Message = "$unpublish_successfull";

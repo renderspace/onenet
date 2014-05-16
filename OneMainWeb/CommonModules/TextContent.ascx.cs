@@ -72,8 +72,7 @@ namespace OneMainWeb.CommonModules
                 if (ImageTemplate > 0)
                 {
                     // load template
-                    BWebsite websiteB = new BWebsite();
-                    object o = websiteB.GetTemplate(ImageTemplate);
+                    object o = BWebsite.GetTemplate(ImageTemplate);
                     if (o is BOImageTemplate)
                         textContentModel.ImageTemplate = (BOImageTemplate) o;
                 }

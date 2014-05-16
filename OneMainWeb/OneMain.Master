@@ -1,10 +1,11 @@
 <%@ Master Language="C#" AutoEventWireup="true" CodeBehind="OneMain.master.cs" Inherits="OneMainWeb.OneMain" %>
 <%@ Register TagPrefix="cc2" TagName="VirtualTableList" Src="~/AdminControls/ScaffoldVirtualTableList.ascx" %>
 <%@ Import namespace="One.Net.BLL" %>
+<%@ Register TagPrefix="Controls" Namespace="OneMainWeb.Controls" Assembly="OneMainWeb" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" >
+<html>
 <head runat="server">
     <title></title>
     <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" title="one default" />
@@ -12,7 +13,7 @@
 	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="/JavaScript/one.js"></script>
 
-    <script type="text/javascript" src="/JavaScript/jquery-1.3.2.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.bgiframe.min.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.autocomplete.min.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script> 
@@ -97,44 +98,26 @@
             </div>
         </div>
    <div class="all">
-       <div class="left-col">
-            <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" BackColor="White" ForeColor="Black" ItemWrap="True" StaticDisplayLevels="3" StaticSubMenuIndent="8px" Width="170px" IncludeStyleBlock="false">
-                <LevelSelectedStyles>
-                    <asp:MenuItemStyle Font-Underline="False" />
-                    <asp:MenuItemStyle Font-Underline="False" />
-                    <asp:MenuItemStyle BackColor="#E3E2DA" Font-Underline="False" />
-                </LevelSelectedStyles>
-                <StaticMenuStyle Height="30px" />
-                <LevelMenuItemStyles>
-                    <asp:MenuItemStyle Font-Underline="False" />
-                    <asp:MenuItemStyle Font-Underline="False" />
-                    <asp:MenuItemStyle BackColor="#C3CED8" Font-Underline="False" />
-                </LevelMenuItemStyles>
-                <StaticMenuItemStyle Height="25px" />
-                <DynamicHoverStyle BackColor="#68849E" />
-                <DynamicMenuStyle Height="20px" />
-                <DynamicSelectedStyle BackColor="#E3E2DA" />
-                <DynamicMenuItemStyle Height="20px" />
-            </asp:Menu>
-           <div class="cc-m-Vertical">
-               <ul class="cc-m">
+       <section class="left-col">
+           <nav>
+                <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" 
+                    ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" 
+                    RenderingMode="List" SkipLinkText="">
+                </asp:Menu>
+               <ul>
                     <li>
-                        <ul>
-                                <li class="cc-m-with-child cc-m-child-sel">
-                                    <span class="cc-m-NonLink cc-m-child-sel">Table</span>
-                                        <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
-                                    </li>
-                            </ul>
+                        <span>Table</span>
+                            <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
                     </li>
                 </ul>
-            </div>
+            </nav> 
             <div style="margin-top: 20px; margin-left: 10px;">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
             </div>
-        </div>
-        <div class="right-col">
+        </section>
+        <section class="right-col">
             <asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
-        </div>
+        </section>
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" />
     </div>
     </form>

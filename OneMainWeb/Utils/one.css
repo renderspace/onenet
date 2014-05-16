@@ -14,8 +14,8 @@ div {float:left}
 .head .headSelect span {float: right; }
 .head .headSelect input {float: right; }
 
-.left-col {width:15%; overflow:hidden; }
-.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 3%; float: left; overflow:hidden; }
+.left-col {width:15%; overflow:hidden; float:left}
+.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 3%; float: left; overflow:hidden; float:left}
 .right-col table {clear:both;}
 .right-col table td {vertical-align:top;}
 
