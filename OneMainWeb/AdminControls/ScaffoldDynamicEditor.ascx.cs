@@ -41,7 +41,7 @@ namespace OneMainWeb.AdminControls
     public partial class ScaffoldDynamicEditor : System.Web.UI.UserControl
     {
         static readonly BInternalContent intContentB = new BInternalContent();
-        private const int SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 20;
+        private const int SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 40;
         private const string NULL = "NULL";
 
         public event EventHandler<EventArgs> Exit;
@@ -147,8 +147,8 @@ namespace OneMainWeb.AdminControls
                 }
             }
 
-            ButtonSave.Text = IsInsert ? One.Net.BLL.ResourceManager.GetString("save_new_item") : One.Net.BLL.ResourceManager.GetString("save");
-            ButtonSaveAndClose.Text = IsInsert ? One.Net.BLL.ResourceManager.GetString("save_and_close_new_item") : One.Net.BLL.ResourceManager.GetString("save_and_close");
+            ButtonSave.Text = "Save";
+            ButtonSaveAndClose.Text = "Save and close";
             base.OnPreRender(e);
         }
 
@@ -306,8 +306,8 @@ namespace OneMainWeb.AdminControls
             if (datepickerJQueryCall.Length > 0)
             {
                 var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-                JQueryCode += "<script type=\"text/javascript\" src=\"/_js/jquery-ui-1.7.2.custom.min.js\"></script>\n";
-                JQueryCode += "<script type=\"text/javascript\" src=\"/_js/i18n/ui.datepicker-" + currentCulture.TwoLetterISOLanguageName + ".js\"></script>\n";
+                JQueryCode += "<script src=\"/_js/jquery.ui.datepicker-sl.js\"></script>";
+                // JQueryCode += "<script type=\"text/javascript\" src=\"/_js/i18n/ui.datepicker-" + currentCulture.TwoLetterISOLanguageName + ".js\"></script>\n";
             }
             /*
             JQueryCode = 
@@ -340,7 +340,7 @@ jQuery.validator.addMethod(
 ";*/
             JQueryCode += "<script type=\"text/javascript\" charset=\"utf-8\">\n";
             JQueryCode +=
-                @"jQuery.validator.addMethod( 
+                @"$.validator.addMethod( 
                                 ""dropdownRequired"", 
                                     function(value, element) { 
                                         if (element.value == ""none"") 
@@ -572,14 +572,30 @@ jQuery.validator.addMethod(
 
             var LiteralSuggest = new Literal();
             LiteralSuggest.Text = "<script type=\"text/javascript\">$(document).ready(function() {";
+            LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification + "\").autocomplete();";
             LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification;
-            LiteralSuggest.Text += "\").autocomplete('/_ashx/BambooOneToManyData.ashx?relationId=" +
+            LiteralSuggest.Text += @""").autocomplete({
+    source: function (request, response) {
+        console.log(""autocomplete"");
+        jQuery.get(""/Utils/BambooOneToManyData.ashx"", {
+            query: request.term
+        }, function (data) {
+            response(data);
+        });
+    },
+    minLength: 3
+});";
+            LiteralSuggest.Text += "}); </script>";
+                
+                
+                /*
+                ('/Utils/BambooOneToManyData.ashx?relationId=" +
                                    column.PartOfRelationId + "').result(";
             LiteralSuggest.Text += "function (evt, data, formatted) { $(\".PK" +
                                    TextBoxSuggestIdentification +
                                    "\").val(data[1]); }";
             LiteralSuggest.Text += ");";
-            LiteralSuggest.Text += "}); </script>";
+            LiteralSuggest.Text += "}); </script>"; */
             //.result(ValidatorOnChange);
             descriptionLabel.AssociatedControlID = TextBoxSuggest.ID;
             panelField.Controls.Add(descriptionLabel);

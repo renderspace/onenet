@@ -601,8 +601,6 @@
   <resource name="friendly_name">Prijazno ime</resource>
   <resource name="show_on_list">Prikaži na seznamu</resource>
   <resource name="column_type">Tip stolpca</resource>
-  <resource name="save_and_close_new_item">Shrani in zapri (kot nov vnos)</resource>
-  <resource name="save_and_close">Shrani in zapri</resource>
   <resource name="execute">Izvedi</resource>
   <resource name="redirect_list">Seznam preusmeritev</resource>
   <resource name="redirect_single">Posamična preusmeritev</resource>

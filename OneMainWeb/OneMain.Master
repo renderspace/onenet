@@ -9,70 +9,10 @@
 <head runat="server">
     <title></title>
     <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" title="one default" />
-    
-	<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="/JavaScript/one.js"></script>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.bgiframe.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.autocomplete.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script> 
-    <script type="text/javascript" src="/JavaScript/additional-methods.js"></script> 
+    <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script> 
 	
-	<script type="text/javascript">
-
-	    if (window.CKEDITOR) {
-	        (function() {
-	            var showCompatibilityMsg = function() {
-	                var env = CKEDITOR.env;
-
-	                var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
-
-	                var browsers =
-			{
-			    gecko: 'Firefox 2.0',
-			    ie: 'Internet Explorer 6.0',
-			    opera: 'Opera 9.5',
-			    webkit: 'Safari 3.0'
-			};
-
-	                var alsoBrowsers = '';
-
-	                for (var key in env) {
-	                    if (browsers[key]) {
-	                        if (env[key])
-	                            html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
-	                        else
-	                            alsoBrowsers += browsers[key] + '+, ';
-	                    }
-	                }
-
-	                alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
-
-	                html += ' It is also compatible with ' + alsoBrowsers + '.';
-
-	                html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
-
-	                var alertsEl = document.getElementById('alerts');
-	                alertsEl && (alertsEl.innerHTML = html);
-	            };
-
-	            var onload = function() {
-	                // Show a friendly compatibility message as soon as the page is loaded,
-	                // for those browsers that are not compatible with CKEditor.
-	                if (!CKEDITOR.env.isCompatible)
-	                    showCompatibilityMsg();
-	            };
-
-	            // Register the onload listener.
-	            if (window.addEventListener)
-	                window.addEventListener('load', onload, false);
-	            else if (window.attachEvent)
-	                window.attachEvent('onload', onload);
-	        })();
-	    }
-	
-	</script>
 	<style type="text/css">
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
     	.browser-logos { padding-top: 20px; }
@@ -120,6 +60,65 @@
         </section>
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" />
     </div>
+    <script type="text/javascript" src="/ckeditor4/ckeditor.js"></script>
+    <script type="text/javascript" src="/JavaScript/one.js"></script>
+
+    
+
+	<script type="text/javascript">
+
+	    if (window.CKEDITOR) {
+	        (function () {
+	            var showCompatibilityMsg = function () {
+	                var env = CKEDITOR.env;
+
+	                var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
+
+	                var browsers =
+			{
+			    gecko: 'Firefox 2.0',
+			    ie: 'Internet Explorer 6.0',
+			    opera: 'Opera 9.5',
+			    webkit: 'Safari 3.0'
+			};
+
+	                var alsoBrowsers = '';
+
+	                for (var key in env) {
+	                    if (browsers[key]) {
+	                        if (env[key])
+	                            html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
+	                        else
+	                            alsoBrowsers += browsers[key] + '+, ';
+	                    }
+	                }
+
+	                alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
+
+	                html += ' It is also compatible with ' + alsoBrowsers + '.';
+
+	                html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
+
+	                var alertsEl = document.getElementById('alerts');
+	                alertsEl && (alertsEl.innerHTML = html);
+	            };
+
+	            var onload = function () {
+	                // Show a friendly compatibility message as soon as the page is loaded,
+	                // for those browsers that are not compatible with CKEditor.
+	                if (!CKEDITOR.env.isCompatible)
+	                    showCompatibilityMsg();
+	            };
+
+	            // Register the onload listener.
+	            if (window.addEventListener)
+	                window.addEventListener('load', onload, false);
+	            else if (window.attachEvent)
+	                window.attachEvent('onload', onload);
+	        })();
+	    }
+
+	</script>
     </form>
 </body>
 </html>
