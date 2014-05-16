@@ -36,46 +36,20 @@ namespace OneMainWeb.Controls
         private bool controlsAdded = false;
 
         //  Template Declarations
-        private int _minDepth;
-        private int _maxDepth;
-        private int _expandToDepth;
-        private bool _localExpand;
-        private string _group;
         private string _selectedUrl;
         private string _selectedParentUrl;
-        private string _spanPosition;
         private SiteMapNode _selectedNode;
         private SiteMapNode _rootNode;
 
-        public int MaxDepth
-        {
-            get { return _maxDepth; }
-            set { _maxDepth = value; }
-        }
+        public int MaxDepth { get; set; }
 
-        public int MinDepth
-        {
-            get { return _minDepth; }
-            set { _minDepth = value; }
-        }
+        public int MinDepth { get; set; }
 
-        public int ExpandToLevel
-        {
-            get { return _expandToDepth; }
-            set { _expandToDepth = value; }
-        }
+        public int ExpandToLevel { get; set; }
 
-        public bool LocalExpand
-        {
-            get { return _localExpand; }
-            set { _localExpand = value; }
-        }
+        public bool LocalExpand { get; set; }
 
-        public string Group
-        {
-            get { return _group; }
-            set { _group = value; }
-        }
+        public string Group { get; set; }
 
         public string FirstUlClass { get; set; }
 
@@ -106,9 +80,8 @@ namespace OneMainWeb.Controls
 
         protected override void CreateChildControls()
         {
-            Stopwatch timer = new Stopwatch();
-            timer.Start();
 
+            //SiteMap.Providers["AspNetXmlSiteMapProvider"]
             _selectedNode = SiteMap.CurrentNode;
             _rootNode = SiteMap.RootNode;
 
@@ -122,7 +95,6 @@ namespace OneMainWeb.Controls
                         _selectedParentUrl = _selectedNode.ParentNode.Url;
                     }
                 }
-
                 SiteMapNodeCollection coll = new SiteMapNodeCollection(SiteMap.RootNode);
                 int currentItemId = 0;
                 int preControlsCount = this.Controls.Count;
@@ -135,8 +107,6 @@ namespace OneMainWeb.Controls
                 }
             }
             Enabled = Visible = controlsAdded;
-            timer.Stop();
-            log.Debug("-- NewMenuGroup RenderRootNode(): " + timer.ElapsedMilliseconds + " ms");
         }
 
         private void RecursiveCreateChildControls(IHierarchicalEnumerable dataItems, ref int currentItemId)
@@ -153,16 +123,17 @@ namespace OneMainWeb.Controls
             foreach (SiteMapNode dataItem in dataItems)
             {
                 string _menuGroup = dataItem["_menuGroup"];
+
                 if (!depth.HasValue)
                 {
-                    depth = Int32.Parse(dataItem["_absDepth"]);
+                    depth = int.Parse(dataItem["_absDepth"]);
                 }
 
-                if (depth > _maxDepth)
+                if (depth > MaxDepth)
                 {
                     break;
                 }
-                else if (_menuGroup != this._group && depth > this._minDepth + 1)
+                else if (_menuGroup != Group && depth > MinDepth + 1)
                 {
                     // do nothing
                 }
@@ -222,8 +193,6 @@ namespace OneMainWeb.Controls
                         cssClass += " selc";
                         linkCssClass += " aselc";
                     }
-
-                    // moved under css class decision making so that redirected urls don't affect css class decision
                     if (dataItem["_IsRedirected"] == "True")
                     {
                         url = dataItem["_redirectToUrl"].ToString();
@@ -239,14 +208,12 @@ namespace OneMainWeb.Controls
                     if (dataItem.IsDescendantOf(_selectedNode))
                         levelAncestorSelected = true;
 
-                    if ((_menuGroup != this._group) || (depth < this._minDepth))
+                    if ((_menuGroup != Group) || (depth < MinDepth))
                     {
                         if (dataItemHasChildren)
                         {
-                            // original if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || (this.ExpandToLevel > depth && !this._localExpand))
                             if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || ((this.LocalExpand && this.ExpandToLevel > depth && levelAncestorSelected) || (!LocalExpand && ExpandToLevel > depth)))
                             {
-                                //  Create any child items
                                 RecursiveCreateChildControls(data.GetChildren(), ref currentItemId);
                             }
                         }
@@ -258,11 +225,11 @@ namespace OneMainWeb.Controls
                                          ((this.LocalExpand && this.ExpandToLevel >= depth && levelAncestorSelected) ||
                                           (!LocalExpand && ExpandToLevel >= depth)));
 
-                        cssClass += " l" + depth.Value + " p" + pageId;
-
-                        cssClass = cssClass.Trim();
+                        if (pageId != null)
+                        {
+                            cssClass += (" l" + depth.Value + " p" + pageId).Trim();
+                        }
                         linkCssClass = linkCssClass.Trim();
-
                         if (showNode)
                         {
                             if (!headerRendered)
@@ -286,15 +253,14 @@ namespace OneMainWeb.Controls
                             Literal item = RenderItem(linkCssClass, title, url);
                             item.ID = "Item" + currentItemId;
 
-                            // this is experimental!!
-                            if (_menuGroup == this._group)
+                            if (_menuGroup == Group)
                                 Controls.Add(item);
                             else 
                                 showNode = false;
 
                         }
 
-                        if (depth.Value < this._maxDepth && dataItemHasChildren)
+                        if (depth.Value < MaxDepth && dataItemHasChildren)
                         {
                             if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || ((this.LocalExpand && this.ExpandToLevel > depth && levelAncestorSelected) || (!LocalExpand && ExpandToLevel > depth)))
                             {

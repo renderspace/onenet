@@ -1,9 +1,9 @@
 <browsers>
 	<browser refID="Default">
 		<controlAdapters>
-			<adapter controlType="System.Web.UI.WebControls.Menu" adapterType="AdaptedCSSFriendly.MenuAdapter" />
+      <!-- adapter controlType="System.Web.UI.WebControls.Menu" adapterType="AdaptedCSSFriendly.MenuAdapter" /-->
 			<adapter controlType="System.Web.UI.WebControls.GridView" adapterType="AdaptedCSSFriendly.GridViewAdapter" />
-			<adapter controlType="System.Web.UI.WebControls.TreeView" adapterType="AdaptedCSSFriendly.TreeViewAdapter" />
+      <adapter controlType="System.Web.UI.WebControls.TreeView" adapterType="AdaptedCSSFriendly.TreeViewAdapter" />
 			<adapter controlType="System.Web.UI.WebControls.RadioButtonList" adapterType="AdaptedCSSFriendly.RadioButtonListAdapter" />
 			<adapter controlType="System.Web.UI.WebControls.CheckBoxList" adapterType="AdaptedCSSFriendly.CheckBoxListAdapter" />
       <adapter controlType="System.Web.UI.WebControls.ChangePassword" adapterType="AdaptedCSSFriendly.ChangePasswordAdapter" />

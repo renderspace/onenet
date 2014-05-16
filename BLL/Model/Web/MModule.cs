@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -15,6 +17,47 @@ namespace One.Net.BLL.Web
         private string webSiteTitle;
         private string relativePageUri;
         private Dictionary<string, BOSetting> settings;
+
+        public SiteMapNode CurrentSiteMapNode
+        {
+            get
+            {
+                return SiteMap.CurrentNode;
+            }
+        }
+
+        public int CurrentPageId
+        {
+            get
+            {
+                if (CurrentSiteMapNode == null)
+                    return 0;
+                var currentPageId = int.Parse(CurrentSiteMapNode["_pageID"]);
+                return currentPageId;
+            }
+        }
+
+        public string ParentPageUrl
+        {
+            get
+            {
+                if (CurrentSiteMapNode == null || CurrentSiteMapNode.ParentNode == null)
+                    return "/";
+
+                return CurrentSiteMapNode.ParentNode.Url;
+            }
+        }
+
+
+
+        public int CurrentWebSiteId
+        {
+            get
+            {
+                var currentWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"]);
+                return currentWebSiteId;
+            }
+        }
 
         protected string TranslateComplex(string keyword)
         {

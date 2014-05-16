@@ -22,49 +22,31 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// chkShowPagesWithoutTranslation control.
+        /// PanelAddSubPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkShowPagesWithoutTranslation;
+        protected global::System.Web.UI.WebControls.Panel PanelAddSubPage;
         
         /// <summary>
-        /// chkExpandTree control.
+        /// TextBoxSubPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkExpandTree;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxSubPage;
         
         /// <summary>
-        /// divAddChild control.
+        /// ButtonAddSubPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAddChild;
-        
-        /// <summary>
-        /// InputWithButtonAddSubPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InputWithButton InputWithButtonAddSubPage;
-        
-        /// <summary>
-        /// treeHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl treeHolder;
+        protected global::System.Web.UI.WebControls.Button ButtonAddSubPage;
         
         /// <summary>
         /// pageTree control.
@@ -76,13 +58,22 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TreeView pageTree;
         
         /// <summary>
-        /// rightSettingsNoAccess control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rightSettingsNoAccess;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
+        
+        /// <summary>
+        /// View0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View View0;
         
         /// <summary>
         /// LiteralNoAccess control.
@@ -94,67 +85,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Literal LiteralNoAccess;
         
         /// <summary>
-        /// rightSettings control.
+        /// View1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rightSettings;
-        
-        /// <summary>
-        /// PlaceHolderControls control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderControls;
-        
-        /// <summary>
-        /// ImagePageStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
-        
-        /// <summary>
-        /// ButtonDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonDelete;
-        
-        /// <summary>
-        /// ButtonUndoDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonUndoDelete;
-        
-        /// <summary>
-        /// ButtonPublish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonPublish;
-        
-        /// <summary>
-        /// ButtonUnPublish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonUnPublish;
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// LiteralLegend control.
@@ -166,13 +103,22 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Literal LiteralLegend;
         
         /// <summary>
-        /// InfoLabelLastChange control.
+        /// ImagePageStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelLastChange;
+        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
+        
+        /// <summary>
+        /// LabelChanged control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelChanged;
         
         /// <summary>
         /// cmdMovePageUp control.
@@ -191,114 +137,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cmdMovePageDown;
-        
-        /// <summary>
-        /// cmdEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdEdit;
-        
-        /// <summary>
-        /// InfoLabelSelectedPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelSelectedPage;
-        
-        /// <summary>
-        /// InfoLabelTemplate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelTemplate;
-        
-        /// <summary>
-        /// InfoLabelUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelUrl;
-        
-        /// <summary>
-        /// InfoLabelMenuGroup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelMenuGroup;
-        
-        /// <summary>
-        /// InfoLabelBreakPersistance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelBreakPersistance;
-        
-        /// <summary>
-        /// InfoLabelSelectedPageId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelSelectedPageId;
-        
-        /// <summary>
-        /// InfoLabelRedirectToUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelRedirectToUrl;
-        
-        /// <summary>
-        /// InfoLabelView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelView;
-        
-        /// <summary>
-        /// InfoLabelEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelEdit;
-        
-        /// <summary>
-        /// InfoLabelSSL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelSSL;
-        
-        /// <summary>
-        /// InfoLabelPrimaryLanguage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelPrimaryLanguage;
         
         /// <summary>
         /// TwoInputTitle control.
@@ -328,13 +166,31 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.DropDownList ddlPageTemplate;
         
         /// <summary>
-        /// TwoInputUrl1 control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input TwoInputUrl1;
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// LabelUriPart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelUriPart;
+        
+        /// <summary>
+        /// TextBoxUri control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxUri;
         
         /// <summary>
         /// TwoInputMenuGroup control.
@@ -391,31 +247,49 @@ namespace OneMainWeb.adm {
         protected global::One.Net.BLL.WebControls.Input InputRedirectToUrl;
         
         /// <summary>
-        /// InputView control.
+        /// OneSettingsPageSettings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputView;
+        protected global::OneMainWeb.AdminControls.OneSettings OneSettingsPageSettings;
         
         /// <summary>
-        /// InputEdit control.
+        /// ButtonDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputEdit;
+        protected global::System.Web.UI.WebControls.Button ButtonDelete;
         
         /// <summary>
-        /// LabeledCheckBoxSSL control.
+        /// ButtonUndoDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox LabeledCheckBoxSSL;
+        protected global::System.Web.UI.WebControls.Button ButtonUndoDelete;
+        
+        /// <summary>
+        /// ButtonPublish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonPublish;
+        
+        /// <summary>
+        /// ButtonUnPublish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonUnPublish;
         
         /// <summary>
         /// cmdSave control.
@@ -427,31 +301,22 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button cmdSave;
         
         /// <summary>
-        /// OneSettingsPageSettings control.
+        /// LiteralModulesOnPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::OneMainWeb.AdminControls.OneSettings OneSettingsPageSettings;
+        protected global::System.Web.UI.WebControls.Literal LiteralModulesOnPage;
         
         /// <summary>
-        /// OneSettingsWebSite control.
+        /// PanleAddInstance control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::OneMainWeb.AdminControls.OneSettings OneSettingsWebSite;
-        
-        /// <summary>
-        /// LiteralAddInstance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralAddInstance;
+        protected global::System.Web.UI.WebControls.Panel PanleAddInstance;
         
         /// <summary>
         /// lblAddModuleInstance control.
@@ -481,15 +346,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button cmdAddInstance;
         
         /// <summary>
-        /// LiteralModulesOnPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralModulesOnPage;
-        
-        /// <summary>
         /// RepeaterModuleInstances control.
         /// </summary>
         /// <remarks>
@@ -499,13 +355,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Repeater RepeaterModuleInstances;
         
         /// <summary>
-        /// PlaceHolderAddRootPage control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderAddRootPage;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// LabelNoRoot control.
@@ -517,13 +373,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Label LabelNoRoot;
         
         /// <summary>
-        /// PlaceHolderAddWebSite control.
+        /// View3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderAddWebSite;
+        protected global::System.Web.UI.WebControls.View View3;
         
         /// <summary>
         /// LabelNoWebSite control.

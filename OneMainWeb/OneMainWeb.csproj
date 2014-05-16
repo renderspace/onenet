@@ -224,6 +224,13 @@
     <Compile Include="CommonModules\VirtualTable.ascx.designer.cs">
       <DependentUpon>VirtualTable.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdminWikiMenu.ascx.cs">
+      <DependentUpon>AdminWikiMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\AdminWikiMenu.ascx.designer.cs">
+      <DependentUpon>AdminWikiMenu.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Blank.ascx.cs">
       <DependentUpon>Blank.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -263,6 +270,7 @@
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
     <Content Include="CommonModules\VirtualTable.ascx" />
+    <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="OneMain.Master" />
   </ItemGroup>

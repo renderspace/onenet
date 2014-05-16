@@ -1,22 +1,23 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Transactions;
 using log4net;
 using One.Net.BLL.DAL;
 using One.Net.BLL.Utility;
+using System.Threading;
+using System.Globalization;
 
 namespace One.Net.BLL
 {
     [Serializable]
     public class BWebsite : BusinessBaseClass
-	{
+    {
         public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
 
         protected new static readonly ILog log = LogManager.GetLogger(typeof(BWebsite));
-		static readonly DbWebsite webSiteDb = new DbWebsite();
+        static readonly DbWebsite webSiteDb = new DbWebsite();
         readonly BInternalContent intContentB = new BInternalContent();
         readonly BContent contentB = new BContent();
         // under heavy load mulitple requests will start the reading process, then the Cache
@@ -25,15 +26,15 @@ namespace One.Net.BLL
         private static readonly object cacheLockingTemplatesList = new Object();
         private static readonly object cacheLockingPage = new Object();
 
-		public BOWebSite Get(int websiteID)
-		{
+        public BOWebSite Get(int websiteID)
+        {
             List<BOWebSite> webSiteList = List();
 
             foreach (BOWebSite webSite in webSiteList)
                 if (webSite.Id == websiteID)
                     return webSite;
             return null;
-		}
+        }
 
         public int? GetRootPageId(int webSiteId)
         {
@@ -46,7 +47,7 @@ namespace One.Net.BLL
             return GetPage(pageId, LanguageId);
         }
 
-        private static string PAGE_CACHE_ID (int pageId, int languageId, bool publishFlag)
+        private static string PAGE_CACHE_ID(int pageId, int languageId, bool publishFlag)
         {
             return "SinglePage_" + pageId + "_L" + languageId + "_" + publishFlag;
         }
@@ -77,7 +78,7 @@ namespace One.Net.BLL
                         if (null == tempPage)
                             OCache.Max(cacheKey, page);
                     }
-                }                
+                }
             }
             return page;
         }
@@ -145,6 +146,124 @@ namespace One.Net.BLL
             return page.URI;
         }
 
+        public enum AddSubPageResult { Ok, OkRootPage, PartialLinkNotValid, PartialLinkExistsOnThisLevel, TriedToAddRootPageToNonEmptySite, NoTemplates }
+
+        public AddSubPageResult AddSubPage(string requestedPageTitle, int webSiteId, int currentPageId)
+        {
+            BOPage parentPageModel = GetPage(currentPageId);
+            BOWebSite site = Get(webSiteId);
+            if (site.PrimaryLanguageId < 1)
+            {
+                site.PrimaryLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            }
+            int newOrder = 0;
+            string newParLink = "";
+
+            newParLink = PrepareParLink(requestedPageTitle);
+            if (!ValidateParLinkSyntax(newParLink))
+                return AddSubPageResult.PartialLinkNotValid;
+
+            if (parentPageModel != null) // Not root
+            {
+                // determine page order
+                List<BOPage> pages = ListChildrenPages(parentPageModel.Id);
+                if (pages != null && pages.Count > 0)
+                {
+                    newOrder = pages[pages.Count - 1].Order + 1;
+                }
+            }
+            else
+            {
+                currentPageId = -1;
+            }
+
+            if (!ValidateParLinkAgainstDB(currentPageId == -1 ? (int?)null : currentPageId, -1, newParLink, webSiteId))
+                return AddSubPageResult.PartialLinkExistsOnThisLevel;
+            bool addingRootPage = false;
+            if (currentPageId == -1)
+            {
+                addingRootPage = true;
+                // check if there are no existing pages on this website
+                if (GetSiteStructure(webSiteId).Count != 0)
+                {
+                    return AddSubPageResult.TriedToAddRootPageToNonEmptySite;
+                }
+            }
+
+            List<BOTemplate> templateData = ListTemplates("3");
+            int templateID = 1;
+            if (templateData.Count > 0)
+            {
+                templateID = templateData[0].Id.Value;
+            }
+            else
+            {
+                return AddSubPageResult.NoTemplates;
+            }
+
+            var page = new BOPage
+            {
+                Title = requestedPageTitle,
+                Template = new BOTemplate { Id = templateID },
+                PublishFlag = false,
+                LanguageId = Thread.CurrentThread.CurrentCulture.LCID,
+                MenuGroup = 0,
+                WebSiteId = webSiteId,
+                BreakPersistance = false,
+                ParLink = newParLink,
+                Order = newOrder
+            };
+
+            if (currentPageId > 0)
+            {
+                page.ParentId = currentPageId;
+            }
+
+            ChangePage(page);
+            OneSiteMapProvider.ReloadSiteMap();
+            return addingRootPage ? AddSubPageResult.OkRootPage : AddSubPageResult.Ok;
+        }
+
+        public string PrepareParLink(string parLink)
+        {
+            return CleanStringForUrl((parLink.ToLower()).Replace(" ", "_")); ;
+        }
+
+        /// <summary>
+        /// Replaces out all characters not appropriate for URL's.
+        /// Also it replaces some like blank space with underscore (_)
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string CleanStringForUrl(string str)
+        {
+            string answer = str.ToLower(CultureInfo.InvariantCulture);
+            answer = answer.Replace("š", "s");
+            answer = answer.Replace("ž", "z");
+            answer = answer.Replace("ć", "c");
+            answer = answer.Replace("č", "c");
+            answer = answer.Replace("đ", "d");
+
+            answer = answer.Replace("Š", "S");
+            answer = answer.Replace("Ž", "Z");
+            answer = answer.Replace("Ć", "C");
+            answer = answer.Replace("Č", "C");
+            answer = answer.Replace("Ð", "D");
+
+            answer = answer.Replace("/", "-");
+            answer = answer.Replace(" ", "-");
+            answer = answer.Replace("?", "");
+            answer = answer.Replace(",", "");
+            answer = answer.Replace(":", "-");
+            answer = answer.Replace(".", "-");
+            answer = answer.Replace(";", "-");
+            answer = answer.Replace("&", "and");
+            answer = answer.Replace("#", "No");
+            answer = answer.Replace("\"", "-");
+            answer = answer.Replace("*", "-");
+            return answer;
+        }
+
         public void ChangePage(BOPage page)
         {
             ChangePage(page, false);
@@ -185,21 +304,21 @@ namespace One.Net.BLL
             using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
             {
 #endif
-                BOPage page1 = GetPage(page1Id);
-                BOPage page2 = GetPage(page2Id);
-                int page1idx = page1.Order;
-                int page2idx = page2.Order;
+            BOPage page1 = GetPage(page1Id);
+            BOPage page2 = GetPage(page2Id);
+            int page1idx = page1.Order;
+            int page2idx = page2.Order;
 
-                if (page1.ParentId != page2.ParentId || page1.WebSiteId != page2.WebSiteId || page1.PublishFlag != page2.PublishFlag)
-                {
-                    throw new ArgumentException("pages do not share the same parent, so swap is not possible");
-                }
-                page1.Order = page2idx;
-                page1.IsChanged = true;
-                ChangePage(page1);
-                page2.Order = page1idx;
-                page2.IsChanged = true;
-                ChangePage(page2);
+            if (page1.ParentId != page2.ParentId || page1.WebSiteId != page2.WebSiteId || page1.PublishFlag != page2.PublishFlag)
+            {
+                throw new ArgumentException("pages do not share the same parent, so swap is not possible");
+            }
+            page1.Order = page2idx;
+            page1.IsChanged = true;
+            ChangePage(page1);
+            page2.Order = page1idx;
+            page2.IsChanged = true;
+            ChangePage(page2);
 #if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
                 ts.Complete();
             }
@@ -255,7 +374,7 @@ namespace One.Net.BLL
                 webSiteDb.DeletePage(pageId, true);
                 if (onlinePage != null)
                     intContentB.Delete(onlinePage.ContentId.Value);
-                deletedCount++;    
+                deletedCount++;
             }
             else
             {
@@ -266,7 +385,28 @@ namespace One.Net.BLL
             }
         }
 
-        public bool DeletePage(int pageId)
+
+        public enum DeletePageByIdResult { Deleted, DeletedRoot, HasChildren, Error }
+
+        public DeletePageByIdResult DeletePageById(int pageId)
+        {
+            BOPage currentPageModel = GetPage(pageId);
+
+            if (currentPageModel != null)
+            {
+                if (ListChildrenPages(currentPageModel.Id).Count != 0)
+                    return DeletePageByIdResult.HasChildren;
+
+                var result = DeletePage(pageId);
+                if (!result)
+                    return DeletePageByIdResult.Error;
+
+                return currentPageModel.IsRoot ? DeletePageByIdResult.DeletedRoot : DeletePageByIdResult.Deleted;
+            }
+            return DeletePageByIdResult.Error;
+        }
+
+        private bool DeletePage(int pageId)
         {
             if (publishFlag)
             {
@@ -345,7 +485,7 @@ namespace One.Net.BLL
 #endif
                 BOPage page = null;
 
-                page = GetPage(pageId);                
+                page = GetPage(pageId);
                 // When publisher calls this method with the wrong language ID, nothing gets published
                 // This won't affect anything else since pages only exist in one language really.
                 if (page == null)
@@ -366,82 +506,82 @@ namespace One.Net.BLL
                 }
 
                 if (page.MarkedForDeletion)
-                    {
-                        bool result = DeletePage(pageId);
+                {
+                    bool result = DeletePage(pageId);
 #if DISTRIBUTED_TRANSACTIONS
                         if (result)
                             ts.Complete();
 #endif
-                        return result;
-                    }
+                    return result;
+                }
 
-                    if (!page.IsChanged)
-                        return false; // nothing to publish
+                if (!page.IsChanged)
+                    return false; // nothing to publish
 
-                    if (!page.IsRoot)
+                if (!page.IsRoot)
+                {
+                    BOPage parentPage = GetPage(page.ParentId.Value, page.LanguageId);
+                    if (parentPage.IsNew)
+                        return false; // we can't publish a page that has no published parent.
+                }
+
+                page.IsChanged = false;
+
+                ChangePage(page, true); // mark the original as published
+
+                // take care of page title (if B
+                BOPage publishedPage = webSiteDb.GetPage(page.Id, true, page.LanguageId);
+                if (page.IsNew || publishedPage == null || (publishedPage != null && page.ContentId == publishedPage.ContentId))
+                    page.ContentId = null;
+                else
+                    page.ContentId = publishedPage.ContentId;
+
+                page.PublishFlag = true;
+                // do actual publishing of main page data
+
+                ChangePage(page, true);
+                // proceed with publishing of modules
+                foreach (BOPlaceHolder placeholder in page.PlaceHolders.Values)
+                {
+                    foreach (BOModuleInstance instance in placeholder.ModuleInstances)
                     {
-                        BOPage parentPage = GetPage(page.ParentId.Value, page.LanguageId);
-                        if (parentPage.IsNew)
-                            return false; // we can't publish a page that has no published parent.
-                    }
-
-                    page.IsChanged = false;
-
-                    ChangePage(page, true); // mark the original as published
-
-                    // take care of page title (if B
-                    BOPage publishedPage = webSiteDb.GetPage(page.Id, true, page.LanguageId);
-                    if (page.IsNew || publishedPage == null || (publishedPage != null && page.ContentId == publishedPage.ContentId))
-                        page.ContentId = null;
-                    else
-                        page.ContentId = publishedPage.ContentId;
-
-                    page.PublishFlag = true;
-                    // do actual publishing of main page data
-
-                    ChangePage(page, true);
-                    // proceed with publishing of modules
-                    foreach (BOPlaceHolder placeholder in page.PlaceHolders.Values)
-                    {
-                        foreach (BOModuleInstance instance in placeholder.ModuleInstances)
+                        if (!instance.IsInherited && instance.PageId == page.Id)
                         {
-                            if (!instance.IsInherited && instance.PageId == page.Id)
+                            if (instance.PendingDelete)
+                                webSiteDb.DeleteModuleInstance(instance.Id);
+                            else if (instance.Name == "TextContent")
+                                PublishTextContentModuleInstance(instance, page.LanguageId);
+                            else if (instance.Name == "SpecialContent")
+                                PublishTextContentModuleInstance(instance, page.LanguageId);
+                            else
                             {
-                                if (instance.PendingDelete)
-                                    webSiteDb.DeleteModuleInstance(instance.Id);
-                                else if (instance.Name == "TextContent")
-                                    PublishTextContentModuleInstance(instance, page.LanguageId);
-                                else if (instance.Name == "SpecialContent")
-                                    PublishTextContentModuleInstance(instance, page.LanguageId);
-                                else
-                                {
-                                    instance.Changed = false;
-                                    ChangeModuleInstance(instance, LanguageId, true);
-                                    instance.PublishFlag = true;
-                                    ChangeModuleInstance(instance, LanguageId, true);
-                                }
+                                instance.Changed = false;
+                                ChangeModuleInstance(instance, LanguageId, true);
+                                instance.PublishFlag = true;
+                                ChangeModuleInstance(instance, LanguageId, true);
                             }
                         }
                     }
-                    /*
-                    foreach (BOPlaceHolder placeholder in page.PlaceHolders.Values)
+                }
+                /*
+                foreach (BOPlaceHolder placeholder in page.PlaceHolders.Values)
+                {
+                    foreach (BOModuleInstance instance in placeholder.ModuleInstances)
                     {
-                        foreach (BOModuleInstance instance in placeholder.ModuleInstances)
+                        string moduleClassName = "One.Net.BLL.B" + instance.Name;
+                        Type[] implementedInterfaces = Type.GetType(moduleClassName).GetInterfaces();
+                        foreach (Type implementedInterface in implementedInterfaces)
                         {
-                            string moduleClassName = "One.Net.BLL.B" + instance.Name;
-                            Type[] implementedInterfaces = Type.GetType(moduleClassName).GetInterfaces();
-                            foreach (Type implementedInterface in implementedInterfaces)
+                            if (implementedInterface == typeof(IModuleInstancePublisher))
                             {
-                                if (implementedInterface == typeof(IModuleInstancePublisher))
-                                {
 
-                                    IModuleInstancePublisher publisher = (IModuleInstancePublisher)Activator.CreateInstance(Type.GetType(moduleClassName));
-                                    publisher.PublishModuleInstance(instance.Id, instance.Settings);
-                                }
+                                IModuleInstancePublisher publisher = (IModuleInstancePublisher)Activator.CreateInstance(Type.GetType(moduleClassName));
+                                publisher.PublishModuleInstance(instance.Id, instance.Settings);
                             }
                         }
                     }
-                    */
+                }
+                */
 #if DISTRIBUTED_TRANSACTIONS
                     ts.Complete();
                 }
@@ -485,7 +625,8 @@ namespace One.Net.BLL
 
             intContentB.Change(content);
             publishedInstance = instance;
-            publishedInstance.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
+
+            publishedInstance.Settings["ContentId"] = new BOSetting { Name = "ContentId", Type = "Int", Value = content.ContentId.Value.ToString(), UserVisibility = BOSetting.USER_VISIBILITY_SPECIAL };
             publishedInstance.PublishFlag = true;
             ChangeModuleInstance(publishedInstance, languageId, true);
         }
@@ -517,6 +658,26 @@ namespace One.Net.BLL
                 this.ChangeModuleInstance(instanceOne, LanguageId, false);
                 this.ChangeModuleInstance(instanceTwo, LanguageId, false);
             }
+        }
+
+        public bool AddModulesInstance(int pageId, int placeholderId, int moduleId)
+        {
+            if (pageId >= 0 && moduleId >= 0 && placeholderId >= 0)
+            {
+                BOModuleInstance moduleInstance = new BOModuleInstance();
+                moduleInstance.PageId = pageId;
+                moduleInstance.PublishFlag = false;
+                moduleInstance.PendingDelete = false;
+                moduleInstance.Changed = true;
+                moduleInstance.ModuleId = moduleId;
+                moduleInstance.Order = -1;
+                moduleInstance.PlaceHolderId = placeholderId;
+                moduleInstance.PersistFrom = 0;
+                moduleInstance.PersistTo = 0;
+                ChangeModuleInstance(moduleInstance);
+                return true;
+            }
+            return false;
         }
 
         public void ChangeModuleInstance(BOModuleInstance instance)
@@ -578,7 +739,7 @@ namespace One.Net.BLL
                             instance.Order = containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances[cnt - 1].Order + 1;
                         else
                             instance.Order = 0;
-                        
+
                         // instance.Order = containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances[containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances.Count - 1].Order + 1;
                     }
                     else
@@ -653,7 +814,7 @@ namespace One.Net.BLL
         #endregion
 
         public List<BOWebSite> List()
-		{
+        {
             List<BOWebSite> websites = OCache.Get(CACHE_SITE_LIST) as List<BOWebSite>;
             if (websites == null)
             {
@@ -670,26 +831,26 @@ namespace One.Net.BLL
                 }
             }
             return websites;
-		}
+        }
 
-		public void ChangeWebsite(BOWebSite website)
-		{
+        public void ChangeWebsite(BOWebSite website)
+        {
             intContentB.Change(website);
-			webSiteDb.Change(website);
+            webSiteDb.Change(website);
             OCache.Remove(CACHE_SITE_LIST);
-		}
+        }
 
         public void ChangeSettings(Dictionary<string, BOSetting> entries, int websiteId)
-		{
+        {
             BOWebSite site = Get(websiteId);
             if (site != null)
             {
                 site.Settings = entries;
                 ChangeWebsite(site);
             }
-		}
+        }
 
-        public BOTemplate GetTemplate(int id)
+        public static BOTemplate GetTemplate(int id)
         {
             List<BOTemplate> list = ListTemplates(null);
             foreach (BOTemplate template in list)
@@ -715,7 +876,7 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns></returns>
-        public List<BOTemplate> ListTemplates(string typeId)
+        public static List<BOTemplate> ListTemplates(string typeId)
         {
             List<BOTemplate> list = OCache.Get("ListTemplates") as List<BOTemplate>;
             if (list == null)
@@ -733,7 +894,7 @@ namespace One.Net.BLL
                         log.Debug("ListTemplates found " + list.Count + " templates.");
                 }
             }
-        
+
             if (!string.IsNullOrEmpty(typeId) && null != list)
             {
                 List<BOTemplate> result = new List<BOTemplate>();

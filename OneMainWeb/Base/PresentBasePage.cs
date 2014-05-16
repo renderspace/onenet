@@ -282,6 +282,12 @@ var _gaq = _gaq || [];
                     Response.Redirect(page.RedirectToUrl);
                 }
 
+                if (!publishFlag && Master.Controls.Count > 2)
+                {
+                    var control = LoadControl("~/Controls/AdminWikiMenu.ascx");
+                    Master.Controls[3].Controls.AddAt(0, control);
+                }
+
                 if (page.RequireSSL && !Request.IsSecureConnection)
                 {
                     Response.StatusCode = 403;

@@ -9,12 +9,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using System.Linq;
 
 using System.ComponentModel;
 
-
 using One.Net.BLL;
-using DropDownList=System.Web.UI.WebControls.DropDownList;
+using DropDownList = System.Web.UI.WebControls.DropDownList;
 using One.Net.BLL.WebControls;
 
 
@@ -33,10 +33,6 @@ namespace OneMainWeb.AdminControls
             }
         }
 
-        private Dictionary<string, BOSetting> settings;
-        private int itemId;
-        private SettingMode settingMode;
-        private bool showSettings;
 
         static readonly BWebsite webSiteB = new BWebsite();
 
@@ -54,44 +50,24 @@ namespace OneMainWeb.AdminControls
         //public delegate void SettingsChangeHandler(object sender, SettingsEventArgs e);
         //public event SettingsChangeHandler SettingsChange;
 
-        [Bindable(true), Category("Data"), DefaultValue("")]
-        public Dictionary<string, BOSetting> Settings
-        {
-            get { return settings; }
-            set { settings = value; }
-        }
+        [Bindable(true), Category("Data"), DefaultValue("True")]
+        public bool DisplayCommands { get; set; }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public int ItemId
-        {
-            get { return itemId; }
-            set { itemId = value; }
-        }
+        public Dictionary<string, BOSetting> Settings { get; set; }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public SettingMode Mode
-        {
-            get { return settingMode; }
-            set { settingMode = value; }
-        }
+        public int ItemId { get; set; }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public string Text
-        {
-            set { cmdShowModuleSettings.Text = value; }
-        }
+        public SettingMode Mode { get; set; }
 
         [Bindable(false), Category("Data"), DefaultValue("")]
-        protected bool ShowSettings
-        {
-            get { return showSettings; }
-            set { showSettings = value; }
-        }
+        protected bool ShowSettings { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Img1.Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-down.gif");
-            Img2.Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-up.gif");
+            PanelCommands.Visible = DisplayCommands;
         }
 
         protected override void OnInit(EventArgs e)
@@ -103,13 +79,14 @@ namespace OneMainWeb.AdminControls
         protected override object SaveControlState()
         {
             object cSBase = base.SaveControlState();
-            object[] cSThis = new object[5];
+            object[] cSThis = new object[6];
 
             cSThis[0] = cSBase;
-            cSThis[1] = showSettings;
-            cSThis[2] = settings;
-            cSThis[3] = itemId;
-            cSThis[4] = settingMode;
+            cSThis[1] = ShowSettings;
+            cSThis[2] = Settings;
+            cSThis[3] = ItemId;
+            cSThis[4] = Mode;
+            cSThis[5] = DisplayCommands;
 
             return cSThis;
         }
@@ -118,11 +95,11 @@ namespace OneMainWeb.AdminControls
         {
             object[] cSThis = (object[])savedState;
             object cSBase = cSThis[0];
-            showSettings = (bool)cSThis[1];
-            settings = (Dictionary<string, BOSetting>) cSThis[2];
-            itemId = (int) cSThis[3];
-            settingMode = (SettingMode) cSThis[4];
-
+            ShowSettings = (bool)cSThis[1];
+            Settings = (Dictionary<string, BOSetting>)cSThis[2];
+            ItemId = (int)cSThis[3];
+            Mode = (SettingMode)cSThis[4];
+            DisplayCommands = (bool)cSThis[5];
             LoadSettings();
 
             base.LoadControlState(cSBase);
@@ -134,14 +111,14 @@ namespace OneMainWeb.AdminControls
 
             switch (this.Mode)
             {
-                case  SettingMode.Module:
-                    this.Settings = webSiteB.GetModuleInstance(itemId).Settings;
+                case SettingMode.Module:
+                    this.Settings = webSiteB.GetModuleInstance(ItemId).Settings;
                     break;
-                case  SettingMode.Page:
-                    this.Settings = webSiteB.GetPage(itemId).Settings;
+                case SettingMode.Page:
+                    this.Settings = webSiteB.GetPage(ItemId).Settings;
                     break;
-                case  SettingMode.Website:
-                    this.Settings = webSiteB.Get(itemId).Settings;
+                case SettingMode.Website:
+                    this.Settings = webSiteB.Get(ItemId).Settings;
                     break;
             }
 
@@ -155,21 +132,7 @@ namespace OneMainWeb.AdminControls
             LoadSettings();
         }
 
-        public void Collapse()
-        {
-            if (showSettings)
-            {
-                plhCollapsed.Visible = true;
-                plhExpanded.Visible = false;
-            }
-            else
-            {
-                plhCollapsed.Visible = false;
-                plhExpanded.Visible = false;
-            }
-        }
-
-        protected void cmdSaveChanges_Click(object sender, EventArgs e)
+        public void Save(EventArgs e = null)
         {
             if (ItemId > 0 && Settings != null)
             {
@@ -227,14 +190,11 @@ namespace OneMainWeb.AdminControls
                             case "String":
                                 setting.Value = ValidInput1.Value;
                                 break;
-                            default:break;
+                            default: break;
                         }
                         SettingsForSaving.Add(setting.Name, setting);
                     }
                 }
-
-//                ShowSettings = false;
-//                LoadSettings();
 
                 switch (Mode)
                 {
@@ -262,32 +222,22 @@ namespace OneMainWeb.AdminControls
             }
         }
 
+        protected void cmdSaveChanges_Click(object sender, EventArgs e)
+        {
+            Save(e);
+        }
+
         public void LoadSettingsControls(Dictionary<string, BOSetting> _settings)
         {
-            if (itemId > 0)
-            {
-                plhCollapsed.Visible = !ShowSettings;
-                plhExpanded.Visible = ShowSettings;
-            }
-            else
-            {
-                plhCollapsed.Visible = plhExpanded.Visible = false;
-            }
-        	Settings = _settings;
+            Settings = _settings;
         }
 
         public void LoadSettings()
         {
-            if (itemId > 0)
+            if (ItemId > 0)
             {
-                plhCollapsed.Visible = !ShowSettings;
-                plhExpanded.Visible = ShowSettings;
                 rptSettings.DataSource = Settings;
                 rptSettings.DataBind();
-            }
-            else
-            {
-                plhCollapsed.Visible = plhExpanded.Visible = false;
             }
         }
 
@@ -308,7 +258,7 @@ namespace OneMainWeb.AdminControls
                     CheckBox1.Visible = false;
                     ValidInput1.Visible = false;
                     InfoLabel1.Visible = false;
-                    
+
 
                     BOSetting setting = ((KeyValuePair<string, BOSetting>)e.Item.DataItem).Value;
 

@@ -1,25 +1,12 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="OneSettings.ascx.cs" Inherits="OneMainWeb.AdminControls.OneSettings" %>
-
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ Import Namespace="System.Collections.Generic" %>
-<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
+<%@ Import Namespace="One.Net.BLL" %>
 <div class="oneSettings">
-    <asp:PlaceHolder ID="plhCollapsed" Visible="true" runat="server">
-         <div class="extline">
-            <span>
-            <asp:LinkButton ID="cmdShowModuleSettings" OnClick="cmdShowModuleSettings_Click" runat="server"  Text="$show" ValidationGroup="none"  />&nbsp;&nbsp;
-            <img id="Img1" alt="" runat="server" />
-            </span>
-        </div>
-    </asp:PlaceHolder>
-    <asp:PlaceHolder ID="plhExpanded" Visible="false" runat="server">
-         <div class="extline">
-            <span>
-                <asp:LinkButton ID="cmdHideModuleSettings" OnClick="cmdHideModuleSettings_Click" runat="server" Text="$hide" ValidationGroup="none" />&nbsp;&nbsp;
-                <img id="Img2" alt="" runat="server" />
-            </span>
-        </div>
-        
+    <details>
+        <summary>Napredne nastavitve</summary>
+
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="ModuleInstanceSettings" />
         <asp:Repeater ID="rptSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated">
             <ItemTemplate>
@@ -36,10 +23,8 @@
                 
             </ItemTemplate>
         </asp:Repeater>
-        <div class="save">
+        <asp:Panel runat="server" ID="PanelCommands" CssClass="commands">
             <asp:Button ID="cmdSaveChanges" runat="server" OnClick="cmdSaveChanges_Click" Text="$update" ValidationGroup="ModuleInstanceSettings"  />
-        </div>
-                
-    </asp:PlaceHolder>    
-
+        </asp:Panel>
+    </details>
 </div>

@@ -57,6 +57,18 @@ namespace One.Net.BLL
             }
         }
 
+        public string ParentURI
+        {
+            get
+            {
+                var lastSlashPosition = URI.LastIndexOf('/');
+                if (lastSlashPosition < 0)
+                    return URI;
+                return URI.Substring(0, lastSlashPosition + 1);
+
+            }
+        }
+
 		public string URI
 		{ 
 			get {return this.uri;}
