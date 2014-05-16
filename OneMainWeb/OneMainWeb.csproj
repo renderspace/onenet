@@ -240,6 +240,7 @@
     </Compile>
     <Compile Include="Controls\BreadCrumb.cs" />
     <Compile Include="Controls\DirectoryControl.cs" />
+    <Compile Include="Controls\GetMeaning.cs" />
     <Compile Include="Controls\MenuGroup.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -258,6 +259,7 @@
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
+    <Content Include="adm\css\adminWikiMenu.css" />
     <Content Include="adm\FileManager2.aspx" />
     <Content Include="adm\Publish.aspx" />
     <Content Include="adm\Scaffold.aspx" />
