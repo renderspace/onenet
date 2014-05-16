@@ -8,7 +8,10 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" title="one default" />
+    <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
+
+    
     <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script> 
