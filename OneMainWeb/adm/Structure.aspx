@@ -12,7 +12,7 @@
     <article class="module width_quarter tall">
         <header><h3 class="tabs_involved">Content Manager</h3>
             <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
-                <asp:TextBox runat="server" ID="TextBoxSubPage" title="Dodaj novo stran" CssClass="labelify"></asp:TextBox>
+                <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
                 <asp:Button ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="$add_module_instance_button" onclick="cmdAddChild_Click" />
             </asp:Panel>
         </header>
