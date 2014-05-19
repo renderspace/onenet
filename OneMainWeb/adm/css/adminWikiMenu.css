@@ -78,3 +78,7 @@ padding: 5px; margin-top: 3px; cursor: move;}
 #modulesListWrapper						{background:rgba(0,0,0,.4);padding:10px 10px 0;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
 #oneNetPreview #modulesListWrapper p 	{font:italic normal 11px 'OpenSansRegular',Arial,Helvetica,sans-serif;padding:0 0 10px;}
 #oneNetPreview #modulesListWrapper li  	{background:none;border:2px dashed #fff;width:100%;text-align:center;display:inline-block;cursor:pointer;font:bold 11px 'OpenSansRegular',Arial,Helvetica,sans-serif;text-transform:uppercase;padding:3px 0;margin:0 0 10px;-webkit-border-radius:none !important;-moz-border-radius:none !important;border-radius:none !important;}
+
+@media (max-width: 1100px) {
+#oneNetPreview {display: none;}
+}
