@@ -575,28 +575,18 @@ jQuery.validator.addMethod(
             LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification + "\").autocomplete();";
             LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification;
             LiteralSuggest.Text += @""").autocomplete({
-    source: function (request, response) {
-        console.log(""autocomplete"");
-        jQuery.get(""/Utils/BambooOneToManyData.ashx"", {
-            query: request.term
-        }, function (data) {
-            response(data);
-        });
-    },
-    minLength: 3
+    source: ""/Utils/BambooOneToManyData.ashx?limit=10&relationId=" + column.PartOfRelationId + @""",
+    minLength: 3,
+    select: function( event, ui ) {
+        console.log(ui.item);
+                    console.log(ui.item.value);
+                    console.log(ui.item.label);
+                    $("".PK" + TextBoxSuggestIdentification + @""").val(ui.item.value);
+                    $(""input." + TextBoxSuggestIdentification + @""").val(ui.item.label);
+    }
 });";
             LiteralSuggest.Text += "}); </script>";
-                
-                
-                /*
-                ('/Utils/BambooOneToManyData.ashx?relationId=" +
-                                   column.PartOfRelationId + "').result(";
-            LiteralSuggest.Text += "function (evt, data, formatted) { $(\".PK" +
-                                   TextBoxSuggestIdentification +
-                                   "\").val(data[1]); }";
-            LiteralSuggest.Text += ");";
-            LiteralSuggest.Text += "}); </script>"; */
-            //.result(ValidatorOnChange);
+
             descriptionLabel.AssociatedControlID = TextBoxSuggest.ID;
             panelField.Controls.Add(descriptionLabel);
             panelField.Controls.Add(TextBoxPrimaryKey);
@@ -706,13 +696,20 @@ jQuery.validator.addMethod(
                             var DropDownListRegular = PanelField.FindControl("FI" + field.Ordinal) as DropDownList;
                             if (DropDownListRegular != null)
                             {
-                                field.NewValueInteger = int.Parse(DropDownListRegular.SelectedValue);
+                                if(DropDownListRegular.SelectedValue == NULL)
+                                {
+                                    field.NewValueIsNull = true;
+                                } 
+                                else 
+                                {
+                                    field.NewValueInteger = int.Parse(DropDownListRegular.SelectedValue);
+                                }
                                 break;
                             }
                             var TextBoxPrimaryKey = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
                             if (TextBoxPrimaryKey != null)
                             {
-                                if (TextBoxPrimaryKey.Text == NULL)
+                                if (TextBoxPrimaryKey.Text == "0" || TextBoxPrimaryKey.Text == NULL || string.IsNullOrWhiteSpace(TextBoxPrimaryKey.Text))
                                 {
                                     field.NewValueIsNull = true;
                                 }
