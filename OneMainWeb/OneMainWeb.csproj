@@ -666,7 +666,9 @@
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.sitemap" />
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <Content Include="Utils\BambooExcelExport.ashx" />
     <Content Include="Utils\BambooOneToManyData.ashx" />
