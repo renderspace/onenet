@@ -369,14 +369,18 @@ div.instanceAllSettings div div.save input{ float: right;}
 
 .pagesettings  { margin-top: 10px; }
 
-.oneSettings { width: 100%; }
-
-.instanceAllSettings .oneSettings 
+.oneSettings 
 { 
 	width: 452px; 
 	padding: 0 10px 10px 10px; 
-	background-color: #E4E4E0; 
+	background-color: #fff; 
 }
+    .oneSettings summary
+    {
+        font-weight: bold;
+        display: block;
+        width: 100%;
+    }
 
 
 .pagesettings div.extline { background-image: url(/Res/dark-bg-horiz.gif); 

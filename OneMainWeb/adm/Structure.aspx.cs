@@ -329,6 +329,7 @@ namespace OneMainWeb.adm
                     moduleSettings.Mode = AdminControls.OneSettings.SettingMode.Module;
                     moduleSettings.ItemId = moduleInstance.Id;
                     moduleSettings.LoadSettingsControls(moduleInstance.Settings);
+                    moduleSettings.LoadSettings();
                 }
 
                 lblPlaceHolder.Text = "$" + currentPlaceHolder.Name;
