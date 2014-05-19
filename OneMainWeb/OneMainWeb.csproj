@@ -416,13 +416,6 @@
       <DependentUpon>FileManager.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="adm\FlashBrowser.aspx.cs">
-      <DependentUpon>FlashBrowser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\FlashBrowser.aspx.designer.cs">
-      <DependentUpon>FlashBrowser.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\ImageBrowser.aspx.cs">
       <DependentUpon>ImageBrowser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -807,7 +800,6 @@
     <Content Include="AdminControls\TextContentControl.ascx" />
     <Content Include="AdminControls\toolbar_close.gif" />
     <Content Include="adm\FileManager.asmx" />
-    <Content Include="adm\FlashBrowser.aspx" />
     <Content Include="adm\Redirects.aspx" />
     <Content Include="adm\SpecialContentEdit.aspx" />
     <Content Include="adm\SQLEditor.aspx" />

@@ -477,9 +477,12 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     }
                     else if (column.IsPartOfForeignKey || column.IsPartOfUserView)
                     {
-                        columnsSql += column.FQName + ", ";
-                        valuesSql += "@V" + column.Name + ", ";
-                        parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
+                        if (!column.NewValueIsNull)
+                        {
+                            columnsSql += column.FQName + ", ";
+                            valuesSql += "@V" + column.Name + ", ";
+                            parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
+                        }
                     }
                 }
                 sql += columnsSql.Substring(0, columnsSql.Length - 2) + ") VALUES (";
@@ -514,8 +517,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     }
                     else if (column.IsPartOfForeignKey || column.IsPartOfUserView)
                     {
-                        sql += column.FQName + " = " + "@V" + column.Name + ", ";
-                        parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
+                        if (!column.ValueIsNull)
+                        {
+                            sql += column.FQName + " = " + "@V" + column.Name + ", ";
+                            parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
+                        }
                     }
                 }
                 sql = sql.Substring(0, sql.Length - 2) + " WHERE 1=1";

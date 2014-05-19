@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Web;
 using System.Web.Services;
 using log4net;
+using Newtonsoft.Json;
 using One.Net.BLL.Scaffold;
 
 namespace OneMainWeb.Utils
@@ -22,7 +24,7 @@ namespace OneMainWeb.Utils
         {
             context.Response.ContentType = "text/plain";
 
-            var sb = new StringBuilder();
+            var list = new List<DTOOneToMany>();
 
             try
             {
@@ -30,7 +32,7 @@ namespace OneMainWeb.Utils
                 Int32.TryParse(context.Request.QueryString["limit"], out limit);
                 var relationId = 0;
                 Int32.TryParse(context.Request.QueryString["relationId"], out relationId);
-                var query = context.Request.QueryString["q"];
+                var query = context.Request.QueryString["term"];
 
                 var tags = Data.GetForeignKeyOptions(relationId, query, limit);
                 foreach (var key in tags.Keys)
@@ -38,15 +40,16 @@ namespace OneMainWeb.Utils
                     // pipe is used as separator, so let's remove it
                     var value = tags[key].Replace("|", "").Trim();
                     var id = key;
-					sb.Append(value).Append("|").Append(id).Append("\n");
+                    list.Add(new DTOOneToMany { label = value, value = id.ToString() }); //sb.Append(value).Append("|").Append(id).Append("\n");
+
                 }
+                context.Response.Write(JsonConvert.SerializeObject(list));
             }
             catch (Exception ex)
             {
                 log.Error("OneToManyData", ex);
+                context.Response.Write(ex.Message);
             }
-            
-            context.Response.Write(sb.ToString());
         }
 
         public bool IsReusable
@@ -56,5 +59,16 @@ namespace OneMainWeb.Utils
                 return false;
             }
         }
+    }
+
+    [Serializable]
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOOneToMany 
+    {
+        [DataMember, JsonProperty]
+        public string value { get; set; }
+
+        [DataMember, JsonProperty]
+        public string label { get; set; }
     }
 }
