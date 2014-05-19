@@ -45,7 +45,7 @@ div {float:left}
 .war span {color:#000; font-weight:bold;}
 
 .warning { color: #F0913C; font-weight: bold;}
-.centerStructure .warning { background-color: #F3F2EF; display: block; padding: 5px 5px 5px 5px;}
+.treeHolder .warning { background-color: #F3F2EF; display: block; padding: 5px 5px 5px 5px;}
 
 .treeHolder {overflow: hidden; float: left; margin-top: -6px;}
 .treeHolder div { float: none;}
@@ -129,9 +129,9 @@ a {color: #000;  font-size: 90%;}
 .inputwithbutton label {width: 49%; float: left; margin-top: 3px; overflow: hidden; }
 .inputwithbutton span { float: left; width: 2%;  }
 
-.centerStructure .fmFiles { width:100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.centerStructure .fmFiles input { float:right; margin-right: 10px; margin-bottom: 7px; }
-.centerStructure .fmFiles input.leftButton { width: auto; float:right; }
+.treeHolder .fmFiles { width:100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
+.treeHolder .fmFiles input { float:right; margin-right: 10px; margin-bottom: 7px; }
+.treeHolder .fmFiles input.leftButton { width: auto; float:right; }
 
 .checkboxlist{float:left;}
 .checkboxlist .cbl{width:100%;float:left;}
@@ -143,9 +143,6 @@ a {color: #000;  font-size: 90%;}
 .textcontentcontrol{width:100%;}
 .textcontentcontrol .input input {width:70%;} 
 .textcontentcontrol .input label {width:29%;} 
-
-.moduleInstance, .pageproperties {border: 1px #CCC solid; background: #FFF; padding: 15px;}
-
 
 
 .browseImage {width:100%;position:relative;}
@@ -164,10 +161,10 @@ a {color: #000;  font-size: 90%;}
 .formEditor .input label{width:33%;} 
 .formEditor .checkbox input{float:right;margin:0 220px 0 0;}
 .input span { float: left; width: 10px;  }
-.centerStructure .input label {width: 90%; float: left; margin-top: 3px; overflow: hidden; margin-left: 5px; }
-.centerStructure .input input { width: 240px; float: left; border: 1px solid #7B9EBD; margin-left: 5px; }
-.centerStructure .addbutton { float: right; margin-right: 20px; }
-.centerStructure .treeHolder { border: 1px solid #9E9E98;}
+.treeHolder .input label {width: 90%; float: left; margin-top: 3px; overflow: hidden; margin-left: 5px; }
+.treeHolder .input input { width: 240px; float: left; border: 1px solid #7B9EBD; margin-left: 5px; }
+.treeHolder .addbutton { float: right; margin-right: 20px; }
+.treeHolder .treeHolder { border: 1px solid #9E9E98;}
 .centerFull .contentEntry .input {}
 /* .centerFull .contentEntry .input input { width: 100%; }*/
 /* .centerFull .contentEntry .input label {width: 49%;  margin-top: 0px; } */
@@ -263,7 +260,7 @@ a {color: #000;  font-size: 90%;}
     margin-bottom: 13px;
 }
 fieldset {margin:0;padding:0;}
-.centerStructure {  width: 22%; overflow: hidden; margin: 0; color: #FFFFFF; background-color: #9e9e98; padding-top: 6px; margin-top: 15px; margin-bottom: 15px; }
+.treeHolder {  width: 270px; overflow: hidden; margin: 0; color: #FFFFFF; background-color: #9e9e98; padding-top: 6px; margin-top: 15px; margin-bottom: 15px; }
 .centerFull {clear:both; padding:0; width: 100%; float: left; overflow: hidden; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
 .centerFull { color: #333333; }
 
@@ -283,42 +280,49 @@ fieldset {margin:0;padding:0;}
 .mainEditor .contentEntry {}
 .centerFull .contentEntry {margin:0;}
 
+.width_quarter {width: 300px!important;}
+.module {width: 500px; float: left}
+.module header {display: inline-block; width: 100%;}
+
+.right-col {width: 800px;}
+
 /*dreveska */
 
-.centerStructure .cct {}
-.centerStructure ul {margin:0;padding:5px 0 5px 0;list-style:none;background-color:#F3F2EF;float:left;}
-.centerStructure ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
-.centerStructure ul ul ul {border-bottom: 1px solid #e3e2da;}
+.treeHolder {margin-right: 20px;}
+.treeHolder .cct {}
+.treeHolder ul {margin:0;padding:5px 0 5px 0;list-style:none;background-color:#F3F2EF;float:left;}
+.treeHolder ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
+.treeHolder ul ul ul {border-bottom: 1px solid #e3e2da;}
 
-.centerStructure ul li {position:relative;padding-left:14px;float:left;}
+.treeHolder ul li {position:relative;padding-left:14px;float:left;}
 .formStructure ul li{position:relative;padding-bottom:5px;padding-top:5px;float:left;}
-.centerStructure ul li a {text-decoration:none;font-size:11px;display:block;float:left;min-height:13px;min-width:20px;}
+.treeHolder ul li a {text-decoration:none;font-size:11px;display:block;float:left;min-height:13px;min-width:20px;}
 
-.centerStructure ul li a {width:254px;}
-.centerStructure ul li li a {width:240px;}
-.centerStructure ul li li li a {width:226px;}
-.centerStructure ul li li li li a {width:212px;}
-.centerStructure ul li li li li li a {width:198px;}
-.centerStructure ul li li li li li li a {width:184px;}
-.centerStructure ul li li li li li li li a {width:170px;}
-.centerStructure ul li em {font-style:normal;color:#5E5E58;font-weight:bold;}
-.centerStructure ul li span.pd,
-.centerStructure ul li span.ch,
-.centerStructure ul li span.pub {background-position: 2px 2px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
-.centerStructure ul li span.pd {background-image:url(/Res/brisanje.gif);}
-.centerStructure ul li span.ch {background-image:url(/Res/objava.gif);}
-.centerStructure ul li span.pub {background-image:url(/Res/objavljeno.gif);}
-.centerStructure ul li span.colapse {background-image:url(/Res/colapse.gif);}
-.centerStructure ul li span.expand {background-image:url(/Res/expand.gif);}
-.centerStructure ul li span.colapse,
-.centerStructure ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
-.centerStructure ul li.sel a {background-color:#9E9E98;}
-.centerStructure ul li.sel li  a {background:none;}
+.treeHolder ul li a {width:254px;}
+.treeHolder ul li li a {width:240px;}
+.treeHolder ul li li li a {width:226px;}
+.treeHolder ul li li li li a {width:212px;}
+.treeHolder ul li li li li li a {width:198px;}
+.treeHolder ul li li li li li li a {width:184px;}
+.treeHolder ul li li li li li li li a {width:170px;}
+.treeHolder ul li em {font-style:normal;color:#5E5E58;font-weight:bold;}
+.treeHolder ul li span.pd,
+.treeHolder ul li span.ch,
+.treeHolder ul li span.pub {background-position: 2px 2px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
+.treeHolder ul li span.pd {background-image:url(/Res/brisanje.gif);}
+.treeHolder ul li span.ch {background-image:url(/Res/objava.gif);}
+.treeHolder ul li span.pub {background-image:url(/Res/objavljeno.gif);}
+.treeHolder ul li span.colapse {background-image:url(/Res/colapse.gif);}
+.treeHolder ul li span.expand {background-image:url(/Res/expand.gif);}
+.treeHolder ul li span.colapse,
+.treeHolder ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
+.treeHolder ul li.sel a {background-color:#9E9E98;}
+.treeHolder ul li.sel li  a {background:none;}
 
 .noImages ul li a {padding: 4px 0;}
 
-.centerStructure ul.cct-Show {}
-.centerStructure ul.cct-Hide {display:none;}
+.treeHolder ul.cct-Show {}
+.treeHolder ul.cct-Hide {display:none;}
 
 /*fieldset {padding:0 10px;}
 fieldset div {margin:0 10px;}
