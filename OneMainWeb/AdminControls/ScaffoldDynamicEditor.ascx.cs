@@ -512,7 +512,7 @@ jQuery.validator.addMethod(
                 panelField.Controls.Add(label);
                 panelField.Controls.Add(InputMultiLanguage);
 
-                validationJQueryRules += CreateValidateRule(!column.IsNullable, "", InputMultiLanguage.UniqueID);
+                validationJQueryRules += CreateValidateRule(false, "", InputMultiLanguage.UniqueID);
             }
         }
 
@@ -546,7 +546,7 @@ jQuery.validator.addMethod(
             panelField.Controls.Add(descriptionLabel);
             panelField.Controls.Add(Input6);
 
-            validationJQueryRules += CreateValidateRule(!column.IsNullable, "", Input6.UniqueID);
+            validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }
 
         private static void PrepareRelationSuggestOptions(VirtualColumn column, Panel panelField, Label descriptionLabel, ref string validationJQueryRules, bool skipSelectedLookup)
