@@ -8,6 +8,7 @@ using System.Data;
 using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Scaffold;
+using System.Collections.Specialized;
 
 namespace OneMainWeb.AdminControls
 {
@@ -155,17 +156,52 @@ namespace OneMainWeb.AdminControls
 
         protected void GridViewItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (GridViewItems.DataKeys[GridViewItems.SelectedIndex] == null)
+            if (GridViewItems.DataKeys[GridViewItems.SelectedIndex] == null || GridViewItems.DataKeys[GridViewItems.SelectedIndex].Values.Count != 1)
             {
                 // nothing selected
                 return;
             }
 
+            var id = 0;
+            var primaryKey = "";
+
+            var primaryKeys = (OrderedDictionary) GridViewItems.DataKeys[GridViewItems.SelectedIndex].Values;
+            foreach(var partOfPrimaryKey in primaryKeys.Keys)
+            {
+                primaryKey = partOfPrimaryKey.ToString();
+                id = int.Parse(primaryKeys[partOfPrimaryKey].ToString());
+            }
+            SelectItem(primaryKey, id);
+        }
+
+        protected void ButtonDisplayById_Click(object sender, EventArgs e)
+        {
+            var id = 0;
+            int.TryParse(TextBoxId.Text.Trim(), out id);
+
+            if (id < 1 || GridViewItems.DataKeys.Count < 1)
+                return;
+
+
+            var primaryKey = "";
+            var primaryKeys = (OrderedDictionary) GridViewItems.DataKeys[0].Values;
+            foreach (var partOfPrimaryKey in primaryKeys.Keys)
+            {
+                primaryKey = partOfPrimaryKey.ToString();
+            }
+            SelectItem(primaryKey, id);
+        }
+
+        protected void SelectItem(string primaryKeyName, int primaryKeyNameValue)
+        {
             if (GridViewItems.DataKeyNames.Count() > 0)
             {
+
+                var primaryKeys = new OrderedDictionary();
+                primaryKeys.Add(primaryKeyName, primaryKeyNameValue);
                 DynamicEditor1.Clear();
                 DynamicEditor1.VirtualTableId = VirtualTableId;
-                DynamicEditor1.PrimaryKeys = GridViewItems.DataKeys[GridViewItems.SelectedIndex].Values;
+                DynamicEditor1.PrimaryKeys = primaryKeys;
                 MultiView1.ActiveViewIndex = 1;
             }
             else
@@ -327,6 +363,7 @@ namespace OneMainWeb.AdminControls
             }
         }
 
+        
 
     }
 }

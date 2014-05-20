@@ -517,11 +517,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     }
                     else if (column.IsPartOfForeignKey || column.IsPartOfUserView)
                     {
-                        if (!column.ValueIsNull)
-                        {
+                        //if (!column.ValueIsNull)
+                        //{
                             sql += column.FQName + " = " + "@V" + column.Name + ", ";
                             parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
-                        }
+                        //}
                     }
                 }
                 sql = sql.Substring(0, sql.Length - 2) + " WHERE 1=1";

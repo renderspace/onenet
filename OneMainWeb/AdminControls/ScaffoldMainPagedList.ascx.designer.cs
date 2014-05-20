@@ -58,6 +58,24 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.Button ButtonExportToExcel;
         
         /// <summary>
+        /// TextBoxId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxId;
+        
+        /// <summary>
+        /// ButtonDisplayById control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonDisplayById;
+        
+        /// <summary>
         /// GridViewItems control.
         /// </summary>
         /// <remarks>

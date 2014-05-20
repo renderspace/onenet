@@ -439,7 +439,6 @@ namespace One.Net.BLL
                             log.Debug("SubmittedAnswer saved to Database");
                         }
                     }
-
                     isSubmissionComplete = true; // only set to true if all is ok
                 }
                 catch (Exception ex)

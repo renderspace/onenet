@@ -13,6 +13,8 @@
             <div class="buttonsTop">
                 <asp:Button ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  Text="$add_new_item" />
                 <asp:Button ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="$export_to_excel" />
+                <asp:TextBox ID="TextBoxId" runat="server"></asp:TextBox>
+                <asp:Button ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" />
             </div>
             <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True" 
                 AutoGenerateColumns="false" 
