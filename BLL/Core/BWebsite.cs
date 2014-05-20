@@ -299,11 +299,6 @@ namespace One.Net.BLL
 
         public void SwapOrderOfPages(int page1Id, int page2Id)
         {
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-#endif
             BOPage page1 = GetPage(page1Id);
             BOPage page2 = GetPage(page2Id);
             int page1idx = page1.Order;
@@ -319,10 +314,6 @@ namespace One.Net.BLL
             page2.Order = page1idx;
             page2.IsChanged = true;
             ChangePage(page2);
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                ts.Complete();
-            }
-#endif
         }
 
         public void UndeletePage(int pageId)
@@ -479,10 +470,6 @@ namespace One.Net.BLL
 
             try
             {
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
                 BOPage page = null;
 
                 page = GetPage(pageId);
@@ -508,10 +495,6 @@ namespace One.Net.BLL
                 if (page.MarkedForDeletion)
                 {
                     bool result = DeletePage(pageId);
-#if DISTRIBUTED_TRANSACTIONS
-                        if (result)
-                            ts.Complete();
-#endif
                     return result;
                 }
 
@@ -582,10 +565,6 @@ namespace One.Net.BLL
                     }
                 }
                 */
-#if DISTRIBUTED_TRANSACTIONS
-                    ts.Complete();
-                }
-#endif
             }
             catch (System.Data.SqlClient.SqlException ex)
             {

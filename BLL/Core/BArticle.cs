@@ -352,11 +352,6 @@ namespace One.Net.BLL
             // publish articles in all languages
             List<int> languages = ListLanguages();
 
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
-
             foreach (int i in languages)
             {
                 BOArticle articleOffline = GetPublishableArticle(id, false, i);
@@ -404,11 +399,6 @@ namespace One.Net.BLL
                     }
                 }
             }
-
-#if DISTRIBUTED_TRANSACTIONS
-                    ts.Complete();
-                }
-#endif
             return success;
         }
 

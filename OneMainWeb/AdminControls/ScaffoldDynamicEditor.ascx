@@ -1,5 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ScaffoldDynamicEditor.ascx.cs" Inherits="OneMainWeb.AdminControls.ScaffoldDynamicEditor" %>
-
 <asp:Literal ID="LiteralJQuery" runat="server" EnableViewState="false"></asp:Literal>		
 <div class="DynamicEditor">
     <asp:Literal ID="LiteralResultsDebug" runat="server" EnableViewState="false"></asp:Literal>

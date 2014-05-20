@@ -30,12 +30,6 @@ namespace One.Net.BLL
         {
             try
             {
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
-
                 if (form.Id.HasValue)
                 {
                     BOForm existingForm = this.GetUnCached(form.Id.Value, false);
@@ -134,12 +128,6 @@ namespace One.Net.BLL
                         }
                     }
                 }
-
-#if DISTRIBUTED_TRANSACTIONS
-                ts.Complete();
-            }
-#endif
-
             }
             catch (Exception ex)
             {
@@ -203,13 +191,7 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="form"></param>
         private static void DeleteForm(BOForm form)
-        {
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-            {
-#endif
-            
+        {   
             if (form.Id.HasValue)
             {
                 foreach (BOSection section in form.Sections.Values)
@@ -238,11 +220,6 @@ namespace One.Net.BLL
 
                 formsDb.DeleteForm(form.Id.Value);
             }
-
-#if DISTRIBUTED_TRANSACTIONS
-                ts.Complete();
-            }
-#endif
         }
 
         /// <summary>
@@ -443,12 +420,6 @@ namespace One.Net.BLL
             {
                 try
                 {
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
-
                     formsDb.InsertFormSubmission(submission);
                     log.Info("FormSubmission saved to Database");
 
@@ -470,12 +441,6 @@ namespace One.Net.BLL
                     }
 
                     isSubmissionComplete = true; // only set to true if all is ok
-
-#if DISTRIBUTED_TRANSACTIONS
-                    ts.Complete();
-                }
-#endif
-
                 }
                 catch (Exception ex)
                 {

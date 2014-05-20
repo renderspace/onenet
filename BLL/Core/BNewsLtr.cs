@@ -125,12 +125,6 @@ namespace One.Net.BLL
                 {
                     subscription.Hash = StringTool.RandomString(10, false);
                 }
-
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
                 newsletterDB.Change(subscription);
 
                     if ( !subscription.Confirmed)
@@ -182,10 +176,6 @@ namespace One.Net.BLL
                     {
                         result = NewsLtrSubRes.Failed;
                     }
-#if DISTRIBUTED_TRANSACTIONS 
-                    ts.Complete();
-                }
-#endif
             }
 
             subscriptionId = subscription.SubscriptionId;

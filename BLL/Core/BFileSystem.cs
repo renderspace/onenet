@@ -73,12 +73,6 @@ namespace One.Net.BLL
             BOFile file = GetUnCached(Id);
             if (file != null)
             {
-
-#if DISTRIBUTED_TRANSACTIONS // Doesn't work with high securtiy template
-                using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required))
-                {
-#endif
-
                 if (file.Folder != null)
                 {
                     // TODO: clear all languages from cache!
@@ -107,11 +101,6 @@ namespace One.Net.BLL
                 fileDb.Delete(Id);
                 OCache.Remove(CACHE_ID + Id);
                 OCache.Remove(BYTES_CACHE_ID + Id);
-
-#if DISTRIBUTED_TRANSACTIONS
-                    ts.Complete();
-                }
-#endif
             }
             else
                 throw new ArgumentException("File with id=" + Id + " does not exist.");
