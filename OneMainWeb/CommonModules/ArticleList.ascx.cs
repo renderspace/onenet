@@ -80,20 +80,16 @@ namespace OneMainWeb.CommonModules
             {
                 requestedArticleTextSearch = HttpUtility.UrlDecode(Request[REQUEST_ARTICLE_TEXT_SEARCH]);
             }
-            
+            if (Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID] != null)
+            {
+                PagerArticles.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID]);
+            }
             ListingState listingState =
                     new ListingState(RecordsPerPage, PagerArticles.FirstRecordIndex, SortDescending ? SortDir.Descending : SortDir.Ascending, 
                     SortByColumn);
                 listingState.OffSet = OffSet; 
 
-           var regulars = RegularsList;
-
-           var articles = articleB.ListArticles(regulars, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
-
-           if (Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID] != null)
-           {
-               PagerArticles.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerArticles.ID]);
-           }
+           var articles = articleB.ListArticles(RegularsList, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
 
            RepeaterArticles.DataSource = articles;
            RepeaterArticles.DataBind();
