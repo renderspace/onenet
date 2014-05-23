@@ -688,6 +688,8 @@ jQuery.validator.addMethod(
                             {
                                 if (!string.IsNullOrEmpty(DatePickerCalendar.Text))
                                     field.NewValueDateTime = DateTime.Parse(DatePickerCalendar.Text, CultureInfo.CurrentCulture);
+                                else if (field.IsNullable)
+                                    field.NewValueIsNull = true;
                                 else
                                     field.NewValueDateTime = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                             }
