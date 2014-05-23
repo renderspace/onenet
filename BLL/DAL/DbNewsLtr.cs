@@ -201,7 +201,7 @@ namespace One.Net.BLL.DAL
                 {
                     newsletter = new BONewsLtr();
                     newsletter.Id = (reader.GetValue(0) == DBNull.Value ? -1 : (int)reader.GetValue(0));
-                    newsletter.Name = (reader.GetValue(2) == DBNull.Value ? "" : (string)reader.GetValue(2));
+                    newsletter.Name = (reader.GetValue(1) == DBNull.Value ? "" : (string)reader.GetValue(1));
                 }
             }
 
