@@ -477,12 +477,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     }
                     else if (column.IsPartOfForeignKey || column.IsPartOfUserView)
                     {
-                        if (!column.NewValueIsNull)
-                        {
-                            columnsSql += column.FQName + ", ";
-                            valuesSql += "@V" + column.Name + ", ";
-                            parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
-                        }
+                        columnsSql += column.FQName + ", ";
+                        valuesSql += "@V" + column.Name + ", ";
+                        parameters.Add(new SqlParameter("@V" + column.Name, column.NewValue));
                     }
                 }
                 sql += columnsSql.Substring(0, columnsSql.Length - 2) + ") VALUES (";

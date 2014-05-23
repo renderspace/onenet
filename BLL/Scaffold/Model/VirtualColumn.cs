@@ -149,6 +149,10 @@ namespace One.Net.BLL.Scaffold.Model
         {
             get
             {
+                if (NewValueIsNull)
+                {
+                    return DBNull.Value;
+                }
                 if (DbType == null)
                 {
                     return NewValueIntegerList;
