@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Transactions;
 using System.Web.Caching;
 using One.Net.BLL.DAL;
@@ -22,6 +23,43 @@ namespace One.Net.BLL
         // inserts will invalidate cache. Better to check for existence first.
         private static readonly object cacheLockingFile = new Object();
         private static readonly object cacheLockingFileBytes = new Object();
+
+        public int UploadFileFromDisk(string inputFilename, int folderId, string localizedTitle, string mimeType)
+        {
+            var fi = new FileInfo(inputFilename);
+            var folder = GetFolder(folderId);
+
+            if (!fi.Exists || folder == null)
+                return 0;
+
+            byte[] fileData = File.ReadAllBytes(fi.FullName);
+
+            if (fileData.Length < 1)
+                return 0;
+
+            var file = new BOFile
+            {
+                File = fileData,
+                Id = null,
+                Folder = folder,
+                Name = fi.Name,
+                Extension = fi.Extension,
+                MimeType = mimeType,
+                Size = ((int)fileData.Length)
+            };
+
+            if (!string.IsNullOrWhiteSpace(localizedTitle))
+            {
+                file.Content = new BOInternalContent();
+                file.Content.Html = string.Empty;
+                file.Content.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                file.Content.Title = localizedTitle;
+                file.Content.SubTitle = "";
+                file.Content.Teaser = "";
+            }
+            Change(file);
+            return file.Id.Value;
+        }
 
         /// <summary>
         /// Changes enclosed BOInternalContent object.
