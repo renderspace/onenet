@@ -41,6 +41,9 @@ namespace OneMainWeb.CommonModules
         protected string SubscriptionEmailSubject { get { return GetStringSetting("SubscriptionEmailSubject"); } }
         protected List<int> NewsletterIds { get { return StringTool.SplitStringToIntegers(GetStringSetting("NewsletterId")); } }
         protected bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
+        protected string SubscriptionEmailBody { get { return GetStringSetting("SubscriptionEmailBody"); } }
+
+        
 
         #endregion Settings
 
@@ -211,7 +214,7 @@ namespace OneMainWeb.CommonModules
                 {
                     NewsLtrSubRes result = newsletterB.Subscribe(InputEmail.Text, NewsletterIds[0],
                                               new Uri(BuildUriString(ConfirmationPage, this.Page)),
-                                              SubscriptionEmailSubject);
+                                              SubscriptionEmailSubject, SubscriptionEmailBody);
 
                     switch (result)
                     {
@@ -247,7 +250,7 @@ namespace OneMainWeb.CommonModules
                         NewsLtrSubRes result =
                             newsletterB.Subscribe(InputEmail.Text, id,
                                                   new Uri(BuildUriString(ConfirmationPage, this.Page)),
-                                                  SubscriptionEmailSubject);
+                                                  SubscriptionEmailSubject, SubscriptionEmailBody);
                         
                         SubResult subRes = new SubResult();
                         subRes.Result = result;

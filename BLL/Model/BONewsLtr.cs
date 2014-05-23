@@ -86,36 +86,11 @@ namespace One.Net.BLL
     [Serializable]
     public class BONewsLtr
     {
-        BOTemplate confirmationTemplate = new BOTemplate();
-        int id = -1;
-        int confirmationTemplateId = -1;
-        string name = string.Empty;
-
         public BONewsLtr()
         { }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int Id { get; set; }
 
-        public int ConfirmationTemplateId
-        {
-            get { return confirmationTemplateId; }
-            set { confirmationTemplateId = value; }
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public BOTemplate ConfirmationTemplate
-        {
-            get { return confirmationTemplate; }
-            set { confirmationTemplate = value; }
-        }
+        public string Name { get; set; }
     }
 }
