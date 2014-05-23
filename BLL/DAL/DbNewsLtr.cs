@@ -193,10 +193,8 @@ namespace One.Net.BLL.DAL
             SqlParameter paramsToPass = new SqlParameter("@newsletterID", newsletterID);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
-                @"SELECT n.id, n.template_fk_id, n.name newsletter_name, t.template_type, 
-                        t.name template_name
+                @"SELECT n.id, n.name newsletter_name
                     FROM [dbo].[newsletter] n 
-                        INNER JOIN [template] t ON t.id=n.template_fk_id 
                         WHERE n.id = @newsletterID", paramsToPass))
             {
                 if (reader.Read())
@@ -204,13 +202,6 @@ namespace One.Net.BLL.DAL
                     newsletter = new BONewsLtr();
                     newsletter.Id = (reader.GetValue(0) == DBNull.Value ? -1 : (int)reader.GetValue(0));
                     newsletter.Name = (reader.GetValue(2) == DBNull.Value ? "" : (string)reader.GetValue(2));
-                    BOTemplate template = new BOTemplate();
-                    template.Id = (reader.GetValue(1) == DBNull.Value ? (Nullable<int>) null : (int)reader.GetValue(1));
-                    newsletter.ConfirmationTemplateId = (reader.GetValue(1) == DBNull.Value ? -1 : (int)reader.GetValue(1));
-
-                    template.Type = reader.GetString(3);
-                    template.Name = (reader.GetValue(4) == DBNull.Value ? "" : (string)reader.GetValue(4));
-                    newsletter.ConfirmationTemplate = template;
                 }
             }
 
@@ -224,11 +215,8 @@ namespace One.Net.BLL.DAL
             List<SqlParameter> paramsToPass = new List<SqlParameter>();
             
             string sql =
-                @"SELECT n.id, n.template_fk_id, n.name newsletter_name, t.template_type, 
-                    t.name template_name 
-                    FROM newsletter n 
-                    INNER JOIN template t on t.id=n.template_fk_id 
-                    WHERE template_type='newsletter'";
+                @"SELECT n.id, n.template_fk_id, n.name newsletter_name
+                    FROM newsletter n";
 
             if (newsletterIds != null && newsletterIds.Count > 0)
                 sql += " AND n.id IN (" + StringTool.RenderAsString(newsletterIds) + ")";
@@ -241,12 +229,6 @@ namespace One.Net.BLL.DAL
                     BONewsLtr newsletter = new BONewsLtr();
                     newsletter.Id = (reader.GetValue(0) == DBNull.Value ? -1 : (int)reader.GetValue(0));
                     newsletter.Name = (reader.GetValue(2) == DBNull.Value ? "" : (string)reader.GetValue(2));
-                    BOTemplate template = new BOTemplate();
-                    template.Id = (reader.GetValue(1) == DBNull.Value ? (int?) null : (int)reader.GetValue(1));
-                    newsletter.ConfirmationTemplateId = (reader.GetValue(1) == DBNull.Value ? -1 : (int)reader.GetValue(1));
-                    template.Type = reader.GetString(3);
-                    template.Name = (reader.GetValue(4) == DBNull.Value ? "" : (string)reader.GetValue(4));
-                    newsletter.ConfirmationTemplate = template;
                     list.Add(newsletter);
                 }
             }

@@ -89,13 +89,13 @@ namespace One.Net.BLL
             return result;
         }
 
-        public NewsLtrSubRes Subscribe(string emailTo, int newsletterId, Uri confirmationPage, string messageSubject)
+        public NewsLtrSubRes Subscribe(string emailTo, int newsletterId, Uri confirmationPage, string messageSubject, string messageBody)
         {
             int subscriptionId;
-            return Subscribe(emailTo, newsletterId, confirmationPage, messageSubject, out subscriptionId);
+            return Subscribe(emailTo, newsletterId, confirmationPage, messageSubject, messageBody, out subscriptionId);
         }
 
-        public NewsLtrSubRes Subscribe(string emailTo, int newsletterId, Uri confirmationPage, string messageSubject,
+        public NewsLtrSubRes Subscribe(string emailTo, int newsletterId, Uri confirmationPage, string messageSubject, string messageBody,
             out int subscriptionId)
         {
             NewsLtrSubRes result = NewsLtrSubRes.Failed;
@@ -130,26 +130,11 @@ namespace One.Net.BLL
                     if ( !subscription.Confirmed)
                     {
                         BONewsLtr newsletter = GetNewsletter(newsletterId);
-
-                        newsletter.ConfirmationTemplate.TemplateSourceDirectory = "site_specific/email_templates";
-                        newsletter.ConfirmationTemplate.Extension = ".tpl";
-                        newsletter.ConfirmationTemplate.PhysicalApplicationPath = AppDomain.CurrentDomain.BaseDirectory;
                         
                         StringBuilder builder = new StringBuilder(confirmationPage.AbsoluteUri);
                         builder.Append("?" + REQUEST_HASH + "=" + subscription.Hash);
                         builder.Append("&" + REQUEST_ACTION + "=" + (int)NewsletterAction.ConfirmSubscription);
                         builder.Append("&" + REQUEST_SUBSCRIPTION_ID + "=" + subscription.SubscriptionId);
-
-                        if (File.Exists(newsletter.ConfirmationTemplate.FilePath))
-                        {
-                            StreamReader objStreamReader = File.OpenText(newsletter.ConfirmationTemplate.FilePath);
-                            newsletter.ConfirmationTemplate.TemplateContent = objStreamReader.ReadToEnd();
-                            newsletter.ConfirmationTemplate.TemplateContent = newsletter.ConfirmationTemplate.TemplateContent.Replace("{$confirmRegistration}", builder.ToString());
-                        }
-                        else
-                        {
-                            throw new ApplicationException("Missing template: " + newsletter.ConfirmationTemplate.FilePath);
-                        }
 
                         try
                         {
@@ -157,7 +142,7 @@ namespace One.Net.BLL
 
                             message.To.Add(new MailAddress(subscription.Email));
                             message.Subject = messageSubject;
-                            message.Body = newsletter.ConfirmationTemplate.TemplateContent;
+                            message.Body = messageBody.Replace("{$confirmRegistration}", builder.ToString());
                             message.IsBodyHtml = false;
 
                             SmtpClient client = new SmtpClient();
