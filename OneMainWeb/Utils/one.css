@@ -1,9 +1,9 @@
-body { font-family: Verdana; font-size: 80%; margin: 0; padding: 0; }
+body { font-family: Verdana, sans-serif; font-size: 13px; margin: 0; padding: 0; }
 
 div {float:left}
 
 .all {width: 100%;}
-.head {width: 100%; color: #FFF; overflow:hidden; background-color: #1A1A1A; border-bottom: 2px solid #FFFFFF; padding: 5px 0 5px 0; }
+.head {width: 100%; color: #FFF; overflow:hidden; background-color: #1f1f1f; border-bottom: 2px solid #FFFFFF; padding: 5px 0 5px 0; }
 .head div  { margin: 0 10px 0 10px; width:980px;}
 
 .head .leftpart { margin-top: 11px; float: left; width: 500px;  }
@@ -14,10 +14,14 @@ div {float:left}
 .head .headSelect span {float: right; }
 .head .headSelect input {float: right; }
 
-.left-col {width:15%; overflow:hidden; float:left}
-.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 3%; float: left; overflow:hidden; float:left}
+.left-col {width:210px; overflow:hidden; float:left}
+.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 20px; float: left; overflow:hidden; float:left}
 .right-col table {clear:both;}
 .right-col table td {vertical-align:top;}
+
+details {display: inline-block; cursor: pointer; padding: 5px; margin: 10px 0; background: #9E9E98;}
+
+header h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px;}
 
 .notifier {
  width: 98%;
@@ -51,7 +55,7 @@ div {float:left}
 .treeHolder div { float: none;}
 
 
-
+.centerStructure {width: 270px; background-color: #9e9e98; color: #FFF;}
 
 
 .left-small {width: 39%; overflow:hidden; background-color: #FFFFFF;}
@@ -99,9 +103,10 @@ div {float:left}
 
 .left-col ul {width: 100%!important;}
 .left-col li {list-style: none;}
-.left-col li a {display: block; padding: 5px 10px; text-decoration: none;}
+.left-col li a {display: block; padding: 5px 10px 5px 15px; text-decoration: none;}
 .left-col li a:hover {background-color: #E3E2DA;}
 .left-col li .selected {background-color: #E3E2DA;}
+.left-col li span {display: block; padding: 5px 10px; font-weight: bold; border-bottom: 1px #ccc solid; padding-bottom; 3px;}
 
 .left-col nav > div {width: 100%;}
 
@@ -160,7 +165,7 @@ a {color: #000;  font-size: 90%;}
 .input label {width: 48%; float: left; margin-top: 3px;}
 .formEditor .input label{width:33%;} 
 .formEditor .checkbox input{float:right;margin:0 220px 0 0;}
-.input span { float: left; width: 10px;  }
+.input span { /*float: left;*/ width: 10px;  }
 .treeHolder .input label {width: 90%; float: left; margin-top: 3px; overflow: hidden; margin-left: 5px; }
 .treeHolder .input input { width: 240px; float: left; border: 1px solid #7B9EBD; margin-left: 5px; }
 .treeHolder .addbutton { float: right; margin-right: 20px; }
@@ -275,16 +280,19 @@ fieldset {margin:0;padding:0;}
 .searchSmall {}
 .searchSmall { color: #FFFFFF; }
 
-.mainEditor { width:76%; float: right;overflow: hidden; margin: 0;  background-color: #CECDC6; margin-top: 15px; margin-bottom: 15px; }
+.mainEditor { width:510px; float: right;overflow: hidden; margin: 0;  background-color: #CECDC6; margin-top: 15px; margin-bottom: 15px; }
 .contentEntry { background-color: #F7F3EF;  padding:2%; width: 96%;}
 .mainEditor .contentEntry {}
 .centerFull .contentEntry {margin:0;}
 
 .width_quarter {width: 300px!important;}
-.module {width: 500px; float: left}
+.module {width: 500px; float: left; margin-bottom: 20px;}
 .module header {display: inline-block; width: 100%;}
 
 .right-col {width: 800px;}
+.right-col a {color: #007AA7;}
+
+.formStructure {width: 290px;}
 
 /*dreveska */
 
@@ -369,18 +377,14 @@ div.instanceAllSettings div div.save input{ float: right;}
 
 .pagesettings  { margin-top: 10px; }
 
-.oneSettings 
+.oneSettings { width: 100%; }
+
+.instanceAllSettings .oneSettings 
 { 
 	width: 452px; 
 	padding: 0 10px 10px 10px; 
-	background-color: #fff; 
+	background-color: #E4E4E0; 
 }
-    .oneSettings summary
-    {
-        font-weight: bold;
-        display: block;
-        width: 100%;
-    }
 
 
 .pagesettings div.extline { background-image: url(/Res/dark-bg-horiz.gif); 
