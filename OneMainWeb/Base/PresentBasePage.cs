@@ -446,12 +446,11 @@ var _gaq = _gaq || [];
         {
             Literal lit = new Literal();
             Version version = Page.GetType().BaseType.Assembly.GetName().Version;
-            string szHtml = string.Format(@"<div class=""preview_banner"" style=""z-index: 100; padding: 10px 10px 10px 10px; Position: absolute;Top: 0;Right: 0; 
+            string szHtml = string.Format(@"<div class=""preview_banner"" style=""z-index: 100; padding: 10px 10px 10px 10px; Position: absolute;Bottom: 0;Right: 0; 
 Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; background-color: Gray; "">
-<span style=""color:Red; font-size: 300%"">{0}</span><br/>
-<span style=""font-size: 100%"">One.NET v{1}</span><br/>
-<span style=""font-size: 100%"">{2} {3}</span>
-</div>", BContent.GetMeaning("site_preview"), version, Request.Browser.Browser, Request.Browser.Version);
+<span style=""font-size: 100%"">One.NET v{0}</span><br/>
+<span style=""font-size: 100%"">{1} {2}</span>
+</div>", version, Request.Browser.Browser, Request.Browser.Version);
             lit.Text = szHtml;
             if (Master.Controls.Count > 1)
                 Master.Controls.AddAt(Master.Controls.Count - 2, lit);

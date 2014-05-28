@@ -840,7 +840,9 @@
     <EmbeddedResource Include="Res\Sql\4_stored_procedures.sql.template" />
     <EmbeddedResource Include="Res\Sql\5_security.sql.template" />
     <EmbeddedResource Include="Res\Sql\1_1_user.sql.template" />
-    <Content Include="adm\web.config" />
+    <Content Include="adm\web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Properties\PublishProfiles\Disk.pubxml" />
   </ItemGroup>
