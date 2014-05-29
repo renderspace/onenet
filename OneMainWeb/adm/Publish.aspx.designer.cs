@@ -22,22 +22,40 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// tabMultiview control.
+        /// LinkButtonArticles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonArticles;
         
         /// <summary>
-        /// tabListArticles control.
+        /// LinkButtonPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabListArticles;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonPages;
+        
+        /// <summary>
+        /// Multiview1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.MultiView Multiview1;
+        
+        /// <summary>
+        /// View1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// articleGridView control.
@@ -67,13 +85,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Button PublishArticlesButton;
         
         /// <summary>
-        /// tabListPages control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabListPages;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// pageGridView control.
@@ -101,50 +119,5 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button PublishPagesButton;
-        
-        /// <summary>
-        /// tabPublisher control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabPublisher;
-        
-        /// <summary>
-        /// chkPublished control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkPublished;
-        
-        /// <summary>
-        /// cmdDisplay control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdDisplay;
-        
-        /// <summary>
-        /// publisherGridview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView publisherGridview;
-        
-        /// <summary>
-        /// ObjectDataSourcePublisherList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourcePublisherList;
     }
 }

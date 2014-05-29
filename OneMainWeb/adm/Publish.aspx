@@ -34,11 +34,12 @@ function SelectAllCheckboxes(parentCheckBox)
 
 
 	<one:Notifier runat="server" ID="Notifier1" />
+    <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click">Articles</asp:LinkButton>
+    <asp:LinkButton ID="LinkButtonPages" runat="server" OnClick="LinkButtonPages_Click">Pages</asp:LinkButton>
 
-	<two:TabularMultiView ID="tabMultiview" runat="server" OnViewIndexChanged="tabMultiview_OnViewIndexChanged">
-		<two:TabularView ID="tabListArticles" runat="server" TabName="$article_list">
-
-			<div class="centerFull">
+    <asp:MultiView runat="server" ID="Multiview1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
+        <asp:View ID="View1" runat="server">
+            <div class="centerFull">
                 <div class="biggv">     
 					    <asp:GridView ID="articleGridView" runat="server" PageSize="25" PageIndex="0"
 						    PagerSettings-Mode="NumericFirstLast"
@@ -66,15 +67,6 @@ function SelectAllCheckboxes(parentCheckBox)
 								    <ItemTemplate><%# Eval("LastChanged")%><br /><%# Eval("LastChangedBy")%></ItemTemplate>
 							    </asp:TemplateField>
 							    <asp:TemplateField>
-							        <ItemTemplate>
-							            <asp:LinkButton  CommandArgument='<%# Container.DataItemIndex %>' ID="cmdSchedule" runat="server" Text="$schedule" CommandName="Schedule" />
-							        </ItemTemplate>
-							        <EditItemTemplate>
-                                        <asp:LinkButton ValidationGroup="sd" CommandArgument='<%# Container.DataItemIndex %>' ID="cmdUpdate" runat="server" Text="$update" CommandName="Save" />							            
-                                        <asp:LinkButton CausesValidation="false" CommandArgument='<%# Container.DataItemIndex %>' ID="cmdCancel" runat="server" Text="$cancel" CommandName="Cancel" />		
-							        </EditItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField>
                                     <HeaderTemplate>
                                         <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
                                     </HeaderTemplate>								    
@@ -95,11 +87,9 @@ function SelectAllCheckboxes(parentCheckBox)
     		    <asp:Button CssClass="right" ID="PublishArticlesButton" OnClick="PublishArticlesButton_Click" runat="server" CausesValidation="false" Text="$publish_selected" />
 		    </div>
 
-        </two:TabularView>
-        
-		<two:TabularView ID="tabListPages" runat="server" TabName="$page_list">
-
-			<div class="centerFull">
+        </asp:View>
+        <asp:View ID="View2" runat="server">
+            <div class="centerFull">
                 <div class="biggv">     
 					    <asp:GridView ID="pageGridView" runat="server" PageSize="25" PageIndex="0"
 						    PagerSettings-Mode="NumericFirstLast"
@@ -126,24 +116,6 @@ function SelectAllCheckboxes(parentCheckBox)
 							    <asp:TemplateField HeaderText="$LastChangedBy">
 								    <ItemTemplate><%# Eval("LastChangedBy")%></ItemTemplate>
 							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$schedule_date">
-							        <ItemTemplate>
-							            <%# ResourceManager.GetString("$check_temporal_publish_tab_for_review") %>
-							        </ItemTemplate>
-							        <EditItemTemplate>
-							            <two:DateEntry ValidationGroup="sd" ShowCalendar="true" ID="txtScheduledAt" runat="server" />
-					                    <asp:Literal ID="litPageId1" runat="server" Visible="false" Text='<%# Eval("Id") %>' />		            
-							        </EditItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField>
-							        <ItemTemplate>
-							            <asp:LinkButton  CommandArgument='<%# Container.DataItemIndex %>' ID="cmdSchedule" runat="server" Text="$schedule" CommandName="Schedule" />
-							        </ItemTemplate>
-							        <EditItemTemplate>
-                                        <asp:LinkButton ValidationGroup="sd" CommandArgument='<%# Container.DataItemIndex %>' ID="cmdUpdate" runat="server" Text="$update" CommandName="Save" />							            
-                                        <asp:LinkButton CausesValidation="false" CommandArgument='<%# Container.DataItemIndex %>' ID="cmdCancel" runat="server" Text="$cancel" CommandName="Cancel" />		
-							        </EditItemTemplate>
-							    </asp:TemplateField>
 							    							    
 							    <asp:TemplateField>
                                     <HeaderTemplate>
@@ -165,58 +137,8 @@ function SelectAllCheckboxes(parentCheckBox)
 			    </div>
    		        <asp:Button CssClass="right" ID="PublishPagesButton" OnClick="PublishPagesButton_Click" runat="server" CausesValidation="false" Text="$publish_selected" />
 			 </div>
-	    </two:TabularView>
 
-		
-        
-		<two:TabularView ID="tabPublisher" runat="server" TabName="$timed_publisher">
-
-			<div class="searchFull">
-			    <two:LabeledCheckBox ID="chkPublished" runat="server" Text="$show_published" />
-			    <asp:Button ID="cmdDisplay" OnClick="cmdDisplay_Click" runat="server" Text="$display" />
-			</div>
-
-			<div class="centerFull">
-                <div class="biggv">     
-					    <asp:GridView ID="publisherGridview" runat="server" PageSize="25" PageIndex="0"
-						    PagerSettings-Mode="NumericFirstLast"
-						    PagerSettings-LastPageText="$last"
-						    PagerSettings-FirstPageText="$first"
-						    PagerSettings-PageButtonCount="7"
-						    AllowSorting="True"
-						    AllowPaging="True"
-						    AutoGenerateColumns="False"
-						    DataSourceID="ObjectDataSourcePublisherList"
-						    CssClass="gv"
-						    DataKeyNames="Id">
-						    <Columns>
-						        <asp:BoundField ItemStyle-HorizontalAlign="center" DataField="SubSystem" HeaderText="$subsystem" SortExpression="subsystem" />
-						        <asp:BoundField ItemStyle-HorizontalAlign="center" DataField="FkId" HeaderText="$fkid" SortExpression="fkid" />
-                                <asp:BoundField DataField="ScheduledAt" HeaderText="$scheduled_at" SortExpression="scheduled_at" />
-                                <asp:BoundField DataField="PublishedAt" HeaderText="$published_at" SortExpression="published_at" />						   
-				                <asp:TemplateField>
-				                    <ItemTemplate>
-				                        <asp:LinkButton runat="server" ID="cmdDelete" CommandName="Delete" Text="$delete" />
-				                    </ItemTemplate>
-				                </asp:TemplateField>		        
-						        
-						    </Columns>
- <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-							    PageButtonCount="7" />						    
-						</asp:GridView>
-				       <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-						    EnablePaging="True" ID="ObjectDataSourcePublisherList" runat="server" SelectMethod="SelectPublisherData"
-						    TypeName="OneMainWeb.PublisherDataSource" OnSelecting="ObjectDataSourcePublisherList_Selecting" SelectCountMethod="SelectPublisherDataCount" SortParameterName="sortBy" DeleteMethod="Delete">
-			            <DeleteParameters>
-			                <asp:Parameter Name="Id" Type="Int32" ConvertEmptyStringToNull="false" />
-			            </DeleteParameters>			    
-				       </asp:ObjectDataSource>
-						
-			    </div>
-			 </div>
-			 
-	    </two:TabularView>
-	    
-    </two:TabularMultiView>
+        </asp:View>
+    </asp:MultiView>
 
 </asp:Content>
