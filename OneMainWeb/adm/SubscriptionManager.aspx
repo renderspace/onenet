@@ -12,7 +12,7 @@
     <asp:LinkButton ID="LinkButton2" runat="server">LinkButton</asp:LinkButton>
     <asp:LinkButton ID="LinkButton3" runat="server">LinkButton</asp:LinkButton>
 
-        <asp:MultiView runat="server" ID="MultiView1"  OnViewIndexChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
+        <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">
                     <asp:PlaceHolder ID="plhNewsletterList" runat="server">
 		            <div class="searchFull">

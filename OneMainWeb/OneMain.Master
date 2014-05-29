@@ -44,7 +44,7 @@
        <section class="left-col">
            <nav>
                 <asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" 
-                    ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" 
+                    ItemWrap="True" StaticDisplayLevels="4" IncludeStyleBlock="false" EnableViewState="false" 
                     RenderingMode="List" SkipLinkText="">
                 </asp:Menu>
                <ul>
