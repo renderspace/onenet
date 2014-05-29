@@ -14,6 +14,8 @@ using One.Net.BLL.Web;
 using OneMainWeb.AdminControls;
 using One.Net.BLL;
 using One.Net.BLL.Utility;
+using System.Globalization;
+using System.Data.SqlTypes;
 
 
 namespace OneMainWeb
@@ -44,15 +46,8 @@ namespace OneMainWeb
             
             if (!IsPostBack)
             {
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = false;
-                tabMultiview.Views[2].Selectable = true;
-                tabMultiview.Views[3].Selectable = false;
-                tabMultiview.SetActiveIndex(0);
-
                 chkAutoPublish.Checked = AutoPublish;
                 CheckboxShowUntranslated.Checked = ShowUntranslated;
-                chkUseFck.Checked = UseCkEditor;
 
                 HistoryControl.GetContent = articleDS.GetArticle;
                 HistoryControl.Img1Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-down.gif");
@@ -85,8 +80,7 @@ namespace OneMainWeb
 
                 if (SelectedArticle != null)
                 {
-                    tabMultiview.Views[1].Selectable = true;
-                    tabMultiview.SetActiveIndex(1);
+                    Multiview1.ActiveViewIndex = 1;
                 }
                 else
                 {
@@ -104,8 +98,7 @@ namespace OneMainWeb
         protected void cmdAddArticle_Click(object sender, EventArgs e)
         {
             PrepareEmptyArticle();
-            tabMultiview.Views[1].Selectable = true;
-            tabMultiview.SetActiveIndex(1);
+            Multiview1.ActiveViewIndex = 1;
         }
 
         protected void ddlRegularFilter_DataBound(object sender, EventArgs e)
@@ -117,8 +110,7 @@ namespace OneMainWeb
         protected void CancelButton_Click(object sender, EventArgs e)
         {
             SelectedArticle = null;
-            tabMultiview.Views[1].Selectable = false;
-            tabMultiview.SetActiveIndex(0);
+            Multiview1.ActiveViewIndex = 0;
         }
 
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
@@ -134,8 +126,7 @@ namespace OneMainWeb
         protected void RegularCancelButton_Click(object sender, EventArgs e)
         {
             SelectedArticle = null;
-            tabMultiview.Views[3].Selectable = false;
-            tabMultiview.SetActiveIndex(2);
+            Multiview1.ActiveViewIndex = 2;
         }
 
         protected void RegularInsertUpdateButton_Click(object sender, EventArgs e)
@@ -153,11 +144,8 @@ namespace OneMainWeb
             articleGridView.DataBind();
         }
 
-        protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
+        protected void Multiview1_ActiveViewChanged(object sender, EventArgs e)
         {
-            tabMultiview.Views[1].Selectable = tabMultiview.Views[1].Visible;
-            tabMultiview.Views[3].Selectable = tabMultiview.Views[3].Visible;
-
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
                 articleGridView.DataBind();
@@ -177,13 +165,15 @@ namespace OneMainWeb
                 }
 
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
-                TextContentEditor.UseCkEditor = this.UseCkEditor;
+                TextContentEditor.UseCkEditor = true;
 
                 if (SelectedArticle != null)
                 {
 
                     if (SelectedArticle.DisplayDate != DateTime.MinValue)
-                        txtDisplayDate.SelectedDate = SelectedArticle.DisplayDate;
+                    {
+                        TextBoxDate.Text = SelectedArticle.DisplayDate.ToString("d", Thread.CurrentThread.CurrentUICulture) + " " + SelectedArticle.DisplayDate.ToString("HH:mm", Thread.CurrentThread.CurrentUICulture);
+                    }
 
                     TextContentEditor.Title = SelectedArticle.Title;
                     TextContentEditor.SubTitle = SelectedArticle.SubTitle;
@@ -218,7 +208,7 @@ namespace OneMainWeb
             }
             else if (((MultiView)sender).ActiveViewIndex == 3)
             {
-                TxtRegularContent.UseCkEditor = this.UseCkEditor;
+                TxtRegularContent.UseCkEditor = true;
 
                 if (SelectedRegular != null)
                 {
@@ -255,8 +245,7 @@ namespace OneMainWeb
             if (grid != null && grid.SelectedValue != null)
             {
                 SelectedArticle = articleB.GetArticle(Int32.Parse(grid.SelectedValue.ToString()), true);
-                tabMultiview.Views[1].Selectable = true;
-                tabMultiview.SetActiveIndex(1);
+                Multiview1.ActiveViewIndex = 1;
             }
         }
 
@@ -266,8 +255,7 @@ namespace OneMainWeb
             if (grid != null && grid.SelectedValue != null)
             {
                 SelectedRegular = articleB.GetRegular(Int32.Parse(grid.SelectedValue.ToString()));
-                tabMultiview.Views[3].Selectable = true;
-                tabMultiview.SetActiveIndex(3);
+                Multiview1.ActiveViewIndex = 3;
             }
         }
 
@@ -441,7 +429,10 @@ namespace OneMainWeb
                         SelectedArticle.SubTitle = TextContentEditor.SubTitle;
                         SelectedArticle.Teaser = TextContentEditor.Teaser;
                         SelectedArticle.Html = TextContentEditor.Html;
-                        SelectedArticle.DisplayDate = txtDisplayDate.SelectedDate;
+
+                        var d = SqlDateTime.MinValue.Value;
+                        DateTime.TryParse(TextBoxDate.Text, Thread.CurrentThread.CurrentUICulture, DateTimeStyles.None, out d);
+                        SelectedArticle.DisplayDate = d;
                         SelectedArticle.IsChanged = true;
                         SelectedArticle.MarkedForDeletion = false;
                         SelectedArticle.PublishFlag = false;
@@ -464,13 +455,11 @@ namespace OneMainWeb
                         if (close)
                         {
                             SelectedArticle = null;
-                            tabMultiview.Views[1].Selectable = false;
-                            tabMultiview.SetActiveIndex(0);
+                            Multiview1.ActiveViewIndex = 0;
                         }
                         else
                         {
-                            tabMultiview.Views[1].Selectable = true;
-                            tabMultiview.SetActiveIndex(1);
+                            Multiview1.ActiveViewIndex = 1;
                         }
                     }
                 }
@@ -501,13 +490,11 @@ namespace OneMainWeb
                 if (close)
                 {
                     SelectedRegular = null;
-                    tabMultiview.Views[3].Selectable = false;
-                    tabMultiview.SetActiveIndex(2);
+                    Multiview1.ActiveViewIndex = 2;
                 }
                 else
                 {
-                    tabMultiview.Views[3].Selectable = true;
-                    tabMultiview.SetActiveIndex(3);
+                    Multiview1.ActiveViewIndex = 3;
                 }
             }
             catch (Exception ex)
@@ -559,14 +546,9 @@ namespace OneMainWeb
             AutoPublish = chkAutoPublish.Checked;
         }
 
-        protected void chkUseFck_CheckedChanged(object sender, EventArgs e)
-        {
-            UseCkEditor = chkUseFck.Checked;
-        }
-
         protected override void OnPreRender(EventArgs e)
         {
-            TextContentEditor.TextBoxCssClass = UseCkEditor ? "ckeditor" : "";
+            TextContentEditor.TextBoxCssClass = "ckeditor";
             if (AutoPublishWarning != null)
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
             base.OnPreRender(e);
@@ -596,6 +578,16 @@ namespace OneMainWeb
                 articleB.DeleteRegular(id);
                 regularGridView.DataBind();
             }
+        }
+
+        protected void LinkButtonArticles_Click(object sender, EventArgs e)
+        {
+            Multiview1.ActiveViewIndex = 0;
+        }
+
+        protected void LinkButtonRegulars_Click(object sender, EventArgs e)
+        {
+            Multiview1.ActiveViewIndex = 2;
         }
     }
 

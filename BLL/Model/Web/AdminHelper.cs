@@ -114,16 +114,6 @@ namespace One.Net.BLL.Model.Web
                     var p = ctrl as ModalPanel;
                     // TODO
                 }
-                else if (ctrl is DateEntry)
-                {
-                    DateEntry c = ctrl as DateEntry;
-                    if (c.Text.StartsWith(translationLabel))
-                        c.Text = ResourceManager.GetString(c.Text, localizationFile);
-                    if (c.FormatMessage.StartsWith(translationLabel))
-                        c.FormatMessage = ResourceManager.GetString(c.Text, localizationFile);
-                    if (c.RequiredMessage.StartsWith(translationLabel))
-                        c.RequiredMessage = ResourceManager.GetString(c.Text, localizationFile);
-                }
                 else if (ctrl is One.Net.BLL.WebControls.Input)
                 {
                     One.Net.BLL.WebControls.Input c = ctrl as One.Net.BLL.WebControls.Input;

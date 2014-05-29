@@ -10,10 +10,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <uc1:Notifier ID="Notifier1" runat="server" />
         
-	    <div class="topStructure">
-		    <asp:checkbox id="chkUseFck" OnCheckedChanged="chkUseFck_CheckedChanged" AutoPostBack="true" Runat="server" Text="$usefck_label" />		
-	    </div>        
-        
         <div class="centerStructure">
             <div id="treeHolder" runat="server" class="treeHolder">
                 <asp:TreeView EnableViewState="false" OnUnload="TreeView1_Unload" ID="TreeView1" runat="server" BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" OnAdaptedSelectedNodeChanged="TreeView1_SelectedNodeChanged" Width="270" ExpandDepth="3">

@@ -66,16 +66,6 @@ namespace OneMainWeb
             }
         }
 
-        protected bool UseCkEditor
-        {
-            get { return profile.UseFCK; }
-            set
-            {
-                profile.UseFCK = value;
-                profile.Save();
-            }
-        }
-
         protected int? RootNodeID
         {
             get

@@ -10,12 +10,15 @@
 	<one:Notifier runat="server" ID="Notifier1" />
 	<div class="topStructure">
 		<asp:checkbox id="chkAutoPublish" OnCheckedChanged="chkAutoPublish_CheckedChanged" AutoPostBack="true" Runat="server" Text="$autopublish_label" />
-		<asp:checkbox id="chkUseFck" OnCheckedChanged="chkUseFck_CheckedChanged" AutoPostBack="true" Runat="server" Text="$usefck_label" />		
 		<asp:checkbox id="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		
 	</div>
 
-	<two:TabularMultiView ID="tabMultiview" runat="server" OnViewIndexChanged="tabMultiview_OnViewIndexChanged">
-		<two:TabularView ID="tabListArticles" runat="server" TabName="$article_list">
+    <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click" ValidationGroup="M">Articles</asp:LinkButton>
+    <asp:LinkButton ID="LinkButtonRegulars" runat="server" OnClick="LinkButtonRegulars_Click" ValidationGroup="M">Regulars</asp:LinkButton>
+
+
+    <asp:MultiView ID="Multiview1" runat="server" ActiveViewIndex="0" OnActiveViewChanged="Multiview1_ActiveViewChanged">
+        <asp:View ID="View1" runat="server">
 			<div class="searchFull">
 			    <asp:Button ID="cmdAddArticle" runat="server" Text="$add_article" OnClick="cmdAddArticle_Click" />			
 			</div>
@@ -101,9 +104,16 @@
 				       </asp:ObjectDataSource>
 			    </div>
 		    </div>
-		</two:TabularView>
+        </asp:View>
+        <asp:View ID="View2" runat="server">
 
-		<two:TabularView ID="tabViewEditArticle" runat="server" TabName="$view_edit_article">
+            <script src="/Javascript/jquery.ui.datepicker-sl.js"></script>
+            <script type="text/javascript" charset="utf-8">
+                $(document).ready(function () {
+                    $("#TextBoxDate").datepicker();
+                });
+            </script>
+
             <div class="searchFull">
 				<table>
 					<tr>
@@ -128,7 +138,10 @@
 			</div>
 			<div class="centerFull">
 			    <div class="contentEntry">
-			        <two:DateEntry ID="txtDisplayDate" runat="server" Text="$display_date" ShowCalendar="true" />
+                    <div class="input">
+                        <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="$display_date"></asp:Label>
+                        <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate"></asp:TextBox>
+                    </div>
                     <one:TextContentControl ID="TextContentEditor" runat="server" />
 			        <div class="save">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
@@ -141,11 +154,10 @@
                     <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />			        
 			        
 			    </div>
-			</div>			
-		</two:TabularView>
-		
-		<two:TabularView ID="tabListRegulars" runat="server" TabName="$regular_list">
-		    <div class="searchFull">
+			</div>
+        </asp:View>
+        <asp:View ID="View3" runat="server">
+            <div class="searchFull">
 		        <two:Input ID="txtNewRegular" Required="false" runat="server" Text="$insert_new_regular" />                
                 <asp:Button ID="cmdAddRegular" Text="$add_regular" runat="server" OnClick="cmdAddRegular_Click" />
 		    </div>
@@ -175,11 +187,9 @@
                 
                 </div>
             </div>
-        </two:TabularView>
-        
-		<two:TabularView ID="tabViewEditRegular" runat="server" TabName="$view_edit_regular">
-
-			<div class="centerFull">
+        </asp:View>
+        <asp:View ID="View4" runat="server">
+            <div class="centerFull">
 			    <div class="contentEntry">
 			        <one:TextContentControl ID="TxtRegularContent" runat="server" TitleLabel="$regular_title" SubTitleLabel="$regular_sub_title" TeaserLabel="$regular_teaser" HtmlLabel="$regular_html" HtmlRows="10" />
 			        <div class="save">
@@ -189,7 +199,7 @@
 			        </div>
 			    </div>
 			</div>
+        </asp:View>
 
-        </two:TabularView>  		
-    </two:TabularMultiView>
+    </asp:MultiView>
 </asp:Content>

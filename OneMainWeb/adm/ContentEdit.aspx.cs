@@ -36,8 +36,7 @@ namespace OneMainWeb.adm
 
             if (!IsPostBack)
             {
-                chkUseFck.Checked = UseCkEditor;
-                TextContentEditor.UseCkEditor = this.UseCkEditor;
+                TextContentEditor.UseCkEditor = true;
 
                 if (Request["instanceId"] != null)
                 {
@@ -156,14 +155,9 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void chkUseFck_CheckedChanged(object sender, EventArgs e)
-        {
-            UseCkEditor = chkUseFck.Checked;
-        }
-
         protected override void OnPreRender(EventArgs e)
         {
-            TextContentEditor.TextBoxCssClass = UseCkEditor ? "ckeditor" : "";
+            TextContentEditor.TextBoxCssClass = "ckeditor";
             base.OnPreRender(e);
         }
 
