@@ -109,7 +109,7 @@ namespace One.Net.BLL.Scaffold
                 if (foreignKeys.Count() > 0)
                     innerJoinSql = innerJoinSql.Substring(0, innerJoinSql.Length - 4);
 
-                mainSql += relation.PrimaryKeySourceTableName + "." + relation.PrimaryKeyDisplayColumn + ", ";
+                mainSql += relation.PrimaryKeySourceTableName + ".[" + relation.PrimaryKeyDisplayColumn + "], ";
 
                 var foreignKeyDisplayColumn = new VirtualColumn { Ordinal = i++, VirtualTableName = relation.PrimaryKeySourceTableName, Name = relation.PrimaryKeyDisplayColumn, IsMultiLanguageContent = relation.IsMultiLanguageContent };
                 cteFieldsList += foreignKeyDisplayColumn.Name + "_" + foreignKeyDisplayColumn.Ordinal + ", ";
