@@ -19,11 +19,7 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = true;
-                tabMultiview.Views[2].Selectable = true;
-                
-                tabMultiview.SetActiveIndex(0);
+
             }
         }
 
@@ -40,10 +36,6 @@ namespace OneMainWeb
             else if (((MultiView)sender).ActiveViewIndex == 2)
             {
                 articleGridView.DataBind();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 3)
-            {
-                publisherGridview.DataBind();
             }
         }
 
@@ -113,16 +105,6 @@ namespace OneMainWeb
 
         protected void ObjectDataSourceEventList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void ObjectDataSourcePublisherList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["published"] = chkPublished.Checked;
-
             if (e.ExecutingSelectCount)
             {
                 e.InputParameters.Clear();
@@ -223,9 +205,14 @@ namespace OneMainWeb
             }
         }
 
-        protected void cmdDisplay_Click(object sender, EventArgs e)
+        protected void LinkButtonArticles_Click(object sender, EventArgs e)
         {
-            publisherGridview.DataBind();
+            Multiview1.ActiveViewIndex = 0;
+        }
+
+        protected void LinkButtonPages_Click(object sender, EventArgs e)
+        {
+            Multiview1.ActiveViewIndex = 1;
         }
     }
 
