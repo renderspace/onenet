@@ -37,7 +37,7 @@ function SelectAllCheckboxes(parentCheckBox)
     <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click">Articles</asp:LinkButton>
     <asp:LinkButton ID="LinkButtonPages" runat="server" OnClick="LinkButtonPages_Click">Pages</asp:LinkButton>
 
-    <asp:MultiView runat="server" ID="Multiview1" OnViewIndexChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
+    <asp:MultiView runat="server" ID="Multiview1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
         <asp:View ID="View1" runat="server">
             <div class="centerFull">
                 <div class="biggv">     

@@ -15,12 +15,18 @@
 		<siteMapNode url="" title="Settings" description="" roles="*">
 			<siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, Everyone" />
 			<siteMapNode url="adm/FileManager.aspx" title="File manager" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, Everyone" />
+			
       <siteMapNode url="adm/Redirects.aspx" title="Redirects" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Everyone" />
-      <siteMapNode url="adm/WebsiteIIS7.aspx" title="Website manager" description="" roles="all, Everyone" />
+      
+
+      <siteMapNode url="" title="Advanced" description="" roles="*">
+        <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, Everyone" />
+        <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, Everyone" />
+        <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, Everyone" />
+        <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Everyone" />
+        <siteMapNode url="adm/WebsiteIIS7.aspx" title="Website manager" description="" roles="all, Everyone" />
+      </siteMapNode>
+      
     </siteMapNode>
 	</siteMapNode>
 </siteMap>
