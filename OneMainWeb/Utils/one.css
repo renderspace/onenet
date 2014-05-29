@@ -2,6 +2,8 @@ body { font-family: Verdana, sans-serif; font-size: 13px; margin: 0; padding: 0;
 
 div {float:left}
 
+.pager span {display: inline-block; margin-left: 5px; padding: 4px; border: 1px #D5D5D2 solid;}
+
 .all {width: 100%;}
 .head {width: 100%; color: #FFF; overflow:hidden; background-color: #1f1f1f; border-bottom: 2px solid #FFFFFF; padding: 5px 0 5px 0; }
 .head div  { margin: 0 10px 0 10px; width:980px;}
