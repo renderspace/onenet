@@ -22,15 +22,6 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// chkUseFck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkUseFck;
-        
-        /// <summary>
         /// treeHolder control.
         /// </summary>
         /// <remarks>

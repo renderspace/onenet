@@ -105,7 +105,7 @@ namespace OneMainWeb
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
-                txtTextContent.UseCkEditor = UseCkEditor;
+                txtTextContent.UseCkEditor = true;
 
                 if (SelectedDictionaryEntry != null && !string.IsNullOrEmpty(SelectedDictionaryEntry.KeyWord))
                 {

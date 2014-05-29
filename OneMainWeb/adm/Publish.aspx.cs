@@ -12,7 +12,6 @@ namespace OneMainWeb
     {
         private static readonly BArticle articleB = new BArticle();
         private static readonly BWebsite webSiteB = new BWebsite();
-        private static readonly BPublisher publisherB = new BPublisher();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -58,20 +57,6 @@ namespace OneMainWeb
                     break;
                 case "Save":
                     var arg = Int32.Parse(e.CommandArgument.ToString());
-                    DateEntry txtScheduledAt = articleGridView.Rows[arg].FindControl("txtScheduledAt") as DateEntry;
-                    Literal litArticleId1 = articleGridView.Rows[arg].FindControl("litArticleId1") as Literal;
-
-                    if (txtScheduledAt != null && litArticleId1 != null)
-                    {
-                        BOPublisherData data = new BOPublisherData();
-                        data.ScheduledAt = txtScheduledAt.SelectedDate;
-                        data.PublishedAt = null;
-                        data.SubSystem = BOPublisherData.ARTICLE_SUBSYSTEM;
-                        data.FkId = Int32.Parse(litArticleId1.Text);
-                        publisherB.Change(data);
-                        Notifier1.Message = ResourceManager.GetString("$article_scheduled_for_publishing");
-                        articleGridView.EditIndex = -1;
-                    }
                     break;
                 case "Cancel":
                     articleGridView.EditIndex = -1;
@@ -95,21 +80,6 @@ namespace OneMainWeb
                     pageGridView.EditIndex = ei;
                     break;
                 case "Save":
-                    int arg = Int32.Parse(e.CommandArgument.ToString());
-                    DateEntry txtScheduledAt = pageGridView.Rows[arg].FindControl("txtScheduledAt") as DateEntry;
-                    Literal litPageId1 = pageGridView.Rows[arg].FindControl("litPageId1") as Literal;
-
-                    if (txtScheduledAt != null && litPageId1 != null)
-                    {
-                        BOPublisherData data = new BOPublisherData();
-                        data.ScheduledAt = txtScheduledAt.SelectedDate;
-                        data.PublishedAt = null;
-                        data.SubSystem = BOPublisherData.PAGE_SUBSYSTEM;
-                        data.FkId = Int32.Parse(litPageId1.Text);
-                        publisherB.Change(data);
-                        Notifier1.Message = ResourceManager.GetString("$page_scheduled_for_publishing");
-                        pageGridView.EditIndex = -1;
-                    }
                     break;
                 case "Cancel":
                     pageGridView.EditIndex = -1;
@@ -295,30 +265,6 @@ namespace OneMainWeb
             PagedList<BOPage> pages = webSiteB.ListUnpublishedPages(webSiteId, new ListingState(recordsPerPage, firstRecordIndex, (sortBy.Contains("ASC") || !sortBy.Contains("DESC") ? SortDir.Ascending : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", "")));
             HttpContext.Current.Items["pageRowCount"] = pages.AllRecords;
             return pages;
-        }
-    }
-
-
-    [Serializable]
-    public class PublisherDataSource
-    {
-        private static readonly BPublisher publisherB = new BPublisher();
-
-        public PagedList<BOPublisherData> SelectPublisherData(int recordsPerPage, int firstRecordIndex, string sortBy, bool published)
-        {
-            PagedList<BOPublisherData> publisherData = publisherB.ListPublisherItems(new ListingState(recordsPerPage, firstRecordIndex, (sortBy.Contains("ASC") || !sortBy.Contains("DESC") ? SortDir.Ascending : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", "")), published);
-            HttpContext.Current.Items["publisherRowCount"] = publisherData.AllRecords;
-            return publisherData;
-        }
-
-        public int SelectPublisherDataCount()
-        {
-            return (int)HttpContext.Current.Items["publisherRowCount"];            
-        }
-
-        public void Delete(int Id)
-        {
-            publisherB.Delete(Id);
         }
     }
 }

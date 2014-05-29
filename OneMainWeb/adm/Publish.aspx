@@ -65,15 +65,6 @@ function SelectAllCheckboxes(parentCheckBox)
 							    <asp:TemplateField HeaderText="$LastChanged">
 								    <ItemTemplate><%# Eval("LastChanged")%><br /><%# Eval("LastChangedBy")%></ItemTemplate>
 							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$schedule_date">
-							        <ItemTemplate>
-							            <%# ResourceManager.GetString("$check_temporal_publish_tab_for_review") %>
-							        </ItemTemplate>
-							        <EditItemTemplate>
-							            <two:DateEntry ValidationGroup="sd" ShowCalendar="true" ID="txtScheduledAt" runat="server" />
-					                    <asp:Literal ID="litArticleId1" runat="server" Visible="false" Text='<%# Eval("Id") %>' />		            
-							        </EditItemTemplate>
-							    </asp:TemplateField>
 							    <asp:TemplateField>
 							        <ItemTemplate>
 							            <asp:LinkButton  CommandArgument='<%# Container.DataItemIndex %>' ID="cmdSchedule" runat="server" Text="$schedule" CommandName="Schedule" />
