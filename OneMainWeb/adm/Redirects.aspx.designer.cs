@@ -22,22 +22,22 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// tabMultiview control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
         
         /// <summary>
-        /// tabListRedirects control.
+        /// View1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabListRedirects;
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// cmdShowAddRedirect control.
@@ -67,13 +67,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.ObjectDataSource RedirectListSource;
         
         /// <summary>
-        /// tabSingleRedirect control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabSingleRedirect;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// InputFromLink control.

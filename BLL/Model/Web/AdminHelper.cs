@@ -100,15 +100,6 @@ namespace One.Net.BLL.Model.Web
                             it.Text = ResourceManager.GetString(it.Text, localizationFile);
                     }
                 }
-                else if (ctrl is TabularMultiView)
-                {
-                    TabularMultiView mv = ctrl as TabularMultiView;
-                    foreach (TabularView tv in mv.Views)
-                    {
-                        if (tv.TabName.StartsWith(translationLabel))
-                            tv.TabName = ResourceManager.GetString(tv.TabName, localizationFile);
-                    }
-                }
                 else if (ctrl is ModalPanel)
                 {
                     var p = ctrl as ModalPanel;

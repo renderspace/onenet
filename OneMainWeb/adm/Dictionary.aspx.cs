@@ -77,9 +77,7 @@ namespace OneMainWeb
                 CheckboxShowUntranslated.Checked = ShowUntranslated;
                 SearchTermNoResults = "";
 
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = false;
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
 
                 TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
                 TwoPostbackPager1.SelectedPage = 1;
@@ -90,14 +88,12 @@ namespace OneMainWeb
         protected void CheckboxShowUntranslated_CheckedChanged(object sender, EventArgs e)
         {
             ShowUntranslated = CheckboxShowUntranslated.Checked;
-            tabMultiview.SetActiveIndex(0);
+            MultiView1.ActiveViewIndex = 0;
             LoadAll(false);
         }
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
         {
-            tabMultiview.Views[1].Selectable = tabMultiview.Views[1].Visible;
-
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
                 if (IsPostBack)
@@ -197,8 +193,7 @@ namespace OneMainWeb
         protected void CancelButton_Click(object sender, EventArgs e)
         {
             SelectedDictionaryEntry = null;
-            tabMultiview.Views[1].Selectable = false;
-            tabMultiview.SetActiveIndex(0);
+            MultiView1.ActiveViewIndex = 0;
         }
 
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
@@ -250,13 +245,11 @@ namespace OneMainWeb
                     txtTextContent.Html = "";
                     infoKeyword.Value = "";
 
-                    tabMultiview.Views[1].Selectable = false;
-                    tabMultiview.SetActiveIndex(0);
+                    MultiView1.ActiveViewIndex = 0;
                 }
                 else
                 {
-                    tabMultiview.Views[1].Selectable = true;
-                    tabMultiview.SetActiveIndex(1);
+                    MultiView1.ActiveViewIndex = 1;
                 }
             }
             catch (Exception ex)
@@ -284,8 +277,7 @@ namespace OneMainWeb
             txtTextContent.Teaser = "";
             txtTextContent.Html = "";
             infoKeyword.Value = SearchTermNoResults;
-            tabMultiview.Views[1].Selectable = true;
-            tabMultiview.SetActiveIndex(1);
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void GridViewEntries_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -320,8 +312,7 @@ namespace OneMainWeb
                     SelectedDictionaryEntry = new BODictionaryEntry();
                     SelectedDictionaryEntry.KeyWord = grid.SelectedValue.ToString();
                 }
-                tabMultiview.Views[1].Selectable = true;
-                tabMultiview.SetActiveIndex(1);
+                MultiView1.ActiveViewIndex = 1;
             }
         }
 
@@ -507,6 +498,16 @@ namespace OneMainWeb
             }
 
             return doc;
+        }
+
+        protected void LinkButtonKeywords_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 0;
+        }
+
+        protected void LinkButtonExport_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 2;
         }
     }
 }

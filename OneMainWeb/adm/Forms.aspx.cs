@@ -72,15 +72,7 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                CheckboxShowUntranslated.Checked = ShowUntranslated;
-
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = false;
-                tabMultiview.Views[2].Selectable = false;
-                tabMultiview.Views[3].Selectable = false;
-                tabMultiview.Views[4].Selectable = false;
-                tabMultiview.Views[5].Selectable = false;
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
             }
         }
 
@@ -199,12 +191,6 @@ namespace OneMainWeb
                 ddlFormTypes.Enabled = (SessionForm.Sections.Count == 0 && SessionForm.SubmissionCount == 0);
                 ddlUpdateSectionTypes.Enabled = (SessionForm.Sections.Count <= 1 && SessionForm.SubmissionCount == 0);
             }
-        }
-
-        protected void CheckboxShowUntranslated_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowUntranslated = CheckboxShowUntranslated.Checked;
-            formGridView.DataBind();
         }
 
         protected void ddlFormTypes_SelectedIndexChanged(object sender, EventArgs e)
@@ -527,8 +513,7 @@ namespace OneMainWeb
             ClearSessionValues();
             FormTree_DataBind();
 
-            tabMultiview.Views[1].Selectable = true;
-            tabMultiview.SetActiveIndex(1);
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void radFrontEndQuestionTypes_SelectedIndexChanged(object sender, EventArgs e)
@@ -656,95 +641,30 @@ namespace OneMainWeb
                 LinkButton cmdEdit = e.Row.Cells[2].FindControl("cmdEdit") as LinkButton;
                 ImageButton cmdEditButton = e.Row.Cells[2].FindControl("cmdEditButton") as ImageButton;
                 LinkButton cmdDelete = e.Row.Cells[3].FindControl("cmdDelete") as LinkButton;
-                LinkButton cmdViewAggregateResults = e.Row.Cells[2].FindControl("cmdViewAggregateResults") as LinkButton;
+                LinkButton LinkButtonAggregate = e.Row.Cells[2].FindControl("LinkButtonAggregate") as LinkButton;
+                LinkButton LinkButtonAll = e.Row.Cells[2].FindControl("LinkButtonAll") as LinkButton;
 
                 BOForm form = e.Row.DataItem as BOForm;
 
-                if (cmdViewAggregateResults != null && cmdEdit != null && cmdDelete != null && form != null)
+                if (LinkButtonAll != null && LinkButtonAggregate != null && cmdEdit != null && cmdDelete != null && form != null)
                 {
                     cmdEditButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
                     if (form.SubmissionCount > 0)
                     {
-                        cmdViewAggregateResults.Enabled = true;
+                        LinkButtonAggregate.Enabled = true;
+                        LinkButtonAll.Enabled = true;
                         cmdDelete.Enabled = false;
                     }
                     else
                     {
-                        cmdViewAggregateResults.Enabled = false;
+                        LinkButtonAggregate.Enabled = false;
+                        LinkButtonAll.Enabled = false;
                         cmdDelete.Enabled = true;
                     }
                 }
             }
         }
 
-        private void LoadAggregateResults()
-        {
-            if (SessionForm != null)
-            {
-                lblFormTitle.Value = SessionForm.Title;
-                lblFormType.Value = SessionForm.FormType.ToString();
-                lblFormSubmissionCount.Value = SessionForm.SubmissionCount.ToString();
-
-                if (SessionForm.FirstSubmissionDate.HasValue)
-                {
-                    lblFirstFormSubmissionDate.Value = SessionForm.FirstSubmissionDate.Value.ToString();
-                }
-                if (SessionForm.LastSubmissionDate.HasValue)
-                {
-                    lblLastFormSubmissionDate.Value = SessionForm.LastSubmissionDate.Value.ToString();
-                }
-
-                rptAggregateSections.DataSource = SessionForm.Sections.Values;
-                rptAggregateSections.DataBind();
-            }
-        }
-
-        private void LoadSingleSubmission()
-        {
-            if (SessionForm != null && SessionSubmission != null)
-            {
-                lblSingleFormTitle.Value = SessionForm.Title;
-                lblSingleFormType.Value = SessionForm.FormType.ToString();
-                lblSingleSubmissionId.Value = SessionSubmission.Id.Value.ToString();
-                lblSingleSubmissionFinished.Value = SessionSubmission.Finished.ToString();
-
-                rptSSSections.DataSource = SessionForm.Sections.Values;
-                rptSSSections.DataBind();
-            }
-        }
-
-        private void LoadAllSubmissions()
-        {
-            if (SessionForm != null)
-            {
-                lblAllFormTitle.Value = SessionForm.Title;
-                lblAllFormType.Value = SessionForm.FormType.ToString();
-                lblAllSubmissionCount.Value = SessionForm.SubmissionCount.ToString();
-                lblAllFormId.Value = SessionForm.Id.Value.ToString();
-
-                if (SessionForm.FirstSubmissionDate.HasValue)
-                {
-                    lblAllFirstSubmissionDate.Value = SessionForm.FirstSubmissionDate.Value.ToString();
-                }
-                if (SessionForm.LastSubmissionDate.HasValue)
-                {
-                    lblAllLastSubmissionDate.Value = SessionForm.LastSubmissionDate.Value.ToString();
-                }
-
-                List<BOQuestion> questions = new List<BOQuestion>();
-                foreach (BOSection section in SessionForm.Sections.Values)
-                {
-                    foreach (BOQuestion question in section.Questions.Values)
-                    {
-                        questions.Add(question);
-                    }
-                }
-
-                AllQuestions = questions;
-
-                submissionGridView.DataBind();
-            }
-        }
 
         protected void ObjectDataSourceSubmissionList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
@@ -760,110 +680,6 @@ namespace OneMainWeb
                     formId = SessionForm.Id.Value;
                 }
                 e.InputParameters.Add("formId", formId);
-            }
-        }
-
-        private void LoadOverallTrends()
-        {
-            if (SessionForm != null)
-            {
-                FormSubmissions = helper.ListFormSubmissions(SessionForm.Id.Value);
-
-                // first grid
-                List<FormOverallTrend> trends = new List<FormOverallTrend>();
-                Dictionary<DateTime, int> daysHours = new Dictionary<DateTime, int>();
-
-                foreach (BOFormSubmission submission in FormSubmissions)
-                {
-                    DateTime dt = new DateTime(submission.Finished.Value.Year,
-                        submission.Finished.Value.Month,
-                        submission.Finished.Value.Day, submission.Finished.Value.Hour, 0, 0);
-
-                    if (daysHours.ContainsKey(dt))
-                    {
-                        int count = daysHours[dt];
-                        daysHours[dt] = count + 1;
-                    }
-                    else
-                    {
-                        daysHours[dt] = 1;
-                    }
-                }
-
-                foreach (DateTime key in daysHours.Keys)
-                {
-                    trends.Add(new FormOverallTrend(daysHours[key], key.ToString("dd.MM.yyyy HH:mm")));
-                }
-
-                gridFormDatesAndTimes.DataSource = trends;
-                gridFormDatesAndTimes.DataBind();
-
-                // second grid
-                Dictionary<DateTime, int> days = new Dictionary<DateTime, int>();
-
-                foreach (BOFormSubmission submission in FormSubmissions)
-                {
-                    DateTime dt = new DateTime(submission.Finished.Value.Year,
-                        submission.Finished.Value.Month,
-                        submission.Finished.Value.Day);
-
-                    if (days.ContainsKey(dt))
-                    {
-                        int count = days[dt];
-                        days[dt] = count + 1;
-                    }
-                    else
-                    {
-                        days[dt] = 1;
-                    }
-                }
-
-                trends = new List<FormOverallTrend>();
-
-                foreach (DateTime key in days.Keys)
-                {
-                    trends.Add(new FormOverallTrend(days[key], key.ToString("dd.MM.yyyy")));
-                }
-
-                gridFormDays.DataSource = trends;
-                gridFormDays.DataBind();
-
-                // third grid
-                Dictionary<DateTime, int> hours = new Dictionary<DateTime, int>();
-                for (int i = 0; i < 24; i++)
-                {
-                    hours.Add(new DateTime(DateTime.MinValue.Year, DateTime.MinValue.Month, DateTime.MinValue.Day, i, DateTime.MinValue.Minute, DateTime.MinValue.Second), 0);
-                }
-
-                foreach (BOFormSubmission submission in FormSubmissions)
-                {
-                    DateTime dt = new DateTime(DateTime.MinValue.Year,
-                        DateTime.MinValue.Month,
-                        DateTime.MinValue.Day,
-                        submission.Finished.Value.Hour,
-                        DateTime.MinValue.Minute,
-                        DateTime.MinValue.Second);
-
-                    if (hours.ContainsKey(dt))
-                    {
-                        int count = hours[dt];
-                        hours[dt] = count + 1;
-                    }
-                    else
-                    {
-                        hours[dt] = 1;
-                    }
-                }
-
-                trends = new List<FormOverallTrend>();
-
-                foreach (DateTime key in hours.Keys)
-                {
-                    trends.Add(new FormOverallTrend(hours[key], key.ToString("HH:mm")));
-                }
-
-                gridFormHours.DataSource = trends;
-                gridFormHours.DataBind();
             }
         }
 
@@ -1403,8 +1219,7 @@ namespace OneMainWeb
                         case "ViewFormSubmission":
                             {
                                 SessionSubmission = helper.GetFormSubmission(submissionId);
-                                tabMultiview.Views[5].Selectable = true;
-                                tabMultiview.SetActiveIndex(5);
+                                MultiView1.ActiveViewIndex = 5;
                                 break;
                             }
                     }
@@ -1423,15 +1238,16 @@ namespace OneMainWeb
 
                 switch (command)
                 {
-                    case "ViewAggregateResults":
+                    case "ExportResults":
                         {
-                            ElementStringId = "Form" + formId;
                             SessionForm = helper.Get(formId);
-                            PopulateElementMap(SessionForm);
-                            FormTree_DataBind();
-
-                            tabMultiview.Views[2].Selectable = true;
-                            tabMultiview.SetActiveIndex(2);
+                            cmdExportAll_Click(null, null);
+                            break;
+                        }
+                    case "ExportAggregateResults":
+                        {
+                            SessionForm = helper.Get(formId);
+                            cmdExportAggregate_Click(null, null);
                             break;
                         }
 
@@ -1441,10 +1257,7 @@ namespace OneMainWeb
                             SessionForm = helper.Get(formId);
                             PopulateElementMap(SessionForm);
                             FormTree_DataBind();
-
-                            tabMultiview.Views[1].Selectable = true;
-                            tabMultiview.SetActiveIndex(1);
-
+                            MultiView1.ActiveViewIndex = 1;
                             break;
                         }
 
@@ -1561,7 +1374,7 @@ namespace OneMainWeb
                             SessionForm = newForm;
                             ElementStringId = "Form" + SessionForm.Id.Value;
                             FormTree_DataBind();
-                            tabMultiview.SetActiveIndex(1);
+                            MultiView1.ActiveViewIndex = 1;
 
                             break;
                         }
@@ -1575,10 +1388,6 @@ namespace OneMainWeb
             {
                 e.InputParameters.Clear();
             }
-            else
-            {
-                e.InputParameters["ShowUntranslated"] = ShowUntranslated;
-            }
         }
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
@@ -1590,9 +1399,10 @@ namespace OneMainWeb
                 formIsNewlyAdded = ElementMap["Form" + SessionForm.Id.Value].NewlyAdded;
             }
 
+            /*
             tabMultiview.Views[1].Selectable = (tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible);
             tabMultiview.Views[2].Selectable = tabMultiview.Views[3].Selectable = tabMultiview.Views[4].Selectable = ((tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible ) && SessionForm != null && !formIsNewlyAdded);
-            tabMultiview.Views[5].Selectable = tabMultiview.Views[5].Visible && SessionForm != null && !formIsNewlyAdded;
+            tabMultiview.Views[5].Selectable = tabMultiview.Views[5].Visible && SessionForm != null && !formIsNewlyAdded;*/
 
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
@@ -1602,22 +1412,6 @@ namespace OneMainWeb
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
                 LoadFormTabControls();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 2)
-            {
-                LoadAggregateResults();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 3)
-            {
-                LoadOverallTrends();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 4)
-            {
-                LoadAllSubmissions();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 5)
-            {
-                LoadSingleSubmission();
             }
         }
 
@@ -1637,13 +1431,8 @@ namespace OneMainWeb
         protected void cmdCancelButton_Click(object sender, EventArgs e)
         {
             ClearSessionValues();
-            
-            tabMultiview.Views[0].Selectable = true;
-            tabMultiview.Views[1].Selectable = false;
-            tabMultiview.Views[2].Selectable = false;
-            tabMultiview.Views[3].Selectable = false;
 
-            tabMultiview.SetActiveIndex(0);
+            MultiView1.ActiveViewIndex = 0;
         }
 
         protected void cmdSaveForm_Click(object sender, EventArgs e)
@@ -1742,11 +1531,7 @@ namespace OneMainWeb
 
                 ClearSessionValues();
 
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = false;
-                tabMultiview.Views[2].Selectable = false;
-                tabMultiview.Views[3].Selectable = false;
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
             }
         }
 
@@ -2257,9 +2042,9 @@ namespace OneMainWeb
             return (int)HttpContext.Current.Items["submissionCount"];
         }
 
-        public PagedList<BOForm> Select(int recordsPerPage, int firstRecordIndex, string sortDirection, string sortBy, bool ShowUntranslated)
+        public PagedList<BOForm> Select(int recordsPerPage, int firstRecordIndex, string sortDirection, string sortBy)
         {
-            PagedList<BOForm> forms = formB.ListUnCached(new ListingState(recordsPerPage, firstRecordIndex, (sortDirection.ToLower() == "asc" ? SortDir.Ascending : SortDir.Descending), sortBy), ShowUntranslated, Thread.CurrentThread.CurrentCulture.LCID);
+            PagedList<BOForm> forms = formB.ListUnCached(new ListingState(recordsPerPage, firstRecordIndex, (sortDirection.ToLower() == "asc" ? SortDir.Ascending : SortDir.Descending), sortBy), false, Thread.CurrentThread.CurrentCulture.LCID);
             HttpContext.Current.Items["rowCount"] = forms.AllRecords;
             return forms;
         }

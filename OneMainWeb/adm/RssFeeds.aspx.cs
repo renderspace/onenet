@@ -37,9 +37,6 @@ namespace OneMainWeb
             if (!IsPostBack)
             {
                 RunDiagnostics();
-                TabMultiview.Views[0].Selectable = true;
-                TabMultiview.Views[1].Selectable = false;
-                TabMultiview.SetActiveIndex(0);
             }
         }
 
@@ -84,8 +81,7 @@ namespace OneMainWeb
                 catch (System.Data.SqlClient.SqlException sqex)
                 {
                     diagnosticsValid = false;
-                    TabMultiview.Views[1].Selectable = false;
-                    TabMultiview.SetActiveIndex(0);
+                    MultiView1.ActiveViewIndex = 0;
                     Notifier1.ExceptionMessage = ((Exception)sqex).Message;
                     Notifier1.ExceptionName = ResourceManager.GetString("$error_loading");
                     Notifier1.Visible = true;
@@ -128,8 +124,6 @@ namespace OneMainWeb
         {
             try
             {
-                TabMultiview.Views[1].Selectable = TabMultiview.Views[1].Visible;
-
                 if (((MultiView) sender).ActiveViewIndex == 0)
                 {
                     FeedsGridView.DataBind();
@@ -222,16 +216,14 @@ namespace OneMainWeb
             int id = Int32.Parse(FeedsGridView.SelectedDataKey.Value.ToString());
             SelectedRssFeed = rssFeedB.GetUnCached(id);
 
-            TabMultiview.Views[1].Selectable = true;
-            TabMultiview.SetActiveIndex(1);            
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void AddRssFeed_Click(object sender, EventArgs e)
         {
             SelectedRssFeed = new BORssFeed();
 
-            TabMultiview.Views[1].Selectable = true;
-            TabMultiview.SetActiveIndex(1);
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void FeedsGridView_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -248,8 +240,7 @@ namespace OneMainWeb
         protected void CancelButton_Click(object sender, EventArgs e)
         {
             SelectedRssFeed = null;
-            TabMultiview.Views[1].Selectable = false;
-            TabMultiview.SetActiveIndex(0);             
+            MultiView1.ActiveViewIndex = 0;      
         }
 
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
@@ -257,8 +248,7 @@ namespace OneMainWeb
             SaveRssFeed();
             Notifier1.Message = ResourceManager.GetString("$item_saved");
 
-            TabMultiview.Views[1].Selectable = true;
-            TabMultiview.SetActiveIndex(1); 
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void InsertUpdateCloseButton_Click(object sender, EventArgs e)
@@ -268,8 +258,7 @@ namespace OneMainWeb
             Notifier1.Message = ResourceManager.GetString("$item_saved");
 
             SelectedRssFeed = null;
-            TabMultiview.Views[1].Selectable = false;
-            TabMultiview.SetActiveIndex(0);  
+            MultiView1.ActiveViewIndex = 0;
         }
 
         private void SaveRssFeed()

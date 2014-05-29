@@ -26,7 +26,7 @@ namespace OneMainWeb.adm
         {
             if (!IsPostBack)
             {
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
             }
         }
 
@@ -265,6 +265,21 @@ namespace OneMainWeb.adm
             website.PrincipalCreated = User.Identity.Name;
             websiteB.ChangeWebsite(website);
             GridViewWebsitesLoad(true);
+        }
+
+        protected void LinkButtonWebsites_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 0;
+        }
+
+        protected void LinkButtonCopy_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 1;
+        }
+
+        protected void LinkButtonRecursive_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 2;
         }
     }
 }

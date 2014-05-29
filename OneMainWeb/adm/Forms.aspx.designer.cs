@@ -22,31 +22,22 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// CheckboxShowUntranslated control.
+        /// MultiView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckboxShowUntranslated;
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
         
         /// <summary>
-        /// tabMultiview control.
+        /// View1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
-        
-        /// <summary>
-        /// tabListForms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabListForms;
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// cmdShowAddForm control.
@@ -76,13 +67,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.ObjectDataSource FormListSource;
         
         /// <summary>
-        /// singleFormTab control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView singleFormTab;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// plhAddForm control.
@@ -623,266 +614,5 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cmdSaveFormAndClose;
-        
-        /// <summary>
-        /// formAggregateResultsTab control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView formAggregateResultsTab;
-        
-        /// <summary>
-        /// cmdExportAggregate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdExportAggregate;
-        
-        /// <summary>
-        /// lblFormTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblFormTitle;
-        
-        /// <summary>
-        /// lblFormType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblFormType;
-        
-        /// <summary>
-        /// lblFormSubmissionCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblFormSubmissionCount;
-        
-        /// <summary>
-        /// lblFirstFormSubmissionDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblFirstFormSubmissionDate;
-        
-        /// <summary>
-        /// lblLastFormSubmissionDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblLastFormSubmissionDate;
-        
-        /// <summary>
-        /// rptAggregateSections control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptAggregateSections;
-        
-        /// <summary>
-        /// tabOverallTrends control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabOverallTrends;
-        
-        /// <summary>
-        /// cmdExportTrends control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdExportTrends;
-        
-        /// <summary>
-        /// gridFormDatesAndTimes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridFormDatesAndTimes;
-        
-        /// <summary>
-        /// gridFormDays control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridFormDays;
-        
-        /// <summary>
-        /// gridFormHours control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridFormHours;
-        
-        /// <summary>
-        /// tabAllResults control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabAllResults;
-        
-        /// <summary>
-        /// cmdExportAll control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdExportAll;
-        
-        /// <summary>
-        /// lblAllFormId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormId;
-        
-        /// <summary>
-        /// lblAllFormTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormTitle;
-        
-        /// <summary>
-        /// lblAllFormType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFormType;
-        
-        /// <summary>
-        /// lblAllSubmissionCount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllSubmissionCount;
-        
-        /// <summary>
-        /// lblAllFirstSubmissionDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllFirstSubmissionDate;
-        
-        /// <summary>
-        /// lblAllLastSubmissionDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblAllLastSubmissionDate;
-        
-        /// <summary>
-        /// submissionGridView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView submissionGridView;
-        
-        /// <summary>
-        /// ObjectDataSourceSubmissionList control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceSubmissionList;
-        
-        /// <summary>
-        /// tabSingleSubmission control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView tabSingleSubmission;
-        
-        /// <summary>
-        /// lblSingleFormTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleFormTitle;
-        
-        /// <summary>
-        /// lblSingleFormType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleFormType;
-        
-        /// <summary>
-        /// lblSingleSubmissionId control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleSubmissionId;
-        
-        /// <summary>
-        /// lblSingleSubmissionFinished control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblSingleSubmissionFinished;
-        
-        /// <summary>
-        /// rptSSSections control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptSSSections;
     }
 }

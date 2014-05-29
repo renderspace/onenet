@@ -5,440 +5,210 @@
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <one:Notifier runat="server" ID="Notifier1" />
-	<div class="topStructure">
-		<asp:checkbox id="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />	
-	</div>	
-    <two:TabularMultiView ID="tabMultiview" runat="server" OnViewIndexChanged="tabMultiview_OnViewIndexChanged">
-        <two:TabularView ID="tabListForms" runat="server" TabName="$form_list">
-          <div class="searchFull">
+        <asp:MultiView runat="server" ID="MultiView1"  OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
+            <asp:View ID="View1" runat="server">
+                 <div class="searchFull">
                    
-                        <asp:Button ID="cmdShowAddForm" runat="server" Text="$add_form" OnClick="cmdShowAddForm_Click" />
+                                <asp:Button ID="cmdShowAddForm" runat="server" Text="$add_form" OnClick="cmdShowAddForm_Click" />
                    
-          </div>
-          <div class="centerFull">
-            <div class="biggv">            
-                    <asp:GridView ID="formGridView" runat="server" PageSize="10" PageIndex="0"
-                        PagerSettings-Mode="NumericFirstLast"
-                        PagerSettings-LastPageText="$last"
-                        PagerSettings-FirstPageText="$first"
-                        PagerSettings-PageButtonCount="7" 
-                        AllowSorting="True" 
-                        AllowPaging="True" 
-                        AutoGenerateColumns="False"
-                        DataSourceID="FormListSource" 
-                        DataKeyNames="Id"
-                        OnRowDataBound="formGridView_RowDataBound"
-                        OnRowCommand="formGridView_RowCommand">
-                        <Columns>
-                            <asp:TemplateField HeaderText="$form_id">
-                                <ItemTemplate>
-                                        <%# Eval("Id") %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="$form">
-                                <ItemTemplate>
-                                        <%# Eval("Title") %>
-                                        <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : string.Empty) ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="$form_type">
-                                <ItemTemplate>
-                                        <%# ResourceManager.GetString("$" + Eval("FormType").ToString()) %>
-                                </ItemTemplate>
-                            </asp:TemplateField> 
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                        <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
-                                </ItemTemplate>
-                            </asp:TemplateField>                           
-                            <asp:TemplateField HeaderText="$form_submission_count">
-                                <ItemTemplate>
-                                        <span style="margin-left: 20px;" ><%# Eval("SubmissionCount") %></span>
-                                </ItemTemplate>
-                            </asp:TemplateField> 
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                        <asp:LinkButton Text="$copy_as_new" CommandName="CopyAsNew" CommandArgument='<%# Eval("Id") %>' ID="cmdCopyAsNew" runat="server" /><br />
-                                </ItemTemplate>
-                            </asp:TemplateField> 
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                        <asp:LinkButton Text="$view_aggregate_results" CommandName="ViewAggregateResults" CommandArgument='<%# Eval("Id") %>' ID="cmdViewAggregateResults" runat="server" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                        <asp:ImageButton CommandName="EditForm"	CommandArgument='<%# Eval("Id") %>' ID="cmdEditButton" runat="server" Enabled='<%# !(bool)Eval("MissingTranslation") %>'  />
-                                        <asp:LinkButton Text="$edit" CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" Enabled='<%# !(bool)Eval("MissingTranslation") %>' runat="server" />
-                                </ItemTemplate>
-                            </asp:TemplateField>                            
-                        </Columns>
-                        <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-                            PageButtonCount="7" />
-                    </asp:GridView>
-                   <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-                        EnablePaging="True" ID="FormListSource" runat="server" SelectMethod="Select"
-                        TypeName="OneMainWeb.FormHelper" DeleteMethod="DeleteForm" OnSelecting="FormListSource_Selecting" SelectCountMethod="SelectCount" SortParameterName="sortBy">
-                        <SelectParameters>
-                            <asp:Parameter Name="sortDirection" DefaultValue="ASC" Type="string" />
-                        </SelectParameters> 
-                   </asp:ObjectDataSource>
-            </div>            
-        </div>  <!-- centerFull -->
-        </two:TabularView>
-        <two:TabularView ID="singleFormTab" runat="server" TabName="$single_form">
-         <div class="searchFull">
-         </div>
-            <div class="centerStructure formStructure">     
-                <asp:PlaceHolder ID="plhAddForm" runat="server">
-		            <two:Input ID="txtAddForm" runat="server" Text="$add_new_form" />
-		            <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
-		        </asp:PlaceHolder>
+                  </div>
+                  <div class="centerFull">
+                    <div class="biggv">            
+                            <asp:GridView ID="formGridView" runat="server" PageSize="10" PageIndex="0"
+                                PagerSettings-Mode="NumericFirstLast"
+                                PagerSettings-LastPageText="$last"
+                                PagerSettings-FirstPageText="$first"
+                                PagerSettings-PageButtonCount="7" 
+                                AllowSorting="True" 
+                                AllowPaging="True" 
+                                AutoGenerateColumns="False"
+                                DataSourceID="FormListSource" 
+                                DataKeyNames="Id"
+                                OnRowDataBound="formGridView_RowDataBound"
+                                OnRowCommand="formGridView_RowCommand">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="$form_id">
+                                        <ItemTemplate>
+                                                <%# Eval("Id") %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="$form">
+                                        <ItemTemplate>
+                                                <%# Eval("Title") %>
+                                                <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : string.Empty) ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="$form_type">
+                                        <ItemTemplate>
+                                                <%# ResourceManager.GetString("$" + Eval("FormType").ToString()) %>
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                                <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>                           
+                                    <asp:TemplateField HeaderText="$form_submission_count">
+                                        <ItemTemplate>
+                                                <span style="margin-left: 20px;" ><%# Eval("SubmissionCount") %></span>
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                                <asp:LinkButton Text="$copy_as_new" CommandName="CopyAsNew" CommandArgument='<%# Eval("Id") %>' ID="cmdCopyAsNew" runat="server" /><br />
+                                        </ItemTemplate>
+                                    </asp:TemplateField> 
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                                <asp:LinkButton Text="Export Aggregate" CommandName="ExportAggregateResults" CommandArgument='<%# Eval("Id") %>' ID="LinkButtonAggregate" runat="server" />
+                                                <asp:LinkButton Text="Export All" CommandName="ExportResults" CommandArgument='<%# Eval("Id") %>' ID="LinkAll" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                                <asp:ImageButton CommandName="EditForm"	CommandArgument='<%# Eval("Id") %>' ID="cmdEditButton" runat="server" Enabled='<%# !(bool)Eval("MissingTranslation") %>'  />
+                                                <asp:LinkButton Text="$edit" CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" Enabled='<%# !(bool)Eval("MissingTranslation") %>' runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>                            
+                                </Columns>
+                                <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
+                                    PageButtonCount="7" />
+                            </asp:GridView>
+                           <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
+                                EnablePaging="True" ID="FormListSource" runat="server" SelectMethod="Select"
+                                TypeName="OneMainWeb.FormHelper" DeleteMethod="DeleteForm" OnSelecting="FormListSource_Selecting" SelectCountMethod="SelectCount" SortParameterName="sortBy">
+                                <SelectParameters>
+                                    <asp:Parameter Name="sortDirection" DefaultValue="ASC" Type="string" />
+                                </SelectParameters> 
+                           </asp:ObjectDataSource>
+                    </div>            
+                </div>  <!-- centerFull -->
+
+            </asp:View>
+            <asp:View ID="View2" runat="server">
+                <div class="searchFull">
+                 </div>
+                    <div class="centerStructure formStructure">     
+                        <asp:PlaceHolder ID="plhAddForm" runat="server">
+		                    <two:Input ID="txtAddForm" runat="server" Text="$add_new_form" />
+		                    <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
+		                </asp:PlaceHolder>
 		        
-		        <asp:PlaceHolder id="plhAddSection" runat="server">
-		            <two:Input Required="false" ID="txtAddSection" runat="server" text="$add_section" />
-		            <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
-		        </asp:PlaceHolder>
+		                <asp:PlaceHolder id="plhAddSection" runat="server">
+		                    <two:Input Required="false" ID="txtAddSection" runat="server" text="$add_section" />
+		                    <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
+		                </asp:PlaceHolder>
 		        
-		        <asp:PlaceHolder ID="plhAddQuestion" runat="server">
-		            <two:Input ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
-		            <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
-		        </asp:PlaceHolder>
-		        <div style="width: 100%;">&nbsp;</div>
-		        <br style="clear: both;" />                
-                <div id="treeHolder" class="treeHolder">                            
-	                <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" 
-		                BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" Width="270" />
-                </div>		
-           	</div>        
-		    <div class="mainEditor formEditor">
-		        <div class="contentEntry">
-		            <asp:PlaceHolder ID="plhUpdateForm" runat="server">
-		                <two:Input Required="false" ID="txtFormName" runat="server" Text="$form_name" />
-		                <two:Input Required="false" ID="InputFormPrivateName" runat="server" Text="$form_private_name" />
-		                <two:Input Required="false" ID="txtFormThankYouNote" runat="server" Text="$form_thank_you_note" Rows="3" TextMode="multiLine" />
-		                <two:Input Required="false" ID="txtFormDescription" runat="server" Text="$form_desc" Rows="3" TextMode="multiLine" />
+		                <asp:PlaceHolder ID="plhAddQuestion" runat="server">
+		                    <two:Input ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
+		                    <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
+		                </asp:PlaceHolder>
+		                <div style="width: 100%;">&nbsp;</div>
+		                <br style="clear: both;" />                
+                        <div id="treeHolder" class="treeHolder">                            
+	                        <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" 
+		                        BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" Width="270" />
+                        </div>		
+           	        </div>        
+		            <div class="mainEditor formEditor">
+		                <div class="contentEntry">
+		                    <asp:PlaceHolder ID="plhUpdateForm" runat="server">
+		                        <two:Input Required="false" ID="txtFormName" runat="server" Text="$form_name" />
+		                        <two:Input Required="false" ID="InputFormPrivateName" runat="server" Text="$form_private_name" />
+		                        <two:Input Required="false" ID="txtFormThankYouNote" runat="server" Text="$form_thank_you_note" Rows="3" TextMode="multiLine" />
+		                        <two:Input Required="false" ID="txtFormDescription" runat="server" Text="$form_desc" Rows="3" TextMode="multiLine" />
 		                
-                        <div class="select">
-                            <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes"
-                                Text="$form_type" />
-                            <asp:DropDownList AppendDataBoundItems="False" 
-                                ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
-                                />
-                            <asp:ObjectDataSource ID="FormTypesSource" runat="server"
-                                SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
-                                <SelectParameters>
-                                </SelectParameters>
-                            </asp:ObjectDataSource>                        
-                        </div>
+                                <div class="select">
+                                    <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes"
+                                        Text="$form_type" />
+                                    <asp:DropDownList AppendDataBoundItems="False" 
+                                        ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
+                                        />
+                                    <asp:ObjectDataSource ID="FormTypesSource" runat="server"
+                                        SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
+                                        <SelectParameters>
+                                        </SelectParameters>
+                                    </asp:ObjectDataSource>                        
+                                </div>
                         
-                        <div class="select">
-                            <asp:Label AssociatedControlID="ddlUpdateSectionTypes" runat="server" ID="lblUpdateSectionTypes"
-                                Text="$section_type" />
-                            <asp:DropDownList AppendDataBoundItems="False" 
-                                ID="ddlUpdateSectionTypes" OnDataBound="ddlUpdateSectionTypes_DataBound" runat="server" DataSourceID="SectionTypesSource"
-                                />
-                            <asp:ObjectDataSource ID="SectionTypesSource" runat="server"
-                                SelectMethod="ListSectionTypes" TypeName="OneMainWeb.FormHelper">
-                                <SelectParameters>
-                                </SelectParameters>
-                            </asp:ObjectDataSource>    
-                        </div> 
+                                <div class="select">
+                                    <asp:Label AssociatedControlID="ddlUpdateSectionTypes" runat="server" ID="lblUpdateSectionTypes"
+                                        Text="$section_type" />
+                                    <asp:DropDownList AppendDataBoundItems="False" 
+                                        ID="ddlUpdateSectionTypes" OnDataBound="ddlUpdateSectionTypes_DataBound" runat="server" DataSourceID="SectionTypesSource"
+                                        />
+                                    <asp:ObjectDataSource ID="SectionTypesSource" runat="server"
+                                        SelectMethod="ListSectionTypes" TypeName="OneMainWeb.FormHelper">
+                                        <SelectParameters>
+                                        </SelectParameters>
+                                    </asp:ObjectDataSource>    
+                                </div> 
                          
-                        <two:LabeledCheckBox runat="server" Text="$allow_multiple_submissions" ID="chkAllowMultipleSubmissions" />
-                        <two:LabeledCheckBox runat="server" Text="$allow_modify_in_submission" ID="chkAllowModifyInSubmission" />                                                
-                        <two:ValidInput Required="false" ID="txtSendTo" runat="server" Text="$form_send_to" ValidationType="email" />
-                        <two:Input Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
-                        <div class="save">
-		                    <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
-		                </div>
-		            </asp:PlaceHolder>
-		            <asp:PlaceHolder ID="plhUpdateSection" runat="server">
-		                <two:Input Required="false" runat="server" ID="txtSectionName" Text="$section_name" />
-		                <two:Input Required="false" ID="InputSectionDescription" runat="server" Text="$section_desc" Rows="3" TextMode="multiLine" />
-                        <two:Input Required="false" ID="InputSectionOnClientClick" runat="server" Text="$section_on_client_click" />
-                        <div class="save">
-		                    <asp:button	id="cmdUpdateSection" Runat="server" CssClass="button" Text="$update_section" OnClick="cmdUpdateSection_Click" />			            
-		                    <asp:button	id="cmdDeleteSection" Runat="server" CssClass="button" Text="$mark_section_as_deleted" OnClick="cmdDeleteSection_Click" />			            		                    
-		                    <asp:button	id="cmdUnDeleteSection" Runat="server" CssClass="button" Text="$undelete_section" OnClick="cmdUnDeleteSection_Click" />			            		                    		                    
-		                </div>
-		            </asp:PlaceHolder>
-		            <asp:PlaceHolder ID="plhUpdateQuestion" runat="server">
-		                <two:input id="txtQuestionText" runat="server" Text="$question_text" />
-		                <two:input Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" Text="$question_description" />
-                        <two:LabeledCheckBox runat="server" Text="$question_requires_answer" ID="chkAnswerIsRequired" />
-                        <div class="radiobuttonlist" id="divFrontEndQuestionTypes" runat="server">
-                            <asp:Label CssClass="radiobuttonlistTitle" ID="lblFrontEndQuestionTypes" runat="server" Text="$user_question_types" />
-                            <asp:RadioButtonList OnSelectedIndexChanged="radFrontEndQuestionTypes_SelectedIndexChanged" ID="radFrontEndQuestionTypes" AutoPostBack="true" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" />
-                        </div>
+                                <two:LabeledCheckBox runat="server" Text="$allow_multiple_submissions" ID="chkAllowMultipleSubmissions" />
+                                <two:LabeledCheckBox runat="server" Text="$allow_modify_in_submission" ID="chkAllowModifyInSubmission" />                                                
+                                <two:ValidInput Required="false" ID="txtSendTo" runat="server" Text="$form_send_to" ValidationType="email" />
+                                <two:Input Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
+                                <div class="save">
+		                            <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
+		                        </div>
+		                    </asp:PlaceHolder>
+		                    <asp:PlaceHolder ID="plhUpdateSection" runat="server">
+		                        <two:Input Required="false" runat="server" ID="txtSectionName" Text="$section_name" />
+		                        <two:Input Required="false" ID="InputSectionDescription" runat="server" Text="$section_desc" Rows="3" TextMode="multiLine" />
+                                <two:Input Required="false" ID="InputSectionOnClientClick" runat="server" Text="$section_on_client_click" />
+                                <div class="save">
+		                            <asp:button	id="cmdUpdateSection" Runat="server" CssClass="button" Text="$update_section" OnClick="cmdUpdateSection_Click" />			            
+		                            <asp:button	id="cmdDeleteSection" Runat="server" CssClass="button" Text="$mark_section_as_deleted" OnClick="cmdDeleteSection_Click" />			            		                    
+		                            <asp:button	id="cmdUnDeleteSection" Runat="server" CssClass="button" Text="$undelete_section" OnClick="cmdUnDeleteSection_Click" />			            		                    		                    
+		                        </div>
+		                    </asp:PlaceHolder>
+		                    <asp:PlaceHolder ID="plhUpdateQuestion" runat="server">
+		                        <two:input id="txtQuestionText" runat="server" Text="$question_text" />
+		                        <two:input Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" Text="$question_description" />
+                                <two:LabeledCheckBox runat="server" Text="$question_requires_answer" ID="chkAnswerIsRequired" />
+                                <div class="radiobuttonlist" id="divFrontEndQuestionTypes" runat="server">
+                                    <asp:Label CssClass="radiobuttonlistTitle" ID="lblFrontEndQuestionTypes" runat="server" Text="$user_question_types" />
+                                    <asp:RadioButtonList OnSelectedIndexChanged="radFrontEndQuestionTypes_SelectedIndexChanged" ID="radFrontEndQuestionTypes" AutoPostBack="true" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" />
+                                </div>
 
-                        <div class="separate_input" id="separateInput" runat="server">
-                            <two:ValidInput ID="txtNumberOfRows" runat="server" Text="$number_of_lines_for_editing" ValidationType="numeric" />
-                            <two:ValidInput ID="txtMaxChars" runat="server" Text="$max_chars" ValidationType="numeric" />
-                            <two:ValidInput ID="txtMaximumFileSize" runat="server" Text="$maximum_file_size" ValidationType="numeric" />                                                    
-                            <div class="checkboxlist" id="divAllowedMimeTypes" runat="server">
-                                <asp:Label CssClass="checkboxlistTitle" ID="lblAllowedMimeTypes" runat="server" Text="$allowed_mime_types" />
-                                <asp:CheckBoxList ID="chkAllowedMimeTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right"  />
-                            </div>
+                                <div class="separate_input" id="separateInput" runat="server">
+                                    <two:ValidInput ID="txtNumberOfRows" runat="server" Text="$number_of_lines_for_editing" ValidationType="numeric" />
+                                    <two:ValidInput ID="txtMaxChars" runat="server" Text="$max_chars" ValidationType="numeric" />
+                                    <two:ValidInput ID="txtMaximumFileSize" runat="server" Text="$maximum_file_size" ValidationType="numeric" />                                                    
+                                    <div class="checkboxlist" id="divAllowedMimeTypes" runat="server">
+                                        <asp:Label CssClass="checkboxlistTitle" ID="lblAllowedMimeTypes" runat="server" Text="$allowed_mime_types" />
+                                        <asp:CheckBoxList ID="chkAllowedMimeTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right"  />
+                                    </div>
                             
-                            <div class="radiobuttonlist" id="divAnswerPresentationTypes" runat="server">
-                                <asp:Label CssClass="radiobuttonlistTitle" ID="lblAnswerPresentationTypes" runat="server" Text="$type_of_information" />
-                                <asp:RadioButtonList AutoPostBack="true" ID="radAnswerPresentationTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" OnSelectedIndexChanged="radAnswerPresentationTypes_SelectIndexChanged" />
-                            </div>       
+                                    <div class="radiobuttonlist" id="divAnswerPresentationTypes" runat="server">
+                                        <asp:Label CssClass="radiobuttonlistTitle" ID="lblAnswerPresentationTypes" runat="server" Text="$type_of_information" />
+                                        <asp:RadioButtonList AutoPostBack="true" ID="radAnswerPresentationTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" OnSelectedIndexChanged="radAnswerPresentationTypes_SelectIndexChanged" />
+                                    </div>       
                             
-                            <two:LabeledCheckBox ID="chkAllowBlankAnswersInMenu" runat="server" Text="$allow_blank_answers_in_menu" />
-                            <two:LabeledCheckBox ID="chkFirstAnswerIsFake" runat="server" Text="$first_answer_in_menu_is_fake" />
-                        </div>
+                                    <two:LabeledCheckBox ID="chkAllowBlankAnswersInMenu" runat="server" Text="$allow_blank_answers_in_menu" />
+                                    <two:LabeledCheckBox ID="chkFirstAnswerIsFake" runat="server" Text="$first_answer_in_menu_is_fake" />
+                                </div>
                         
-                        <two:Input ID="txtAnswers" runat="server" Text="$answers_one_per_line" Rows="5" TextMode="MultiLine" />                                                                                                    
-                        <div class="save">
+                                <two:Input ID="txtAnswers" runat="server" Text="$answers_one_per_line" Rows="5" TextMode="MultiLine" />                                                                                                    
+                                <div class="save">
 		                    
-		                    <asp:button	id="cmdDeleteQuestion" Runat="server" CssClass="button" Text="$mark_question_as_deleted" OnClick="cmdDeleteQuestion_Click" />			            		                    		                    
-		                    <asp:button	id="cmdUnDeleteQuestion" Runat="server" CssClass="button" Text="$undelete_question" OnClick="cmdUnDeleteQuestion_Click" />			            		                    		                    		                    
-		                    <span>&nbsp;&nbsp;</span>
-		                    <asp:button	id="cmdUpdateQuestion" Runat="server" CssClass="button" Text="$update_question" OnClick="cmdUpdateQuestion_Click" />			            
-		                </div>
-		            </asp:PlaceHolder>
-                </div>
-            </div>
-            <div class="searchFull" id="overallButtons" runat="server">
-                <p class="save">
-                    <asp:Button ID="cmdCancelButton" OnClick="cmdCancelButton_Click" runat="server" Text="$cancel" />
-                    <asp:Button ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="$save" />
-                    <asp:Button ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="$save_close" />
-                </p> 				    
-            </div>                
-        </two:TabularView>   
-        
-        <two:TabularView ID="formAggregateResultsTab" runat="server" TabName="$form_aggregate_results">
-            <div class="searchFull">
-                    <asp:Button ID="cmdExportAggregate" OnClick="cmdExportAggregate_Click" runat="server" Text="$export" />
-            </div>
-            <div class="centerFull">
-                <div class="formresults">
-                    <two:InfoLabel ID="lblFormTitle" Text="$form_title" runat="server" />
-                    <two:InfoLabel ID="lblFormType" Text="$form_type" runat="server" />
-                    <two:InfoLabel ID="lblFormSubmissionCount" Text="$form_submission_count" runat="server" />
-                    <two:InfoLabel ID="lblFirstFormSubmissionDate" Text="$first_form_submission_date" runat="server" />
-                    <two:InfoLabel ID="lblLastFormSubmissionDate" Text="$last_form_submission_date" runat="server" />            
-                </div>
-                <div class="biggv"> 
-                
-                    <asp:Repeater ID="rptAggregateSections" OnItemDataBound="rptAggregateSections_ItemDataBound" runat="server">
-                        <HeaderTemplate>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th><asp:Label ID="Label1" runat="server" Text="$question"></asp:Label></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                        </HeaderTemplate>
-                        <ItemTemplate>
-                            <tr><td colspan="5">[<%# Eval("Idx") %>] <%# Eval("Title") %></td></tr>
-                            <asp:Repeater ID="rptAggregateQuestions" OnItemDataBound="rptAggregateQuestions_ItemDataBound" runat="server">
-                                <ItemTemplate>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            [<%#DataBinder.Eval(((RepeaterItem)Container.Parent.Parent).DataItem, "Idx")%> / <%# Eval("Idx") %>]                                
-                                        </td>
-                                        <td>
-                                            <%# Eval("Title") %>
-                                        </td>
-                                        <td>
-                                            <%# Eval("TimesAnswered")%>
-                                        </td>
-                                        <td>
-                                            <asp:Repeater ID="rptAggregateAnswers" OnItemDataBound="rptAggregateAnswers_ItemDataBound" runat="server">
-                                                <HeaderTemplate>
-                                                    <table>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <tr id="multiRow" runat="server" class="multi">
-                                                        <td class="AnswerTitle"><%# Eval("Title") %></td>
-                                                        <td class="TimesAnswered"><%# Eval("TimesAnswered") %></td>
-                                                        <td class="InclusivePercentage"><span ID="spanInclusivePercentage" runat="server"><%# string.Format("{0:#0.00'%}", Eval("PercentageAnswered"))%></span></td>
-                                                        <td class="OverallPercentage"><%# string.Format("{0:#0.00'%}", Eval("OverallPercentageAnswered"))%></td>                                                        
-                                                    </tr>
-                                                </ItemTemplate>
-                                                <FooterTemplate>
-                                                    </table>                                        
-                                                </FooterTemplate>
-                                            </asp:Repeater>                                 
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </ItemTemplate>      
-                        <FooterTemplate>
-                            </table>
-                        </FooterTemplate>                            
-                    </asp:Repeater>           
-                </div>                       
-            </div>
-        </two:TabularView>  
-       
-        <two:TabularView ID="tabOverallTrends" runat="server" TabName="$form_overall_trends">
-            <div class="searchFull">
-                <asp:Button ID="cmdExportTrends" OnClick="cmdExportTrends_Click" runat="server" Text="$export" />
-            </div>
-          <div class="centerFull">
-             	          
-            
-            <div class="biggv">  
-               <asp:GridView ID="gridFormDatesAndTimes" runat="server" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:BoundField DataField="Date" HeaderText="$date_and_time" />
-                        <asp:BoundField DataField="SubmittedFormCount" HeaderText="$totalFormsSubmitted" />
-                    </Columns>
-               </asp:GridView> 
-            </div>                       
-            
-            <div class="biggv">  
-               <asp:GridView ID="gridFormDays" runat="server" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:BoundField DataField="Date" HeaderText="$date" />
-                        <asp:BoundField DataField="SubmittedFormCount" HeaderText="$totalFormsSubmitted" />
-                    </Columns>
-               </asp:GridView> 
-            </div>                       
-
-            <div class="biggv">  
-               <asp:GridView ID="gridFormHours" runat="server" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:BoundField DataField="Date" HeaderText="$time" />
-                        <asp:BoundField DataField="SubmittedFormCount" HeaderText="$totalFormsSubmitted" />
-                    </Columns>
-               </asp:GridView> 
-            </div>                       
-
-            
-          </div>                     
-        </two:TabularView>
-        <two:TabularView ID="tabAllResults" runat="server" TabName="$all_results">
-            <div class="searchFull">
-                    <asp:Button ID="cmdExportAll" OnClick="cmdExportAll_Click" runat="server" Text="$export" />
-            </div>
-            <div class="centerFull">
-                <div class="formresults">
-                    <two:InfoLabel ID="lblAllFormId" Text="$form_id" runat="server" />
-                    <two:InfoLabel ID="lblAllFormTitle" Text="$form_title" runat="server" />
-                    <two:InfoLabel ID="lblAllFormType" Text="$form_type" runat="server" />
-                    <two:InfoLabel ID="lblAllSubmissionCount" Text="$form_submission_count" runat="server" />
-                    <two:InfoLabel ID="lblAllFirstSubmissionDate" Text="$first_form_submission_date" runat="server" />
-                    <two:InfoLabel ID="lblAllLastSubmissionDate" Text="$last_form_submission_date" runat="server" />            
-                </div>
-                <div class="biggv"> 
-					    <asp:GridView ID="submissionGridView" runat="server" PageSize="5" PageIndex="0"
-						    PagerSettings-Mode="NumericFirstLast"
-						    PagerSettings-LastPageText="$last"
-						    PagerSettings-FirstPageText="$first"
-						    PagerSettings-PageButtonCount="7"
-						    AllowSorting="True"
-						    AllowPaging="True"
-						    AutoGenerateColumns="False"
-						    DataSourceID="ObjectDataSourceSubmissionList"
-						    CssClass="gv"
-						    DataKeyNames="Id"
-						    OnRowCommand="submissionGridView_RowCommand">
-						    <Columns>
-						        <asp:BoundField DataField="Id" HeaderText="$Id" SortExpression="Id" />
-						        <asp:BoundField DataField="Finished" HeaderText="$Finished" SortExpression="Finished" />
-							    <asp:TemplateField>
-								    <ItemTemplate>
-										     <div style="width: 50px;">
-										        <asp:LinkButton Text="$view" CommandName="ViewFormSubmission" CommandArgument='<%# Eval("Id") %>' ID="cmdView" runat="server" />
-    										</div>
-								    </ItemTemplate>
-							    </asp:TemplateField>						        
-						    </Columns>
-						    <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-							    PageButtonCount="7" />
-					    </asp:GridView>
-				       <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-						    EnablePaging="True" ID="ObjectDataSourceSubmissionList" runat="server" SelectMethod="ListFormSubmissions"
-						    TypeName="OneMainWeb.FormHelper" OnSelecting="ObjectDataSourceSubmissionList_Selecting" SelectCountMethod="FormSubmissionCount" SortParameterName="sortBy">
-				       </asp:ObjectDataSource>
-                </div>
-            </div>
-        </two:TabularView>  
-        
-        
-        <two:TabularView ID="tabSingleSubmission" runat="server" TabName="$single_submission">
-            <div class="centerFull">
-                <div class="formresults">
-                    <two:InfoLabel ID="lblSingleFormTitle" Text="$form_title" runat="server" />
-                    <two:InfoLabel ID="lblSingleFormType" Text="$form_type" runat="server" />
-                    <two:InfoLabel ID="lblSingleSubmissionId" Text="$form_submission_id" runat="server" />
-                    <two:InfoLabel ID="lblSingleSubmissionFinished" Text="$finished_date" runat="server" />
-                </div>
-                <div class="biggv"> 
-                
-                    <asp:Repeater ID="rptSSSections" OnItemDataBound="rptSSSections_ItemDataBound" runat="server">
-                        <HeaderTemplate>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>                                        
-                                        <th><asp:Label ID="Label1" runat="server" Text="$question"></asp:Label></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                        </HeaderTemplate>
-                        <ItemTemplate>
-                            <tr><td colspan="5">[<%# Eval("Idx") %>] <%# Eval("Title") %></td></tr>
-                            <asp:Repeater ID="rptSSQuestions" OnItemDataBound="rptSSQuestions_ItemDataBound" runat="server">
-                                <ItemTemplate>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            [<%#DataBinder.Eval(((RepeaterItem)Container.Parent.Parent).DataItem, "Idx")%> / <%# Eval("Idx") %>]                                
-                                        </td>
-                                        <td>
-                                            <%# Eval("Title") %>
-                                        </td>
-                                        <td>
-                                            <asp:Repeater ID="rptSSAnswers" OnItemDataBound="rptSSAnswers_ItemDataBound" runat="server">
-                                                <HeaderTemplate>
-                                                    <table>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <tr id="multiRow" runat="server" class="multi">
-                                                        <td class="AnswerTitle"><%# Eval("Title") %><span runat="server" id="spanAdditionalField" /></td>
-                                                    </tr>
-                                                    <tr id="singleRow" runat="server" class="multi">
-                                                        <td class="AnswerTitle" id="answerValue" runat="server"></td>
-                                                    </tr>                                                    
-                                                </ItemTemplate>
-                                                <FooterTemplate>
-                                                    </table>                                        
-                                                </FooterTemplate>
-                                            </asp:Repeater>                                 
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </ItemTemplate>      
-                        <FooterTemplate>
-                            </table>
-                        </FooterTemplate>                            
-                    </asp:Repeater>           
-                </div>                       
-            </div>
-        </two:TabularView>  
-        
-        
-                      
-    </two:TabularMultiView>
+		                            <asp:button	id="cmdDeleteQuestion" Runat="server" CssClass="button" Text="$mark_question_as_deleted" OnClick="cmdDeleteQuestion_Click" />			            		                    		                    
+		                            <asp:button	id="cmdUnDeleteQuestion" Runat="server" CssClass="button" Text="$undelete_question" OnClick="cmdUnDeleteQuestion_Click" />			            		                    		                    		                    
+		                            <span>&nbsp;&nbsp;</span>
+		                            <asp:button	id="cmdUpdateQuestion" Runat="server" CssClass="button" Text="$update_question" OnClick="cmdUpdateQuestion_Click" />			            
+		                        </div>
+		                    </asp:PlaceHolder>
+                        </div>
+                    </div>
+                    <div class="searchFull" id="overallButtons" runat="server">
+                        <p class="save">
+                            <asp:Button ID="cmdCancelButton" OnClick="cmdCancelButton_Click" runat="server" Text="$cancel" />
+                            <asp:Button ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="$save" />
+                            <asp:Button ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="$save_close" />
+                        </p> 				    
+                    </div>       
+            </asp:View>
+        </asp:MultiView>
 </asp:Content>
 
 

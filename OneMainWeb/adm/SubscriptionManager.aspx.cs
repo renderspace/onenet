@@ -23,10 +23,6 @@ namespace OneMainWeb
 			cmdDeleteSubscriptions.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_confirm_delete_subscriptions") + @"');";
 			if (!IsPostBack)
 			{
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = true;
-                tabMultiview.Views[2].Selectable = true;
-                tabMultiview.SetActiveIndex(0);
             }
         }
 
@@ -205,8 +201,7 @@ namespace OneMainWeb
 					newsletterB.DeleteSubscription(sub.SubscriptionId);
 					countDeleted++;
 				}
-				tabMultiview.Views[1].Selectable = true;
-				tabMultiview.SetActiveIndex(1);
+				MultiView1.ActiveViewIndex = 1;
 				Notifier1.Visible = true;
 				Notifier1.Message = "deleted " + countDeleted + " subscriptions from newsletter: " + ddlNewsletterFilter.SelectedItem.Text;
 			}
@@ -236,8 +231,7 @@ namespace OneMainWeb
                     }
                 }
 
-                tabMultiview.Views[1].Selectable = true;
-                tabMultiview.SetActiveIndex(1);
+                MultiView1.ActiveViewIndex = 1;
                 Notifier1.Visible = true;
                 Notifier1.Message = "deleted " + countDeleted + " unconfirmed subscriptions that were subscribed before " + fromDate.ToString("dd.MM.yyyy");
             }

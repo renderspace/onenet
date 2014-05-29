@@ -22,22 +22,49 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.Notifier notifier;
         
         /// <summary>
-        /// tabMultiview control.
+        /// LinkButtonWebsites control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularMultiView tabMultiview;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonWebsites;
         
         /// <summary>
-        /// TabularView1 control.
+        /// LinkButtonCopy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView TabularView1;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonCopy;
+        
+        /// <summary>
+        /// LinkButtonRecursive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonRecursive;
+        
+        /// <summary>
+        /// MultiView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.MultiView MultiView1;
+        
+        /// <summary>
+        /// View1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
         /// GridViewWebsites control.
@@ -85,13 +112,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button ButtonAdd;
         
         /// <summary>
-        /// TabularView2 control.
+        /// View2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView TabularView2;
+        protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
         /// treeHolder control.
@@ -139,13 +166,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button ButtonCopy;
         
         /// <summary>
-        /// TabularView3 control.
+        /// View3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.TabularView TabularView3;
+        protected global::System.Web.UI.WebControls.View View3;
         
         /// <summary>
         /// treeHolder2 control.
