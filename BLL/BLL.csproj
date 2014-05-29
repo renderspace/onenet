@@ -183,7 +183,6 @@
     <Compile Include="WebConfig\RssConfiguration.cs" />
     <Compile Include="WebConfig\RssConfigProvider.cs" />
     <Compile Include="WebConfig\RssConfigProviderCollection.cs" />
-    <Compile Include="WebControls\CleanDropDownList.cs" />
     <Compile Include="WebControls\InfoLabel.cs" />
     <Compile Include="WebControls\Input.cs" />
     <Compile Include="WebControls\InputWithButton.cs" />
@@ -191,8 +190,6 @@
     <Compile Include="WebControls\ModalPanel.cs" />
     <Compile Include="WebControls\Pager.cs" />
     <Compile Include="WebControls\PostbackPager.cs" />
-    <Compile Include="WebControls\TabularMultiView.cs" />
-    <Compile Include="WebControls\TabularView.cs" />
     <Compile Include="WebControls\ValidInput.cs" />
   </ItemGroup>
   <ItemGroup>

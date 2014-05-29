@@ -27,16 +27,12 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                tabMultiview.Views[0].Selectable = true;
-                tabMultiview.Views[1].Selectable = false;
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
             }
         }
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
-        {
-            tabMultiview.Views[1].Selectable = (tabMultiview.Views[1].Visible);
-            
+        {   
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
                 GridViewRedirects.DataBind();
@@ -70,7 +66,7 @@ namespace OneMainWeb
             var button = sender as Button;
             if (button.CommandName == "SAVE_CLOSE")
             {
-                tabMultiview.SetActiveIndex(0);
+                MultiView1.ActiveViewIndex = 0;
                 GridViewRedirects.DataBind();
             }
         }
@@ -78,14 +74,13 @@ namespace OneMainWeb
         protected void CmdCancel_Click(object sender, EventArgs e)
         {
             CurrentItem = null;
-            tabMultiview.SetActiveIndex(0);
+            MultiView1.ActiveViewIndex = 0;
         }
 
         protected void cmdShowAddRedirect_Click(object sender, EventArgs e)
         {
             CurrentItem = null;
-            tabMultiview.Views[1].Selectable = true;
-            tabMultiview.SetActiveIndex(1);
+            MultiView1.ActiveViewIndex = 1;
         }
 
         protected void RedirectListSource_Deleted(object sender, ObjectDataSourceStatusEventArgs e)
@@ -101,8 +96,7 @@ namespace OneMainWeb
 
                 if (CurrentItem != null && CurrentItem.Id.HasValue)
                 {
-                    tabMultiview.Views[1].Selectable = true;
-                    tabMultiview.SetActiveIndex(1);
+                    MultiView1.ActiveViewIndex = 1;
                 }
             }
         }

@@ -450,7 +450,7 @@ if(window.jQuery)
 
                                                 if (holderDiv != null)
                                                 {
-                                                    CleanDropDownList dropDownList = holderDiv.FindControl("DropDownList" + question.Id) as CleanDropDownList;
+                                                    var dropDownList = holderDiv.FindControl("DropDownList" + question.Id) as DropDownList;
 
                                                     if (dropDownList != null)
                                                     {
@@ -598,7 +598,7 @@ if(window.jQuery)
                                     Label lblDropDownList = new Label();
                                     lblDropDownList.Text = question.Title;
 
-                                    CleanDropDownList dropDownList = new CleanDropDownList();
+                                    var dropDownList = new DropDownList();
                                     dropDownList.DataSource = question.Answers.Values;
                                     dropDownList.DataTextField = "Title";
                                     dropDownList.DataValueField = "Id";
@@ -990,7 +990,7 @@ if(window.jQuery)
 
                                     if (holderDiv != null)
                                     {
-                                        CleanDropDownList dropDownList = holderDiv.FindControl("DropDownList" + question.Id) as CleanDropDownList;
+                                        var dropDownList = holderDiv.FindControl("DropDownList" + question.Id) as DropDownList;
 
                                         if (dropDownList != null)
                                         {

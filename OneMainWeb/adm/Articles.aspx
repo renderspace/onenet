@@ -26,7 +26,7 @@
 			    <two:InputWithButton ValidationType="int" ID="InputWithButtonShowById" ValidationGroup="ShowById" ButtonText="$show" Text="$article_ShowById" runat="server" OnClick="cmdShowById_Click" />
 			</div>
 			<div class="searchFull">
-                <two:CleanDropDownList OnDataBound="ddlRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="ddlRegularFilter" runat="server" DataSourceID="RegularSource"  />
+                <asp:DropDownList OnDataBound="ddlRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="ddlRegularFilter" runat="server" DataSourceID="RegularSource"  />
                 <asp:ObjectDataSource ID="RegularSource" runat="server" OnSelecting="ObjectDataSourceRegularSource_Selecting"
                     SelectMethod="ListRegulars" TypeName="OneMainWeb.ArticleDataSource">
                     <SelectParameters>
