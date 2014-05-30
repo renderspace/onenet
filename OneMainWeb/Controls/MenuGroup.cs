@@ -53,6 +53,8 @@ namespace OneMainWeb.Controls
 
         public string FirstUlClass { get; set; }
 
+        public string SpanPosition { get; set; }
+
         public MenuGroup()
         {
             base.EnableViewState = false;
@@ -310,7 +312,19 @@ namespace OneMainWeb.Controls
         protected virtual Literal RenderItem(string linkCssClass, string title, string url)
         {
             Literal item = new Literal();
-            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a>";
+
+            if (SpanPosition == "inner")
+            {
+                item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\"><span>" + title + "</span></a>";
+            }
+            else if (SpanPosition == "outer")
+            {
+                item.Text = "<span><a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a></span>";
+            }
+            else
+            {
+                item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + title + "</a>";
+            }
             return item;
         }
 
