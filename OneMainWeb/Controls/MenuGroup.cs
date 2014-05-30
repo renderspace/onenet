@@ -53,6 +53,8 @@ namespace OneMainWeb.Controls
 
         public string FirstUlClass { get; set; }
 
+        public bool ShowDescription { get; set; }
+
         public MenuGroup()
         {
             base.EnableViewState = false;
@@ -152,6 +154,7 @@ namespace OneMainWeb.Controls
                     }
 
                     string title = dataItem.Title;
+                    string description = dataItem.Description;
                     string pageId = dataItem["_pageID"];
                     bool dataItemHasChildren = dataItem.HasChildNodes;
 
@@ -250,7 +253,7 @@ namespace OneMainWeb.Controls
                             Controls.Add(itemHeader);
 
                             //  Create the data item
-                            Literal item = RenderItem(linkCssClass, title, url);
+                            Literal item = RenderItem(linkCssClass, title, url, description);
                             item.ID = "Item" + currentItemId;
 
                             if (_menuGroup == Group)
@@ -307,10 +310,10 @@ namespace OneMainWeb.Controls
             }
         }
 
-        protected virtual Literal RenderItem(string linkCssClass, string title, string url)
+        protected virtual Literal RenderItem(string linkCssClass, string title, string url, string description)
         {
             Literal item = new Literal();
-            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\"><span>" + title + "</span></a>";
+            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\"><span>" + title + "</span>" + (ShowDescription && !string.IsNullOrWhiteSpace(description) ? "<span class=\"d\">" + description + "</span>" : "") + "</a>";
             return item;
         }
 

@@ -205,6 +205,13 @@
     <Compile Include="CommonModules\CustomWidget.ascx.designer.cs">
       <DependentUpon>CustomWidget.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\Menu.ascx.cs">
+      <DependentUpon>Menu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\Menu.ascx.designer.cs">
+      <DependentUpon>Menu.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\NajdiSearch.ascx.cs">
       <DependentUpon>NajdiSearch.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -271,6 +278,7 @@
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
+    <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
     <Content Include="CommonModules\VirtualTable.ascx" />

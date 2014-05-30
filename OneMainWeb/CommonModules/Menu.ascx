@@ -1,0 +1,3 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Menu.ascx.cs" Inherits="OneMainWeb.CommonModules.Menu" EnableViewState="false" %>
+<%@ Register TagPrefix="Controls" Namespace="OneMainWeb.Controls" Assembly="OneMainWeb" %>
+<Controls:MenuGroup ID="MenuGroup1" runat="server" LocalExpand="true" MinDepth="1" MaxDepth="2" Group="0" ExpandToLevel="2" FirstUlClass="sf-menu" CssClass="navigation" ShowDescription="true" />

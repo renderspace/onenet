@@ -42,8 +42,14 @@
 					</div>
                 </header>
 			    <div class="pageproperties">
-                        
-			        <two:Input ID="TwoInputTitle" runat="server" Text="$page_title" ValidationGroup="PageSett" />
+                    <div class="input">
+                        <asp:Label AssociatedControlID="" ID="LabelTitle" Text="Title" runat="server"></asp:Label>
+                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett"></asp:TextBox>
+                    </div>
+                    <div class="input">
+                        <asp:Label AssociatedControlID="" ID="LabelDescription" Text="Description" runat="server"></asp:Label>
+                        <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett"></asp:TextBox>
+                    </div>
 			        <div class="select">
 			            <asp:label id="lblTemplate1" runat="server"	Text="$page_template" AssociatedControlID="ddlPageTemplate" />
 				        <asp:dropdownlist id="ddlPageTemplate" Runat="server"></asp:dropdownlist>

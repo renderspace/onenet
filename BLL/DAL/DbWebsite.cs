@@ -68,7 +68,7 @@ namespace One.Net.BLL.DAL
                     new SqlParameter("@publishFlag", publishFlag)
                     };
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
-                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, 
+                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.teaser AS Teaser, 
                     t.name AS Template, t.id AS TemplateID, p.content_fk_id AS ContentID, menu_group, idx, changed, pending_delete, 
                     p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL]
                      FROM [dbo].pages p
@@ -83,6 +83,7 @@ namespace One.Net.BLL.DAL
                 int _indexID = rdr.GetOrdinal("ID");
                 int _indexUrl = rdr.GetOrdinal("par_link");
                 int _indexTitle = rdr.GetOrdinal("Title");
+                int _indexTeaser = rdr.GetOrdinal("Teaser");
                 int _indexParent = rdr.GetOrdinal("Parent");
                 int _indexPublish = rdr.GetOrdinal("publish");
                 int _indexTemplate = rdr.GetOrdinal("Template");
@@ -99,6 +100,7 @@ namespace One.Net.BLL.DAL
                 int _indexEditGroups = rdr.GetOrdinal("editGroups");
                 int _indexRequireSSL = rdr.GetOrdinal("requireSSL");
 
+
                 while (rdr.Read())
                 {
                     BOPage sitePage = new BOPage();
@@ -114,6 +116,9 @@ namespace One.Net.BLL.DAL
                     sitePage.LanguageId = languageId;
                     sitePage.ContentId = rdr.GetInt32(_indexContentID);
                     sitePage.Title = rdr[_indexTitle] != DBNull.Value ? rdr.GetString(_indexTitle) : string.Empty;
+                    sitePage.Teaser = rdr[_indexTeaser] != DBNull.Value ? rdr.GetString(_indexTeaser) : string.Empty;
+
+
                     sitePage.ParLink = rdr.GetString(_indexUrl);
                     sitePage.Template = new BOTemplate();
                     sitePage.Template.Type = "3";

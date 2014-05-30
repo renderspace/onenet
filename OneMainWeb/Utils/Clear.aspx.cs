@@ -9,9 +9,8 @@ namespace OneMainWeb.Utils
         {
             if (!IsPostBack)
             {
-                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(1060);
-                Button1.Text = BContent.GetMeaning("magic_button");
-                Button2.Text = BContent.GetMeaning("magic_button2");
+                Button1.Text = "Clear cache";
+                Button2.Text = "Clear cookies";
             }
         }
 
