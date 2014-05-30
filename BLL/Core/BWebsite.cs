@@ -276,7 +276,6 @@ namespace One.Net.BLL
             if (page == null)
                 return;
             page.SubTitle = "";
-            page.Teaser = "";
             page.Html = "";
 
             if (!publishing)

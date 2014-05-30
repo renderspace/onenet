@@ -140,7 +140,10 @@ namespace OneMainWeb.adm
                     TextBoxUri.Visible = SelectedPageId != RootNodeID;
 
                     LabelChanged.Text = selectedPage.LastChanged + ", " + selectedPage.LastChangedBy;
-                    TwoInputTitle.Value = selectedPage.Title;
+
+                    TextBoxTitle.Text = selectedPage.Title;
+                    TextBoxDescription.Text = selectedPage.Teaser;
+
                     ButtonPublish.Visible = selectedPage.IsChanged;
                     ButtonUnPublish.Visible = !selectedPage.IsNew;
                     ButtonDelete.Visible = !selectedPage.MarkedForDeletion;
@@ -644,7 +647,8 @@ namespace OneMainWeb.adm
                     {
                         page.MenuGroup = menuGroupID;
                         page.Template = new BOTemplate { Id = selectedTemplateID };
-                        page.Title = TwoInputTitle.Value;
+                        page.Title = TextBoxTitle.Text;
+                        page.Teaser = TextBoxDescription.Text;
                         page.ParLink = newParLink;
                         page.BreakPersistance = breakPersistance;
                         page.RedirectToUrl = redirectToUrl;
@@ -661,7 +665,8 @@ namespace OneMainWeb.adm
 
                     page.MenuGroup = menuGroupID;
                     page.Template = new BOTemplate { Id = selectedTemplateID };
-                    page.Title = TwoInputTitle.Value;
+                    page.Title = TextBoxTitle.Text;
+                    page.Teaser = TextBoxDescription.Text;
                     page.ParLink = ""; // page.IsRoot
                     page.BreakPersistance = breakPersistance;
                     page.RedirectToUrl = redirectToUrl;
