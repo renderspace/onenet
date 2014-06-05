@@ -278,16 +278,6 @@ namespace OneMainWeb.adm
                 InitializeControls();
         }
 
-        /*
-        protected void InputWithButtonVote_Click(object sender, EventArgs e)
-        {
-            if (SelectedModuleInstanceId.HasValue)
-            {
-                int score = FormatTool.GetInteger(InputWithButtonVote.Value);
-                textContentB.Vote(score, SelectedModuleInstanceId.Value);
-            }
-        }
-        */
 
         protected void cmdRevertToPublished_Click(object sender, EventArgs e)
         {
