@@ -69,6 +69,7 @@ templates:[
 		
 		config.disableObjectResizing = true;
 		config.resize_enabled = false;
+		config.allowedContent = true;
 	}; 
 	
 	
