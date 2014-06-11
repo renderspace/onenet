@@ -124,17 +124,6 @@ namespace OneMainWeb.adm
                         TextContentEditor.Teaser = textContentModel.Teaser;
                         TextContentEditor.Html = textContentModel.Html;
                         InfoLabelLastChange.Value = textContentModel.LastChangedBy;
-
-                        /*
-                        if (textContentModel.IsRated)
-                        {
-                            InfoLabelVotes.Visible = InfoLabelScore.Visible = true;
-                            InfoLabelScore.Value = textContentModel.Score.Value.ToString();
-                            InfoLabelVotes.Value = textContentModel.Votes.ToString();
-                        }
-                        else
-                            InfoLabelVotes.Visible = InfoLabelScore.Visible = false;
-                        */
                         HistoryControl.Visible = true;
                         if (SelectedModuleInstanceId.HasValue)
                             HistoryControl.SelectedItemId = SelectedModuleInstanceId.Value;
