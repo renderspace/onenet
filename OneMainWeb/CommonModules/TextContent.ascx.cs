@@ -87,6 +87,7 @@ namespace OneMainWeb.CommonModules
                 if (textContentModel.Title.Length > 0)
                 {
                     output.WriteBeginTag("h1");
+                    output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContentModel.Title);
                     output.WriteEndTag("h1");
@@ -95,6 +96,7 @@ namespace OneMainWeb.CommonModules
                 if (textContentModel.SubTitle.Length > 0)
                 {
                     output.WriteBeginTag("h2");
+                    output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContentModel.SubTitle);
                     output.WriteEndTag("h2");
