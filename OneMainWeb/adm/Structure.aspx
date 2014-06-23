@@ -67,6 +67,7 @@
 			        <two:LabeledCheckBox ID="LabeledCheckBoxBreakPersistance" runat="server" Text="$break_persistance" />
 			        <two:Input  ID="InputRedirectToUrl" runat="server" Text="$redirectToUrl" ValidationGroup="PageSett" Required="false" />    
                     <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="$label_page_settings" DisplayCommands="false"  />	
+                    <asp:button	id="cmdSave" Runat="server"	CssClass="button green" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
 			    </div>
                 <footer>    
 				    <div class="submit_link">
@@ -74,7 +75,7 @@
 			            <asp:button ID="ButtonUndoDelete" CssClass="left" runat="server" Text="$undelete_page" OnClick="cmdUnDelete_Click" Visible="false" />
 			            <asp:button ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right alt_btn" />				     
 			            <asp:button ID="ButtonUnPublish" CssClass="right" runat="server" OnClick="ButtonUnPublish_Click" />
-                        <asp:button	id="cmdSave" Runat="server"	CssClass="button green" Text="$update" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                        
 				    </div>
 			    </footer>	
             </article>
@@ -82,7 +83,6 @@
                 <header class="with_buttons">
                     <h3><asp:Literal ID="LiteralModulesOnPage" runat="server" EnableViewState="false"></asp:Literal></h3>
                      <asp:Panel ID="PanleAddInstance" runat="server" CssClass="addStuff">
-                        <asp:Label id="lblAddModuleInstance" Runat="server" Text="$add_module_instance" AssociatedControlID="ddlModuleTypes" />
 				        <asp:dropdownlist id="ddlModuleTypes" Runat="server" />
                         <asp:button	id="cmdAddInstance"	Runat="server" text="$add_module_instance_button" onclick="cmdAddInstance_Click" />
                     </asp:Panel>
@@ -99,48 +99,48 @@
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
-                            <h4><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%></h4>
-
-                            <%# (bool) Eval("IsInherited") ? ResourceManager.GetString("$inherited") : "" %>
-
-
-                            <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='$label_delete_instance' />
-                            <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='$label_undelete_mi' />
-						    <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text="$move_up" />
-						    <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="$move_down" />
-
-                            <asp:Label ID="Label3" runat="server" Text="$persistency" CssClass="instanceTitle"></asp:Label>
-    						                        
-						    <asp:Label ID="Label4" runat="server" Text="$l_from" CssClass="emph"></asp:Label>
-							<asp:Label ID="lblPersistentFromDGrid" Runat="server" />
-                									    
-							<asp:Label ID="Label5" runat="server" Text="$l_to" CssClass="emph"></asp:Label>
-							<asp:Label ID="lblPersistentToDGrid" Runat="server"	/>
-
-                            <asp:Label ID="lblPlaceHolder" Runat="server" />
+                            <h4><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%> <asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                    Text='Edit content'	/></h4>
+                            <h5><%# (bool) Eval("IsInherited") ? ResourceManager.GetString("$inherited") : "" %></h5>
                             <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label>
 
-                            <asp:Button ID="cmdEditButton" runat="server" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>'  />
-                            <asp:Button	ID="cmdEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
-                                Text='$label_edit'	/>
+                            <asp:Panel runat="server" ID="PanelNotInherited">
+                                <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='$label_delete_instance' />
+                                <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='$label_undelete_mi' />
+						        <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text="$move_up" />
+						        <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="$move_down" />
 
-                            <div class="select">
-							    <asp:Label ID="LabelPlaceHolder" runat="server" Text="$place_holder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
-							    <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
-							</div>
-							<div class="select">
-								<asp:Label ID="Label10" runat="server" Text="$l_from" AssociatedControlID="ddlPersistentFromDGrid"></asp:Label>
-								<asp:DropDownList runat="server" ID="ddlPersistentFromDGrid"  />
-							</div>
-                            <div class="select">    
-                                <asp:Label ID="Label11" runat="server" Text="$l_to" AssociatedControlID="ddlPersistentToDGrid"></asp:Label>
-                                <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	/>
-							</div>
+                                <asp:Label ID="Label3" runat="server" Text="$persistency" CssClass="instanceTitle"></asp:Label>
+    						                    
+                                <a onclick="toggle_visibility('persistance-detail');" class="persistance-details">    
+						            <asp:Label ID="Label4" runat="server" Text="$l_from" CssClass="emph"></asp:Label>
+							        <asp:Label ID="lblPersistentFromDGrid" Runat="server" />
+                									    
+							        <asp:Label ID="Label5" runat="server" Text="$l_to" CssClass="emph"></asp:Label>
+							        <asp:Label ID="lblPersistentToDGrid" Runat="server"	/>
 
-                            <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="sbutton" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
+                                    <asp:Label ID="lblPlaceHolder" Runat="server" />
+                                </a>
 
-                            <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="$label_module_settings" DisplayCommands="true"/>
+                                <div id="persistance-detail" style="display:none">
+                                    <div class="select">
+							            <asp:Label ID="LabelPlaceHolder" runat="server" Text="$place_holder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
+							            <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
+							        </div>
+							        <div class="select">
+								        <asp:Label ID="Label10" runat="server" Text="$l_from" AssociatedControlID="ddlPersistentFromDGrid"></asp:Label>
+								        <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid"  />
+							        </div>
+                                    <div class="select">    
+                                        <asp:Label ID="Label11" runat="server" Text="$l_to" AssociatedControlID="ddlPersistentToDGrid"></asp:Label>
+                                        <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	/>
+							        </div>
 
+                                    <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="sbutton" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
+                                </div>
+
+                                <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="$label_module_settings" DisplayCommands="true"/>
+                            </asp:Panel>
                         </div>
 		            </ItemTemplate>
 		        </asp:Repeater>

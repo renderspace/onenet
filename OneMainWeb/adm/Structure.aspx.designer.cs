@@ -283,6 +283,15 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.OneSettings OneSettingsPageSettings;
         
         /// <summary>
+        /// cmdSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdSave;
+        
+        /// <summary>
         /// ButtonDelete control.
         /// </summary>
         /// <remarks>
@@ -319,15 +328,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button ButtonUnPublish;
         
         /// <summary>
-        /// cmdSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSave;
-        
-        /// <summary>
         /// LiteralModulesOnPage control.
         /// </summary>
         /// <remarks>
@@ -344,15 +344,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanleAddInstance;
-        
-        /// <summary>
-        /// lblAddModuleInstance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAddModuleInstance;
         
         /// <summary>
         /// ddlModuleTypes control.

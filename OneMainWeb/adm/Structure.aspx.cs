@@ -266,13 +266,15 @@ namespace OneMainWeb.adm
             // for position and inheritance settings
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
             // for textcontentedit
-            Control editButton = e.Item.FindControl("cmdEdit");
+            var ButtonEdit = e.Item.FindControl("ButtonEdit") as Button;
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
             Control undeleteButton = e.Item.FindControl("cmdUndeleteInstance");
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");
             Control cmdMoveDown = e.Item.FindControl("cmdMoveDown");
             Label lblPlaceHolder = (Label)(e.Item.FindControl("lblPlaceHolder"));
             Label LabelModuleDistinctName = (Label)(e.Item.FindControl("LabelModuleDistinctName"));
+            var PanelNotInherited = (Panel)(e.Item.FindControl("PanelNotInherited"));
+
             BOModuleInstance moduleInstance = e.Item.DataItem as BOModuleInstance;
 
             if (moduleInstance != null && (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
@@ -283,8 +285,7 @@ namespace OneMainWeb.adm
                 else
                     return;
 
-                cmdMoveUp.Visible = !moduleInstance.IsInherited;
-                cmdMoveDown.Visible = !moduleInstance.IsInherited;
+                PanelNotInherited.Visible = !moduleInstance.IsInherited;
 
                 // hide cmdMoveUp/cmdMoveDown, if there is no module instance above/below current instance respectively.
                 for (int i = 0; i < currentPlaceHolder.ModuleInstances.Count; i++)
@@ -302,10 +303,10 @@ namespace OneMainWeb.adm
                     }
                 }
 
-                deleteButton.Visible = !moduleInstance.IsInherited && !moduleInstance.PendingDelete;
-                undeleteButton.Visible = moduleInstance.PendingDelete && !moduleInstance.IsInherited;
-                editButton.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
-                if (!moduleInstance.IsInherited && moduleInstance.Name == "TextContent")
+                deleteButton.Visible = !moduleInstance.PendingDelete;
+                undeleteButton.Visible = moduleInstance.PendingDelete;
+                ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                if (moduleInstance.Name == "TextContent")
                 {
                     BOInternalContent textContentModel = textContentB.GetTextContent(moduleInstance.Id);
                     if (textContentModel != null && textContentModel.IsComplete)

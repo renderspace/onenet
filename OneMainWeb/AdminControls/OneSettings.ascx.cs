@@ -238,6 +238,7 @@ namespace OneMainWeb.AdminControls
             {
                 rptSettings.DataSource = Settings;
                 rptSettings.DataBind();
+                Visible = Settings.Count > 0;
             }
         }
 
