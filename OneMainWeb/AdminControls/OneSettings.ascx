@@ -5,7 +5,7 @@
 <%@ Import Namespace="One.Net.BLL" %>
 <div class="oneSettings">
     <details>
-        <summary>Napredne nastavitve</summary>
+        <summary>Advanced settings</summary>
 
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="ModuleInstanceSettings" />
         <asp:Repeater ID="rptSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated">

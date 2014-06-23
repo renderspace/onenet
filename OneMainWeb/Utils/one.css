@@ -21,7 +21,7 @@ div {float:left}
 .right-col table {clear:both;}
 .right-col table td {vertical-align:top;}
 
-details {display: inline-block; cursor: pointer; padding: 5px; margin: 10px 0; background: #9E9E98;}
+
 
 header h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px;}
 
@@ -108,7 +108,11 @@ header h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px;}
 .left-col li a {display: block; padding: 5px 10px 5px 15px; text-decoration: none;}
 .left-col li a:hover {background-color: #E3E2DA;}
 .left-col li .selected {background-color: #E3E2DA;}
-.left-col li span {display: block; padding: 5px 10px; font-weight: bold; border-bottom: 1px #ccc solid; padding-bottom; 3px;}
+.left-col li span {display: block; font-weight: bold; border-bottom: 1px #ccc solid; padding-bottom: ;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
 
 .left-col nav > div {width: 100%;}
 
@@ -195,6 +199,11 @@ a {color: #000;  font-size: 90%;}
 .checkbox input {float: left; }
 
 .oneSettings .checkbox label {width: 39%; float: left; margin-top: 3px; overflow: hidden;}
+
+.infolabel { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px;}
+.infolabel .info {float: left; }
+
+.oneSettings .infolabel  .infolabel {width: 39%; float: left; margin-top: 3px; overflow: hidden;}
 .instanceAllSettings .checkbox label {width: 56%; float: left; margin-top: 3px; overflow: hidden;}
 .contentEntry .checkbox label {width: 29%;float:left;}
 
@@ -800,3 +809,42 @@ padding:10px;	 }
 
 
 .debug {display:none;}
+
+.persistance-details
+{
+    display: block;
+     width: 80%;
+}
+
+.edit_button
+{
+    float: right;
+}
+
+.second_box
+{
+    width: 100%;
+}
+
+.pageproperties
+{
+    border: 1px solid gray;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f3f2ef;
+}
+
+.moduleInstance
+{
+    border: 1px solid gray;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f3f2ef;
+}
+summary
+{
+    font-weight: bold;
+    
+}
+
+details {display: inline-block; cursor: pointer; padding: 5px; margin: 10px 0; border-top: 1px solid gray; }
