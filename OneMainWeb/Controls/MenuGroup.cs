@@ -178,23 +178,23 @@ namespace OneMainWeb.Controls
                     {
                         dataItemSelected = true;
                         levelSelected = true;
-                        cssClass += " sel";
-                        linkCssClass += " asel";
+                        cssClass += " sel ";
+                        linkCssClass += " asel ";
                     }
                     else if (url == _selectedParentUrl)
                     {
                         dataItemChildSelected = true;
                         dataItemDescendantSelected = true;
                         levelDescendantSelected = true;
-                        cssClass += " selc";
-                        linkCssClass += " aselc";
+                        cssClass += " selc ";
+                        linkCssClass += " aselc ";
                     }
                     else if (_selectedNode.IsDescendantOf(dataItem))
                     {
                         levelDescendantSelected = true;
                         dataItemDescendantSelected = true;
-                        cssClass += " selc";
-                        linkCssClass += " aselc";
+                        cssClass += " selc ";
+                        linkCssClass += " aselc ";
                     }
                     if (dataItem["_IsRedirected"] == "True")
                     {
