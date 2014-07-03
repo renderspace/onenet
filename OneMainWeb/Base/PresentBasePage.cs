@@ -510,27 +510,14 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     if (tempArticleIdProvider.EnableDefaultArticleIdProvider)
                         defaultArticleIdProvider = tempArticleIdProvider;
                 }
-                if (mod is ILeadImageProvider)
-                {
-                    ILeadImageProvider tempLeadImageProvider = (ILeadImageProvider)mod;
-                    if (tempLeadImageProvider.EnableLeadImageProvider)
-                    {
-                        if (providedLinkTags == null)
-                            providedLinkTags = new Dictionary<string, string>();
-                        providedLinkTags.Add("image_src", tempLeadImageProvider.ImageUri);
-                        if (providedMetaTags == null)
-                            providedMetaTags = new Dictionary<string, string>();
-                        providedMetaTags.Add("og:image", tempLeadImageProvider.ImageUri);
-                        providedMetaTags.Add("og:description", tempLeadImageProvider.ImageDescription);
-                        providedMetaTags.Add("description", tempLeadImageProvider.ImageDescription);
-                    }
-                }
                 if (mod is IMetaDataProvider)
                 {
                     IMetaDataProvider tempMetaDataProvider = (IMetaDataProvider)mod;
 
                     if (tempMetaDataProvider.HasDescription)
+                    {
                         providedDescription += tempMetaDataProvider.MetaDescription + " ";
+                    }
                     if (tempMetaDataProvider.HasKeyWords)
                         providedKeywords += tempMetaDataProvider.MetaKeyWords + " ";
                     if (tempMetaDataProvider.HasTitle)
@@ -690,6 +677,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                             controlName = "OgImage";
                         else if (key.ToLowerInvariant() == "og:description")
                             controlName = "OgDescription";
+                        else if (key.ToLowerInvariant() == "og:url")
+                            controlName = "OgUrl";
 
                         if (!string.IsNullOrEmpty(controlName))
                         {
