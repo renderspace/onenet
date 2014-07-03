@@ -1,321 +1,62 @@
-body { font-family: Verdana, sans-serif; font-size: 13px; margin: 0; padding: 0; }
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext);
 
-div {float:left}
+body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0; }
 
-.pager span {display: inline-block; margin-left: 5px; padding: 4px; border: 1px #D5D5D2 solid;}
+h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 
-.all {width: 100%;}
-.head {width: 100%; color: #FFF; overflow:hidden; background-color: #1f1f1f; border-bottom: 2px solid #FFFFFF; padding: 5px 0 5px 0; }
-.head div  { margin: 0 10px 0 10px; width:980px;}
+input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
+select, select:hover, select:focus {color: #000;}
+textarea {padding: 3px 5px; border-color: #ccc!important;}
+input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
+input[type="text"], select { border: 1px #ccc solid!important;}
 
-.head .leftpart { margin-top: 11px; float: left; width: 500px;  }
-.head .LoginName { float:left; width: 640px; }
-.head .version { font-family:Trebuchet MS; color: #9e9e98;  font-size: 11px; margin-right: 85px; }
-.head a { color: #FFF; }
-.head .headSelect {float: right; margin-right: 20px; width: 250px; }
-.head .headSelect span {float: right; }
-.head .headSelect input {float: right; }
+.navbar-brand img {margin-right: 10px;}
 
-.left-col {width:210px; overflow:hidden; float:left}
-.right-col { width:79%; min-height: 600px; background-color: #E3E2DA; padding: 20px; float: left; overflow:hidden; float:left}
-.right-col table {clear:both;}
-.right-col table td {vertical-align:top;}
+.head {width: 100%; background-color: #1f1f1f; padding: 5px; color: #FFF; }
 
+.centerStructure {width: 320px;}
+.centerStructure, .mainEditor {float: left;}
+.mainEditor {margin-left: 10px; width: 600px; background: #f5f5f5;}
+.mainEditor .contentEntry, .TextContentInstance {padding: 15px;}
 
+.input label, .select label {width: 150px;}
 
-header h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px;}
+summary, .extline {margin: 10px 0; cursor: pointer;}
 
-.notifier {
- width: 98%;
- float: left; 
- overflow: hidden;
- margin: 10px 0;
- padding: 1%; 
- font-size: 110%;
-}
-.err  {
- border: 1px solid #993333;
- background-color: #BEB0B0;
- color: #993333;
-}
-.succ {
- border: 1px solid #597012;
- background-color: #E1E7CF;
- color: #323232;
-}
-.war  {
- border: 1px solid #b18306;
- background-color: #f1d51a;
- color: #FFFFFF;
-}
-.war span {color:#000; font-weight:bold;}
+.module h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px; margin-bottom: 10px;}
+.module footer {border-top: 1px #ccc solid; padding-top: 10px; margin-top: 10px;}
 
-.warning { color: #F0913C; font-weight: bold;}
-.treeHolder .warning { background-color: #F3F2EF; display: block; padding: 5px 5px 5px 5px;}
+.lastChanged {padding: 10px; background: #9E9E98; color: #FFF; display: inline-block; width: 100%;}
+.lastChanged .infolabel {float: left;}
+.lastChanged .info {float: right;}
 
-.treeHolder {overflow: hidden; float: left; margin-top: -6px;}
-.treeHolder div { float: none;}
+.module {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px; padding: 20px; background-color: #E3E2DA;}
+.tall {float: left;}
 
+.main textarea {width: 100%;}
+.main table {width: 100%; margin: 20px 0;}
+.main table tr td, table tr th {padding: 5px;}
 
-.centerStructure {width: 270px; background-color: #9e9e98; color: #FFF;}
-
-
-.left-small {width: 39%; overflow:hidden; background-color: #FFFFFF;}
-.right-small {width: 59%; overflow:hidden; background-color: #CCCCCC; }
-
-/*
-.cc-m-Vertical ul {margin: 0; padding: 0; margin-bottom: 10px;}
-.cc-m-Vertical ul li { list-style: none; margin-bottom: 10px;}
-*/
-
-.clear { clear: both;}
-.left { float: left;}
-.right { float: right;}
-
-/* ****************** */
-/* MENU */
-/* ****************** */
-
-.cc-m-Horizontal {	width: 760px;
-    float: left; 
-    overflow: hidden;
-    padding: 6px 10px 0 10px;
-    margin: 13px 13px 0 6px;
-    }
-
-.cc-m-Horizontal .sel {color: #000000;}
-.cc-m-Horizontal ul {margin:0; padding:0;display:block;float:left;}
-.cc-m-Horizontal ul li {margin-right:5px; background-image: url(/Res/menu.gif); background-position: left 0px;float:left; list-style-type:none;display:block;float:left;}
-.cc-m-Horizontal ul li span,
-.cc-m-Horizontal ul li a {font-size: 11px;background-image: url(/Res/menu.gif); background-position:right 50px; padding:6px 10px 6px 10px;display:block;color: #010101;text-decoration: none;display:block;float:left;}
-.cc-m-Horizontal ul li span {color:#c5c5c2;}
-.cc-m-Horizontal ul li.sel {background-position: left -25px;}
-.cc-m-Horizontal ul li.sel a {background-position: right -75px;}
-.cc-m-Horizontal ul li.sel span {background-position:right -50px;color: #fff;font-weight:bold;text-decoration: none;}
-
-
-.left-col ul {margin: 0 0 20px 0; padding:0; width: 170px;}
-.left-col li li ul {padding-left:8px;}
-.left-col li li li { background: url(/Res/arrow_icon.gif) 0px center no-repeat; border-top: 2px solid #fff;border-bottom: 2px solid #fff;padding: 3px 0 3px 10px;}
-.left-col li li li a {font-size:11px;padding: 0px 5px 0px 5px;color: #1A1A1A;text-decoration:none;text-indent:13px;}
-.left-col li li li a:hover {text-decoration:underline;}
-.left-col .cc-m-NonLink { margin-top: 20px; display: block; color: #808080;}
-.left-col ul li.sel {background-color: #E2E1D9;font-weight: bold; background-image: none; }
-.left-col span.cc-m-NonLink  {margin-left: 7px; margin-top: 15px;}
-
-.left-col ul {width: 100%!important;}
-.left-col li {list-style: none;}
-.left-col li a {display: block; padding: 5px 10px 5px 15px; text-decoration: none;}
-.left-col li a:hover {background-color: #E3E2DA;}
-.left-col li .selected {background-color: #E3E2DA;}
-.left-col li span {display: block; font-weight: bold; border-bottom: 1px #ccc solid; padding-bottom: ;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-}
-
-.left-col nav > div {width: 100%;}
-
-.emph {font-weight: bold; color: #8E8E88;}
-
-a {color: #000;  font-size: 90%;}
-
-.fck {width: 100%;clear:both;}
-.fck div{ width: 100%;}
-
-.date {  width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.date label { width: 49%; float: left;}
-.date .required { width: 2%;  float: right;}
-.date .format { width: 2%;  float: right;}
-.date .parse { width: 2%;  float: right;}
-.date .image { float: left;}
-.date input { float:left;}
-
-.inputwithbutton { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.inputwithbutton input { float:right;margin:0 10px 0 0; }
-.inputwithbutton input.text { width: 58%; float: left; border: 1px solid #7B9EBD; margin: 0; margin-left: 6px; }
-
-.inputwithbutton a { display: block; float: right; border: 1px solid #7B9EBD; }
-.inputwithbutton textarea { width: 80%; float: right; border: 1px solid #7B9EBD; }
-.inputwithbutton label {width: 49%; float: left; margin-top: 3px; overflow: hidden; }
-.inputwithbutton span { float: left; width: 2%;  }
-
-.treeHolder .fmFiles { width:100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.treeHolder .fmFiles input { float:right; margin-right: 10px; margin-bottom: 7px; }
-.treeHolder .fmFiles input.leftButton { width: auto; float:right; }
-
-.checkboxlist{float:left;}
-.checkboxlist .cbl{width:100%;float:left;}
-.checkboxlist .cbl div{width:50%;float:left;}
-.checkboxlist .cbl input{margin-left:0;}
-.checkboxlist label{width:100px;float:left;margin-bottom:8px;}
-.checkboxlist .cbl label{margin-bottom:2px;}
-
-.textcontentcontrol{width:100%;}
-.textcontentcontrol .input input {width:70%;} 
-.textcontentcontrol .input label {width:29%;} 
-
-
-.browseImage {width:100%;position:relative;}
-.browseImage input.browse {position:absolute;top:0;left:40%;top:2px;width:61px;}
-.input { width:100%; float: left; clear: both;  }
-.pageproperties .input { width:468px; margin-top: 3px; margin-bottom: 3px;  }
-.instanceAllSettings .input { width: 450px;  margin-top: 3px; margin-bottom: 3px; }
-.input input { width:51%; float: right; border: 1px solid #7B9EBD; margin-top: 3px; margin-bottom: 3px; }
-.input .required { float:right; }
-.instanceAllSettings .input input{ width: 190px;  }
-.pageproperties .input input{width:230px;}
-.pageproperties .checkbox label{float:left;}
-.pageproperties .checkbox input{float:right;margin:0 222px 0 0;}
-.input textarea { width: 100%; float: left; border: 1px solid #7B9EBD; }
-.input label {width: 48%; float: left; margin-top: 3px;}
-.formEditor .input label{width:33%;} 
-.formEditor .checkbox input{float:right;margin:0 220px 0 0;}
-.input span { /*float: left;*/ width: 10px;  }
-.treeHolder .input label {width: 90%; float: left; margin-top: 3px; overflow: hidden; margin-left: 5px; }
-.treeHolder .input input { width: 240px; float: left; border: 1px solid #7B9EBD; margin-left: 5px; }
-.treeHolder .addbutton { float: right; margin-right: 20px; }
-.treeHolder .treeHolder { border: 1px solid #9E9E98;}
-.centerFull .contentEntry .input {}
-/* .centerFull .contentEntry .input input { width: 100%; }*/
-/* .centerFull .contentEntry .input label {width: 49%;  margin-top: 0px; } */
-.centerFull .contentEntry .input textarea { width: 100%; float: left;}
-
-.select { width:100%; float: left; clear: both; margin-top: 3px; margin-bottom: 3px;}
-.pageproperties .select { width:468px; margin-top: 3px; margin-bottom: 3px;}
-.select span {width: 49%; float: left; margin-top: 3px; overflow: hidden; }
-.select select { width:49%; float: right; }
-.searchFull td div.select select {width:100%;}
-.listbox{float:left;width:100%;}
-.listbox select {width: 100%;}
-.pageproperties  .select select { width: 230px; }
-.select label {width: 48%; float: left; margin-top: 3px; overflow: hidden;}
-.select span.required{ float: right; width: 1%; }
-
-.oneSettings .select select { width: 195px; float: right; }
-
-
-.checkbox { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px;}
-.checkbox input {float: left; }
-
-.oneSettings .checkbox label {width: 39%; float: left; margin-top: 3px; overflow: hidden;}
-
-.infolabel { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px;}
-.infolabel .info {float: left; }
-
-.oneSettings .infolabel  .infolabel {width: 39%; float: left; margin-top: 3px; overflow: hidden;}
-.instanceAllSettings .checkbox label {width: 56%; float: left; margin-top: 3px; overflow: hidden;}
-.contentEntry .checkbox label {width: 29%;float:left;}
-
-.radiobuttonlist { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.radiobuttonlist span.radiobuttonlistTitle { display: block; width: 100%; font-weight: bold;  }
-.radiobuttonlist label {width: 49%; float: left; margin-top: 3px; overflow: hidden;}
-.radiobuttonlist input {margin-left: 15px; float: left; }
-.radiobuttonlist br {clear: both; }
-
-.checkboxlist { width: 100%; float: left; clear: both;  margin-top: 3px; margin-bottom: 3px; }
-.checkboxlist span.checkboxlistTitle { display: block; width: 100%; float: left; font-weight: bold; }
-.checkboxlist label {width: 49%; float: left; margin-top: 3px; overflow: hidden;}
-.checkboxlist input {margin-left: 15px; float: left; }
-.checkboxlist br {clear: both; }
-
-.separate_input {  margin-left: 30px; }
-.separate_input .radiobuttonlistTitle { width: 100%; display: block; }
-.separate_input .checkboxlist { width:100%; }
-.separate_input .checkboxlist span.checkboxlistTitle {  }
-.separate_input .checkboxlist span {display: block;width:200px;}
-.separate_input .checkboxlist span label {display:block;float:left;}
-.separate_input .checkbox {}
-.separate_input label {width: 49%;}
-
-.formresults div.infolabel {width:100%; float: left;clear:both;border-bottom: 1px solid #fff;padding: 5px 0;}
-.formresults div.infolabel span.infolabel  {display: block; float: left;width:300px;margin:0 4px 0 0;}
-.formresults div.infolabel span.info {margin:0 0 0 4px;width:200px; float:left; overflow: hidden; display: block; font-weight: bold;}
-
-.contentEntry div.infolabel {width:100%; float: left; clear:both; padding: 5px 0; }
-.contentEntry div.infolabel span.infolabel  {display: block; float: left;width:28%;margin:0 4px 0 0; }
-.contentEntry div.infolabel span.info {margin:0 0 0 4px;width:49%; float:left; overflow: hidden; display: block; font-weight: bold;}
-
-
-
-.pageproperties div.infolabel {width:468px; float: left;clear:both;border-bottom: 1px solid #fff;padding: 5px 0;}
-.pageproperties div.infolabel span.infolabel  {display: block; float: left;width:230px;margin:0 4px 0 0;}
-.pageproperties div.infolabel span.info {margin:0 0 0 4px;width:230px;float:left; overflow: hidden; display: block; font-weight: bold;}
-.pageproperties div.urllabel {width:468px; float: left;clear:both;border-bottom: 1px solid #fff;padding: 5px 0;}
-.pageproperties div.urllabel  span.infolabel  {display: block; float: left;margin:0 4px 0 0; width: 230px;}
-.pageproperties div.urllabel  span.info  {margin:0 0 0 4px;float:left; display: block; font-weight: bold;}
-
-.instanceAllSettings div.infolabel {width:450px; float: left;clear:both; padding: 5px 0;}
-.instanceAllSettings div.infolabel span.infolabel  {display: block; float: left; width:250px; margin:0 4px 0 0;}
-.instanceAllSettings div.infolabel span.info {margin:0 0 0 4px;width:190px;float:left; overflow: hidden; display: block; font-weight: bold;}
-
-
-.save {border-bottom: 1px solid #9C9E9C;border-top: 1px solid #9C9E9C;text-align:right;padding:10px 0;margin-top: 10px;clear:both;width:100%;}
-.save a {margin-right:10px;}
-.separate_input {border-top: 1px solid #9C9E9C;padding:10px;margin-top: 10px;}
-
-.pageproperties .save {width:468px;}
-.mainEditor .contentEntry .save {width:100%;float:none ! important;min-height:24px;}
-.centerFull .contentEntry .save {width: 100%;text-align:left;}
-.centerFull .contentEntry .textcontentcontrol {width:100%;}
-.propertyArea .save {padding:0 0 10px;border:none;}
-.instanceAllSettings .save 
-{
-	padding-top: 10px;
-	border-bottom: 1px solid #CECDC6; 
-	border-top: 1px solid #CECDC6; 
-	width:100%;
-}
-.topStructure 
-{
-    width:98%;
-    overflow: hidden;
-    background-color: #9e9e98;
-    color: #FFFFFF;
-    padding:1%;
-    margin-bottom: 13px;
-}
-fieldset {margin:0;padding:0;}
-.treeHolder {  width: 270px; overflow: hidden; margin: 0; color: #FFFFFF; background-color: #9e9e98; padding-top: 6px; margin-top: 15px; margin-bottom: 15px; }
-.centerFull {clear:both; padding:0; width: 100%; float: left; overflow: hidden; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
-.centerFull { color: #333333; }
-
-.fmPopUp { padding: 0px 10px 10px 10px; width: 788px; float: left;height:508px; overflow-y: scroll; background-color: #F7F3EF; margin: 0px 0 13px 0; color: #FFFFFF; }
-.fmPopUp .contentEntry {color:#000;}
-.fmPopUp .warning {clear:both;}
-.fmPopUp .fmFiles {text-indent:10px;}
-
-.searchFull { padding:1%; width: 98%; float: left; overflow: hidden; background-color: #9e9e98; margin: 0px 0 0px 0; color: #FFFFFF;}
-.searchFull .input label {width:35%;}
-
-.searchSmall {}
-.searchSmall { color: #FFFFFF; }
-
-.mainEditor { width:510px; float: right;overflow: hidden; margin: 0;  background-color: #CECDC6; margin-top: 15px; margin-bottom: 15px; }
-.contentEntry { background-color: #F7F3EF;  padding:2%; width: 96%;}
-.mainEditor .contentEntry {}
-.centerFull .contentEntry {margin:0;}
-
-.width_quarter {width: 300px!important;}
-.module {width: 500px; float: left; margin-bottom: 20px;}
-.module header {display: inline-block; width: 100%;}
-
-.right-col {width: 800px;}
-.right-col a {color: #007AA7;}
-
-.formStructure {width: 290px;}
+.main tr:nth-child(even) td { background: #e7e7e7; }
+.main tr:nth-child(odd)  td { background: #fafafa; }
+.main tr td { background: #e7e7e7; }
+.main tr+tr td { background: #fafafa; }
+.main tr+tr+tr td { background: #e7e7e7; }
+.main tr+tr+tr+tr td { background: #fafafa; }
+.main tr+tr+tr+tr+tr td { background: #e7e7e7; }
+.main tr+tr+tr+tr+tr+tr td { background: #fafafa; }
 
 /*dreveska */
 
 .treeHolder {margin-right: 20px;}
 .treeHolder .cct {}
-.treeHolder ul {margin:0;padding:5px 0 5px 0;list-style:none;background-color:#F3F2EF;float:left;}
+.treeHolder ul {width: 300px;margin:0;padding:10px;list-style:none;float:left;}
 .treeHolder ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
 .treeHolder ul ul ul {border-bottom: 1px solid #e3e2da;}
 
 .treeHolder ul li {position:relative;padding-left:14px;float:left;}
 .formStructure ul li{position:relative;padding-bottom:5px;padding-top:5px;float:left;}
-.treeHolder ul li a {text-decoration:none;font-size:11px;display:block;float:left;min-height:13px;min-width:20px;}
+.treeHolder ul li a {text-decoration:none;display:block;float:left;min-height:13px;min-width:20px;}
 
 .treeHolder ul li a {width:254px;}
 .treeHolder ul li li a {width:240px;}
@@ -327,7 +68,7 @@ fieldset {margin:0;padding:0;}
 .treeHolder ul li em {font-style:normal;color:#5E5E58;font-weight:bold;}
 .treeHolder ul li span.pd,
 .treeHolder ul li span.ch,
-.treeHolder ul li span.pub {background-position: 2px 2px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
+.treeHolder ul li span.pub {background-position: 1px 4px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
 .treeHolder ul li span.pd {background-image:url(/Res/brisanje.gif);}
 .treeHolder ul li span.ch {background-image:url(/Res/objava.gif);}
 .treeHolder ul li span.pub {background-image:url(/Res/objavljeno.gif);}
@@ -335,163 +76,13 @@ fieldset {margin:0;padding:0;}
 .treeHolder ul li span.expand {background-image:url(/Res/expand.gif);}
 .treeHolder ul li span.colapse,
 .treeHolder ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
-.treeHolder ul li.sel a {background-color:#9E9E98;}
+.treeHolder ul li.sel > a {background-color:#9E9E98; color: #FFF;}
 .treeHolder ul li.sel li  a {background:none;}
 
 .noImages ul li a {padding: 4px 0;}
 
 .treeHolder ul.cct-Show {}
 .treeHolder ul.cct-Hide {display:none;}
-
-/*fieldset {padding:0 10px;}
-fieldset div {margin:0 10px;}
-fieldset div div {margin:0;}*/
-fieldset legend {padding:7px 0 10px;}
-
-.mainEditor fieldset {padding:0 10px 10px;}
-.mainEditor fieldset .instanceButtons {}
-
-.statusBars {padding:0;width:100%;background-color:#9e9e98;color:#FFF;}
-.statusBars img {margin:0 5px 0 0;float:left;}
-.statusBars input  { margin:0 0 0 10px;float: right;}
-.statusBars input.left { float: left;}
-
-.statusBars .lastChangedStatus { width: 70%; float: left; }
-.statusBars .lastChangedStatus span {display: block; float: left;}
-.statusBars .lastChangedStatus span.info {  margin-left: 10px; font-weight: bold; } 
-
-.statusBars .instanceButtons { padding: 4px 5px 3px 5px; width: 463px;}
-.statusBars .pageButtons  { padding: 4px 5px 3px 5px;}
-.statusBars .lastChanged { padding: 4px 5px 3px 5px;width:98%;}
-.statusBars .lastChangedStatus { width: 300px; }
-.statusBars .lastChanged .lastChangedStatus {font-size: 11px;}
-
-
-.statusBars .pageButtons input { margin-bottom: 3px; }
-/*.mainEditor .statusBars {width: 487px;}*/
-
-
-.pageproperties { padding-bottom: 10px; }
-
-div.instancePosition {background-color: #E4E4E0;   }
-.instancePosition table {width:100%; margin:0;}
-.instancePosition  table td {padding:0 3px;}
-
-div.instanceAllSettings { float:left;margin-bottom: 0;width:100%;}
-div.instanceAllSettings input.sbutton {margin: 0 0 10px 305px;}
-div.instanceAllSettings div{ float:left; }
-fieldset div.statusBars { float:left;}
-div.instanceAllSettings table {float:left;width:100%;}
-div.instanceAllSettings div { float:left;width:100%;}
-div.instanceAllSettings div div.save input{ float: right;}
-
-
-.pagesettings  { margin-top: 10px; }
-
-.oneSettings { width: 100%; }
-
-.instanceAllSettings .oneSettings 
-{ 
-	width: 452px; 
-	padding: 0 10px 10px 10px; 
-	background-color: #E4E4E0; 
-}
-
-
-.pagesettings div.extline { background-image: url(/Res/dark-bg-horiz.gif); 
-	background-repeat:repeat-x; background-position: center; 
-	text-align: right; padding: 8px 0 8px 0; 
-	clear: both;  width:468px; }
-.instanceAllSettings div.extline 
-{
-	width:100%;
-	background-image: url(/Res/dark-bg-horiz.gif); 
-	background-repeat:repeat-x; 
-	background-position: center; 
-	text-align: right; 
-	padding: 8px 0 8px 0; 
-	clear: both;
-}
-div.extline span{margin-right: 30px; padding: 0 10px 0 10px; }
-
-.pagesettings div.extline span {background-color: #CECDC6;  }
-.pagesettings div.extline span a { text-decoration: none; }
-
-.instanceAllSettings div.extline span {background-color: #E4E4E0;}
-.contentEntry .instanceAllSettings div.extline span {background-color: #F7F3EF;  }
-.instanceAllSettings div.extline span a { text-decoration: none; }
-
-.ModuleDistinctName {font-size: 10px;}
-
-.mainEditor table { float: left; border-collapse: collapse; }
-.mainEditor table tr { border: 0;}
-.mainEditor table td { border: 0;}
-
-.publishButtons {width: 100px; text-align: center;}
-.publishButtons img { margin: 5px 0 5px 0;}
-
-div.biggv { color: #000000; width: 98%; padding:1%; background-color: #F7F3EF; margin:0;}
-.biggv table {width: 100%; border-collapse: collapse; }
-.biggv table thead th { background-color: #9e9e98; font-size: 120%; padding: 5px 5px 5px 5px; margin: 5px; color: #ffffff; border-right: 1px solid #F3F2EF; }
-.biggv table thead th a { color: #ffffff; }
-.biggv table tbody td  { background-color: #D5D5D2; border-bottom: 5px solid #F3F2EF; padding: 5px 5px 5px 5px;}
-.biggv table table tbody td { border-bottom: 0; }
-.biggv table table tbody tr.single td{}
-.biggv table table tbody tr.multi td{background-color:#9E9E98;}
-.biggv table table tbody td.AnswerTitle { width: 50%; }
-.biggv table table tbody td.TimesAnswered { width: 12%;}
-.biggv table table tbody td.InclusivePercentage { width: 19%;}
-.biggv table table tbody td.ExclusivePercentage { width: 19%;}
-
-div.cc-gv{display:block;float:left;width:100%;}
-.right-col .cc-gv table {width:100%;margin:10px 0;}
-.right-col .cc-gv table th{background:#9E9E98;border-right:1px solid #fff;padding:5px;color: #ffffff;font-size:120%;}
-.right-col .cc-gv table th a {color:#fff;}
-.right-col .cc-gv table td { background-color: #D5D5D2; border-bottom: 5px solid #F3F2EF; padding:10px;}
-.right-col .listing {width:100%;}
-.right-col ul.cc-m {padding-left:15px;}
-
-.DynamicEditor .field {float:left;width:100%;border-bottom:1px solid #9C9E9C;margin:0 0 20px;padding:0 0 20px;}
-.DynamicEditor .field:last-of-type {border:none;}
-.DynamicEditor .field label {float:left; width:15%;}
-.DynamicEditor .field span.label {float:left;width:50%;}
-.DynamicEditor .field textarea {float:left;display:block;width:100%;min-height:80px;}
-.DynamicEditor .field select{width:434px;float:left;display:block;}
-.DynamicEditor .field input {margin-right:10px;float:left;}
-.DynamicEditor .save {width:100%;text-align:left;}
-
-div.smallgv {color: #000000;  width:96%; padding:2%; background-color: #F7F3EF; margin: 15px 0px 15px 0px;}
-.smallgv table {width: 100%; border-collapse: collapse; }
-.smallgv table thead th { background-color: #9e9e98; font-size: 120%; padding: 5px 5px 5px 5px; margin: 5px; color: #ffffff; border-right: 1px solid #F3F2EF; border-bottom: 8px solid #F3F2EF; }
-.smallgv table thead th a { color: #ffffff; }
-.smallgv table tbody td  { background-color: #D5D5D2; border-bottom: 8px solid #F3F2EF; padding: 5px 5px 5px 5px;}
-
-div.smallestgv {color: #000000; border: 1px solid #9e9e98;  padding: 5px; background-color: #F7F3EF; margin: 10px 0px 10px 0px;}
-.smallestgv table {width: 460px; border-collapse: collapse;  }
-.smallestgv table thead th { background-color: #9e9e98; font-size: 120%;text-align:left; padding:5px; margin: 5px; color: #ffffff; border-right: 1px solid #F3F2EF; }
-.smallestgv table thead th a { color: #ffffff; }
-.smallestgv table tbody td  { background-color: #D5D5D2; border-bottom: 5px solid #F3F2EF; padding: 5px 5px 5px 5px;}
-
-
-.FileName {}
-.FileName span {  overflow: hidden; display:block;width:205px;}
-
-table tbody tr.selFile td {background-color: #9E9E98 !important;}
-
-.TextContentInstance {margin-top: 6px; width: 468px;}
-.TextContentInstance .selectTextContentInstance {width: 50%; float: left; }
-.TextContentInstance .changeTextContentInstance {float: right; }
-
-.AspNet-ChangePassword {width: 740px;}
-.AspNet-ChangePassword div{width: 100%;  }
-.AspNet-ChangePassword-SubmitPanel {border-bottom: 1px solid #9C9E9C; 
-	border-top: 1px solid #9C9E9C; 
-	text-align: right; 
-	padding:10px; 
-	margin-top: 10px; }
-/*.AspNet-ChangePassword-ChangePasswordTitlePanel { width: 100%;  }
-.AspNet-ChangePassword-PasswordPanel { width: 100%;  }*/
-
 /* calendar */
 
 div.calendar 
@@ -725,74 +316,6 @@ div.calendar
   color: #0f0;
 }
 
-/* end calendar -------------------------- */
-/* Width="270px" style="position:absolute;border:solid 1px #000;" */
-.modalPanel { position: absolute; width: 650px;top: 30px; left: 200px; }
-.modalPanel .innerDiv{padding: 10px 10px 0 10px; }
-.modalPanel .outerBorder{padding: 0 10px 10px 10px; }
-
-.modalPanel div {  background: white;}
-.modalPanel div div { background: none;}
-
-
-.modalPanel .modalPanelTitle { padding: 10px;
-	border-left: 2px solid black; 
-	border-right: 2px solid black;
-	border-top: 2px solid black;
-	border-bottom:none;
-	 width: 606px; background-color: #9E9E98; 
-	 float: none;
-	 text-align: left;
-	 }
-.modalPanel .modalPanelTitle input { position: absolute; right: 20px; top: 20px; }
-
-.modalPanel .innerBorder {background-color: #F7F3EF; 
-	border-left: 2px solid black; 
-	border-right: 2px solid black;
-	border-bottom: 2px solid black;
-	 width: 606px;
-padding:10px;	 }
-
-.instanceAllSettings .modalPanel .input	{width:100%;margin:0 0 10px;}
-.instanceAllSettings .modalPanel .input	input{width:390px;}	 
-	 
-.dragger { border: 5px solid red;}
-
-.modalPanel .treeHolder{  margin-top: 10px;}
-
-.modalPanel table  { clear: both;}
-.modalPanel table td { text-align: left; }
-
-.modalPanel div.infolabel {width: 584px; background: #fff;padding:10px;margin:0 0 10px;}
-.modalPanel div.infolabel span.infolabel {width: 50%;  }
-
-.mainEditor .contentEntry .modalPanel .save  {width: 100%; padding: 0; }
-.mainEditor .contentEntry .modalPanel .save  .padder {padding: 10px; }
-
-
-
-.radioList div {float:none;clear:both;}
-.radioList div label {width:auto;}
-.radiobuttonlist div {float:none;clear:both;}
-.checkboxlist .checkList div {clear:both;}
-
-.role_list {width:100%;padding: 25px 0 15px 1%;}
-.role_list div {width:49%;padding-bottom: 2px;}
-
-.PasswordPanel {float:left;display:block; width:100%; margin:3px 0;clear:both;}
-.PasswordPanel label {float:left; padding:0 0 0 108px;}
-.PasswordPanel input {float:left; width:200px; border:1px solid #CCC;}
-
-.NewPasswordPanel {float:left;display:block; width:100%;  margin:3px 0;}
-.NewPasswordPanel label {float:left; padding:0 0 0 74px;}
-.NewPasswordPanel input {float:left; width:200px;  border:1px solid #CCC;}
-
-.ConfirmNewPasswordPanel {float:left;display:block; width:100%;  margin:3px 0;}
-.ConfirmNewPasswordPanel label{float:left; padding:0 0 0 20px;}
-.ConfirmNewPasswordPanel input{float:left; width:200px; border:1px solid #CCC;}
-
-.SubmitPanel {float:left;display:block; width:100%;  margin:3px 0; padding:10px 0 20px 175px;}
-.centerFull h1 {padding:0 0 0 10px;}
 
 .ck {width:100%;margin-bottom:10px;}
 .ck div {float:none;}
@@ -806,45 +329,3 @@ padding:10px;	 }
 .ck .cke_dialog_ui_vbox
 .ck .cke_dialog_ui_text {float:none;}
 
-
-
-.debug {display:none;}
-
-.persistance-details
-{
-    display: block;
-     width: 80%;
-}
-
-.edit_button
-{
-    float: right;
-}
-
-.second_box
-{
-    width: 100%;
-}
-
-.pageproperties
-{
-    border: 1px solid gray;
-    margin: 10px;
-    padding: 10px;
-    background-color: #f3f2ef;
-}
-
-.moduleInstance
-{
-    border: 1px solid gray;
-    margin: 10px;
-    padding: 10px;
-    background-color: #f3f2ef;
-}
-summary
-{
-    font-weight: bold;
-    
-}
-
-details {display: inline-block; cursor: pointer; padding: 5px; margin: 10px 0; border-top: 1px solid gray; }
