@@ -69,7 +69,7 @@
                     RenderingMode="List" SkipLinkText=""
                 </p>
 				
-				<asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar"
+				<asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar" RenderingMode="List"
                     ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" />
   
                <ul class="nav nav-sidebar">
