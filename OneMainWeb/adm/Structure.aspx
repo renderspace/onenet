@@ -111,33 +111,33 @@
 						        <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="$move_down" />
 
                                 <asp:Label ID="Label3" runat="server" Text="$persistency" CssClass="instanceTitle"></asp:Label>
-    						                    
-                                <a onclick="toggle_visibility('persistance-detail');" class="persistance-details">    
-						            <asp:Label ID="Label4" runat="server" Text="$l_from" CssClass="emph"></asp:Label>
-							        <asp:Label ID="lblPersistentFromDGrid" Runat="server" />
+
+                                <details>
+                                    <summary>
+                                        <asp:Label ID="Label4" runat="server" Text="$l_from" CssClass="emph"></asp:Label>
+							            <asp:Label ID="lblPersistentFromDGrid" Runat="server" />
                 									    
-							        <asp:Label ID="Label5" runat="server" Text="$l_to" CssClass="emph"></asp:Label>
-							        <asp:Label ID="lblPersistentToDGrid" Runat="server"	/>
+							            <asp:Label ID="Label5" runat="server" Text="$l_to" CssClass="emph"></asp:Label>
+							            <asp:Label ID="lblPersistentToDGrid" Runat="server"	/>
 
-                                    <asp:Label ID="lblPlaceHolder" Runat="server" />
-                                </a>
+                                        <asp:Label ID="lblPlaceHolder" Runat="server" />
+                                    </summary>
 
-                                <div id="persistance-detail" style="display:none">
-                                    <div class="select">
-							            <asp:Label ID="LabelPlaceHolder" runat="server" Text="$place_holder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
-							            <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
-							        </div>
-							        <div class="select">
-								        <asp:Label ID="Label10" runat="server" Text="$l_from" AssociatedControlID="ddlPersistentFromDGrid"></asp:Label>
-								        <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid"  />
-							        </div>
-                                    <div class="select">    
-                                        <asp:Label ID="Label11" runat="server" Text="$l_to" AssociatedControlID="ddlPersistentToDGrid"></asp:Label>
-                                        <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	/>
-							        </div>
+                                      <div class="select">
+							                <asp:Label ID="LabelPlaceHolder" runat="server" Text="$place_holder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
+							                <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
+							            </div>
+							            <div class="select">
+								            <asp:Label ID="Label10" runat="server" Text="$l_from" AssociatedControlID="ddlPersistentFromDGrid"></asp:Label>
+								            <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid"  />
+							            </div>
+                                        <div class="select">    
+                                            <asp:Label ID="Label11" runat="server" Text="$l_to" AssociatedControlID="ddlPersistentToDGrid"></asp:Label>
+                                            <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	/>
+							            </div>
 
-                                    <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="sbutton" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
-                                </div>
+                                        <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="sbutton" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
+                                </details>
 
                                 <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="$label_module_settings" DisplayCommands="true"/>
                             </asp:Panel>
