@@ -336,7 +336,7 @@ namespace OneMainWeb.adm
                     moduleSettings.LoadSettings();
                 }
 
-                lblPlaceHolder.Text = "$" + currentPlaceHolder.Name;
+                lblPlaceHolder.Text = currentPlaceHolder.Name;
                 DropDownList ddlPlaceHolder = e.Item.FindControl("ddlPlaceHolder") as DropDownList;
                 DropDownList ddlPersistentFromDGrid = (DropDownList)e.Item.FindControl("ddlPersistentFromDGrid");
                 DropDownList ddlPersistentToDGrid = (DropDownList)e.Item.FindControl("ddlPersistentToDGrid");
