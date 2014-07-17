@@ -1,37 +1,47 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext);
 
-body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0; }
-
+body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0;}
+ul:focus, .nav-sidebar li a:focus {outline:0px !important; -webkit-appearance:none;}
 h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 
-input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
-select, select:hover, select:focus {color: #000;}
+input[type="button"], input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
+select, select:hover, select:focus {color: #000!important;}
 textarea {padding: 3px 5px; border-color: #ccc!important;}
 input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
 input[type="text"], select { border: 1px #ccc solid!important;}
 
+.navbar-brand {font-size: 10px!important;}
 .navbar-brand img {margin-right: 10px;}
+.nav>li>a {float: left; padding: 19px 15px!important;}
+.nav>li:nth-child(2)>a {padding: 15px 15px!important;}
+.nav>li:nth-child(4)>a, .nav>li:nth-child(4)>a:hover {background-color: #424040!important;}
 
 .head {width: 100%; background-color: #1f1f1f; padding: 5px; color: #FFF; }
 
 .centerStructure {width: 320px;}
 .centerStructure, .mainEditor {float: left;}
 .mainEditor {margin-left: 10px; width: 600px; background: #f5f5f5;}
-.mainEditor .contentEntry, .TextContentInstance {padding: 15px;}
+.mainEditor .contentEntry, .TextContentInstance {padding: 15px 15px 0 15px;}
 
 .input label, .select label {width: 150px;}
 
-summary, .extline {margin: 10px 0; cursor: pointer;}
+.extline {margin: 10px 0; cursor: pointer;}
+summary {margin: 10px 0 0 0; cursor: pointer;}
+details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 
 .module h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px; margin-bottom: 10px;}
-.module footer {border-top: 1px #ccc solid; padding-top: 10px; margin-top: 10px;}
+.module .submit-links {border-top: 1px #ccc solid; padding-top: 10px; margin-top: 10px;}
 
 .lastChanged {padding: 10px; background: #9E9E98; color: #FFF; display: inline-block; width: 100%;}
 .lastChanged .infolabel {float: left;}
 .lastChanged .info {float: right;}
 
-.module {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px; padding: 20px; background-color: #E3E2DA;}
-.tall {float: left;}
+.module, .mainEditor, .centerStructure {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px; padding: 20px; background-color: #E3E2DA;}
+.tall {float: left; width: 320px;}
+.page-and-module-settings {float: left; width: 70%;}
+.page-and-module-settings .module {width: 100%;}
+
+.input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 150px;}
 
 .main textarea {width: 100%;}
 .main table {width: 100%; margin: 20px 0;}
@@ -46,16 +56,56 @@ summary, .extline {margin: 10px 0; cursor: pointer;}
 .main tr+tr+tr+tr+tr td { background: #e7e7e7; }
 .main tr+tr+tr+tr+tr+tr td { background: #fafafa; }
 
+.topStructure {display: block; width: 100%; border-top: 4px #9e9e98 solid; float: left; margin: 10px 0; padding: 10px; background-color: #E3E2DA;}
+table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; background-color: #E3E2DA;}
+
+.level4 {position: relative!important; width: 100%; left: 0!important;}
+
 /*dreveska */
+
+.treeview {margin-right: 20px;}
+.treeview .cct {}
+.treeview ul {width: 300px;margin:0;padding:10px 0;list-style:none;float:left;}
+.treeview ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
+.treeview ul ul ul {border-bottom: 1px solid #e3e2da;}
+
+.treeview ul li {position:relative;padding-left:14px;float:left;}
+.formStructure ul li{position:relative;padding-bottom:5px;padding-top:5px;float:left;}
+.treeview ul li a {text-decoration:none;display:block;float:left;min-height:13px;min-width:20px;}
+
+.treeview ul li a {width:254px;}
+.treeview ul li li a {width:240px;}
+.treeview ul li li li a {width:226px;}
+.treeview ul li li li li a {width:212px;}
+.treeview ul li li li li li a {width:198px;}
+.treeview ul li li li li li li a {width:184px;}
+.treeview ul li li li li li li li a {width:170px;}
+.treeview ul li em {font-style:normal;color:#5E5E58;font-weight:bold;}
+.treeview ul li span.pd,
+.treeview ul li span.ch,
+.treeview ul li span.pub {background-position: 1px 4px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
+.treeview ul li span.pd {background-image:url(/Res/brisanje.gif);}
+.treeview ul li span.ch {background-image:url(/Res/objava.gif);}
+.treeview ul li span.pub {background-image:url(/Res/objavljeno.gif);}
+.treeview ul li span.colapse {background-image:url(/Res/colapse.gif);}
+.treeview ul li span.expand {background-image:url(/Res/expand.gif);}
+.treeview ul li span.colapse,
+.treeview ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
+.treeview ul li.sel > a {background-color:#9E9E98; color: #FFF;}
+.treeview ul li.sel li  a {background:none;}
+
+.noImages ul li a {padding: 4px 0;}
+
+.treeview ul.cct-Show {}
+.treeview ul.cct-Hide {display:none;}
 
 .treeHolder {margin-right: 20px;}
 .treeHolder .cct {}
-.treeHolder ul {width: 300px;margin:0;padding:10px;list-style:none;float:left;}
+.treeHolder ul {width: 300px;margin:0;padding:10px 0;list-style:none;float:left;}
 .treeHolder ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
 .treeHolder ul ul ul {border-bottom: 1px solid #e3e2da;}
 
 .treeHolder ul li {position:relative;padding-left:14px;float:left;}
-.formStructure ul li{position:relative;padding-bottom:5px;padding-top:5px;float:left;}
 .treeHolder ul li a {text-decoration:none;display:block;float:left;min-height:13px;min-width:20px;}
 
 .treeHolder ul li a {width:254px;}
@@ -79,10 +129,28 @@ summary, .extline {margin: 10px 0; cursor: pointer;}
 .treeHolder ul li.sel > a {background-color:#9E9E98; color: #FFF;}
 .treeHolder ul li.sel li  a {background:none;}
 
-.noImages ul li a {padding: 4px 0;}
-
 .treeHolder ul.cct-Show {}
 .treeHolder ul.cct-Hide {display:none;}
+
+/**/
+.DynamicEditor {display: block;border-top: 4px #9e9e98 solid;float: left;margin: 10px;padding: 20px;background-color: #E3E2DA;}
+.DynamicEditor > div {float: left; width: 100%;}
+.DynamicEditor label {text-align: left; width: 150px;}
+.DynamicEditor .save {clear: both;}
+/**/
+.nav-sidebar, .nav-sidebar ul {margin: 0 20px; padding: 0; width: 100%!important;}
+.nav-sidebar li {float: left; width: 190px; list-style: none;}
+.nav-sidebar li a {float: left; width: 180px; padding: 2px 0;}
+.nav-sidebar li::before{float: left; width: 10px; content:"» ";}
+.nav-sidebar li span {float: left; width: 100%; font-weight: bold; margin: 3px 20px; border-bottom: 1px #ccc solid;}
+/**/
+.pager span {display: inline-block; margin: 4px;}
+/**/
+.searchFull {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}
+.searchFull select {width: 160px;}
+/**/
+.centerFull .infolabel, .centerFull .info {padding: 0 10px 20px 0;}
+
 /* calendar */
 
 div.calendar 
@@ -329,3 +397,15 @@ div.calendar
 .ck .cke_dialog_ui_vbox
 .ck .cke_dialog_ui_text {float:none;}
 
+
+@media (max-width: 1423px) {
+.page-and-module-settings {width: 60%;}
+}
+
+@media (max-width: 1083px) {
+.page-and-module-settings {width: 50%;}
+}
+
+@media (max-width: 975px) {
+.page-and-module-settings, .tall {width: 100%;}
+}
