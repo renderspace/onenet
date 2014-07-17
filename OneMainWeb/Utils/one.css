@@ -3,7 +3,7 @@
 body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0;}
 ul:focus, .nav-sidebar li a:focus {outline:0px !important; -webkit-appearance:none;}
 h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
-
+.radio, .checkbox {padding-left: 0!important;}
 input[type="button"], input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
 select, select:hover, select:focus {color: #000!important;}
 textarea {padding: 3px 5px; border-color: #ccc!important;}
@@ -133,6 +133,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .treeHolder ul.cct-Hide {display:none;}
 
 /**/
+.save {margin-bottom: 5px;}
 .DynamicEditor {display: block;border-top: 4px #9e9e98 solid;float: left;margin: 10px;padding: 20px;background-color: #E3E2DA;}
 .DynamicEditor > div {float: left; width: 100%;}
 .DynamicEditor label {text-align: left; width: 150px;}
