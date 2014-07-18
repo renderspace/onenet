@@ -136,25 +136,27 @@
 					</tr>
 				</table>
 			</div>
-			<div class="centerFull">
-			    <div class="contentEntry">
-                    <div class="input">
-                        <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="$display_date"></asp:Label>
-                        <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate"></asp:TextBox>
-                    </div>
-                    <one:TextContentControl ID="TextContentEditor" runat="server" />
-			        <div class="save">
-			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				        <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" />
-				        <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
-				        <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />
-				        <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>
+            <div class="centerFullOuter">
+			    <div class="centerFull">
+			        <div class="contentEntry">
+                        <div class="input">
+                            <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="$display_date"></asp:Label>
+                            <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate"></asp:TextBox>
+                        </div>
+                        <one:TextContentControl ID="TextContentEditor" runat="server" />
+			            <div class="save">
+			                <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
+				            <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" />
+				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
+				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />
+				            <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>
+			            </div>
+			        
+                        <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />			        
+			        
 			        </div>
-			        
-                    <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />			        
-			        
 			    </div>
-			</div>
+            </div>
         </asp:View>
         <asp:View ID="View3" runat="server">
             <div class="searchFull">

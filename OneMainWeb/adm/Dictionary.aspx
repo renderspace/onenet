@@ -9,8 +9,10 @@
 <div class="topStructure">
     <asp:checkbox ID="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		
 </div>
-    <asp:LinkButton ID="LinkButtonKeywords" runat="server" OnClick="LinkButtonKeywords_Click">Keywords</asp:LinkButton>
-    <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click">Import/Export</asp:LinkButton>
+    <div class="topCommands">
+        <asp:LinkButton ID="LinkButtonKeywords" runat="server" OnClick="LinkButtonKeywords_Click">Keywords</asp:LinkButton>
+        <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click">Import/Export</asp:LinkButton>
+    </div>
 
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
             <asp:View ID="View1" runat="server">
