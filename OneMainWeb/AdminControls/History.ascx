@@ -6,16 +6,14 @@
         <asp:PlaceHolder ID="PlaceHolderCollapsed" Visible="true" runat="server">
              <div class="extline">
                 <span>
-                    <asp:LinkButton ID="CmdShowHistory" OnClick="CmdShowHistory_Click" runat="server"  Text="$show_history" ValidationGroup="none"  />&nbsp;&nbsp;
-                    <img id="Img1" alt="" runat="server" />
+                    <asp:LinkButton ID="CmdShowHistory" OnClick="CmdShowHistory_Click" runat="server"  Text="Show audit history" ValidationGroup="none"  />&nbsp;&nbsp;
                 </span>
             </div>
         </asp:PlaceHolder>	
         <asp:PlaceHolder ID="PlaceHolderExpanded" Visible="false" runat="server">
              <div class="extline">
                 <span>
-                    <asp:LinkButton ID="CmdHideHistory" OnClick="CmdHideHistory_Click" runat="server" Text="$hide_history" ValidationGroup="none" />&nbsp;&nbsp;
-                    <img id="Img2" alt="" runat="server" />
+                    <asp:LinkButton ID="CmdHideHistory" OnClick="CmdHideHistory_Click" runat="server" Text="Hide audit history" ValidationGroup="none" />&nbsp;&nbsp;
                 </span>
             </div>
             <div class="smallestgv">  
