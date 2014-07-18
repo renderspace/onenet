@@ -449,8 +449,6 @@
 	<resource name="export_subscriptions">Izvozi izbrane prijave</resource>
 	<resource name="principal_saved_by">Lastnik spremembe</resource>
 	<resource name="date_saved">Datum spremembe</resource>
-	<resource name="hide_history">Skrij zgodovino</resource>
-	<resource name="show_history">Pokaži zgodovino sprememb</resource>
 	<resource name="category_filter">Filtriraj po kategoriji</resource>
 	<resource name="filter_events">Filtriraj</resource>
 	<resource name="is_online">Je trenutno prijavljen</resource>

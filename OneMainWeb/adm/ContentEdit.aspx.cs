@@ -50,8 +50,6 @@ namespace OneMainWeb.adm
                 }
 
                 HistoryControl.GetContent = textContentB.GetTextContent;
-                HistoryControl.Img1Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-down.gif");
-                HistoryControl.Img2Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-up.gif");
 
                 if ( SelectedModuleInstanceId.HasValue )
                     HistoryControl.SelectedItemId = SelectedModuleInstanceId.Value;

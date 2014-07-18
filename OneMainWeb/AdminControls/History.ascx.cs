@@ -47,18 +47,6 @@ namespace OneMainWeb.AdminControls
         [Bindable(false), Category("Behaviour"), DefaultValue("")]
         public ContentGetter GetContent { get { return getContent; } set { getContent = value; } }
 
-        public string Img1Src
-        {
-            get { return Img1.Src; }
-            set { Img1.Src = value; }
-        }
-
-        public string Img2Src
-        {
-            get { return Img2.Src; }
-            set { Img2.Src = value; }
-        }
-
         public int SelectedItemId { get { return selectedItemId; } set { selectedItemId = value; } }
 
         public bool ShowHistory { get { return showHistory; } 

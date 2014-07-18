@@ -40,15 +40,6 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.LinkButton CmdShowHistory;
         
         /// <summary>
-        /// Img1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage Img1;
-        
-        /// <summary>
         /// PlaceHolderExpanded control.
         /// </summary>
         /// <remarks>
@@ -65,15 +56,6 @@ namespace OneMainWeb.AdminControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton CmdHideHistory;
-        
-        /// <summary>
-        /// Img2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage Img2;
         
         /// <summary>
         /// GridViewAudit control.
