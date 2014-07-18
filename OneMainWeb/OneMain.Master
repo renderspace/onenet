@@ -25,6 +25,26 @@
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
     	.browser-logos { padding-top: 20px; }
     </style>
+
+    <script>
+
+        $(document).ready(function () {
+            $(".nav-sidebar ul li a").each(function () {
+                var anchor = $(this);
+                var attrHref = anchor.attr('href');
+                var url = (typeof attrHref !== typeof undefined && attrHref.length > 0) ? attrHref.trim() : "";
+                if (url == "" || url == "#") {
+                    //unbind the __dopostback
+                    anchor.unbind('click');
+                    anchor.bind('click', function (e) {
+                        e.preventDefault();
+                    });
+                    anchor.addClass('nolink');
+                }
+            });
+        });
+
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -66,12 +86,10 @@
 				<asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar" RenderingMode="List"
                     ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" />
   
-               <ul class="nav nav-sidebar">
-                    <li>
-                        <span>Table</span>
-                            <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
-                    </li>
-                </ul>
+               <div class="nav nav-sidebar">
+                    <span>Table</span>
+                    <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
+                </div>
             </nav> 
             <div style="margin-top: 20px; margin-left: 10px;">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
@@ -80,7 +98,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
         </div>
-        <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" />
+        <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" ShowStartingNode="false" />
 	 </div>
     </div>
     <script type="text/javascript" src="/ckeditor4/ckeditor.js"></script>
