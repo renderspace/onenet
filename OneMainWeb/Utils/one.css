@@ -4,15 +4,27 @@ body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; p
 ul:focus, .nav-sidebar li a:focus {outline:0px !important; -webkit-appearance:none;}
 h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 .radio, .checkbox {padding-left: 0!important;}
-input[type="button"], input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
+input[type="button"], input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 0;}
+input[type="text"], select {min-width: 220px;}
 select, select:hover, select:focus {color: #000!important;}
 textarea {display: inline-block; padding: 3px 5px; border: 1px #ccc solid!important;}
 input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
 input[type="text"], select { border: 1px #ccc solid!important;}
-.input, .select, .buttons {margin-bottom: 15px;}
-.page-and-module-settings input[type="text"], .page-and-module-settings  select, .page-and-module-settings  .input span {width: 100%;}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {width: 20px;}
+.input, .select, .buttons {margin-bottom: 10px; display: inline-block;}
+.input, .select {width: 100%;}
+.layout-left {float: left; width: 15%;}
+.layout-right {float: right; width: 85%;}
+.layout-right input, .layout-right select {width: 100%;}
+.layout-mid {float: left; width: 30%;}
+.input.uri .layout-right {width: 50%;}
+.input.uri span {width: auto;}
 
 input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
+
+.alert {font-size: 16px;}
+
+.moduleInstance {border-bottom: 1px #ccc solid; padding: 15px 0;}
 
 .navbar-brand {font-size: 10px!important;}
 .navbar-brand img {margin-right: 10px;}
@@ -27,7 +39,7 @@ input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc soli
 .mainEditor {margin-left: 10px; width: 600px; background: #f5f5f5;}
 .mainEditor .contentEntry, .TextContentInstance {padding: 15px 15px 0 15px;}
 
-.input label, .select label {width: 150px;}
+.input label, .select label {width: 157px;}
 
 .extline {margin: 10px 0; cursor: pointer;}
 summary {margin: 10px 0 0 0; cursor: pointer;}
@@ -45,7 +57,7 @@ details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 .page-and-module-settings {float: left; width: 70%;}
 .page-and-module-settings .module {width: 100%;}
 
-.input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 150px;}
+.input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 157px;}
 
 .main textarea {width: 100%;}
 .main table {float: left; width: 100%; margin: 20px 0;}
@@ -64,6 +76,11 @@ details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; background-color: #E3E2DA;}
 
 .level4 {position: relative!important; width: 100%; left: 0!important;}
+
+.ModuleDistinctName {display: inline-block; margin: 15px 0;}
+.instanceTitle {margin: 0 15px;}
+
+.topCommands a {margin-right: 20px;}
 
 /*dreveska */
 
@@ -158,6 +175,13 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .searchFull select {width: 160px;}
 /**/
 .centerFull .infolabel, .centerFull .info {padding: 0 10px 20px 0;}
+/**/
+.button.green {color: #fff; background-color: #5cb85c; border-color: #4cae4c;}
+input.delete-btn {color: #fff; background-color: #c9302c; border-color: #ac2925;}
+input.save-btn, input.changeTextContentInstance {color: #fff; background-color: #5cb85c; border-color: #4cae4c;}
+input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
+
+.required {display: none!important;}
 
 /* calendar */
 
