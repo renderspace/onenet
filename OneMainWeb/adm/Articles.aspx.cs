@@ -50,8 +50,6 @@ namespace OneMainWeb
                 CheckboxShowUntranslated.Checked = ShowUntranslated;
 
                 HistoryControl.GetContent = articleDS.GetArticle;
-                HistoryControl.Img1Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-down.gif");
-                HistoryControl.Img2Src = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.extend-up.gif");
 
                 if (SelectedArticle != null && SelectedArticle.Id.HasValue)
                     HistoryControl.SelectedItemId = SelectedArticle.Id.Value;

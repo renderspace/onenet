@@ -40,8 +40,7 @@ using System.Runtime.InteropServices;
 
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.previewBanner.png", "image/png")]
 
-[assembly: System.Web.UI.WebResource("OneMainWeb.Res.extend-down.gif", "image/gif")]
-[assembly: System.Web.UI.WebResource("OneMainWeb.Res.extend-up.gif", "image/gif")]
+
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.objava.gif", "image/gif")]
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.objavljeno.gif", "image/gif")]
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.brisanje.gif", "image/gif")]

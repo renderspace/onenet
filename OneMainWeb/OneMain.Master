@@ -19,6 +19,9 @@
     <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script> 
+
+    
+    
 	<script src="/JavaScript/bootstrap.min.js"></script>
 	
 	<style type="text/css">
@@ -92,7 +95,7 @@
                 </div>
             </nav> 
             <div style="margin-top: 20px; margin-left: 10px;">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="$clear_preview_cache" />
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" />
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -160,6 +163,10 @@
 	    }
 
 	</script>
+    <script type="text/javascript" src="/JavaScript/jquery.details.js"></script> 
+    <script>
+        $('details').details();
+    </script>
     </form>
 </body>
 </html>

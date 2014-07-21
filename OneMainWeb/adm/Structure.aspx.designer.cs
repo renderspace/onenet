@@ -112,15 +112,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Image ImagePageStatus;
         
         /// <summary>
-        /// LabelChanged control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelChanged;
-        
-        /// <summary>
         /// cmdMovePageUp control.
         /// </summary>
         /// <remarks>
@@ -220,58 +211,58 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TextBox TextBoxUri;
         
         /// <summary>
-        /// TwoInputMenuGroup control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput TwoInputMenuGroup;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// PanelMenuGroups control.
+        /// TextBoxMenuGroup control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelMenuGroups;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxMenuGroup;
         
         /// <summary>
-        /// LabelMenuGroups control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelMenuGroups;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// DropDownListMenuGroups control.
+        /// CheckBoxBreakPersitence control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListMenuGroups;
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxBreakPersitence;
         
         /// <summary>
-        /// LabeledCheckBoxBreakPersistance control.
+        /// Label7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox LabeledCheckBoxBreakPersistance;
+        protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// InputRedirectToUrl control.
+        /// InputRedirectToUrl1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputRedirectToUrl;
+        protected global::System.Web.UI.WebControls.TextBox InputRedirectToUrl1;
         
         /// <summary>
         /// OneSettingsPageSettings control.
@@ -283,13 +274,13 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.OneSettings OneSettingsPageSettings;
         
         /// <summary>
-        /// cmdSave control.
+        /// LabelChanged control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSave;
+        protected global::System.Web.UI.WebControls.Label LabelChanged;
         
         /// <summary>
         /// ButtonDelete control.
@@ -326,6 +317,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonUnPublish;
+        
+        /// <summary>
+        /// cmdSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cmdSave;
         
         /// <summary>
         /// LiteralModulesOnPage control.
