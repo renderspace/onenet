@@ -6,9 +6,12 @@ h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 .radio, .checkbox {padding-left: 0!important;}
 input[type="button"], input[type="text"], input[type="submit"], select {padding: 3px 5px; margin: 2px;}
 select, select:hover, select:focus {color: #000!important;}
-textarea {padding: 3px 5px; border-color: #ccc!important;}
+textarea {display: inline-block; padding: 3px 5px; border: 1px #ccc solid!important;}
 input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
 input[type="text"], select { border: 1px #ccc solid!important;}
+.input, .select, .buttons {margin-bottom: 15px;}
+
+input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
 
 .navbar-brand {font-size: 10px!important;}
 .navbar-brand img {margin-right: 10px;}
@@ -44,7 +47,7 @@ details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 .input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 150px;}
 
 .main textarea {width: 100%;}
-.main table {width: 100%; margin: 20px 0;}
+.main table {float: left; width: 100%; margin: 20px 0;}
 .main table tr td, table tr th {padding: 5px;}
 
 .main tr:nth-child(even) td { background: #e7e7e7; }
@@ -140,10 +143,13 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .DynamicEditor .save {clear: both;}
 /**/
 .nav-sidebar, .nav-sidebar ul {margin: 0 20px; padding: 0; width: 100%!important;}
-.nav-sidebar li {float: left; width: 190px; list-style: none;}
+.nav-sidebar li {float: left; width: 260px; list-style: none;}
 .nav-sidebar li a {float: left; width: 180px; padding: 2px 0;}
-.nav-sidebar li::before{float: left; width: 10px; content:"» ";}
-.nav-sidebar li span {float: left; width: 100%; font-weight: bold; margin: 3px 20px; border-bottom: 1px #ccc solid;}
+.nav-sidebar li::before a {float: left; width: 10px;}
+.nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 3px 20px; border-bottom: 1px #ccc solid;}
+.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 10px 0 0 0; color: #000; border-bottom: 1px #ccc solid;}
+.nav-sidebar li a.nolink:hover {text-decoration: none; cursor: default;}
+
 /**/
 .pager span {display: inline-block; margin: 4px;}
 /**/
