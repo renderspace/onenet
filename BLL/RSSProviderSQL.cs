@@ -22,7 +22,7 @@ namespace One.Net.BLL
 
         public List<BORssItem> ListItems(List<int> categories, int languageId)
         {
-            string cats = string.Empty;
+            string cats = "";
             foreach (int category in categories)
                 cats += category + ",";
             cats.TrimEnd(',');

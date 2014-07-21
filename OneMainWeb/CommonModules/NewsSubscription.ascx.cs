@@ -21,7 +21,7 @@ namespace OneMainWeb.CommonModules
         //private readonly Regex regex = new Regex(@"^(([\w\-\.]+@([A-Za-z0-9]([\w\-])+\.){1,2}([a-zA-Z]([\w\-]){1,3}));*)+");
         private BNewsLtr.NewsletterAction action = BNewsLtr.NewsletterAction.Default;
         private static readonly BNewsLtr newsletterB = new BNewsLtr();
-        private string hash = string.Empty;
+        private string hash = "";
         private int subscriptionID = -1;
 
         #endregion Variables

@@ -5,7 +5,9 @@
 <one:TextContentControl ID="txtCategory" runat="server" />
 <two:LabeledCheckBox ID="chkIsSelectable" runat="server" Text="$is_selectable" />
 <two:LabeledCheckBox ID="chkIsPrivate" runat="server" Text="$is_private" />
-<two:InfoLabel ID="InfoLabelID" runat="server" Text="$id" />
+
+ID: <asp:Label runat="server" ID="LabelId"></asp:Label>
+
 <div style=" margin-top: 5px; float: right;" class="save">
     <asp:Button ValidationGroup="FN" ID="cmdDeleteNode" cssclass="left" runat="server" Text="$delete" OnClick="cmdDeleteNode_Click" />				
     <asp:Button ValidationGroup="FN" ID="cmdUpdateNode" cssclass="right" runat="server" Text="$update" OnClick="cmdUpdateNode_Click" />
@@ -14,7 +16,7 @@
 	<two:modalpanel Visible="false" OnWindowClosed="moveCategoryPanel_WindowClosed" ShowCloseButton="true" id="moveCategoryPanel" runat="server" >
 	    <div class="outerBorder">
 	        <div class="innerBorder">
-	            <two:InfoLabel ID="lblMoveCategory" runat="server" Text="$category_to_move"></two:InfoLabel>
+                Category to move: <asp:Label runat="server" ID="LabelCategoryToMove"></asp:Label>
 	            <div class="treeHolder noImages">
 	                <asp:TreeView ID="moveCategoryTree" OnAdaptedSelectedNodeChanged="moveCategoryTree_SelectedNodeChanged" OnSelectedNodeChanged="moveCategoryTree_SelectedNodeChanged" runat="server" SelectedNodeStyle-BackColor="Gray" Width="320px" />
 	            </div>   

@@ -150,7 +150,7 @@ namespace OneMainWeb.AdminControls
                 {
                     cmdOverwrite.Visible = false;
                     imagePreview.Visible = false;
-                    imagePreview.Text = imagePreviewSize.Text = string.Empty;
+                    imagePreview.Text = imagePreviewSize.Text = "";
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace OneMainWeb.AdminControls
                                 if (file.Content == null)
                                 {
                                     file.Content = new BOInternalContent();
-                                    file.Content.Html = string.Empty;
+                                    file.Content.Html = "";
                                 }
 
                                 file.Content.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;

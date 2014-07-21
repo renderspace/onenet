@@ -32,7 +32,7 @@ namespace OneMainWeb
                 if (Session["SelectedUICulture"] != null)
                     return Session["SelectedUICulture"].ToString();
                 else
-                    return string.Empty;
+                    return "";
             }
             set
             {
@@ -91,8 +91,8 @@ namespace OneMainWeb
             var page = websiteB.GetPage(PageId);
             var webSite = websiteB.Get(page.WebSiteId);
 
-            var customBodyCode = string.Empty;
-            var customHeadCode = string.Empty;
+            var customBodyCode = "";
+            var customHeadCode = "";
 
             if (webSite.Settings.ContainsKey("GoogleAnalyticsCode"))
             {
@@ -671,7 +671,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     foreach (string key in providedMetaTags.Keys)
                     {
                         HtmlMeta metaControl = null;
-                        string controlName = string.Empty;
+                        string controlName = "";
 
                         if (key.ToLowerInvariant() == "og:image")
                             controlName = "OgImage";

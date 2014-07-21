@@ -24,8 +24,8 @@ namespace One.Net.BLL
 
         string redirectToUrl = "";
         int menuGroup;
-	    private string frontEndRequireGroupList = string.Empty;
-	    private string editRequireGroupList = string.Empty;
+	    private string frontEndRequireGroupList = "";
+	    private string editRequireGroupList = "";
 	    private bool requireSSL = false;
 
         bool breakPersistance = false;

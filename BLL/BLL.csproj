@@ -183,7 +183,6 @@
     <Compile Include="WebConfig\RssConfiguration.cs" />
     <Compile Include="WebConfig\RssConfigProvider.cs" />
     <Compile Include="WebConfig\RssConfigProviderCollection.cs" />
-    <Compile Include="WebControls\InfoLabel.cs" />
     <Compile Include="WebControls\Input.cs" />
     <Compile Include="WebControls\InputWithButton.cs" />
     <Compile Include="WebControls\LabeledCheckBox.cs" />

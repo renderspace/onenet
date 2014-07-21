@@ -124,7 +124,7 @@ namespace One.Net.BLL.DAL
                 rssFeed.LinkToList = reader.GetString(4);
                 rssFeed.LinkToSingle = reader.GetString(5);
                 rssFeed.Categories =
-                    StringTool.SplitStringToIntegers(reader.IsDBNull(6) ? string.Empty : reader.GetString(6));
+                    StringTool.SplitStringToIntegers(reader.IsDBNull(6) ? "" : reader.GetString(6));
                 rssFeed.LanguageId = reader.GetInt32(7);
             }
         }

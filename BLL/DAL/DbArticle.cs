@@ -215,7 +215,7 @@ WHERE a2.publish = @publishFlag ";
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
         {
-            return ListPagedArticles(false, null, null, string.Empty, state, languageId, false, true);
+            return ListPagedArticles(false, null, null, "", state, languageId, false, true);
         }
 
         public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, bool showUntranslated, string titleSearch, List<int> regulars)

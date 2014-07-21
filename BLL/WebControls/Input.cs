@@ -24,7 +24,7 @@ namespace One.Net.BLL.WebControls
             get
             {
                 String s = (String)ViewState["Text"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
             
             set
@@ -42,7 +42,7 @@ namespace One.Net.BLL.WebControls
             get
             {
                 String s = (String)ViewState["ContainerCssClass"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
 
             set
@@ -60,7 +60,7 @@ namespace One.Net.BLL.WebControls
             get
             {
                 String s = (String)ViewState["TextBoxCssClass"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
 
             set
@@ -217,7 +217,7 @@ namespace One.Net.BLL.WebControls
             lab1.Text = Text;
             lab1.AssociatedControlID = inp.ID;
 
-            if (inputRequired.ErrorMessage == string.Empty)
+            if (inputRequired.ErrorMessage == "")
             {
                 string errmsg = "Field is required";
                 inputRequired.ErrorMessage = errmsg;

@@ -115,8 +115,8 @@ namespace One.Net.BLL.DAL
                     sitePage.Order = rdr.GetInt32(_indexOrder);
                     sitePage.LanguageId = languageId;
                     sitePage.ContentId = rdr.GetInt32(_indexContentID);
-                    sitePage.Title = rdr[_indexTitle] != DBNull.Value ? rdr.GetString(_indexTitle) : string.Empty;
-                    sitePage.Teaser = rdr[_indexTeaser] != DBNull.Value ? rdr.GetString(_indexTeaser) : string.Empty;
+                    sitePage.Title = rdr[_indexTitle] != DBNull.Value ? rdr.GetString(_indexTitle) : "";
+                    sitePage.Teaser = rdr[_indexTeaser] != DBNull.Value ? rdr.GetString(_indexTeaser) : "";
 
 
                     sitePage.ParLink = rdr.GetString(_indexUrl);

@@ -34,7 +34,7 @@ namespace One.Net.BLL
         public static string GetMeaning(string keyWord, bool noHtml = false)
         {
             if (string.IsNullOrEmpty(keyWord))
-                return string.Empty;
+                return "";
 
             string cacheKey = DICT_CACHE_ID + "L_" + Thread.CurrentThread.CurrentCulture.LCID + "_" + keyWord;
 

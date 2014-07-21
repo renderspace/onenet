@@ -62,8 +62,8 @@ namespace One.Net.BLL.Web
     public class AdminExternalEventArgs : EventArgs
     {
         private Exception exc = new Exception();
-        private string message = string.Empty;
-        private string warning = string.Empty;
+        private string message = "";
+        private string warning = "";
 
         public AdminExternalEventArgs(Exception exc, string message)
         {

@@ -68,7 +68,7 @@ namespace OneMainWeb.AdminControls
                 folder.Type = CategoryType;
                 folder.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
                 folder.Title = InputWithButtonAddTreeNode.Value;
-                folder.Teaser = folder.SubTitle = folder.Html = string.Empty;
+                folder.Teaser = folder.SubTitle = folder.Html = "";
                 folder.IsSelectable = true;
                 folder.IsPrivate = false;
                 folder.ChildCount = 0;

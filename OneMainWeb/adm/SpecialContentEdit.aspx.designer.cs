@@ -49,15 +49,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl rightSettings;
         
         /// <summary>
-        /// InfoLabelLastChange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelLastChange;
-        
-        /// <summary>
         /// DropDownListModuleInstances control.
         /// </summary>
         /// <remarks>

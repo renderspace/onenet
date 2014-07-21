@@ -8,12 +8,16 @@
         <summary>Advanced settings</summary>
 
         <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="ModuleInstanceSettings" />
-        <asp:Repeater ID="rptSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated">
+        <asp:Repeater ID="RepeaterSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated" OnItemDataBound="RepeaterSettings_ItemDataBound">
             <ItemTemplate>
                 <asp:Label ID="KeyLabel1" runat="server" Visible="false" Text='<%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Key %>'></asp:Label>
                 <two:ValidInput ID="ValidInput1" runat="server" Visible="false"  Text='<%# ResourceManager.GetString("$" + ((KeyValuePair<string, BOSetting>)Container.DataItem).Value.Name) %>' Value='<%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Value.Value %>' ValidationGroup="ModuleInstanceSettings" Required="false" />
                 <two:LabeledCheckBox ID="CheckBox1" runat="server" Visible="false" Text='<%# ResourceManager.GetString("$" + ((KeyValuePair<string, BOSetting>)Container.DataItem).Value.Name) %>' />
-                <two:InfoLabel ID="InfoLabel1" runat="server" Visible="false" Value='<%# ResourceManager.GetString("$" + ((KeyValuePair<string, BOSetting>)Container.DataItem).Value.Value) %>'  Text='<%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Key %>'></two:InfoLabel>
+
+                <asp:Panel runat="server" CssClass="infoLabel" ID="PanelInfo">
+                    <asp:Label runat="server" ID="LabelKey" AssociatedControlID="LabelValue"></asp:Label>
+                    <asp:Label  runat="server" ID="LabelValue"></asp:Label>
+                </asp:Panel>
                 
                 <asp:Panel ID="PanelSelect1" runat="server" Visible="false" CssClass="select">
                     <asp:Label ID="Label1" runat="server" Text='<%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Key %>'></asp:Label>

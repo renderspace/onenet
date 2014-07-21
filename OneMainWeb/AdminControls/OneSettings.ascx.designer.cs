@@ -22,13 +22,13 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
         
         /// <summary>
-        /// rptSettings control.
+        /// RepeaterSettings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptSettings;
+        protected global::System.Web.UI.WebControls.Repeater RepeaterSettings;
         
         /// <summary>
         /// PanelCommands control.

@@ -93,8 +93,8 @@ namespace OneMainWeb.Controls
                     string title = dataItem.Title;
                     bool dataItemHasChildren = dataItem.HasChildNodes;
 
-                    string cssClass = string.Empty;
-                    string linkCssClass = string.Empty;
+                    string cssClass = "";
+                    string linkCssClass = "";
 
                     IHierarchyData data = dataItems.GetHierarchyData(dataItem);
 

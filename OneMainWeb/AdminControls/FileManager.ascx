@@ -58,7 +58,7 @@
 		        <asp:TemplateField HeaderText="$file_name" ItemStyle-CssClass="FileName">
                     <ItemTemplate>
                         <asp:Label ID="lblFileName" runat="server" Text='<%# Eval("Name") %>' /><br />
-                        <%# Eval("Content") != null && (bool)Eval("Content.IsRated") ? ResourceManager.GetString("$votes") + " : " + Eval("Content.Votes").ToString() + " " + ResourceManager.GetString("$score") + " : " + Eval("Content.Score").ToString() : string.Empty%>
+                        <%# Eval("Content") != null && (bool)Eval("Content.IsRated") ? ResourceManager.GetString("$votes") + " : " + Eval("Content.Votes").ToString() + " " + ResourceManager.GetString("$score") + " : " + Eval("Content.Score").ToString() : ""%>
                     </ItemTemplate>
                     <EditItemTemplate>
                         <strong><asp:Label ID="lblFileName" runat="server" Text='<%# Eval("Name") %>' /></strong>

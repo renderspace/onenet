@@ -344,7 +344,7 @@ namespace OneMainWeb
 
         protected string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
         {
-            string strReturn = string.Empty;
+            string strReturn = "";
             if (objIsChanged != null && objMarkedForDeletion != null)
             {
                 if (bool.Parse(objMarkedForDeletion.ToString()))

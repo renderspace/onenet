@@ -15,7 +15,7 @@ namespace OneMainWeb.AdminControls
 {
     public partial class Notifier : System.Web.UI.UserControl
     {
-        string title = string.Empty, message = string.Empty, code = string.Empty, exceptionName = string.Empty, exceptionMessage = string.Empty, warning = string.Empty;
+        string title = "", message = "", code = "", exceptionName = "", exceptionMessage = "", warning = "";
 
         public string Title
         {
@@ -67,7 +67,7 @@ namespace OneMainWeb.AdminControls
                 Label5.Text = ResourceManager.GetString(ExceptionName);
                 Label6.Text = ResourceManager.GetString(ExceptionMessage);
             }
-            if (!string.IsNullOrEmpty(Message))
+            if (!string.IsNullOrEmpty(Title))
             {
                 PanelNotifierSuccess.Visible = true;
                 Label1.Text = ResourceManager.GetString(Title);

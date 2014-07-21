@@ -41,8 +41,8 @@ namespace OneMainWeb
             {
                 if (CurrentItem == null)
                 {
-                    InputFromLink.Value = string.Empty;
-                    InputToLink.Value = string.Empty;
+                    InputFromLink.Value = "";
+                    InputToLink.Value = "";
                 }
                 else
                 {

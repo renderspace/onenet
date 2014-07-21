@@ -128,7 +128,7 @@ namespace One.Net.BLL
         {
             if (!col.HasKeys())
             {
-                return string.Empty;
+                return "";
             }
 
             int count = col.Count;

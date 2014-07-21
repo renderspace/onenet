@@ -119,7 +119,7 @@ namespace OneMainWeb.AdminControls
                     txtCategory.SubTitle = category.SubTitle;
                     chkIsSelectable.Checked = category.IsSelectable;
                     chkIsPrivate.Checked = category.IsPrivate;
-                    InfoLabelID.Value = category.Id.Value.ToString();
+                    LabelId.Text = category.Id.Value.ToString();
 
                     if (ListCategorizedItems != null)
                     {
@@ -151,7 +151,7 @@ namespace OneMainWeb.AdminControls
                 {
                     cmdMoveCategory.Visible = true;
                     moveCategoryPanel.Title = ResourceManager.GetString("$move_category");
-                    lblMoveCategory.Value = SelectedCategory.Title;
+                    LabelCategoryToMove.Text = SelectedCategory.Title;
                     moveCategoryTree.Nodes.Clear();
                     moveCategoryTree.Nodes.Add(treeNodes[0]);
                     moveCategoryTree.ExpandAll();

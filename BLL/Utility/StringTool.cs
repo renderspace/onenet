@@ -50,7 +50,7 @@ namespace One.Net.BLL
             Regex finder = new Regex(regex, RegexOptions.IgnoreCase);
             MatchCollection matches = finder.Matches(str);
             if (matches.Count < 1)
-                return string.Empty;
+                return "";
             string answer = matches[0].ToString();
             finder = new Regex(@name + @"=""", RegexOptions.IgnoreCase);
             answer = finder.Replace(answer, "");
@@ -64,14 +64,14 @@ namespace One.Net.BLL
             char separator = ',';
             if (categories != null)
             {
-                string cats = string.Empty;
+                string cats = "";
                 foreach (int cat in categories)
                     cats += cat.ToString() + separator;
                 return cats.TrimEnd(separator);
             }
             else
             {
-                return string.Empty;
+                return "";
             }
         }
 
@@ -79,14 +79,14 @@ namespace One.Net.BLL
         {
             if (strings != null)
             {
-                string strs = string.Empty;
+                string strs = "";
                 foreach (string str in strings)
                     strs += str.ToString() + separator;
                 return strs.TrimEnd(separator);
             }
             else
             {
-                return string.Empty;
+                return "";
             }
         }
 
@@ -146,7 +146,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public static string GetStringWithWordsAndAfter(string original, string matchString, int wordsBefore, int wordsAfter)
         {
-            string retValue = string.Empty;
+            string retValue = "";
 
             string[] matchedWords = matchString.Split(new char[] { ' ' });
 

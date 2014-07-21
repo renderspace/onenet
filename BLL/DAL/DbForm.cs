@@ -19,7 +19,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[0] = SqlHelper.GetNullable("Id", form.Id);
             paramsToPass[1] = new SqlParameter("@ContentId", form.ContentId.Value);
 
-            string formType = string.Empty;
+            string formType = "";
             switch (form.FormType)
             {
                 case FormTypes.Poll: formType = BOForm.FORM_TYPE_POLL; break;
@@ -61,7 +61,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[0] = SqlHelper.GetNullable("@Id", section.Id);
             paramsToPass[1] = new SqlParameter("@ContentId", section.ContentId.Value);
 
-            string sectionType = string.Empty;
+            string sectionType = "";
             switch (section.SectionType)
             {
                 case SectionTypes.MultiPage: sectionType = BOSection.SECTION_TYPE_MULTI_PAGE; break;
@@ -78,7 +78,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[0].Direction = ParameterDirection.InputOutput;
             paramsToPass[0].DbType = DbType.Int32;
 
-            string sql = string.Empty;
+            string sql = "";
 
             if (section.Id.HasValue)
             {
@@ -108,7 +108,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[3] = new SqlParameter("@SectionId", question.ParentId.Value);
             paramsToPass[4] = new SqlParameter("@Idx", question.Idx);
 
-            string validationType = string.Empty;
+            string validationType = "";
             switch (question.ValidationType)
             {
                 case ValidationTypes.None: validationType = BOQuestion.VALIDATION_TYPE_NONE; break;
@@ -124,7 +124,7 @@ namespace One.Net.BLL.DAL
 
             paramsToPass[5] = new SqlParameter("@ValidationType", validationType);
 
-            string sql = string.Empty;
+            string sql = "";
 
             paramsToPass[0].Direction = ParameterDirection.InputOutput;
             paramsToPass[0].DbType = DbType.Int32;
@@ -155,7 +155,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[0] = new SqlParameter("@Id", answer.Id);
             paramsToPass[1] = new SqlParameter("@ContentId", answer.ContentId.Value);
 
-            string answerType = string.Empty;
+            string answerType = "";
             switch (answer.AnswerType)
             {
                 case AnswerTypes.Checkbox: answerType = BOAnswer.ANSWER_TYPE_CHECKBOX; break;
@@ -166,7 +166,7 @@ namespace One.Net.BLL.DAL
             }
             paramsToPass[2] = new SqlParameter("@AnswerType", answerType);
 
-            string additionalFieldType = string.Empty;
+            string additionalFieldType = "";
             switch (answer.AdditionalFieldType)
             {
                 case AdditionalFieldTypes.File: additionalFieldType = BOAnswer.ADDITIONAL_FIELD_TYPE_FILE; break;
@@ -183,7 +183,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[9] = SqlHelper.GetNullable("@AllowedMimeTypes", answer.AllowedMimeTypes); 
             paramsToPass[10] = new SqlParameter("@IsFake", answer.IsFake);
 
-            string sql = string.Empty;
+            string sql = "";
 
             paramsToPass[0].Direction = ParameterDirection.Output;
             paramsToPass[0].DbType = DbType.Int32;
@@ -299,13 +299,13 @@ namespace One.Net.BLL.DAL
                         case BOForm.FORM_TYPE_QUESTIONAIRE: form.FormType = FormTypes.Questionaire; break;
                     }
 
-                    form.SendToString = (reader.IsDBNull(3) ? string.Empty : reader.GetString(3));
+                    form.SendToString = (reader.IsDBNull(3) ? "" : reader.GetString(3));
                     form.SubmissionCount = reader.GetInt32(4);
                     form.FirstSubmissionDate = (reader.IsDBNull(5) ? (DateTime?)null : reader.GetDateTime(5));
                     form.LastSubmissionDate = (reader.IsDBNull(6) ? (DateTime?)null : reader.GetDateTime(6));
                     form.AllowMultipleSubmissions = reader.GetBoolean(7);
                     form.AllowModifyInSubmission = reader.GetBoolean(8);
-                    form.CompletionRedirect = (reader["completion_redirect"] == DBNull.Value ? string.Empty : (string)reader["completion_redirect"]);
+                    form.CompletionRedirect = (reader["completion_redirect"] == DBNull.Value ? "" : (string)reader["completion_redirect"]);
                 }
             }
 
@@ -383,13 +383,13 @@ namespace One.Net.BLL.DAL
                             break;
                     }
 
-                    form.SendToString = (reader.IsDBNull(13) ? string.Empty : reader.GetString(13));
+                    form.SendToString = (reader.IsDBNull(13) ? "" : reader.GetString(13));
                     form.SubmissionCount = reader.GetInt32(14);
                     form.FirstSubmissionDate = (reader.IsDBNull(15) ? (DateTime?) null : reader.GetDateTime(15));
                     form.LastSubmissionDate = (reader.IsDBNull(16) ? (DateTime?) null : reader.GetDateTime(16));
                     form.AllowMultipleSubmissions = reader.GetBoolean(17);
                     form.AllowModifyInSubmission = reader.GetBoolean(18);
-                    form.CompletionRedirect = (reader["completion_redirect"] == DBNull.Value ? string.Empty : (string)reader["completion_redirect"]);
+                    form.CompletionRedirect = (reader["completion_redirect"] == DBNull.Value ? "" : (string)reader["completion_redirect"]);
 
                     if (forms.AllRecords < 1)
                         forms.AllRecords = reader.GetInt32(21);
@@ -406,7 +406,7 @@ namespace One.Net.BLL.DAL
         {
             PagedList<BOFormSubmission> submissions = new PagedList<BOFormSubmission>();
 
-            string sql = string.Empty;
+            string sql = "";
             CommandType commandType = CommandType.Text;
             SqlParameter[] paramsToPass = null;
 
@@ -662,7 +662,7 @@ namespace One.Net.BLL.DAL
                     answer.MaxChars = (reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6));
                     answer.NumberOfRows = (reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7));
                     answer.MaxFileSize = (reader.IsDBNull(8) ? (int?)null : reader.GetInt32(8));
-                    answer.AllowedMimeTypes = (reader.IsDBNull(9) ? string.Empty : reader.GetString(9));
+                    answer.AllowedMimeTypes = (reader.IsDBNull(9) ? "" : reader.GetString(9));
                     answer.TimesAnswered = reader.GetInt32(10);
                     answer.IsFake = reader.GetBoolean(11);
 

@@ -52,6 +52,11 @@ namespace One.Net.BLL
             set { this.userVisibility = value; }
         }
 
+        public bool IsVisible
+        {
+            get { return UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL; }
+        }
+
 	    public Dictionary<string, string> Options
 	    {
 	        get { return options; }

@@ -18,7 +18,7 @@ namespace One.Net.BLL
             get { return wholeHtml; }
         }
 
-        private string cssClass = string.Empty;
+        private string cssClass = "";
 
         public string CssClass
         {

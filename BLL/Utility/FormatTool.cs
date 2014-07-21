@@ -33,7 +33,7 @@ namespace One.Net.BLL
             if (file.Contains("."))
                 return Regex.Replace(file, @"^.*\.", "");
             else
-                return string.Empty;
+                return "";
         }
 
         public static string GetFileName(string fileUri)

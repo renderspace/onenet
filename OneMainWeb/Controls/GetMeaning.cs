@@ -24,7 +24,7 @@ namespace OneMainWeb.Controls
             get
             {
                 String s = (String)ViewState["Keyword"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
 
             set

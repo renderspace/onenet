@@ -28,7 +28,6 @@
 	<resource name="l_to">Do</resource>
 	<resource name="l_idx">Zap.št.</resource>
 	<resource name="page_status">Status</resource>
-	<resource name="page_info">Stran</resource>
 	<resource name="label_edit">Uredi</resource>
 	<resource name="new_tc">* Ni vsebine *</resource>
 	<resource name="all_content_published">Objavljeno</resource>
@@ -104,7 +103,6 @@
 	<resource name="place_holder">Pozicija na strani</resource>
 	<resource name="move_up"> &#9650; </resource>
 	<resource name="move_down"> &#9660; </resource>
-	<resource name="persistency">Dedovanje</resource>
 	<resource name="add_page">Nova stran</resource>
 	<resource name="change_position">Spremeni postavitev modula</resource>
 	<resource name="update">Shrani</resource>
@@ -555,7 +553,6 @@
 	<resource name="missing_rssConfiguration_providers_section_from_web_config">V web.config manjka sekcija ponudniki RSS</resource>
 	<resource name="missing_rssConfiguration_providers_from_web_config">V web.config manjka vsebina sekcije ponudniki RSS</resource>
 	<resource name="rss_categories_loading_failed">Napaka pri nalaganjo RSS kategorij.</resource>
-	<resource name="help">Pomoč</resource>
 	<resource name="mi_locations">Lokacija</resource>
 	<resource name="mi_charts">Lestvice</resource>
 	<resource name="mi_authors">Avtorji</resource>

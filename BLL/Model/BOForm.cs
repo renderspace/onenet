@@ -30,8 +30,8 @@ namespace One.Net.BLL.Forms
         private bool allowMultipleSubmissions = false;
         private bool allowModifyInSubmission = false;
         private int submissionCount = 0;
-        private string sendToString = string.Empty;
-        private string completionRedirect = string.Empty;
+        private string sendToString = "";
+        private string completionRedirect = "";
         private FormTypes formType = FormTypes.Poll;
         private Dictionary<int, BOSection> sections = new Dictionary<int, BOSection>();
         private DateTime? firstSubmissionDate = null;
@@ -159,7 +159,7 @@ namespace One.Net.BLL.Forms
         public const string SECTION_TYPE_SINGLE_PAGE = "SinglePage";
 
         private int idx;
-        private string onClientClick = string.Empty;
+        private string onClientClick = "";
         private SectionTypes sectionType = SectionTypes.SinglePage;
         private Dictionary<int, BOQuestion> questions = new Dictionary<int, BOQuestion>();
 
@@ -257,7 +257,7 @@ namespace One.Net.BLL.Forms
         private int? maxChars = null;
         private int? numberOfRows = null;
         private int? maxFileSize = null;
-        private string allowedMimeTypes = string.Empty;
+        private string allowedMimeTypes = "";
         private AnswerTypes answerType = AnswerTypes.SingleText;
         private AdditionalFieldTypes additionalFieldType = AdditionalFieldTypes.None;
         private int timesAnswered = 0; // used when displaying poll results, and aggregate results

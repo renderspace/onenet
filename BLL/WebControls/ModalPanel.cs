@@ -275,11 +275,11 @@ namespace One.Net.BLL.WebControls
             set { iconUrl = value; }
         }
 
-        private string title = String.Empty;
+        private string title = "";
         private string titleCssClass = "modalPanelTitle";
         private string windowClass = "modalPanel";
         private string closeButtonImageUrl = "toolbar_close.gif";
-        private string iconUrl = String.Empty;
+        private string iconUrl = "";
         private string iconCssClass = "titleIcon";
 
         /// <summary>
