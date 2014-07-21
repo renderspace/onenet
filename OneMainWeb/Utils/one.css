@@ -10,6 +10,7 @@ textarea {display: inline-block; padding: 3px 5px; border: 1px #ccc solid!import
 input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
 input[type="text"], select { border: 1px #ccc solid!important;}
 .input, .select, .buttons {margin-bottom: 15px;}
+.page-and-module-settings input[type="text"], .page-and-module-settings  select, .page-and-module-settings  .input span {width: 100%;}
 
 input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
 
