@@ -33,7 +33,7 @@
 		         </asp:PlaceHolder>
                 <div class="save">
                     <asp:Button ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="$revert_to_published" CssClass="left" />
-                    <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="$label_save" CssClass="right" />
+                    <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="right save-btn" />
                 </div>		
             </div>		     
         </div>

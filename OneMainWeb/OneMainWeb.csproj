@@ -347,6 +347,7 @@
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
+    <Content Include="JavaScript\jquery.details.js" />
     <Content Include="JavaScript\jquery.ui.datepicker-sl.js" />
     <Content Include="OneMain.Master" />
   </ItemGroup>

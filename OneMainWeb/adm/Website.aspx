@@ -80,7 +80,7 @@
                         <two:InfoLabel ID="InfoLabelPageId" runat="server" Text="$selected_page_id" />                                        
                     </div>                         
                     <div class="save">
-                        <asp:Button OnPreRender="ButtonDelete_PreRender" ID="ButtonDelete" runat="server" text="$delete_node_and_subpages" OnClick="ButtonDelete_Click" />
+                        <asp:Button OnPreRender="ButtonDelete_PreRender" ID="ButtonDelete" runat="server" text="Delete node and everything below" OnClick="ButtonDelete_Click" CssClass="delete-btn" />
                     </div>
                 </div>
             </asp:View>

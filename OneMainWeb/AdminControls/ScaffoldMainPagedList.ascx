@@ -22,7 +22,7 @@
                 OnSorting="GridViewItems_Sorting">
             </asp:GridView>                
             <div class="buttonsMiddle">
-                <asp:Button ID="ButtonDeleteSelected" runat="server" Text="$delete_selected_items" onclick="ButtonDeleteSelected_Click" />
+                <asp:Button ID="ButtonDeleteSelected" runat="server" Text="$delete_selected_items" onclick="ButtonDeleteSelected_Click" CssClass="delete-btn" />
             </div>
             <bll:PostbackPager id="PostbackPager1" OnCommand="PostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
             <asp:Literal ID="Literal1" runat="server" Text=""></asp:Literal>

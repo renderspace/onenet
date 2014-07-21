@@ -14,12 +14,10 @@
 	<resource name="update_succeeded">Vnos je bil uspešno shranjen</resource>
 	<resource name="update_failed_missing_data">Prosimo izpolnite vse obvezne podakte. Vnos ni bil shranjen.</resource>
 	<resource name="error_saving">Napaka pri shranjevanju.</resource>
-	<resource name="redirectToUrl">Preusmeritev na URL</resource>
 	<resource name="viewGroups">Dovoljenje za ogled strani</resource>
 	<resource name="editGroups">Dovoljenje za urejanje strani</resource>
 	<resource name="requireSSL">Zahtevana varna povezava</resource>
 	<resource name="show_untranslated">Pokaži neprevedeno vsebino</resource>
-	<resource name="clear_preview_cache">Izprazni cache</resource>
 	<resource name="has_children_delete_not_possible">Stran ima podstrani, zato brisanje ni možno.</resource>
 	<resource name="show_pages_without_translation">Pokaži strani brez prevoda</resource>
 	<resource name="enable_menu_group_display">Pokaži skupine menijev</resource>
@@ -89,12 +87,9 @@
 	<resource name="confirmed">Prijava potrjena ob</resource>
 	<resource name="add_subpage">Dodaj novo stran</resource>
 	<resource name="page_title">Naslov strani</resource>
-	<resource name="page_template">Predloga strani</resource>
 	<resource name="page_url">URI (link do strani)</resource>
-	<resource name="page_menu_group">Skupina menijev (pozicija menija)</resource>
 	<resource name="page_id">Zaporedna št. strani</resource>
 	<resource name="page_url_name">Imena menijev</resource>
-	<resource name="break_persistance">Ne deduj modulov na tej strani</resource>
 	<resource name="label_website_settings">Nastavitve spletnega mesta</resource>
 	<resource name="label_page_settings">Nastavitve strani</resource>
 	<resource name="label_update_root_par_link_as_blank">URL vstopne strani je bil shranjen kot /</resource>
@@ -103,7 +98,6 @@
 	<resource name="label_module_settings">Nastavitve modula</resource>
 	<resource name="edit_structure">Urejanje strukture</resource>
 	<resource name="add_module_instance">Nov modul</resource>
-	<resource name="add_module_instance_button">Dodaj</resource>
 	<resource name="last_changed_date">Zadnjič uredil</resource>
 	<resource name="modules_on_page">Moduli na tej strani</resource>
 	<resource name="module_name">Modul</resource>

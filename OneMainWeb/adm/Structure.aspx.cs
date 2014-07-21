@@ -151,8 +151,8 @@ namespace OneMainWeb.adm
 
                     PanelAddSubPage.Visible = PanelAddSubPage.Visible && !selectedPage.MarkedForDeletion;
 
-                    ButtonPublish.Text = selectedPage.MarkedForDeletion ? "$publish_delete" : "$publish";
-                    ButtonUnPublish.Text = "$unpublish_page";
+                    ButtonPublish.Text = selectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
+                    ButtonUnPublish.Text = "Unpublish";
                     ImagePageStatus.Visible = true;
                     if (selectedPage.MarkedForDeletion)
                     {
@@ -170,26 +170,7 @@ namespace OneMainWeb.adm
                     LabelUriPart.Text = selectedPage.ParentURI;
                     TextBoxUri.Text = selectedPage.ParLink;
 
-                    DropDownListMenuGroups.Items.Clear();
-                    PanelMenuGroups.Visible = false;
-                    TwoInputMenuGroup.Visible = true;
-
-                    TwoInputMenuGroup.Value = selectedPage.MenuGroup.ToString();
-                    BOSetting MenuGroupListSetting = null;
-                    if (webSite.Settings.TryGetValue("MenuGroupList", out MenuGroupListSetting))
-                    {
-                        List<int> menugroupIds = StringTool.SplitStringToIntegers(MenuGroupListSetting.Value);
-                        if (menugroupIds.Count > 0)
-                        {
-                            PanelMenuGroups.Visible = true;
-                            TwoInputMenuGroup.Visible = false;
-                            DropDownListMenuGroups.DataSource = menugroupIds;
-                            DropDownListMenuGroups.DataBind();
-
-                            if (menugroupIds.Contains(selectedPage.MenuGroup))
-                                DropDownListMenuGroups.SelectedValue = selectedPage.MenuGroup.ToString();
-                        }
-                    }
+                    TextBoxMenuGroup.Text = selectedPage.MenuGroup.ToString();
                     ddlPageTemplate_DataBind();
 
                     ListItem selItem = ddlPageTemplate.Items.FindByValue(selectedPage.Template.Id.ToString());
@@ -197,9 +178,8 @@ namespace OneMainWeb.adm
                     {
                         selItem.Selected = true;
                     }
-                    LabeledCheckBoxBreakPersistance.Checked = selectedPage.BreakPersistance;
-
-                    InputRedirectToUrl.Value = selectedPage.RedirectToUrl;
+                    CheckBoxBreakPersitence.Checked = selectedPage.BreakPersistance;
+                    InputRedirectToUrl1.Text = selectedPage.RedirectToUrl;
 
                     if (selectedPage.ParentId.HasValue)
                     {
@@ -626,14 +606,9 @@ namespace OneMainWeb.adm
 
             if (page != null)
             {
-                bool breakPersistance = LabeledCheckBoxBreakPersistance.Checked;
-                string redirectToUrl = InputRedirectToUrl.Value;
-                int menuGroupID = 0;
-
-                if (PanelMenuGroups.Visible && DropDownListMenuGroups.Items.Count > 0)
-                    menuGroupID = FormatTool.GetInteger(DropDownListMenuGroups.SelectedValue);
-                else
-                    menuGroupID = FormatTool.GetInteger(TwoInputMenuGroup.Value);
+                bool breakPersistance = CheckBoxBreakPersitence.Checked;
+                string redirectToUrl = InputRedirectToUrl1.Text;
+                int menuGroupID = FormatTool.GetInteger(TextBoxMenuGroup.Text);
                 int selectedTemplateID = FormatTool.GetInteger(ddlPageTemplate.SelectedValue);
 
                 if (!page.IsRoot)
