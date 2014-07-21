@@ -4,10 +4,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <one:Notifier runat="server" ID="notifier" />
-
-    <asp:LinkButton ID="LinkButtonWebsites" runat="server" OnClick="LinkButtonWebsites_Click">Websites</asp:LinkButton>
-    <asp:LinkButton ID="LinkButtonCopy" runat="server" OnClick="LinkButtonCopy_Click">Copy website structure</asp:LinkButton>
-    <asp:LinkButton ID="LinkButtonRecursive" runat="server" OnClick="LinkButtonRecursive_Click">Recursive delete</asp:LinkButton>
+    <div class="topCommands">
+        <asp:LinkButton ID="LinkButtonWebsites" runat="server" OnClick="LinkButtonWebsites_Click">Websites</asp:LinkButton>
+        <asp:LinkButton ID="LinkButtonCopy" runat="server" OnClick="LinkButtonCopy_Click">Copy website structure</asp:LinkButton>
+        <asp:LinkButton ID="LinkButtonRecursive" runat="server" OnClick="LinkButtonRecursive_Click">Recursive delete</asp:LinkButton>
+    </div>
 
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="TabMultiview_OnViewIndexChanged">
             <asp:View ID="View1" runat="server">
