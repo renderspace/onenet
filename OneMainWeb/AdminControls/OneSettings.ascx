@@ -24,7 +24,7 @@
             </ItemTemplate>
         </asp:Repeater>
         <asp:Panel runat="server" ID="PanelCommands" CssClass="commands">
-            <asp:Button ID="cmdSaveChanges" runat="server" OnClick="cmdSaveChanges_Click" Text="$update" ValidationGroup="ModuleInstanceSettings"  />
+            <asp:Button ID="cmdSaveChanges" runat="server" OnClick="cmdSaveChanges_Click" Text="Save" ValidationGroup="ModuleInstanceSettings"  CssClass="save-btn" />
         </asp:Panel>
     </details>
 </div>

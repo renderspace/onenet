@@ -35,7 +35,7 @@
                 <one:TextContentControl ID="TextContentEditor" runat="server" />
                 <div class="save">
                     <asp:Button ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="$revert_to_published" CssClass="left" />
-                    <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="$label_save" CssClass="right" />
+                    <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="right save-btn" />
                 </div>		
                 <%-- 
                 <two:InfoLabel runat="server" ID="InfoLabelVotes" Text="$votes" ></two:InfoLabel>                                
