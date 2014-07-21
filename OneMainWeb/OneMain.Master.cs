@@ -130,7 +130,6 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             LiteralAppVersion.Text = AppVersion;
-            HyperLinkHelp.Text = ResourceManager.GetString("$help");
 
             profile = new WebProfile(ProfileBase.Create(Page.User.Identity.Name, Page.User.Identity.IsAuthenticated));
             if (!IsPostBack || SelectedCulture != CultureInfo.CurrentCulture.Name)

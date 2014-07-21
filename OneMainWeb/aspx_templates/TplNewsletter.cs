@@ -20,7 +20,7 @@ namespace OneMainWeb.aspx_templates
         int templateID = -1;
         int newsletterID = -1;
         bool validData = false;
-        string testEmail, fromEmail, toEmail, hash = string.Empty;
+        string testEmail, fromEmail, toEmail, hash = "";
 
         public int NewsletterID
         {

@@ -69,7 +69,7 @@ namespace One.Net.BLL
             if (!name.StartsWith("$"))
                 return name;
             if (name.Length < 2)
-                return string.Empty;
+                return "";
             else
                 name = name.TrimStart('$');
 
@@ -81,7 +81,7 @@ namespace One.Net.BLL
             if (!name.StartsWith("$"))
                 return name;
             if (name.Length < 2)
-                return string.Empty;
+                return "";
             else
                 name = name.TrimStart('$');
 
@@ -93,7 +93,7 @@ namespace One.Net.BLL
 			if (!name.StartsWith("$"))
 				return name;
 			if (name.Length < 2)
-				return string.Empty;
+				return "";
 			else
 				name = name.TrimStart('$');
 

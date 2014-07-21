@@ -98,7 +98,7 @@ namespace OneMainWeb
 
         public static string GetFileIcon(Page page, string location, string extension)
         {
-            string ret = string.Empty;
+            string ret = "";
             switch (extension)
             {
                 case "ai":

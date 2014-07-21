@@ -40,24 +40,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TreeView TreeView1;
         
         /// <summary>
-        /// rightSettings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rightSettings;
-        
-        /// <summary>
-        /// InfoLabelLastChange control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelLastChange;
-        
-        /// <summary>
         /// DropDownListModuleInstances control.
         /// </summary>
         /// <remarks>
@@ -85,6 +67,15 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button ButtonChangeModuleInstance;
         
         /// <summary>
+        /// PanelEditor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelEditor;
+        
+        /// <summary>
         /// TextContentEditor control.
         /// </summary>
         /// <remarks>
@@ -92,6 +83,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.TextContentControl TextContentEditor;
+        
+        /// <summary>
+        /// LabelChanged control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelChanged;
         
         /// <summary>
         /// cmdRevertToPublished control.

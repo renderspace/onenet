@@ -245,7 +245,7 @@ namespace One.Net.BLL.Utility
 
             private void Initialise(string query)
             {
-                if (query == string.Empty || query == null)
+                if (query == "" || query == null)
                 {
                     return;
                 }
@@ -255,7 +255,7 @@ namespace One.Net.BLL.Utility
 
                 query = HttpUtility.UrlDecode(query); //not actually necessary if using a  "~" prefix
 
-                if (_encoder.Prefix != string.Empty && _encoder.Prefix != null && query.StartsWith(_encoder.Prefix))
+                if (_encoder.Prefix != "" && _encoder.Prefix != null && query.StartsWith(_encoder.Prefix))
                 {
                     query = query.Substring(_encoder.Prefix.Length);
                     query = _encoder.Decode(query);
@@ -265,7 +265,7 @@ namespace One.Net.BLL.Utility
                 foreach (string s in pairs)
                 {
                     string[] pair = s.Split(new char[] { '=' });
-                    this[pair[0]] = (pair.Length > 1) ? pair[1] : string.Empty;
+                    this[pair[0]] = (pair.Length > 1) ? pair[1] : "";
                 }
             }
 
@@ -283,7 +283,7 @@ namespace One.Net.BLL.Utility
             {
                 if (!this.HasKeys())
                 {
-                    return string.Empty;
+                    return "";
                 }
 
                 int count = this.Count;
@@ -333,7 +333,7 @@ namespace One.Net.BLL.Utility
             {
                 get
                 {
-                    return string.Empty;
+                    return "";
                 }
             }
         }

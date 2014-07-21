@@ -59,10 +59,10 @@ namespace OneMainWeb
         private void PrepareEmptyArticle()
         {
             SelectedArticle = new BOArticle();
-            SelectedArticle.Title = string.Empty;
-            SelectedArticle.SubTitle = string.Empty;
-            SelectedArticle.Teaser = string.Empty;
-            SelectedArticle.Html = string.Empty;
+            SelectedArticle.Title = "";
+            SelectedArticle.SubTitle = "";
+            SelectedArticle.Teaser = "";
+            SelectedArticle.Html = "";
             SelectedArticle.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             SelectedArticle.IsNew = true;
             SelectedArticle.PublishFlag = false;
@@ -350,7 +350,7 @@ namespace OneMainWeb
             if ( articleId == -1)
                 e.InputParameters["titleSearch"] = InputWithButtonShowById.Value;                
             else
-                e.InputParameters["titleSearch"] = string.Empty;              
+                e.InputParameters["titleSearch"] = "";              
 
             if (e.ExecutingSelectCount)
                 e.InputParameters.Clear();
@@ -557,7 +557,7 @@ namespace OneMainWeb
             BORegular regular = new BORegular();
 
             regular.Title = txtNewRegular.Value;
-            regular.SubTitle = regular.Teaser = regular.Html = string.Empty;
+            regular.SubTitle = regular.Teaser = regular.Html = "";
             regular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             regular.ContentId = null;
 
@@ -610,7 +610,7 @@ namespace OneMainWeb
         public PagedList<BOArticle> SelectArticles(int recordsPerPage, int firstRecordIndex, string sortBy, string strRegularId, bool showUntranslated, string titleSearch)
         {
             int regularId = FormatTool.GetInteger(strRegularId);
-            string regularFilter = string.Empty;
+            string regularFilter = "";
             if (regularId > 0)
             {
                 regularFilter = regularId.ToString();

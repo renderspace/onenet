@@ -23,7 +23,7 @@ namespace One.Net.BLL.WebControls
             get
             {
                 String s = (String)ViewState["Text"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
 
             set
@@ -41,7 +41,7 @@ namespace One.Net.BLL.WebControls
             get
             {
                 String s = (String)ViewState["ContainerCssClass"];
-                return ((s == null) ? String.Empty : s);
+                return ((s == null) ? "" : s);
             }
 
             set

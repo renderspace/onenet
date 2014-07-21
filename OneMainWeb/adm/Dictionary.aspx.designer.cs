@@ -76,15 +76,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Button cmdAddDictionaryEntry;
         
         /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblMessage;
-        
-        /// <summary>
         /// InputWithButtonSearch control.
         /// </summary>
         /// <remarks>
@@ -130,13 +121,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
-        /// infoKeyword control.
+        /// LabelKeyword control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel infoKeyword;
+        protected global::System.Web.UI.WebControls.Label LabelKeyword;
         
         /// <summary>
         /// txtKeyword control.

@@ -16,7 +16,7 @@
             <div class="statusBars">
                 <div class="pageButtons">
                     <div class="lastChanged">
-                        <two:InfoLabel ID="InfoLabelLastChange" runat="server" Text="$last_changed_date" ContainerCssClass="lastChangedStatus"></two:InfoLabel>
+
                     </div>
                     
                     <div class="TextContentInstance">

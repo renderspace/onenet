@@ -40,7 +40,7 @@ namespace One.Net.BLL
         {
             get 
             {
-                string answer = string.Empty;
+                string answer = "";
                 foreach (BORegular regular in regulars)
                 {
                     answer += regular.Title + ", ";

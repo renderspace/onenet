@@ -26,7 +26,7 @@ namespace OneMainWeb.AdminControls
         private bool showHistory;
         private int selectedItemId;
         private ContentGetter getContent;
-        private string selectedGuid = string.Empty;
+        private string selectedGuid = "";
 
         public delegate BOInternalContent ContentGetter(int id);
         public delegate List<BOInternalContentAudit> AuditsLister(int id);
@@ -122,8 +122,6 @@ namespace OneMainWeb.AdminControls
             Input InputSubTitle = GridViewAudit.Rows[rowIndex].FindControl("InputSubTitle") as Input;
             Input InputTeaser = GridViewAudit.Rows[rowIndex].FindControl("InputTeaser") as Input;
             Input InputHtml = GridViewAudit.Rows[rowIndex].FindControl("InputHtml") as Input;
-            InfoLabel LabelDateModified = GridViewAudit.Rows[rowIndex].FindControl("LabelDateModified") as InfoLabel;
-            InfoLabel LabelPrincipalModified = GridViewAudit.Rows[rowIndex].FindControl("LabelPrincipalModified") as InfoLabel;
             ModalPanel PanelAuditInfo = GridViewAudit.Rows[rowIndex].FindControl("PanelAuditInfo") as ModalPanel;
 
 
@@ -132,8 +130,6 @@ namespace OneMainWeb.AdminControls
                 && InputSubTitle != null
                 && InputTeaser != null
                 && InputHtml != null
-                && LabelDateModified != null
-                && LabelPrincipalModified != null
                 && PanelAuditInfo != null)
             {
                 string guid = LiteralHiddenGuid.Text;
@@ -152,8 +148,6 @@ namespace OneMainWeb.AdminControls
                                 InputSubTitle.Value = audit.SubTitle;
                                 InputTeaser.Value = audit.Teaser;
                                 InputHtml.Value = audit.Html;
-                                LabelDateModified.Value = audit.DateModified.Value.ToString();
-                                LabelPrincipalModified.Value = audit.PrincipalModified;
                                 PanelAuditInfo.Visible = true;
                                 break;
                             }

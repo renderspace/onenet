@@ -42,8 +42,9 @@
                                             <two:Input ReadOnly="true" ID="InputSubTitle" Text="$subtitle" runat="server" Value='<%# Eval("SubTitle") %>' />	    
                                             <two:Input TextMode="MultiLine" Rows="3" ReadOnly="true" ID="InputTeaser" Text="$teaser" runat="server" Value='<%# Eval("Teaser") %>' />	    
                                             <two:Input TextMode="MultiLine" Rows="3" ReadOnly="true" ID="InputHtml" Text="$html" runat="server" Value='<%# Eval("Html") %>' />	    
-                                            <two:InfoLabel ID="LabelDateModified" Text="$date_saved" runat="server" Value='<%# Eval("DateModified") %>' />	    
-                                            <two:InfoLabel ID="LabelPrincipalModified" Text="$principal_saved_by" runat="server" Value='<%# Eval("PrincipalModified") %>' />	    
+
+                                            <asp:Label runat="server" ID="LabelModified" Text="<%# Eval("DisplayLastChanged") %>"></asp:Label>
+                                            
                                             <asp:LinkButton ValidationGroup="no-validation-group" ID="CmdRevertTo" runat="server" Text="$revert_to" CommandName="RevertTo" CommandArgument='<%# Container.DataItemIndex %>' />
                                         </div>
                                     </div>

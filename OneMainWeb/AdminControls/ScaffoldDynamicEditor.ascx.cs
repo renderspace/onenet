@@ -669,10 +669,11 @@ jQuery.validator.addMethod(
                             }
                             break;
                         case FieldType.Display:
-                            var InfoLabelDisplay = PanelField.FindControl("FI" + field.Ordinal) as InfoLabel;
+#warning WTF? Display? Save?
+                            var InfoLabelDisplay = PanelField.FindControl("FI" + field.Ordinal) as Label;
                             if (InfoLabelDisplay != null)
                             {
-                                field.NewValueString = InfoLabelDisplay.Value;
+                                field.NewValueString = InfoLabelDisplay.Text;
                             }
                             break;
                         case FieldType.Checkbox:

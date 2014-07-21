@@ -28,7 +28,7 @@ namespace OneMainWeb
 
         protected string ElementStringId
         {
-            get { return (Session["ElementStringId"] != null ? Session["ElementStringId"].ToString() : string.Empty); }
+            get { return (Session["ElementStringId"] != null ? Session["ElementStringId"].ToString() : ""); }
             set { Session["ElementStringId"] = value; }
         }
 
@@ -441,7 +441,7 @@ namespace OneMainWeb
                 chkAllowBlankAnswersInMenu.Visible = false;
             }
 
-            txtAnswers.Value = string.Empty;
+            txtAnswers.Value = "";
             foreach (BOAnswer answer in question.Answers.Values)
             {
                 txtAnswers.Value += answer.Title + "\n";
@@ -897,7 +897,7 @@ namespace OneMainWeb
                             strw.GetStringBuilder().Append(@"<table border=""1px"">");
                             foreach (BOSubmittedAnswer submittedAnswer in submission.SubmittedQuestions[question.Id.Value].SubmittedAnswers.Values)
                             {
-                                string answerCssClass = string.Empty;
+                                string answerCssClass = "";
 
                                 if (submittedAnswer.Answer.AnswerType == AnswerTypes.Checkbox || submittedAnswer.Answer.AnswerType == AnswerTypes.DropDown || submittedAnswer.Answer.AnswerType == AnswerTypes.Radio)
                                 {
@@ -1089,7 +1089,7 @@ namespace OneMainWeb
                         strw.GetStringBuilder().Append(@"<table border=""1px"">");
                         foreach (BOAnswer answer in question.Answers.Values)
                         {
-                            string answerTitle = string.Empty;
+                            string answerTitle = "";
                             if (answer.AnswerType == AnswerTypes.SingleText)
                             {
                                 answerTitle = ResourceManager.GetString("$TextualAnswer");
@@ -1103,7 +1103,7 @@ namespace OneMainWeb
                                 answerTitle = answer.Title;
                             }
 
-                            string answerCssClass = string.Empty;
+                            string answerCssClass = "";
 
                             if (answer.AnswerType == AnswerTypes.Checkbox || answer.AnswerType == AnswerTypes.DropDown || answer.AnswerType == AnswerTypes.Radio)
                             {
@@ -1549,15 +1549,15 @@ namespace OneMainWeb
             form.Id = rand.Next();
 
             form.Title = txtAddForm.Value;
-            form.SendToString = string.Empty;
-            form.SubTitle = string.Empty;
-            form.Teaser = string.Empty;
-            form.Html = string.Empty;
+            form.SendToString = "";
+            form.SubTitle = "";
+            form.Teaser = "";
+            form.Html = "";
             form.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             form.FormType = FormTypes.Questionaire;
             form.AllowModifyInSubmission = false;
             form.AllowMultipleSubmissions = false;
-            form.CompletionRedirect = string.Empty;
+            form.CompletionRedirect = "";
 
             SessionForm = form;
             ElementStringId = "Form" + form.Id.Value;
@@ -1609,12 +1609,12 @@ namespace OneMainWeb
             section.ParentId = SessionForm.Id;
             section.Idx = SessionForm.Sections.Count + 1;
             section.Title = txtAddSection.Value;
-            section.SubTitle = string.Empty;
-            section.Teaser = string.Empty;
-            section.Html = string.Empty;
+            section.SubTitle = "";
+            section.Teaser = "";
+            section.Html = "";
             section.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             section.SectionType = SectionTypes.MultiPage;
-            section.OnClientClick = string.Empty;
+            section.OnClientClick = "";
 
             switch (ddlUpdateSectionTypes.SelectedValue)
             {
@@ -1661,9 +1661,9 @@ namespace OneMainWeb
                 question.ParentId = sectionId;
                 question.Idx = section.Questions.Count + 1;
                 question.Title = txtAddQuestion.Value;
-                question.SubTitle = string.Empty;
-                question.Teaser = string.Empty;
-                question.Html = string.Empty;
+                question.SubTitle = "";
+                question.Teaser = "";
+                question.Html = "";
                 question.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
                 question.IsAnswerRequired = false;
 
@@ -1672,7 +1672,7 @@ namespace OneMainWeb
                 rand = new Random(question.Id.Value);
 
                 // add default answer
-                BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty,string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 255, 0, AdditionalFieldTypes.None, false);
+                BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "","", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 255, 0, AdditionalFieldTypes.None, false);
                 question.Answers.Add(answer.Id.Value, answer);
                 section.Questions.Add(question.Id.Value, question);
                 txtAddQuestion.Value = "";
@@ -1776,7 +1776,7 @@ namespace OneMainWeb
                                 foreach (string answerText in answerStrings)
                                 {
                                     rand = (question.LastAnswerKey.HasValue ? new Random(question.LastAnswerKey.Value) : new Random());
-                                    BOAnswer answer = new BOAnswer(rand.Next(), question.Id, question.Answers.Count + 1, answerText, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, answerType, 0, 0, AdditionalFieldTypes.None, false);
+                                    BOAnswer answer = new BOAnswer(rand.Next(), question.Id, question.Answers.Count + 1, answerText, "", "", "", Thread.CurrentThread.CurrentCulture.LCID, answerType, 0, 0, AdditionalFieldTypes.None, false);
                                     question.Answers.Add(answer.Id.Value, answer);
                                 }
 
@@ -1801,26 +1801,26 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.SingleLineOfText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Captcha:
                         {
                             question.ValidationType = ValidationTypes.Captcha;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 10, 1, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 10, 1, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                             break;
                         }
                     case FormHelper.FrontEndQuestionTypes.MultiLineText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), FormatTool.GetInteger(txtNumberOfRows.Value), AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), FormatTool.GetInteger(txtNumberOfRows.Value), AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.FileUpload:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleFile, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleFile, 0, 0, AdditionalFieldTypes.None, false);
                             answer.MaxFileSize = (FormatTool.GetInteger(txtMaximumFileSize.Value) <= 0 ? (int?)null : FormatTool.GetInteger(txtMaximumFileSize.Value));
                             foreach (ListItem item in chkAllowedMimeTypes.Items)
                             {
@@ -1835,45 +1835,45 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.VAT:
                         {
                             question.ValidationType = ValidationTypes.VAT;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                             break;
                         }
                     case FormHelper.FrontEndQuestionTypes.Telephone :
                         {
                             question.ValidationType = ValidationTypes.Telephone;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                             break;
                         }
                     case FormHelper.FrontEndQuestionTypes.NumericalValue:
                         {
                             question.ValidationType = ValidationTypes.Numeric;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.DateTime:
                         {
                             question.ValidationType = ValidationTypes.DateTime;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Time:
                         {
                             question.ValidationType = ValidationTypes.Time;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Email:
                         {
                             question.ValidationType = ValidationTypes.Email;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Integer:
                         {
                             question.ValidationType = ValidationTypes.Integer;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, string.Empty, string.Empty, string.Empty, string.Empty, Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                 }
@@ -2132,8 +2132,8 @@ namespace OneMainWeb
     [Serializable]
     public class BOAdminFormElement
     {
-        private string stringId = string.Empty;
-        private string parentStringId = string.Empty;
+        private string stringId = "";
+        private string parentStringId = "";
         private bool newlyAdded;
         private bool pendingDelete;
         private string title;

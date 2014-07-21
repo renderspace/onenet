@@ -120,7 +120,7 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(@"<td class=""general"" align=""center"">" +
                                                (sub.DateConfirmed.HasValue
                                                    ? sub.DateConfirmed.Value.ToShortDateString()
-                                                   : string.Empty) + @"</td></tr>");
+                                                   : "") + @"</td></tr>");
             }
             strw.GetStringBuilder().Append("</table><br />");
             // END DETAIL

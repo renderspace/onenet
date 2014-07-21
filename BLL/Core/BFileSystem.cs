@@ -51,7 +51,7 @@ namespace One.Net.BLL
             if (!string.IsNullOrWhiteSpace(localizedTitle))
             {
                 file.Content = new BOInternalContent();
-                file.Content.Html = string.Empty;
+                file.Content.Html = "";
                 file.Content.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
                 file.Content.Title = localizedTitle;
                 file.Content.SubTitle = "";

@@ -77,8 +77,8 @@
                         </div>
                     </div>   
                     <div class="mainEditor">
-                        <two:InfoLabel ID="InfoLabelPageName" runat="server" Text="$selected_page" /><br />
-                        <two:InfoLabel ID="InfoLabelPageId" runat="server" Text="$selected_page_id" />                                        
+                        Selected page: <asp:Label runat="server" ID="LabelSelectedPageName"></asp:Label><br />
+                        Selected page ID: <asp:Label runat="server" ID="LabelSelectedPageId"></asp:Label>                                
                     </div>                         
                     <div class="save">
                         <asp:Button OnPreRender="ButtonDelete_PreRender" ID="ButtonDelete" runat="server" text="Delete node and everything below" OnClick="ButtonDelete_Click" CssClass="delete-btn" />

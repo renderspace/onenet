@@ -29,7 +29,7 @@ namespace One.Net.BLL.WebControls
         protected bool causesValidation;
         protected string buttonText;
         protected bool isLinkButton;
-        protected string validationType = string.Empty;
+        protected string validationType = "";
         protected string buttonCssClass;
 
 
@@ -156,7 +156,7 @@ namespace One.Net.BLL.WebControls
                 }
             }
 
-            if (inputRequired.ErrorMessage == string.Empty)
+            if (inputRequired.ErrorMessage == "")
             {
                 string errmsg = "*";
                 inputRequired.ErrorMessage = errmsg;

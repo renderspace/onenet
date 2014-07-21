@@ -20,9 +20,9 @@ namespace One.Net.BLL
         private int? id = null;
         private int idx;
         private int size = 0;
-        private string name = string.Empty;
-        private string extension = string.Empty;
-        private string mimeType = string.Empty;
+        private string name = "";
+        private string extension = "";
+        private string mimeType = "";
         private byte[] file = null;
 
         #endregion Variables
@@ -80,7 +80,7 @@ namespace One.Net.BLL
 
         public string Title
         {
-            get { return (content != null ? content.Title : string.Empty); }
+            get { return (content != null ? content.Title : ""); }
         }
 
         public override string ToString()

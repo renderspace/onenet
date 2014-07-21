@@ -40,13 +40,13 @@ namespace OneMainWeb.AdminControls {
         protected global::One.Net.BLL.WebControls.LabeledCheckBox chkIsPrivate;
         
         /// <summary>
-        /// InfoLabelID control.
+        /// LabelId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelID;
+        protected global::System.Web.UI.WebControls.Label LabelId;
         
         /// <summary>
         /// cmdDeleteNode control.
@@ -85,13 +85,13 @@ namespace OneMainWeb.AdminControls {
         protected global::One.Net.BLL.WebControls.ModalPanel moveCategoryPanel;
         
         /// <summary>
-        /// lblMoveCategory control.
+        /// LabelCategoryToMove control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel lblMoveCategory;
+        protected global::System.Web.UI.WebControls.Label LabelCategoryToMove;
         
         /// <summary>
         /// moveCategoryTree control.

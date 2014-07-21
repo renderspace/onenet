@@ -109,17 +109,17 @@ namespace OneMainWeb
                     txtTextContent.SubTitle = SelectedDictionaryEntry.SubTitle;
                     txtTextContent.Teaser = SelectedDictionaryEntry.Teaser;
                     txtTextContent.Html = SelectedDictionaryEntry.Html;
-                    infoKeyword.Value = SelectedDictionaryEntry.KeyWord;
+                    LabelKeyword.Text = SelectedDictionaryEntry.KeyWord;
 
                     txtKeyword.Visible = false;
-                    infoKeyword.Visible = true;
+                    LabelKeyword.Visible = true;
                     InsertUpdateButton.Text = ResourceManager.GetString("$update");
                     InsertUpdateCloseButton.Text = ResourceManager.GetString("$update_close");
                 }
                 else
                 {
                     txtKeyword.Visible = true;
-                    infoKeyword.Visible = false;
+                    LabelKeyword.Visible = false;
                     InsertUpdateButton.Text = ResourceManager.GetString("$insert");
                     InsertUpdateCloseButton.Text = ResourceManager.GetString("$insert_close");
                 }
@@ -243,7 +243,7 @@ namespace OneMainWeb
                     txtTextContent.SubTitle = "";
                     txtTextContent.Teaser = "";
                     txtTextContent.Html = "";
-                    infoKeyword.Value = "";
+                    LabelKeyword.Text = "";
 
                     MultiView1.ActiveViewIndex = 0;
                 }
@@ -276,7 +276,7 @@ namespace OneMainWeb
             txtTextContent.SubTitle = "";
             txtTextContent.Teaser = "";
             txtTextContent.Html = "";
-            infoKeyword.Value = SearchTermNoResults;
+            LabelKeyword.Text= SearchTermNoResults;
             MultiView1.ActiveViewIndex = 1;
         }
 

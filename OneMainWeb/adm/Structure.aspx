@@ -9,20 +9,22 @@
 
     <uc1:Notifier ID="Notifier1" runat="server" />
     
-    <section class="module tall">
-        <header><h3 class="tabs_involved">Tree structure</h3>
-            <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
-                <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
-                <asp:Button ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="Add" onclick="cmdAddChild_Click" />
-            </asp:Panel>
-        </header>
-        <div class="treeview">
-	        <asp:TreeView OnUnload="pageTree_Unload" EnableViewState="false" ID="pageTree" runat="server" OnAdaptedSelectedNodeChanged="pageTree_SelectedNodeChanged" OnSelectedNodeChanged="pageTree_SelectedNodeChanged" PopulateNodesFromClient="false" />
+    <div class="row">
+        <div class="col-md-3">
+            <section class="module tall">
+                <header><h3 class="tabs_involved">Tree structure</h3>
+                    <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
+                        <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
+                        <asp:Button ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="Add" onclick="cmdAddChild_Click" />
+                    </asp:Panel>
+                </header>
+                <div class="treeview">
+	                <asp:TreeView OnUnload="pageTree_Unload" EnableViewState="false" ID="pageTree" runat="server" OnAdaptedSelectedNodeChanged="pageTree_SelectedNodeChanged" OnSelectedNodeChanged="pageTree_SelectedNodeChanged" PopulateNodesFromClient="false" />
+                </div>
+            </section>
         </div>
-    </section>
-
-
-    <div class="page-and-module-settings">
+        <div class="col-md-9">
+            <div class="page-and-module-settings">
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View0" runat="server">
                 <section class="module">
@@ -89,14 +91,7 @@
                             </div>
                         </div>
 
-                        <div class="checkbox">
-                            <div class="layout-left">
-                                <asp:Label AssociatedControlID="CheckBoxBreakPersitence" ID="Label6" Text="Break persistance" runat="server"></asp:Label>
-                            </div>
-                            <div class="layout-right">
-                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" />
-                            </div>
-                        </div>
+                        
 
                         <div class="input">
                             <div class="layout-left">
@@ -104,6 +99,15 @@
                             </div>
                             <div class="layout-right">
                                 <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url"></asp:TextBox>
+                            </div>
+                        </div>
+
+                        <div class="checkbox">
+                            <div class="layout-left">
+                                <asp:Label AssociatedControlID="CheckBoxBreakPersitence" ID="Label6" Text="Break persistance" runat="server"></asp:Label>
+                            </div>
+                            <div class="layout-right">
+                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" />
                             </div>
                         </div>
  
@@ -140,30 +144,29 @@
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
-                            <h4><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%> <asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
-                                    Text='Edit content'	/></h4>
-                            <h5><%# (bool) Eval("IsInherited") ? ResourceManager.GetString("Inherited") : "" %></h5>
-                            <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label>
+                            <h4><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
+                                
+                                 <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
+                                <asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                    Text='Edit content'	/>
 
-                            <asp:Panel runat="server" ID="PanelNotInherited">
-                                <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='Delete instance' CssClass="delete-btn"  />
-                                <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' />
-						        <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text=" &#9650; " />
-						        <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text=" &#9660; " />
+                                <asp:PlaceHolder ID="PlaceHolderNotInherited2" runat="server">
+                                    <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='Delete instance' CssClass="delete-btn"  />
+                                    <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' />
+						            <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text=" &#9650; " />
+						            <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text=" &#9660; " />
+                                </asp:PlaceHolder>
+                            </h4>
 
-                                <asp:Label ID="Label3" runat="server" Text="$persistency" CssClass="instanceTitle"></asp:Label>
+                            
 
-                                <details>
-                                    <summary>
-                                        <asp:Label ID="Label4" runat="server" Text="From" CssClass="emph"></asp:Label>
-							            <asp:Label ID="lblPersistentFromDGrid" Runat="server" />
-                									    
-							            <asp:Label ID="Label5" runat="server" Text="To" CssClass="emph"></asp:Label>
-							            <asp:Label ID="lblPersistentToDGrid" Runat="server"	/>
+                           
 
-                                        <asp:Label ID="lblPlaceHolder" Runat="server" />
-                                    </summary>
-
+                            <details>
+                                <summary>
+                                    <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
+                                </summary>
+                                    <asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
                                         <div class="select">
 							                <asp:Label ID="LabelPlaceHolder" runat="server" Text="Placeholder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
 							                <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
@@ -178,10 +181,10 @@
 							            </div>
 
                                         <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="save-btn" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
-                                </details>
+                                    </asp:PlaceHolder>
+                            </details>
 
-                                <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
-                            </asp:Panel>
+                            <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
                         </div>
 		            </ItemTemplate>
 		        </asp:Repeater>
@@ -198,5 +201,7 @@
                 </section>
              </asp:View>
         </asp:MultiView>
+    </div>
+        </div>
     </div>
 </asp:Content>

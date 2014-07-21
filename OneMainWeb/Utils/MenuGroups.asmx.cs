@@ -97,7 +97,7 @@ namespace OneMainWeb.Utils
                 {
                     string url = dataItem.Url;
 
-                    string parentUrl = string.Empty;
+                    string parentUrl = "";
                     if (dataItem.ParentNode != null)
                         parentUrl = dataItem.ParentNode.Url;
 
@@ -109,8 +109,8 @@ namespace OneMainWeb.Utils
                     bool dataItemChildSelected = false;
                     bool dataItemDescendantSelected = false;
 
-                    string cssClass = string.Empty;
-                    string linkCssClass = string.Empty;
+                    string cssClass = "";
+                    string linkCssClass = "";
 
                     if (!firstAssigned)
                     {

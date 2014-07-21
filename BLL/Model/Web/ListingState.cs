@@ -19,7 +19,7 @@ namespace One.Net.BLL
 
         SortDir sortDirection = SortDir.Ascending;
 
-        string sortField = string.Empty;
+        string sortField = "";
 
 		public ListingState() {}
 

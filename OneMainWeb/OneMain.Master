@@ -69,7 +69,7 @@
 				<li><a><asp:LoginName ID="LoginName1" runat="server" /></a></li>
 				<li><a><asp:DropDownList CssClass="headSelect" runat="server" ID="DropDownListWebSiteCombined" AutoPostBack="true" OnSelectedIndexChanged="DropDownListWebSiteCombined_SelectedIndexChanged"></asp:DropDownList>
                         <asp:Label runat="server" ID="LabelWebSiteDescription" Visible="false"></asp:Label></a></li>
-				<li><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false"></asp:Hyperlink></li>
+				<li><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false">Help</asp:Hyperlink></li>
 				<li><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="RedirectToLoginPage" /></li>
 			  </ul>
 			</div>
@@ -94,7 +94,7 @@
                     <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
                 </div>
             </nav> 
-            <div style="margin-top: 20px; margin-left: 10px;">
+            <div class="clear-cache">
                 <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" />
             </div>
         </div>

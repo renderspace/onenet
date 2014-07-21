@@ -193,22 +193,22 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TreeView TreeView2;
         
         /// <summary>
-        /// InfoLabelPageName control.
+        /// LabelSelectedPageName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelPageName;
+        protected global::System.Web.UI.WebControls.Label LabelSelectedPageName;
         
         /// <summary>
-        /// InfoLabelPageId control.
+        /// LabelSelectedPageId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InfoLabel InfoLabelPageId;
+        protected global::System.Web.UI.WebControls.Label LabelSelectedPageId;
         
         /// <summary>
         /// ButtonDelete control.

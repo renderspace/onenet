@@ -39,8 +39,8 @@ namespace OneMainWeb.adm
         public void TreeView2_SelectedNodeChanged(object sender, EventArgs e)
         {
             SelectedPageId = FormatTool.GetInteger(TreeView2.SelectedNode.Value);
-            InfoLabelPageId.Value = SelectedPageId.ToString();
-            InfoLabelPageName.Value = TreeView2.SelectedNode.Text;
+            LabelSelectedPageId.Text = SelectedPageId.ToString();
+            LabelSelectedPageName.Text = TreeView2.SelectedNode.Text;
             TreeView2.CollapseAll();
             ExpandLoop(TreeView2.SelectedNode);
         }
@@ -66,8 +66,8 @@ namespace OneMainWeb.adm
                 {
                     tree.Selected = true;
                     SelectedPageId = Int32.Parse(tree.Value);
-                    InfoLabelPageId.Value = tree.Value;
-                    InfoLabelPageName.Value = tree.Text;
+                    LabelSelectedPageId.Text = tree.Value;
+                    LabelSelectedPageName.Text = tree.Text;
                 }
             }
         }
@@ -165,8 +165,8 @@ namespace OneMainWeb.adm
             websiteB.DeleteTree(SelectedPageId, ref mcount, ref dcount);
             notifier.Message = mcount + ResourceManager.GetString("$pages_marked_for_deletion");
             notifier.Message += "<br />" + dcount + ResourceManager.GetString("$pages_permanently_deleted");
-            InfoLabelPageId.Value = "";
-            InfoLabelPageName.Value = "";
+            LabelSelectedPageId.Text = "";
+            LabelSelectedPageName.Text = "";
             TreeView2_DataBind();
         }
 

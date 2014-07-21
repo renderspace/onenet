@@ -42,7 +42,7 @@ namespace OneMainWeb.AdminControls
         //public class SettingsEventArgs : EventArgs
         //{
         //    string error;
-        //    public SettingsEventArgs() { this.error = string.Empty; }
+        //    public SettingsEventArgs() { this.error = ""; }
         //    public SettingsEventArgs(string error) { this.error = error; }
         //    public string Error { get { return error; } }
         //}
@@ -138,7 +138,7 @@ namespace OneMainWeb.AdminControls
             {
                 Dictionary<string, BOSetting> SettingsForSaving = new Dictionary<string, BOSetting>();
 
-                foreach (RepeaterItem item in rptSettings.Items)
+                foreach (RepeaterItem item in RepeaterSettings.Items)
                 {
                     ValidInput ValidInput1 = item.FindControl("ValidInput1") as ValidInput;
                     Label KeyLabel1 = item.FindControl("KeyLabel1") as Label;
@@ -236,9 +236,13 @@ namespace OneMainWeb.AdminControls
         {
             if (ItemId > 0)
             {
-                rptSettings.DataSource = Settings;
-                rptSettings.DataBind();
-                Visible = Settings.Count > 0;
+                RepeaterSettings.DataSource = Settings;
+                RepeaterSettings.DataBind();
+                Visible = Settings.Where(s => s.Value.IsVisible).Count() > 0;
+            }
+            else
+            {
+                Visible = false;
             }
         }
 
@@ -249,7 +253,11 @@ namespace OneMainWeb.AdminControls
                 LabeledCheckBox CheckBox1 = e.Item.FindControl("CheckBox1") as LabeledCheckBox;
                 ValidInput ValidInput1 = e.Item.FindControl("ValidInput1") as ValidInput;
                 Label KeyLabel1 = e.Item.FindControl("KeyLabel1") as Label;
-                InfoLabel InfoLabel1 = e.Item.FindControl("InfoLabel1") as InfoLabel;
+
+                var PanelInfo = e.Item.FindControl("PanelInfo") as Panel;
+                var LabelKey = e.Item.FindControl("LabelKey") as Label;
+                var LabelValue = e.Item.FindControl("LabelValue") as Label;
+
                 DropDownList DropDownList1 = e.Item.FindControl("DropDownList1") as DropDownList;
                 Panel PanelSelect1 = e.Item.FindControl("PanelSelect1") as Panel;
                 Label LabelHiddenInfo = e.Item.FindControl("LabelHiddenInfo") as Label;
@@ -258,7 +266,7 @@ namespace OneMainWeb.AdminControls
                 {
                     CheckBox1.Visible = false;
                     ValidInput1.Visible = false;
-                    InfoLabel1.Visible = false;
+                    PanelInfo.Visible = false;
 
 
                     BOSetting setting = ((KeyValuePair<string, BOSetting>)e.Item.DataItem).Value;
@@ -320,7 +328,7 @@ namespace OneMainWeb.AdminControls
                                     }
                                 default:
                                     {
-                                        InfoLabel1.Visible = true;
+                                        PanelInfo.Visible = true;
                                         break;
                                     }
                             }
@@ -344,9 +352,23 @@ namespace OneMainWeb.AdminControls
                     }
                     else
                     {
-                        InfoLabel1.Visible = true;
+                        PanelInfo.Visible = true;
                     }
                 }
+            }
+        }
+
+        protected void RepeaterSettings_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                var setting = (KeyValuePair<string, BOSetting>) e.Item.DataItem;
+
+                    var LabelKey = e.Item.FindControl("LabelKey") as Label;
+                    var LabelValue = e.Item.FindControl("LabelValue") as Label;
+                    var KeyLabel1 = e.Item.FindControl("KeyLabel1") as Label;
+
+                    LabelKey.Text = KeyLabel1.Text = setting.Key;
             }
         }
     }

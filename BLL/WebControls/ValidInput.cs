@@ -22,7 +22,7 @@ namespace One.Net.BLL.WebControls
         {
             get
             {
-                return (ViewState["validationType"] != null ? ViewState["validationType"].ToString() : string.Empty);
+                return (ViewState["validationType"] != null ? ViewState["validationType"].ToString() : "");
             }
             set
             {

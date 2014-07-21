@@ -15,8 +15,8 @@ namespace One.Net.BLL
         int emailId = -1;
         int newsLetterId = -1;
         int subscriptionId = -1;
-        string email = string.Empty;
-        string hash = string.Empty;
+        string email = "";
+        string hash = "";
         DateTime dateSubscribed = DateTime.MinValue;
         DateTime? dateConfirmed;
         DateTime? dateUnsubscribed;

@@ -349,7 +349,7 @@ namespace OneMainWeb.AdminControls
                 // check first row that all cells empty
                 for (int i = 0; i < grdView.Rows[0].Cells.Count; i++)
                 {
-                    if (grdView.Rows[0].Cells[i].Text != string.Empty)
+                    if (grdView.Rows[0].Cells[i].Text != "")
                     {
                         bIsGridEmpty = false;
                     }

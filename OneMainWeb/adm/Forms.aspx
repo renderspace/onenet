@@ -35,7 +35,7 @@
                                     <asp:TemplateField HeaderText="$form">
                                         <ItemTemplate>
                                                 <%# Eval("Title") %>
-                                                <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : string.Empty) ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
+                                                <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : "") ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="$form_type">

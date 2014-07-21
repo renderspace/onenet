@@ -54,7 +54,7 @@ namespace OneMainWeb.AdminControls
             get
             {
                 var value = base.ViewState["DataField"];
-                return value != null ? value.ToString() : string.Empty;
+                return value != null ? value.ToString() : "";
             }
             set
             {

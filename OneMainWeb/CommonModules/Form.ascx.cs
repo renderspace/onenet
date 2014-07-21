@@ -693,7 +693,7 @@ if(window.jQuery)
                         // Since TwoControlsLibrary validation controls are used to validate all text input
                         // divValidationMark is basically only used for file validation messages
                         HtmlGenericControl validationDiv = new HtmlGenericControl("div");
-                        validationDiv.InnerText = string.Empty;
+                        validationDiv.InnerText = "";
                         validationDiv.Visible = false;
                         validationDiv.Attributes.Add("class", "validationResult");
 
@@ -1264,7 +1264,7 @@ if(window.jQuery)
 
         public static string GenerateRandomCode()
         {
-            string s = string.Empty;
+            string s = "";
             for (int i = 0; i < 6; i++)
                 s = String.Concat(s, random.Next(10).ToString());
             return s;

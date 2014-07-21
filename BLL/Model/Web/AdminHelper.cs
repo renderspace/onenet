@@ -121,12 +121,6 @@ namespace One.Net.BLL.Model.Web
                     if (c.RequiredMessage.StartsWith(translationLabel))
                         c.RequiredMessage = ResourceManager.GetString(c.RequiredMessage, localizationFile);
                 }
-                else if (ctrl is InfoLabel)
-                {
-                    InfoLabel c = ctrl as InfoLabel;
-                    if (c.Text.StartsWith(translationLabel))
-                        c.Text = ResourceManager.GetString(c.Text, localizationFile);
-                }
                 else if (ctrl is LabeledCheckBox)
                 {
                     LabeledCheckBox c = ctrl as LabeledCheckBox;

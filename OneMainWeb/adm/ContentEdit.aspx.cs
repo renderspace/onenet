@@ -100,7 +100,8 @@ namespace OneMainWeb.adm
 
         private void InitializeControls()
         {
-            rightSettings.Visible = SelectedModuleInstanceId.HasValue;
+            LabelChanged.Text = "";
+            PanelEditor.Visible = SelectedModuleInstanceId.HasValue;
             // MainTextBox.TextBoxCssClass = chkUseFck.Checked ? "ckeditor" : "";
 
             HistoryControl.Visible = false;
@@ -121,7 +122,7 @@ namespace OneMainWeb.adm
                         TextContentEditor.SubTitle = textContentModel.SubTitle;
                         TextContentEditor.Teaser = textContentModel.Teaser;
                         TextContentEditor.Html = textContentModel.Html;
-                        InfoLabelLastChange.Value = textContentModel.LastChangedBy;
+                        LabelChanged.Text = textContentModel.DisplayLastChanged;
                         HistoryControl.Visible = true;
                         if (SelectedModuleInstanceId.HasValue)
                             HistoryControl.SelectedItemId = SelectedModuleInstanceId.Value;
@@ -129,7 +130,7 @@ namespace OneMainWeb.adm
                     }
                     else
                     {
-                        InfoLabelLastChange.Text = TextContentEditor.Html = TextContentEditor.Title = TextContentEditor.SubTitle = TextContentEditor.Teaser = string.Empty;
+                        TextContentEditor.Html = TextContentEditor.Title = TextContentEditor.SubTitle = TextContentEditor.Teaser = "";
                     }
                 }
 
@@ -161,7 +162,7 @@ namespace OneMainWeb.adm
 
             ButtonChangeModuleInstance.Visible = DropDownListModuleInstances.Visible = filteredModuleInstances.Count > 1;
 
-            LabelModuleInstanceName.Text = string.Empty;
+            LabelModuleInstanceName.Text = "";
             if (filteredModuleInstances.Count > 1)
             {
                 DropDownListModuleInstances.DataSource = filteredModuleInstances;
@@ -252,7 +253,7 @@ namespace OneMainWeb.adm
                 else
                 {
                     textContentB.ChangeTextContent(SelectedModuleInstanceId.Value, TextContentEditor.Title, TextContentEditor.SubTitle, TextContentEditor.Teaser, html);
-                    Notifier1.Message = ResourceManager.GetString("$save_sucessfull");
+                    Notifier1.Message = ResourceManager.GetString("Save sucessfull.");
                 }
             }
             else
@@ -278,7 +279,7 @@ namespace OneMainWeb.adm
                     textContentB.ChangeTextContent(SelectedModuleInstanceId.Value, onlineContent.Title, onlineContent.SubTitle, onlineContent.Teaser, onlineContent.Html);
                     TreeView1_DataBind();
                     InitializeControls();
-                    Notifier1.Message = ResourceManager.GetString("$save_sucessfull");
+                    Notifier1.Message = ResourceManager.GetString("Save sucessfull.");
                 }
             }
         }

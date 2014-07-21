@@ -8,11 +8,11 @@ namespace One.Net.BLL.Model
     public class BORssFeed
     {
         private int? id = null;
-        private string title = string.Empty;
-        private string description = string.Empty;
-        private string type = string.Empty;
-        private string linkToList = string.Empty;
-        private string linkToSingle = string.Empty;
+        private string title = "";
+        private string description = "";
+        private string type = "";
+        private string linkToList = "";
+        private string linkToSingle = "";
         private List<int> categories = new List<int>();
         private int languageId;
 

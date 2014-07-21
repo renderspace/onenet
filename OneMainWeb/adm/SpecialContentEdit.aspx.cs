@@ -96,11 +96,11 @@ namespace OneMainWeb.adm
                         specialContent.ContentId.Value > 0)
                     {
                         MainTextBox.Value = specialContent.Html;
-                        InfoLabelLastChange.Value = specialContent.LastChangedBy;
+                        
                     }
                     else
                     {
-                        InfoLabelLastChange.Text = MainTextBox.Value = string.Empty;
+                        MainTextBox.Value = "";
                     }
                 }
 
@@ -126,7 +126,7 @@ namespace OneMainWeb.adm
 
             ButtonChangeModuleInstance.Visible = DropDownListModuleInstances.Visible = filteredModuleInstances.Count > 1;
 
-            LabelModuleInstanceName.Text = string.Empty;
+            LabelModuleInstanceName.Text = "";
             if (filteredModuleInstances.Count > 1)
             {
                 DropDownListModuleInstances.DataSource = filteredModuleInstances;
@@ -171,7 +171,7 @@ namespace OneMainWeb.adm
             if (SelectedModuleInstanceId.HasValue)
             {
                 string html = MainTextBox.Value;
-                specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, string.Empty, string.Empty, string.Empty, html);
+                specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, "", "", "", html);
                 Notifier1.Message = ResourceManager.GetString("$save_sucessfull");
             }
             else
@@ -190,7 +190,7 @@ namespace OneMainWeb.adm
                 if (onlineContent != null)
                 {
                     // TODO: after content is reverted to published version, the offline content should no longer be marked as changed. 
-                    specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, string.Empty, string.Empty, string.Empty, onlineContent.Html);
+                    specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, "", "", "", onlineContent.Html);
                     TreeView1_DataBind();
                     InitializeControls();
                     Notifier1.Message = ResourceManager.GetString("$save_sucessfull");

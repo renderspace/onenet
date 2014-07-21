@@ -25,15 +25,15 @@ namespace OneMainWeb.adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LiteralLegend.Text = ResourceManager.GetString("$page_info");
-            LiteralNoAccess.Text = ResourceManager.GetString("$no_rights");
-            LiteralModulesOnPage.Text = ResourceManager.GetString("$modules_on_page");
+            LiteralLegend.Text = "Selected page";
+            LiteralNoAccess.Text = "You do not have the rights to edit this page.";
+            LiteralModulesOnPage.Text = "Module instances on current page";
 
             pageTree_DataBind();
 
             if (!IsPostBack)
             {
-                Page.Title = ResourceManager.GetString("$module_structure");
+                Page.Title = "Website structure";
                 ddlModuleTypes_DataBind();
                 InitializeControls();
             }
@@ -139,7 +139,7 @@ namespace OneMainWeb.adm
                     BOWebSite webSite = webSiteB.Get(SelectedWebSiteId);
                     TextBoxUri.Visible = SelectedPageId != RootNodeID;
 
-                    LabelChanged.Text = selectedPage.LastChanged + ", " + selectedPage.LastChangedBy;
+                    LabelChanged.Text = selectedPage.DisplayLastChanged;
 
                     TextBoxTitle.Text = selectedPage.Title;
                     TextBoxDescription.Text = selectedPage.Teaser;
@@ -243,6 +243,7 @@ namespace OneMainWeb.adm
 
         protected void RepaterModuleInstances_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+            
             // for position and inheritance settings
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
             // for textcontentedit
@@ -253,20 +254,25 @@ namespace OneMainWeb.adm
             Control cmdMoveDown = e.Item.FindControl("cmdMoveDown");
             Label lblPlaceHolder = (Label)(e.Item.FindControl("lblPlaceHolder"));
             Label LabelModuleDistinctName = (Label)(e.Item.FindControl("LabelModuleDistinctName"));
-            var PanelNotInherited = (Panel)(e.Item.FindControl("PanelNotInherited"));
+            var PlaceHolderNotInherited1 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited1"));
+            var PlaceHolderNotInherited2 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited2"));
+            
+            
 
             BOModuleInstance moduleInstance = e.Item.DataItem as BOModuleInstance;
 
             if (moduleInstance != null && (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                var ddlPlaceHolder = e.Item.FindControl("ddlPlaceHolder") as DropDownList;
+                var ddlPersistentFromDGrid = (DropDownList)e.Item.FindControl("ddlPersistentFromDGrid");
+                var ddlPersistentToDGrid = (DropDownList)e.Item.FindControl("ddlPersistentToDGrid");
+                var LiteralInstanceSummary = e.Item.FindControl("LiteralInstanceSummary") as Literal;
+
                 BOPlaceHolder currentPlaceHolder = null;
                 if (selectedPage.PlaceHolders.ContainsKey(moduleInstance.PlaceHolderId))
                     currentPlaceHolder = selectedPage.PlaceHolders[moduleInstance.PlaceHolderId];
                 else
                     return;
-
-                PanelNotInherited.Visible = !moduleInstance.IsInherited;
-
                 // hide cmdMoveUp/cmdMoveDown, if there is no module instance above/below current instance respectively.
                 for (int i = 0; i < currentPlaceHolder.ModuleInstances.Count; i++)
                 {
@@ -304,24 +310,29 @@ namespace OneMainWeb.adm
                     }
                 }
 
-                AdminControls.OneSettings moduleSettings = e.Item.FindControl("moduleSettings") as AdminControls.OneSettings;
+                var moduleSettings = e.Item.FindControl("moduleSettings") as AdminControls.OneSettings;
+                moduleSettings.Visible = !moduleInstance.IsInherited;
+                //                    moduleSettings.Settings = moduleInstance.Settings;
+                moduleSettings.Mode = AdminControls.OneSettings.SettingMode.Module;
+                moduleSettings.ItemId = moduleInstance.Id;
+                moduleSettings.LoadSettingsControls(moduleInstance.Settings);
+                moduleSettings.LoadSettings();
+                PlaceHolderNotInherited1.Visible = PlaceHolderNotInherited2.Visible = !moduleInstance.IsInherited;
+                moduleSettings.Visible = moduleSettings.Visible && !moduleInstance.IsInherited;
 
-                if (moduleSettings != null)
+                if (moduleInstance.IsInherited)
                 {
-                    moduleSettings.Visible = !moduleInstance.IsInherited;
-                    //                    moduleSettings.Settings = moduleInstance.Settings;
-                    moduleSettings.Mode = AdminControls.OneSettings.SettingMode.Module;
-                    moduleSettings.ItemId = moduleInstance.Id;
-                    moduleSettings.LoadSettingsControls(moduleInstance.Settings);
-                    moduleSettings.LoadSettings();
+                    LiteralInstanceSummary.Text = "This is inherited module instance.";
                 }
-
-                lblPlaceHolder.Text = currentPlaceHolder.Name;
-                DropDownList ddlPlaceHolder = e.Item.FindControl("ddlPlaceHolder") as DropDownList;
-                DropDownList ddlPersistentFromDGrid = (DropDownList)e.Item.FindControl("ddlPersistentFromDGrid");
-                DropDownList ddlPersistentToDGrid = (DropDownList)e.Item.FindControl("ddlPersistentToDGrid");
-                Label lblPersistentFromDGrid = (Label)e.Item.FindControl("lblPersistentFromDGrid");
-                Label lblPersistentToDGrid = (Label)e.Item.FindControl("lblPersistentToDGrid");
+                else if (moduleInstance.PersistFrom == moduleInstance.PersistTo)
+                {
+                    LiteralInstanceSummary.Text = "<span>Template position: </span><strong>" + currentPlaceHolder.Name + "</strong>";
+                }
+                else
+                {
+                    LiteralInstanceSummary.Text = "<span>Inherited from depth: </span><strong>" + moduleInstance.PersistFrom.ToString() + "</strong> to depth: <strong>" +
+                        moduleInstance.PersistTo.ToString() + "</strong>; <span>Template position: </span>" + currentPlaceHolder.Name;
+                }
 
                 if (ddlPlaceHolder != null)
                 {
@@ -339,8 +350,8 @@ namespace OneMainWeb.adm
                         ddlPersistentToDGrid.Items.Add(item);
                         ddlPersistentFromDGrid.Items.Add(item);
                     }
-                    ddlPersistentFromDGrid.SelectedValue = lblPersistentFromDGrid.Text = moduleInstance.PersistFrom.ToString();
-                    ddlPersistentToDGrid.SelectedValue = lblPersistentToDGrid.Text = moduleInstance.PersistTo.ToString();
+                    ddlPersistentFromDGrid.SelectedValue =  moduleInstance.PersistFrom.ToString();
+                    ddlPersistentToDGrid.SelectedValue = moduleInstance.PersistTo.ToString();
                 }
             }
         }
@@ -473,7 +484,7 @@ namespace OneMainWeb.adm
 
         protected string RenderModuleName(object _Changed, object _PendingDelete, object name, object id)
         {
-            string strExtension = string.Empty;
+            string strExtension = "";
             if (FormatTool.GetBoolean(_PendingDelete))
             {
                 strExtension = "/Res/brisanje.gif";
@@ -493,7 +504,7 @@ namespace OneMainWeb.adm
 
         protected string RenderPageStatus()
         {
-            string strReturn = string.Empty;
+            string strReturn = "";
 
             BOPage page = webSiteB.GetPage(SelectedPageId);
             if (page != null)
@@ -719,7 +730,8 @@ namespace OneMainWeb.adm
                     BOPage parentPage = webSiteB.GetPage(publishingPage.ParentId.Value);
                     if (parentPage.IsNew)
                     {
-                        Notifier1.Warning = "$publish_parent_first";
+                        Notifier1.Warning = "Please publish parent page before trying to publish this one.";
+                        Notifier1.Message = "Page was not published, try again after you published the page above";
                         return;
                     }
                 }
@@ -729,26 +741,26 @@ namespace OneMainWeb.adm
                     if (publishingPage.MarkedForDeletion && !publishingPage.IsRoot)
                     {
                         SelectedPageId = publishingPage.ParentId.Value;
-                        Notifier1.Message = "$page_delete_publish_sucessfull";
+                        Notifier1.Message = "Page was successfully completely deleted.";
                     }
                     else if (publishingPage.MarkedForDeletion)
                     {
                         SelectedPageId = -1;
-                        Notifier1.Message = "$root_page_delete_publish_sucessfull";
+                        Notifier1.Message = "Root page was successfully completely deleted.";
                     }
                     else
                     {
-                        Notifier1.Message = "$publish_sucessfull";
+                        Notifier1.Message = "Publish sucessfull.";
                     }
                 }
                 else
                 {
-                    Notifier1.Warning = "$publish_unsucessfull";
+                    Notifier1.Warning = "Unknown error while publishing.";
                 }
             }
             else
             {
-                Notifier1.ExceptionName = "$trying_to_publish_nonexisting_page";
+                Notifier1.ExceptionName = "Trying to publish nonexisting page.";
             }
             InitializeControls();
             pageTree_DataBind();
@@ -763,7 +775,8 @@ namespace OneMainWeb.adm
                 bool hasChildren = webSiteB.ListChildrenIds(SelectedPageId).Count > 0;
                 if (hasChildren)
                 {
-                    Notifier1.Warning = "$unpublish_unsuccessfull_because_page_has_children";
+                    Notifier1.Warning = "Unpublish was not successful because the page has children.";
+                    Notifier1.Message = "Unpublish children pages first.";
                     return;
                 }
 

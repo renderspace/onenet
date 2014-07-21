@@ -59,7 +59,7 @@ namespace OneMainWeb.CommonModules
                     bool dataItemHasChildren = dataItem.HasChildNodes;
 
                     string cssClass = "mg" + menuGroup.Value.ToString() + " ";
-                    string linkCssClass = string.Empty;
+                    string linkCssClass = "";
 
                     IHierarchyData data = dataItems.GetHierarchyData(dataItem);
 

@@ -8,18 +8,18 @@ namespace One.Net.BLL
     public class BOTemplate
     {
         private int? id;// = -1;
-        private string name = string.Empty;
-        private string templateType = string.Empty;
-        private string templateContent = string.Empty;
+        private string name = "";
+        private string templateType = "";
+        private string templateContent = "";
 
         [NonSerialized]
-        private string physicalApplicationPath = string.Empty;
+        private string physicalApplicationPath = "";
 
         [NonSerialized]
-        private string extension = string.Empty;
+        private string extension = "";
 
         [NonSerialized]
-        private string templateSourceDirectory = string.Empty;
+        private string templateSourceDirectory = "";
 
         public BOTemplate()
         { }

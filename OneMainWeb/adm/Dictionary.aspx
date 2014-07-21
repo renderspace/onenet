@@ -18,7 +18,6 @@
             <asp:View ID="View1" runat="server">
                 <div class="searchFull">
 	                <asp:Button ID="cmdAddDictionaryEntry" runat="server" Text="$add_dictionary_entry" OnClick="cmdAddDictionaryEntry_Click" />
-	                <two:InfoLabel ID="lblMessage" runat="server" Visible="false" />
                     <two:InputWithButton ID="InputWithButtonSearch" ValidationGroup="search" runat="server" Text="$search_keyword" ButtonText="$search" OnClick="cmdSearch_Click" IsLinkButton="false"  />
 	            </div>
                 <div class="centerFull">
@@ -60,7 +59,8 @@
             <asp:View ID="View2" runat="server">
                 <div class="centerFull">
 		        <div class="contentEntry">
-		            <two:InfoLabel ID="infoKeyword" runat="server" Text="$keyword" />
+                    Keyword: <asp:Label runat="server" ID="LabelKeyword"></asp:Label>
+
 		            <two:Input ID="txtKeyword" runat="server" Text="$keyword" />
 		            <one:TextContentControl ID="txtTextContent" runat="server" 
 		            TitleLabel="$dict_entry_title" SubTitleLabel="$dict_entry_sub_title" 
