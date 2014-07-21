@@ -5,7 +5,7 @@
     <asp:Panel ID="PanelFieldsHolder" runat="server"></asp:Panel>
     <div class="save">
         <asp:Button ID="ButtonCancel" runat="server" Text="$cancel" onclick="ButtonCancel_Click" ValidationGroup="Cancel" CausesValidation="false" UseSubmitBehavior="false" />
-        <asp:Button ID="ButtonSave" runat="server" Text="$save" onclick="ButtonSave_Click" />
+        <asp:Button ID="ButtonSave" runat="server" Text="Save" onclick="ButtonSave_Click" CssClass="save-btn" />
         <asp:Button ID="ButtonSaveAndClose" runat="server" onclick="ButtonSaveAndClose_Click" />
     </div>
 </div>

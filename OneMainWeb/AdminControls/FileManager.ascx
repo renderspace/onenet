@@ -72,7 +72,7 @@
                         <asp:Literal id="litSelectButton" runat="server" Text='<%# GetFileUrl(DataBinder.Eval(Container.DataItem, "Id")) %>' />		                
 		            </ItemTemplate>
 		            <EditItemTemplate>
-		                <asp:LinkButton ID="cmdSave" CommandArgument='<%# Container.DataItemIndex %>' CommandName="UpdateFile" runat="server" Text="$update" />
+		                <asp:LinkButton ID="cmdSave" CommandArgument='<%# Container.DataItemIndex %>' CommandName="UpdateFile" runat="server" Text="Save" CssClass="save-btn" />
 		                <asp:LinkButton ID="cmdCancel" CommandArgument='<%# Container.DataItemIndex %>' CommandName="Cancel" runat="server" Text="$cancel" />
 		            </EditItemTemplate>
 		        </asp:TemplateField>
