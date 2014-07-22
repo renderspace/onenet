@@ -62,6 +62,8 @@ details .select {margin: 10px 0 0 0;}
 
 .module, .mainEditor, .centerStructure {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px 0 10px 0; padding: 20px; background-color: #E3E2DA;}
 .tall {float: left; width: 100%;}
+.tall input[type='text'] {min-width: 190px; width: 190px;}
+
 .page-and-module-settings {float: left; width: 100%;}
 .page-and-module-settings .module {width: 100%;}
 
@@ -93,7 +95,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 /*dreveska */
 
 .treeview {margin-right: 20px;}
-.treeview .cct {overflow-x: scroll;}
+.treeview .cct {overflow: hidden;}
 .treeview ul {width: 300px;margin:0;padding:10px 0;list-style:none;float:left;}
 .treeview ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
 .treeview ul ul ul {border-bottom: 1px solid #e3e2da;}
@@ -169,11 +171,11 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .DynamicEditor .save {clear: both;}
 /**/
 .nav-sidebar, .nav-sidebar ul {margin: 0 20px; padding: 0; width: 100%!important;}
-.nav-sidebar li {float: left; width: 260px; list-style: none;}
-.nav-sidebar li a {float: left; width: 180px; padding: 2px 0;}
-.nav-sidebar li::before a {float: left; width: 10px;}
+.nav-sidebar li {float: left; width: 100%; list-style: none;}
+.nav-sidebar li a {float: left; width: 100%; padding: 2px 10px;}
+.nav-sidebar li a.selected {font-weight: bold; background: #EEEEEE; color: #333;}
 .nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 3px 20px; border-bottom: 1px #ccc solid;}
-.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 10px 0 0 0; color: #000; border-bottom: 1px #ccc solid;}
+.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 10px 0 3px 0; padding: 2px 0; color: #000; border-bottom: 1px #ccc solid;}
 .nav-sidebar li a.nolink:hover {text-decoration: none; cursor: default;}
 
 /**/
