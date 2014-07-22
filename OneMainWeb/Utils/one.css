@@ -195,7 +195,7 @@ input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
 .moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
 .m-ops {float: left;}
 .m-btns {float: right;}
-.s-btn {margin: 0 0 0 4px!important;}
+.s-btn {margin: 0 0 0 10px!important;}
 /**/
 .clear-cache {margin: 20px 0 30px 0;}
 .clear-cache input {margin: 0; color: #fff; background-color: #5bc0de; border-color: #46b8da;}
