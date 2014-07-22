@@ -8,7 +8,7 @@
 <one:Notifier runat="server" ID="Notifier1" />
 <div class="row">
 <div class="col-md-3">
-<div class="centerStructure">
+<div class="centerStructure ce-it-1">
     <div id="divUploadFile" runat="server" class="fmFiles">
 	    <asp:FileUpload ID="fileUpload" runat="server" />
 	    <asp:Button ID="cmdUpload" ValidationGroup="upload" OnClick="cmdUpload_Click" cssclass="leftButton" runat="server" Text="$upload" />
@@ -27,7 +27,7 @@
 </div>
 
 <div class="col-md-9">
-<div class="mainEditor">
+<div class="mainEditor ce-it-2">
     <div class="contentEntry">
         <asp:Button OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="$recursive_delete" />
         <asp:CheckBox ID="CheckBoxConfirm" runat="server" />
