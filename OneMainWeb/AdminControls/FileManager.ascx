@@ -6,6 +6,8 @@
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="TextContentControl.ascx" %>
 <%@ Import Namespace="One.Net.BLL" %>
 <one:Notifier runat="server" ID="Notifier1" />
+<div class="row">
+<div class="col-md-3">
 <div class="centerStructure">
     <div id="divUploadFile" runat="server" class="fmFiles">
 	    <asp:FileUpload ID="fileUpload" runat="server" />
@@ -22,7 +24,9 @@
     
     <one:TreeCategorization ID="categorization" OnNodeAdded="categorization_NodeAdded" runat="server" OnAdaptedSelectedNodeChanged="categorization_SelectedNodeChanged" OnSelectedNodeChanged="categorization_SelectedNodeChanged" />
 </div>
+</div>
 
+<div class="col-md-9">
 <div class="mainEditor">
     <div class="contentEntry">
         <asp:Button OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="$recursive_delete" />
@@ -104,5 +108,6 @@
 		    </DeleteParameters>
 	    </asp:ObjectDataSource>		
     </asp:PlaceHolder>	  
-     
+</div>
+</div>     
 </div>
