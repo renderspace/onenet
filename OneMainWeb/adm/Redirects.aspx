@@ -57,8 +57,8 @@
 			        <two:Input id="InputToLink" runat="server" Text="$to_link" ValidationGroup="REDIRECTS" />
 			        <div class="save">
 				        <asp:button ID="button3" runat="server" Text="$cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
-				        <asp:button ID="button4" CommandName="SAVE" runat="server" Text="$save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
-				        <asp:button ID="button5" CommandName="SAVE_CLOSE" runat="server" Text="$save_close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
+				        <asp:button ID="button4" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
+				        <asp:button ID="button5" CommandName="SAVE_CLOSE" runat="server" Text="Save and close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
 			        </div>
 			    </div>
 			</div>

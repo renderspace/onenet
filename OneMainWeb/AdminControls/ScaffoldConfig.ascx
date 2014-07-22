@@ -113,7 +113,7 @@
                 </Columns>
         </asp:GridView>
         <div class="buttonsMiddle">
-            <asp:Button ID="CmdSaveColumnChanges" runat="server" Text="$save_changes" OnClick="CmdSaveColumnChanges_Click" />
-            <asp:Button ID="CmdCancelColumnChanges" runat="server" Text="$cancel" OnClick="CmdCancelColumnChanges_Click" />
+            <asp:Button ID="CmdSaveColumnChanges" runat="server" Text="Save" OnClick="CmdSaveColumnChanges_Click" />
+            <asp:Button ID="CmdCancelColumnChanges" runat="server" Text="Cancel" OnClick="CmdCancelColumnChanges_Click" />
         </div>           
     </asp:PlaceHolder> 

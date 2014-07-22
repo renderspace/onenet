@@ -166,7 +166,7 @@
 
                            
 
-                            <details>
+                            <details runat="server" id="HtmlDetails">
                                 <summary>
                                     <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
                                 </summary>

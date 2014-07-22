@@ -82,7 +82,7 @@
 	                <two:modalpanel ShowCloseButton="true" OnWindowClosed="moveFoldersPanel_WindowClosed" Visible="false" id="moveFoldersPanel" runat="server" >
 	                    <div class="outerBorder">
 	                        <div class="innerBorder">
-	                            <two:InfoLabel ID="lblMovingFileName" Text="$file_to_move" runat="server" Value='<%# Eval("Name") %>' />	    
+                                File to move: <asp:Label runat="server" ID="LabelFileToMove" Text='<%# Eval("Name") %>' />
 	                            <div id="treeHolder" runat="server" class="treeHolder">
 	                                <asp:TreeView ID="moveFoldersTree" OnAdaptedSelectedNodeChanged="moveFoldersTree_SelectedNodeChanged" OnSelectedNodeChanged="moveFoldersTree_SelectedNodeChanged" Width="320px" runat="server" SelectedNodeStyle-BackColor="Gray" />
 	                            </div>
