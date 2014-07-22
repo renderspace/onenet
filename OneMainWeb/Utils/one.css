@@ -20,10 +20,8 @@ input[type="text"], select { border: 1px #ccc solid!important;}
 .input.uri .layout-right {width: 50%;}
 .input.uri span {width: auto; font-size: 12px;}
 
-input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
+input[type="submit"] {color: #428bca;  font-weight: bold!important; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin: 0 0 0 7px; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
 input[type="number"]  {width: 70px;}
-
-
 
 .alert h2 {font-size: 16px; font-weight: bold;}
 .alert p {font-size: 13px;}
@@ -48,8 +46,11 @@ input[type="number"]  {width: 70px;}
 .input label, .select label {width: 157px;}
 
 .extline {margin: 10px 0; cursor: pointer;}
-summary {margin: 10px 0 0 0; cursor: pointer;}
-details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
+summary {margin: 10px 0 0 0; cursor: pointer; text-decoration: underline;}
+summary.nolink {text-decoration: none;}
+details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0; overflow: auto;}
+details input[type='submit'] {float: right;}
+details .select {margin: 10px 0 0 0;}
 
 .module h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px; margin-bottom: 10px;}
 .module .submit-links {float: right; padding-top: 10px; margin-top: 10px;}
@@ -190,7 +191,7 @@ input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
 
 .required {display: none!important;}
 /**/
-.moduleInstance {background: #DAD9D4; padding: 15px; margin-top: 15px;}
+.moduleInstance {background: #EEEEEE; padding: 15px; margin-top: 15px;}
 .moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
 .m-ops {float: left;}
 .m-btns {float: right;}
