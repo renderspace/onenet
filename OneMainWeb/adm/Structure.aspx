@@ -114,8 +114,9 @@
                         <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="Page settings" DisplayCommands="false"  />	
                         
 			        </div>
-                    <div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
+                    
 				    <div class="submit-links">
+						<div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
 					    <asp:button id="ButtonDelete" CssClass="left delete-btn" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
 			            <asp:button ID="ButtonUndoDelete" CssClass="left" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
 			            <asp:button ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right alt_btn" />				     
@@ -144,18 +145,21 @@
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
-                            <h4><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
+                            <h4><span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
                                 
-                                 <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
-                                <asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
+                                </span>
+								<span class="m-btns">
+								<asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
                                     Text='Edit content'	/>
 
                                 <asp:PlaceHolder ID="PlaceHolderNotInherited2" runat="server">
                                     <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='Delete instance' CssClass="delete-btn"  />
                                     <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' />
-						            <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text=" &#9650; " />
-						            <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text=" &#9660; " />
+						            <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text=" &#9650; " CssClass="s-btn" />
+						            <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text=" &#9660; " CssClass="s-btn" />
                                 </asp:PlaceHolder>
+								</span>
                             </h4>
 
                             
