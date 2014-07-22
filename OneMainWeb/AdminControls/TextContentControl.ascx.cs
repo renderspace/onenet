@@ -45,19 +45,7 @@ namespace OneMainWeb.AdminControls
             get { return useCkEditor; }
             set {
                 useCkEditor = value;
-                if (useCkEditor)
-                    txtHtml.TextBoxCssClass = "ckeditor";
-
-                //fckHolder.Visible = value;
-                //txtHtml.Visible = !value;
-                /*if (value)
-                {
-                    fckHtml.Value = txtHtml.Value;
-                }
-                else
-                {
-                    txtHtml.Value = fckHtml.Value;
-                }*/
+                txtHtml.TextBoxCssClass = useCkEditor ? "ckeditor" : "" ;
             }
         }
 

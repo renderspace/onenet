@@ -13,102 +13,12 @@ namespace OneMainWeb.adm {
     public partial class SpecialContentEdit {
         
         /// <summary>
-        /// Notifier1 control.
+        /// TextSpecialContent1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::OneMainWeb.AdminControls.Notifier Notifier1;
-        
-        /// <summary>
-        /// treeHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl treeHolder;
-        
-        /// <summary>
-        /// TreeView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TreeView TreeView1;
-        
-        /// <summary>
-        /// rightSettings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rightSettings;
-        
-        /// <summary>
-        /// DropDownListModuleInstances control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownListModuleInstances;
-        
-        /// <summary>
-        /// LabelModuleInstanceName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelModuleInstanceName;
-        
-        /// <summary>
-        /// ButtonChangeModuleInstance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonChangeModuleInstance;
-        
-        /// <summary>
-        /// PlaceHolderEditor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderEditor;
-        
-        /// <summary>
-        /// MainTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input MainTextBox;
-        
-        /// <summary>
-        /// cmdRevertToPublished control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdRevertToPublished;
-        
-        /// <summary>
-        /// ButtonSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonSave;
+        protected global::OneMainWeb.AdminControls.TextSpecialContent TextSpecialContent1;
     }
 }

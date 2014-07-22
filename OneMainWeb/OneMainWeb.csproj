@@ -277,6 +277,10 @@
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\TextSpecialContent.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
+    <Content Include="adm\css\bootstrap.min.css" />
+    <Content Include="adm\css\dashboard.css" />
+    <Content Include="adm\css\default_editor.css" />
+    <Content Include="adm\css\one.css" />
     <Content Include="adm\FileManager2.aspx" />
     <Content Include="adm\Publish.aspx" />
     <Content Include="adm\Scaffold.aspx" />
@@ -356,6 +360,8 @@
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
     <Content Include="JavaScript\bootstrap.min.js" />
+    <Content Include="JavaScript\ck.js" />
+    <Content Include="JavaScript\default_custom_ckeditor.js" />
     <Content Include="JavaScript\jquery.details.js" />
     <Content Include="JavaScript\jquery.ui.datepicker-sl.js" />
     <Content Include="OneMain.Master" />
@@ -678,8 +684,6 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Utils\bootstrap.min.css" />
-    <Content Include="Utils\dashboard.css" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\One.asmx" />
     <Content Include="Utils\TestException.aspx" />
@@ -819,7 +823,6 @@
     </Content>
     <EmbeddedResource Include="Res\previewBanner.png" />
     <Content Include="Utils\Clear.aspx" />
-    <Content Include="Utils\one.css" />
     <Content Include="Utils\Rss.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -855,8 +858,6 @@
     <Content Include="Res\template4.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Utils\ck.js" />
-    <Content Include="Utils\default_editor.css" />
     <EmbeddedResource Include="Res\Sql\1_database.sql.template" />
     <EmbeddedResource Include="Res\Sql\2_tables.sql.template" />
     <EmbeddedResource Include="Res\Sql\3_standard_inserts.sql.template" />

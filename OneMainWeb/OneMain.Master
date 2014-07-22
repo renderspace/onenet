@@ -8,13 +8,13 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="/Utils/one.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
     <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
     <!-- Bootstrap core CSS -->
-    <link href="Utils/bootstrap.min.css" rel="stylesheet">
+    <link href="/adm/css/bootstrap.min.css" rel="stylesheet">
 	
     <!-- Custom styles for this template -->
-    <link href="Utils/dashboard.css" rel="stylesheet">
+    <link href="/adm/css/dashboard.css" rel="stylesheet">
 	
     <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
