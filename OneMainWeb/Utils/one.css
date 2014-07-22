@@ -23,6 +23,8 @@ input[type="text"], select { border: 1px #ccc solid!important;}
 input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
 input[type="number"]  {width: 70px;}
 
+
+
 .alert h2 {font-size: 16px; font-weight: bold;}
 .alert p {font-size: 13px;}
 
@@ -50,8 +52,9 @@ summary {margin: 10px 0 0 0; cursor: pointer;}
 details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 
 .module h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px; margin-bottom: 10px;}
-.module .submit-links {border-top: 1px #ccc solid; padding-top: 10px; margin-top: 10px;}
+.module .submit-links {float: right; padding-top: 10px; margin-top: 10px;}
 
+.lastChange {float: left; margin: 4px 20px 0 0;}
 .lastChanged {padding: 10px; background: #9E9E98; color: #FFF; display: inline-block; width: 100%;}
 .lastChanged .infolabel {float: left;}
 .lastChanged .info {float: right;}
@@ -81,7 +84,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 
 .level4 {position: relative!important; width: 100%; left: 0!important;}
 
-.ModuleDistinctName {display: inline-block; margin: 15px 0;}
+.ModuleDistinctName {display: inline-block; margin: 0;}
 .instanceTitle {margin: 0 15px;}
 
 .topCommands a {margin-right: 20px;}
@@ -186,6 +189,12 @@ input.save-btn, input.changeTextContentInstance {color: #fff; background-color: 
 input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
 
 .required {display: none!important;}
+/**/
+.moduleInstance {background: #DAD9D4; padding: 15px; margin-top: 15px;}
+.moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
+.m-ops {float: left;}
+.m-btns {float: right;}
+.s-btn {margin: 0 0 0 4px!important;}
 
 /* calendar */
 
