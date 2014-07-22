@@ -18,11 +18,15 @@ input[type="text"], select { border: 1px #ccc solid!important;}
 .layout-right input, .layout-right select {width: 100%;}
 .layout-mid {float: left; width: 30%;}
 .input.uri .layout-right {width: 50%;}
-.input.uri span {width: auto;}
+.input.uri span {width: auto; font-size: 12px;}
 
 input[type="submit"] {color: #333; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin-bottom: 0; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
+input[type="number"]  {width: 70px;}
 
-.alert {font-size: 16px;}
+.alert h2 {font-size: 16px; font-weight: bold;}
+.alert p {font-size: 13px;}
+
+.right.buttons {float: right;}
 
 .moduleInstance {border-bottom: 1px #ccc solid; padding: 15px 0;}
 
@@ -52,9 +56,9 @@ details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0;}
 .lastChanged .infolabel {float: left;}
 .lastChanged .info {float: right;}
 
-.module, .mainEditor, .centerStructure {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px; padding: 20px; background-color: #E3E2DA;}
-.tall {float: left; width: 320px;}
-.page-and-module-settings {float: left; width: 70%;}
+.module, .mainEditor, .centerStructure {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px 0 10px 0; padding: 20px; background-color: #E3E2DA;}
+.tall {float: left; width: 100%;}
+.page-and-module-settings {float: left; width: 100%;}
 .page-and-module-settings .module {width: 100%;}
 
 .input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 157px;}
@@ -85,7 +89,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 /*dreveska */
 
 .treeview {margin-right: 20px;}
-.treeview .cct {}
+.treeview .cct {overflow-x: scroll;}
 .treeview ul {width: 300px;margin:0;padding:10px 0;list-style:none;float:left;}
 .treeview ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
 .treeview ul ul ul {border-bottom: 1px solid #e3e2da;}
@@ -429,15 +433,11 @@ div.calendar
 .ck .cke_dialog_ui_vbox
 .ck .cke_dialog_ui_text {float:none;}
 
+@media (max-width: 1650px) {
+.tall input[type="text"], select {width: 100%; min-width: 100%; margin-bottom: 6px;}
+}
 
 @media (max-width: 1423px) {
-.page-and-module-settings {width: 60%;}
+.input.uri span {width: 121px; word-wrap: break-word;}
 }
 
-@media (max-width: 1083px) {
-.page-and-module-settings {width: 50%;}
-}
-
-@media (max-width: 975px) {
-.page-and-module-settings, .tall {width: 100%;}
-}
