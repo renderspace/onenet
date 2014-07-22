@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 	<title></title>
-	<link href="../Utils/bootstrap.min.css" rel="stylesheet" />
+	<link href="/adm/css/bootstrap.min.css" rel="stylesheet" />
 	<style type="text/css">
 	@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext);
 	body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0;}

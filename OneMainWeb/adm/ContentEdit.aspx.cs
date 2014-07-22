@@ -29,6 +29,7 @@ namespace OneMainWeb.adm
             TextSpecialContent1.EnableXHTMLValidator = EnableXHTMLValidator;
             TextSpecialContent1.ExpandTree = ExpandTree;
             TextSpecialContent1.SelectedPageId = SelectedPageId;
+            TextSpecialContent1.IsSpecialContent = false;
         }  
     }
 }
