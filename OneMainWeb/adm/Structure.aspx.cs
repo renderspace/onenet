@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using System.Threading;
 using System.Globalization;
 using One.Net.BLL;
+using System.Web.UI.HtmlControls;
 
 
 namespace OneMainWeb.adm
@@ -263,6 +264,7 @@ namespace OneMainWeb.adm
 
             if (moduleInstance != null && (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem))
             {
+                var HtmlDetails = e.Item.FindControl("HtmlDetails") as HtmlGenericControl;
                 var ddlPlaceHolder = e.Item.FindControl("ddlPlaceHolder") as DropDownList;
                 var ddlPersistentFromDGrid = (DropDownList)e.Item.FindControl("ddlPersistentFromDGrid");
                 var ddlPersistentToDGrid = (DropDownList)e.Item.FindControl("ddlPersistentToDGrid");
@@ -318,11 +320,13 @@ namespace OneMainWeb.adm
                 moduleSettings.LoadSettingsControls(moduleInstance.Settings);
                 moduleSettings.LoadSettings();
                 PlaceHolderNotInherited1.Visible = PlaceHolderNotInherited2.Visible = !moduleInstance.IsInherited;
+
                 moduleSettings.Visible = moduleSettings.Visible && !moduleInstance.IsInherited;
 
                 if (moduleInstance.IsInherited)
                 {
                     LiteralInstanceSummary.Text = "This is inherited module instance.";
+                    HtmlDetails.Attributes.Add("class", "nolink");
                 }
                 else if (moduleInstance.PersistFrom == moduleInstance.PersistTo)
                 {

@@ -203,8 +203,8 @@
                     <div class="searchFull" id="overallButtons" runat="server">
                         <p class="save">
                             <asp:Button ID="cmdCancelButton" OnClick="cmdCancelButton_Click" runat="server" Text="$cancel" />
-                            <asp:Button ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="$save" />
-                            <asp:Button ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="$save_close" />
+                            <asp:Button ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="Save" />
+                            <asp:Button ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="Save and close" />
                         </p> 				    
                     </div>       
             </asp:View>

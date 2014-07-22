@@ -140,6 +140,13 @@
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.designer.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AdminControls\TextSpecialContent.ascx.cs">
+      <DependentUpon>TextSpecialContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\TextSpecialContent.ascx.designer.cs">
+      <DependentUpon>TextSpecialContent.ascx</DependentUpon>
+    </Compile>
     <Compile Include="adm\FileManager2.aspx.cs">
       <DependentUpon>FileManager2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -268,6 +275,7 @@
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
+    <Content Include="AdminControls\TextSpecialContent.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
     <Content Include="adm\FileManager2.aspx" />
     <Content Include="adm\Publish.aspx" />
@@ -347,6 +355,7 @@
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
+    <Content Include="JavaScript\bootstrap.min.js" />
     <Content Include="JavaScript\jquery.details.js" />
     <Content Include="JavaScript\jquery.ui.datepicker-sl.js" />
     <Content Include="OneMain.Master" />
@@ -660,6 +669,8 @@
     </Content>
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Res\one-net-logo-vs.png" />
+    <Content Include="Res\one-net.png" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
@@ -667,6 +678,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Utils\bootstrap.min.css" />
+    <Content Include="Utils\dashboard.css" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\One.asmx" />
     <Content Include="Utils\TestException.aspx" />
@@ -829,7 +842,6 @@
     <Content Include="Res\expand.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Res\Galleriffic.js" />
     <Content Include="Res\log_in_screen_02.gif" />
     <Content Include="Res\template1.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

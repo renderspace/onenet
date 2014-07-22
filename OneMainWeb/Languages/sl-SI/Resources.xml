@@ -119,12 +119,10 @@
 	<resource name="label_teaser">Teaser</resource>
 	<resource name="label_html"></resource>
 	<resource name="label_change_module_instance">Izberi pojavitev modula</resource>
-	<resource name="label_save">Shrani</resource>
 	<resource name="revert_to_published">Povrni v objavljeno stanje</resource>
 	<resource name="usefck_label">Uporabi napredni urejevalnik besedila</resource>
 	<resource name="cancel">Prekliči</resource>
 	<resource name="save">Shrani</resource>
-	<resource name="save_close">Shrani in zapri</resource>
 	<resource name="update_close">Shrani in zapri</resource>
 	<resource name="insert">Shrani in zapri</resource>
 	<resource name="insert_close">(novo) Shrani in zapri</resource>

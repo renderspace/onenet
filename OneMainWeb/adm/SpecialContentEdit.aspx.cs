@@ -172,10 +172,10 @@ namespace OneMainWeb.adm
             {
                 string html = MainTextBox.Value;
                 specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, "", "", "", html);
-                Notifier1.Message = ResourceManager.GetString("$save_sucessfull");
+                Notifier1.Message = ResourceManager.GetString("Saved.");
             }
             else
-                Notifier1.ExceptionName = ResourceManager.GetString("$because_of_inactivity_selected_module_was_not_saved");
+                Notifier1.ExceptionName = ResourceManager.GetString("Because of inactivity, selected module was not saved.");
 
             TreeView1_DataBind();
             InitializeControls();
@@ -193,7 +193,7 @@ namespace OneMainWeb.adm
                     specialContentB.ChangeTextContent(SelectedModuleInstanceId.Value, "", "", "", onlineContent.Html);
                     TreeView1_DataBind();
                     InitializeControls();
-                    Notifier1.Message = ResourceManager.GetString("$save_sucessfull");
+                    Notifier1.Message = ResourceManager.GetString("Saved.");
                 }
             }
         }
