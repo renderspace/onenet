@@ -113,8 +113,6 @@ namespace OneMainWeb
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(ConfigurationManager.AppSettings["PreferredCulture"]);
-
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();

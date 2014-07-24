@@ -29,7 +29,6 @@ namespace One.Net.BLL
         private Dictionary<int, SiteMapNode> _nodes = new Dictionary<int, SiteMapNode>(64);
 
         private static int webSiteID;
-        private static string UserCulture;
 
         protected static readonly ILog log = LogManager.GetLogger(typeof(OneSiteMapProvider));
 
@@ -37,9 +36,6 @@ namespace One.Net.BLL
 
         public OneSiteMapProvider() 
         {
-            // default language is set in web.config:
-            UserCulture = ConfigurationManager.AppSettings["PreferredCulture"].ToString();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(UserCulture);
             bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);        
         }
 
@@ -68,8 +64,6 @@ namespace One.Net.BLL
                 }
                 log.Debug("-- cache miss");
 
-                UserCulture = ConfigurationManager.AppSettings["PreferredCulture"].ToString();
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(UserCulture);
                 List<BOPage> pages = webSiteDb.GetSiteStructure(webSiteID, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
 
                 foreach (BOPage page in pages)
