@@ -21,6 +21,11 @@ using System.Web.Http;
 
 using One.Net.BLL;
 using One.Net.BLL.Service;
+using Microsoft.AspNet.Identity;
+using System.Net;
+using System.Web.Optimization;
+using Microsoft.AspNet.Identity.EntityFramework;
+using OneMainWeb.Models;
 
 namespace OneMainWeb
 {
@@ -57,33 +62,22 @@ namespace OneMainWeb
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            
-            //const string adminRoleName = "admin";
-            //const string allRoleName = "all";
-            //const string adminUserName = "mirzap";
-            //const string adminEmail = "mirzap@renderspace.si";
-            //const string adminPassword = "mirzap";
-
-            //if (!Roles.RoleExists(adminRoleName))
-            //{
-            //    Roles.CreateRole(adminRoleName);
-            //    Roles.CreateRole(allRoleName);
-            //}
-
-            //if (Membership.GetUser(adminUserName) == null && string.IsNullOrEmpty(Membership.GetUserNameByEmail(adminEmail)))
-            //{
-            //    Membership.CreateUser(adminUserName, adminPassword, adminEmail);
-            //}
-
-            //if (!Roles.IsUserInRole(adminUserName, adminRoleName))
-            //{
-            //    Roles.AddUserToRole(adminUserName, adminRoleName);
-            //    Roles.AddUserToRole(adminUserName, allRoleName);
-            //}
-
             log4net.Config.XmlConfigurator.Configure();
             Version version = this.GetType().BaseType.Assembly.GetName().Version;
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
+
+            // Code that runs on application startup
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            /*
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            if (!rm.RoleExists("admin"))
+            {
+                rm.Create(new IdentityRole("admin"));
+            } */
+
+
 
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
@@ -164,15 +158,6 @@ namespace OneMainWeb
                     log.Debug("EndRequest " + req);
                 }
             }
-        }
-
-        protected void Application_AuthorizeRequest(object sender, EventArgs e)
-        {
-            string publishRoleMapping = ConfigurationManager.AppSettings["PublishRoleMapping"];
-            Context.Items.Add("publish", User.IsInRole(publishRoleMapping));
-
-            string privateAccessRoleMapping = ConfigurationManager.AppSettings["PrivateAccessRoleMapping"];
-            Context.Items.Add("has_private_access", User.IsInRole(privateAccessRoleMapping));
         }
 
         protected void Application_Error(object sender, EventArgs e)

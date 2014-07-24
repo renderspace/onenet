@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneMainWeb", "OneMainWeb\OneMainWeb.csproj", "{872B2B2D-1C88-421C-9C46-C34746CF4E2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{3EC05CC8-A433-482A-86E3-AA01F9519A01}"
@@ -11,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C55BF
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "One.Cron.API", "..\..\codeplex_one_cron\trunk\One.Cron.API\One.Cron.API.csproj", "{97484946-3AEF-46A8-AD6E-036458D9FE6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityBootstrap", "IdentityBootstrap\IdentityBootstrap.csproj", "{D924C579-D003-4621-AB63-1CD17122320E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +58,26 @@ Global
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{97484946-3AEF-46A8-AD6E-036458D9FE6E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Release|.NET.ActiveCfg = Release|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D924C579-D003-4621-AB63-1CD17122320E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Release|.NET.ActiveCfg = Release|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4BBD21CC-C3D9-4128-B149-4A67EC8E07F4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

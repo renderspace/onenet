@@ -1,10 +1,9 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="OneMainWeb.Login" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="OneMainWeb.Login" Title="One.NET Content mangement system Login" %>
 <%@ Import namespace="One.Net.BLL" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-	<title></title>
 	<link href="/adm/css/bootstrap.min.css" rel="stylesheet" />
 	<style type="text/css">
 	@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext);

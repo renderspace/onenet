@@ -106,15 +106,6 @@ namespace OneMainWeb {
             }
         }
         
-        public virtual string SelectedUICulture {
-            get {
-                return ((string)(this.GetPropertyValue("SelectedUICulture")));
-            }
-            set {
-                this.SetPropertyValue("SelectedUICulture", value);
-            }
-        }
-        
         public virtual bool UseFCK {
             get {
                 return ((bool)(this.GetPropertyValue("UseFCK")));
@@ -157,15 +148,6 @@ namespace OneMainWeb {
             }
             set {
                 this.SetPropertyValue("SelectedCultureId", value);
-            }
-        }
-        
-        public virtual int SelectedUICultureId {
-            get {
-                return ((int)(this.GetPropertyValue("SelectedUICultureId")));
-            }
-            set {
-                this.SetPropertyValue("SelectedUICultureId", value);
             }
         }
         
