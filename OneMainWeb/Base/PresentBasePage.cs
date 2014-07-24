@@ -25,21 +25,6 @@ namespace OneMainWeb
 {
     public class PresentBasePage : Page
     {
-        protected string SelectedUICulture
-        {
-            get
-            {
-                if (Session["SelectedUICulture"] != null)
-                    return Session["SelectedUICulture"].ToString();
-                else
-                    return "";
-            }
-            set
-            {
-                Session["SelectedUICulture"] = value;
-            }
-        }
-
         BOPage page;
         BWebsite websiteB;
         private readonly string customModulesFolder;
@@ -421,19 +406,6 @@ var _gaq = _gaq || [];
             else
             {
                 log.Error("-OnInit 404");
-            }
-        }
-
-        protected override void InitializeCulture()
-        {
-            if (string.IsNullOrEmpty(SelectedUICulture))
-            {
-                SelectedUICulture = ConfigurationManager.AppSettings["PreferredUICulture"].ToString();
-            }
-
-            if (!string.IsNullOrEmpty(SelectedUICulture) && SelectedUICulture != "Auto")
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(SelectedUICulture);
             }
         }
 

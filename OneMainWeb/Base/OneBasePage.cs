@@ -101,28 +101,6 @@ namespace OneMainWeb
             }
         }
 
-        protected string SelectedUICulture
-        {
-            get
-            {
-                if (Session["SelectedUICulture"] != null)
-                {
-                    return Session["SelectedUICulture"].ToString();
-                }
-                else
-                {
-                    Session["SelectedUICulture"] = profile.SelectedUICulture;
-                    return profile.SelectedUICulture;
-                }
-            }
-            set
-            {
-                Session["SelectedUICulture"] = value;
-                profile.SelectedUICulture = value;
-                profile.Save();
-            }
-        }
-
 
         protected string SelectedCulture
         {
@@ -250,22 +228,6 @@ namespace OneMainWeb
             {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(SelectedCulture);
                 SelectedCultureId = Thread.CurrentThread.CurrentCulture.LCID;
-            }
-
-            if (string.IsNullOrEmpty(SelectedUICulture) && SelectedUICultureId == 0)
-            {
-                SelectedUICulture = ConfigurationManager.AppSettings["PreferredUICulture"].ToString();
-            }
-
-            if (SelectedUICultureId > 0)
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(SelectedUICultureId);
-                SelectedUICulture = Thread.CurrentThread.CurrentUICulture.Name;
-            }
-            else if (!string.IsNullOrEmpty(SelectedUICulture) && SelectedUICulture != "Auto")
-            {
-                Thread.CurrentThread.CurrentUICulture = new CultureInfo(SelectedUICulture);
-                SelectedUICultureId = Thread.CurrentThread.CurrentUICulture.LCID;
             }
 
             if ( SelectedWebSiteId == 0)
