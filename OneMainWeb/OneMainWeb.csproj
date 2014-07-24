@@ -521,23 +521,6 @@
     <Compile Include="adm\SubscriptionManager.aspx.designer.cs">
       <DependentUpon>SubscriptionManager.aspx</DependentUpon>
     </Compile>
-    <Compile Include="aspx_templates\2col.aspx.cs">
-      <DependentUpon>2col.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aspx_templates\2col.aspx.designer.cs">
-      <DependentUpon>2col.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="aspx_templates\2col.Master.cs">
-      <DependentUpon>2col.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="aspx_templates\2col.Master.designer.cs">
-      <DependentUpon>2col.Master</DependentUpon>
-    </Compile>
-    <Compile Include="aspx_templates\TplNewsletter.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Base\OneBasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -713,8 +696,6 @@
     <Content Include="AdminControls\OneSettings.ascx" />
     <Content Include="adm\Dictionary.aspx" />
     <Content Include="adm\FileManager.aspx" />
-    <Content Include="aspx_templates\2col.aspx" />
-    <Content Include="aspx_templates\2col.Master" />
     <Content Include="Res\brisanje.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
