@@ -33,8 +33,6 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             CheckBrowser();
-
-            Page.Title = ResourceManager.GetString("$login");
         }
 
         private void CheckBrowser()

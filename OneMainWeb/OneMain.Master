@@ -66,11 +66,25 @@
 			</div>
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-right">
-				<li><a><asp:LoginName ID="LoginName1" runat="server" /></a></li>
-				<li><a><asp:DropDownList CssClass="headSelect" runat="server" ID="DropDownListWebSiteCombined" AutoPostBack="true" OnSelectedIndexChanged="DropDownListWebSiteCombined_SelectedIndexChanged"></asp:DropDownList>
-                        <asp:Label runat="server" ID="LabelWebSiteDescription" Visible="false"></asp:Label></a></li>
-				<li><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false">Help</asp:Hyperlink></li>
-				<li><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="RedirectToLoginPage" /></li>
+
+
+
+                  <asp:LoginView runat="server" ViewStateMode="Disabled" ID="LoginView1">
+                        <AnonymousTemplate>
+                                <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                                <li><a><asp:LoginName ID="LoginName1" runat="server" /></a></li>
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                <li><a><asp:DropDownList CssClass="headSelect" runat="server" ID="DropDownListWebSiteCombined" AutoPostBack="true" OnSelectedIndexChanged="DropDownListWebSiteCombined_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:Label runat="server" ID="LabelWebSiteDescription" Visible="false"></asp:Label></a></li>
+				                <li><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false">Help</asp:Hyperlink></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
 			  </ul>
 			</div>
 		  </div>

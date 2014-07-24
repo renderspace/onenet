@@ -124,28 +124,6 @@ namespace OneMainWeb
             }
         }
 
-        protected int SelectedUICultureId
-        {
-            get
-            {
-                if (Session["SelectedUICultureId"] != null)
-                {
-                    return Int32.Parse(Session["SelectedUICultureId"].ToString());
-                }
-                else
-                {
-                    Session["SelectedUICultureId"] = profile.SelectedUICultureId;
-                    return profile.SelectedUICultureId;
-                }
-            }
-            set
-            {
-                Session["SelectedUICultureId"] = value;
-                profile.SelectedUICultureId = value;
-                profile.Save();
-            }
-        }
-
         protected int SelectedCultureId
         {
             get

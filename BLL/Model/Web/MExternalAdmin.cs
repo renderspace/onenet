@@ -36,11 +36,6 @@ namespace One.Net.BLL.Web
             }
         }  
 
-        protected static string SelectedUICulture
-        {
-            get { return Thread.CurrentThread.CurrentUICulture.Name; }
-        }
-
         protected static int SelectedLanguageId
         {
             get { return Thread.CurrentThread.CurrentCulture.LCID; }
