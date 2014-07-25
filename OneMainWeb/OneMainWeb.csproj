@@ -695,13 +695,6 @@
     <Compile Include="CommonModules\Form.ascx.designer.cs">
       <DependentUpon>Form.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -903,7 +896,6 @@
     <Content Include="adm\External.aspx" />
     <Content Include="adm\RssFeeds.aspx" />
     <Content Include="CommonModules\Form.ascx" />
-    <Content Include="Login.aspx" />
     <Content Include="Res\one-big-logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
