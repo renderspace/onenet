@@ -1,14 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RegisterExternalLogin.aspx.cs" Inherits="OneMainWeb.Account.RegisterExternalLogin" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-    <div>
+﻿<%@ Page Language="C#" MasterPageFile="~/Account/Account.Master" AutoEventWireup="true" CodeBehind="RegisterExternalLogin.aspx.cs" Inherits="OneMainWeb.Account.RegisterExternalLogin" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
         <h3>Register with your <%: ProviderName %> account</h3>
 
         <asp:PlaceHolder runat="server">
@@ -38,7 +31,4 @@
                 </div>
             </div>
         </asp:PlaceHolder>
-    </div>
-    </form>
-</body>
-</html>
+</asp:Content>
