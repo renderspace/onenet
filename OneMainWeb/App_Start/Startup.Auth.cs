@@ -34,8 +34,8 @@ namespace OneMainWeb
             //   appSecret: "");
 
             app.UseGoogleAuthentication(
-               clientId: "000-000.apps.googleusercontent.com",
-               clientSecret: "00000000000");
+               clientId: "326977998446-hs33i2nd3qmbaq0u54uliun972iv2k4v.apps.googleusercontent.com",
+               clientSecret: "CfdmRC7svWrj99e7rIgVV9BV");
 
         }
     }

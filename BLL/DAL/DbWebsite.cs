@@ -196,7 +196,7 @@ namespace One.Net.BLL.DAL
                         site.Settings.Add(rdr.GetString(0), setting);
                     }
                 }
-
+                /*
                 if (site.RootPageId.HasValue)
                 {
                     paramsToPass = new SqlParameter("@rootPageId", site.RootPageId);
@@ -211,6 +211,7 @@ namespace One.Net.BLL.DAL
                 }
                 else
                     site.Languages.Add(site.PrimaryLanguageId);
+                 */
             }
 			return websiteList;
 		}

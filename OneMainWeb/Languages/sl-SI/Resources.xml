@@ -387,7 +387,6 @@
 	<resource name="event_scheduled_for_publishing">Dogodek je bil postavljen v vrsto za avtomatsko objavljanje vsebin</resource>
 	<resource name="page_scheduled_for_publishing">Stran je bila postavljena v vrsto za avtomatsko objavljanje vsebin</resource>
 	<resource name="check_temporal_publish_tab_for_review">Seznam je na voljo v zavihku "Tempirano objavljanje"</resource>
-	<resource name="no_root_page">Spletna stran nima korenske strani.</resource>
 	<resource name="no_web_site">Spletno mesto ni izbrano.</resource>
 	<resource name="label_insert_root_par_link_as_blank">Za korensko stran je bil avtomatsko dodeljen naslov /</resource>
 	<resource name="folder_successfully_added">Dodan nov imenik.</resource>

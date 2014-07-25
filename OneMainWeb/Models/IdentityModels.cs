@@ -10,6 +10,10 @@ namespace OneMainWeb.Models
     // You can add User data for the user by adding more properties to your User class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string SelectedWebSiteId { get; set; }
+        public string SelectedCultureId { get; set; }
+        public string SelectedPageId { get; set; }
+        public string Email { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
