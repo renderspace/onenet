@@ -162,10 +162,6 @@
 								</span>
                             </h4>
 
-                            
-
-                           
-
                             <details runat="server" id="HtmlDetails">
                                 <summary>
                                     <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
@@ -196,7 +192,7 @@
             </asp:View>
              <asp:View ID="View2" runat="server">
                 <section class="module">
-                     <asp:Label runat="server" ID="LabelNoRoot" Text="$no_root_page"></asp:Label>
+                     <asp:Label runat="server" ID="LabelNoRoot" Text="Website doesn't have a root page. Use form on the left to add it."></asp:Label>
                 </section>
              </asp:View>
              <asp:View ID="View3" runat="server">

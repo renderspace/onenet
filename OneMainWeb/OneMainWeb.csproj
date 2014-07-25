@@ -22,6 +22,10 @@
     <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -194,6 +198,20 @@
     <Compile Include="Account\OpenAuthProviders.ascx.designer.cs">
       <DependentUpon>OpenAuthProviders.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Account\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\RegisterExternalLogin.aspx.designer.cs">
+      <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AdminControls\CustomBoundField.cs" />
     <Compile Include="AdminControls\ScaffoldConfig.ascx.cs">
       <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
@@ -230,6 +248,7 @@
     <Compile Include="AdminControls\TextSpecialContent.ascx.designer.cs">
       <DependentUpon>TextSpecialContent.ascx</DependentUpon>
     </Compile>
+    <Compile Include="adm\AuthorizationHelper.cs" />
     <Compile Include="adm\FileManager2.aspx.cs">
       <DependentUpon>FileManager2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -361,6 +380,8 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Manage.aspx" />
     <Content Include="Account\OpenAuthProviders.ascx" />
+    <Content Include="Account\Register.aspx" />
+    <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
@@ -686,13 +707,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\BambooExcelExport.ashx.cs">
       <DependentUpon>BambooExcelExport.ashx</DependentUpon>
@@ -732,13 +746,6 @@
     <Compile Include="Utils\VirtualTable.ashx.cs">
       <DependentUpon>VirtualTable.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-    </Compile>
     <Compile Include="WebProfile.cs" />
     <Content Include="AdminControls\Notifier.ascx" />
     <Content Include="Global.asax" />
@@ -777,7 +784,6 @@
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\One.asmx" />
     <Content Include="Utils\TestException.aspx" />
-    <Content Include="ViewSwitcher.ascx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -788,7 +794,6 @@
     <Content Include="Utils\BambooExcelExport.ashx" />
     <Content Include="Utils\BambooOneToManyData.ashx" />
     <Content Include="Utils\VirtualTable.ashx" />
-    <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\ContentEdit.aspx" />
@@ -1000,7 +1005,16 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1532</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9090/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

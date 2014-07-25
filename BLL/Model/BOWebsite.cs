@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace One.Net.BLL
 {
@@ -52,7 +53,17 @@ namespace One.Net.BLL
             set { rootPageId = value; }
         }
 
-        public int PrimaryLanguageId
+        public string DisplayName
+        {
+            get
+            {
+                CultureInfo TempCultureInfo = new CultureInfo(LanguageId);
+                return Title + " [" + TempCultureInfo.ThreeLetterISOLanguageName + "]";
+            }
+        }
+
+     
+        public override int LanguageId
         {
             get 
             {
@@ -71,11 +82,5 @@ namespace One.Net.BLL
                 siteSettings["PrimaryLanguageId"] = setting;
             }
         }
-
-	    public List<int> Languages
-	    {
-	        get { return languages; }
-	        set { languages = value; }
-	    }
 	}
 }

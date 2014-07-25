@@ -902,21 +902,6 @@ namespace OneMainWeb.adm
                         site.Settings.Add(rdr.GetString(0), setting);
                     }
                 }
-
-                if (site.RootPageId.HasValue)
-                {
-                    paramsToPass = new SqlParameter("@rootPageId", site.RootPageId);
-                    using (SqlDataReader rdr = SqlHelper.ExecuteReader(BuildConnectionString(serverName, dbName, dbUsername, dbPassword), CommandType.Text,
-                    @"SELECT language_fk_id, par_link 
-                        FROM int_link 
-                        WHERE pages_fk_id= @rootPageId AND pages_fk_publish = 0", paramsToPass))
-                    {
-                        while (rdr.Read())
-                            site.Languages.Add(rdr.GetInt32(0));
-                    }
-                }
-                else
-                    site.Languages.Add(site.PrimaryLanguageId);
             }
 
             foreach (BOWebSite site in websiteList)
@@ -925,7 +910,7 @@ namespace OneMainWeb.adm
 
                 var paramsToPass = new SqlParameter[2];
                 paramsToPass[0] = new SqlParameter("@contentID", site.ContentId.Value);
-                paramsToPass[1] = new SqlParameter("@languageID", site.PrimaryLanguageId);
+                paramsToPass[1] = new SqlParameter("@languageID", site.LanguageId);
 
                 using (SqlDataReader reader = SqlHelper.ExecuteReader(BuildConnectionString(serverName, dbName, dbUsername, dbPassword), CommandType.Text,
                     @"SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, c.principal_modified_by, c.date_modified, c.votes, c.score
@@ -937,7 +922,7 @@ namespace OneMainWeb.adm
                     {
                         content = new BOInternalContent();
                         content.ContentId = site.ContentId.Value;
-                        PopulateContent(reader, content, site.PrimaryLanguageId);
+                        PopulateContent(reader, content, site.LanguageId);
                     }
                 }
 

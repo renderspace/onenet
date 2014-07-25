@@ -1,6 +1,7 @@
-﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="WebApplication1.Account.Register" %>
-
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Account/Account.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="OneMainWeb.Account.Register" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: Title %>.</h2>
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
@@ -10,6 +11,16 @@
         <h4>Create a new account.</h4>
         <hr />
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
+
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="TextBoxEmail" CssClass="col-md-2 control-label">Email</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="TextBoxEmail" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="TextBoxEmail"
+                    CssClass="text-danger" ErrorMessage="The email field is required." />
+            </div>
+        </div>
+
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
             <div class="col-md-10">

@@ -2,9 +2,9 @@
 using Microsoft.Owin.Security;
 using System;
 using System.Web;
-using WebApplication1.Models;
+using OneMainWeb.Models;
 
-namespace WebApplication1.Account
+namespace OneMainWeb.Account
 {
     public partial class RegisterExternalLogin : System.Web.UI.Page
     {
@@ -13,7 +13,7 @@ namespace WebApplication1.Account
             get { return (string)ViewState["ProviderName"] ?? String.Empty; }
             private set { ViewState["ProviderName"] = value; }
         }
-
+        
         protected string ProviderAccountKey
         {
             get { return (string)ViewState["ProviderAccountKey"] ?? String.Empty; }
@@ -67,8 +67,8 @@ namespace WebApplication1.Account
                     userName.Text = loginInfo.DefaultUserName;
                 }
             }
-        }        
-        
+        }
+
         protected void LogIn_Click(object sender, EventArgs e)
         {
             CreateAndLoginUser();
@@ -102,9 +102,9 @@ namespace WebApplication1.Account
             AddErrors(result);
         }
 
-        private void AddErrors(IdentityResult result) 
+        private void AddErrors(IdentityResult result)
         {
-            foreach (var error in result.Errors) 
+            foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
             }

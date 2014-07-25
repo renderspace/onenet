@@ -80,25 +80,11 @@ namespace OneMainWeb.adm
                 }
             }
 
-            // fix redirect problem when no pages are present in db
-            if (TempWebSite != null && TempWebSite.Languages.Count == 0)
-            {
-                TempWebSite.Languages.Add(TempWebSite.PrimaryLanguageId);
-            }
-
-            if (TempWebSite != null && !TempWebSite.Languages.Contains(SelectedCultureId))
-            {
-                SelectedCultureId = TempWebSite.PrimaryLanguageId;
-                SelectedCulture = (new CultureInfo(SelectedCultureId)).Name;
-                log.Info("redirecting from TempWebSite.Languages.Contains");
-                Response.Redirect(Request.Url.LocalPath);
-            }
-
             RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
 
             if (TempWebSite == null)
             {
-                // no website selected has no root
+                // no website selected 
                 MultiView1.ActiveViewIndex = 3;
                 PanelAddSubPage.Visible = false;
                 return;
@@ -115,6 +101,8 @@ namespace OneMainWeb.adm
                 MultiView1.ActiveViewIndex = 1;
                 PanelAddSubPage.Visible = true;
             }
+
+            
 
             if (SelectedPageId < 1)
             {

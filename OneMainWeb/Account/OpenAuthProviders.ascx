@@ -13,7 +13,7 @@
         </ItemTemplate>
         <EmptyDataTemplate>
             <div>
-                <p>There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=252803">this article</a> for details on setting up this ASP.NET application to support logging in via external services.</p>
+                <p>There are no external authentication services configured.</p>
             </div>
         </EmptyDataTemplate>
     </asp:ListView>

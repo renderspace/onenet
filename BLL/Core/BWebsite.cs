@@ -152,9 +152,9 @@ namespace One.Net.BLL
         {
             BOPage parentPageModel = GetPage(currentPageId);
             BOWebSite site = Get(webSiteId);
-            if (site.PrimaryLanguageId < 1)
+            if (site.LanguageId < 1)
             {
-                site.PrimaryLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                site.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             }
             int newOrder = 0;
             string newParLink = "";
@@ -799,7 +799,7 @@ namespace One.Net.BLL
                 websites = webSiteDb.List();
                 foreach (BOWebSite site in websites)
                 {
-                    site.LoadContent(intContentB.Get(site.ContentId.Value, site.PrimaryLanguageId));
+                    site.LoadContent(intContentB.Get(site.ContentId.Value, site.LanguageId));
                 }
                 lock (cacheLockingWebSiteList)
                 {
@@ -959,7 +959,7 @@ namespace One.Net.BLL
 
                 if (fromWebsite != null && toWebsite != null && fromPage != null)
                 {
-                    CopyPageToWebsite(toWebsiteId, toWebsite.PrimaryLanguageId, fromPageId, fromWebsite.PrimaryLanguageId, fromPage.URI, null, 0);
+                    CopyPageToWebsite(toWebsiteId, toWebsite.LanguageId, fromPageId, fromWebsite.LanguageId, fromPage.URI, null, 0);
                 }
             }
         }
