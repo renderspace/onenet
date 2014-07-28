@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <uc1:Notifier ID="Notifier1" runat="server" />
     

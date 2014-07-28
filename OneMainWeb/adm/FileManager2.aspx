@@ -1,7 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="FileManager2.aspx.cs" Inherits="OneMainWeb.FileManager2" Title="$file_manager" ValidateRequest="false" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register Assembly="CKFinder" Namespace="CKFinder" TagPrefix="CKFinder" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<script type="text/javascript">
 	function ShowFileInfo(fileUrl, data) {
 		fileUrl = unescape(fileUrl);

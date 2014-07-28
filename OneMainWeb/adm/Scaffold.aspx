@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="cc1" TagName="MainPagedList" Src="~/AdminControls/ScaffoldMainPagedList.ascx" %>
 <%@ Register TagPrefix="cc2" TagName="VirtualTableList" Src="~/AdminControls/ScaffoldVirtualTableList.ascx" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <asp:MultiView runat="server" ID="MultiView1">
         <asp:View ID="View1" runat="server">

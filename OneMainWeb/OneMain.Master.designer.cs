@@ -13,6 +13,15 @@ namespace OneMainWeb {
     public partial class OneMain {
         
         /// <summary>
+        /// Head control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder Head;
+        
+        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>
@@ -76,13 +85,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// MainContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
         
         /// <summary>
         /// SiteMapDataSource1 control.

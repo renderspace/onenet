@@ -6,7 +6,7 @@
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />
 	<div class="topStructure">
 		<asp:checkbox id="chkAutoPublish" OnCheckedChanged="chkAutoPublish_CheckedChanged" AutoPostBack="true" Runat="server" Text="$autopublish_label" />
