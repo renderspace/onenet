@@ -29,9 +29,9 @@ namespace OneMainWeb
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "862156870463013",
+               appSecret: "3b42f9b2a5267c59748b79cf52686d8b");
 
             app.UseGoogleAuthentication(
                clientId: "326977998446-hs33i2nd3qmbaq0u54uliun972iv2k4v.apps.googleusercontent.com",
