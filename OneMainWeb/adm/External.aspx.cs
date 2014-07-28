@@ -35,7 +35,7 @@ namespace OneMainWeb
         {
             if (Request[R_MODULE] != null)
             {
-                ContentPlaceHolder contentPlaceHolder = (ContentPlaceHolder) Master.FindControl("ContentPlaceHolder1");
+                ContentPlaceHolder contentPlaceHolder = (ContentPlaceHolder) Master.FindControl("MainContent");
 
                 string controlName = Request[R_MODULE].ToString();
                 Control control = null;

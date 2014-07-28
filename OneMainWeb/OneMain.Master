@@ -46,6 +46,7 @@
         });
 
     </script>
+    <asp:contentplaceholder id="Head" runat="server" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -98,7 +99,7 @@
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <asp:contentplaceholder id="ContentPlaceHolder1" runat="server" />
+            <asp:contentplaceholder id="MainContent" runat="server" />
         </div>
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" ShowStartingNode="false" />
 	 </div>

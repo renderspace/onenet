@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />
 
     <asp:LinkButton ID="LinkButton1" runat="server">LinkButton</asp:LinkButton>

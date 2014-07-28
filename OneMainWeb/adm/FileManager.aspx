@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register TagPrefix="one" TagName="FileManager" Src="~/AdminControls/FileManager.ascx" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         <div class="topStructure">
             <asp:checkbox id="chkExpandTree" AutoPostBack="true" Runat="server"	Text="$expand_tree" OnCheckedChanged="chkExpandTree_CheckedChanged" /><br/>
         </div>

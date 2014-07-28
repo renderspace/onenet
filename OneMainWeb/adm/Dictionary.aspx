@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL"%>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <one:Notifier runat="server" ID="Notifier1" />
 <div class="topStructure">
     <asp:checkbox ID="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		

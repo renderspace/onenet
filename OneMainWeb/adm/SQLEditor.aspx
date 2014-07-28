@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SQLEditor.aspx.cs" Inherits="OneMainWeb.adm.SQLEditor" Title="$sql_edit" %>
 
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
     <div class="topStructure">
 

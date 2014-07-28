@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ OutputCache Location="None" VaryByParam="None" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <one:Notifier runat="server" ID="Notifier1" />
         <asp:MultiView runat="server" ID="MultiView1"  OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
             <asp:View ID="View1" runat="server">
