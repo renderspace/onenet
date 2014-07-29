@@ -22,14 +22,13 @@ namespace OneMainWeb.AdminControls
     {
         private bool useCkEditor;
 
-        public string TitleLabel { get { return txtTitle.Text; } set { txtTitle.Text = value; } }
-        public string SubTitleLabel { get { return txtSubTitle.Text; } set { txtSubTitle.Text = value; } }
+        public string TitleLabel { get { return TextBoxTitle.Text; } set { TextBoxTitle.Text = value; } }
+        public string SubTitleLabel { get { return TextBoxSubTitle.Text; } set { TextBoxSubTitle.Text = value; } }
         public string TeaserLabel { get { return txtTeaser.Text; } set { txtTeaser.Text = value; } }
         public string HtmlLabel { get { return txtHtml.Text; } set { txtHtml.Text = value; } }
 
-        public TextBoxMode TitleTextMode { get { return txtTitle.TextMode; } set { txtTitle.TextMode = value; } }
-        public int TitleTextRows { get { return txtTitle.Rows; } set { txtTitle.Rows = value; } }
-        public string TitleContainerCssClass { get { return txtTitle.ContainerCssClass; } set { txtTitle.ContainerCssClass = value; } }
+        public TextBoxMode TitleTextMode { get { return TextBoxTitle.TextMode; } set { TextBoxTitle.TextMode = value; } }
+        public int TitleTextRows { get { return TextBoxTitle.Rows; } set { TextBoxTitle.Rows = value; } }
 
         public Unit HtmlHeight { get { return txtHtml.Height; } set { txtHtml.Height = value; } }
         public int HtmlRows { get { return txtHtml.Rows; } set { txtHtml.Rows = value; } }
@@ -49,8 +48,8 @@ namespace OneMainWeb.AdminControls
             }
         }
 
-        public bool SubTitleVisible { get { return txtSubTitle.Visible; } set { txtSubTitle.Visible = value; } }
-        public bool TitleVisible { get { return txtTitle.Visible; } set { txtTitle.Visible = value; } }
+        public bool SubTitleVisible { get { return TextBoxSubTitle.Visible; } set { TextBoxSubTitle.Visible = value; } }
+        public bool TitleVisible { get { return TextBoxTitle.Visible; } set { TextBoxTitle.Visible = value; } }
         public bool TeaserVisible { get { return txtTeaser.Visible; } set { txtTeaser.Visible = value; } }
         public bool HtmlVisible
         {
@@ -61,10 +60,10 @@ namespace OneMainWeb.AdminControls
             }
         }
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public string Title { get { return txtTitle.Value; } set { txtTitle.Value = value; } }
+        public string Title { get { return TextBoxTitle.Text; } set { TextBoxTitle.Text = value; } }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public string SubTitle { get { return txtSubTitle.Value; } set { txtSubTitle.Value = value; } }
+        public string SubTitle { get { return TextBoxSubTitle.Text; } set { TextBoxSubTitle.Text = value; } }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
         public string Teaser { get { return txtTeaser.Value; } set { txtTeaser.Value = value; } }

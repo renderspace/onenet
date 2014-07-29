@@ -17,14 +17,12 @@ namespace OneMainWeb
         {
             if (!IsPostBack)
             {
-                chkExpandTree.Checked = ExpandTree;
                 filemng2.ExpandTree = ExpandTree;
             }
         }
 
         protected void chkExpandTree_CheckedChanged(object sender, EventArgs e)
         {
-            ExpandTree = chkExpandTree.Checked;
             filemng2.ExpandTree = ExpandTree;
             filemng2.LoadControls();
         }

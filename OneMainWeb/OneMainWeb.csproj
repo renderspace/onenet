@@ -70,7 +70,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.FriendlyUrls">
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
@@ -711,6 +712,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\BambooExcelExport.ashx.cs">
       <DependentUpon>BambooExcelExport.ashx</DependentUpon>
@@ -749,6 +757,13 @@
     </Compile>
     <Compile Include="Utils\VirtualTable.ashx.cs">
       <DependentUpon>VirtualTable.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebProfile.cs" />
     <Content Include="AdminControls\Notifier.ascx" />
@@ -789,6 +804,7 @@
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\One.asmx" />
     <Content Include="Utils\TestException.aspx" />
+    <Content Include="ViewSwitcher.ascx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -799,6 +815,7 @@
     <Content Include="Utils\BambooExcelExport.ashx" />
     <Content Include="Utils\BambooOneToManyData.ashx" />
     <Content Include="Utils\VirtualTable.ashx" />
+    <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\ContentEdit.aspx" />

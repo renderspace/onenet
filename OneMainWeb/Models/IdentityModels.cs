@@ -57,7 +57,7 @@ namespace OneMainWeb
 
         public static string GetExternalLoginRedirectUrl(string accountProvider)
         {
-            return "/Account/RegisterExternalLogin?" + ProviderNameKey + "=" + accountProvider;
+            return "/Account/RegisterExternalLogin.aspx?" + ProviderNameKey + "=" + accountProvider;
         }
 
         private static bool IsLocalUrl(string url)

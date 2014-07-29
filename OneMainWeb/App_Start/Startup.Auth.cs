@@ -16,7 +16,7 @@ namespace OneMainWeb
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login.aspx")
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

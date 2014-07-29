@@ -19,20 +19,25 @@
             </section>
         </div>
          <div class="col-md-9">
-                <asp:DropDownList CssClass="selectTextContentInstance" ID="DropDownListModuleInstances" runat="server" ValidationGroup="MI"></asp:DropDownList>
-                <asp:Label ID="LabelModuleInstanceName" runat="server"></asp:Label>
-                <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="$label_change_module_instance" />
+                <section class="module">
+                     <div>
+                        <asp:DropDownList CssClass="selectTextContentInstance" ID="DropDownListModuleInstances" runat="server" ValidationGroup="MI"></asp:DropDownList>
+                        <asp:Label ID="LabelModuleInstanceName" runat="server"></asp:Label>
+                        <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="$label_change_module_instance" />
+                     </div>
+                </section>
+                <section class="module">
+                    <asp:Panel runat="server" ID="PanelEditor">
+                        <one:TextContentControl ID="TextContentEditor" runat="server" />
 
-                <asp:Panel runat="server" ID="PanelEditor">
-                    <one:TextContentControl ID="TextContentEditor" runat="server" />
+                        <div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
+				        <div class="submit-links">
+					        <asp:Button ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="$revert_to_published" CssClass="left" />
+                            <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="right save-btn" />
+				        </div>
 
-                    <div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
-				    <div class="submit-links">
-					    <asp:Button ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="$revert_to_published" CssClass="left" />
-                        <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="right save-btn" />
-				    </div>
-
-                    <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />
-                </asp:Panel>
+                        <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />
+                    </asp:Panel>
+                </section>
              </div>
        </div> 

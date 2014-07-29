@@ -26,7 +26,7 @@ namespace OneMainWeb.Account
             ProviderName = IdentityHelper.GetProviderNameFromRequest(Request);
             if (String.IsNullOrEmpty(ProviderName))
             {
-                Response.Redirect("~/Account/Login");
+                Response.Redirect("~/Account/Login.aspx");
             }
             if (!IsPostBack)
             {
@@ -34,7 +34,7 @@ namespace OneMainWeb.Account
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    Response.Redirect("~/Account/Login");
+                    Response.Redirect("~/Account/Login.aspx");
                 }
                 var user = manager.Find(loginInfo.Login);
                 if (user != null)
@@ -48,7 +48,7 @@ namespace OneMainWeb.Account
                     var verifiedloginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo(IdentityHelper.XsrfKey, User.Identity.GetUserId());
                     if (verifiedloginInfo == null)
                     {
-                        Response.Redirect("~/Account/Login");
+                        Response.Redirect("~/Account/Login.aspx");
                     }
 
                     var result = manager.AddLogin(User.Identity.GetUserId(), verifiedloginInfo.Login);
@@ -88,7 +88,7 @@ namespace OneMainWeb.Account
                 var loginInfo = Context.GetOwinContext().Authentication.GetExternalLoginInfo();
                 if (loginInfo == null)
                 {
-                    Response.Redirect("~/Account/Login");
+                    Response.Redirect("~/Account/Login.aspx");
                     return;
                 }
                 result = manager.AddLogin(user.Id, loginInfo.Login);

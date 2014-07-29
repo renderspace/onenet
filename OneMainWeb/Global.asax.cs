@@ -67,7 +67,7 @@ namespace OneMainWeb
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
 
             // Code that runs on application startup
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            // RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             /*
