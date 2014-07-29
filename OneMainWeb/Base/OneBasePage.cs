@@ -85,12 +85,7 @@ namespace OneMainWeb
 
         protected bool ExpandTree
         {
-            get { return profile.ExpandTree; }
-            set
-            {
-                profile.ExpandTree = value;
-                profile.Save();
-            }
+            get { return false; }
         }
 
         protected bool ShowUntranslated

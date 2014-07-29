@@ -3,8 +3,5 @@
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register TagPrefix="one" TagName="FileManager" Src="~/AdminControls/FileManager.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-        <div class="topStructure">
-            <asp:checkbox id="chkExpandTree" AutoPostBack="true" Runat="server"	Text="$expand_tree" OnCheckedChanged="chkExpandTree_CheckedChanged" /><br/>
-        </div>
         <one:FileManager runat="server" ID="filemng2" ShowSelectLink="false" />
 </asp:Content>

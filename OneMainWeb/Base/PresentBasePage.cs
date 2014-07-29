@@ -286,7 +286,7 @@ var _gaq = _gaq || [];
 
                 if (!page.IsViewableByCurrentPrincipal)
                 {
-                    if (!FormsAuthentication.LoginUrl.Contains("/Account/Login"))
+                    if (!FormsAuthentication.LoginUrl.Contains("/Account/Login.aspx"))
                     {
                         // redirect to login page only if it is not the default one.
                         Response.Redirect(FormsAuthentication.LoginUrl, true);
