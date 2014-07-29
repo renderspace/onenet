@@ -63,6 +63,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FiftyOne.Foundation">
+      <HintPath>..\packages\51Degrees.mobi.3.1.4.5\lib\NET40\FiftyOne.Foundation.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -369,6 +372,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mobile\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="OneMain.Master.cs">
       <DependentUpon>OneMain.Master</DependentUpon>
@@ -478,6 +485,7 @@
     <Content Include="JavaScript\default_custom_ckeditor.js" />
     <Content Include="JavaScript\jquery.details.js" />
     <Content Include="JavaScript\jquery.ui.datepicker-sl.js" />
+    <Content Include="Mobile\Default.aspx" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -767,6 +775,7 @@
     <Content Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="Account\Account.Master" />
+    <Content Include="51Degrees.config" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
@@ -974,6 +983,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminExtensions\" />
+    <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
   </ItemGroup>
   <ItemGroup>
