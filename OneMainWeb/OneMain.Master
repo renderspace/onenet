@@ -12,15 +12,19 @@
     <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
     <!-- Bootstrap core CSS -->
     <link href="/adm/css/bootstrap.min.css" rel="stylesheet">
-	
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
+    <script>
+        tracing = <%: TracingFlag %>;
+    </script>
 	
-    <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script> 
+    <script src="/Scripts/jquery-2.1.1.min.js"></script>
+    <script src="/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script> 
     
-	<script src="/JavaScript/bootstrap.min.js"></script>
+    
+    
+	
 	
 	<style type="text/css">
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
@@ -95,7 +99,7 @@
                 </div>
             </nav> 
             <div class="clear-cache">
-                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" />
+                <asp:LinkButton ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" CssClass="btn btn-info" />
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -104,69 +108,10 @@
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" ShowStartingNode="false" />
 	 </div>
     </div>
-    <script type="text/javascript" src="/ckeditor4/ckeditor.js"></script>
-    <script type="text/javascript" src="/JavaScript/one.js"></script>
-
-    
-
-	<script type="text/javascript">
-
-	    if (window.CKEDITOR) {
-	        (function () {
-	            var showCompatibilityMsg = function () {
-	                var env = CKEDITOR.env;
-
-	                var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
-
-	                var browsers =
-			{
-			    gecko: 'Firefox 2.0',
-			    ie: 'Internet Explorer 6.0',
-			    opera: 'Opera 9.5',
-			    webkit: 'Safari 3.0'
-			};
-
-	                var alsoBrowsers = '';
-
-	                for (var key in env) {
-	                    if (browsers[key]) {
-	                        if (env[key])
-	                            html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
-	                        else
-	                            alsoBrowsers += browsers[key] + '+, ';
-	                    }
-	                }
-
-	                alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
-
-	                html += ' It is also compatible with ' + alsoBrowsers + '.';
-
-	                html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
-
-	                var alertsEl = document.getElementById('alerts');
-	                alertsEl && (alertsEl.innerHTML = html);
-	            };
-
-	            var onload = function () {
-	                // Show a friendly compatibility message as soon as the page is loaded,
-	                // for those browsers that are not compatible with CKEditor.
-	                if (!CKEDITOR.env.isCompatible)
-	                    showCompatibilityMsg();
-	            };
-
-	            // Register the onload listener.
-	            if (window.addEventListener)
-	                window.addEventListener('load', onload, false);
-	            else if (window.attachEvent)
-	                window.attachEvent('onload', onload);
-	        })();
-	    }
-
-	</script>
-    <script type="text/javascript" src="/JavaScript/jquery.details.js"></script> 
-    <script>
-        $('details').details();
-    </script>
+    <script src="/ckeditor4/ckeditor.js"></script>
+    <script src="/JavaScript/bootstrap.min.js"></script>
+    <script src="/JavaScript/jquery.details.js"></script> 
+    <script src="/JavaScript/one.js"></script>    
     </form>
 </body>
 </html>

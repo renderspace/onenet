@@ -25,7 +25,6 @@ namespace OneMainWeb.AdminControls
         public bool IsSpecialContent { get; set; }
 
 
-
         protected int? SelectedModuleInstanceId
         {
             get { return (Session["SelectedModuleInstanceId"] != null ? (int?)Int32.Parse(Session["SelectedModuleInstanceId"].ToString()) : (int?)null); }
@@ -49,10 +48,7 @@ namespace OneMainWeb.AdminControls
                     }
                 }
 
-                HistoryControl.GetContent = textContentB.GetTextContent;
-
-                if (SelectedModuleInstanceId.HasValue)
-                    HistoryControl.SelectedItemId = SelectedModuleInstanceId.Value;
+                
 
                 DropDownListModuleInstances_DataBind();
                 InitializeControls();
@@ -90,21 +86,12 @@ namespace OneMainWeb.AdminControls
             }
         }
 
-        protected void HistoryControl_RevertToAudit(object sender, TypedEventArg<BOInternalContent> e)
-        {
-            TextContentEditor.Title = e.Value.Title;
-            TextContentEditor.SubTitle = e.Value.SubTitle;
-            TextContentEditor.Teaser = e.Value.Teaser;
-            TextContentEditor.Html = e.Value.Html;
-        }
-
         private void InitializeControls()
         {
-            LabelChanged.Text = "";
+            LastChangeAndHistory1.Text = "";
+            LastChangeAndHistory1.SelectedContentId = 0;
             PanelEditor.Visible = SelectedModuleInstanceId.HasValue;
             // MainTextBox.TextBoxCssClass = chkUseFck.Checked ? "ckeditor" : "";
-
-            HistoryControl.Visible = false;
 
             if (SelectedModuleInstanceId.HasValue)
             {
@@ -122,11 +109,8 @@ namespace OneMainWeb.AdminControls
                         TextContentEditor.SubTitle = textContentModel.SubTitle;
                         TextContentEditor.Teaser = textContentModel.Teaser;
                         TextContentEditor.Html = textContentModel.Html;
-                        LabelChanged.Text = textContentModel.DisplayLastChanged;
-                        HistoryControl.Visible = true;
-                        if (SelectedModuleInstanceId.HasValue)
-                            HistoryControl.SelectedItemId = SelectedModuleInstanceId.Value;
-                        HistoryControl.LoadHistory();
+                        LastChangeAndHistory1.Text = textContentModel.DisplayLastChanged;
+                        LastChangeAndHistory1.SelectedContentId = textContentModel.ContentId.Value;
                     }
                     else
                     {

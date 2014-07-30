@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OneMainWeb.AdminControls {
+namespace OneMainWeb.adm {
     
     
-    public partial class ScaffoldMainPagedList {
+    public partial class Regulars {
         
         /// <summary>
         /// Notifier1 control.
@@ -22,13 +22,13 @@ namespace OneMainWeb.AdminControls {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// MultiView1 control.
+        /// Multiview1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MultiView1;
+        protected global::System.Web.UI.WebControls.MultiView Multiview1;
         
         /// <summary>
         /// View1 control.
@@ -40,93 +40,75 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
-        /// ButtonInsert control.
+        /// TextBoxRegular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonInsert;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxRegular;
         
         /// <summary>
-        /// TextBoxId control.
+        /// cmdAddRegular control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxId;
+        protected global::System.Web.UI.WebControls.LinkButton cmdAddRegular;
         
         /// <summary>
-        /// ButtonDisplayById control.
+        /// regularGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        protected global::System.Web.UI.WebControls.GridView regularGridView;
         
         /// <summary>
-        /// ButtonExportToExcel control.
+        /// View3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonExportToExcel;
+        protected global::System.Web.UI.WebControls.View View3;
         
         /// <summary>
-        /// GridViewItems control.
+        /// TxtRegularContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewItems;
+        protected global::OneMainWeb.AdminControls.TextContentControl TxtRegularContent;
         
         /// <summary>
-        /// ButtonDeleteSelected control.
+        /// RegularCancelButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonDeleteSelected;
+        protected global::System.Web.UI.WebControls.Button RegularCancelButton;
         
         /// <summary>
-        /// PostbackPager1 control.
+        /// RegularInsertUpdateButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.PostbackPager PostbackPager1;
+        protected global::System.Web.UI.WebControls.Button RegularInsertUpdateButton;
         
         /// <summary>
-        /// Literal1 control.
+        /// RegularInsertUpdateCloseButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
-        
-        /// <summary>
-        /// View2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View2;
-        
-        /// <summary>
-        /// DynamicEditor1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::OneMainWeb.AdminControls.ScaffoldDynamicEditor DynamicEditor1;
+        protected global::System.Web.UI.WebControls.Button RegularInsertUpdateCloseButton;
     }
 }

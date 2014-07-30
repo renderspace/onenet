@@ -1,251 +1,195 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-	<configSections>
-		<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-			<section name="OneMainWeb.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-		</sectionGroup>
-		<section name="autoLanguageDetectionConfiguration" type="One.Net.BLL.WebConfig.AutoLanguageDetectionConfiguration" />
-		<section name="rssConfiguration" type="One.Net.BLL.WebConfig.RssConfiguration" />
-		<section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
-		<section name="urlrewritingnet" requirePermission="false" type="UrlRewritingNet.Configuration.UrlRewriteSection, UrlRewritingNet.UrlRewriter" />    
-		<sectionGroup name="system.web.extensions" type="System.Web.Configuration.SystemWebExtensionsSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
-			<sectionGroup name="scripting" type="System.Web.Configuration.ScriptingSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
-				<section name="scriptResourceHandler" type="System.Web.Configuration.ScriptingScriptResourceHandlerSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication"/>
-				<sectionGroup name="webServices" type="System.Web.Configuration.ScriptingWebServicesSectionGroup, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35">
-					<section name="jsonSerialization" type="System.Web.Configuration.ScriptingJsonSerializationSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="Everywhere" />
-					<section name="profileService" type="System.Web.Configuration.ScriptingProfileServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
-					<section name="authenticationService" type="System.Web.Configuration.ScriptingAuthenticationServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
-					<section name="roleService" type="System.Web.Configuration.ScriptingRoleServiceSection, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" requirePermission="false" allowDefinition="MachineToApplication" />
-				</sectionGroup>
-			</sectionGroup>
-		  </sectionGroup>
-	</configSections>
-	<log4net debug="false">
-		<appender name="LogFileAppender" type="log4net.Appender.RollingFileAppender,log4net">
-			<param name="File" value="@APPLOGPATH@"/>
-			<param name="AppendToFile" value="true"/>
-			<rollingStyle value="Date" />
-			<datePattern value="yyyyMM" />
-			<layout type="log4net.Layout.PatternLayout,log4net">
-				<param name="ConversionPattern" value="%d [%t] %-5p %c [%x] - %m%n"/>
-			</layout>
-		</appender>
-		<root> 
-			<priority value="@LOGLEVEL@"/>
-			<appender-ref ref="LogFileAppender"/>
-		</root>
-		<category name="VFSSiteMapProvider">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="TRewriteRule">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="Global">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="One.Net.BLL.BWebsite">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="PresentBasePage">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="OneMainWeb.PresentControls.OldMenuGroup">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="OneMainWeb.Controls.MenuGroup">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="One.Net.BLL.OCache">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="PresentBasePage">
-	      <priority value="ERROR" />
-	    </category>
-	    <category name="Article">
-	      <priority value="INFO" />
-	    </category>
-	    <category name="Comments">
-	      <priority value="INFO" />
-	    </category>
-	</log4net>   
-  <!--<autoLanguageDetectionConfiguration>
-    <languages>
-      <add language="en-US" redirectTo="http://www.kdd.si" />
-      <add language="sl-SI" redirectTo="http://www.kdd.si" />      
-    </languages>    
-  </autoLanguageDetectionConfiguration>-->
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+    <section name="rssConfiguration" type="One.Net.BLL.WebConfig.RssConfiguration" />
+    <section name="urlrewritingnet" requirePermission="false" type="UrlRewritingNet.Configuration.UrlRewriteSection, UrlRewritingNet.UrlRewriter" />
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <sectionGroup name="fiftyOne">
+      <section name="log" type="FiftyOne.Foundation.Mobile.Configuration.LogSection, FiftyOne.Foundation" requirePermission="false" allowDefinition="Everywhere" restartOnExternalChanges="false" allowExeDefinition="MachineToApplication" />
+      <section name="redirect" type="FiftyOne.Foundation.Mobile.Configuration.RedirectSection, FiftyOne.Foundation" requirePermission="false" allowDefinition="Everywhere" restartOnExternalChanges="false" allowExeDefinition="MachineToApplication" />
+      <section name="detection" type="FiftyOne.Foundation.Mobile.Detection.Configuration.DetectionSection, FiftyOne.Foundation" requirePermission="false" allowDefinition="Everywhere" restartOnExternalChanges="false" allowExeDefinition="MachineToApplication" />
+      <section name="imageOptimisation" type="FiftyOne.Foundation.Mobile.Configuration.ImageOptimisationSection, FiftyOne.Foundation" requirePermission="false" allowDefinition="Everywhere" restartOnExternalChanges="false" allowExeDefinition="MachineToApplication" />
+    </sectionGroup>
+  </configSections>
   <rssConfiguration>
     <providers>
-      <add name="Articles" type="One.NET.BLL.RSSProviderSQL"
-      listItemsMethod="[dbo].[ListArticlesForRss]"
-      listCategoriesMethod="[dbo].[ListArticleCategoriesForRss]"
-      connectionString="_conn_string_name_" />
+      <add name="Articles" type="One.Net.BLL.RSSProviderSQL" listItemsMethod="[dbo].[ListArticlesForRss]" listCategoriesMethod="[dbo].[ListArticleCategoriesForRss]" connectionString="MsSqlConnectionString" />
     </providers>
-  </rssConfiguration>  
+  </rssConfiguration>
   <urlrewritingnet rewriteOnlyVirtualUrls="true" contextItemsPrefix="QueryString" xmlns="http://www.urlrewriting.net/schemas/config/2006/07">
     <providers>
-      <add name="TURLProvider" type="One.NET.BLL.TURLProvider" securityTrimmingEnabled="true"/>
+      <add name="TURLProvider" type="One.NET.BLL.TURLProvider" securityTrimmingEnabled="true" />
     </providers>
-    <rewrites>  
-      <add name="@MAINREDIRECTNAME@" provider="RegEx" virtualUrl="^/(?!_files)(_.*)+" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/@SITESPECIFICPATH@/$1" redirect="None" ignoreCase="true"/>
+    <rewrites>
+      <add name="backslashRedir" provider="RegEx" virtualUrl="~/(.*)/$" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/$1" redirect="Application" ignoreCase="true" />
+      <add name="svetavladarRedir" provider="RegEx" virtualUrl="^/(?!_files)(_.*)+" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/site_specific/$1" redirect="None" ignoreCase="true" />
       <add name="AdminRedir" provider="RegEx" virtualUrl="^/adm" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/adm/structure.aspx" redirect="None" ignoreCase="true" />
-      <add name="robotsRedir" provider="RegEx" virtualUrl="^/robots.txt" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/@SITESPECIFICPATH@/robots.txt" redirect="None" ignoreCase="true"/>
-      <add name="favicoRedir" provider="RegEx" virtualUrl="^/favicon.ico" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/@SITESPECIFICPATH@/favicon.ico" redirect="None" ignoreCase="true"/>
-	  <add name="crossdomainRedir" provider="RegEx" virtualUrl="^/crossdomain.xml" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/@SITESPECIFICPATH@/crossdomain.xml" redirect="None" ignoreCase="true" />
+      <add name="robotsRedir" provider="RegEx" virtualUrl="^/robots.txt" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/site_specific/robots.txt" redirect="None" ignoreCase="true" />
+      <add name="favicoRedir" provider="RegEx" virtualUrl="^/favicon.ico" rewriteUrlParameter="ExcludeFromClientQueryString" destinationUrl="~/site_specific/favicon.ico" redirect="None" ignoreCase="true" />
       <add name="MainRedirect" provider="TURLProvider"></add>
     </rewrites>
   </urlrewritingnet>
   <appSettings>
-    <add key="aspxTemplatesFolder" value="@SITESPECIFICPATH@\aspx_templates"/>
-    <add key="customModulesFolder" value="@SITESPECIFICPATH@\custom_modules"/>
-	<add key="emailTemplatesFolder" value="@SITESPECIFICPATH@\email_templates" />
-    <add key="WebSiteId" value="@WEBSITEID@" />
-	<add key="PreferredCulture" value="@PREFFEREDCULTURE@" />
-	<add key="PreferredUICulture" value="@PREFFEREDUICULTURE@" />
-	<add key="EnableDictionaryCache" value="true"/>
-    <add key="PublishRoleMapping" value="@PUBLISHROLEMAPPING@"/>
-	<add key="PublishFlag" value="@PUBLISHFLAG@"/>
-	<add key="EnableXHTMLValidator" value="True" />
-  </appSettings> 
-    <connectionStrings>
-	    <clear/> 
-		<add name="MsSqlConnectionString" connectionString="@CONN@;Pooling=true;"/>
-		<add name="MsSqlConnectionString13" connectionString="@CONN13@;Pooling=true;"/>
-		<add name="MsSqlConnectionStringCustom" connectionString="@CONNCUSTOM@;Pooling=true;"/>
-		<add name="ProfileSqlConnectionString" connectionString="@CONNPROFILE@;Pooling=true;"/>		
-		<add name="MsSqlConnectionStringCrawler" connectionString="@CONNCRAWLER@;Pooling=true;"/>
-	</connectionStrings>
- 
-    <system.web>
-		<pages>
-	        <controls>
-	          <add tagPrefix="asp" namespace="System.Web.UI" assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-	          <add tagPrefix="asp" namespace="System.Web.UI.WebControls" assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-	          <add namespace="AjaxControlToolkit" assembly="AjaxControlToolkit" tagPrefix="ajaxToolkit"/>
-	        </controls>
-		</pages>
-		<httpRuntime maxRequestLength="12288" />
-		<customErrors defaultRedirect="~/@SITESPECIFICPATH@/error.htm" mode="Off">
-			<error statusCode="404" redirect="~/@SITESPECIFICPATH@/filenotfound.htm"/>
-			<error statusCode="403" redirect="~/@SITESPECIFICPATH@/authorizationfailed.htm"/>
-		</customErrors>
-        <compilation debug="@DEBUGENABLED@">
-			<assemblies>
-	            <add assembly="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-	            <add assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-	            <!--<add assembly="System.Data.DataSetExtensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>-->
-	            <add assembly="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
-	          </assemblies>
-		</compilation>
-		<authentication mode="Windows"/>
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    
 
-      <roleManager enabled="true" defaultProvider="AspNetWindowsTokenRoleProvider">
-        <providers>
-          <clear/>
-            <add name="AspNetWindowsTokenRoleProvider" applicationName="/" type="System.Web.Security.WindowsTokenRoleProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-          </providers>
-        
-      </roleManager>
+    <add key="WebSiteId" value="7" />
+    <add key="PublishRoleMapping" value="publisher" />
+    <add key="PublishFlag" value="false" />
+    <add key="CacheDuration" value="3600" />
+  </appSettings>
+  <connectionStrings>
+    <add name="ProfileSqlConnectionString" connectionString="server=tartar.netinet.si;uid=auth;pwd=auth;database=AuthManager;Pooling=true;" />
+    <add name="DefaultConnection" connectionString="server=tartar.netinet.si;uid=auth;pwd=auth;database=universal_identity;Pooling=true;" providerName="System.Data.SqlClient" />
 
-      <profile enabled="true">
-        <providers>
-          <clear/>
-          <add name="AspNetSqlProfileProvider" type="System.Web.Profile.SqlProfileProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-             applicationName="/" connectionStringName="ProfileSqlConnectionString" />
-        </providers>
-        <properties>
-          <add name="AutoPublish" type="Boolean" allowAnonymous="false" />
-          <add name="EnableDelete" type="Boolean" allowAnonymous="false" />
-          <add name="EnableStructureEditing" type="Boolean" allowAnonymous="false" />
-          <add name="ShowMenuGroupIds" type="Boolean" allowAnonymous="false" />
-          <add name="UseFCK" type="Boolean" allowAnonymous="false" />
-          <add name="ExpandTree" type="Boolean" allowAnonymous="false" />
-          <add name="SelectedCultureId" type="Int32" allowAnonymous="false" />
-          <add name="SelectedUICultureId" type="Int32" allowAnonymous="false" />          
-          <add name="SelectedWebSiteId" type="Int32" allowAnonymous="false" />
-          <add name="SelectedPageId" type="Int32" allowAnonymous="false" />
-          <add name="SelectedCulture" type="String" allowAnonymous="false" />
-          <add name="SelectedUICulture" type="String" allowAnonymous="false" />
-          <add name="RootNodeId" type="Int32" allowAnonymous="false" />
-          <add name="ShowUntranslated" type="Boolean" allowAnonymous="false" />		  
-        </properties>
-      </profile>
-      
-		<siteMap enabled="true" defaultProvider="OneSiteMapProvider">
-			<providers>
-				<clear/>
-				<add name="AspNetXmlSiteMapProvider" siteMapFile="Web.sitemap" securityTrimmingEnabled="true" type="System.Web.XmlSiteMapProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
-				<add name="OneSiteMapProvider" type="One.Net.BLL.OneSiteMapProvider" securityTrimmingEnabled="false" connectionStringName="SiteMapConnectionString" />
-			</providers>
-		</siteMap>
-		<httpHandlers>
-			<add path="*.css" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.swf" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.pdf" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.msi" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.ai" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.eps" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.mpg" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.doc" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.xls" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.flv" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.zip" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<!--add path="*" verb="GET,HEAD,POST" type="System.Web.DefaultHttpHandler" validate="true" /-->
-			<!-- add path="*.gif" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler" validate="false" / -->
-			<!-- add path="*.gif" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler"/> -->
-			<!-- add path="*.png" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler"/> -->
-			<add path="*.gif" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.png" verb="GET,HEAD,POST" type="System.Web.StaticFileHandler"/>
-			<add path="*.jpg" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler"/>
-			
-			<remove verb="*" path="*.asmx"/>
-	        <add verb="*" path="*.asmx" validate="false" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-	        <add verb="*" path="*_AppService.axd" validate="false" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-	        <add verb="GET,HEAD" path="ScriptResource.axd" type="System.Web.Handlers.ScriptResourceHandler, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" validate="false"/>
-	      </httpHandlers>
-      <httpModules>
-        <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter" />
-		<add name="ScriptModule" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-      </httpModules>
-    </system.web>
-	<system.webServer>
-		<validation validateIntegratedModeConfiguration="false"/>
+
+    <add name="MsSqlConnectionString" connectionString="server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=zrsz;Pooling=true;" />
+    <add name="Bamboo" connectionString="server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=zrsz-custom;Pooling=true;" />
+    <add name="MsSqlConnectionString13" connectionString=";Pooling=true;" />
+    <add name="MsSqlConnectionStringCustom" connectionString="server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=zrsz-custom;Pooling=true;" />
+
+    
+
+    <add name="MsSqlConnectionStringCrawler" connectionString="server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=Crawler;Pooling=true;" />
+    <!-- Baza ZRSZ_JobVacancy -->
+    <add name="eSvetovanje.Entities.Properties.Settings.ZRSZ_KorpoWebConnectionString" connectionString="Data Source=tartar.netinet.si;Initial Catalog=KorpoWeb;Persist Security Info=True;User Id=zrsz;Password=zrsz" providerName="System.Data.SqlClient" />
+    <add name="eSvetovanje.Entities.Properties.Settings.ZRSZ_JobVacancyConnectionString" connectionString="Data Source=tartar.netinet.si;Initial Catalog=zrsz-JobVacancy;Persist Security Info=True;User ID=zrsz;Password=zrsz" providerName="System.Data.SqlClient" />
+    <!-- Glavna baza aplikacije eSvetovanje -->
+    <add name="eSvetovanje.Entities.Properties.Settings.eSvetovanjeConnectionString" connectionString="Data Source=tartar.netinet.si;Initial Catalog=zrsz-eSvetovanje2;Persist Security Info=True;User ID=zrsz;Password=zrsz" providerName="System.Data.SqlClient" />
+    <!-- KorpoWeb -->
+    <add name="eSvetovanje.Entities.Properties.Settings.ESSConnectionString" connectionString="Data Source=tartar.netinet.si;Initial Catalog=zrsz-SkupnaBaza;Persist Security Info=True;User ID=zrsz;Password=zrsz" providerName="System.Data.SqlClient" />
+    <!--<add name="eSvetovanje.Entities.Properties.Settings.ESSConnectionString" connectionString="user id=wds_test;password=wds_test_1234*;data source=cswebrazvoj;initial catalog=SkupnaBaza;packet size=4096" providerName="System.Data.SqlClient"/>-->
+    <add name="eSvetovanje.Kontakti" connectionString="Data Source=tartar.netinet.si;Initial Catalog=zrsz-Kontakti;Persist Security Info=True;User ID=zrsz;Password=zrsz" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <fiftyOne>
+    <redirect firstRequestOnly="true" mobileHomePageUrl="http://zrszm.t.renderspace.net" timeout="20" devicesFile="~/App_Data/Devices.dat" mobilePagesRegex="/(Mobile)/">
+    </redirect>
+    <log logFile="~/App_Data/Log.txt" logLevel="Info" />
+    <detection binaryFilePath="~/App_Data/51Degrees.dat" />
+  </fiftyOne>
+  <system.web>
+    <globalization fileEncoding="utf-8" requestEncoding="utf-8" responseEncoding="utf-8" uiCulture="sl-SI" culture="sl-SI" />
+    <pages validateRequest="false" enableEventValidation="false" viewStateEncryptionMode="Never" enableViewStateMac="false" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID">
+      <namespaces>
+        <add namespace="System.Web.Optimization" />
+        <add namespace="Microsoft.AspNet.Identity" />
+      </namespaces>
+      <controls>
+        <add assembly="Microsoft.AspNet.Web.Optimization.WebForms" namespace="Microsoft.AspNet.Web.Optimization.WebForms" tagPrefix="webopt" />
+      </controls>
+    </pages>
+    <sessionState timeout="60" />
+    <httpRuntime maxRequestLength="12288" requestValidationMode="2.0" />
+    <customErrors defaultRedirect="~/site_specific/error.htm" mode="Off">
+      <error statusCode="404" redirect="~/site_specific/filenotfound.htm" />
+      <error statusCode="403" redirect="~/site_specific/authorizationfailed.htm" />
+    </customErrors>
+    <compilation debug="true">
+      <assemblies>
+        <add assembly="System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+      </assemblies>
+    </compilation>
+    <authentication mode="None">
+      <forms loginUrl="/Account/Login.aspx" />
+    </authentication>
+    
+    <!--
+    <authentication mode="Forms" />
+    <membership defaultProvider="TwoAspMembershipProvider">
+      <providers>
+        <clear />
+        <add name="TwoAspMembershipProvider" type="System.Web.Security.SqlMembershipProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" 
+             connectionStringName="DefaultConnection" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" 
+             applicationName="OneNet" requiresUniqueEmail="true" passwordFormat="Hashed" maxInvalidPasswordAttempts="5" minRequiredPasswordLength="4" 
+             minRequiredNonalphanumericCharacters="0" passwordAttemptWindow="10" passwordStrengthRegularExpression="" />
+      </providers>
+    </membership>
+    <roleManager enabled="true" defaultProvider="SqlRoleManager">
+      <providers>
+        <clear />
+        <add name="SqlRoleManager" type="System.Web.Security.SqlRoleProvider" connectionStringName="DefaultConnection" applicationName="OneNet" />
+      </providers>
+    </roleManager>-->
+    <profile enabled="true">
+      <providers>
+        <clear />
+        <add name="AspNetSqlProfileProvider" type="System.Web.Profile.SqlProfileProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" applicationName="/" connectionStringName="DefaultConnection" />
+      </providers>
+      <properties>
+        <add name="AutoPublish" type="Boolean" allowAnonymous="false" />
+        <add name="EnableStructureEditing" type="Boolean" allowAnonymous="false" />
+        <add name="ShowMenuGroupIds" type="Boolean" allowAnonymous="false" />
+        <add name="UseFCK" type="Boolean" allowAnonymous="false" />
+        <add name="ExpandTree" type="Boolean" allowAnonymous="false" />
+        <add name="SelectedCultureId" type="Int32" allowAnonymous="false" />
+        <add name="SelectedWebSiteId" type="Int32" allowAnonymous="false" />
+        <add name="SelectedPageId" type="Int32" allowAnonymous="false" />
+        <add name="SelectedCulture" type="String" allowAnonymous="false" />
+        <add name="SelectedUICulture" type="String" allowAnonymous="false" />
+        <add name="RootNodeId" type="Int32" allowAnonymous="false" />
+        <add name="ShowUntranslated" type="Boolean" allowAnonymous="false" />
+        <add name="UserSecret" type="String" allowAnonymous="false" />
+        <add name="DisplayName" type="String" allowAnonymous="false" />
+        <add name="FirstName" type="String" allowAnonymous="false" />
+        <add name="SurName" type="String" allowAnonymous="false" />
+        <add name="Email" type="String" allowAnonymous="false" />
+      </properties>
+    </profile>
+    <siteMap enabled="true" defaultProvider="OneSiteMapProvider">
+      <providers>
+        <clear />
+        <add name="AspNetXmlSiteMapProvider" siteMapFile="Web.sitemap" securityTrimmingEnabled="true" type="System.Web.XmlSiteMapProvider, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+        <add name="OneSiteMapProvider" type="One.Net.BLL.OneSiteMapProvider" securityTrimmingEnabled="false" connectionStringName="SiteMapConnectionString" />
+      </providers>
+    </siteMap>
+    <httpModules>
+      <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter" />
+    </httpModules>
+    <webServices>
+      <protocols>
+        <add name="HttpGet" />
+        <add name="HttpPost" />
+        <add name="HttpSoap" />
+      </protocols>
+    </webServices>
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
     <modules runAllManagedModulesForAllRequests="true">
-      <remove name="UrlRewriteModule"/>
-      <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter"/>
-			<remove name="ScriptModule"/>
-      <add name="ScriptModule" preCondition="managedHandler" type="System.Web.Handlers.ScriptModule, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-		</modules>
-		<handlers>
-      <add path="*.jpg" name="jpg" verb="GET,HEAD,POST" preCondition="integratedMode"  type="One.Net.BLL.TImageHandler"/>
-      
-			<remove name="ScriptHandlerFactory"/>
-			<remove name="ScriptHandlerFactoryAppServices"/>
-			<remove name="ScriptResource"/><remove name="WebServiceHandlerFactory-Integrated"/>
-			<add name="ScriptHandlerFactory" verb="*" path="*.asmx" preCondition="integratedMode" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-			<add name="ScriptHandlerFactoryAppServices" verb="*" path="*_AppService.axd" preCondition="integratedMode" type="System.Web.Script.Services.ScriptHandlerFactory, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-			<add name="ScriptResource" preCondition="integratedMode" verb="GET,HEAD" path="ScriptResource.axd" type="System.Web.Handlers.ScriptResourceHandler, System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
-		</handlers>
-	</system.webServer>
+      <remove name="FormsAuthenticationModule" />
+      <remove name="UrlRewriteModule" />
+      <add name="UrlRewriteModule" type="UrlRewritingNet.Web.UrlRewriteModule, UrlRewritingNet.UrlRewriter" />
+    </modules>
+    <handlers>
+      <add path="*.gif" name="gif2" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler" />
+      <add path="*.png" name="png2" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler" />
+      <add path="*.jpg" name="jpg2" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler" />
+      <add path="*.jpeg" name="jpeg2" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler" />
+      <add path="*.ico" name="ico2" verb="GET,HEAD,POST" type="One.Net.BLL.TImageHandler" />
+    </handlers>
+  </system.webServer>
   <system.net>
     <mailSettings>
-      <smtp from="@DEFAULTFROM@">
-        <network host="@SMTP@" port="25" defaultCredentials="true"/>
+      <smtp from="info@renderspace.si">
+        <network host="mx.renderspace.si" port="25" defaultCredentials="true" />
       </smtp>
     </mailSettings>
   </system.net>
-  
   <system.serviceModel>
     <services>
       <service name="One.Net.BLL.Service.FormService" behaviorConfiguration="myBehavior">
         <endpoint address="" binding="webHttpBinding" contract="One.Net.BLL.Service.IFormService" />
       </service>
     </services>
-
     <behaviors>
       <serviceBehaviors>
         <behavior name="myBehavior">
-          <serviceDebug includeExceptionDetailInFaults="true"/>
+          <serviceDebug includeExceptionDetailInFaults="true" />
           <!--<serviceAuthorization principalPermissionMode="UseAspNetRoles" roleProviderName="NikondaRoleManager">
             <authorizationPolicies>
               <add policyType="Nikonda.Scaffold.Core.Web.MembershipAuthorizationPolicy, Nikonda.Scaffold.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
@@ -261,165 +205,46 @@
     </behaviors>
     <extensions>
       <behaviorExtensions>
-        <add name="NewtonsoftJsonBehavior" type="Newtonsoft.Json.Extensions.NewtonsoftJsonBehavior, NewtonsoftJsonExtensions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+        <add name="NewtonsoftJsonBehavior" type="Newtonsoft.Json.Extensions.NewtonsoftJsonBehavior, NewtonsoftJsonExtensions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
       </behaviorExtensions>
     </extensions>
-    <serviceHostingEnvironment multipleSiteBindingsEnabled="false" aspNetCompatibilityEnabled="true"/>
+    <serviceHostingEnvironment multipleSiteBindingsEnabled="false" aspNetCompatibilityEnabled="true" />
   </system.serviceModel>
-  
-  
-
   <location path="adm">
     <system.web>
       <authorization>
-        <allow users="*" />
+        <deny users="?" />
       </authorization>
     </system.web>
   </location>
-  
-  <location path="adm/ContentEdit.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-
-  <location path="adm/Structure.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-  
-  <location path="adm/Publish.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>  
-
-  <location path="adm/Forms.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-
-  <location path="adm/Faqs.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-  
-  <location path="adm/Comments.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>  
-
-  <location path="adm/Articles.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>  
-
-	<location path="adm/PersonalSettings.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="adm, all, Everyone, admin" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-  
-  <location path="adm/SubscriptionManager.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="adm, all, Everyone" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-	
-  <location path="adm/AuthorInfo.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="adm, all, Everyone" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>	
-
-  <location path="adm/dictionary.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-
-  <location path="adm/FileManager.aspx">
-    <system.web>
-      <authorization>
-        <allow roles="adm, all, Everyone" />
-        <deny users="*"/>
-      </authorization>
-    </system.web>
-  </location>
-
-	<location path="adm/Events.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="adm, all, Everyone" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-	
-	<location path="adm/RssFeeds.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="admin" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-
-	<location path="adm/Users.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="admin" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-	
-	<location path="adm/Stores.aspx">
-		<system.web>
-			<authorization>
-				<allow roles="adm, all, Everyone" />
-				<deny users="*"/>
-			</authorization>
-		</system.web>
-	</location>
-	
-  
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.AspNet.Identity.Core" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.0.0" newVersion="2.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.1.0.0" newVersion="2.1.0.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConwebnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v11.0" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
 </configuration>

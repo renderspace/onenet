@@ -1,3 +1,66 @@
+function trace(msg) {
+    if (typeof tracing == 'undefined' || !tracing) return;
+    try { console.log(msg); } catch (ex) { }
+}
+
+function logError(XMLHttpRequest, textStatus, errorThrown) {
+    var errorToLog = "textStatus: " + textStatus + " errorThrown: " + errorThrown;
+    trace(errorToLog);
+    _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
+}
+
+
+if (window.CKEDITOR) {
+    (function () {
+        var showCompatibilityMsg = function () {
+            var env = CKEDITOR.env;
+
+            var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
+
+            var browsers =
+    {
+        gecko: 'Firefox 2.0',
+        ie: 'Internet Explorer 6.0',
+        opera: 'Opera 9.5',
+        webkit: 'Safari 3.0'
+    };
+
+            var alsoBrowsers = '';
+
+            for (var key in env) {
+                if (browsers[key]) {
+                    if (env[key])
+                        html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
+                    else
+                        alsoBrowsers += browsers[key] + '+, ';
+                }
+            }
+
+            alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
+
+            html += ' It is also compatible with ' + alsoBrowsers + '.';
+
+            html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
+
+            var alertsEl = document.getElementById('alerts');
+            alertsEl && (alertsEl.innerHTML = html);
+        };
+
+        var onload = function () {
+            // Show a friendly compatibility message as soon as the page is loaded,
+            // for those browsers that are not compatible with CKEditor.
+            if (!CKEDITOR.env.isCompatible)
+                showCompatibilityMsg();
+        };
+
+        // Register the onload listener.
+        if (window.addEventListener)
+            window.addEventListener('load', onload, false);
+        else if (window.attachEvent)
+            window.attachEvent('onload', onload);
+    })();
+}
+
 
 function swapIt(name_open, name_close) 
 { 
@@ -35,3 +98,28 @@ function toggle_visibility(id) {
     return false;
 }
 
+$('details').details();
+
+$('#audit-history').on('show.bs.modal', function (e) {
+    //var selectedItemId =  $('#audit-history').data('selected-item-id');
+    var selectedItemId = $(this).data('content-id');
+    if (selectedItemId > 0) {
+        $.ajax({
+            url: "/AdminService/GetContentHistory?contentId=" + selectedItemId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            success: function (data) {
+                trace("GetContentHistory success");
+                $('#audit-history-table tbody').empty();
+                $.map(data, function (item) {
+                    $('#audit-history-table tbody').append('<tr><td>' + item.DisplayLastChanged + '</td><td>' + item.Title + '</td></tr>');
+                    trace(item);
+                });
+            },
+            error: logError
+        });
+    }
+
+
+});

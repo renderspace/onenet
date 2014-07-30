@@ -220,6 +220,13 @@
       <DependentUpon>RegisterExternalLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminControls\CustomBoundField.cs" />
+    <Compile Include="AdminControls\LastChangeAndHistory.ascx.cs">
+      <DependentUpon>LastChangeAndHistory.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\LastChangeAndHistory.ascx.designer.cs">
+      <DependentUpon>LastChangeAndHistory.ascx</DependentUpon>
+    </Compile>
     <Compile Include="AdminControls\ScaffoldConfig.ascx.cs">
       <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -269,6 +276,13 @@
     </Compile>
     <Compile Include="adm\Publish.aspx.designer.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Regulars.aspx.cs">
+      <DependentUpon>Regulars.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Regulars.aspx.designer.cs">
+      <DependentUpon>Regulars.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\Scaffold.aspx.cs">
       <DependentUpon>Scaffold.aspx</DependentUpon>
@@ -393,6 +407,7 @@
     <Content Include="Account\OpenAuthProviders.ascx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
+    <Content Include="AdminControls\LastChangeAndHistory.ascx" />
     <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
@@ -404,7 +419,11 @@
     <Content Include="adm\css\default_editor.css" />
     <Content Include="adm\css\one.css" />
     <Content Include="adm\FileManager2.aspx" />
+    <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="adm\Publish.aspx" />
+    <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
     <Content Include="adm\ScaffoldConfig.aspx" />
     <Content Include="adm\Website.aspx" />
@@ -499,13 +518,6 @@
     </Compile>
     <Compile Include="AdminControls\CategoryEditor.ascx.designer.cs">
       <DependentUpon>CategoryEditor.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="AdminControls\History.ascx.cs">
-      <DependentUpon>History.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\History.ascx.designer.cs">
-      <DependentUpon>History.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminControls\TextContentControl.ascx.cs">
       <DependentUpon>TextContentControl.ascx</DependentUpon>
@@ -791,6 +803,15 @@
     <Content Include="Account\Web.config" />
     <Content Include="Account\Account.Master" />
     <Content Include="51Degrees.config" />
+    <Content Include="adm\fonts\glyphicons-halflings-regular.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\fonts\glyphicons-halflings-regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
@@ -942,7 +963,6 @@
     <Content Include="Utils\Rss.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminControls\History.ascx" />
     <Content Include="AdminControls\TextContentControl.ascx" />
     <Content Include="AdminControls\toolbar_close.gif" />
     <Content Include="adm\FileManager.asmx" />

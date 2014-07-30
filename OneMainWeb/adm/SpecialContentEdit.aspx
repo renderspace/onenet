@@ -1,4 +1,4 @@
-﻿<%@ Page ValidateRequest="false"  Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SpecialContentEdit.aspx.cs" Inherits="OneMainWeb.adm.SpecialContentEdit" Title="$special_content"  %>
+﻿<%@ Page ValidateRequest="false"  Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SpecialContentEdit.aspx.cs" Inherits="OneMainWeb.adm.SpecialContentEdit" Title="Special content"  %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register src="../AdminControls/TextSpecialContent.ascx" tagname="TextSpecialContent" tagprefix="uc1" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

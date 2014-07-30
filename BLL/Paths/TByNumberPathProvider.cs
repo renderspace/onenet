@@ -80,11 +80,12 @@ namespace One.Net.BLL
         public bool Exists
         {
             get {
-                bool hasPrivateAccess = (bool)HttpContext.Current.Items["has_private_access"];
+                //bool hasPrivateAccess = (bool)HttpContext.Current.Items["has_private_access"];
                 bool fileExistsOnDisk = false;
 
                 fileExistsOnDisk = EnableDiskCache && CachedFileInfo.Exists;
-                return fileExistsOnDisk || (file != null && (!file.Folder.IsPrivate || hasPrivateAccess)); 
+                //return fileExistsOnDisk || (file != null && (!file.Folder.IsPrivate || hasPrivateAccess)); 
+                return fileExistsOnDisk || (file != null); 
             }
         }
 

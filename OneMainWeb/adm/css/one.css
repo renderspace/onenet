@@ -20,7 +20,8 @@ input[type="text"], select { border: 1px #ccc solid!important;}
 .input.uri .layout-right {width: 50%;}
 .input.uri span {width: auto; font-size: 12px;}
 
-input[type="submit"] {color: #428bca;  font-weight: bold!important; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin: 0 0 0 7px; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}
+.glyphicon { font-weight: normal!important; font-size: 12px; }
+/* input[type="submit"] {color: #428bca;  font-weight: bold!important; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin: 0 0 0 7px; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}  */
 input[type="number"]  {width: 70px;}
 
 .alert h2 {font-size: 16px; font-weight: bold;}
@@ -458,3 +459,7 @@ div.calendar
 .input.uri span {width: 121px; word-wrap: break-word;}
 }
 
+
+.audit-history-table {max-height: 500px; overflow: auto;}
+.ModuleDistinctName { font-size: 11px; font-weight: normal;}
+.m-ops { margin: 3px 0 0 20px; }

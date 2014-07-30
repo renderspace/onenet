@@ -3,6 +3,7 @@
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
+<%@ Register src="~/AdminControls/LastChangeAndHistory.ascx" tagname="LastChangeAndHistory" tagprefix="uc2" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -15,7 +16,7 @@
                 <header><h3 class="tabs_involved">Tree structure</h3>
                     <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
                         <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
-                        <asp:Button ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="Add" onclick="cmdAddChild_Click" />
+                        <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="cmdAddChild_Click" CssClass="btn btn-success" />
                     </asp:Panel>
                 </header>
                 <div class="treeview">
@@ -116,12 +117,14 @@
 			        </div>
                     
 				    <div class="submit-links">
-						<div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
-					    <asp:button id="ButtonDelete" CssClass="left delete-btn" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
-			            <asp:button ID="ButtonUndoDelete" CssClass="left" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
-			            <asp:button ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right alt_btn" />				     
-			            <asp:button ID="ButtonUnPublish" CssClass="right" runat="server" OnClick="ButtonUnPublish_Click" />
-                        <asp:button	id="cmdSave" Runat="server"	CssClass="save-btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+						<uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+
+
+					    <asp:button id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
+			            <asp:button ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
+			            <asp:button ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
+			            <asp:button ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" />
+                        <asp:button	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
 				    </div>
                     
                 </section>
@@ -145,19 +148,22 @@
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
-                            <h4><span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
+                            <h4>
+                                <asp:LinkButton	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-trash'></span>" CssClass="btn btn-danger pull-left"  />
+                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
                                 
                                 <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
                                 </span>
 								<span class="m-btns">
-								<asp:Button	ID="ButtonEdit" Runat="server"	CssClass="edit_button" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
-                                    Text='Edit content'	/>
+                                    
+								<asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                    Text='<span class="glyphicon glyphicon-pencil"></span> Edit'	/>
 
                                 <asp:PlaceHolder ID="PlaceHolderNotInherited2" runat="server">
-                                    <asp:Button	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text='Delete instance' CssClass="delete-btn"  />
-                                    <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' />
-						            <asp:Button	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text=" &#9650; " CssClass="s-btn" />
-						            <asp:Button	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text=" &#9660; " CssClass="s-btn" />
+                                    
+                                    <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' CssClass="btn" />
+						            <asp:LinkButton	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text="<span class='glyphicon glyphicon-arrow-up'></span>"  CssClass="btn s-btn" />
+						            <asp:LinkButton	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-arrow-down'></span>"  CssClass="btn s-btn" />
                                 </asp:PlaceHolder>
 								</span>
                             </h4>

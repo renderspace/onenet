@@ -168,7 +168,9 @@
     <Compile Include="Scaffold\Model\VirtualTable.cs" />
     <Compile Include="Scaffold\PhysicalSchema.cs" />
     <Compile Include="Scaffold\Schema.cs" />
+    <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\FormService.cs" />
+    <Compile Include="Service\IAdminService.cs" />
     <Compile Include="Service\IFormService.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />
     <Compile Include="Utility\FolderRightsReader.cs" />
