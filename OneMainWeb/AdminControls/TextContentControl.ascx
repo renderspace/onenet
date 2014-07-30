@@ -20,4 +20,4 @@
 </div>
 
 <two:Input Text="Teaser" TextMode="MultiLine" Rows="5" Required="false" runat="server" ID="txtTeaser" />
-<two:Input ID="txtHtml" runat="server" TextMode="MultiLine" Rows="35" Required="false" ContainerCssClass="ck" />
+<two:Input ID="txtHtml" runat="server" TextMode="MultiLine" Rows="20" Required="false" ContainerCssClass="ck" />

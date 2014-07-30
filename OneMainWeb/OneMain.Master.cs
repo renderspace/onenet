@@ -70,6 +70,11 @@ namespace OneMainWeb
             }
         }
 
+        protected string TracingFlag
+        {
+            get { return (!PresentBasePage.ReadPublishFlag()).ToString().ToLower(); }
+        }
+
         private AuthorizationHelper authorizationHelper = null;
 
 

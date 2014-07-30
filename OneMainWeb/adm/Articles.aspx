@@ -2,39 +2,30 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>
-<%@ Register Src="~/AdminControls/History.ascx" TagName="History" TagPrefix="uc1" %>
+<%@ Register src="~/AdminControls/LastChangeAndHistory.ascx" tagname="LastChangeAndHistory" tagprefix="uc2" %>
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />
-	<div class="topStructure">
-		<asp:checkbox id="chkAutoPublish" OnCheckedChanged="chkAutoPublish_CheckedChanged" AutoPostBack="true" Runat="server" Text="$autopublish_label" />
-		<asp:checkbox id="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		
-	</div>
-
-    <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click" ValidationGroup="M">Articles</asp:LinkButton>
-    <asp:LinkButton ID="LinkButtonRegulars" runat="server" OnClick="LinkButtonRegulars_Click" ValidationGroup="M">Regulars</asp:LinkButton>
 
 
     <asp:MultiView ID="Multiview1" runat="server" ActiveViewIndex="0" OnActiveViewChanged="Multiview1_ActiveViewChanged">
         <asp:View ID="View1" runat="server">
-			<div class="searchFull">
-			    <asp:Button ID="cmdAddArticle" runat="server" Text="$add_article" OnClick="cmdAddArticle_Click" />			
-			</div>
-			<div class="searchFull">
-			    <two:InputWithButton ValidationType="int" ID="InputWithButtonShowById" ValidationGroup="ShowById" ButtonText="$show" Text="$article_ShowById" runat="server" OnClick="cmdShowById_Click" />
-			</div>
-			<div class="searchFull">
-                <asp:DropDownList OnDataBound="ddlRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="ddlRegularFilter" runat="server" DataSourceID="RegularSource"  />
-                <asp:ObjectDataSource ID="RegularSource" runat="server" OnSelecting="ObjectDataSourceRegularSource_Selecting"
-                    SelectMethod="ListRegulars" TypeName="OneMainWeb.ArticleDataSource">
-                    <SelectParameters>
-                        <asp:Parameter Name="sortBy" Type="string" DefaultValue="id" />
-                    </SelectParameters>
-                </asp:ObjectDataSource>                     
-    	        <asp:Button ID="cmdFilterArticles" runat="server" Text="$filter_articles" OnClick="cmdFilterArticles_Click" />                                    
-			 </div>
+
+            <div class="searchFull">
+			    <div class="col-md-2">
+			        <asp:LinkButton ID="cmdAddArticle" runat="server" text="<span class='glyphicon glyphicon-plus'></span> Add" OnClick="cmdAddArticle_Click" CssClass="btn btn-success" />			
+			    </div>
+			    <div class="col-md-6">
+                    <asp:TextBox runat="server" ID="TextBoxShowById" placeholder="Search by ID or title" ValidationGroup="ShowById"></asp:TextBox>
+                    <asp:LinkButton runat="server"  OnClick="cmdShowById_Click" ID="LinkButtonShowById" CssClass="btn btn-info" ValidationGroup="ShowById" Text="Search"></asp:LinkButton>
+			    </div>
+			    <div class="col-md-4">
+                    <asp:DropDownList OnDataBound="ddlRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="ddlRegularFilter" runat="server"   />                  
+    	            <asp:LinkButton ID="cmdFilterArticles" runat="server" Text="Filter" OnClick="cmdFilterArticles_Click" CssClass="btn btn-info" />                                    
+			     </div>
+            </div>
 			<div class="centerFull">
                 <div class="biggv">     
 					    <asp:GridView ID="articleGridView" runat="server" PageSize="10" PageIndex="0"
@@ -152,56 +143,13 @@
 				            <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>
 			            </div>
 			        
-                        <uc1:History runat="server" OnRevertToAudit="HistoryControl_RevertToAudit" id="HistoryControl" />			        
+                        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
 			        
 			        </div>
 			    </div>
             </div>
         </asp:View>
-        <asp:View ID="View3" runat="server">
-            <div class="searchFull">
-		        <two:Input ID="txtNewRegular" Required="false" runat="server" Text="$insert_new_regular" />                
-                <asp:Button ID="cmdAddRegular" Text="$add_regular" runat="server" OnClick="cmdAddRegular_Click" />
-		    </div>
-			<div class="centerFull">
-                <div class="biggv"> 
-
-	                <asp:GridView OnSelectedIndexChanged="regularGridView_SelectedIndexChanged" DataSourceID="ObjectDataSourceRegularList" ID="regularGridView" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id">
-		                <Columns>
-			                <asp:BoundField HeaderText="$id" DataField="Id" SortExpression="Id" ReadOnly="True" />
-			                <asp:BoundField HeaderText="$title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
-
-			                <asp:TemplateField HeaderText="$delete">
-				                <ItemTemplate>
-					                <asp:LinkButton ID="cmdDeleteRegular" runat="server" OnClick="cmdDeleteRegular_Click" Text="$delete" CommandArgument='<%# ((BORegular) Container.DataItem).Id %>' />
-				                </ItemTemplate>
-			                </asp:TemplateField>
-                            <asp:CommandField SelectText="$edit" ShowSelectButton="true" />
-		                </Columns>
-	                </asp:GridView>
-                    
-                    
-					<asp:ObjectDataSource ID="ObjectDataSourceRegularList" runat="server" OnSelecting="ObjectDataSourceRegularList_Selecting"
-					    SelectMethod="ListRegulars" SortParameterName="sortBy" 
-					    TypeName="OneMainWeb.ArticleDataSource">
-				    </asp:ObjectDataSource>
-                    
-                
-                </div>
-            </div>
-        </asp:View>
-        <asp:View ID="View4" runat="server">
-            <div class="centerFull">
-			    <div class="contentEntry">
-			        <one:TextContentControl ID="TxtRegularContent" runat="server" TitleLabel="$regular_title" SubTitleLabel="$regular_sub_title" TeaserLabel="$regular_teaser" HtmlLabel="$regular_html" HtmlRows="10" />
-			        <div class="save">
-				        <asp:Button ID="RegularCancelButton" runat="server" CausesValidation="false" CommandName="Cancel" Text="$cancel" OnClick="RegularCancelButton_Click" />
-				        <asp:Button ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" />
-				        <asp:Button ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click" />
-			        </div>
-			    </div>
-			</div>
-        </asp:View>
+        
 
     </asp:MultiView>
 </asp:Content>

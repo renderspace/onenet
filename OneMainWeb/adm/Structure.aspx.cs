@@ -128,7 +128,8 @@ namespace OneMainWeb.adm
                     BOWebSite webSite = webSiteB.Get(SelectedWebSiteId);
                     TextBoxUri.Visible = SelectedPageId != RootNodeID;
 
-                    LabelChanged.Text = selectedPage.DisplayLastChanged;
+                    LastChangeAndHistory1.Text = selectedPage.DisplayLastChanged;
+                    LastChangeAndHistory1.SelectedContentId = selectedPage.ContentId.Value;
 
                     TextBoxTitle.Text = selectedPage.Title;
                     TextBoxDescription.Text = selectedPage.Teaser;
@@ -236,7 +237,7 @@ namespace OneMainWeb.adm
             // for position and inheritance settings
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
             // for textcontentedit
-            var ButtonEdit = e.Item.FindControl("ButtonEdit") as Button;
+            var ButtonEdit = e.Item.FindControl("ButtonEdit") as LinkButton;
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
             Control undeleteButton = e.Item.FindControl("cmdUndeleteInstance");
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");

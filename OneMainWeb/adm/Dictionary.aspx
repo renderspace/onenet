@@ -6,9 +6,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <one:Notifier runat="server" ID="Notifier1" />
-<div class="topStructure">
-    <asp:checkbox ID="CheckboxShowUntranslated" OnCheckedChanged="CheckboxShowUntranslated_CheckedChanged" AutoPostBack="true" Runat="server" Text="$show_untranslated" />		
-</div>
+
     <div class="topCommands">
         <asp:LinkButton ID="LinkButtonKeywords" runat="server" OnClick="LinkButtonKeywords_Click">Keywords</asp:LinkButton>
         <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click">Import/Export</asp:LinkButton>

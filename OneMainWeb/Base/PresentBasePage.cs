@@ -35,8 +35,6 @@ namespace OneMainWeb
         private readonly List<MModule> activeModules = new List<MModule>();
         private readonly List<BOIntContImage> imagesOnThisPage = new List<BOIntContImage>();
 
-        private bool publishFlag = false;
-
         public int PageId
         {
             get
@@ -45,15 +43,18 @@ namespace OneMainWeb
             }
         }
 
-        public bool PublishFlag
-        {
-            get { return publishFlag; }
-            set { publishFlag = value; }
-        }
+        public bool PublishFlag { get; set; }
 
         protected internal string CustomModulesFolder
         {
             get { return customModulesFolder; }
+        }
+
+        public static bool ReadPublishFlag()
+        { 
+            var publishFlag = false;
+            bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);
+            return publishFlag;
         }
 
         public PresentBasePage()
@@ -64,8 +65,7 @@ namespace OneMainWeb
             {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(int.Parse(SiteMap.CurrentNode["_languageId"]));
             }
-
-            bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);
+            PublishFlag = ReadPublishFlag();
 
             PreInit += Page_PreInit;
         }
@@ -267,7 +267,7 @@ var _gaq = _gaq || [];
                     Response.Redirect(page.RedirectToUrl);
                 }
 
-                if (!publishFlag && Master.Controls.Count > 2)
+                if (!PublishFlag && Master.Controls.Count > 2)
                 {
                     var control = LoadControl("~/Controls/AdminWikiMenu.ascx");
                     Master.Controls[3].Controls.AddAt(0, control);
@@ -300,7 +300,7 @@ var _gaq = _gaq || [];
                         Response.End();
                     }
                 }
-                if (!publishFlag)
+                if (!PublishFlag)
                     InsertDebugBanner();
 
                 try
@@ -354,7 +354,7 @@ var _gaq = _gaq || [];
                                     log.Error("Error while loading module", ex);
                                     Literal message = new Literal();
                                     message.Text = "<h3 style=\"color:red;\">Error while loading module</h3>";
-                                    if (!publishFlag)
+                                    if (!PublishFlag)
                                     {
                                         message.Text += "<h4>" + ex.Message + "</h4>";
                                         p.BorderStyle = BorderStyle.Solid;

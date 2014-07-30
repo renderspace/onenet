@@ -106,11 +106,15 @@ namespace OneMainWeb.AdminControls
 
                     var items = Data.ListItems(VirtualTableId, state);
 
-                    GridViewItems.Columns.Clear();
+                  //  GridViewItems.Columns.Clear();
                     GridViewItems.DataSource = items;
                     GridViewItems.DataKeyNames = (string[])items.ExtendedProperties["DataKeyNames"];
 
                     var multiRowSelector = new CustomBoundField { HeaderText = "_select", ShowCheckBox = true };
+
+                    var editColumnToMove = GridViewItems.Columns[0];
+                    GridViewItems.Columns.RemoveAt(0);
+                    
 
                     if (GridViewItems.DataKeyNames.Count() > 0)
                     {
@@ -136,8 +140,11 @@ namespace OneMainWeb.AdminControls
                         if (bool.Parse(col.ExtendedProperties["ShowOnList"].ToString()))
                             GridViewItems.Columns.Add(field);
                     }
+                    GridViewItems.Columns.Add(editColumnToMove);
 
-                    GridViewItems.Columns.Insert(1, new CommandField { ShowHeader = true, ShowSelectButton = true, HeaderText = "", SelectText = "Edit" });
+                    /*
+                    GridViewItems.Columns.Insert(1, new CommandField { ShowHeader = true, ShowSelectButton = true, HeaderText = "", 
+                        SelectText = "" }); */
                     GridViewItems.DataBind();
                     var allRecords = (int)items.ExtendedProperties["AllRecords"];
                     PostbackPager1.TotalRecords = allRecords;

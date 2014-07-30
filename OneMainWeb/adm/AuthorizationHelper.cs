@@ -126,6 +126,15 @@ namespace OneMainWeb.adm
             }
         }
 
+        public bool HasPublishRights
+        {
+            get
+            {
+                bool publishRole = manager != null ? manager.IsInRole(Thread.CurrentPrincipal.Identity.GetUserId(), "publisher") : Roles.IsUserInRole("publisher");
+                return publishRole;
+            }
+        }
+
         private void CheckWebSiteRole(int webSiteId)
         {
             var webSiteB = new BWebsite();

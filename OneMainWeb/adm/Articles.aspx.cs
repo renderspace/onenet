@@ -32,28 +32,18 @@ namespace OneMainWeb
             set { ViewState["SelectedArticle"] = value; }
         }
 
-        protected BORegular SelectedRegular
-        {
-            get { return ViewState["SelectedRegular"] as BORegular; }
-            set { ViewState["SelectedRegular"] = value; }
-        }
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Notifier1.Visible = true;
-            chkAutoPublish.Visible = (bool)Context.Items["publish"];
             AutoPublishWarning.Visible = AutoPublish;
-            
             if (!IsPostBack)
             {
-                chkAutoPublish.Checked = AutoPublish;
-                CheckboxShowUntranslated.Checked = ShowUntranslated;
-
-                HistoryControl.GetContent = articleDS.GetArticle;
-
-                if (SelectedArticle != null && SelectedArticle.Id.HasValue)
-                    HistoryControl.SelectedItemId = SelectedArticle.Id.Value;
+                ddlRegularFilter.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
+                ddlRegularFilter.DataBind();
             }
+            
         }
 
         private void PrepareEmptyArticle()
@@ -70,7 +60,7 @@ namespace OneMainWeb
 
         protected void cmdShowById_Click(object sender, EventArgs e)
         {
-            int id = FormatTool.GetInteger(InputWithButtonShowById.Value);
+            int id = FormatTool.GetInteger(TextBoxShowById.Text);
 
             if ( id > -1)
             {
@@ -120,26 +110,21 @@ namespace OneMainWeb
         {
             SaveArticle(true);
         }
-
-        protected void RegularCancelButton_Click(object sender, EventArgs e)
-        {
-            SelectedArticle = null;
-            Multiview1.ActiveViewIndex = 2;
-        }
-
-        protected void RegularInsertUpdateButton_Click(object sender, EventArgs e)
-        {
-            SaveRegular(false);
-        }
-
-        protected void RegularInsertUpdateCloseButton_Click(object sender, EventArgs e)
-        {
-            SaveRegular(true);
-        }
         
         protected void cmdFilterArticles_Click(object sender, EventArgs e)
         {
             articleGridView.DataBind();
+        }
+
+        private void Regulars_DataBind(ListControl lb)
+        {
+            if (lb != null)
+            {
+                lb.DataSource = articleB.ListRegulars(new ListingState(), ShowUntranslated, null, null);
+                lb.DataTextField = "Title";
+                lb.DataValueField = "Id";
+                lb.DataBind();
+            }
         }
 
         protected void Multiview1_ActiveViewChanged(object sender, EventArgs e)
@@ -150,8 +135,6 @@ namespace OneMainWeb
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
-                HistoryControl.Visible = false;
-
                 Regulars_DataBind(lbRegulars);
 
                 if (SelectedArticle != null)
@@ -164,6 +147,8 @@ namespace OneMainWeb
 
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
                 TextContentEditor.UseCkEditor = true;
+                LastChangeAndHistory1.SelectedContentId = 0;
+                LastChangeAndHistory1.Text = "";
 
                 if (SelectedArticle != null)
                 {
@@ -179,63 +164,18 @@ namespace OneMainWeb
                     TextContentEditor.Html = SelectedArticle.Html;
 
                     if (SelectedArticle.Id.HasValue)
+                    {
+                        LastChangeAndHistory1.SelectedContentId = SelectedArticle.ContentId.Value;
+                        LastChangeAndHistory1.Text = SelectedArticle.DisplayLastChanged;
                         LabelId.Text = SelectedArticle.Id.Value.ToString();
-
-                    if (SelectedArticle.Id.HasValue)
-                    {
-                        InsertUpdateButton.Text = ResourceManager.GetString("$update");
-                        InsertUpdateCloseButton.Text = ResourceManager.GetString("$update_close");
+                       
                     }
-                    else
-                    {
-                        InsertUpdateButton.Text = ResourceManager.GetString("$insert");
-                        InsertUpdateCloseButton.Text = ResourceManager.GetString("$insert_close");
-                    }
-
-                    if (SelectedArticle.Id.HasValue)
-                    {
-                        HistoryControl.SelectedItemId = SelectedArticle.Id.Value;
-                        HistoryControl.Visible = true;
-                        HistoryControl.LoadHistory();
-                    }
-                }
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 2)
-            {
-                regularGridView.DataBind();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 3)
-            {
-                TxtRegularContent.UseCkEditor = true;
-
-                if (SelectedRegular != null)
-                {
-                    TxtRegularContent.Title = SelectedRegular.Title;
-                    TxtRegularContent.SubTitle = SelectedRegular.SubTitle;
-                    TxtRegularContent.Teaser = SelectedRegular.Teaser;
-                    TxtRegularContent.Html = SelectedRegular.Html;
-
-                    if (SelectedRegular.Id.HasValue)
-                    {
-                        RegularInsertUpdateButton.Text = ResourceManager.GetString("$update");
-                        RegularInsertUpdateCloseButton.Text = ResourceManager.GetString("$update_close");
-                    }
-                    else
-                    {
-                        RegularInsertUpdateButton.Text = ResourceManager.GetString("$insert");
-                        RegularInsertUpdateCloseButton.Text = ResourceManager.GetString("$insert_close");
-                    }
+                    InsertUpdateButton.Text = "Save";
+                    InsertUpdateCloseButton.Text = "Save & Close";
                 }
             }
         }
 
-        protected void HistoryControl_RevertToAudit(object sender, TypedEventArg<BOInternalContent> e)
-        {
-            TextContentEditor.Title = e.Value.Title;
-            TextContentEditor.SubTitle = e.Value.SubTitle;
-            TextContentEditor.Teaser = e.Value.Teaser;
-            TextContentEditor.Html = e.Value.Html;
-        }
 
         protected void articleGridView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -247,15 +187,7 @@ namespace OneMainWeb
             }
         }
 
-        protected void regularGridView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridView grid = sender as GridView;
-            if (grid != null && grid.SelectedValue != null)
-            {
-                SelectedRegular = articleB.GetRegular(Int32.Parse(grid.SelectedValue.ToString()));
-                Multiview1.ActiveViewIndex = 3;
-            }
-        }
+        
 
         protected void articleGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -277,8 +209,8 @@ namespace OneMainWeb
                     cmdEditButton != null &&
                     cmdUnPublish != null)
                 {
-                    cmdUnPublish.Visible = !article.IsNew && !article.MarkedForDeletion && (bool)Context.Items["publish"]; ;
-                    cmdPublish.Visible = (article.MarkedForDeletion || article.IsChanged) && (bool)Context.Items["publish"];
+                    cmdUnPublish.Visible = !article.IsNew && !article.MarkedForDeletion && Authorization.HasPublishRights;
+                    cmdPublish.Visible = (article.MarkedForDeletion || article.IsChanged) && Authorization.HasPublishRights;
                     cmdEdit.Visible = !article.MarkedForDeletion;
                     cmdDelete.Visible = !article.MarkedForDeletion;
                     cmdRevertToPublished.Visible = !article.IsNew && ( article.IsChanged || article.MarkedForDeletion);
@@ -345,10 +277,10 @@ namespace OneMainWeb
         {
             e.InputParameters["showUntranslated"] = ShowUntranslated;
 
-            int articleId = FormatTool.GetInteger(InputWithButtonShowById.Value);
+            int articleId = FormatTool.GetInteger(TextBoxShowById.Text);
 
-            if ( articleId == -1)
-                e.InputParameters["titleSearch"] = InputWithButtonShowById.Value;                
+            if (articleId == -1)
+                e.InputParameters["titleSearch"] = TextBoxShowById.Text;
             else
                 e.InputParameters["titleSearch"] = "";              
 
@@ -356,17 +288,7 @@ namespace OneMainWeb
                 e.InputParameters.Clear();
         }
 
-        protected void ObjectDataSourceRegularList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["showUntranslated"] = ShowUntranslated;
-            if (e.ExecutingSelectCount)
-                e.InputParameters.Clear();
-        }
-
-        protected void ObjectDataSourceRegularSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["showUntranslated"] = ShowUntranslated;
-        }
+       
 
         private void SaveArticle(bool close)
         {
@@ -471,49 +393,7 @@ namespace OneMainWeb
             }
         }
         
-        private void SaveRegular(bool close)
-        {
-            try
-            {
-                SelectedRegular.Html = TxtRegularContent.Html;
-                SelectedRegular.Title = TxtRegularContent.Title;
-                SelectedRegular.Teaser = TxtRegularContent.Teaser;
-                SelectedRegular.SubTitle = TxtRegularContent.SubTitle;
-                SelectedRegular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
-
-                articleB.ChangeRegular(SelectedRegular);
-
-                Notifier1.Message = ResourceManager.GetString("$regular_saved");
-
-                if (close)
-                {
-                    SelectedRegular = null;
-                    Multiview1.ActiveViewIndex = 2;
-                }
-                else
-                {
-                    Multiview1.ActiveViewIndex = 3;
-                }
-            }
-            catch (Exception ex)
-            {
-                Notifier1.Visible = true;
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_saving");
-                Notifier1.ExceptionMessage = ex.Message;
-                Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
-            }
-        }
-        
-        private void Regulars_DataBind(ListControl lb)
-        {
-            if (lb != null)
-            {
-                lb.DataSource = articleB.ListRegulars(new ListingState(), ShowUntranslated, null, null);
-                lb.DataTextField = "Title";
-                lb.DataValueField = "Id";
-                lb.DataBind();
-            }
-        }
+       
 
         protected void cmdAssignRegularToArticle_Click(object sender, EventArgs e)
         {
@@ -533,59 +413,12 @@ namespace OneMainWeb
             lbRegularsAssignedToArticle.Items.Remove(item);
         }
 
-        protected void CheckboxShowUntranslated_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowUntranslated = CheckboxShowUntranslated.Checked;
-            articleGridView.DataBind();
-        }
-
-        protected void chkAutoPublish_CheckedChanged(object sender, EventArgs e)
-        {
-            AutoPublish = chkAutoPublish.Checked;
-        }
-
         protected override void OnPreRender(EventArgs e)
         {
             TextContentEditor.TextBoxCssClass = "ckeditor";
             if (AutoPublishWarning != null)
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
             base.OnPreRender(e);
-        }
-
-        protected void cmdAddRegular_Click(object sender, EventArgs e)
-        {
-            BORegular regular = new BORegular();
-
-            regular.Title = txtNewRegular.Value;
-            regular.SubTitle = regular.Teaser = regular.Html = "";
-            regular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
-            regular.ContentId = null;
-
-            articleB.ChangeRegular(regular);
-
-            regularGridView.DataBind();
-        }
-
-        protected void cmdDeleteRegular_Click(object sender, EventArgs e)
-        {
-            LinkButton button = sender as LinkButton;
-
-            if (button != null)
-            {
-                int id = Int32.Parse(button.CommandArgument);
-                articleB.DeleteRegular(id);
-                regularGridView.DataBind();
-            }
-        }
-
-        protected void LinkButtonArticles_Click(object sender, EventArgs e)
-        {
-            Multiview1.ActiveViewIndex = 0;
-        }
-
-        protected void LinkButtonRegulars_Click(object sender, EventArgs e)
-        {
-            Multiview1.ActiveViewIndex = 2;
         }
     }
 
@@ -642,11 +475,6 @@ namespace OneMainWeb
         public void MarkForDeletion(int id)
         {
             articleB.MarkForDeletion(id);
-        }
-
-        public List<BORegular> ListRegulars(string sortBy, bool showUntranslated)
-        {
-            return articleB.ListRegulars(new ListingState(SortDir.Ascending, sortBy), showUntranslated, null, null);
         }
     }
 

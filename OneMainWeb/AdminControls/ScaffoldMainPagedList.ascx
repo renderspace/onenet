@@ -4,25 +4,44 @@
 <%@ Register TagPrefix="cc1" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register src="~/AdminControls/ScaffoldDynamicEditor.ascx" tagname="ScaffoldDynamicEditor" tagprefix="uc1" %>
 
-<div class="top">
-    <cc1:Notifier runat="server" ID="Notifier1" />
-</div>  
+<cc1:Notifier runat="server" ID="Notifier1" />
+
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="View1" runat="server">
+
+        <div class="searchFull">
+			    <div class="col-md-2">
+                    <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
+			    </div>
+			    <div class="col-md-6">
+                    <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID"></asp:TextBox>
+                    <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" CssClass="btn btn-info" />
+			    </div>
+			    <div class="col-md-4">
+                    <asp:LinkButton ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="Export to Excel" CssClass="btn btn-info" />
+			     </div>
+            </div>
+
         <div class="listing">
-            <div class="buttonsTop">
-                <asp:Button ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  Text="$add_new_item" />
-                <asp:Button ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="$export_to_excel" />
-                <asp:TextBox ID="TextBoxId" runat="server"></asp:TextBox>
-                <asp:Button ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" />
+            <div>
+                
+                
+                
             </div>
             <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True" 
                 AutoGenerateColumns="false" 
                 onselectedindexchanged="GridViewItems_SelectedIndexChanged" 
-                OnSorting="GridViewItems_Sorting">
+                OnSorting="GridViewItems_Sorting" CssClass="table table-hover">
+                <Columns>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:LinkButton runat="server" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" CommandName="select" CssClass="btn btn-info btn-xs" OnClick="GridViewItems_SelectedIndexChanged" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
             </asp:GridView>                
             <div class="buttonsMiddle">
-                <asp:Button ID="ButtonDeleteSelected" runat="server" Text="$delete_selected_items" onclick="ButtonDeleteSelected_Click" CssClass="delete-btn" />
+                <asp:LinkButton ID="ButtonDeleteSelected" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" onclick="ButtonDeleteSelected_Click" CssClass="btn btn-danger" />
             </div>
             <bll:PostbackPager id="PostbackPager1" OnCommand="PostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
             <asp:Literal ID="Literal1" runat="server" Text=""></asp:Literal>

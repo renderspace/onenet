@@ -118,7 +118,6 @@
 	<resource name="label_subtitle">Podnaslov</resource>
 	<resource name="label_teaser">Teaser</resource>
 	<resource name="label_html"></resource>
-	<resource name="label_change_module_instance">Izberi pojavitev modula</resource>
 	<resource name="revert_to_published">Povrni v objavljeno stanje</resource>
 	<resource name="usefck_label">Uporabi napredni urejevalnik besedila</resource>
 	<resource name="cancel">Prekliči</resource>

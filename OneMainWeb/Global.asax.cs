@@ -90,6 +90,9 @@ namespace OneMainWeb
 
             
             RouteTable.Routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
+            RouteTable.Routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
+
+            
 
             //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
             /*

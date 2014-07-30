@@ -32,6 +32,12 @@ namespace OneMainWeb
         WebProfile profile = null;
         protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
+
+        public AuthorizationHelper Authorization
+        {
+            get { return authorizationHelper; }
+            set { authorizationHelper = value; }
+        }
         public OneBasePage()
         {
 
@@ -90,22 +96,12 @@ namespace OneMainWeb
 
         protected bool ShowUntranslated
         {
-            get { return profile.ShowUntranslated; }
-            set
-            {
-                profile.ShowUntranslated = value;
-                profile.Save();
-            }
+            get { return false; }
         }
 
         protected bool AutoPublish
         {
-            get { return profile.AutoPublish; }
-            set
-            {
-                profile.AutoPublish = value;
-                profile.Save();
-            }
+            get { return false; }
         }
 
         protected int? RootNodeID

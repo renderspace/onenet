@@ -74,7 +74,6 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                CheckboxShowUntranslated.Checked = ShowUntranslated;
                 SearchTermNoResults = "";
 
                 MultiView1.ActiveViewIndex = 0;
@@ -83,13 +82,6 @@ namespace OneMainWeb
                 TwoPostbackPager1.SelectedPage = 1;
                 LoadAll(false);
             }
-        }
-
-        protected void CheckboxShowUntranslated_CheckedChanged(object sender, EventArgs e)
-        {
-            ShowUntranslated = CheckboxShowUntranslated.Checked;
-            MultiView1.ActiveViewIndex = 0;
-            LoadAll(false);
         }
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)

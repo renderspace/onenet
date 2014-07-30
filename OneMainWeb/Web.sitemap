@@ -9,8 +9,10 @@
 		</siteMapNode>
 		<siteMapNode url="" title="Modules" description="" roles="*">
 			<siteMapNode url="adm/Forms.aspx" title="Forms" description="" roles="all, Everyone"/>
-			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, Everyone" />
-			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="all, Everyone" />
+			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, admin, articles">
+        <siteMapNode url="adm/Regulars.aspx" title="Regulars" roles="all, admin, regulars"></siteMapNode>
+      </siteMapNode>
+			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="all, admin, newsletter" />
 		</siteMapNode>
 		<siteMapNode url="" title="Settings" description="" roles="*">
 			<siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, Everyone" />
