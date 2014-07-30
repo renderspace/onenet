@@ -150,21 +150,21 @@ namespace OneMainWeb
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
 
-            PagedList<BODictionaryEntry> entries = contentB.ListDictionaryEntries(state, ShowUntranslated, InputWithButtonSearch.Value);
+            PagedList<BODictionaryEntry> entries = contentB.ListDictionaryEntries(state, ShowUntranslated, TextBoxSearch.Text);
 
             TwoPostbackPager1.TotalRecords = entries.AllRecords;
             TwoPostbackPager1.DetermineData();
             GridViewEntries.DataSource = entries;
             GridViewEntries.DataBind();
 
-            if (!string.IsNullOrEmpty(InputWithButtonSearch.Value) && entries.AllRecords == 0)
+            if (!string.IsNullOrEmpty(TextBoxSearch.Text) && entries.AllRecords == 0)
             {
                 if (!ShowUntranslated)
                     Notifier1.Warning = ResourceManager.GetString("$you_can_get_more_results_if_tick_show_untranslated");
 
                 GridViewEntries.Visible = false;
                 LabelNoResults.Visible = true;
-                SearchTermNoResults = InputWithButtonSearch.Value;
+                SearchTermNoResults = TextBoxSearch.Text;
             }
             else
             {

@@ -260,13 +260,20 @@ namespace OneMainWeb.AdminControls
                         PanelField.Controls.Add(CheckBox1);
                         break;
                     case FieldType.Calendar:
+                         var Panel2 = new Panel { CssClass = "col-sm-2" };
+                        var Panel10 = new Panel { CssClass = "col-sm-10" };
+
                         var DatePicker1 = new TextBox();
                         DatePicker1.ID = "FI" + column.Ordinal;
                         if (column.ValueDateTime != System.Data.SqlTypes.SqlDateTime.MinValue)
                             DatePicker1.Text = ((DateTime)column.ValueDateTime).ToShortDateString();
                         LabelDescription.AssociatedControlID = DatePicker1.ID;
-                        PanelField.Controls.Add(LabelDescription);
-                        PanelField.Controls.Add(DatePicker1);
+
+                        Panel2.Controls.Add(LabelDescription);
+                        Panel10.Controls.Add(DatePicker1);
+
+                        PanelField.Controls.Add(Panel2);
+                        PanelField.Controls.Add(Panel10);
 
 
 
@@ -297,8 +304,8 @@ namespace OneMainWeb.AdminControls
                         break;
                 }
 
-                var requiredLabel = new Label { Text = "*", CssClass = column.IsRequiredOnInsert ? "req marker" : "marker" };
-                PanelField.Controls.Add(requiredLabel);
+                //var requiredLabel = new Label { Text = "*", CssClass = column.IsRequiredOnInsert ? "req marker" : "marker" };
+                //PanelField.Controls.Add(requiredLabel);
             }
 
             var JQueryCode = "";
@@ -447,6 +454,8 @@ jQuery.validator.addMethod(
 
         private static void PrepareIntegerInput(VirtualColumn column, Panel PanelField, Label LabelDescription, ref string validationJQueryRules)
         {
+            var Panel2 = new Panel { CssClass = "col-sm-2" };
+            var Panel10 = new Panel { CssClass = "col-sm-10" };
             var TextBox4 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
@@ -454,8 +463,10 @@ jQuery.validator.addMethod(
                 MaxLength = 11 //(-2,147,483,648 to 2,147,483,647)
             };
             LabelDescription.AssociatedControlID = TextBox4.ID;
-            PanelField.Controls.Add(LabelDescription);
-            PanelField.Controls.Add(TextBox4);
+            Panel2.Controls.Add(LabelDescription);
+            Panel10.Controls.Add(TextBox4);
+            PanelField.Controls.Add(Panel2);
+            PanelField.Controls.Add(Panel10);
 
             validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBox4.UniqueID);
         }
@@ -518,6 +529,8 @@ jQuery.validator.addMethod(
 
         private static void PrepareTextBoxInput(VirtualColumn column, Panel panelField, Label descriptionLabel, ref string validationJQueryRules)
         {
+            var Panel2 = new Panel { CssClass = "col-sm-2" };
+            var Panel10 = new Panel { CssClass = "col-sm-10" };
             var Input6 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
@@ -543,8 +556,11 @@ jQuery.validator.addMethod(
                     Input6.Rows = 1;
             }
             descriptionLabel.AssociatedControlID = Input6.ID;
-            panelField.Controls.Add(descriptionLabel);
-            panelField.Controls.Add(Input6);
+            Panel2.Controls.Add(descriptionLabel);
+            Panel10.Controls.Add(Input6);
+
+            panelField.Controls.Add(Panel2);
+            panelField.Controls.Add(Panel10);
 
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }

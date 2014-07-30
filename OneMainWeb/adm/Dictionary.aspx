@@ -7,34 +7,38 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <one:Notifier runat="server" ID="Notifier1" />
 
-    <div class="topCommands">
-        <asp:LinkButton ID="LinkButtonKeywords" runat="server" OnClick="LinkButtonKeywords_Click">Keywords</asp:LinkButton>
-        <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click">Import/Export</asp:LinkButton>
-    </div>
-
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
             <asp:View ID="View1" runat="server">
+
                 <div class="searchFull">
-	                <asp:Button ID="cmdAddDictionaryEntry" runat="server" Text="$add_dictionary_entry" OnClick="cmdAddDictionaryEntry_Click" />
-                    <two:InputWithButton ID="InputWithButtonSearch" ValidationGroup="search" runat="server" Text="$search_keyword" ButtonText="$search" OnClick="cmdSearch_Click" IsLinkButton="false"  />
-	            </div>
+			        <div class="col-md-2">
+                        <asp:LinkButton ID="ButtonInsert" runat="server" onclick="cmdAddDictionaryEntry_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
+			        </div>
+			        <div class="col-md-6">
+                        <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search by keyword or text" ValidationGroup="search"></asp:TextBox>
+                        <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search" OnClick="cmdSearch_Click" CssClass="btn btn-info" ValidationGroup="search" />
+			        </div>
+			        <div class="col-md-4">
+                        <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click" CssClass="btn btn-info" Text="Import / export keywords" />
+			         </div>
+                </div>
                 <div class="centerFull">
                         <div class="biggv">  
                             <asp:Label ID="LabelNoResults" runat="server" Visible="false" EnableViewState="false"></asp:Label>
                             <asp:GridView ID="GridViewEntries" runat="server" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" OnSorting="GridViewEntries_Sorting" OnRowDeleting="GridViewEntries_RowDeleting"
                                     EnableViewState="true" OnRowDataBound="GridViewEntries_RowDataBound"
-						            CssClass="gv"
+						            CssClass="table table-hover"
 						            DataKeyNames="KeyWord"
 						            OnSelectedIndexChanged="GridViewEntries_SelectedIndexChanged">
 						            <Columns>
+                                        <asp:TemplateField>
+								            <ItemTemplate>
+								                    <asp:LinkButton ID="cmdDelete" CommandArgument='<%# Eval("KeyWord") %>' CommandName="Delete" runat="server" Text="$delete"  />
+								            </ItemTemplate>
+							            </asp:TemplateField>
 							            <asp:TemplateField HeaderText="$keyword" SortExpression="keyword">
 								            <ItemTemplate>
 								                <asp:Label ID="LabelKeyWord" runat="server" Text='<%# Eval("KeyWord") %>' />
-								            </ItemTemplate>
-							            </asp:TemplateField>
-							            <asp:TemplateField>
-								            <ItemTemplate>
-								                    <asp:LinkButton ID="cmdDelete" CommandArgument='<%# Eval("KeyWord") %>' CommandName="Delete" runat="server" Text="$delete"  />
 								            </ItemTemplate>
 							            </asp:TemplateField>
 							            <asp:TemplateField HeaderText="$meaning">
@@ -42,10 +46,7 @@
                                         </asp:TemplateField>
                                         <asp:TemplateField>
 								            <ItemTemplate>
-								                <div style="width: 50px;">
-								                    <asp:ImageButton ID="cmdEditButton" runat="server" CommandName="Select"	CommandArgument='<%# Eval("KeyWord") %>'  />
-										            <asp:LinkButton Text="$edit" CommandName="Select" CommandArgument='<%# Eval("KeyWord") %>' ID="cmdEdit" runat="server" />
-										        </div>
+                                                <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("KeyWord") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
 								            </ItemTemplate>
 							            </asp:TemplateField>
 							        </Columns>

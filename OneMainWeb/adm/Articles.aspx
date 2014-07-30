@@ -44,19 +44,23 @@
 						    OnRowDeleted="articleGridView_Deleted"
 						    OnRowCommand="articleGridView_RowCommand">
 						    <Columns>
+                                 <asp:TemplateField>
+							        <ItemTemplate>
+                                        <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="$id" SortExpression="a.id">
+							        <ItemTemplate>
+								        <%# Eval("Id") %>
+							        </ItemTemplate>
+							    </asp:TemplateField>
 							    <asp:TemplateField HeaderText="$article" SortExpression="cds.title">
 								    <ItemTemplate><%# Eval("Title") %></ItemTemplate>
 							    </asp:TemplateField>
 							    <asp:TemplateField HeaderText="$display_date" SortExpression="a.display_date">
 								    <ItemTemplate><%# ((DateTime)Eval("DisplayDate")).ToShortDateString()%></ItemTemplate>
 							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$id" SortExpression="a.id">
-							        <ItemTemplate>
-							            <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
-							            <br />
-								        <%# Eval("Id") %>
-							        </ItemTemplate>
-							    </asp:TemplateField>
+							    
 							    <asp:TemplateField HeaderText="$RegularsList">
 								    <ItemTemplate><%# Eval("RegularsList")%></ItemTemplate>
 							    </asp:TemplateField>
@@ -73,10 +77,7 @@
 							    </asp:TemplateField>
 							    <asp:TemplateField>
 								    <ItemTemplate>
-								        <div style="width: 50px;">
-								            <asp:ImageButton ID="cmdEditButton" runat="server" CommandName="Select"	CommandArgument='<%# Eval("Id") %>'  />
-										    <asp:LinkButton Text="$edit" CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" />
-										</div>
+                                        <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs  " />
 								    </ItemTemplate>
 							    </asp:TemplateField>
 						    </Columns>

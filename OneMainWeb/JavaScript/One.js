@@ -100,6 +100,8 @@ function toggle_visibility(id) {
 
 $('details').details();
 
+$('.scaffold-edit-button a').addClass("btn btn-info btn-xs");
+
 $('#audit-history').on('show.bs.modal', function (e) {
     //var selectedItemId =  $('#audit-history').data('selected-item-id');
     var selectedItemId = $(this).data('content-id');
