@@ -112,10 +112,6 @@ namespace OneMainWeb.AdminControls
 
                     var multiRowSelector = new CustomBoundField { HeaderText = "_select", ShowCheckBox = true };
 
-                    var editColumnToMove = GridViewItems.Columns[0];
-                    GridViewItems.Columns.RemoveAt(0);
-                    
-
                     if (GridViewItems.DataKeyNames.Count() > 0)
                     {
                         GridViewItems.Columns.Add(multiRowSelector);
@@ -140,11 +136,12 @@ namespace OneMainWeb.AdminControls
                         if (bool.Parse(col.ExtendedProperties["ShowOnList"].ToString()))
                             GridViewItems.Columns.Add(field);
                     }
-                    GridViewItems.Columns.Add(editColumnToMove);
 
-                    /*
-                    GridViewItems.Columns.Insert(1, new CommandField { ShowHeader = true, ShowSelectButton = true, HeaderText = "", 
-                        SelectText = "" }); */
+                    var commandField = new CommandField { ShowHeader = true, ShowSelectButton = true, HeaderText = "", SelectText = "<span class=\"glyphicon glyphicon-pencil\"></span> Edit"};
+                    commandField.ItemStyle.CssClass = "scaffold-edit-button";
+                    GridViewItems.Columns.Add(commandField);
+                    GridViewItems.DataBind();
+
                     GridViewItems.DataBind();
                     var allRecords = (int)items.ExtendedProperties["AllRecords"];
                     PostbackPager1.TotalRecords = allRecords;
@@ -259,7 +256,7 @@ namespace OneMainWeb.AdminControls
 
         protected void ButtonExportToExcel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/_ashx/BambooExcelExport.ashx?virtualTableId=" + VirtualTableId);
+            Response.Redirect("/Utils/BambooExcelExport.ashx?virtualTableId=" + VirtualTableId);
         }
 
         private void ProcessCustomBoundFieldsInGridViewItems(Action action)
@@ -369,8 +366,5 @@ namespace OneMainWeb.AdminControls
                 }
             }
         }
-
-        
-
     }
 }

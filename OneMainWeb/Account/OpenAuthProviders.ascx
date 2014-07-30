@@ -5,9 +5,10 @@
     <asp:ListView runat="server" ID="providerDetails" ItemType="System.String" SelectMethod="GetProviderNames" ViewStateMode="Disabled">
         <ItemTemplate>
             <p>
-                <button type="submit" class="btn btn-default" name="provider" value="<%#: Item %>"
+                <button type="submit" class="btn btn-primary" name="provider" value="<%#: Item %>"
                     title="Log in using your <%#: Item %> account.">
-                    <%#: Item %>
+                    <span class="glyphicon glyphicon-user">
+                    <%#: Item %></span>
                 </button>
             </p>
         </ItemTemplate>

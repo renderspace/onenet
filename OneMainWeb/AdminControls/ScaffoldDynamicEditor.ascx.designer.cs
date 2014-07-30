@@ -37,7 +37,7 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelFieldsHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder PanelFieldsHolder;
         
         /// <summary>
         /// ButtonCancel control.

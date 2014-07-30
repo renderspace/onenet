@@ -23,22 +23,10 @@
             </div>
 
         <div class="listing">
-            <div>
-                
-                
-                
-            </div>
             <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True" 
                 AutoGenerateColumns="false" 
                 onselectedindexchanged="GridViewItems_SelectedIndexChanged" 
                 OnSorting="GridViewItems_Sorting" CssClass="table table-hover">
-                <Columns>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:LinkButton runat="server" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" CommandName="select" CssClass="btn btn-info btn-xs" OnClick="GridViewItems_SelectedIndexChanged" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
             </asp:GridView>                
             <div class="buttonsMiddle">
                 <asp:LinkButton ID="ButtonDeleteSelected" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" onclick="ButtonDeleteSelected_Click" CssClass="btn btn-danger" />

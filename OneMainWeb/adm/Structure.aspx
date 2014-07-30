@@ -133,7 +133,7 @@
                     <h3><asp:Literal ID="LiteralModulesOnPage" runat="server" EnableViewState="false"></asp:Literal></h3>
                         <asp:Panel ID="PanleAddInstance" runat="server" CssClass="addStuff">
 				        <asp:dropdownlist id="ddlModuleTypes" Runat="server" />
-                        <asp:button	id="cmdAddInstance"	Runat="server" text="Add module instance" onclick="cmdAddInstance_Click" />
+                        <asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="cmdAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
                     </asp:Panel>
                 </div>
                
