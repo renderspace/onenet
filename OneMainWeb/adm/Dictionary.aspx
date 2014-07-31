@@ -32,9 +32,13 @@
 						            OnSelectedIndexChanged="GridViewEntries_SelectedIndexChanged">
 						            <Columns>
                                         <asp:TemplateField>
-								            <ItemTemplate>
-								                    <asp:LinkButton ID="cmdDelete" CommandArgument='<%# Eval("KeyWord") %>' CommandName="Delete" runat="server" Text="$delete"  />
-								            </ItemTemplate>
+                                            <HeaderTemplate>
+                                                <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
+                                            </HeaderTemplate>								    
+							                <ItemTemplate>
+							                    <asp:Literal ID="litId" Visible="false" runat="server" Text='<%# Eval("KeyWord") %>' />
+							                    <asp:CheckBox ID="chkFor" runat="server" Text="" />
+							                </ItemTemplate>
 							            </asp:TemplateField>
 							            <asp:TemplateField HeaderText="$keyword" SortExpression="keyword">
 								            <ItemTemplate>
@@ -51,6 +55,7 @@
 							            </asp:TemplateField>
 							        </Columns>
                             </asp:GridView>
+                            <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
                             <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
                         </div>
                 </div>

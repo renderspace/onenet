@@ -56,102 +56,86 @@ namespace OneMainWeb.AdminControls
             set { containerControlType = value; }
         }
 
-        protected int? SelectedFileId
-        {
-            get { return (ViewState["SelectedFileId"] == null ? (int?)null : (int?)Int32.Parse(ViewState["SelectedFileId"].ToString())); }
-            set { ViewState["SelectedFileId"] = value; }
-        }
-
-        protected int SelectedFileIdForMove
-        {
-            get { return ViewState["SelectedFileIdForMove"] == null ? -1 : FormatTool.GetInteger(ViewState["SelectedFileIdForMove"]); }
-            set { ViewState["SelectedFileIdForMove"] = value; }
-        }
+        [Bindable(false), Category("Data"), DefaultValue("")]
+        public BOCategory SelectedFolder { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                LoadDefaults();
+                FileManager_DataBind();
+
+                
             }
         }
 
-        private void LoadDefaults()
+        public void FileManager_DataBind()
         {
-            SelectedFileIdForMove = -1;
+
+            var treeNodes = GenerateTreeNodes(fileB.ListFolders());
+            TreeViewFolders.Nodes.Add(treeNodes[0]);
+            TreeViewFolders.DataBind();
+
+            lblSearchMessage.Visible = filesHolder.Visible = PanelUpload.Visible = false;
+
+            if (SelectedFolder != null && SelectedFolder.Id.HasValue)
+            {
+                filesHolder.Visible = PanelUpload.Visible = true;
+            }
 
             CmdRecursiveDelete.Enabled = true;
-            categorization.ExpandTree = ExpandTree;
-
-            categorization.CategoryType = BOFile.FOLDER_CATEGORIZATION_TYPE;
-            categorization.ChangeCategory = fileB.ChangeFolder;
-            categorization.ListCategories = fileB.ListFolders;
-            categorization.GetCategory = fileB.GetFolder;
-
-            categoryEditor.CategoryType = BOFile.FOLDER_CATEGORIZATION_TYPE;
-            categoryEditor.GetCategory = fileB.GetFolder;
-            categoryEditor.ChangeCategory = fileB.ChangeFolder;
-            categoryEditor.DeleteCategory = fileB.DeleteFolder;
-            categoryEditor.ListCategorizedItems = helper.ListCategorizable;
-            categoryEditor.ListCategories = fileB.ListFolders;
-            categoryEditor.MoveCategory = fileB.MoveFolder;
-
-            categorization.LoadControls();
-            categoryEditor.SelectedCategory = categorization.SelectedCategory;
-            categoryEditor.LoadControls();
-            LoadFiles();            
         }
+
+        #region Helper methods
+
+        public static TreeNodeCollection GenerateTreeNodes(List<BOCategory> categories)
+        {
+            TreeNodeCollection nodeColl = new TreeNodeCollection();
+
+            TreeNode root = null;
+
+            foreach (BOCategory category in categories)
+            {
+                if (!category.ParentId.HasValue)
+                {
+                    root = new TreeNode(category.Title, category.Id.ToString());
+                    nodeColl.Add(root);
+                }
+            }
+
+            AddChildren(root, categories);
+
+            return nodeColl;
+        }
+
+        private static void AddChildren(TreeNode node, List<BOCategory> categories)
+        {
+            foreach (BOCategory category in categories)
+            {
+                if (category.ParentId.HasValue && category.ParentId.Value.ToString() == node.Value)
+                {
+                    node.ChildNodes.Add(new TreeNode(category.Title, category.Id.ToString()));
+                }
+            }
+            if (node != null)
+            {
+                foreach (TreeNode childNode in node.ChildNodes)
+                {
+                    AddChildren(childNode, categories);
+                }
+            }
+        }
+
+        #endregion Helper methods
 
         protected void CmdRecursiveDelete_Click(object sender, EventArgs e)
         {
-            if (CheckBoxConfirm.Checked && categorization.SelectedCategory != null && categorization.SelectedCategory.Id.HasValue)
+            if (CheckBoxConfirm.Checked && SelectedFolder != null && SelectedFolder.Id.HasValue)
             {
-                fileB.RecursiveFolderDelete(categorization.SelectedCategory.Id.Value);
+                fileB.RecursiveFolderDelete(SelectedFolder.Id.Value);
                 Notifier1.Message = ResourceManager.GetString("$recursive_delete_success");
-
-                categorization.LoadControls();
-                categoryEditor.SelectedCategory = categorization.SelectedCategory;
-                categoryEditor.LoadControls();
-                LoadFiles();
+                FileManager_DataBind();
                 CheckBoxConfirm.Checked = false;
-            }
-        }
-
-        public void LoadControls()
-        {
-            categorization.ExpandTree = ExpandTree;
-            CmdRecursiveDelete.Enabled = true;
-            categorization.LoadControls();
-            categorization.TreeDataBind();
-            categoryEditor.LoadControls();
-        }
-
-        private void LoadFiles()
-        {
-            lblSearchMessage.Visible = filesHolder.Visible = divShowFile.Visible = divUploadFile.Visible = false;
-
-            if (categorization.SelectedCategory != null && categorization.SelectedCategory.Id.HasValue)
-            {
-                filesHolder.Visible = divShowFile.Visible = divUploadFile.Visible = true;
-
-                if (SelectedFileId.HasValue)
-                {
-                    BOFile selectedFile = fileB.Get(SelectedFileId.Value);
-                    if (selectedFile != null)
-                    {
-                        
-                        cmdOverwrite.Visible = true;
-                        imagePreview.Text = GenerateFileIcon(selectedFile, 150);
-                        imagePreview.Visible = true;
-                        imagePreviewSize.Text = String.Format("{0:F} kb", ((float)selectedFile.Size / (float)1024));
-                    }
-                }
-                else
-                {
-                    cmdOverwrite.Visible = false;
-                    imagePreview.Visible = false;
-                    imagePreview.Text = imagePreviewSize.Text = "";
-                }
             }
         }
 
@@ -174,53 +158,40 @@ namespace OneMainWeb.AdminControls
             return ret;
         }
 
-        protected void categorization_NodeAdded(object sender, EventArgs e)
+        protected void TreeNodeAdd_Click(object sender, EventArgs e)
         {
-            categoryEditor.SelectedCategory = categorization.SelectedCategory;
-            categoryEditor.LoadControls();
-            LoadFiles();
-            Notifier1.Message = ResourceManager.GetString("$folder_successfully_added");
-        }
-
-        protected void categoryEditor_CategoryMoved(object sender, EventArgs e)
-        {
-            categorization.LoadControls();
-            categoryEditor.LoadControls();
-            Notifier1.Message = ResourceManager.GetString("$folder_successfully_moved");
-        }
-
-        protected void categoryEditor_CategoryFailedToMove(object sender, EventArgs e)
-        {
-            Notifier1.Warning = ResourceManager.GetString("$folder_move_failed");
-        }
-
-        protected void categoryEditor_CategoryDeleted(object sender, EventArgs e)
-        {
-            // load data from db in case node has been deleted
-            categorization.LoadControls();
-
-            // if node has been deleted, select parent ( note that categoryEditor.SelectedCategory is used, since it hasnt been reset )
-            if (categorization.FindNode(categoryEditor.SelectedCategory) == null)
+            if (string.IsNullOrWhiteSpace(TextBoxFolder.Text))
             {
-                categorization.SelectedCategory = categoryEditor.SelectedCategory;
-                categorization.SelectParent();
+                BOCategory folder = new BOCategory();
+
+                folder.Type = BOFile.FOLDER_CATEGORIZATION_TYPE;
+                folder.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                folder.Title = TextBoxFolder.Text;
+                folder.Teaser = folder.SubTitle = folder.Html = "";
+                folder.IsSelectable = true;
+                folder.IsPrivate = false;
+                folder.ChildCount = 0;
+
+                if (SelectedFolder == null || !SelectedFolder.Id.HasValue)
+                {
+                    folder.ParentId = null;
+                }
+                else
+                {
+                    folder.ParentId = SelectedFolder.Id.Value;
+                }
+
+                fileB.ChangeFolder(folder);
+                TextBoxFolder.Text = "";
+
+                FileManager_DataBind();
             }
-
-            categoryEditor.SelectedCategory = categorization.SelectedCategory;
-            categoryEditor.LoadControls();
-            LoadFiles();
-            Notifier1.Message = ResourceManager.GetString("$folder_successfully_deleted");
-        }
-
-        protected void categoryEditor_CategoryUpdated(object sender, EventArgs e)
-        {
-            categorization.LoadControls();
-            Notifier1.Message = ResourceManager.GetString("$folder_successfully_updated");
         }
 
         protected void cmdSearch_Click(object sender, EventArgs e)
         {
-            int searchId = FormatTool.GetInteger(InputWithButtonSearch.Value);
+            /*
+            int searchId = FormatTool.GetInteger(TextBoxSearch.Text);
 
             BOFile existingFile = null;
 
@@ -231,11 +202,8 @@ namespace OneMainWeb.AdminControls
 
             if (existingFile != null)
             {
-                SelectedFileId = searchId;
                 categorization.SelectNode(existingFile.Folder);
-                categoryEditor.SelectedCategory = categorization.SelectedCategory;
-                categoryEditor.LoadControls();
-                LoadFiles();
+                FileManager_DataBind();
                 lblSearchMessage.Text = ResourceManager.GetString("$file_found");
             }
             else
@@ -245,15 +213,7 @@ namespace OneMainWeb.AdminControls
 
             lblSearchMessage.Visible = true;
 
-            fileGrid.DataBind();
-        }
-
-        public void categorization_SelectedNodeChanged(object sender, EventArgs e)
-        {
-            SelectedFileId = null;
-            categoryEditor.SelectedCategory = categorization.SelectedCategory;
-            categoryEditor.LoadControls();
-            LoadFiles();
+            fileGrid.DataBind(); */
         }
 
         protected void cmdUpload_Click(object sender, EventArgs e)
@@ -272,6 +232,7 @@ namespace OneMainWeb.AdminControls
             }
         }
 
+        /*
         protected void cmdOverwrite_Click(object sender, EventArgs e)
         {
             if (SelectedFileId.HasValue)
@@ -297,100 +258,7 @@ namespace OneMainWeb.AdminControls
                     Notifier1.Warning = ResourceManager.GetString("$file_overwritte_failed");
                 }
             }
-        }
-
-        protected void moveFoldersPanel_WindowClosed(object sender, EventArgs e)
-        {
-            ModalPanel panel = (ModalPanel) sender;
-            if (panel != null)
-            {
-                panel.Visible = false;
-            }
-        }
-
-        protected void fileGrid_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            string command = e.CommandName;
-            int rowIndex = FormatTool.GetInteger(e.CommandArgument);
-
-            if (rowIndex < 0)
-                return;
-
-            Literal LiteralHiddenFileId = fileGrid.Rows[rowIndex].FindControl("LiteralHiddenFileId") as Literal;
-
-            if (LiteralHiddenFileId != null)
-            {
-                int id = FormatTool.GetInteger(LiteralHiddenFileId.Text);
-
-                if (id > 0)
-                {
-                    BOFile file = fileB.Get(id);
-                    TextContentControl txtFileContent = fileGrid.Rows[rowIndex].FindControl("txtFileContent") as TextContentControl;
-                    ModalPanel moveFoldersPanel = fileGrid.Rows[rowIndex].FindControl("moveFoldersPanel") as ModalPanel;
-
-                    switch (command)
-                    {
-                        case "MoveFile":
-                            ClosePreviousPanels();
-                            categoryEditor.HideMovePanel();
-                            SelectedFileIdForMove = id;
-                            if ( moveFoldersPanel != null)
-                                moveFoldersPanel.Visible = true;
-                            break;
-                        case "EditRow":
-                            SelectedFileId = id;
-                            fileGrid.EditIndex = rowIndex;
-                            break;
-                        case "UpdateFile":
-                            SelectedFileId = id;
-
-                            if (txtFileContent != null && file != null)
-                            {
-                                if (file.Content == null)
-                                {
-                                    file.Content = new BOInternalContent();
-                                    file.Content.Html = "";
-                                }
-
-                                file.Content.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
-                                file.Content.Title = txtFileContent.Title;
-                                file.Content.SubTitle = txtFileContent.SubTitle;
-                                file.Content.Teaser = txtFileContent.Teaser;
-                                fileB.Change(file);
-                                Notifier1.Message = ResourceManager.GetString("$file_successfully_updated");
-                            }
-                            else
-                            {
-                                Notifier1.Message = ResourceManager.GetString("$file_update_failed");
-                            }
-
-                            fileGrid.EditIndex = -1;
-                            break;
-                        case "Cancel":
-                            {
-                                fileGrid.EditIndex = -1;
-                                break;
-                            }
-                    }
-                }
-            }
-        }
-
-        private void ClosePreviousPanels()
-        {
-            if ( SelectedFileIdForMove > -1 )
-            {
-                foreach (GridViewRow row in fileGrid.Rows )
-                {
-                    if ( row.RowType == DataControlRowType.DataRow )
-                    {
-                        ModalPanel moveFoldersPanel = row.FindControl("moveFoldersPanel") as ModalPanel;
-                        if ( moveFoldersPanel != null)
-                            moveFoldersPanel.Visible = false;
-                    }
-                }
-            }
-        }
+        }*/
 
         protected string GetFileUrl(object objID)
         {
@@ -408,51 +276,9 @@ namespace OneMainWeb.AdminControls
             return strReturn;
         }
 
-        protected void FileListODS_Deleted(object sender, ObjectDataSourceStatusEventArgs e)
-        {
-            SelectedFileId = null;
-            LoadFiles();
-            Notifier1.Message = ResourceManager.GetString("$file_successfully_deleted");
-        }
-
         protected void FileListODS_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
             e.InputParameters["filterExtensions"] = filterExtensions;
-        }
-
-        public void moveFoldersTree_SelectedNodeChanged(object sender, EventArgs e)
-        {
-            bool moved = false;
-
-            TreeView tree = sender as TreeView;
-            if (tree != null)
-            {
-                HtmlGenericControl treeHolder = tree.Parent as HtmlGenericControl;
-                if (treeHolder != null)
-                {
-                    ModalPanel panel = treeHolder.Parent as ModalPanel;
-                    if (panel != null)
-                    {
-                        Literal fileIdLit = panel.FindControl("fileIdLit") as Literal;
-
-                        if (fileIdLit != null)
-                        {
-                            int fileId = FormatTool.GetInteger(fileIdLit.Text);
-
-                            BOFile file = fileB.Get(fileId);
-                            int newFolderId = FormatTool.GetInteger(tree.SelectedValue);
-                            BOCategory newFolder = fileB.GetFolder(newFolderId);
-                            fileB.MoveFile(file, newFolder);
-                            fileGrid.DataBind();
-                            moved = true;
-                            Notifier1.Message = ResourceManager.GetString("$file_successfully_moved");
-                        }
-                    }
-                }
-            }
-
-            if (!moved)
-                Notifier1.Message = ResourceManager.GetString("$file_moved_failed");
         }
 
         public void fileGrid_ForceDataBind()
@@ -462,63 +288,26 @@ namespace OneMainWeb.AdminControls
 
         protected void fileGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.Cells.Count >= 3)
+            if (e.Row.Cells.Count >= 2)
             {
                 BOFile selectedFile = e.Row.DataItem as BOFile;
-                ModalPanel moveFoldersPanel = e.Row.FindControl("moveFoldersPanel") as ModalPanel;
-                LinkButton cmdDelete = e.Row.FindControl("cmdDelete") as LinkButton;
 
-                if (moveFoldersPanel != null)
+                if (selectedFile != null)
                 {
-                    moveFoldersPanel.Title = ResourceManager.GetString("$move_file_to_folder");
-
-                    HtmlGenericControl treeHolder = moveFoldersPanel.FindControl("treeHolder") as HtmlGenericControl;
-
-                    if (treeHolder != null)
-                    {
-                        TreeView moveFoldersTree = treeHolder.FindControl("moveFoldersTree") as TreeView;
-                        if (moveFoldersTree != null)
-                        {
-                            TreeNodeCollection treeNodes = TreeCategorization.GenerateTreeNodes(fileB.ListFolders());
-                            moveFoldersTree.Nodes.Clear();
-                            moveFoldersTree.Nodes.Add(treeNodes[0]);
-                            moveFoldersTree.ExpandAll();
-                        }
-                    }
-                }
-
-                if (selectedFile != null && cmdDelete != null)
-                {
-                    if (fileB.ListFileUses(selectedFile.Id.Value).Count > 0)
-                        cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_file_is_linked_confirm_delete") + @"');";
-
-                    cmdDelete.Enabled = true;
-
                     Literal litSelectButton = e.Row.Cells[3].FindControl("litSelectButton") as Literal;
                     if (litSelectButton != null)
                     {
                         litSelectButton.Visible = ShowSelectLink;
                     }
 
-                    Literal imageSymbol = e.Row.Cells[0].FindControl("imageSymbol") as Literal;
+                    Literal imageSymbol = e.Row.Cells[1].FindControl("imageSymbol") as Literal;
 
                     if (imageSymbol != null)
                         imageSymbol.Text = GenerateFileIcon(selectedFile, 50);
 
-                    if (selectedFile.Id == FormatTool.GetInteger(InputWithButtonSearch.Value))
+                    if (selectedFile.Id == FormatTool.GetInteger(TextBoxSearch.Text))
                     {
                         e.Row.CssClass += " selFile";// imageSymbol.Text += "<hr/>";
-                    }
-
-                    if (e.Row.RowState == (DataControlRowState.Edit | DataControlRowState.Alternate))
-                    {
-                        TextContentControl txtFileContent = e.Row.FindControl("txtFileContent") as TextContentControl;
-                        if (txtFileContent != null && selectedFile.Content != null)
-                        {
-                            txtFileContent.Title = selectedFile.Content.Title;
-                            txtFileContent.SubTitle = selectedFile.Content.SubTitle;
-                            txtFileContent.Teaser = selectedFile.Content.Teaser;
-                        }
                     }
                 }
             }
@@ -528,9 +317,9 @@ namespace OneMainWeb.AdminControls
         {
             BOFile file = null;
 
-            if (fileUpload != null && fileUpload.HasFile && categorization.SelectedCategory != null && categorization.SelectedCategory.Id.HasValue)
+            if (fileUpload != null && fileUpload.HasFile && SelectedFolder != null && SelectedFolder.Id.HasValue)
             {
-                BOCategory folder = fileB.GetFolder(categorization.SelectedCategory.Id.Value);
+                BOCategory folder = fileB.GetFolder(SelectedFolder.Id.Value);
 
                 string filePath = fileUpload.PostedFile.FileName;
                 var fi = new System.IO.FileInfo(filePath);
@@ -593,6 +382,54 @@ namespace OneMainWeb.AdminControls
         {
             base.OnPreRender(e);
         }
+
+        protected IEnumerable<int> GetCheckedIds()
+        {
+            var result = new List<int>();
+            foreach (GridViewRow row in fileGrid.Rows)
+            {
+                CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
+                Literal litArticleId = row.FindControl("litId") as Literal;
+
+                if (litArticleId != null && chkForPublish != null && chkForPublish.Checked)
+                {
+                    int articleId = FormatTool.GetInteger(litArticleId.Text);
+                    if (articleId > 0)
+                    {
+                        result.Add(articleId);
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            int deletedCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                /*
+                if (fileB.ListFileUses(selectedFile.Id.Value).Count > 0)
+                    cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_file_is_linked_confirm_delete") + @"');";
+
+                if (fileB.Delete(i))
+                {
+                    deletedCount++;
+                }*/
+            }
+            if (deletedCount > 0)
+            {
+                Notifier1.Title = string.Format("Deleted {0} files", deletedCount);
+                //RegularDataBind();
+            }
+        }
+
+        protected void TreeViewFolders_SelectedNodeChanged(object sender, EventArgs e)
+        {
+            SelectedFolder = fileB.GetFolder(Int32.Parse(TreeViewFolders.SelectedNode.Value.ToString()), true);
+            FileManager_DataBind();
+        }
     }
 
     [Serializable]
@@ -635,11 +472,6 @@ namespace OneMainWeb.AdminControls
                     return files;
                 }
             }
-        }
-
-        public void Delete(int Id)
-        {
-            fileB.Delete(Id);
         }
 
         public List<ICategorizable> ListCategorizable(int categoryId)

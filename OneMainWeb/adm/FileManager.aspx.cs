@@ -24,7 +24,7 @@ namespace OneMainWeb
         protected void chkExpandTree_CheckedChanged(object sender, EventArgs e)
         {
             filemng2.ExpandTree = ExpandTree;
-            filemng2.LoadControls();
+            filemng2.FileManager_DataBind();
         }
     }
 }

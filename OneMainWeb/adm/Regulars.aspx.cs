@@ -23,9 +23,14 @@ namespace OneMainWeb.adm
         {
             if (!IsPostBack)
             {
-                regularGridView.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
-                regularGridView.DataBind();
+                RegularDataBind();
             }
+        }
+
+        protected void RegularDataBind()
+        {
+            regularGridView.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
+            regularGridView.DataBind();
         }
 
         protected void Multiview1_ActiveViewChanged(object sender, EventArgs e)
@@ -52,21 +57,49 @@ namespace OneMainWeb.adm
             regular.SubTitle = regular.Teaser = regular.Html = "";
             regular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             regular.ContentId = null;
-
             articleB.ChangeRegular(regular);
-
-            regularGridView.DataBind();
+            RegularDataBind();
         }
 
-        protected void cmdDeleteRegular_Click(object sender, EventArgs e)
+        protected IEnumerable<int> GetCheckedIds()
         {
-            LinkButton button = sender as LinkButton;
-
-            if (button != null)
+            var result = new List<int>();
+            foreach (GridViewRow row in regularGridView.Rows)
             {
-                int id = Int32.Parse(button.CommandArgument);
-                articleB.DeleteRegular(id);
-                regularGridView.DataBind();
+                CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
+                Literal litArticleId = row.FindControl("litId") as Literal;
+
+                if (litArticleId != null && chkForPublish != null && chkForPublish.Checked)
+                {
+                    int articleId = FormatTool.GetInteger(litArticleId.Text);
+                    if (articleId > 0)
+                    {
+                        result.Add(articleId);
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            int deletedCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                if (articleB.DeleteRegular(i))
+                {
+                    deletedCount++;
+                }
+            }
+            if (deletedCount > 0)
+            {
+                Notifier1.Title = string.Format("Deleted {0} categories", deletedCount);
+                RegularDataBind();
+            }
+            if (deletedCount != list.Count())
+            {
+                Notifier1.ExceptionName = "Some of the regulars weren't deleted. Check if they still contain articles";
             }
         }
 
@@ -75,8 +108,8 @@ namespace OneMainWeb.adm
             GridView grid = sender as GridView;
             if (grid != null && grid.SelectedValue != null)
             {
-                Multiview1.ActiveViewIndex = 1;
                 SelectedRegular = articleB.GetRegular(Int32.Parse(grid.SelectedValue.ToString()));
+                Multiview1.ActiveViewIndex = 1;
             }
         }
 
@@ -111,6 +144,7 @@ namespace OneMainWeb.adm
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
+            regularGridView.DataBind();
         }
 
         protected void RegularCancelButton_Click(object sender, EventArgs e)
@@ -127,19 +161,6 @@ namespace OneMainWeb.adm
         protected void RegularInsertUpdateCloseButton_Click(object sender, EventArgs e)
         {
             SaveRegular(true);
-        }
-        /*
-        protected void ObjectDataSourceRegularList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["showUntranslated"] = ShowUntranslated;
-            if (e.ExecutingSelectCount)
-                e.InputParameters.Clear();
-        }
-
-        protected void ObjectDataSourceRegularSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["showUntranslated"] = ShowUntranslated;
-        }*/
-        
+        } 
     }
 }

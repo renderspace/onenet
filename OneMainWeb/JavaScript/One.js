@@ -98,6 +98,23 @@ function toggle_visibility(id) {
     return false;
 }
 
+function SelectAllCheckboxes(parentCheckBox) {
+    var children = parentCheckBox.children;
+    var theBox = (parentCheckBox.type == "checkbox") ? parentCheckBox : parentCheckBox.children.item[0];
+    var checkboxes = theBox.form.elements;
+    for (i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].type == "checkbox" && checkboxes[i].id != "gvProducts_ctl01_chkAll") {
+            if (checkboxes[i].checked) {
+                checkboxes[i].checked = false;
+            }
+            else {
+                checkboxes[i].checked = true;
+            }
+        }
+    }
+    theBox.checked = !theBox.checked;
+}
+
 $('details').details();
 
 $('.scaffold-edit-button a').addClass("btn btn-info btn-xs");

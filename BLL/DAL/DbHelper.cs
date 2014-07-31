@@ -31,10 +31,6 @@ namespace One.Net.BLL.DAL
                     content.PrincipalModified = reader.GetString(6);
                     content.DateModified = reader.GetDateTime(7);
                 }
-
-                content.Votes = reader.GetInt32(8);
-                if (!reader.IsDBNull(9))
-                    content.Score = Double.Parse(reader.GetValue(9).ToString());
             }
             else
             {

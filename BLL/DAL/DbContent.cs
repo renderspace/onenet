@@ -82,8 +82,8 @@ namespace One.Net.BLL.DAL
                 paramsToPass[4] = new SqlParameter("@teaser", content.Teaser);
                 paramsToPass[5] = new SqlParameter("@html", content.Html);
                 paramsToPass[6] = new SqlParameter("@principal", Thread.CurrentPrincipal.Identity.Name);
-                paramsToPass[7] = SqlHelper.GetNullable("score", content.Score);
-                paramsToPass[8] = new SqlParameter("@votes", content.Votes);
+                paramsToPass[7] = SqlHelper.GetNullable("score", 0);
+                paramsToPass[8] = new SqlParameter("@votes", 0);
 
                 object result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
 

@@ -17,21 +17,27 @@
                 <asp:LinkButton ID="cmdAddRegular" text="<span class='glyphicon glyphicon-plus'></span> Add" runat="server" OnClick="cmdAddRegular_Click"  CssClass="btn btn-success" />		
 		    </div>
 		    <div class="centerFull">
-                <div class="biggv"> 
-	                <asp:GridView OnSelectedIndexChanged="regularGridView_SelectedIndexChanged" ID="regularGridView" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id">
-		                <Columns>
-			                <asp:BoundField HeaderText="$id" DataField="Id" SortExpression="Id" ReadOnly="True" />
-			                <asp:BoundField HeaderText="$title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
-
-			                <asp:TemplateField HeaderText="$delete">
-				                <ItemTemplate>
-					                <asp:LinkButton ID="cmdDeleteRegular" runat="server" OnClick="cmdDeleteRegular_Click" Text="$delete" CommandArgument='<%# ((BORegular) Container.DataItem).Id %>' />
-				                </ItemTemplate>
-			                </asp:TemplateField>
-                            <asp:CommandField SelectText="$edit" ShowSelectButton="true" />
-		                </Columns>
-	                </asp:GridView>
-                </div>
+	            <asp:GridView OnSelectedIndexChanged="regularGridView_SelectedIndexChanged" ID="regularGridView" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id">
+		            <Columns>
+                         <asp:TemplateField>
+                            <HeaderTemplate>
+                                <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
+                            </HeaderTemplate>								    
+							<ItemTemplate>
+							    <asp:Literal ID="litId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
+							    <asp:CheckBox ID="chkFor" runat="server" Text="" />
+							</ItemTemplate>
+						</asp:TemplateField>
+			            <asp:BoundField HeaderText="$id" DataField="Id" SortExpression="Id" ReadOnly="True" />
+			            <asp:BoundField HeaderText="$title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
+                        <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:LinkButton  CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs" CausesValidation="false" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" />
+                                </ItemTemplate>
+                        </asp:TemplateField>
+		            </Columns>
+	            </asp:GridView>
+                <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
             </div>
         </asp:View>
         <asp:View ID="View3" runat="server">

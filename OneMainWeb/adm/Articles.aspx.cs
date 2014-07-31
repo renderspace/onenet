@@ -187,92 +187,6 @@ namespace OneMainWeb
             }
         }
 
-        
-
-        protected void articleGridView_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.Cells.Count >= 4)
-            {
-                LinkButton cmdPublish = e.Row.FindControl("cmdPublish") as LinkButton;
-                LinkButton cmdEdit = e.Row.FindControl("cmdEdit") as LinkButton;
-                ImageButton cmdEditButton = e.Row.FindControl("cmdEditButton") as ImageButton;
-                LinkButton cmdDelete = e.Row.FindControl("cmdDelete") as LinkButton;
-                LinkButton cmdRevertToPublished = e.Row.FindControl("cmdRevertToPublished") as LinkButton;
-                LinkButton cmdUnPublish = e.Row.FindControl("cmdUnPublish") as LinkButton;
-                BOArticle article = e.Row.DataItem as BOArticle;
-
-                if (article != null &&
-                    cmdPublish != null &&
-                    cmdEdit != null &&
-                    cmdDelete != null &&
-                    cmdRevertToPublished != null &&
-                    cmdEditButton != null &&
-                    cmdUnPublish != null)
-                {
-                    cmdUnPublish.Visible = !article.IsNew && !article.MarkedForDeletion && Authorization.HasPublishRights;
-                    cmdPublish.Visible = (article.MarkedForDeletion || article.IsChanged) && Authorization.HasPublishRights;
-                    cmdEdit.Visible = !article.MarkedForDeletion;
-                    cmdDelete.Visible = !article.MarkedForDeletion;
-                    cmdRevertToPublished.Visible = !article.IsNew && ( article.IsChanged || article.MarkedForDeletion);
-                    cmdEditButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
-                    //cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_confirm_delete") + @"');";
-                }
-            }
-        }
-
-        protected void articleGridView_Deleted(object sender, GridViewDeletedEventArgs e)
-        {
-            Notifier1.Visible = true;
-            if (e.Exception != null)
-            {
-                Notifier1.Message = e.Exception.Message;
-                e.ExceptionHandled = true;
-            }
-            else
-            {
-                Notifier1.Message = ResourceManager.GetString("$mark_for_deletion_succeeded");
-            }
-        }
-
-        protected void articleGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandArgument != null)
-            {
-                int id = FormatTool.GetInteger(e.CommandArgument);
-                if (id > 0)
-                {
-                    switch (e.CommandName)
-                    {
-                        case "Publish":
-                            {
-                                Notifier1.Visible = true;
-                                if (articleB.Publish(id))
-                                    Notifier1.Message = ResourceManager.GetString("$publish_sucessfull");
-                                else
-                                    Notifier1.Message = ResourceManager.GetString("$publish_unsucessfull");
-
-                                articleGridView.DataBind();
-                            } break;
-                        case "RevertToPublished":
-                            {
-                                articleB.RevertToPublished(id);
-                                Notifier1.Visible = true;
-                                Notifier1.Message = ResourceManager.GetString("$revert_to_published_succeeded");
-                                articleGridView.DataBind();
-                            } break;
-                        case "UnPublish":
-                            {
-                                articleB.UnPublish(id);
-                                Notifier1.Visible = true;
-                                Notifier1.Message = ResourceManager.GetString("$unpublish_succeeded");
-                                articleGridView.DataBind();
-                                break;
-                            }
-                    }
-                }
-            }
-        }
-
         protected void ObjectDataSourceArticleList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
             e.InputParameters["showUntranslated"] = ShowUntranslated;
@@ -419,6 +333,82 @@ namespace OneMainWeb
             if (AutoPublishWarning != null)
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
             base.OnPreRender(e);
+        }
+
+        protected IEnumerable<int> GetCheckedIds()
+        {
+            var result = new List<int>();
+            foreach (GridViewRow row in articleGridView.Rows)
+            {
+                CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
+                Literal litArticleId = row.FindControl("litId") as Literal;
+
+                if (litArticleId != null && chkForPublish != null && chkForPublish.Checked)
+                {
+                    int articleId = FormatTool.GetInteger(litArticleId.Text);
+                    if (articleId > 0)
+                    {
+                        result.Add(articleId);
+                    }
+                }
+            }
+            return result;
+        }
+
+        protected void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            int deletedCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                if (articleB.MarkForDeletion(i))
+                {
+                    deletedCount++;
+                }
+            }
+            if (deletedCount > 0)
+            {
+                Notifier1.Title = string.Format("Marked {0} articles for delete", deletedCount);
+                articleGridView.DataBind();
+            }
+        }
+
+        protected void ButtonPublish_Click(object sender, EventArgs e)
+        {
+            int publishCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                if (articleB.Publish(i))
+                {
+                    publishCount++;
+                }
+            }
+            if (publishCount > 0)
+            {
+                Notifier1.Title = string.Format("Published {0} articles", publishCount);
+                articleGridView.DataBind();
+            }
+        }
+
+        
+
+        protected void ButtonRevert_Click(object sender, EventArgs e)
+        {
+            int revertCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                if (articleB.RevertToPublished(i))
+                {
+                    revertCount++;
+                }
+            }
+            if (revertCount > 0)
+            {
+                Notifier1.Title = string.Format("Reverted to published {0} articles", revertCount);
+                articleGridView.DataBind();
+            }
         }
     }
 

@@ -39,20 +39,27 @@
 						    DataSourceID="ObjectDataSourceArticleList"
 						    CssClass="gv"
 						    DataKeyNames="Id"
-						    OnSelectedIndexChanged="articleGridView_SelectedIndexChanged"
-						    OnRowDataBound="articleGridView_RowDataBound"
-						    OnRowDeleted="articleGridView_Deleted"
-						    OnRowCommand="articleGridView_RowCommand">
+						    OnSelectedIndexChanged="articleGridView_SelectedIndexChanged">
 						    <Columns>
-                                 <asp:TemplateField>
+                                <asp:TemplateField>
+                                    <HeaderTemplate>
+                                        <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
+                                    </HeaderTemplate>								    
 							        <ItemTemplate>
-                                        <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+							            <asp:Literal ID="litId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
+							            <asp:CheckBox ID="chkFor" runat="server" Text="" />
+							        </ItemTemplate>
+							    </asp:TemplateField>
                                 <asp:TemplateField HeaderText="$id" SortExpression="a.id">
 							        <ItemTemplate>
 								        <%# Eval("Id") %>
 							        </ItemTemplate>
+							    </asp:TemplateField>
+                                <asp:TemplateField HeaderText="$status">
+								    <ItemTemplate>
+								            <img src='<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>' alt="" />
+										</div>
+								    </ItemTemplate>
 							    </asp:TemplateField>
 							    <asp:TemplateField HeaderText="$article" SortExpression="cds.title">
 								    <ItemTemplate><%# Eval("Title") %></ItemTemplate>
@@ -63,17 +70,6 @@
 							    
 							    <asp:TemplateField HeaderText="$RegularsList">
 								    <ItemTemplate><%# Eval("RegularsList")%></ItemTemplate>
-							    </asp:TemplateField>
-							    
-							    <asp:TemplateField HeaderText="$status">
-								    <ItemTemplate>
-								        <div class="publishButtons">
-								            <asp:LinkButton Text="$publish" CommandName="Publish" CommandArgument='<%# Eval("Id") %>' ID="cmdPublish" runat="server" /><br />
-								            <asp:LinkButton Text="$unpublish" CommandName="UnPublish" CommandArgument='<%# Eval("Id") %>' ID="cmdUnPublish" runat="server" /><br />
-								            <img src='<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>' alt="" /><br />
-										    <asp:LinkButton Text="$revert_to_published" CommandName="RevertToPublished" CommandArgument='<%# Eval("Id") %>' ID="cmdRevertToPublished" runat="server" />
-										</div>
-								    </ItemTemplate>
 							    </asp:TemplateField>
 							    <asp:TemplateField>
 								    <ItemTemplate>
@@ -94,6 +90,10 @@
 							    <asp:Parameter Name="Id" Type="Int32" />
 						    </DeleteParameters>
 				       </asp:ObjectDataSource>
+
+                        <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
+                        <asp:LinkButton CssClass="btn btn-warning" ID="ButtonPublish" OnClick="ButtonPublish_Click" runat="server" CausesValidation="false" Text="Publish selected" />
+                        <asp:LinkButton CssClass="btn btn-info" ID="ButtonRevert" OnClick="ButtonRevert_Click" runat="server" CausesValidation="false" Text="Revert selected to published state" />
 			    </div>
 		    </div>
         </asp:View>
@@ -138,9 +138,9 @@
                         <one:TextContentControl ID="TextContentEditor" runat="server" />
 			            <div class="save">
 			                <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				            <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" />
-				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
-				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />
+				            <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" CssClass="btn btn-primary" />
+				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success" />
+				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success" />
 				            <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>
 			            </div>
 			        

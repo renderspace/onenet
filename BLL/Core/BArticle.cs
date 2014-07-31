@@ -246,14 +246,16 @@ namespace One.Net.BLL
 
         #region Regular methods
 
-        public void DeleteRegular(int id)
+        public bool DeleteRegular(int id)
         {
             BORegular regular = articleDB.GetRegular(id, true);
             if (regular != null && regular.ArticleCount == 0)
             {
                 articleDB.DeleteRegular(id);
                 ClearLanguageVariations(REGULAR_CACHE_ID(id));
+                return true;
             }
+            return false;
         }
 
         /// <summary>
@@ -402,7 +404,7 @@ namespace One.Net.BLL
             return success;
         }
 
-        public void UnPublish(int id)
+        public bool UnPublish(int id)
         {
             ClearCache(id);
             BOArticle articleOffline = GetUnCachedArticle(id, false, false);
@@ -414,25 +416,27 @@ namespace One.Net.BLL
                 contentB.Delete(articleOnline.ContentId.Value);
                 articleOffline.IsChanged = true;
                 ChangeArticle(articleOffline);
+                return true;
             }
             else
-                throw new Exception("articleOffline is null");
+                return false;
         }
 
-        public void MarkForDeletion(int id)
+        public bool MarkForDeletion(int id)
         {
             ClearCache(id);
             BOArticle articleOffline = GetUnCachedArticle(id, false, false);
-            if (articleOffline != null)
+            if (articleOffline != null && articleOffline.MarkedForDeletion == false)
             {
                 articleOffline.MarkedForDeletion = true;
                 articleDB.ChangeArticle(articleOffline); // change the article
+                return true;
             }
             else
-                throw new Exception("articleOffline is null");
+                return false;
         }
 
-        public void RevertToPublished(int id)
+        public bool RevertToPublished(int id)
         {
             ClearCache(id);
             BOArticle articleOffline = GetUnCachedArticle(id, false, false);
@@ -446,14 +450,16 @@ namespace One.Net.BLL
                 articleOffline.ContentId = offlineContentID;
 
                 this.ChangeArticle(articleOffline);
+                return true;
             }
             else if (articleOffline != null && articleOffline.MarkedForDeletion)
             {
                 articleOffline.MarkedForDeletion = false;
                 articleDB.ChangeArticle(articleOffline);
+                return true;
             }
             else
-                throw new Exception("articleOffline or articleOnline is null");
+                return false;
         }
 
         #endregion
