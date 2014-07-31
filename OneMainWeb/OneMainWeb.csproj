@@ -507,13 +507,6 @@
     <Compile Include="AdminControls\CategorizationUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AdminControls\CategoryEditor.ascx.cs">
-      <DependentUpon>CategoryEditor.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\CategoryEditor.ascx.designer.cs">
-      <DependentUpon>CategoryEditor.ascx</DependentUpon>
-    </Compile>
     <Compile Include="AdminControls\TextContentControl.ascx.cs">
       <DependentUpon>TextContentControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -845,7 +838,6 @@
     <Content Include="CommonModules\TextContent.ascx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminControls\CategoryEditor.ascx" />
     <Content Include="AdminControls\TreeCategorization.ascx" />
     <Content Include="AdminControls\FileManager.ascx" />
     <Content Include="AdminControls\OneSettings.ascx" />

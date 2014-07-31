@@ -5,34 +5,6 @@
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<script language="javascript" type="text/javascript">
-
-// select/deselect all checkboxes
-
-function SelectAllCheckboxes(parentCheckBox)
-{
-    var children = parentCheckBox.children;
-    var theBox = (parentCheckBox.type == "checkbox") ? parentCheckBox: parentCheckBox.children.item[0];
-    var checkboxes = theBox.form.elements;
-    for( i=0; i<checkboxes.length; i++)
-    {
-        if(checkboxes[i].type == "checkbox" && checkboxes[i].id != "gvProducts_ctl01_chkAll")
-        {
-            if(checkboxes[i].checked)
-            {
-                checkboxes[i].checked = false;
-            }
-            else
-            {
-                checkboxes[i].checked = true;
-            }
-        }
-    } 
-    theBox.checked = !theBox.checked;
-}
-</script>
-
-
 	<one:Notifier runat="server" ID="Notifier1" />
     <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click">Articles</asp:LinkButton>
     <asp:LinkButton ID="LinkButtonPages" runat="server" OnClick="LinkButtonPages_Click">Pages</asp:LinkButton>

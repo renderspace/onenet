@@ -315,6 +315,40 @@ namespace OneMainWeb
                 cmdEditButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
         }
 
+        protected IEnumerable<string> GetCheckedKeywords()
+        {
+            var result = new List<string>();
+            foreach (GridViewRow row in GridViewEntries.Rows)
+            {
+                CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
+                Literal litArticleId = row.FindControl("litId") as Literal;
+
+                if (litArticleId != null && chkForPublish != null && chkForPublish.Checked && !string.IsNullOrEmpty(litArticleId.Text))
+                {
+                    result.Add(litArticleId.Text);
+                }
+            }
+            return result;
+        }
+
+        protected void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            int deletedCount = 0;
+            var list = GetCheckedKeywords();
+            foreach (var keyword in list)
+            {
+                if (contentB.DeleteDictionaryEntry(keyword))
+                {
+                    deletedCount++;
+                }
+            }
+            if (deletedCount > 0)
+            {
+                Notifier1.Title = string.Format("Deleted {0} keywords", deletedCount);
+                GridViewEntries.DataBind();
+            }
+        }
+
         protected void CmdImport_Click(object sender, EventArgs e)
         {
             if (FileUploadImport.HasFile)

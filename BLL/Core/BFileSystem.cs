@@ -106,7 +106,7 @@ namespace One.Net.BLL
         /// Deletes content, belongsto and file objects based on given file id.
         /// </summary>
         /// <param name="Id"></param>
-        public void Delete(int Id) 
+        public bool Delete(int Id) 
         {
             BOFile file = GetUnCached(Id);
             if (file != null)
@@ -139,9 +139,10 @@ namespace One.Net.BLL
                 fileDb.Delete(Id);
                 OCache.Remove(CACHE_ID + Id);
                 OCache.Remove(BYTES_CACHE_ID + Id);
+                return true;
             }
             else
-                throw new ArgumentException("File with id=" + Id + " does not exist.");
+                return false;
         }
 
         /// <summary>

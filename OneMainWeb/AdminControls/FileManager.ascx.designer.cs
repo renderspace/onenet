@@ -22,13 +22,13 @@ namespace OneMainWeb.AdminControls {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// divUploadFile control.
+        /// PanelUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUploadFile;
+        protected global::System.Web.UI.WebControls.Panel PanelUpload;
         
         /// <summary>
         /// fileUpload control.
@@ -46,7 +46,7 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdUpload;
+        protected global::System.Web.UI.WebControls.LinkButton cmdUpload;
         
         /// <summary>
         /// cmdOverwrite control.
@@ -55,34 +55,7 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdOverwrite;
-        
-        /// <summary>
-        /// divShowFile control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divShowFile;
-        
-        /// <summary>
-        /// imagePreview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal imagePreview;
-        
-        /// <summary>
-        /// imagePreviewSize control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal imagePreviewSize;
+        protected global::System.Web.UI.WebControls.LinkButton cmdOverwrite;
         
         /// <summary>
         /// lblSearchMessage control.
@@ -94,22 +67,58 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.Label lblSearchMessage;
         
         /// <summary>
-        /// InputWithButtonSearch control.
+        /// TextBoxSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.InputWithButton InputWithButtonSearch;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxSearch;
         
         /// <summary>
-        /// categorization control.
+        /// ButtonDisplayById control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::OneMainWeb.AdminControls.TreeCategorization categorization;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        
+        /// <summary>
+        /// PanelAddFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelAddFolder;
+        
+        /// <summary>
+        /// TextBoxFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxFolder;
+        
+        /// <summary>
+        /// ButtonAddFolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonAddFolder;
+        
+        /// <summary>
+        /// TreeViewFolders control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TreeView TreeViewFolders;
         
         /// <summary>
         /// CmdRecursiveDelete control.
@@ -130,15 +139,6 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxConfirm;
         
         /// <summary>
-        /// categoryEditor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::OneMainWeb.AdminControls.CategoryEditor categoryEditor;
-        
-        /// <summary>
         /// filesHolder control.
         /// </summary>
         /// <remarks>
@@ -157,12 +157,12 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.GridView fileGrid;
         
         /// <summary>
-        /// FileListODS control.
+        /// ButtonDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource FileListODS;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
     }
 }

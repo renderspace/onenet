@@ -950,10 +950,6 @@ namespace OneMainWeb.adm
                     content.PrincipalModified = reader.GetString(6);
                     content.DateModified = reader.GetDateTime(7);
                 }
-
-                content.Votes = reader.GetInt32(8);
-                if (!reader.IsDBNull(9))
-                    content.Score = Double.Parse(reader.GetValue(9).ToString());
             }
             else
             {
@@ -1007,8 +1003,8 @@ namespace OneMainWeb.adm
             paramsToPass[4] = new SqlParameter("@teaser", website.Teaser);
             paramsToPass[5] = new SqlParameter("@html", website.Html);
             paramsToPass[6] = new SqlParameter("@principal", Thread.CurrentPrincipal.Identity.Name);
-            paramsToPass[7] = SqlHelper.GetNullable("score", website.Score);
-            paramsToPass[8] = new SqlParameter("@votes", website.Votes);
+            paramsToPass[7] = SqlHelper.GetNullable("score", 0);
+            paramsToPass[8] = new SqlParameter("@votes", 0);
 
             object result = SqlHelper.ExecuteScalar(BuildConnectionString(serverName, dbName, dbUsername, dbPassword), CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
 

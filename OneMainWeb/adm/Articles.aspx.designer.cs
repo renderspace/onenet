@@ -103,6 +103,33 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceArticleList;
         
         /// <summary>
+        /// ButtonDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
+        
+        /// <summary>
+        /// ButtonPublish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonPublish;
+        
+        /// <summary>
+        /// ButtonRevert control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonRevert;
+        
+        /// <summary>
         /// View2 control.
         /// </summary>
         /// <remarks>

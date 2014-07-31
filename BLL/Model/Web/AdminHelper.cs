@@ -100,11 +100,6 @@ namespace One.Net.BLL.Model.Web
                             it.Text = ResourceManager.GetString(it.Text, localizationFile);
                     }
                 }
-                else if (ctrl is ModalPanel)
-                {
-                    var p = ctrl as ModalPanel;
-                    // TODO
-                }
                 else if (ctrl is One.Net.BLL.WebControls.Input)
                 {
                     One.Net.BLL.WebControls.Input c = ctrl as One.Net.BLL.WebControls.Input;

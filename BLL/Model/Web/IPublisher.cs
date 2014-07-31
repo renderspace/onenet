@@ -13,13 +13,13 @@ namespace One.Net.BLL
         /// Deletes the published version of object, if it exists. In effect, unpublishing it.
         /// </summary>
         /// <param name="frequentQuestionId"></param>
-        void UnPublish(int id);
+        bool UnPublish(int id);
 
         /// <summary>
         /// Marks the object for deletion .... marks mark_for_deletion flag for offline copy for deletion....
         /// </summary>
         /// <param name="frequentQuestionId"></param>
-        void MarkForDeletion(int id);
+        bool MarkForDeletion(int id);
 
         /// <summary>
         /// Copies the published FAQ to preview FAQ, overwriting it if it exists.
@@ -28,6 +28,6 @@ namespace One.Net.BLL
         /// Also works as undelete if object was never published.
         /// </summary>
         /// <param name="frequentQuestionId"></param>
-        void RevertToPublished(int id);
+        bool RevertToPublished(int id);
     }
 }
