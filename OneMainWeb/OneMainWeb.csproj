@@ -496,6 +496,7 @@
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
+    <Content Include="JavaScript\bootstrap-treeview.js" />
     <Content Include="JavaScript\bootstrap.min.js" />
     <Content Include="JavaScript\ck.js" />
     <Content Include="JavaScript\default_custom_ckeditor.js" />
@@ -520,13 +521,6 @@
     </Compile>
     <Compile Include="AdminControls\TreeCategorization.ascx.designer.cs">
       <DependentUpon>TreeCategorization.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="AdminControls\FileManager.ascx.cs">
-      <DependentUpon>FileManager.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\FileManager.ascx.designer.cs">
-      <DependentUpon>FileManager.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminControls\OneSettings.ascx.cs">
       <DependentUpon>OneSettings.ascx</DependentUpon>
@@ -563,17 +557,6 @@
     <Compile Include="adm\External.aspx.designer.cs">
       <DependentUpon>External.aspx</DependentUpon>
     </Compile>
-    <Compile Include="adm\FileManager.asmx.cs">
-      <DependentUpon>FileManager.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="adm\ImageBrowser.aspx.cs">
-      <DependentUpon>ImageBrowser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\ImageBrowser.aspx.designer.cs">
-      <DependentUpon>ImageBrowser.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\Dictionary.aspx.cs">
       <DependentUpon>Dictionary.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -594,13 +577,6 @@
     </Compile>
     <Compile Include="adm\Forms.aspx.designer.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="adm\LinkBrowser.aspx.cs">
-      <DependentUpon>LinkBrowser.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\LinkBrowser.aspx.designer.cs">
-      <DependentUpon>LinkBrowser.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\Redirects.aspx.cs">
       <DependentUpon>Redirects.aspx</DependentUpon>
@@ -839,7 +815,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminControls\TreeCategorization.ascx" />
-    <Content Include="AdminControls\FileManager.ascx" />
     <Content Include="AdminControls\OneSettings.ascx" />
     <Content Include="adm\Dictionary.aspx" />
     <Content Include="adm\FileManager.aspx" />
@@ -850,8 +825,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Articles.aspx" />
-    <Content Include="adm\ImageBrowser.aspx" />
-    <Content Include="adm\LinkBrowser.aspx" />
     <Content Include="adm\SubscriptionManager.aspx" />
     <Content Include="CommonModules\Directory.ascx" />
     <Content Include="CommonModules\FormSelector.ascx" />
@@ -955,7 +928,6 @@
   <ItemGroup>
     <Content Include="AdminControls\TextContentControl.ascx" />
     <Content Include="AdminControls\toolbar_close.gif" />
-    <Content Include="adm\FileManager.asmx" />
     <Content Include="adm\Redirects.aspx" />
     <Content Include="adm\SpecialContentEdit.aspx" />
     <Content Include="adm\SQLEditor.aspx" />

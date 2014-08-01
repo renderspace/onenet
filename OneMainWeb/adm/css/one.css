@@ -463,3 +463,8 @@ div.calendar
 .audit-history-table {max-height: 500px; overflow: auto;}
 .ModuleDistinctName { font-size: 11px; font-weight: normal;}
 .m-ops { margin: 3px 0 0 20px; }
+
+.glyphicon-none:before {
+    content: "\2122";
+    color: transparent !important;
+}

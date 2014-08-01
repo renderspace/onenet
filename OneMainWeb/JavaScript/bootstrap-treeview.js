@@ -225,7 +225,7 @@
             if (!self.initialized) {
 
                 // Setup first time only components
-                self.$element.addClass(pluginName);
+                //self.$element.addClass(pluginName);
                 self.$wrapper = $(self._template.list);
 
                 self._injectStyle();
@@ -252,6 +252,11 @@
 
                 node.nodeId = self.nodes.length;
                 self.nodes.push(node);
+                trace(self.selectedNode);
+                if (node.selected && jQuery.isEmptyObject(self.selectedNode)) {
+                    trace("selected node");
+                    self.selectedNode = node;
+                }
 
                 var treeItem = $(self._template.item)
 					.addClass('node-' + self._elementId)
@@ -270,8 +275,8 @@
                     treeItem
 						.append($(self._template.iconWrapper)
 							.append($(self._template.icon)
-								.addClass('click-expand')
-								.addClass(self.options.expandIcon))
+								.addClass(node.noChildren > 0 ? 'click-expand' : '')
+								.addClass(node.noChildren > 0 ? self.options.expandIcon : 'glyphicon glyphicon-none'))
 						);
                 }
                 else if (node.nodes) {

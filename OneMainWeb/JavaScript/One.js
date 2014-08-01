@@ -144,68 +144,61 @@ $('#audit-history').on('show.bs.modal', function (e) {
 });
 
 function getTree(callback) {
-    var d1 = new Object();
-    var tree = [
-  {
-      text: "Parent 1",
-      nodes: [
-        {
-            text: "Child 1",
-            nodes: [
-              {
-                  text: "Grandchild 1"
-              },
-              {
-                  text: "Grandchild 2"
-              }
-            ]
-        },
-        {
-            text: "Child 2"
-        }
-      ]
-  },
-  {
-      text: "Parent 2"
-  },
-  {
-      text: "Parent 3"
-  },
-  {
-      text: "Parent 4"
-  },
-  {
-      text: "Parent 5"
-  }
-    ];
-    //trace(tree);
-    var that = this;
+    var selectedFolderId = $('#HiddenSelectedFolderId').val();
+    if (selectedFolderId < 1)
+        selectedFolderId = 0;
     $.ajax({
-        url: "/AdminService/GetFolderTree",
+        url: "/AdminService/GetFolderTree?selectedId=" + selectedFolderId,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: "GET",
-        success: callback/*function (data1) {
-            trace("GetFolderTree success");
-            //d1 = JSON.parse('[ {"text": "Parent 1" }, {"text": "Parent 2" }, {"text": "Parent 2", "nodes":  [{"text": "Parent 1" }, {"text": "Parent 2" } ] } ]');
-            d1 = "mijv";
-            
-        }*/,
+        success: callback,
         error: logError
     });
-    trace("d1:");
-    trace(d1);
-    // Some logic to retrieve, or generate tree structure
-   return d1;
-}
+};
+
+function files_databind(selectedFolderId) {
+    $.ajax({
+        url: "/AdminService/ListFiles?folderId=" + selectedFolderId,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "GET",
+        success: function (data) {
+            trace("ListFiles success");
+            $('#files-table tbody').empty();
+            $.map(data, function (item) {
+                $('#files-table tbody').append('<tr><td><input type="checkbox" /></td><td>' + item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name + '</td><td><a href="#" data-id="' + item.Id + '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
+            });
+            trace(data.length);
+            if (data.length == 0) {
+                $('#files-table thead').hide();
+            } else {
+                $('#files-table thead').show();
+            }
+        },
+        error: logError
+    });
+};
 
 getTree(function (d1) {
+    var selectedFolderId = $('#HiddenSelectedFolderId').val();
     $('#tree').treeview({ data: JSON.parse(d1) });
+    if (selectedFolderId > 0) {
+        files_databind(selectedFolderId)
+    }
 });
 
 $('#tree').removeClass("treeview");
 
 
+
+
 $('#tree').on('nodeSelected', function (event, node) {
-    trace(node);
+    if (node.id > 0) {
+        files_databind(node.id);
+        trace("nodeSelected:" + node.id);
+        $('#HiddenSelectedFolderId').val(node.id);
+    } else {
+        $('#files-table tbody').empty();
+    }
 });
