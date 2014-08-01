@@ -6,7 +6,7 @@ function trace(msg) {
 function logError(XMLHttpRequest, textStatus, errorThrown) {
     var errorToLog = "textStatus: " + textStatus + " errorThrown: " + errorThrown;
     trace(errorToLog);
-    _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
+    //    _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
 }
 
 
@@ -141,4 +141,71 @@ $('#audit-history').on('show.bs.modal', function (e) {
     }
 
 
+});
+
+function getTree(callback) {
+    var d1 = new Object();
+    var tree = [
+  {
+      text: "Parent 1",
+      nodes: [
+        {
+            text: "Child 1",
+            nodes: [
+              {
+                  text: "Grandchild 1"
+              },
+              {
+                  text: "Grandchild 2"
+              }
+            ]
+        },
+        {
+            text: "Child 2"
+        }
+      ]
+  },
+  {
+      text: "Parent 2"
+  },
+  {
+      text: "Parent 3"
+  },
+  {
+      text: "Parent 4"
+  },
+  {
+      text: "Parent 5"
+  }
+    ];
+    //trace(tree);
+    var that = this;
+    $.ajax({
+        url: "/AdminService/GetFolderTree",
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "GET",
+        success: callback/*function (data1) {
+            trace("GetFolderTree success");
+            //d1 = JSON.parse('[ {"text": "Parent 1" }, {"text": "Parent 2" }, {"text": "Parent 2", "nodes":  [{"text": "Parent 1" }, {"text": "Parent 2" } ] } ]');
+            d1 = "mijv";
+            
+        }*/,
+        error: logError
+    });
+    trace("d1:");
+    trace(d1);
+    // Some logic to retrieve, or generate tree structure
+   return d1;
+}
+
+getTree(function (d1) {
+    $('#tree').treeview({ data: JSON.parse(d1) });
+});
+
+$('#tree').removeClass("treeview");
+
+
+$('#tree').on('nodeSelected', function (event, node) {
+    trace(node);
 });
