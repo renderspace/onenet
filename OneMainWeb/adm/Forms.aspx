@@ -7,13 +7,12 @@
     <one:Notifier runat="server" ID="Notifier1" />
         <asp:MultiView runat="server" ID="MultiView1"  OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
             <asp:View ID="View1" runat="server">
-                 <div class="searchFull">
+                 <div class="adminSection">
                    
                                 <asp:Button ID="cmdShowAddForm" runat="server" Text="$add_form" OnClick="cmdShowAddForm_Click" />
                    
                   </div>
-                  <div class="centerFull">
-                    <div class="biggv">            
+         
                             <asp:GridView ID="formGridView" runat="server" PageSize="10" PageIndex="0"
                                 PagerSettings-Mode="NumericFirstLast"
                                 PagerSettings-LastPageText="$last"
@@ -40,7 +39,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="$form_type">
                                         <ItemTemplate>
-                                                <%# ResourceManager.GetString("$" + Eval("FormType").ToString()) %>
+                                                <%# Eval("FormType").ToString() %>
                                         </ItemTemplate>
                                     </asp:TemplateField> 
                                     <asp:TemplateField>
@@ -81,8 +80,7 @@
                                     <asp:Parameter Name="sortDirection" DefaultValue="ASC" Type="string" />
                                 </SelectParameters> 
                            </asp:ObjectDataSource>
-                    </div>            
-                </div>  <!-- centerFull -->
+                  
 
             </asp:View>
             <asp:View ID="View2" runat="server">
@@ -146,7 +144,14 @@
                          
                                 <two:LabeledCheckBox runat="server" Text="$allow_multiple_submissions" ID="chkAllowMultipleSubmissions" />
                                 <two:LabeledCheckBox runat="server" Text="$allow_modify_in_submission" ID="chkAllowModifyInSubmission" />                                                
-                                <two:ValidInput Required="false" ID="txtSendTo" runat="server" Text="$form_send_to" ValidationType="email" />
+
+                                <div class="form-group">
+                                    <label>form_send_to</label>
+                                    <asp:TextBox runat="server" ID="txtSendTo" type="email"></asp:TextBox>
+                                </div>
+
+                                
+                                
                                 <asp:TextBox Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
                                 <div class="save">
 		                            <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
@@ -172,9 +177,36 @@
                                 </div>
 
                                 <div class="separate_input" id="separateInput" runat="server">
-                                    <two:ValidInput ID="txtNumberOfRows" runat="server" Text="$number_of_lines_for_editing" ValidationType="numeric" />
-                                    <two:ValidInput ID="txtMaxChars" runat="server" Text="$max_chars" ValidationType="numeric" />
-                                    <two:ValidInput ID="txtMaximumFileSize" runat="server" Text="$maximum_file_size" ValidationType="numeric" />                                                    
+                                    <div class="form-input">
+                                        <div class="col-sm-3">
+                                            <label>$number_of_lines_for_editing</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <asp:TextBox ID="txtNumberOfRows" runat="server" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="form-input">
+                                        <div class="col-sm-3">
+                                             <label>$max_chars</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <asp:TextBox ID="txtMaxChars" runat="server" Text="$max_chars" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="form-input">
+                                        <div class="col-sm-3">
+                                             <label>$maximum_file_size</label>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <asp:TextBox ID="txtMaximumFileSize" runat="server" type="number"/>       
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                                                                 
                                     <div class="checkboxlist" id="divAllowedMimeTypes" runat="server">
                                         <asp:Label CssClass="checkboxlistTitle" ID="lblAllowedMimeTypes" runat="server" Text="$allowed_mime_types" />
                                         <asp:CheckBoxList ID="chkAllowedMimeTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right"  />

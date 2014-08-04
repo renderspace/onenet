@@ -72,7 +72,7 @@ namespace OneMainWeb
                 }
                 else
                 {
-                    Notifier1.Message = ResourceManager.GetString("$article_does_not_exist");
+                    Notifier1.Message = "$article_does_not_exist";
                     Notifier1.Visible = true;
                 }
             }
@@ -131,7 +131,11 @@ namespace OneMainWeb
         {
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
-                articleGridView.DataBind();
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+                GridViewSortExpression = "";
+                Articles_DataBind();
+
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
@@ -176,6 +180,25 @@ namespace OneMainWeb
             }
         }
 
+        private void Articles_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
+            TwoPostbackPager1.TotalRecords = articles.AllRecords;
+            TwoPostbackPager1.DetermineData();
+            articleGridView.DataSource = articles;
+            articleGridView.DataBind();
+        }
+
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Articles_DataBind();
+        }
 
         protected void articleGridView_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -210,7 +233,7 @@ namespace OneMainWeb
             {
                 if (lbRegularsAssignedToArticle.Items.Count == 0)
                 {
-                    Notifier1.Warning = ResourceManager.GetString("$minimum_one_regular_has_to_be_assigned_to_article");
+                    Notifier1.Warning = "$minimum_one_regular_has_to_be_assigned_to_article";
                     return;
                 }
                 else
@@ -234,11 +257,11 @@ namespace OneMainWeb
                     if (EnableXHTMLValidator && (hasErrors || hasAmpersands))
                     {
                         if (hasErrors)
-                            Notifier1.Warning += "<h3>" + ResourceManager.GetString("$errors") + "</h3><ul>";
+                            Notifier1.Warning += "<h3>" + "$errors" + "</h3><ul>";
 
                         foreach (var validatorError in errors)
                         {
-                            Notifier1.Warning += "<li>" + ResourceManager.GetString("$" + validatorError.Error);
+                            Notifier1.Warning += "<li>" + "$" + validatorError.Error;
                             if (!string.IsNullOrEmpty(validatorError.Tag))
                                 Notifier1.Warning += "<span>" + validatorError.Tag + "</span>";
                             Notifier1.Warning += "</li>";
@@ -249,10 +272,10 @@ namespace OneMainWeb
 
                         if (hasAmpersands)
                         {
-                            Notifier1.Warning += "<h3>" + ResourceManager.GetString("$ampersands") + "</h3><ul>";
+                            Notifier1.Warning += "<h3>" + "$ampersands" + "</h3><ul>";
                             foreach (int i in ampersands)
                             {
-                                Notifier1.Warning += "<li>" + ResourceManager.GetString("$position") + "<span>" + i + "</span></li>";
+                                Notifier1.Warning += "<li>" + "$position" + "<span>" + i + "</span></li>";
                             }
                             Notifier1.Warning += "</ul>";
                         }
@@ -284,7 +307,7 @@ namespace OneMainWeb
 
                         if (AutoPublish)
                             articleB.Publish(SelectedArticle.Id.Value);
-                        Notifier1.Message = ResourceManager.GetString("$article_saved");
+                        Notifier1.Message = "$article_saved";
 
                         if (close)
                         {
@@ -301,7 +324,7 @@ namespace OneMainWeb
             catch (Exception ex)
             {
                 Notifier1.Visible = true;
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_saving");
+                Notifier1.ExceptionName = "$error_saving";
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }

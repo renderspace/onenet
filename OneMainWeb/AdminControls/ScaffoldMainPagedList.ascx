@@ -9,7 +9,7 @@
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="View1" runat="server">
 
-        <div class="searchFull">
+        <div class="adminSection">
 			<div class="col-md-2">
                 <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
 			</div>
@@ -28,11 +28,15 @@
             onselectedindexchanged="GridViewItems_SelectedIndexChanged" 
             OnSorting="GridViewItems_Sorting">
         </asp:GridView>                
-        <div class="buttonsMiddle">
-            <asp:LinkButton ID="ButtonDeleteSelected" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" onclick="ButtonDeleteSelected_Click" CssClass="btn btn-danger" />
+
+        <div class="text-center">
+            <bll:PostbackPager id="PostbackPager1" OnCommand="PostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
         </div>
-        <bll:PostbackPager id="PostbackPager1" OnCommand="PostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
-        <asp:Literal ID="Literal1" runat="server" Text=""></asp:Literal>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <asp:LinkButton ID="ButtonDeleteSelected" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" onclick="ButtonDeleteSelected_Click" CssClass="btn btn-danger" />
+            </div>
+        </div>
 
     </asp:View>
     <asp:View ID="View2" runat="server">

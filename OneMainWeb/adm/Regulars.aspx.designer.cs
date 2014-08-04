@@ -100,7 +100,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RegularCancelButton;
+        protected global::System.Web.UI.WebControls.LinkButton RegularCancelButton;
         
         /// <summary>
         /// RegularInsertUpdateButton control.
@@ -109,7 +109,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RegularInsertUpdateButton;
+        protected global::System.Web.UI.WebControls.LinkButton RegularInsertUpdateButton;
         
         /// <summary>
         /// RegularInsertUpdateCloseButton control.
@@ -118,6 +118,6 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RegularInsertUpdateCloseButton;
+        protected global::System.Web.UI.WebControls.LinkButton RegularInsertUpdateCloseButton;
     }
 }

@@ -45,8 +45,8 @@ namespace OneMainWeb
             if (RssConfiguration.Configuration == null)
             {
                 Notifier1.ExceptionMessage =
-                    ResourceManager.GetString("$rss_configuration_element_missing_from_web_config");
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_loading");
+                    "$rss_configuration_element_missing_from_web_config";
+                Notifier1.ExceptionName = "$error_loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;
@@ -54,8 +54,8 @@ namespace OneMainWeb
             else if (RssConfiguration.Configuration.RssProviders == null)
             {
                 Notifier1.ExceptionMessage =
-                    ResourceManager.GetString("$missing_rssConfiguration_providers_section_from_web_config");
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_loading");
+                    "$missing_rssConfiguration_providers_section_from_web_config";
+                Notifier1.ExceptionName = "$error_loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;
@@ -63,8 +63,8 @@ namespace OneMainWeb
             else if (RssConfiguration.Configuration.RssProviders.Count == 0)
             {
                 Notifier1.ExceptionMessage =
-                    ResourceManager.GetString("$missing_rssConfiguration_providers_from_web_config");
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_loading");
+                    "$missing_rssConfiguration_providers_from_web_config";
+                Notifier1.ExceptionName = "$error_loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;
@@ -83,7 +83,7 @@ namespace OneMainWeb
                     diagnosticsValid = false;
                     MultiView1.ActiveViewIndex = 0;
                     Notifier1.ExceptionMessage = ((Exception)sqex).Message;
-                    Notifier1.ExceptionName = ResourceManager.GetString("$error_loading");
+                    Notifier1.ExceptionName = "$error_loading";
                     Notifier1.Visible = true;
                     AddRssFeed.Enabled = false;
                 }
@@ -115,7 +115,7 @@ namespace OneMainWeb
                 }
                 else
                 {
-                    throw new Exception(ResourceManager.GetString("$rss_categories_loading_failed"));
+                    throw new Exception("$rss_categories_loading_failed");
                 }
             }            
         }
@@ -192,13 +192,13 @@ namespace OneMainWeb
 
                     if (SelectedRssFeed != null && SelectedRssFeed.Id.HasValue)
                     {
-                        InsertUpdateButton.Text = ResourceManager.GetString("$update_rss_feed");
-                        InsertUpdateCloseButton.Text = ResourceManager.GetString("$update_rss_feed_and_close");
+                        InsertUpdateButton.Text = "$update_rss_feed";
+                        InsertUpdateCloseButton.Text = "$update_rss_feed_and_close";
                     }
                     else
                     {
-                        InsertUpdateButton.Text = ResourceManager.GetString("$add_rss_feed");
-                        InsertUpdateCloseButton.Text = ResourceManager.GetString("$add_rss_feed_and_close");
+                        InsertUpdateButton.Text = "$add_rss_feed";
+                        InsertUpdateCloseButton.Text = "$add_rss_feed_and_close";
                     }
                 }
             }
@@ -246,7 +246,7 @@ namespace OneMainWeb
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveRssFeed();
-            Notifier1.Message = ResourceManager.GetString("$item_saved");
+            Notifier1.Message = "$item_saved";
 
             MultiView1.ActiveViewIndex = 1;
         }
@@ -255,7 +255,7 @@ namespace OneMainWeb
         {
             SaveRssFeed();
 
-            Notifier1.Message = ResourceManager.GetString("$item_saved");
+            Notifier1.Message = "$item_saved";
 
             SelectedRssFeed = null;
             MultiView1.ActiveViewIndex = 0;

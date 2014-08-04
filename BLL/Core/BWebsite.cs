@@ -8,6 +8,12 @@ using One.Net.BLL.DAL;
 using One.Net.BLL.Utility;
 using System.Threading;
 using System.Globalization;
+using Microsoft.Web.Administration;
+using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.Data.SqlClient;
+using MsSqlDBUtility;
 
 namespace One.Net.BLL
 {
@@ -816,6 +822,149 @@ namespace One.Net.BLL
             intContentB.Change(website);
             webSiteDb.Change(website);
             OCache.Remove(CACHE_SITE_LIST);
+        }
+
+        public bool SiteExists(string title, string previewUrl)
+        {
+            var list = List();
+            var result = list.Where(s => s.Title == title || s.PreviewUrl == previewUrl).FirstOrDefault();
+            return result != null;
+        }
+
+        public enum AddWebSiteResult { Error, IisError, NotAllowed, SameNameExistsIis, SameNameExistsDatabase, FileSystemError, CreateDatabaseError, Success }
+
+        public AddWebSiteResult AddWebSite(BOWebSite website, bool newDatabase, DirectoryInfo currentPhysicalRootPath, string connectString)
+        {
+            var siteName = website.Title;
+            SqlConnectionStringBuilder builder = null;
+            if (newDatabase && !string.IsNullOrWhiteSpace(connectString))
+            {
+                builder = new SqlConnectionStringBuilder(connectString);
+                
+            }
+            else if (newDatabase && string.IsNullOrWhiteSpace(connectString))
+            {
+                return AddWebSiteResult.Error;
+            }
+            else
+            {
+                builder = new SqlConnectionStringBuilder(SqlHelper.ConnStringMain);
+            }
+            var appPoolName = builder.InitialCatalog;
+            if (string.IsNullOrWhiteSpace(appPoolName) || string.IsNullOrWhiteSpace(siteName) || website.Id > 0)
+            {
+                return AddWebSiteResult.Error;
+            }
+
+            DirectoryInfo newWebsiteRoot = new DirectoryInfo(Path.Combine(currentPhysicalRootPath.Parent.FullName, siteName));
+            using (var sm = new ServerManager())
+            {
+                if (!sm.Sites.AllowsAdd)
+                {
+                    return AddWebSiteResult.NotAllowed;
+                }
+                if (sm.Sites.Any(t => t.Name == siteName))
+                {
+                    return AddWebSiteResult.SameNameExistsIis;
+                }
+                if (!newDatabase && SiteExists(website.Title, website.PreviewUrl))
+                {
+                    return AddWebSiteResult.SameNameExistsDatabase;
+                }
+                if (!IISHelper.AppPoolExists(sm, appPoolName))
+                {
+                    IISHelper.CreateNewAppPool(sm, appPoolName, "v4.5");
+                }
+                IISHelper.CreateWebSite(sm, siteName, appPoolName, website.PreviewUrl, newWebsiteRoot.FullName);
+                sm.CommitChanges();
+            }
+
+            try
+            {
+                IISHelper.DirectoryCopy(currentPhysicalRootPath.FullName, newWebsiteRoot, copyAdminFolders: true);
+                var dirSec = newWebsiteRoot.GetAccessControl();
+                dirSec.SetAccessRuleProtection(false, true);
+                dirSec.AddAccessRule(new FileSystemAccessRule(WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
+                newWebsiteRoot.SetAccessControl(dirSec);
+            }
+            catch (Exception ex)
+            {
+                log.Error("AddWebSite", ex);
+                return AddWebSiteResult.FileSystemError;
+            }
+
+            if (!newDatabase)
+            {
+                ChangeWebsite(website);
+                using (var sm = new ServerManager())
+                {
+                    if (!sm.Sites.Any(t => t.Name == siteName))
+                        return AddWebSiteResult.IisError;
+
+                    IISHelper.AddAppSetting(sm, siteName, "WebSiteId", website.Id.ToString());
+                    sm.CommitChanges();
+                }
+            }
+            else if (CreateDatabase(builder))
+            {
+                using (var sm = new ServerManager())
+                {
+                    if (!sm.Sites.Any(t => t.Name == siteName))
+                        return AddWebSiteResult.IisError;
+
+                    IISHelper.AddConnectionString(sm, siteName, "MsSqlConnectionString", connectString);
+                    sm.CommitChanges();
+                }
+            }
+            else
+            {
+                return AddWebSiteResult.CreateDatabaseError;
+            }
+
+            return AddWebSiteResult.Success;
+        }
+
+        private bool CreateDatabase(SqlConnectionStringBuilder builder)
+        {
+            var databaseSql = DatabaseHelper.GetFileContentFromResource("Sql.1_database.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var userSql = DatabaseHelper.GetFileContentFromResource("Sql.1_1_user.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var tablesSql = DatabaseHelper.GetFileContentFromResource("Sql.2_tables.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var insertsSql = DatabaseHelper.GetFileContentFromResource("Sql.3_standard_inserts.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var spsSql = DatabaseHelper.GetFileContentFromResource("Sql.4_stored_procedures.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var securitySql = DatabaseHelper.GetFileContentFromResource("Sql.5_security.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, databaseSql));
+            {
+                return false;
+            }
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, userSql))
+            {
+                return false;
+            }
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, tablesSql))
+            {
+                return false;
+            }
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, insertsSql))
+            {
+                return false;
+            }
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, spsSql))
+            {
+                return false;
+            }
+
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, securitySql))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void ChangeSettings(Dictionary<string, BOSetting> entries, int websiteId)

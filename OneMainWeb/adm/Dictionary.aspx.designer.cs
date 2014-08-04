@@ -94,15 +94,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView GridViewEntries;
         
         /// <summary>
-        /// ButtonDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
-        
-        /// <summary>
         /// TwoPostbackPager1 control.
         /// </summary>
         /// <remarks>
@@ -110,6 +101,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
+        
+        /// <summary>
+        /// ButtonDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
         
         /// <summary>
         /// View2 control.
@@ -154,7 +154,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
+        protected global::System.Web.UI.WebControls.LinkButton CancelButton;
         
         /// <summary>
         /// InsertUpdateButton control.
@@ -163,7 +163,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateButton;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateButton;
         
         /// <summary>
         /// InsertUpdateCloseButton control.
@@ -172,7 +172,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateCloseButton;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateCloseButton;
         
         /// <summary>
         /// View3 control.

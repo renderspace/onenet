@@ -7,7 +7,7 @@
     <one:Notifier runat="server" ID="Notifier1" />
     <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
         <asp:View ID="View1" runat="server">
-                <div class="searchFull">
+                <div class="adminSection">
                 <asp:Button ID="cmdShowAddRedirect" runat="server" Text="$add_redirect" OnClick="cmdShowAddRedirect_Click" />
             </div>  
             <div class="centerFull">
@@ -55,7 +55,7 @@
                 <div class="contentEntry">            
 			        <asp:TextBox id="InputFromLink" runat="server" Text="$from_link" ValidationGroup="REDIRECTS" />
 			        <asp:TextBox id="InputToLink" runat="server" Text="$to_link" ValidationGroup="REDIRECTS" />
-			        <div class="save">
+			        <div class="form-group">
 				        <asp:button ID="button3" runat="server" Text="$cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
 				        <asp:button ID="button4" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
 				        <asp:button ID="button5" CommandName="SAVE_CLOSE" runat="server" Text="Save and close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />

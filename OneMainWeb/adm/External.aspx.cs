@@ -66,17 +66,17 @@ namespace OneMainWeb
                     }
                     else
                     {
-                        Notifier1.Warning = ResourceManager.GetString("$failed_to_load_module");
+                        Notifier1.Warning = "$failed_to_load_module";
                     }
                 }
                 else
                 {
-                    Notifier1.Warning = ResourceManager.GetString("$module_does_not_exist");
+                    Notifier1.Warning = "$module_does_not_exist";
                 }
             }
             else
             {
-                Notifier1.Warning = ResourceManager.GetString("$missing_module_parameter");
+                Notifier1.Warning = "$missing_module_parameter";
             }
         }
 
@@ -85,7 +85,7 @@ namespace OneMainWeb
             AdminExternalEventArgs ae = e as AdminExternalEventArgs;
             if (ae != null)
             {
-                Notifier1.ExceptionName = ResourceManager.GetString("$error");
+                Notifier1.ExceptionName = "$error";
                 Notifier1.ExceptionMessage = ae.Exc.Message;
             }
         }

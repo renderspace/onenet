@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+    </Reference>
     <Reference Include="MsSqlDBUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\library\MsSqlDBUtility\bin\Release\MsSqlDBUtility.dll</HintPath>
@@ -120,7 +124,6 @@
     <Compile Include="Model\BOSetting.cs" />
     <Compile Include="Model\BOTemplate.cs" />
     <Compile Include="Model\BOWebsite.cs" />
-    <Compile Include="Model\Web\AdminHelper.cs" />
     <Compile Include="Model\Web\IArticleIdConsumer.cs" />
     <Compile Include="Model\Web\IArticleIdProvider.cs" />
     <Compile Include="Model\Web\IContentIdConsumer.cs" />
@@ -172,13 +175,14 @@
     <Compile Include="Service\FormService.cs" />
     <Compile Include="Service\IAdminService.cs" />
     <Compile Include="Service\IFormService.cs" />
+    <Compile Include="Utility\DatabaseHelper.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />
     <Compile Include="Utility\FolderRightsReader.cs" />
     <Compile Include="Utility\FormatTool.cs" />
+    <Compile Include="Utility\IISHelper.cs" />
     <Compile Include="Utility\LoosyFormatter.cs" />
     <Compile Include="Utility\OCache.cs" />
     <Compile Include="Utility\OContext.cs" />
-    <Compile Include="Utility\ResourceManager.cs" />
     <Compile Include="Utility\StringTool.cs" />
     <Compile Include="Utility\UrlBuilder.cs" />
     <Compile Include="Utility\XHTMLValidator.cs" />
@@ -195,6 +199,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Sql\1_1_user.sql.template" />
+    <EmbeddedResource Include="Sql\1_database.sql.template" />
+    <EmbeddedResource Include="Sql\2_tables.sql.template" />
+    <EmbeddedResource Include="Sql\3_standard_inserts.sql.template" />
+    <EmbeddedResource Include="Sql\4_stored_procedures.sql.template" />
+    <EmbeddedResource Include="Sql\5_security.sql.template" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

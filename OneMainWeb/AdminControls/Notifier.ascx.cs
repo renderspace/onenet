@@ -64,20 +64,20 @@ namespace OneMainWeb.AdminControls
             if (!string.IsNullOrEmpty(ExceptionName))
             {
                 PanelNotifierError.Visible = true;
-                Label5.Text = ResourceManager.GetString(ExceptionName);
-                Label6.Text = ResourceManager.GetString(ExceptionMessage);
+                Label5.Text = ExceptionName;
+                Label6.Text = ExceptionMessage;
             }
             if (!string.IsNullOrEmpty(Title))
             {
                 PanelNotifierSuccess.Visible = true;
-                Label1.Text = ResourceManager.GetString(Title);
-                Label2.Text = ResourceManager.GetString(Message);
+                Label1.Text = Title;
+                Label2.Text = Message;
             }
             if (!string.IsNullOrEmpty(Warning))
             {
                 PanelNotifierWarning.Visible = true;
-                Label3.Text = ResourceManager.GetString(Warning);
-                Label4.Text = ResourceManager.GetString(Message);
+                Label3.Text = Warning;
+                Label4.Text = Message;
             }
             base.OnPreRender(e);
         }

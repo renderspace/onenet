@@ -80,8 +80,8 @@ namespace OneMainWeb.adm
             var mcount = 0;
             var dcount = 0;
             websiteB.DeleteTree(SelectedPageId, ref mcount, ref dcount);
-            notifier.Message = mcount + ResourceManager.GetString("$pages_marked_for_deletion");
-            notifier.Message += "<br />" + dcount + ResourceManager.GetString("$pages_permanently_deleted");
+            notifier.Message = mcount + "$pages_marked_for_deletion";
+            notifier.Message += "<br />" + dcount + "$pages_permanently_deleted";
             LabelSelectedPageId.Text = "";
             LabelSelectedPageName.Text = "";
             TreeView2_DataBind();
@@ -89,7 +89,7 @@ namespace OneMainWeb.adm
 
         protected void ButtonDelete_PreRender(object sender, EventArgs e)
         {
-            ButtonDelete.OnClientClick = "return confirm('" + ResourceManager.GetString("$confirm") + "')";
+            ButtonDelete.OnClientClick = "return confirm('" + "$confirm" + "')";
         }
     }
 }

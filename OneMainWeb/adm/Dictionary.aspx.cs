@@ -29,16 +29,7 @@ namespace OneMainWeb
             set { ViewState["SelectedDictionaryEntry"] = value; }
         }
 
-        private SortDir GridViewSortDirection
-        {
-            get
-            {
-                if (ViewState["sortDirection"] == null)
-                    ViewState["sortDirection"] = SortDir.Ascending;
-                return (SortDir)ViewState["sortDirection"];
-            }
-            set { ViewState["sortDirection"] = value; }
-        }
+        
 
         protected string GridViewSortExpression
         {
@@ -62,15 +53,12 @@ namespace OneMainWeb
             set { ViewState["SearchReturnedNoResults"] = value; }
         }
 
-        public int GridViewPageSize
-        {
-            get { return 10; }
-        }
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Notifier1.Visible = true;
-            LabelNoResults.Text = ResourceManager.GetString("$no_search_results");
+            LabelNoResults.Text = "$no_search_results";
 
             if (!IsPostBack)
             {
@@ -105,22 +93,22 @@ namespace OneMainWeb
 
                     txtKeyword.Visible = false;
                     LabelKeyword.Visible = true;
-                    InsertUpdateButton.Text = ResourceManager.GetString("$update");
-                    InsertUpdateCloseButton.Text = ResourceManager.GetString("$update_close");
+                    InsertUpdateButton.Text = "$update";
+                    InsertUpdateCloseButton.Text = "$update_close";
                 }
                 else
                 {
                     txtKeyword.Visible = true;
                     LabelKeyword.Visible = false;
-                    InsertUpdateButton.Text = ResourceManager.GetString("$insert");
-                    InsertUpdateCloseButton.Text = ResourceManager.GetString("$insert_close");
+                    InsertUpdateButton.Text = "$insert";
+                    InsertUpdateCloseButton.Text = "$insert_close";
                 }
             }
             else if (((MultiView)sender).ActiveViewIndex == 2)
             {
                 RadioButtonListWriteTypes.Items.Clear();
-                RadioButtonListWriteTypes.Items.Add(new ListItem(ResourceManager.GetString("$overwrite"), "0"));
-                RadioButtonListWriteTypes.Items.Add(new ListItem(ResourceManager.GetString("$dont_overwrite"), "1"));
+                RadioButtonListWriteTypes.Items.Add(new ListItem("overwrite", "0"));
+                RadioButtonListWriteTypes.Items.Add(new ListItem("dont_overwrite", "1"));
                 RadioButtonListWriteTypes.SelectedIndex = 1;
             }
         }
@@ -160,7 +148,7 @@ namespace OneMainWeb
             if (!string.IsNullOrEmpty(TextBoxSearch.Text) && entries.AllRecords == 0)
             {
                 if (!ShowUntranslated)
-                    Notifier1.Warning = ResourceManager.GetString("$you_can_get_more_results_if_tick_show_untranslated");
+                    Notifier1.Warning = "$you_can_get_more_results_if_tick_show_untranslated";
 
                 GridViewEntries.Visible = false;
                 LabelNoResults.Visible = true;
@@ -220,10 +208,10 @@ namespace OneMainWeb
                 switch(result)
                 {
                     case BContent.ResultCode.OK:
-                        Notifier1.Message = ResourceManager.GetString("$dictionary_entry_saved");
+                        Notifier1.Message = "$dictionary_entry_saved";
                         break;
                     default:
-                        Notifier1.Warning = ResourceManager.GetString("$dictionary_entry_not_saved");
+                        Notifier1.Warning = "$dictionary_entry_not_saved";
                         close = false;
                         break;
                 }
@@ -247,7 +235,7 @@ namespace OneMainWeb
             catch (Exception ex)
             {
                 Notifier1.Visible = true;
-                Notifier1.ExceptionName = ResourceManager.GetString("$error_saving");
+                Notifier1.ExceptionName = "$error_saving";
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
@@ -283,11 +271,11 @@ namespace OneMainWeb
                     if(contentB.DeleteDictionaryEntry(keyword))
                     {
                         LoadAll(false);
-                        Notifier1.Message = ResourceManager.GetString("$deleted");
+                        Notifier1.Message = "$deleted";
                     }
                     else
                     {
-                        Notifier1.Warning = ResourceManager.GetString("$delete_failed");
+                        Notifier1.Warning = "$delete_failed";
                     }
                 }
             }
@@ -437,19 +425,19 @@ namespace OneMainWeb
                             }
                         }
 
-                        Notifier1.Message = ResourceManager.GetString("$successfully_import_count") + countImport;
-                        Notifier1.Message += "<br />" + ResourceManager.GetString("$fail_import_count") + countFail;
+                        Notifier1.Message = "$successfully_import_count" + countImport;
+                        Notifier1.Message += "<br />" + "$fail_import_count" + countFail;
                     }
                     else
                     {
 
-                        Notifier1.Warning = ResourceManager.GetString("$invalid_import_file_or_failed_to_read");
+                        Notifier1.Warning = "$invalid_import_file_or_failed_to_read";
                     }
                 }
             }
             else
             {
-                Notifier1.Warning = ResourceManager.GetString("$import_file_not_selected");
+                Notifier1.Warning = "$import_file_not_selected";
             }
         }
 
@@ -459,7 +447,7 @@ namespace OneMainWeb
             Response.Buffer = false;
             Response.ContentType = "text/xml";
             Response.AddHeader("Content-Disposition", "attachment; filename=\"" +
-                ResourceManager.GetString("$dictionary_export") + DateTime.Now.ToShortDateString() + ".xml\";");
+                "$dictionary_export" + DateTime.Now.ToShortDateString() + ".xml\";");
 
             Response.ContentEncoding = Encoding.UTF8;
             Response.Write(Get().OuterXml.ToString());

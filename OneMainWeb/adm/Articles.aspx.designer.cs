@@ -94,13 +94,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView articleGridView;
         
         /// <summary>
-        /// ObjectDataSourceArticleList control.
+        /// TwoPostbackPager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceArticleList;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
         
         /// <summary>
         /// ButtonDelete control.
@@ -166,15 +166,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Button cmdRemoveRegularFromArticle;
         
         /// <summary>
-        /// lblRegularAssignedToArticleMark control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRegularAssignedToArticleMark;
-        
-        /// <summary>
         /// lbRegularsAssignedToArticle control.
         /// </summary>
         /// <remarks>
@@ -211,6 +202,15 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.TextContentControl TextContentEditor;
         
         /// <summary>
+        /// LastChangeAndHistory1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
+        
+        /// <summary>
         /// LabelId control.
         /// </summary>
         /// <remarks>
@@ -226,7 +226,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
+        protected global::System.Web.UI.WebControls.LinkButton CancelButton;
         
         /// <summary>
         /// InsertUpdateButton control.
@@ -235,7 +235,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateButton;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateButton;
         
         /// <summary>
         /// InsertUpdateCloseButton control.
@@ -244,7 +244,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateCloseButton;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateCloseButton;
         
         /// <summary>
         /// AutoPublishWarning control.
@@ -254,14 +254,5 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label AutoPublishWarning;
-        
-        /// <summary>
-        /// LastChangeAndHistory1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
     }
 }

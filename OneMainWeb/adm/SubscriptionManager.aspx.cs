@@ -17,21 +17,39 @@ namespace OneMainWeb
 
         protected static BNewsLtr newsletterB = new BNewsLtr();
 
+        protected int SelectedNewsletterId
+        {
+            get { 
+                int newsletterId = FormatTool.GetInteger( ddlNewsletterFilter.SelectedValue );
+                return newsletterId;
+            }
+        }
+
+        protected int SelectedSubscriptionFilterId
+        {
+            get
+            {
+                int subscriptionFilterId = FormatTool.GetInteger(ddlSubscriptionFilter.SelectedValue);
+                return subscriptionFilterId;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            cmdDeleteUnconfirmedSubscriptions.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_confirm_delete_unconfirmed_subscriptions") + @"');";
-			cmdDeleteSubscriptions.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_confirm_delete_subscriptions") + @"');";
+            cmdDeleteUnconfirmedSubscriptions.OnClientClick = @"return confirm('" + "$label_confirm_delete_unconfirmed_subscriptions" + @"');";
+			cmdDeleteSubscriptions.OnClientClick = @"return confirm('" + "$label_confirm_delete_subscriptions" + @"');";
 			if (!IsPostBack)
 			{
+                MultiView1.ActiveViewIndex = 0;
             }
         }
 
         private void ddlSubscriptionFilter_DataBind()
         {
             ddlSubscriptionFilter.Items.Clear();
-            ddlSubscriptionFilter.Items.Add(new ListItem(ResourceManager.GetString("$started_subscription"), SUBSCRIPTION_TYPE_STARTED.ToString()));
-            ddlSubscriptionFilter.Items.Add(new ListItem(ResourceManager.GetString("$confirmed_subscription"), SUBSCRIPTION_TYPE_CONFIRMED.ToString()));
-            ddlSubscriptionFilter.Items.Add(new ListItem(ResourceManager.GetString("$unsubscribed"), SUBSCRIPTION_TYPE_UNSUBSCRIBED.ToString()));
+            ddlSubscriptionFilter.Items.Add(new ListItem("$started_subscription", SUBSCRIPTION_TYPE_STARTED.ToString()));
+            ddlSubscriptionFilter.Items.Add(new ListItem("$confirmed_subscription", SUBSCRIPTION_TYPE_CONFIRMED.ToString()));
+            ddlSubscriptionFilter.Items.Add(new ListItem("$unsubscribed", SUBSCRIPTION_TYPE_UNSUBSCRIBED.ToString()));
         }
 
         private static void ddlNewsletter_DataBind(ListControl ddl)
@@ -52,7 +70,7 @@ namespace OneMainWeb
                 ddlSubscriptionFilter_DataBind();
                 ddlNewsletter_DataBind(ddlNewsletters);
                 ddlNewsletter_DataBind(ddlNewsletterFilter);
-                subscriptionGridView.DataBind();
+                Subscriptions_DataBind();
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
@@ -64,14 +82,34 @@ namespace OneMainWeb
             }
         }
 
+        private void Subscriptions_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            PagedList<BONewsLtrSub> subscriptions = newsletterB.ListSubscriptions(SelectedNewsletterId, state, SelectedSubscriptionFilterId);
+            TwoPostbackPager1.TotalRecords = subscriptions.AllRecords;
+            TwoPostbackPager1.DetermineData();
+            subscriptionGridView.DataSource = subscriptions;
+            Subscriptions_DataBind();
+        }
+
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Subscriptions_DataBind();
+        }
+
         protected void CmdExportSubscriptions_Click(object sender, EventArgs e)
         {
-            PagedList<BONewsLtrSub> subscriptions = newsletterB.ListSubscriptions(Int32.Parse(ddlNewsletters.SelectedValue), new ListingState(null, null, SortDir.Ascending, "email"), Int32.Parse(ddlSubscriptionFilter.SelectedValue));
+            PagedList<BONewsLtrSub> subscriptions = newsletterB.ListSubscriptions(Int32.Parse(ddlNewsletters.SelectedValue), new ListingState(null, null, SortDir.Ascending, "email"), SelectedSubscriptionFilterId);
 
             Response.Clear();
             Response.Buffer = true;
             Response.ContentType = "application/vnd.ms-excel";
-            Response.AddHeader("Content-Disposition", "attachment; filename=\"" + ResourceManager.GetString("$export_newsletter_subscriptions_file_name") + ".xls\";");
+            Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$export_newsletter_subscriptions_file_name" + ".xls\";");
             Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Charset = "";
@@ -106,10 +144,10 @@ namespace OneMainWeb
 
             strw.GetStringBuilder().Append(
                 @"<table border=""1px""><tr>");
-            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + ResourceManager.GetString("$subscription_id") + "</th>");
-            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + ResourceManager.GetString("$email") + "</th>");
-            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + ResourceManager.GetString("$subscribed") + "</th>");
-            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + ResourceManager.GetString("$confirmed") + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "$subscription_id" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "$email" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "$subscribed" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "$confirmed" + "</th>");
             strw.GetStringBuilder().Append("</tr>");
 
             foreach (BONewsLtrSub sub in subscriptions)
@@ -137,7 +175,7 @@ namespace OneMainWeb
         {
             plhCSLSubs.Visible = false;
             plhSubscriptions.Visible = true;
-            subscriptionGridView.DataBind();
+            Subscriptions_DataBind();
         }
 
         protected void cmdDisplayCSLSubscriptions_Click(object sender, EventArgs e)
@@ -146,9 +184,8 @@ namespace OneMainWeb
             plhSubscriptions.Visible = false;
 
             int newsletterId = FormatTool.GetInteger(ddlNewsletters.SelectedValue);
-            int subscriptionType = FormatTool.GetInteger(ddlSubscriptionFilter.SelectedValue);
 
-            List<BONewsLtrSub> subs = newsletterB.ListSubscriptions(newsletterId, new ListingState(null, null, SortDir.Ascending, null), subscriptionType);
+            List<BONewsLtrSub> subs = newsletterB.ListSubscriptions(newsletterId, new ListingState(null, null, SortDir.Ascending, null), SelectedSubscriptionFilterId);
 
             StringBuilder emailBuilder = new StringBuilder();
 
@@ -182,8 +219,8 @@ namespace OneMainWeb
                     string hash = litHash.Text;
 
                     if (newsletterB.Unsubscribe(subId, hash) == NewsLtrSubRes.Success)
-                        Notifier1.Message = ResourceManager.GetString("$sucessively_unsubscribed_sub");
-                    subscriptionGridView.DataBind();   
+                        Notifier1.Message = "$sucessively_unsubscribed_sub";
+                    Subscriptions_DataBind();   
                 }
             }
         }
@@ -208,20 +245,20 @@ namespace OneMainWeb
 			else if (!chkDeleteAll.Checked)
 			{
 				Notifier1.Visible = true;
-				Notifier1.ExceptionName = ResourceManager.GetString("$label_delete_all_precaution_title");
-				Notifier1.ExceptionMessage = ResourceManager.GetString("$label_delete_all_precaution_text");
+				Notifier1.ExceptionName = "$label_delete_all_precaution_title";
+				Notifier1.ExceptionMessage = "$label_delete_all_precaution_text";
 			}
 		}
 
         protected void cmdDeleteUnconfirmedSubscriptions_Click(object sender, EventArgs e)
         {
-            int newsletterId = FormatTool.GetInteger( ddlNewsletterFilter.SelectedValue );
+            
             DateTime fromDate = DateTime.Now.AddDays(-Int32.Parse(txtBackFromDays.Text));
 
-            if (newsletterId > -1 && fromDate != DateTime.MinValue)
+            if (SelectedNewsletterId  > 0 && fromDate != DateTime.MinValue)
             {
                 int countDeleted = 0;
-                List<BONewsLtrSub> unconfirmedSubscriptions = newsletterB.ListSubscriptions(newsletterId, new ListingState(null, null, SortDir.Ascending, null), SUBSCRIPTION_TYPE_STARTED);
+                List<BONewsLtrSub> unconfirmedSubscriptions = newsletterB.ListSubscriptions(SelectedNewsletterId, new ListingState(null, null, SortDir.Ascending, null), SUBSCRIPTION_TYPE_STARTED);
                 foreach (BONewsLtrSub sub in unconfirmedSubscriptions)
                 {
                     if (sub.DateSubscribed < fromDate)
@@ -238,7 +275,7 @@ namespace OneMainWeb
             else
             {
                 Notifier1.Visible = true;
-                Notifier1.Message = ResourceManager.GetString("$delete_failed");
+                Notifier1.Message = "$delete_failed";
             }
         }
 
@@ -294,23 +331,6 @@ namespace OneMainWeb
         {
             Regex reg = new Regex(@"^(([\w\-\.]+@([A-Za-z0-9]([\w\-])*\.){1,2}([a-zA-Z]([\w\-]){1,3}));*)+"); // regex pattern from TwoControlsLibrary
             return reg.IsMatch(email);
-        }
-    }
-
-    public class SubscriptionHelper
-    {
-        protected static BNewsLtr newsletterB = new BNewsLtr();
-
-        public PagedList<BONewsLtrSub> ListSubscriptions(int newsletterId, int firstRecordIndex, int recordsPerPage, int subscriptionType, string sortBy)
-        {
-            PagedList<BONewsLtrSub> subscriptions = newsletterB.ListSubscriptions(newsletterId, new ListingState(recordsPerPage, firstRecordIndex, (sortBy.ToLower().Contains("asc") || !sortBy.ToLower().Contains("desc") ? SortDir.Ascending : SortDir.Descending), sortBy.ToLower().Replace("desc", "").Replace("asc", "")), subscriptionType);
-            HttpContext.Current.Items["rowCount"] = subscriptions.AllRecords;
-            return subscriptions;
-        }
-
-        public int GetSubscriptionCount()
-        {
-            return (int)HttpContext.Current.Items["rowCount"];
         }
     }
 }

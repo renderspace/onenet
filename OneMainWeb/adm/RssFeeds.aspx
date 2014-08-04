@@ -14,7 +14,7 @@
 
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="TabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">
-                <div class="searchFull">
+                <div class="adminSection">
 			        <asp:Button ID="AddRssFeed" runat="server" Text="$add_rss_feed" OnClick="AddRssFeed_Click" />
 			    </div>
 
@@ -84,7 +84,7 @@
 			                <asp:Label ID="lblCategories" runat="server" Text="$categories" AssociatedControlID="chlCategories" />
 			                <asp:CheckBoxList ID="chlCategories" runat="server" />
 			            </div>
-			            <div class="save">
+			            <div class="form-group">
 				            <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" />
 				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
 				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />

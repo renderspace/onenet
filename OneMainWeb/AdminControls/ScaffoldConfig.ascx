@@ -8,7 +8,7 @@
     <asp:PlaceHolder runat="server" ID="PlaceHolderList">
 
 
-        <div class="searchFull">
+        <div class="adminSection">
 			<div class="col-md-5" >
                 <asp:DropDownList runat="server" DataTextField="FriendlyName" DataValueField="StartingPhysicalTable" ID="DropDownListPhysical"></asp:DropDownList>
                 <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonAdd_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add table" CssClass="btn btn-success" />
@@ -55,11 +55,15 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <div class="buttonsMiddle">
-            <asp:LinkButton ID="CmdCancel" runat="server" Text="$cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
+        <div class="form-horizontal">
+            <div class="form-group">
+                 <div class="col-sm-12">
+                    <asp:LinkButton ID="CmdCancel" runat="server" Text="$cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
 
-            <asp:LinkButton ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="btn btn-success" />
-        </div>     
+                    <asp:LinkButton ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="btn btn-success" />
+                </div>
+            </div>     
+        </div>
         
     </asp:PlaceHolder>
     <asp:PlaceHolder runat="server" ID="PlaceHolderSingle">

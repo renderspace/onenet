@@ -85,15 +85,6 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.GridView GridViewItems;
         
         /// <summary>
-        /// ButtonDeleteSelected control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonDeleteSelected;
-        
-        /// <summary>
         /// PostbackPager1 control.
         /// </summary>
         /// <remarks>
@@ -103,13 +94,13 @@ namespace OneMainWeb.AdminControls {
         protected global::One.Net.BLL.WebControls.PostbackPager PostbackPager1;
         
         /// <summary>
-        /// Literal1 control.
+        /// ButtonDeleteSelected control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal Literal1;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDeleteSelected;
         
         /// <summary>
         /// View2 control.

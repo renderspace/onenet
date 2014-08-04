@@ -118,7 +118,7 @@ namespace OneMainWeb.AdminControls
                     }
                     else if (VirtualTableId > 0)
                     {
-                        Notifier1.Warning = ResourceManager.GetString("NoPrimaryKeyDefined");
+                        Notifier1.Warning = "NoPrimaryKeyDefined";
                     }
 
                     foreach (DataColumn col in items.Columns)
@@ -296,7 +296,7 @@ namespace OneMainWeb.AdminControls
             }
             if (deletedCount == 0 && deleteFailedCount == 0)
             {
-                Notifier1.Message = ResourceManager.GetString("NothingToDelete");
+                Notifier1.Message = "NothingToDelete";
             }
             else
             {

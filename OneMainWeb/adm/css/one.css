@@ -181,8 +181,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 /**/
 .pager span {display: inline-block; margin: 4px;}
 /**/
-.searchFull {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}
-.searchFull select {width: 160px;}
+
 /**/
 .centerFull .infolabel, .centerFull .info {padding: 0 10px 20px 0;}
 /**/
@@ -468,4 +467,6 @@ div.calendar
     color: transparent !important;
 }
 
-.full {width: 100%;}
+.full {width: 100%; float: left;}
+
+.adminSection {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}

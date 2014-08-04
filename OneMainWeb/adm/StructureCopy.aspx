@@ -15,7 +15,7 @@
                 <asp:Label ID="LabelEmptyWebSites" runat="server" AssociatedControlID="CheckBoxListEmptyWebSites" Text="$empty_websites" />
                 <asp:CheckBoxList ID="CheckBoxListEmptyWebSites" runat="server"></asp:CheckBoxList>
             </div>
-            <div class="save">
+            <div class="form-group">
                 <asp:Button ID="ButtonCopy" runat="server" text="$copy_pages_to_site" OnClick="ButtonCopy_Click" />
             </div>
         </div>

@@ -6,39 +6,21 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />
-    <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click">Articles</asp:LinkButton>
-    <asp:LinkButton ID="LinkButtonPages" runat="server" OnClick="LinkButtonPages_Click">Pages</asp:LinkButton>
+    <div class="adminSection">    
+        <asp:LinkButton ID="LinkButtonArticles" runat="server" OnClick="LinkButtonArticles_Click">Articles</asp:LinkButton>
+        <asp:LinkButton ID="LinkButtonPages" runat="server" OnClick="LinkButtonPages_Click">Pages</asp:LinkButton>
+    </div>
 
     <asp:MultiView runat="server" ID="Multiview1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
         <asp:View ID="View1" runat="server">
-            <div class="centerFull">
-                <div class="biggv">     
-					    <asp:GridView ID="articleGridView" runat="server" PageSize="25" PageIndex="0"
-						    PagerSettings-Mode="NumericFirstLast"
-						    PagerSettings-LastPageText="$last"
-						    PagerSettings-FirstPageText="$first"
-						    PagerSettings-PageButtonCount="7"
+            
+					    <asp:GridView ID="articleGridView" runat="server" CssClass="table table-hover"
 						    AllowSorting="True"
-						    AllowPaging="True"
 						    AutoGenerateColumns="False"
-						    DataSourceID="ObjectDataSourceArticleList"
-						    CssClass="gv"
 						    DataKeyNames="Id"
 						    OnRowCommand="articleGridView_RowCommand">
 						    <Columns>
-							    <asp:TemplateField HeaderText="$article" SortExpression="title">
-								    <ItemTemplate><%# Eval("Title") %></ItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$display_date" SortExpression="display_date">
-								    <ItemTemplate><%# ((DateTime)Eval("DisplayDate")).ToShortDateString()%></ItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$RegularsList">
-								    <ItemTemplate><%# Eval("RegularsList")%></ItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$LastChanged">
-								    <ItemTemplate><%# Eval("LastChanged")%><br /><%# Eval("LastChangedBy")%></ItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField>
+                                <asp:TemplateField>
                                     <HeaderTemplate>
                                         <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
                                     </HeaderTemplate>								    
@@ -47,68 +29,68 @@
 							            <asp:CheckBox ID="chkForPublish" runat="server" Text="" />
 							        </ItemTemplate>
 							    </asp:TemplateField>
-						    </Columns>
-						    <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-							    PageButtonCount="7" />
-					    </asp:GridView>
-				       <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-						    EnablePaging="True" ID="ObjectDataSourceArticleList" runat="server" SelectMethod="SelectArticles"
-						    TypeName="OneMainWeb.UnpublishedArticleDataSource" OnSelecting="ObjectDataSourceArticleList_Selecting" SelectCountMethod="SelectArticleCount" SortParameterName="sortBy">
-				       </asp:ObjectDataSource>
-			    </div>
-    		    <asp:Button CssClass="right" ID="PublishArticlesButton" OnClick="PublishArticlesButton_Click" runat="server" CausesValidation="false" Text="$publish_selected" />
-		    </div>
-
-        </asp:View>
-        <asp:View ID="View2" runat="server">
-            <div class="centerFull">
-                <div class="biggv">     
-					    <asp:GridView ID="pageGridView" runat="server" PageSize="25" PageIndex="0"
-						    PagerSettings-Mode="NumericFirstLast"
-						    PagerSettings-LastPageText="$last"
-						    PagerSettings-FirstPageText="$first"
-						    PagerSettings-PageButtonCount="7"
-						    AllowSorting="True"
-						    AllowPaging="True"
-						    AutoGenerateColumns="False"
-						    DataSourceID="ObjectDataSourcePageList"
-						    CssClass="gv"
-						    DataKeyNames="Id"
-						    OnRowCommand="pageGridView_RowCommand">
-						    <Columns>
-							    <asp:TemplateField HeaderText="$id">
-								    <ItemTemplate><%# Eval("Id") %></ItemTemplate>
-							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$page">
+							    <asp:TemplateField HeaderText="Title" SortExpression="title">
 								    <ItemTemplate><%# Eval("Title") %></ItemTemplate>
 							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$LastChanged">
-								    <ItemTemplate><%# Eval("LastChanged")%></ItemTemplate>
+							    <asp:TemplateField HeaderText="Display date" SortExpression="display_date">
+								    <ItemTemplate><%# ((DateTime)Eval("DisplayDate")).ToShortDateString()%></ItemTemplate>
 							    </asp:TemplateField>
-							    <asp:TemplateField HeaderText="$LastChangedBy">
-								    <ItemTemplate><%# Eval("LastChangedBy")%></ItemTemplate>
+							    <asp:TemplateField HeaderText="Categories">
+								    <ItemTemplate><%# Eval("RegularsList")%></ItemTemplate>
 							    </asp:TemplateField>
-							    							    
-							    <asp:TemplateField>
-                                    <HeaderTemplate>
-                                        <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
-                                    </HeaderTemplate>							    
-							        <ItemTemplate>
-							            <asp:Literal ID="litPageId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
-							            <asp:CheckBox ID="chkForPublish" runat="server" Text="" />
-							        </ItemTemplate>
-							    </asp:TemplateField>						    
+							    <asp:TemplateField HeaderText="LastChanged">
+								    <ItemTemplate><%# Eval("DisplayLastChanged")%></ItemTemplate>
+							    </asp:TemplateField>
+							    
 						    </Columns>
-						    <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-							    PageButtonCount="7" />						    
-						</asp:GridView>
-				       <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-						    EnablePaging="True" ID="ObjectDataSourcePageList" runat="server" SelectMethod="SelectPages"
-						    TypeName="OneMainWeb.UnpublishedPageDataSource" OnSelecting="ObjectDataSourcePageList_Selecting" SelectCountMethod="SelectPageCount" SortParameterName="sortBy">
-				       </asp:ObjectDataSource>						
-			    </div>
-   		        <asp:Button CssClass="right" ID="PublishPagesButton" OnClick="PublishPagesButton_Click" runat="server" CausesValidation="false" Text="$publish_selected" />
-			 </div>
+					    </asp:GridView>
+			    
+                <div class="text-center">
+                    <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <asp:LinkButton CssClass="btn btn-warning" ID="PublishArticlesButton" OnClick="PublishArticlesButton_Click" runat="server" CausesValidation="false" Text="Publish selected" />
+                    </div>
+                </div>
+        </asp:View>
+        <asp:View ID="View2" runat="server">
+				<asp:GridView ID="pageGridView" runat="server"  CssClass="table table-hover"
+					AllowSorting="True"
+					AutoGenerateColumns="False"
+					DataKeyNames="Id"
+					OnRowCommand="pageGridView_RowCommand">
+					<Columns>
+                        <asp:TemplateField>
+                            <HeaderTemplate>
+                                <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
+                            </HeaderTemplate>							    
+							<ItemTemplate>
+							    <asp:Literal ID="litPageId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
+							    <asp:CheckBox ID="chkForPublish" runat="server" Text="" />
+							</ItemTemplate>
+						</asp:TemplateField>	
+						<asp:TemplateField HeaderText="Id">
+							<ItemTemplate><%# Eval("Id") %></ItemTemplate>
+						</asp:TemplateField>
+						<asp:TemplateField HeaderText="Page title">
+							<ItemTemplate><%# Eval("Title") %></ItemTemplate>
+						</asp:TemplateField>
+						<asp:TemplateField HeaderText="LastChanged">
+							<ItemTemplate><%# Eval("DisplayLastChanged")%></ItemTemplate>
+						</asp:TemplateField>
+							    							    
+											    
+					</Columns>				    
+				</asp:GridView>		
+                <div class="text-center">
+                    <two:PostbackPager id="TwoPostbackPager2" OnCommand="TwoPostbackPager2_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <asp:LinkButton CssClass="btn btn-warning" ID="PublishPagesButton" OnClick="PublishPagesButton_Click" runat="server" CausesValidation="false" Text="Publish selected" />
+                    </div>
+                </div>			
 
         </asp:View>
     </asp:MultiView>

@@ -19,7 +19,7 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-
+                Multiview1.ActiveViewIndex = 0;
             }
         }
 
@@ -27,16 +27,58 @@ namespace OneMainWeb
         {
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
-                articleGridView.DataBind();
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+                GridViewSortExpression = "";
+                Articles_DataBind();
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
-                pageGridView.DataBind();
+                TwoPostbackPager2.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager2.SelectedPage = 1;
+                GridViewSortExpression = "";
+                Pages_DataBind();
             }
-            else if (((MultiView)sender).ActiveViewIndex == 2)
-            {
-                articleGridView.DataBind();
-            }
+        }
+
+        private void Articles_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
+            TwoPostbackPager1.TotalRecords = articles.AllRecords;
+            TwoPostbackPager1.DetermineData();
+            articleGridView.DataSource = articles;
+            articleGridView.DataBind();
+        }
+
+        private void Pages_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager2.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            PagedList<BOPage> pages = webSiteB.ListUnpublishedPages(SelectedWebSiteId, state);
+            TwoPostbackPager2.TotalRecords = pages.AllRecords;
+            TwoPostbackPager2.DetermineData();
+            pageGridView.DataSource = pages;
+            pageGridView.DataBind();
+        }
+
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Articles_DataBind();
+        }
+
+        public void TwoPostbackPager2_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager2.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Pages_DataBind();
         }
 
         protected void articleGridView_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -56,12 +98,6 @@ namespace OneMainWeb
             }
         }
 
-
-
-
-
-
-
         protected void pageGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             string command = e.CommandName;
@@ -76,48 +112,6 @@ namespace OneMainWeb
                 case "Cancel":
                     pageGridView.EditIndex = -1;
                     break;
-            }
-        }
-
-        protected void ObjectDataSourceArticleList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void ObjectDataSourceCommentList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void ObjectDataSourceFaqList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void ObjectDataSourceEventList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void ObjectDataSourcePageList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["webSiteId"] = SelectedWebSiteId;
-
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
             }
         }
 
@@ -147,19 +141,19 @@ namespace OneMainWeb
             if (publishCount > 0)
             {
                 // note, resource file has to contain "Uspjesno objavio {0} clanaka"
-                Notifier1.Message = string.Format(ResourceManager.GetString("$successfully_published_n_articles"), publishCount);
+                Notifier1.Message = string.Format("$successfully_published_n_articles", publishCount);
                 articleGridView.DataBind();
             }
 
             if (failedCount > 0)
             {
                 // note, resource file has to contain "Nije objavio {0} clanaka"
-                Notifier1.Warning = string.Format(ResourceManager.GetString("$failed_to_publish_n_articles"), failedCount);
+                Notifier1.Warning = string.Format("$failed_to_publish_n_articles", failedCount);
             }           
 
             if ( publishCount == 0 && failedCount == 0)
             {
-                Notifier1.Warning = ResourceManager.GetString("$nothing_to_publish");
+                Notifier1.Warning = "$nothing_to_publish";
             }
         }
 
@@ -189,19 +183,19 @@ namespace OneMainWeb
             if (publishedCount > 0)
             {
                 // note, resource file has to contain "Uspjesno objavio {0} stranica"
-                Notifier1.Message = string.Format(ResourceManager.GetString("$successfully_published_n_pages"), publishedCount);
+                Notifier1.Message = string.Format("$successfully_published_n_pages", publishedCount);
                 pageGridView.DataBind();
             }
             
             if ( failedCount > 0 )
             {
                 // note, resource file has to contain "Nije objavio {0} stranice"
-                Notifier1.Warning = string.Format(ResourceManager.GetString("$failed_to_publish_n_pages"), failedCount);
+                Notifier1.Warning = string.Format("$failed_to_publish_n_pages", failedCount);
             }
 
             if (failedCount == 0 && publishedCount == 0)
             {
-                Notifier1.Warning = ResourceManager.GetString("$nothing_to_publish");
+                Notifier1.Warning = "$nothing_to_publish";
             }
         }
 
@@ -213,45 +207,6 @@ namespace OneMainWeb
         protected void LinkButtonPages_Click(object sender, EventArgs e)
         {
             Multiview1.ActiveViewIndex = 1;
-        }
-    }
-
-    
-
-
-    [Serializable]
-    public class UnpublishedArticleDataSource
-    {
-        private static readonly BArticle articleB = new BArticle();
-
-        public int SelectArticleCount()
-        {
-            return (int)HttpContext.Current.Items["articleRowCount"];
-        }
-
-        public PagedList<BOArticle> SelectArticles(int recordsPerPage, int firstRecordIndex, string sortBy)
-        {
-            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(new ListingState(recordsPerPage, firstRecordIndex, (sortBy.Contains("ASC") || !sortBy.Contains("DESC") ? SortDir.Ascending : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", "")));
-            HttpContext.Current.Items["articleRowCount"] = articles.AllRecords;
-            return articles;
-        }
-    }
-
-    [Serializable]
-    public class UnpublishedPageDataSource
-    {
-        private static readonly BWebsite webSiteB = new BWebsite();
-
-        public int SelectPageCount()
-        {
-            return (int)HttpContext.Current.Items["pageRowCount"];
-        }
-
-        public PagedList<BOPage> SelectPages(int webSiteId, int recordsPerPage, int firstRecordIndex, string sortBy)
-        {
-            PagedList<BOPage> pages = webSiteB.ListUnpublishedPages(webSiteId, new ListingState(recordsPerPage, firstRecordIndex, (sortBy.Contains("ASC") || !sortBy.Contains("DESC") ? SortDir.Ascending : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", "")));
-            HttpContext.Current.Items["pageRowCount"] = pages.AllRecords;
-            return pages;
         }
     }
 }
