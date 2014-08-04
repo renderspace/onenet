@@ -82,7 +82,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputFromLink;
+        protected global::System.Web.UI.WebControls.TextBox InputFromLink;
         
         /// <summary>
         /// InputToLink control.
@@ -91,7 +91,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputToLink;
+        protected global::System.Web.UI.WebControls.TextBox InputToLink;
         
         /// <summary>
         /// button3 control.

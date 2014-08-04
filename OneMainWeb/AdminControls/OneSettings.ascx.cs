@@ -140,7 +140,7 @@ namespace OneMainWeb.AdminControls
 
                 foreach (RepeaterItem item in RepeaterSettings.Items)
                 {
-                    ValidInput ValidInput1 = item.FindControl("ValidInput1") as ValidInput;
+                    TextBox ValidInput1 = item.FindControl("ValidInput1") as TextBox;
                     Label KeyLabel1 = item.FindControl("KeyLabel1") as Label;
                     LabeledCheckBox CheckBox1 = item.FindControl("CheckBox1") as LabeledCheckBox;
                     DropDownList DropDownList1 = item.FindControl("DropDownList1") as DropDownList;
@@ -159,7 +159,7 @@ namespace OneMainWeb.AdminControls
                                             setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
                                     }
                                     else
-                                        setting.Value = FormatTool.GetInteger(ValidInput1.Value).ToString();
+                                        setting.Value = FormatTool.GetInteger(ValidInput1.Text).ToString();
                                     break;
                                 }
                             case "Bool":
@@ -169,7 +169,7 @@ namespace OneMainWeb.AdminControls
                                 }
                             case "PageId":
                                 {
-                                    setting.Value = FormatTool.GetInteger(ValidInput1.Value).ToString();
+                                    setting.Value = FormatTool.GetInteger(ValidInput1.Text).ToString();
                                     break;
                                 }
                             default:
@@ -177,7 +177,7 @@ namespace OneMainWeb.AdminControls
                                     if (setting.HasOptions)
                                         setting.Value = DropDownList1.SelectedValue;
                                     else
-                                        setting.Value = ValidInput1.Value;
+                                        setting.Value = ValidInput1.Text;
                                     break;
                                 }
                         }
@@ -188,7 +188,7 @@ namespace OneMainWeb.AdminControls
                         switch (setting.Type)
                         {
                             case "String":
-                                setting.Value = ValidInput1.Value;
+                                setting.Value = ValidInput1.Text;
                                 break;
                             default: break;
                         }
@@ -251,7 +251,7 @@ namespace OneMainWeb.AdminControls
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 LabeledCheckBox CheckBox1 = e.Item.FindControl("CheckBox1") as LabeledCheckBox;
-                ValidInput ValidInput1 = e.Item.FindControl("ValidInput1") as ValidInput;
+                TextBox ValidInput1 = e.Item.FindControl("ValidInput1") as TextBox;
                 Label KeyLabel1 = e.Item.FindControl("KeyLabel1") as Label;
 
                 var PanelInfo = e.Item.FindControl("PanelInfo") as Panel;
@@ -294,9 +294,7 @@ namespace OneMainWeb.AdminControls
                                     {
                                         if (setting.UserVisibility == BOSetting.USER_VISIBILITY_COMMON)
                                         {
-                                            ValidInput1.ContainerCssClass = "input input_common";
                                         }
-                                        ValidInput1.ValidationType = "integer";
                                         ValidInput1.Visible = true;
                                         break;
                                     }
@@ -304,9 +302,7 @@ namespace OneMainWeb.AdminControls
                                     {
                                         if (setting.UserVisibility == BOSetting.USER_VISIBILITY_COMMON)
                                         {
-                                            ValidInput1.ContainerCssClass = "input input_common";
                                         }
-                                        ValidInput1.ValidationType = "";
                                         ValidInput1.Visible = true;
                                         break;
                                     }
@@ -323,7 +319,6 @@ namespace OneMainWeb.AdminControls
                                 case "PageId":
                                     {
                                         ValidInput1.Visible = true;
-                                        ValidInput1.ValidationType = "integer";
                                         break;
                                     }
                                 default:
@@ -340,8 +335,6 @@ namespace OneMainWeb.AdminControls
                         {
                             case "String":
                                 {
-                                    ValidInput1.ContainerCssClass = "input input_multiline";
-                                    ValidInput1.ValidationType = "";
                                     ValidInput1.Visible = true;
                                     ValidInput1.Rows = 5;
                                     ValidInput1.TextMode = TextBoxMode.MultiLine;

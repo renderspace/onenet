@@ -100,7 +100,7 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdRevertToPublished;
+        protected global::System.Web.UI.WebControls.LinkButton cmdRevertToPublished;
         
         /// <summary>
         /// ButtonSave control.
@@ -109,6 +109,6 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonSave;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonSave;
     }
 }

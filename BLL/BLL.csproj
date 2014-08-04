@@ -185,12 +185,10 @@
     <Compile Include="WebConfig\RssConfiguration.cs" />
     <Compile Include="WebConfig\RssConfigProvider.cs" />
     <Compile Include="WebConfig\RssConfigProviderCollection.cs" />
-    <Compile Include="WebControls\Input.cs" />
     <Compile Include="WebControls\InputWithButton.cs" />
     <Compile Include="WebControls\LabeledCheckBox.cs" />
     <Compile Include="WebControls\Pager.cs" />
     <Compile Include="WebControls\PostbackPager.cs" />
-    <Compile Include="WebControls\ValidInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Scaffold\DAL\Scaffold.sql" />

@@ -154,7 +154,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtCSV;
+        protected global::System.Web.UI.WebControls.TextBox txtCSV;
         
         /// <summary>
         /// plhSubscriptions control.
@@ -217,7 +217,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput txtBackFromDays;
+        protected global::System.Web.UI.WebControls.TextBox txtBackFromDays;
         
         /// <summary>
         /// cmdDeleteUnconfirmedSubscriptions control.
@@ -280,7 +280,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputEmails;
+        protected global::System.Web.UI.WebControls.TextBox InputEmails;
         
         /// <summary>
         /// CmdImport control.

@@ -109,7 +109,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputTitle;
+        protected global::System.Web.UI.WebControls.TextBox InputTitle;
         
         /// <summary>
         /// InputDescription control.
@@ -118,7 +118,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputDescription;
+        protected global::System.Web.UI.WebControls.TextBox InputDescription;
         
         /// <summary>
         /// InputLinkToList control.
@@ -127,7 +127,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputLinkToList;
+        protected global::System.Web.UI.WebControls.TextBox InputLinkToList;
         
         /// <summary>
         /// InputLinkToSingle control.
@@ -136,7 +136,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputLinkToSingle;
+        protected global::System.Web.UI.WebControls.TextBox InputLinkToSingle;
         
         /// <summary>
         /// lblProviders control.

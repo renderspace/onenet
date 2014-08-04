@@ -184,10 +184,10 @@ namespace OneMainWeb
                             }
                         }
 
-                        InputTitle.Value = SelectedRssFeed.Title;
-                        InputLinkToSingle.Value = SelectedRssFeed.LinkToSingle;
-                        InputLinkToList.Value = SelectedRssFeed.LinkToList;
-                        InputDescription.Value = SelectedRssFeed.Description;
+                        InputTitle.Text = SelectedRssFeed.Title;
+                        InputLinkToSingle.Text = SelectedRssFeed.LinkToSingle;
+                        InputLinkToList.Text = SelectedRssFeed.LinkToList;
+                        InputDescription.Text = SelectedRssFeed.Description;
                     }
 
                     if (SelectedRssFeed != null && SelectedRssFeed.Id.HasValue)
@@ -263,11 +263,11 @@ namespace OneMainWeb
 
         private void SaveRssFeed()
         {
-            SelectedRssFeed.Title = InputTitle.Value;
-            SelectedRssFeed.Description = InputDescription.Value;
+            SelectedRssFeed.Title = InputTitle.Text;
+            SelectedRssFeed.Description = InputDescription.Text;
             SelectedRssFeed.Type = ddlProviders.SelectedValue;
-            SelectedRssFeed.LinkToList = InputLinkToList.Value;
-            SelectedRssFeed.LinkToSingle = InputLinkToSingle.Value;
+            SelectedRssFeed.LinkToList = InputLinkToList.Text;
+            SelectedRssFeed.LinkToSingle = InputLinkToSingle.Text;
             string categories = "";
             foreach (ListItem item in chlCategories.Items)
             {

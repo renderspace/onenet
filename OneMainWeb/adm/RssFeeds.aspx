@@ -72,10 +72,10 @@
             <asp:View ID="View2" runat="server">
                 <div class="centerFull">
 			        <div class="contentEntry">
-			            <two:Input ID="InputTitle" runat="server" Text="$title" />
-			            <two:Input ID="InputDescription" Rows="4" TextMode="MultiLine" runat="server" Text="$description" />
-			            <two:Input ID="InputLinkToList" runat="server" Text="$link_to_list" />
-			            <two:Input ID="InputLinkToSingle" runat="server" Text="$link_to_single" />
+			            <asp:TextBox ID="InputTitle" runat="server" Text="$title" />
+			            <asp:TextBox ID="InputDescription" Rows="4" TextMode="MultiLine" runat="server" Text="$description" />
+			            <asp:TextBox ID="InputLinkToList" runat="server" Text="$link_to_list" />
+			            <asp:TextBox ID="InputLinkToSingle" runat="server" Text="$link_to_single" />
 			            <div class="select">
 			                <asp:Label ID="lblProviders" runat="server" Text="$providers" AssociatedControlID="ddlProviders" />
 			                <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlProviders_SelectedIndexChanged" ID="ddlProviders" runat="server" />

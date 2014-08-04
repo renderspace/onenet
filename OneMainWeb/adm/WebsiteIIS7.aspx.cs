@@ -177,7 +177,7 @@ namespace OneMainWeb.adm
             }
 
             DropDownListExistingDatabaseName.Items.Clear();
-            var names = DataBaseConnectionHelper.ListDatabases(InputDbServer.Value, MasterDbUserName, MasterDbPassword);
+            var names = DataBaseConnectionHelper.ListDatabases(InputDbServer.Text, MasterDbUserName, MasterDbPassword);
             foreach (var name in names)
                 DropDownListExistingDatabaseName.Items.Add(new ListItem(name, name));
 
@@ -199,12 +199,12 @@ namespace OneMainWeb.adm
             {
                 // using an existing db
                 if (Websites != null && Websites.Count > 0)
-                    InputAppPoolName.Value = Websites[0].AppPoolName;
+                    InputAppPoolName.Text = Websites[0].AppPoolName;
             }
             else
             {
                 // new db has been created
-                InputAppPoolName.Value = "";
+                InputAppPoolName.Text = "";
             }
 
             // next button not needed any more
@@ -285,11 +285,11 @@ namespace OneMainWeb.adm
 
         protected void ButtonAddWebsite_Click(object sender, EventArgs e)
         {
-            var siteSpecificName = InputSiteSpecificName.Value;
-            var siteName = InputWebSiteName.Value + ".w.renderspace.net";
+            var siteSpecificName = InputSiteSpecificName.Text;
+            var siteName = InputWebSiteName.Text + ".w.renderspace.net";
             var lcid = Int32.Parse(DropDownListLcid.SelectedValue);
-            var hostHeaders = InputHostHeader.Value;
-            var appPoolName = InputAppPoolName.Value;
+            var hostHeaders = InputHostHeader.Text;
+            var appPoolName = InputAppPoolName.Text;
 
             using (var sm = new Microsoft.Web.Administration.ServerManager())
             {

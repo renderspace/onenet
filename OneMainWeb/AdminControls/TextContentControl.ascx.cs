@@ -24,39 +24,33 @@ namespace OneMainWeb.AdminControls
 
         public string TitleLabel { get { return TextBoxTitle.Text; } set { TextBoxTitle.Text = value; } }
         public string SubTitleLabel { get { return TextBoxSubTitle.Text; } set { TextBoxSubTitle.Text = value; } }
-        public string TeaserLabel { get { return txtTeaser.Text; } set { txtTeaser.Text = value; } }
-        public string HtmlLabel { get { return txtHtml.Text; } set { txtHtml.Text = value; } }
+        public string TeaserLabel { get { return TextBoxTeaser.Text; } set { TextBoxTeaser.Text = value; } }
+        public string HtmlLabel { get { return TextBoxHtml.Text; } set { TextBoxHtml.Text = value; } }
 
         public TextBoxMode TitleTextMode { get { return TextBoxTitle.TextMode; } set { TextBoxTitle.TextMode = value; } }
         public int TitleTextRows { get { return TextBoxTitle.Rows; } set { TextBoxTitle.Rows = value; } }
 
-        public Unit HtmlHeight { get { return txtHtml.Height; } set { txtHtml.Height = value; } }
-        public int HtmlRows { get { return txtHtml.Rows; } set { txtHtml.Rows = value; } }
-
-        public string TextBoxCssClass
-        {
-            get { return txtHtml.TextBoxCssClass; }
-            set { txtHtml.TextBoxCssClass = value; }
-        }
+        public Unit HtmlHeight { get { return TextBoxHtml.Height; } set { TextBoxHtml.Height = value; } }
+        public int HtmlRows { get { return TextBoxHtml.Rows; } set { TextBoxHtml.Rows = value; } }
 
         public bool UseCkEditor
         {
             get { return useCkEditor; }
             set {
                 useCkEditor = value;
-                txtHtml.TextBoxCssClass = useCkEditor ? "ckeditor" : "" ;
+                TextBoxHtml.CssClass = useCkEditor ? "ckeditor" : "" ;
             }
         }
 
         public bool SubTitleVisible { get { return TextBoxSubTitle.Visible; } set { TextBoxSubTitle.Visible = value; } }
         public bool TitleVisible { get { return TextBoxTitle.Visible; } set { TextBoxTitle.Visible = value; } }
-        public bool TeaserVisible { get { return txtTeaser.Visible; } set { txtTeaser.Visible = value; } }
+        public bool TeaserVisible { get { return TextBoxTeaser.Visible; } set { TextBoxTeaser.Visible = value; } }
         public bool HtmlVisible
         {
-            get { return txtHtml.Visible; }
+            get { return TextBoxHtml.Visible; }
             set
             {
-                txtHtml.Visible = value;
+                TextBoxHtml.Visible = value;
             }
         }
         [Bindable(true), Category("Data"), DefaultValue("")]
@@ -66,16 +60,16 @@ namespace OneMainWeb.AdminControls
         public string SubTitle { get { return TextBoxSubTitle.Text; } set { TextBoxSubTitle.Text = value; } }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
-        public string Teaser { get { return txtTeaser.Value; } set { txtTeaser.Value = value; } }
+        public string Teaser { get { return TextBoxTeaser.Text; } set { TextBoxTeaser.Text = value; } }
 
         [Bindable(true), Category("Data"), DefaultValue("")]
         public string Html
         {
-            get { return txtHtml.Value; }
-            set { txtHtml.Value = value; }
+            get { return TextBoxHtml.Text; }
+            set { TextBoxHtml.Text = value; }
             /*
-            get { return (useFckEditor ? fckHtml.Value : txtHtml.Value); } 
-            set { fckHtml.Value = txtHtml.Value = value; }*/
+            get { return (useFckEditor ? fckHtml.Value : TextBoxHtml.Value); } 
+            set { fckHtml.Value = TextBoxHtml.Value = value; }*/
         }
 
         protected void Page_Load(object sender, EventArgs e)

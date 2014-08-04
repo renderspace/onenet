@@ -32,7 +32,7 @@
                     </div>        
                 </asp:PlaceHolder>
                 <asp:PlaceHolder runat="server" ID="plhCSLSubs">
-                    <two:Input Required="false" Rows="15" Text="$csv" TextMode="multiLine" ID="txtCSV" ValidationGroup="MG" runat="server" />
+                    <asp:TextBox Required="false" Rows="15" Text="$csv" TextMode="multiLine" ID="txtCSV" ValidationGroup="MG" runat="server" />
                 </asp:PlaceHolder>
                 <asp:PlaceHolder ID="plhSubscriptions" runat="server">
                       <div class="centerFull">
@@ -111,7 +111,7 @@
                             <asp:Label AssociatedControlID="DropDownListNewsletters" runat="server" ID="LabelNewsletters" Text="$newsletters"></asp:Label>
                             <asp:DropDownList ID="DropDownListNewsletters" runat="server" />
                         </div>
-                        <two:Input ValidationGroup="EI" runat="server" ID="InputEmails" TextMode="multiLine" Rows="20" Text="$emails" />
+                        <asp:TextBox ValidationGroup="EI" runat="server" ID="InputEmails" TextMode="multiLine" Rows="20" Text="$emails" />
                         <asp:Button OnClick="CmdImport_Click" ValidationGroup="EI" runat="server" ID="CmdImport" Text="$import" />
 	                </div>
             </asp:View>

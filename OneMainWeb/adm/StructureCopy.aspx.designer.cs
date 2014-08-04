@@ -7,63 +7,63 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OneMainWeb.AdminControls {
+namespace OneMainWeb.adm {
     
     
-    public partial class ScaffoldDynamicEditor {
+    public partial class StructureCopy {
         
         /// <summary>
-        /// LiteralJQuery control.
+        /// notifier control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralJQuery;
+        protected global::OneMainWeb.AdminControls.Notifier notifier;
         
         /// <summary>
-        /// LiteralResultsDebug control.
+        /// treeHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralResultsDebug;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl treeHolder;
         
         /// <summary>
-        /// PanelFieldsHolder control.
+        /// TreeView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder PanelFieldsHolder;
+        protected global::System.Web.UI.WebControls.TreeView TreeView1;
         
         /// <summary>
-        /// ButtonCancel control.
+        /// LabelEmptyWebSites control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonCancel;
+        protected global::System.Web.UI.WebControls.Label LabelEmptyWebSites;
         
         /// <summary>
-        /// ButtonSave control.
+        /// CheckBoxListEmptyWebSites control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonSave;
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxListEmptyWebSites;
         
         /// <summary>
-        /// ButtonSaveAndClose control.
+        /// ButtonCopy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonSaveAndClose;
+        protected global::System.Web.UI.WebControls.Button ButtonCopy;
     }
 }

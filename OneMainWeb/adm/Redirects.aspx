@@ -53,8 +53,8 @@
         <asp:View ID="View2" runat="server">
                 <div class="centerFull">
                 <div class="contentEntry">            
-			        <two:Input id="InputFromLink" runat="server" Text="$from_link" ValidationGroup="REDIRECTS" />
-			        <two:Input id="InputToLink" runat="server" Text="$to_link" ValidationGroup="REDIRECTS" />
+			        <asp:TextBox id="InputFromLink" runat="server" Text="$from_link" ValidationGroup="REDIRECTS" />
+			        <asp:TextBox id="InputToLink" runat="server" Text="$to_link" ValidationGroup="REDIRECTS" />
 			        <div class="save">
 				        <asp:button ID="button3" runat="server" Text="$cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
 				        <asp:button ID="button4" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />

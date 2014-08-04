@@ -54,15 +54,15 @@
                         </asp:DropDownList>
                         <asp:CustomValidator ValidateEmptyText="true" runat="server" ClientValidationFunction="ValidateDatabaseMode" ControlToValidate="DropDownListDatabaseMode" ErrorMessage="*" ValidationGroup="database_mode" />
                     </div>
-                    <two:Input Required="true" ID="InputDbServer" runat="server" Text="$db_server" ValidationGroup="database_mode" />
-                    <two:Input Required="true" ID="InputMasterDbUsername" runat="server" Text="$master_db_username" ValidationGroup="database_mode" />
-                    <two:Input TextMode="Password" Required="true" ID="InputMasterDbPassword" runat="server" Text="$master_db_password" ValidationGroup="database_mode" />
+                    <asp:TextBox Required="true" ID="InputDbServer" runat="server" Text="$db_server" ValidationGroup="database_mode" />
+                    <asp:TextBox Required="true" ID="InputMasterDbUsername" runat="server" Text="$master_db_username" ValidationGroup="database_mode" />
+                    <asp:TextBox TextMode="Password" Required="true" ID="InputMasterDbPassword" runat="server" Text="$master_db_password" ValidationGroup="database_mode" />
                 </div>
             </asp:WizardStep>
             <asp:WizardStep StepType="Step" runat="server" Title="$database_new">
                 <div class="searchFull">
-                    <two:Input Required="true" ID="InputSqlPhysicalPath" runat="server" Text="$db_sql_physical_path" ValidationGroup="database_new" Value="c:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\" />
-                    <two:Input Required="true" ID="InputNewDbName" runat="server" Text="$new_db_name" ValidationGroup="database_new" />
+                    <asp:TextBox Required="true" ID="InputSqlPhysicalPath" runat="server" Text="$db_sql_physical_path" ValidationGroup="database_new" Value="c:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\" />
+                    <asp:TextBox Required="true" ID="InputNewDbName" runat="server" Text="$new_db_name" ValidationGroup="database_new" />
                 </div>
             </asp:WizardStep>
             <asp:WizardStep StepType="Step" runat="server" Title="$database_existing">
@@ -72,8 +72,8 @@
                         <asp:DropDownList ValidationGroup="database_existing" ID="DropDownListExistingDatabaseName" runat="server" />
                         <asp:CustomValidator runat="server" ValidationGroup="database_existing" ClientValidationFunction="ValidateDatabaseName" ControlToValidate="DropDownListExistingDatabaseName" ErrorMessage="*" />
                     </div>
-                    <two:Input Required="true" ID="InputExistingDbUsername" runat="server" Text="$existing_db_username" ValidationGroup="database_existing" />
-                    <two:Input TextMode="Password" Required="true" ID="InputExistingDbPassword" runat="server" Text="$existing_db_password" ValidationGroup="database_existing" />
+                    <asp:TextBox Required="true" ID="InputExistingDbUsername" runat="server" Text="$existing_db_username" ValidationGroup="database_existing" />
+                    <asp:TextBox TextMode="Password" Required="true" ID="InputExistingDbPassword" runat="server" Text="$existing_db_password" ValidationGroup="database_existing" />
                 </div>
             </asp:WizardStep>
             <asp:WizardStep Title="$website_step" runat="server" StepType="Step">
@@ -108,10 +108,10 @@
                     </div>
                 </div>
                 <div class="searchFull">
-                    <two:Input ValidationGroup="website" ID="InputAppPoolName" runat="server" Text="$app_pool_name" />
-                    <two:Input ValidationGroup="website" ID="InputSiteSpecificName" runat="server" Text="$site_specific_name" />
-                    <span><two:Input ValidationGroup="website" ID="InputWebSiteName" runat="server" Text="$web_site_name" />.w.renderspace.net</span>
-                    <two:Input ValidationGroup="website" ID="InputHostHeader" runat="server" Text="$web_site_host_headers" />
+                    <asp:TextBox ValidationGroup="website" ID="InputAppPoolName" runat="server" Text="$app_pool_name" />
+                    <asp:TextBox ValidationGroup="website" ID="InputSiteSpecificName" runat="server" Text="$site_specific_name" />
+                    <span><asp:TextBox ValidationGroup="website" ID="InputWebSiteName" runat="server" Text="$web_site_name" />.w.renderspace.net</span>
+                    <asp:TextBox ValidationGroup="website" ID="InputHostHeader" runat="server" Text="$web_site_host_headers" />
                     <div class="select">
                         <asp:Label ID="LabelLanguage" runat="server" AssociatedControlID="DropDownListLcid" Text="$language" />
                         <asp:DropDownList ValidationGroup="website" ID="DropDownListLcid" runat="server" />

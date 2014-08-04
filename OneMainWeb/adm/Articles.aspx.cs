@@ -329,7 +329,6 @@ namespace OneMainWeb
 
         protected override void OnPreRender(EventArgs e)
         {
-            TextContentEditor.TextBoxCssClass = "ckeditor";
             if (AutoPublishWarning != null)
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
             base.OnPreRender(e);

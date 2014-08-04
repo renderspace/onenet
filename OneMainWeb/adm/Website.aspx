@@ -4,86 +4,76 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <one:Notifier runat="server" ID="notifier" />
-    <div class="topCommands">
-        <asp:LinkButton ID="LinkButtonWebsites" runat="server" OnClick="LinkButtonWebsites_Click">Websites</asp:LinkButton>
-        <asp:LinkButton ID="LinkButtonCopy" runat="server" OnClick="LinkButtonCopy_Click">Copy website structure</asp:LinkButton>
-        <asp:LinkButton ID="LinkButtonRecursive" runat="server" OnClick="LinkButtonRecursive_Click">Recursive delete</asp:LinkButton>
-    </div>
 
-        <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="TabMultiview_OnViewIndexChanged">
-            <asp:View ID="View1" runat="server">
-                <div class="centerFull">
-			        <div class="biggv">  
-				        <asp:GridView	ID="GridViewWebsites"
-								        runat="server"
-								        CssClass="gv"
-								        AutoGenerateColumns="false"
-								        AllowPaging="false"
-								        AllowSorting="false"
-								        DataKeyNames="Id"
-                                        OnRowEditing="GridViewWebsites_RowEditing"
-                                        OnRowUpdating="GridViewWebsites_RowUpdating"
-                                        OnRowCancelingEdit="GridViewWebsites_RowCancelingEdit">
-					        <Columns>
-                                <asp:BoundField HeaderText="$id" DataField="Id" ReadOnly="true" />
-                                <asp:BoundField HeaderText="$title" DataField="Title" />
-                                <asp:BoundField HeaderText="$lcid" DataField="LanguageId" ReadOnly="true" />
-						        <asp:TemplateField HeaderText="$last_changed_by">
-							        <ItemTemplate><%# Eval("PrincipalModified") == null || string.IsNullOrEmpty(Eval("PrincipalModified").ToString()) ? Eval("PrincipalCreated") : Eval("PrincipalModified")%></ItemTemplate>
-						        </asp:TemplateField>
-						        <asp:TemplateField HeaderText="$last_change_date">
-							        <ItemTemplate><%# Eval("DateModified") == null || !((DateTime?)Eval("DateModified")).HasValue ? ((DateTime)Eval("DateCreated")).ToShortDateString() : ((DateTime?)Eval("DateModified")).Value.ToShortDateString() %></ItemTemplate>
-						        </asp:TemplateField>
-                                <asp:CommandField HeaderText="$edit" ShowEditButton="true" CancelText="$cancel" EditText="$edit"
-                                    UpdateText="$update" />
-                            </Columns>
-                        </asp:GridView>
+    <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="MultiView1_ActiveViewChanged" ActiveViewIndex="0">
+        <asp:View runat="server">
+            <div class="searchFull">
+			    <div class="col-md-2">
+                    <asp:LinkButton ID="ButtonStartWizard" runat="server" onclick="ButtonStartWizard_Click"  text="<span class='glyphicon glyphicon-plus'></span> New website" CssClass="btn btn-success" />
+			    </div>
+            </div>
+            <asp:GridView	ID="GridViewWebsites"
+					runat="server"
+					CssClass="gv"
+					AutoGenerateColumns="false"
+					AllowPaging="false"
+					AllowSorting="false"
+					DataKeyNames="Id">
+		        <Columns>
+                    <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
+                    <asp:BoundField HeaderText="Title" DataField="DisplayName" />
+                    <asp:BoundField HeaderText="Last Changed" DataField="DisplayLastChanged" />
+                </Columns>
+            </asp:GridView>
+
+        </asp:View>
+        <asp:View runat="server">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Website title</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ValidationGroup="website" Text="" ID="InputTitle" runat="server" CssClass="form-control" MaxLength="255" placeholder="website title is important for SEO" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Language</label>
+                <div class="col-sm-9">
+                    <asp:DropDownList ID="DropDownList1" ValidationGroup="website" runat="server" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Preview website address</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPreviewUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="typically http://sitename.w.renderspace.net (in general: http://preview.example.com)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Production website address</label>
+                <div class="col-sm-9">
+                    <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="http://www.example.com" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="checkbox">
+                        <label>
+                            <asp:CheckBox runat="server" ID="CheckboxNewDatabase" CssClass="j_control_new_database" /> Create new database (you'll need admin password for database).
+                        </label>
                     </div>
                 </div>
-                <div class="searchFull">
-                    <two:Input Required="true" ValidationGroup="website" Text="$title" ID="InputTitle" runat="server" />
-                    <div class="select">
-                        <asp:Label ID="LabelLanguage" runat="server" AssociatedControlID="DropDownList1" Text="$language" />
-                        <asp:DropDownList ID="DropDownList1" ValidationGroup="website" runat="server" />
-                    </div>
-                    <div class="save">
-                        <asp:Button Text="$add" ValidationGroup="website" id="ButtonAdd" runat="server" OnClick="ButtonAdd_Click" />
-                    </div>
-                </div>
-            </asp:View>
-            <asp:View ID="View2" runat="server">
-                <div class="centerFull">
-                    <div class="centerStructure">
-                        <div id="treeHolder" runat="server" class="treeHolder">
-                            <asp:TreeView OnUnload="TreeView1_Unload" ID="TreeView1" runat="server" BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" OnAdaptedSelectedNodeChanged="TreeView1_SelectedNodeChanged" Width="270" ExpandDepth="3">
-                            </asp:TreeView>
-                        </div>
-                    </div>            
-                    <div class="mainEditor">
-                        <asp:Label ID="LabelEmptyWebSites" runat="server" AssociatedControlID="CheckBoxListEmptyWebSites" Text="$empty_websites" />
-                        <asp:CheckBoxList ID="CheckBoxListEmptyWebSites" runat="server"></asp:CheckBoxList>
-                    </div>
-                    <div class="save">
-                        <asp:Button ID="ButtonCopy" runat="server" text="$copy_pages_to_site" OnClick="ButtonCopy_Click" />
-                    </div>
-                </div>
-            </asp:View>
-            <asp:View ID="View3" runat="server">
-                <div class="centerFull">
-                    <div class="centerStructure">
-                        <div id="treeHolder2" runat="server" class="treeHolder">
-                            <asp:TreeView OnUnload="TreeView2_Unload" ID="TreeView2" runat="server" BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" OnSelectedNodeChanged="TreeView2_SelectedNodeChanged" OnAdaptedSelectedNodeChanged="TreeView2_SelectedNodeChanged" Width="270" ExpandDepth="3">
-                            </asp:TreeView>
-                        </div>
-                    </div>   
-                    <div class="mainEditor">
-                        Selected page: <asp:Label runat="server" ID="LabelSelectedPageName"></asp:Label><br />
-                        Selected page ID: <asp:Label runat="server" ID="LabelSelectedPageId"></asp:Label>                                
-                    </div>                         
-                    <div class="save">
-                        <asp:Button OnPreRender="ButtonDelete_PreRender" ID="ButtonDelete" runat="server" text="Delete node and everything below" OnClick="ButtonDelete_Click" CssClass="delete-btn" />
-                    </div>
-                </div>
-            </asp:View>
-        </asp:MultiView>
+            </div>
+
+            
+
+            <div class="form-group">
+
+                <asp:LinkButton  ValidationGroup="website" id="ButtonAdd" runat="server" OnClick="ButtonAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Create website" CssClass="btn btn-success" />
+           </div>
+
+        </asp:View>
+    </asp:MultiView>
+
+	
 </asp:Content>

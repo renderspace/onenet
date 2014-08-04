@@ -90,17 +90,17 @@
                  </div>
                     <div class="centerStructure formStructure">     
                         <asp:PlaceHolder ID="plhAddForm" runat="server">
-		                    <two:Input ID="txtAddForm" runat="server" Text="$add_new_form" />
+		                    <asp:TextBox ID="txtAddForm" runat="server" Text="$add_new_form" />
 		                    <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
 		                </asp:PlaceHolder>
 		        
 		                <asp:PlaceHolder id="plhAddSection" runat="server">
-		                    <two:Input Required="false" ID="txtAddSection" runat="server" text="$add_section" />
+		                    <asp:TextBox Required="false" ID="txtAddSection" runat="server" text="$add_section" />
 		                    <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
 		                </asp:PlaceHolder>
 		        
 		                <asp:PlaceHolder ID="plhAddQuestion" runat="server">
-		                    <two:Input ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
+		                    <asp:TextBox ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
 		                    <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
 		                </asp:PlaceHolder>
 		                <div style="width: 100%;">&nbsp;</div>
@@ -113,10 +113,10 @@
 		            <div class="mainEditor formEditor">
 		                <div class="contentEntry">
 		                    <asp:PlaceHolder ID="plhUpdateForm" runat="server">
-		                        <two:Input Required="false" ID="txtFormName" runat="server" Text="$form_name" />
-		                        <two:Input Required="false" ID="InputFormPrivateName" runat="server" Text="$form_private_name" />
-		                        <two:Input Required="false" ID="txtFormThankYouNote" runat="server" Text="$form_thank_you_note" Rows="3" TextMode="multiLine" />
-		                        <two:Input Required="false" ID="txtFormDescription" runat="server" Text="$form_desc" Rows="3" TextMode="multiLine" />
+		                        <asp:TextBox Required="false" ID="txtFormName" runat="server" Text="$form_name" />
+		                        <asp:TextBox Required="false" ID="InputFormPrivateName" runat="server" Text="$form_private_name" />
+		                        <asp:TextBox Required="false" ID="txtFormThankYouNote" runat="server" Text="$form_thank_you_note" Rows="3" TextMode="multiLine" />
+		                        <asp:TextBox Required="false" ID="txtFormDescription" runat="server" Text="$form_desc" Rows="3" TextMode="multiLine" />
 		                
                                 <div class="select">
                                     <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes"
@@ -147,15 +147,15 @@
                                 <two:LabeledCheckBox runat="server" Text="$allow_multiple_submissions" ID="chkAllowMultipleSubmissions" />
                                 <two:LabeledCheckBox runat="server" Text="$allow_modify_in_submission" ID="chkAllowModifyInSubmission" />                                                
                                 <two:ValidInput Required="false" ID="txtSendTo" runat="server" Text="$form_send_to" ValidationType="email" />
-                                <two:Input Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
+                                <asp:TextBox Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
                                 <div class="save">
 		                            <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
 		                        </div>
 		                    </asp:PlaceHolder>
 		                    <asp:PlaceHolder ID="plhUpdateSection" runat="server">
-		                        <two:Input Required="false" runat="server" ID="txtSectionName" Text="$section_name" />
-		                        <two:Input Required="false" ID="InputSectionDescription" runat="server" Text="$section_desc" Rows="3" TextMode="multiLine" />
-                                <two:Input Required="false" ID="InputSectionOnClientClick" runat="server" Text="$section_on_client_click" />
+		                        <asp:TextBox Required="false" runat="server" ID="txtSectionName" Text="$section_name" />
+		                        <asp:TextBox Required="false" ID="InputSectionDescription" runat="server" Text="$section_desc" Rows="3" TextMode="multiLine" />
+                                <asp:TextBox Required="false" ID="InputSectionOnClientClick" runat="server" Text="$section_on_client_click" />
                                 <div class="save">
 		                            <asp:button	id="cmdUpdateSection" Runat="server" CssClass="button" Text="$update_section" OnClick="cmdUpdateSection_Click" />			            
 		                            <asp:button	id="cmdDeleteSection" Runat="server" CssClass="button" Text="$mark_section_as_deleted" OnClick="cmdDeleteSection_Click" />			            		                    
@@ -163,8 +163,8 @@
 		                        </div>
 		                    </asp:PlaceHolder>
 		                    <asp:PlaceHolder ID="plhUpdateQuestion" runat="server">
-		                        <two:input id="txtQuestionText" runat="server" Text="$question_text" />
-		                        <two:input Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" Text="$question_description" />
+		                        <asp:TextBox id="txtQuestionText" runat="server" Text="$question_text" />
+		                        <asp:TextBox Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" Text="$question_description" />
                                 <two:LabeledCheckBox runat="server" Text="$question_requires_answer" ID="chkAnswerIsRequired" />
                                 <div class="radiobuttonlist" id="divFrontEndQuestionTypes" runat="server">
                                     <asp:Label CssClass="radiobuttonlistTitle" ID="lblFrontEndQuestionTypes" runat="server" Text="$user_question_types" />
@@ -189,7 +189,7 @@
                                     <two:LabeledCheckBox ID="chkFirstAnswerIsFake" runat="server" Text="$first_answer_in_menu_is_fake" />
                                 </div>
                         
-                                <two:Input ID="txtAnswers" runat="server" Text="$answers_one_per_line" Rows="5" TextMode="MultiLine" />                                                                                                    
+                                <asp:TextBox ID="txtAnswers" runat="server" Text="$answers_one_per_line" Rows="5" TextMode="MultiLine" />                                                                                                    
                                 <div class="save">
 		                    
 		                            <asp:button	id="cmdDeleteQuestion" Runat="server" CssClass="button" Text="$mark_question_as_deleted" OnClick="cmdDeleteQuestion_Click" />			            		                    		                    

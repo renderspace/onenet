@@ -3,65 +3,63 @@
 <%@ Register TagPrefix="bll" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="cc1" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 
-    <div class="top">
-        <cc1:Notifier runat="server" ID="Notifier1" />
-    </div>  
+     <cc1:Notifier runat="server" ID="Notifier1" />
 
     <asp:PlaceHolder runat="server" ID="PlaceHolderList">
-        <div class="physical_ListBox">
-            <asp:ListBox ID="ListBoxPhysical" runat="server" DataTextField="FriendlyName" DataValueField="StartingPhysicalTable" Rows="15">
-            </asp:ListBox>
-            <div class="add">
-                <asp:Button ID="ButtonAdd" runat="server" Text="&gt;" onclick="ButtonAdd_Click" />
+
+
+        <div class="searchFull">
+			<div class="col-md-5" >
+                <asp:DropDownList runat="server" DataTextField="FriendlyName" DataValueField="StartingPhysicalTable" ID="DropDownListPhysical"></asp:DropDownList>
+                <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonAdd_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add table" CssClass="btn btn-success" />
             </div>
         </div>
 
-        <div class="listing">
-            <asp:GridView ID="GridViewVirtualTables" runat="server" AllowSorting="false" AutoGenerateColumns="false" 
-                onselectedindexchanged="GridViewVirtualTables_SelectedIndexChanged" 
-                OnRowDeleted="GridViewVirtualTables_RowDeleted"
-                OnRowCommand="GridViewVirtualTables_RowCommand"
-                OnRowDeleting="GridViewVirtualTables_Deleting"
-                OnRowDataBound="GridViewVirtualTables_RowDataBound">
-                <Columns>
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:Button CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="$delete" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:BoundField DataField="StartingPhysicalTable" HeaderText="$physical_table" />
-                    <asp:TemplateField HeaderText="Show">
-                        <ItemTemplate>
-                            <asp:CheckBox ID="CheckBoxShowOnMenu" runat="server" Checked='<%# Eval("ShowOnMenu") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="$name">
-                        <ItemTemplate>
-                            <asp:TextBox ID="TextBoxFriendlyName" runat="server" Text='<%# Eval("FriendlyName") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="$where_condition" >
-                        <ItemTemplate>
-                            <asp:TextBox ID="TextBoxWhereCondition" runat="server" Text='<%# Eval("Condition") %>' />
-                        </ItemTemplate>
-                    </asp:TemplateField>  
-                    <asp:TemplateField HeaderText="$order_by">
-                        <ItemTemplate>
-                            <asp:DropDownList runat="server" ID="DropDownListOrder" />
-                        </ItemTemplate>
-                    </asp:TemplateField>              
-                    <asp:TemplateField>
-                        <ItemTemplate>
-                            <asp:Button ID="CmdSelect" runat="server" Text="$edit_columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
-            <div class="buttonsMiddle">
-                <asp:Button ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="save-btn" />
-                <asp:Button ID="CmdCancel" runat="server" Text="$cancel" OnClick="CmdCancel_Click" />
-            </div>     
-        </div>   
+        <asp:GridView ID="GridViewVirtualTables" runat="server" AllowSorting="false" AutoGenerateColumns="false"  CssClass="table table-hover"
+            onselectedindexchanged="GridViewVirtualTables_SelectedIndexChanged" 
+            OnRowDeleted="GridViewVirtualTables_RowDeleted"
+            OnRowCommand="GridViewVirtualTables_RowCommand"
+            OnRowDeleting="GridViewVirtualTables_Deleting"
+            OnRowDataBound="GridViewVirtualTables_RowDataBound">
+            <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Button CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="$delete" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="StartingPhysicalTable" HeaderText="$physical_table" />
+                <asp:TemplateField HeaderText="Show">
+                    <ItemTemplate>
+                        <asp:CheckBox ID="CheckBoxShowOnMenu" runat="server" Checked='<%# Eval("ShowOnMenu") %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="$name">
+                    <ItemTemplate>
+                        <asp:TextBox ID="TextBoxFriendlyName" runat="server" Text='<%# Eval("FriendlyName") %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="$where_condition" >
+                    <ItemTemplate>
+                        <asp:TextBox ID="TextBoxWhereCondition" runat="server" Text='<%# Eval("Condition") %>' />
+                    </ItemTemplate>
+                </asp:TemplateField>  
+                <asp:TemplateField HeaderText="$order_by">
+                    <ItemTemplate>
+                        <asp:DropDownList runat="server" ID="DropDownListOrder" />
+                    </ItemTemplate>
+                </asp:TemplateField>              
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:Button ID="CmdSelect" runat="server" Text="$edit_columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" />
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+        <div class="buttonsMiddle">
+            <asp:LinkButton ID="CmdCancel" runat="server" Text="$cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
+
+            <asp:LinkButton ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="btn btn-success" />
+        </div>     
         
     </asp:PlaceHolder>
     <asp:PlaceHolder runat="server" ID="PlaceHolderSingle">
@@ -84,7 +82,7 @@
             </div>
         </div>
 
-        <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True" 
+        <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True"  CssClass="table table-hover"
             AutoGenerateColumns="false" OnRowDeleting="GridViewItems_RowDeleting" OnRowDeleted="GridViewItems_RowDeleted" OnRowCommand="GridViewItems_RowCommand" OnRowDataBound="GridViewItems_RowDataBound">
                 <Columns>
                     <asp:BoundField HeaderText="Description" DataField="Description" />

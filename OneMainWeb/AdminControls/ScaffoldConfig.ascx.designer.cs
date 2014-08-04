@@ -31,22 +31,22 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderList;
         
         /// <summary>
-        /// ListBoxPhysical control.
+        /// DropDownListPhysical control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBoxPhysical;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListPhysical;
         
         /// <summary>
-        /// ButtonAdd control.
+        /// ButtonInsert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonAdd;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonInsert;
         
         /// <summary>
         /// GridViewVirtualTables control.
@@ -58,22 +58,22 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.GridView GridViewVirtualTables;
         
         /// <summary>
-        /// CmdSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdSave;
-        
-        /// <summary>
         /// CmdCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdCancel;
+        protected global::System.Web.UI.WebControls.LinkButton CmdCancel;
+        
+        /// <summary>
+        /// CmdSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton CmdSave;
         
         /// <summary>
         /// PlaceHolderSingle control.

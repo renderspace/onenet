@@ -41,13 +41,13 @@ namespace OneMainWeb
             {
                 if (CurrentItem == null)
                 {
-                    InputFromLink.Value = "";
-                    InputToLink.Value = "";
+                    InputFromLink.Text = "";
+                    InputToLink.Text = "";
                 }
                 else
                 {
-                    InputFromLink.Value = CurrentItem.FromLink;
-                    InputToLink.Value = CurrentItem.ToLink;
+                    InputFromLink.Text = CurrentItem.FromLink;
+                    InputToLink.Text = CurrentItem.ToLink;
                 }
             }
         }
@@ -57,8 +57,8 @@ namespace OneMainWeb
             if (CurrentItem == null)
                 CurrentItem = new BORedirect();
 
-            CurrentItem.FromLink = InputFromLink.Value;
-            CurrentItem.ToLink = InputToLink.Value;
+            CurrentItem.FromLink = InputFromLink.Text;
+            CurrentItem.ToLink = InputToLink.Text;
 
             var redirect = CurrentItem;
             BRedirects.Change(CurrentItem);

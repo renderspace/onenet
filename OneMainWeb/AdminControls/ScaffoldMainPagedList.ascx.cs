@@ -106,7 +106,7 @@ namespace OneMainWeb.AdminControls
 
                     var items = Data.ListItems(VirtualTableId, state);
 
-                  //  GridViewItems.Columns.Clear();
+                    GridViewItems.Columns.Clear();
                     GridViewItems.DataSource = items;
                     GridViewItems.DataKeyNames = (string[])items.ExtendedProperties["DataKeyNames"];
 
