@@ -58,10 +58,10 @@ namespace OneMainWeb.AdminControls
 
             var physicalTableNames = (from t in physicalTables select t.StartingPhysicalTable);
 
-            ListBoxPhysical.DataSource = from t in physicalTables
+            DropDownListPhysical.DataSource = from t in physicalTables
                                          join ptn in physicalTableNames on t.StartingPhysicalTable equals ptn
                                          select t;
-            ListBoxPhysical.DataBind();
+            DropDownListPhysical.DataBind();
 
             GridViewVirtualTablesDataBind();
         }
@@ -167,11 +167,11 @@ namespace OneMainWeb.AdminControls
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
         {
-            if (ListBoxPhysical.SelectedItem != null)
+            if (DropDownListPhysical.SelectedItem != null)
             {
                 var t = new VirtualTable
                 {
-                    StartingPhysicalTable = ListBoxPhysical.SelectedValue,
+                    StartingPhysicalTable = DropDownListPhysical.SelectedValue,
                     OrderColumn = ""
                 };
                 Schema.ChangeVirtualTable(t);

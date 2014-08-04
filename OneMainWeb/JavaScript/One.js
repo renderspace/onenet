@@ -180,15 +180,20 @@ function files_databind(selectedFolderId) {
     });
 };
 
-getTree(function (d1) {
-    var selectedFolderId = $('#HiddenSelectedFolderId').val();
-    $('#tree').treeview({ data: JSON.parse(d1) });
-    if (selectedFolderId > 0) {
-        files_databind(selectedFolderId)
-    }
-});
 
-$('#tree').removeClass("treeview");
+var folderTree = $('#tree');
+
+if (folderTree.is("div")) {
+    getTree(function (d1) {
+        var selectedFolderId = $('#HiddenSelectedFolderId').val();
+        folderTree.treeview({ data: JSON.parse(d1) });
+        if (selectedFolderId > 0) {
+            files_databind(selectedFolderId);
+        }
+    });
+
+    folderTree.removeClass("treeview");
+}
 
 
 

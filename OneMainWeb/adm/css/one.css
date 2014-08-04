@@ -70,7 +70,6 @@ details .select {margin: 10px 0 0 0;}
 
 .input span {display: inline-block; margin-bottom: 5px; font-weight: bold; width: 157px;}
 
-.main textarea {width: 100%;}
 .main table {float: left; width: 100%; margin: 20px 0;}
 .main table tr td, table tr th {padding: 5px;}
 
@@ -468,3 +467,5 @@ div.calendar
     content: "\2122";
     color: transparent !important;
 }
+
+.full {width: 100%;}

@@ -100,22 +100,6 @@ namespace One.Net.BLL.Model.Web
                             it.Text = ResourceManager.GetString(it.Text, localizationFile);
                     }
                 }
-                else if (ctrl is One.Net.BLL.WebControls.Input)
-                {
-                    One.Net.BLL.WebControls.Input c = ctrl as One.Net.BLL.WebControls.Input;
-                    if (c.Text.StartsWith(translationLabel))
-                        c.Text = ResourceManager.GetString(c.Text, localizationFile);
-                    if (c.RequiredMessage.StartsWith(translationLabel))
-                        c.RequiredMessage = ResourceManager.GetString(c.RequiredMessage, localizationFile);
-                }
-                else if (ctrl is ValidInput)
-                {
-                    ValidInput c = ctrl as ValidInput;
-                    if (c.Text.StartsWith(translationLabel))
-                        c.Text = ResourceManager.GetString(c.Text, localizationFile);
-                    if (c.RequiredMessage.StartsWith(translationLabel))
-                        c.RequiredMessage = ResourceManager.GetString(c.RequiredMessage, localizationFile);
-                }
                 else if (ctrl is LabeledCheckBox)
                 {
                     LabeledCheckBox c = ctrl as LabeledCheckBox;

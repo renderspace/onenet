@@ -206,7 +206,7 @@ namespace OneMainWeb
                 if (null == SelectedDictionaryEntry) 
                 {
                     SelectedDictionaryEntry = new BODictionaryEntry();
-                    SelectedDictionaryEntry.KeyWord = txtKeyword.Value;
+                    SelectedDictionaryEntry.KeyWord = txtKeyword.Text;
                 }
 
                 SelectedDictionaryEntry.Title = txtTextContent.Title;
@@ -263,7 +263,7 @@ namespace OneMainWeb
         protected void cmdAddDictionaryEntry_Click(object sender, EventArgs e)
         {
             SelectedDictionaryEntry = null;
-            txtKeyword.Value = SearchTermNoResults;
+            txtKeyword.Text = SearchTermNoResults;
             txtTextContent.Title = "";
             txtTextContent.SubTitle = "";
             txtTextContent.Teaser = "";

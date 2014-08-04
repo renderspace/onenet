@@ -298,19 +298,26 @@
     <Compile Include="adm\ScaffoldConfig.aspx.designer.cs">
       <DependentUpon>ScaffoldConfig.aspx</DependentUpon>
     </Compile>
+    <Compile Include="adm\StructureCopy.aspx.cs">
+      <DependentUpon>StructureCopy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\StructureCopy.aspx.designer.cs">
+      <DependentUpon>StructureCopy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\StructureDelete.aspx.cs">
+      <DependentUpon>StructureDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\StructureDelete.aspx.designer.cs">
+      <DependentUpon>StructureDelete.aspx</DependentUpon>
+    </Compile>
     <Compile Include="adm\Website.aspx.cs">
       <DependentUpon>Website.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="adm\Website.aspx.designer.cs">
       <DependentUpon>Website.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="adm\WebsiteIIS7.aspx.cs">
-      <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\WebsiteIIS7.aspx.designer.cs">
-      <DependentUpon>WebsiteIIS7.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -422,8 +429,9 @@
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
     <Content Include="adm\ScaffoldConfig.aspx" />
+    <Content Include="adm\StructureCopy.aspx" />
+    <Content Include="adm\StructureDelete.aspx" />
     <Content Include="adm\Website.aspx" />
-    <Content Include="adm\WebsiteIIS7.aspx" />
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
@@ -571,13 +579,6 @@
     <Compile Include="adm\FileManager.aspx.designer.cs">
       <DependentUpon>FileManager.aspx</DependentUpon>
     </Compile>
-    <Compile Include="adm\Forms.aspx.cs">
-      <DependentUpon>Forms.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\Forms.aspx.designer.cs">
-      <DependentUpon>Forms.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\Redirects.aspx.cs">
       <DependentUpon>Redirects.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -676,24 +677,10 @@
     <Compile Include="CommonModules\TextContent.ascx.designer.cs">
       <DependentUpon>TextContent.ascx</DependentUpon>
     </Compile>
-    <Compile Include="CommonModules\Form.ascx.cs">
-      <DependentUpon>Form.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CommonModules\Form.ascx.designer.cs">
-      <DependentUpon>Form.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site.Mobile.Master.designer.cs">
-      <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\BambooExcelExport.ashx.cs">
@@ -733,13 +720,6 @@
     </Compile>
     <Compile Include="Utils\VirtualTable.ashx.cs">
       <DependentUpon>VirtualTable.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ViewSwitcher.ascx.designer.cs">
-      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
     <Compile Include="WebProfile.cs" />
     <Content Include="AdminControls\Notifier.ascx" />
@@ -792,7 +772,6 @@
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\One.asmx" />
     <Content Include="Utils\TestException.aspx" />
-    <Content Include="ViewSwitcher.ascx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -803,12 +782,10 @@
     <Content Include="Utils\BambooExcelExport.ashx" />
     <Content Include="Utils\BambooOneToManyData.ashx" />
     <Content Include="Utils\VirtualTable.ashx" />
-    <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\ContentEdit.aspx" />
     <Content Include="adm\css\one-fm.css" />
-    <Content Include="adm\Forms.aspx" />
     <Content Include="adm\Structure.aspx" />
     <Content Include="CommonModules\NewsSubscription.ascx" />
     <Content Include="CommonModules\TextContent.ascx" />
@@ -908,7 +885,6 @@
   <ItemGroup>
     <Content Include="adm\External.aspx" />
     <Content Include="adm\RssFeeds.aspx" />
-    <Content Include="CommonModules\Form.ascx" />
     <Content Include="Res\one-big-logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

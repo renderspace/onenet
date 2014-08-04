@@ -493,7 +493,7 @@ if(window.jQuery)
                                             }
                                         case AnswerTypes.SingleText:
                                             {
-                                                ValidInput answerInput = questionDiv.FindControl("AnswerSingleText" + firstAnswer.Id) as ValidInput;
+                                                var answerInput = questionDiv.FindControl("AnswerSingleText" + firstAnswer.Id) as TextBox;
 
                                                 if (answerInput != null)
                                                 {

@@ -3,7 +3,7 @@
 
 	<div id="divAddChild" runat="server" style="width: 100%;">
 	
-	    <two:InputWithButton ID="InputWithButtonAddTreeNode" ValidationGroup="NNN1" runat="server" Text="$new_category" ButtonText="$add" OnClick="CmdAddTreeNode_Click"  />
+	    <asp:InputWithButton ID="InputWithButtonAddTreeNode" ValidationGroup="NNN1" runat="server" Text="$new_category" ButtonText="$add" OnClick="CmdAddTreeNode_Click"  />
 		<br style="clear: both" />
 	</div>
 	<div style="width: 100%;">&nbsp;</div>

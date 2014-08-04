@@ -18,20 +18,20 @@
             </section>
         </div>
          <div class="col-md-9">
-                <section class="module">
+                <section class="module full">
                      <div>
                         <asp:DropDownList CssClass="selectTextContentInstance" ID="DropDownListModuleInstances" runat="server" ValidationGroup="MI"></asp:DropDownList>
                         <asp:Label ID="LabelModuleInstanceName" runat="server"></asp:Label>
                         <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
                      </div>
                 </section>
-                <section class="module">
+                <section class="module full">
                     <asp:Panel runat="server" ID="PanelEditor">
                         <one:TextContentControl ID="TextContentEditor" runat="server" />
                         <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
-				        <div class="submit-links">
-					        <asp:Button ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="left" />
-                            <asp:Button ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="right save-btn" />
+				        <div class="form-group">
+					        <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
+                            <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
 				        </div>
                     </asp:Panel>
                 </section>

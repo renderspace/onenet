@@ -156,7 +156,7 @@ namespace OneMainWeb
             {
                 emailBuilder.Append(sub.Email + "; ");
             }
-            txtCSV.Value = emailBuilder.ToString();
+            txtCSV.Text = emailBuilder.ToString();
         }
 
         protected void SubscriptionSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
@@ -216,7 +216,7 @@ namespace OneMainWeb
         protected void cmdDeleteUnconfirmedSubscriptions_Click(object sender, EventArgs e)
         {
             int newsletterId = FormatTool.GetInteger( ddlNewsletterFilter.SelectedValue );
-            DateTime fromDate = DateTime.Now.AddDays(-Int32.Parse(txtBackFromDays.Value));
+            DateTime fromDate = DateTime.Now.AddDays(-Int32.Parse(txtBackFromDays.Text));
 
             if (newsletterId > -1 && fromDate != DateTime.MinValue)
             {
@@ -248,7 +248,7 @@ namespace OneMainWeb
 
             if ( newsletterId > 0)
             {
-                string rawEmails = InputEmails.Value;
+                string rawEmails = InputEmails.Text;
                 string[] emails = rawEmails.Split('\n'); // split csv contents by new line
 
                 StringBuilder strBuilder = new StringBuilder();

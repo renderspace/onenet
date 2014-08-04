@@ -91,7 +91,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtAddForm;
+        protected global::System.Web.UI.WebControls.TextBox txtAddForm;
         
         /// <summary>
         /// cmdAddForm control.
@@ -118,7 +118,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtAddSection;
+        protected global::System.Web.UI.WebControls.TextBox txtAddSection;
         
         /// <summary>
         /// cmdAddSection control.
@@ -145,7 +145,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtAddQuestion;
+        protected global::System.Web.UI.WebControls.TextBox txtAddQuestion;
         
         /// <summary>
         /// cmdAddQuestion control.
@@ -181,7 +181,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtFormName;
+        protected global::System.Web.UI.WebControls.TextBox txtFormName;
         
         /// <summary>
         /// InputFormPrivateName control.
@@ -190,7 +190,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputFormPrivateName;
+        protected global::System.Web.UI.WebControls.TextBox InputFormPrivateName;
         
         /// <summary>
         /// txtFormThankYouNote control.
@@ -199,7 +199,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtFormThankYouNote;
+        protected global::System.Web.UI.WebControls.TextBox txtFormThankYouNote;
         
         /// <summary>
         /// txtFormDescription control.
@@ -208,7 +208,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtFormDescription;
+        protected global::System.Web.UI.WebControls.TextBox txtFormDescription;
         
         /// <summary>
         /// lblFormTypes control.
@@ -289,7 +289,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput txtSendTo;
+        protected global::System.Web.UI.WebControls.TextBox txtSendTo;
         
         /// <summary>
         /// InputCompletionRedirect control.
@@ -298,7 +298,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputCompletionRedirect;
+        protected global::System.Web.UI.WebControls.TextBox InputCompletionRedirect;
         
         /// <summary>
         /// cmdUpdateForm control.
@@ -325,7 +325,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtSectionName;
+        protected global::System.Web.UI.WebControls.TextBox txtSectionName;
         
         /// <summary>
         /// InputSectionDescription control.
@@ -334,7 +334,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputSectionDescription;
+        protected global::System.Web.UI.WebControls.TextBox InputSectionDescription;
         
         /// <summary>
         /// InputSectionOnClientClick control.
@@ -343,7 +343,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input InputSectionOnClientClick;
+        protected global::System.Web.UI.WebControls.TextBox InputSectionOnClientClick;
         
         /// <summary>
         /// cmdUpdateSection control.
@@ -388,7 +388,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtQuestionText;
+        protected global::System.Web.UI.WebControls.TextBox txtQuestionText;
         
         /// <summary>
         /// txtQuestionDescription control.
@@ -397,7 +397,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtQuestionDescription;
+        protected global::System.Web.UI.WebControls.TextBox txtQuestionDescription;
         
         /// <summary>
         /// chkAnswerIsRequired control.
@@ -451,7 +451,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput txtNumberOfRows;
+        protected global::System.Web.UI.WebControls.TextBox txtNumberOfRows;
         
         /// <summary>
         /// txtMaxChars control.
@@ -460,7 +460,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput txtMaxChars;
+        protected global::System.Web.UI.WebControls.TextBox txtMaxChars;
         
         /// <summary>
         /// txtMaximumFileSize control.
@@ -469,7 +469,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.ValidInput txtMaximumFileSize;
+        protected global::System.Web.UI.WebControls.TextBox txtMaximumFileSize;
         
         /// <summary>
         /// divAllowedMimeTypes control.
@@ -550,7 +550,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.Input txtAnswers;
+        protected global::System.Web.UI.WebControls.TextBox txtAnswers;
         
         /// <summary>
         /// cmdDeleteQuestion control.

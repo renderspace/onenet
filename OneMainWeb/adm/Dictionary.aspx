@@ -65,7 +65,7 @@
 		        <div class="contentEntry">
                     Keyword: <asp:Label runat="server" ID="LabelKeyword"></asp:Label>
 
-		            <two:Input ID="txtKeyword" runat="server" Text="$keyword" />
+		            <asp:TextBox ID="txtKeyword" runat="server" Text="$keyword" />
 		            <one:TextContentControl ID="txtTextContent" runat="server" 
 		            TitleLabel="$dict_entry_title" SubTitleLabel="$dict_entry_sub_title" 
 		            TeaserLabel="$dict_entry_teaser" HtmlLabel="$dict_entry_html" HtmlRows="10" />

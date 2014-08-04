@@ -130,8 +130,8 @@ namespace OneMainWeb.AdminControls
                             {
 
                             }
-                            var TextBoxPrimaryKey = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as TextBox;
-                            if (TextBoxPrimaryKey != null)
+                            var HiddenFieldPrimaryKey = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as HiddenField;
+                            if (HiddenFieldPrimaryKey != null)
                             {
 
                             }
@@ -171,7 +171,7 @@ namespace OneMainWeb.AdminControls
             {
                 var PanelField = new Panel();
                 PanelField.ID = "PanelField" + column.Ordinal;
-                PanelField.CssClass = "field";
+                PanelField.CssClass = "form-group";
                 var LabelInfo = new Label
                 {
                     CssClass = "info",
@@ -182,9 +182,12 @@ namespace OneMainWeb.AdminControls
                 {
                     PanelField.CssClass += " hidden";
                 }
-                var LabelDescription = new Label { Text = column.FriendlyName };
 
+                var PanelRight = new Panel { CssClass = "col-sm-9" };
                 PanelFieldsHolder.Controls.Add(PanelField);
+                PanelField.Controls.Add(new Literal { Text = "<label class=\"col-sm-3 control-label\">" + column.FriendlyName + "</label>" });
+
+                
 
                 // Important: all the data is read here, but overwritten when loading viewstate.
                 // The most logical thing is probably to move all data reading to prerender event,
@@ -192,88 +195,105 @@ namespace OneMainWeb.AdminControls
                 switch (column.BackendType)
                 {
                     case FieldType.Integer:
-                        PrepareIntegerInput(column, PanelField, LabelDescription, ref validationJQueryRules);
+                        PrepareIntegerInput(column, PanelRight, ref validationJQueryRules);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.Decimal:
-                        PrepareDecimalInput(column, PanelField, LabelDescription, ref validationJQueryRules);
+                        PrepareDecimalInput(column, PanelRight, ref validationJQueryRules);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.SingleText:
-                        PrepareTextBoxInput(column, PanelField, LabelDescription, ref validationJQueryRules);
+                        PrepareTextBoxInput(column, PanelRight, ref validationJQueryRules);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.OneToMany:
                         var v1 = Data.GetForeignKeyOptions(column.PartOfRelationId, SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT);
                         if (v1.Values.Count >= SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT)
                         {
-                            PrepareRelationSuggestOptions(column, PanelField, LabelDescription,
-                                                          ref validationJQueryRules, false);
+                            PrepareRelationSuggestOptions(column, PanelField, ref validationJQueryRules, false);
                         }
                         else
                         {
-                            PrepareRelationOptions(column, PanelField, LabelDescription, v1, ref validationJQueryRules);
+                            PrepareRelationOptions(column, PanelField, v1, ref validationJQueryRules);
                         }
                         break;
                     case FieldType.ManyToMany:
-                        PanelField.CssClass += " manyToMany";
+                        var PanelSubLeft = new Panel { CssClass = "col-sm-5" };
+                        var PanelSubCenter = new Panel { CssClass = "col-sm-1" };
+                        var PanelSubRight = new Panel { CssClass = "col-sm-5" };
+
 
                         var v2 = Data.GetForeignKeyOptions(column.PartOfRelationId, SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT);
-
                         if (v2.Values.Count >= SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT)
                         {
-                            PrepareRelationSuggestOptions(column, PanelField, LabelDescription,
-                                                          ref validationJQueryRules, true);
+                            PrepareRelationSuggestOptions(column, PanelSubLeft, ref validationJQueryRules, true);
                         }
                         else
                         {
-                            PrepareRelationOptions(column, PanelField, LabelDescription, v2, ref validationJQueryRules);
+                            PrepareRelationOptions(column, PanelSubLeft, v2, ref validationJQueryRules);
                         }
 
-                        var buttonsPanel = new Panel();
-                        buttonsPanel.CssClass = "addRemove";
-                        var ButtonAddManyToManyRelation = new Button();
-                        ButtonAddManyToManyRelation.Text = ">";
+                        var ButtonAddManyToManyRelation = new LinkButton { CssClass = "btn btn-default" };
+                        ButtonAddManyToManyRelation.Text = "<span class=\"glyphicon glyphicon-chevron-right\"></span>";
                         ButtonAddManyToManyRelation.CommandName = "Add relation";
                         ButtonAddManyToManyRelation.CommandArgument = column.Ordinal.ToString();
                         ButtonAddManyToManyRelation.Click += ButtonAddManyToManyRelation_Click;
                         ButtonAddManyToManyRelation.ValidationGroup = "ADDREMOVE";
-                        buttonsPanel.Controls.Add(ButtonAddManyToManyRelation);
+                        PanelSubCenter.Controls.Add(ButtonAddManyToManyRelation);
 
-                        var ButtonRemoveManyToManyRelation = new Button();
-                        ButtonRemoveManyToManyRelation.Text = "<";
+                        var ButtonRemoveManyToManyRelation = new LinkButton { CssClass = "btn btn-default" };
+                        ButtonRemoveManyToManyRelation.Text = "<span class=\"glyphicon glyphicon-chevron-left\"></span>";
                         ButtonRemoveManyToManyRelation.CommandName = "Remove relation";
                         ButtonRemoveManyToManyRelation.CommandArgument = column.Ordinal.ToString();
                         ButtonRemoveManyToManyRelation.Click += ButtonRemoveManyToManyRelation_Click;
                         ButtonRemoveManyToManyRelation.ValidationGroup = "ADDREMOVE";
-                        buttonsPanel.Controls.Add(ButtonRemoveManyToManyRelation);
+                        PanelSubCenter.Controls.Add(ButtonRemoveManyToManyRelation);
 
-                        PanelField.Controls.Add(buttonsPanel);
+                        PanelRight.Controls.Add(PanelSubCenter);
 
-                        var ManyToManyJoinsListBox = new ListBox();
-                        ManyToManyJoinsListBox.ID = "MML" + column.Ordinal;
-                        PanelField.Controls.Add(ManyToManyJoinsListBox);
+                        var ManyToManyJoinsListBox = new ListBox { CssClass = "form-control", ID = "MML" + column.Ordinal };
+                        PanelSubRight.Controls.Add(ManyToManyJoinsListBox);
+
+                        PanelRight.Controls.Add(PanelSubLeft);
+                        PanelRight.Controls.Add(PanelSubCenter);
+                        PanelRight.Controls.Add(PanelSubRight);
+
+                        PanelField.Controls.Add(PanelRight);
+
+                        
                         break;
                     case FieldType.Checkbox:
                         var CheckBox1 = new CheckBox();
                         CheckBox1.ID = "FI" + column.Ordinal;
                         CheckBox1.Checked = column.ValueBoolean;
-                        LabelDescription.AssociatedControlID = CheckBox1.ID;
-                        PanelField.Controls.Add(LabelDescription);
-                        PanelField.Controls.Add(CheckBox1);
+
+                        var Panel11 = new Panel { CssClass = "col-sm-offset-3 col-sm-9" };
+                        var PanelC = new Panel { CssClass = "checkbox" };
+                        var LabelC = new Label();
+                        var Literal1 = new Literal();
+                        var Literal2 = new Literal();
+
+                        Literal1.Text = "<label>";
+                        Literal2.Text = column.FriendlyName + "</label>";
+
+                        PanelC.Controls.Add(Literal1);
+                        PanelC.Controls.Add(CheckBox1);
+                        PanelC.Controls.Add(Literal2);
+                        Panel11.Controls.Add(PanelC);
+
+                        PanelField.Controls.RemoveAt(0);
+                        PanelField.Controls.Add(Panel11);
                         break;
                     case FieldType.Calendar:
-                         var Panel2 = new Panel { CssClass = "col-sm-2" };
-                        var Panel10 = new Panel { CssClass = "col-sm-10" };
 
-                        var DatePicker1 = new TextBox();
-                        DatePicker1.ID = "FI" + column.Ordinal;
+                        var DatePicker1 = new TextBox { ID = "FI" + column.Ordinal };
+
+
                         if (column.ValueDateTime != System.Data.SqlTypes.SqlDateTime.MinValue)
                             DatePicker1.Text = ((DateTime)column.ValueDateTime).ToShortDateString();
-                        LabelDescription.AssociatedControlID = DatePicker1.ID;
 
-                        Panel2.Controls.Add(LabelDescription);
-                        Panel10.Controls.Add(DatePicker1);
-
-                        PanelField.Controls.Add(Panel2);
-                        PanelField.Controls.Add(Panel10);
+                        PanelRight.Controls.Add(DatePicker1);
+                        PanelField.Controls.Add(PanelRight);
 
 
 
@@ -290,17 +310,17 @@ namespace OneMainWeb.AdminControls
                         break;
                     case FieldType.Display:
                         LabelInfo.Text = column.Value;
-                        PanelField.Controls.Add(new Label { Text = column.Description, AssociatedControlID = LabelInfo.ID });
-                        PanelField.Controls.Add(LabelInfo);
+                        PanelRight.Controls.Add(LabelInfo);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.MultiLanguageText:
-                        PrepareMultiLanguageInput(column, PanelField, LabelDescription, ref validationJQueryRules);
+                        PrepareMultiLanguageInput(column, PanelField,  ref validationJQueryRules);
                         break;
                     default:
                         LabelInfo.Text = "unsupported type:" + column.DbType.Name + ";requested display type:" +
                                          column.BackendType;
-                        PanelField.Controls.Add(new Label { Text = column.Description, AssociatedControlID = LabelInfo.ID });
-                        PanelField.Controls.Add(LabelInfo);
+                        PanelRight.Controls.Add(LabelInfo);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                 }
 
@@ -384,12 +404,12 @@ jQuery.validator.addMethod(
         private void ButtonAddManyToManyRelation_Click(object sender, EventArgs e)
         {
             MarkCurrentStatus(SubmissionStatus.InternalEvent);
-            var ButtonAddManyToManyRelation = sender as Button;
+            var ButtonAddManyToManyRelation = sender as IButtonControl;
             if (ButtonAddManyToManyRelation != null)
             {
                 var DropDownRelationOptions = PanelFieldsHolder.FindControl("FI" + ButtonAddManyToManyRelation.CommandArgument) as DropDownList;
                 var ManyToManyJoinsListBox = PanelFieldsHolder.FindControl("MML" + ButtonAddManyToManyRelation.CommandArgument) as ListBox;
-                var TextBoxPrimaryKey = PanelFieldsHolder.FindControl("FI" + ButtonAddManyToManyRelation.CommandArgument) as TextBox;
+                var HiddenFieldPrimaryKey = PanelFieldsHolder.FindControl("PKFI" + ButtonAddManyToManyRelation.CommandArgument) as HiddenField;
                 var TextBoxSuggest = PanelFieldsHolder.FindControl("TBFI" + ButtonAddManyToManyRelation.CommandArgument) as TextBox;
 
                 string selectedPrimaryKeyValue = NULL;
@@ -400,18 +420,18 @@ jQuery.validator.addMethod(
                     selectedItem = DropDownRelationOptions.SelectedItem;
                     selectedPrimaryKeyValue = selectedItem.Value;
                 }
-                else if (TextBoxPrimaryKey != null)
+                else if (HiddenFieldPrimaryKey != null)
                 {
-                    if (TextBoxPrimaryKey.Text == NULL)
+                    if (HiddenFieldPrimaryKey.Value == NULL)
                     {
                         return;
                     }
                     else
                     {
-                        selectedPrimaryKeyValue = TextBoxPrimaryKey.Text;
+                        selectedPrimaryKeyValue = HiddenFieldPrimaryKey.Value;
                         selectedItem = new ListItem();
                         selectedItem.Text = TextBoxSuggest.Text;
-                        selectedItem.Value = TextBoxPrimaryKey.Text;
+                        selectedItem.Value = HiddenFieldPrimaryKey.Value;
                     }
                 }
 
@@ -426,9 +446,9 @@ jQuery.validator.addMethod(
                     ManyToManyJoinsListBox.Items.Add(selectedItem);
 
                     // clearing selection on the left after successfull adding
-                    if (TextBoxPrimaryKey != null && TextBoxSuggest != null)
+                    if (HiddenFieldPrimaryKey != null && TextBoxSuggest != null)
                     {
-                        TextBoxPrimaryKey.Text = "";
+                        HiddenFieldPrimaryKey.Value = "";
                         TextBoxSuggest.Text = "";
                     }
                 }
@@ -452,21 +472,17 @@ jQuery.validator.addMethod(
             }
         }
 
-        private static void PrepareIntegerInput(VirtualColumn column, Panel PanelField, Label LabelDescription, ref string validationJQueryRules)
+        private static void PrepareIntegerInput(VirtualColumn column, Panel PanelField, ref string validationJQueryRules)
         {
-            var Panel2 = new Panel { CssClass = "col-sm-2" };
-            var Panel10 = new Panel { CssClass = "col-sm-10" };
             var TextBox4 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
                 Text = column.Value,
+                CssClass = "form-control",
                 MaxLength = 11 //(-2,147,483,648 to 2,147,483,647)
             };
-            LabelDescription.AssociatedControlID = TextBox4.ID;
-            Panel2.Controls.Add(LabelDescription);
-            Panel10.Controls.Add(TextBox4);
-            PanelField.Controls.Add(Panel2);
-            PanelField.Controls.Add(Panel10);
+            TextBox4.Attributes.Add("type", "number");
+            PanelField.Controls.Add(TextBox4);
 
             validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBox4.UniqueID);
         }
@@ -477,22 +493,21 @@ jQuery.validator.addMethod(
             return " " + uniqueId + ": {" + (required ? requiredString : "") + rules + "},";
         }
 
-        private static void PrepareDecimalInput(VirtualColumn column, Panel PanelField, Label LabelDescription, ref string validationJQueryRules)
+        private static void PrepareDecimalInput(VirtualColumn column, Panel PanelField, ref string validationJQueryRules)
         {
             var TextBox4 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
                 Text = column.Value,
+                CssClass = "form-control",
                 MaxLength = 16
             };
-            LabelDescription.AssociatedControlID = TextBox4.ID;
-            PanelField.Controls.Add(LabelDescription);
             PanelField.Controls.Add(TextBox4);
 
             validationJQueryRules += CreateValidateRule(!column.IsNullable, "decimal:true", TextBox4.UniqueID);
         }
 
-        private static void PrepareMultiLanguageInput(VirtualColumn column, Panel panelField, Label descriptionLabel, ref string validationJQueryRules)
+        private static void PrepareMultiLanguageInput(VirtualColumn column, Panel panelField, ref string validationJQueryRules)
         {
             var languages = intContentB.ListLanguages();
 
@@ -507,7 +522,6 @@ jQuery.validator.addMethod(
                 {
                     ID = ("FI" + column.Ordinal + "_" + l),
                     MaxLength = column.Precision,
-                    Width = 430,
                     Rows = 4,
                     TextMode = TextBoxMode.MultiLine
                 };
@@ -516,10 +530,9 @@ jQuery.validator.addMethod(
                 if (content != null)
                     InputMultiLanguage.Text = content.Html;
 
-                var label = new Label();
+                var label = new Literal();
                 var ci = new CultureInfo(l);
-                label.AssociatedControlID = InputMultiLanguage.ID;
-                label.Text = descriptionLabel.Text + " [" + ci.Name + "]";
+                label.Text = column.FriendlyName + " [" + ci.Name + "]";
                 panelField.Controls.Add(label);
                 panelField.Controls.Add(InputMultiLanguage);
 
@@ -527,16 +540,13 @@ jQuery.validator.addMethod(
             }
         }
 
-        private static void PrepareTextBoxInput(VirtualColumn column, Panel panelField, Label descriptionLabel, ref string validationJQueryRules)
+        private static void PrepareTextBoxInput(VirtualColumn column, Panel panelField, ref string validationJQueryRules)
         {
-            var Panel2 = new Panel { CssClass = "col-sm-2" };
-            var Panel10 = new Panel { CssClass = "col-sm-10" };
             var Input6 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
                 Text = column.Value,
                 MaxLength = column.Precision,
-                Width = 430
             };
 
             if (column.Precision < 60)
@@ -555,62 +565,55 @@ jQuery.validator.addMethod(
                 else
                     Input6.Rows = 1;
             }
-            descriptionLabel.AssociatedControlID = Input6.ID;
-            Panel2.Controls.Add(descriptionLabel);
-            Panel10.Controls.Add(Input6);
-
-            panelField.Controls.Add(Panel2);
-            panelField.Controls.Add(Panel10);
-
+            Input6.CssClass = "form-control";
+            panelField.Controls.Add(Input6);
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }
 
-        private static void PrepareRelationSuggestOptions(VirtualColumn column, Panel panelField, Label descriptionLabel, ref string validationJQueryRules, bool skipSelectedLookup)
+        private static void PrepareRelationSuggestOptions(VirtualColumn column, Panel panelField, ref string validationJQueryRules, bool skipSelectedLookup)
         {
-            var TextBoxSuggestIdentification = "FI" + column.Ordinal;
+            var suggestIdentification = "FI" + column.Ordinal;
+
+            panelField.CssClass += " " + suggestIdentification;
 
             var TextBoxSuggest = new TextBox();
-            TextBoxSuggest.ID = "TB" + TextBoxSuggestIdentification;
-            TextBoxSuggest.CssClass = TextBoxSuggestIdentification + " suggest";
+            TextBoxSuggest.ID = "TB" + suggestIdentification;
+            TextBoxSuggest.CssClass = " suggest form-control";
             //   if (!skipSelectedLookup)
             //       TextBoxSuggest.Text = BData.GetForeignKeySelectedOption(column.PartOfRelationId, column.ValueInteger);
 
-            var TextBoxPrimaryKey = new TextBox();
+            var HiddenFieldPrimaryKey = new HiddenField();
+            HiddenFieldPrimaryKey.ID = "PK" + suggestIdentification;
             //TextBoxPrimaryKey.ReadOnly = true;
-            TextBoxPrimaryKey.CssClass = "PK" + TextBoxSuggestIdentification + " suggest_pk";
-            TextBoxPrimaryKey.ID = TextBoxSuggestIdentification;
-            TextBoxPrimaryKey.Text = column.ValueInteger.ToString();
-            TextBoxPrimaryKey.Attributes.Add("onfocus", "blur()");
+            // HiddenFieldPrimaryKey.CssClass = "PK" + TextBoxSuggestIdentification + " suggest_pk";
+            HiddenFieldPrimaryKey.Value = column.ValueInteger.ToString();
+            // HiddenFieldPrimaryKey.Attributes.Add("onfocus", "blur()");
 
-            validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBoxPrimaryKey.UniqueID);
+            // validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", HiddenFieldPrimaryKey.UniqueID);
 
             //TextBoxPrimaryKey.Attributes.Add("style", "display: none;");
-
             var LiteralSuggest = new Literal();
             LiteralSuggest.Text = "<script type=\"text/javascript\">$(document).ready(function() {";
-            LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification + "\").autocomplete();";
-            LiteralSuggest.Text += " $(\"." + TextBoxSuggestIdentification;
-            LiteralSuggest.Text += @""").autocomplete({
+
+            // LiteralSuggest.Text += " $(\"." + suggestIdentification + " input.suggest\").autocomplete();";
+            LiteralSuggest.Text += " $(\"." + suggestIdentification + @" .suggest"").autocomplete({
     source: ""/Utils/BambooOneToManyData.ashx?limit=10&relationId=" + column.PartOfRelationId + @""",
     minLength: 3,
     select: function( event, ui ) {
         console.log(ui.item);
-                    console.log(ui.item.value);
-                    console.log(ui.item.label);
-                    $("".PK" + TextBoxSuggestIdentification + @""").val(ui.item.value);
-                    $(""input." + TextBoxSuggestIdentification + @""").val(ui.item.label);
+                    $(""." + suggestIdentification + @" input[type=hidden]"").val(ui.item.value);
+                    $(""." + suggestIdentification + @" .suggest"").val(ui.item.label);
+                    return false;
     }
 });";
             LiteralSuggest.Text += "}); </script>";
 
-            descriptionLabel.AssociatedControlID = TextBoxSuggest.ID;
-            panelField.Controls.Add(descriptionLabel);
-            panelField.Controls.Add(TextBoxPrimaryKey);
+            panelField.Controls.Add(HiddenFieldPrimaryKey);
             panelField.Controls.Add(TextBoxSuggest);
             panelField.Controls.Add(LiteralSuggest);
         }
 
-        private static void PrepareRelationOptions(VirtualColumn column, Panel panelField, Label descriptionLabel, Dictionary<int, string> values, ref string validationJQueryRules)
+        private static void PrepareRelationOptions(VirtualColumn column, Panel panelField, Dictionary<int, string> values, ref string validationJQueryRules)
         {
             var dropDown = new DropDownList
             {
@@ -637,11 +640,7 @@ jQuery.validator.addMethod(
                 }
                 dropDown.Items.Add(item);
             }
-
-            descriptionLabel.AssociatedControlID = dropDown.ID;
-            panelField.Controls.Add(descriptionLabel);
             panelField.Controls.Add(dropDown);
-
             validationJQueryRules +=
                 " " + dropDown.UniqueID
                 + ": {"
@@ -653,7 +652,7 @@ jQuery.validator.addMethod(
         {
             int invalidFields = 0;
 
-            var debug = "<div class=\"debug\"><h4>RetreiveSubmittedFields<h4>";
+            var debug = "<div class=\"debug hidden\"><h4>RetreiveSubmittedFields</h4>";
 
             foreach (var field in Item.Columns.Values)
             {
@@ -725,16 +724,16 @@ jQuery.validator.addMethod(
                                 }
                                 break;
                             }
-                            var TextBoxPrimaryKey = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
-                            if (TextBoxPrimaryKey != null)
+                            var HiddenFieldPrimaryKey = PanelField.FindControl("FI" + field.Ordinal) as HiddenField;
+                            if (HiddenFieldPrimaryKey != null)
                             {
-                                if (TextBoxPrimaryKey.Text == "0" || TextBoxPrimaryKey.Text == NULL || string.IsNullOrWhiteSpace(TextBoxPrimaryKey.Text))
+                                if (HiddenFieldPrimaryKey.Value == "0" || HiddenFieldPrimaryKey.Value == NULL || string.IsNullOrWhiteSpace(HiddenFieldPrimaryKey.Value))
                                 {
                                     field.NewValueIsNull = true;
                                 }
                                 else
                                 {
-                                    field.NewValueInteger = int.Parse(TextBoxPrimaryKey.Text);
+                                    field.NewValueInteger = int.Parse(HiddenFieldPrimaryKey.Value);
                                 }
                             }
                             break;
