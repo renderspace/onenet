@@ -45,7 +45,6 @@ namespace One.Net.BLL.WebControls
         int recordsPerPage;
         int pageCount;
 
-        string containerClass;
         string pagerTitle;
         string pagerSubTitle;
 
@@ -122,16 +121,6 @@ namespace One.Net.BLL.WebControls
         }
 
         /// <summary>
-        /// Get/Set the CSS class of the container
-        /// </summary>
-        [Category("One Pager"), DefaultValue(""), Description("Get/Set the CSS class of the container")]
-        public string ContainerCssClass
-        {
-            get { return containerClass; }
-            set { containerClass = value; }
-        }
-
-        /// <summary>
         /// Get/Set the pager title
         /// </summary>
         [Category("One Pager"), DefaultValue(""), Description("Get/Set the pager title")]
@@ -205,7 +194,7 @@ namespace One.Net.BLL.WebControls
         protected override object SaveControlState()
         {
             object cSBase = base.SaveControlState();
-            object[] cSThis = new object[9];
+            object[] cSThis = new object[8];
 
             cSThis[0] = cSBase;
             cSThis[1] = maxColsPerRow;
@@ -213,9 +202,8 @@ namespace One.Net.BLL.WebControls
             cSThis[3] = selectedPage;
             cSThis[4] = totalRecords;
             cSThis[5] = recordsPerPage;
-            cSThis[6] = containerClass;
-            cSThis[7] = pagerTitle;
-            cSThis[8] = pagerSubTitle;
+            cSThis[6] = pagerTitle;
+            cSThis[7] = pagerSubTitle;
 
             return cSThis;
         }
@@ -229,9 +217,8 @@ namespace One.Net.BLL.WebControls
             selectedPage = (int)cSThis[3];
             totalRecords = (int)cSThis[4];
             recordsPerPage = (int)cSThis[5];
-            containerClass = (string)cSThis[6];
-            pagerTitle = (string)cSThis[7];
-            pagerSubTitle = (string)cSThis[8];
+            pagerTitle = (string)cSThis[6];
+            pagerSubTitle = (string)cSThis[7];
 
             DetermineData();
 
@@ -242,9 +229,8 @@ namespace One.Net.BLL.WebControls
 
         public override void RenderBeginTag(HtmlTextWriter writer)
         {
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(containerClass) ? "pagination" : containerClass);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "pagination");
             writer.RenderBeginTag("ul");
-            //base.RenderBeginTag(writer);
         }
 
         public override void RenderEndTag(HtmlTextWriter writer)
@@ -260,8 +246,8 @@ namespace One.Net.BLL.WebControls
                 int lowerHalf = this.SelectedPage - (numPagesShown / 2);
                 int upperHalf = this.SelectedPage + (numPagesShown / 2);
 
-                if (lowerHalf < 2)
-                    lowerHalf = 2;
+                if (lowerHalf < 1)
+                    lowerHalf = 1;
                 if (upperHalf > pageCount - 1)
                     upperHalf = pageCount - 1;
                 if ( lowerHalf > upperHalf )
@@ -270,105 +256,57 @@ namespace One.Net.BLL.WebControls
                 int fromPage = lowerHalf;
                 int toPage = upperHalf;
 
-                    RenderPrevNextButtonSpan(writer, SelectedPage - 1, "prev", true); // render prev button
-
-                    // RenderStaticPageLinkSpan(writer, 1, " firststatic");
-
+                if (fromPage > 1)
+                {
+                    RenderStaticPageLinkSpan(writer, 1, " firststatic");
                     RenderDots(writer, "li", "disabled");
+                }
 
-                    for (int i = fromPage; i <= toPage; i++)
+                for (int i = fromPage; i <= toPage; i++)
+                {   
+                    if (i != SelectedPage)
                     {
-                        string cssClassBuilder = "";
-                        if (i == fromPage)
-                        {
-                            cssClassBuilder = " first";
-                        }
-                        if (i == toPage)
-                        {
-                            cssClassBuilder = " last";
-                        }
-                        
-                        if (i != SelectedPage)
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "norp" + cssClassBuilder);
-                            writer.RenderBeginTag("li");
-                            writer.AddAttribute(HtmlTextWriterAttribute.Href, Page.ClientScript.GetPostBackClientHyperlink(this, (i).ToString()));
-                            writer.RenderBeginTag(HtmlTextWriterTag.A);
-                        }
-                        else
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "active" + cssClassBuilder);
-                            writer.RenderBeginTag("li");
-                        }
-
-                        writer.Write(i);
-
-                        writer.RenderEndTag();
-
-                        if (i != SelectedPage)
-                        {
-                            writer.RenderEndTag();
-                        }
+                        writer.RenderBeginTag("li");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Href, Page.ClientScript.GetPostBackClientHyperlink(this, (i).ToString()));
                     }
-
-                    if (toPage < pageCount)
+                    else
                     {
-                        RenderDots(writer, "li", "disabled");
-                        RenderStaticPageLinkSpan(writer, pageCount, " laststatic");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
+                        writer.RenderBeginTag("li");
                     }
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write(i);
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
+                }
 
-                    RenderPrevNextButtonSpan(writer, SelectedPage + 1, "next", false); // render next button
-               
+                if (toPage < pageCount)
+                {
+                    RenderDots(writer, "li", "disabled");
+                    RenderStaticPageLinkSpan(writer, pageCount, " laststatic");
+                }
             }
-        }
-
-        private void RenderPrevNextButtonSpan(HtmlTextWriter writer, int page, string cssClass, bool isPrev)
-        {
-            if (page < 1)
-                page = 1;
-            else if (page > pageCount)
-                page = pageCount;
-
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
-            writer.RenderBeginTag("li");
-
-            if ((selectedPage > 1 && isPrev) || (selectedPage < pageCount && !isPrev))
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Href,
-                                    Page.ClientScript.GetPostBackClientHyperlink(this, (page).ToString()));
-                writer.RenderBeginTag(HtmlTextWriterTag.A);
-            }
-
-            if ((selectedPage > 1 && isPrev) || (selectedPage < pageCount && !isPrev))
-            {
-                writer.RenderEndTag();
-            }
-            writer.RenderEndTag();
         }
 
         private void RenderStaticPageLinkSpan(HtmlTextWriter writer, int page, string cssClass)
         {
             if (page != SelectedPage)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "norp" + cssClass);
                 writer.RenderBeginTag("li");
                 writer.AddAttribute(HtmlTextWriterAttribute.Href, Page.ClientScript.GetPostBackClientHyperlink(this, (page).ToString()));
                 writer.RenderBeginTag(HtmlTextWriterTag.A);
             }
             else
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "selp" + cssClass);
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
                 writer.RenderBeginTag("li");
+                writer.RenderBeginTag(HtmlTextWriterTag.A);
             }
 
             writer.Write(page);
 
             writer.RenderEndTag();
-
-            if (page != SelectedPage)
-            {
-                writer.RenderEndTag();
-            }            
+            writer.RenderEndTag();
         }
 
         private static void RenderDots(HtmlTextWriter writer, string tag, string cssClass)

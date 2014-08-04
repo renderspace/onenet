@@ -26,6 +26,6 @@
 
 <div class="form-group">
     <div class="col-sm-12">
-        <asp:TextBox runat="server" ID="TextBoxHtml"  TextMode="MultiLine" Rows="20" CssClass="form-control"></asp:TextBox>
+        <asp:TextBox runat="server" ID="TextBoxHtml"  TextMode="MultiLine" Rows="20"></asp:TextBox>
     </div>
 </div>

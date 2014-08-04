@@ -68,7 +68,7 @@ namespace OneMainWeb
             if (CheckBoxConfirm.Checked && SelectedFolderId  > 0)
             {
                 fileB.RecursiveFolderDelete(SelectedFolderId);
-                Notifier1.Message = ResourceManager.GetString("$recursive_delete_success");
+                Notifier1.Message = "$recursive_delete_success";
                 CheckBoxConfirm.Checked = false;
             }
         }
@@ -126,11 +126,11 @@ namespace OneMainWeb
             {
                 categorization.SelectNode(existingFile.Folder);
                 FileManager_DataBind();
-                lblSearchMessage.Text = ResourceManager.GetString("$file_found");
+                lblSearchMessage.Text = "$file_found");
             }
             else
             {
-                lblSearchMessage.Text = ResourceManager.GetString("$file_not_found");
+                lblSearchMessage.Text = "$file_not_found");
             }
 
             lblSearchMessage.Visible = true;
@@ -146,11 +146,11 @@ namespace OneMainWeb
             {
                 fileB.Change(uploadedFile);
                 //GridViewFiles.DataBind();
-                Notifier1.Message = ResourceManager.GetString("$file_successfully_uploaded");
+                Notifier1.Message = "$file_successfully_uploaded";
             }
             else
             {
-                Notifier1.Warning = ResourceManager.GetString("$file_upload_failed");
+                Notifier1.Warning = "$file_upload_failed";
             }
         }
 
@@ -173,11 +173,11 @@ namespace OneMainWeb
                     fileB.Change(existingFile);
                     GridViewFiles.DataBind();
                     LoadFiles();
-                    Notifier1.Message = ResourceManager.GetString("$file_successfully_overwritten");
+                    Notifier1.Message = "$file_successfully_overwritten");
                 }
                 else
                 {
-                    Notifier1.Warning = ResourceManager.GetString("$file_overwritte_failed");
+                    Notifier1.Warning = "$file_overwritte_failed");
                 }
             }
         }*/
@@ -253,7 +253,7 @@ namespace OneMainWeb
             {
                 /*
                 if (fileB.ListFileUses(selectedFile.Id.Value).Count > 0)
-                    cmdDelete.OnClientClick = @"return confirm('" + ResourceManager.GetString("$label_file_is_linked_confirm_delete") + @"');";
+                    cmdDelete.OnClientClick = @"return confirm('" + "$label_file_is_linked_confirm_delete") + @"');";
 
                 if (fileB.Delete(i))
                 {

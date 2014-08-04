@@ -205,11 +205,11 @@ namespace OneMainWeb.AdminControls
                 if (EnableXHTMLValidator && (hasErrors || hasAmpersands))
                 {
                     if (hasErrors)
-                        Notifier1.Warning += "<h3>" + ResourceManager.GetString("$errors") + "</h3><ul>";
+                        Notifier1.Warning += "<h3>" + "$errors" + "</h3><ul>";
 
                     foreach (var validatorError in errors)
                     {
-                        Notifier1.Warning += "<li>" + ResourceManager.GetString("$" + validatorError.Error);
+                        Notifier1.Warning += "<li>" + "$" + validatorError.Error;
                         if (!string.IsNullOrEmpty(validatorError.Tag))
                             Notifier1.Warning += "<span>" + validatorError.Tag + "</span>";
                         Notifier1.Warning += "</li>";
@@ -220,10 +220,10 @@ namespace OneMainWeb.AdminControls
 
                     if (hasAmpersands)
                     {
-                        Notifier1.Warning += "<h3>" + ResourceManager.GetString("$ampersands") + "</h3><ul>";
+                        Notifier1.Warning += "<h3>" + "$ampersands" + "</h3><ul>";
                         foreach (int i in ampersands)
                         {
-                            Notifier1.Warning += "<li>" + ResourceManager.GetString("$position") + "<span>" + i + "</span></li>";
+                            Notifier1.Warning += "<li>" + "$position" + "<span>" + i + "</span></li>";
                         }
                         Notifier1.Warning += "</ul>";
                     }
@@ -231,12 +231,12 @@ namespace OneMainWeb.AdminControls
                 else
                 {
                     textContentB.ChangeTextContent(SelectedModuleInstanceId.Value, TextContentEditor.Title, TextContentEditor.SubTitle, TextContentEditor.Teaser, html);
-                    Notifier1.Message = ResourceManager.GetString("Save sucessfull.");
+                    Notifier1.Message = "Save sucessfull.";
                 }
             }
             else
             {
-                Notifier1.ExceptionName = ResourceManager.GetString("$because_of_inactivity_selected_module_was_not_saved");
+                Notifier1.ExceptionName = "$because_of_inactivity_selected_module_was_not_saved";
             }
 
             TreeView1_DataBind();
@@ -257,7 +257,7 @@ namespace OneMainWeb.AdminControls
                     textContentB.ChangeTextContent(SelectedModuleInstanceId.Value, onlineContent.Title, onlineContent.SubTitle, onlineContent.Teaser, onlineContent.Html);
                     TreeView1_DataBind();
                     InitializeControls();
-                    Notifier1.Message = ResourceManager.GetString("Save sucessfull.");
+                    Notifier1.Message = "Save sucessfull.";
                 }
             }
         }

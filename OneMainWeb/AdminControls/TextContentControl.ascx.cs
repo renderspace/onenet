@@ -22,11 +22,6 @@ namespace OneMainWeb.AdminControls
     {
         private bool useCkEditor;
 
-        public string TitleLabel { get { return TextBoxTitle.Text; } set { TextBoxTitle.Text = value; } }
-        public string SubTitleLabel { get { return TextBoxSubTitle.Text; } set { TextBoxSubTitle.Text = value; } }
-        public string TeaserLabel { get { return TextBoxTeaser.Text; } set { TextBoxTeaser.Text = value; } }
-        public string HtmlLabel { get { return TextBoxHtml.Text; } set { TextBoxHtml.Text = value; } }
-
         public TextBoxMode TitleTextMode { get { return TextBoxTitle.TextMode; } set { TextBoxTitle.TextMode = value; } }
         public int TitleTextRows { get { return TextBoxTitle.Rows; } set { TextBoxTitle.Rows = value; } }
 
@@ -38,7 +33,7 @@ namespace OneMainWeb.AdminControls
             get { return useCkEditor; }
             set {
                 useCkEditor = value;
-                TextBoxHtml.CssClass = useCkEditor ? "ckeditor" : "" ;
+                TextBoxHtml.CssClass = useCkEditor ? "form-control ckeditor" : "form-control";
             }
         }
 
@@ -84,7 +79,7 @@ namespace OneMainWeb.AdminControls
         {
             writer.WriteLine();
             writer.WriteBeginTag(HtmlTextWriterTag.Div.ToString());
-            writer.WriteAttribute(HtmlTextWriterAttribute.Class.ToString(), "textcontentcontrol");
+            writer.WriteAttribute(HtmlTextWriterAttribute.Class.ToString(), "full");
             writer.WriteAttribute(HtmlTextWriterAttribute.Id.ToString(), this.ClientID);
             writer.WriteAttribute(HtmlTextWriterAttribute.Name.ToString(), this.UniqueID);
             writer.Write(HtmlTextWriter.TagRightChar);

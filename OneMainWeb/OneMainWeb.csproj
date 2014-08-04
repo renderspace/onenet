@@ -104,22 +104,6 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Administration, Version=7.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\library\Microsoft.Web.Administration.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -263,12 +247,12 @@
       <DependentUpon>TextSpecialContent.ascx</DependentUpon>
     </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
-    <Compile Include="adm\FileManager2.aspx.cs">
-      <DependentUpon>FileManager2.aspx</DependentUpon>
+    <Compile Include="adm\Forms.aspx.cs">
+      <DependentUpon>Forms.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="adm\FileManager2.aspx.designer.cs">
-      <DependentUpon>FileManager2.aspx</DependentUpon>
+    <Compile Include="adm\Forms.aspx.designer.cs">
+      <DependentUpon>Forms.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\Publish.aspx.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
@@ -421,10 +405,10 @@
     <Content Include="adm\css\dashboard.css" />
     <Content Include="adm\css\default_editor.css" />
     <Content Include="adm\css\one.css" />
-    <Content Include="adm\FileManager2.aspx" />
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="adm\Forms.aspx" />
     <Content Include="adm\Publish.aspx" />
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
@@ -866,35 +850,11 @@
     <Content Include="Res\one_logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Res\placeHolders\centerContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\leftContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\leftMiniContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\rightContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\rightMiniContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\External.aspx" />
     <Content Include="adm\RssFeeds.aspx" />
     <Content Include="Res\one-big-logo.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\centerLeftContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\centerRightContainer.gif">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Res\placeHolders\hidden.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Res\previewBanner.png" />
@@ -909,10 +869,6 @@
     <Content Include="adm\SQLEditor.aspx" />
     <Content Include="App_Browsers\one.browser" />
     <Content Include="CommonModules\SpecialContent.ascx" />
-    <Content Include="Languages\sl-SI\Resources.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Res\colapse.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -932,12 +888,6 @@
     <Content Include="Res\template4.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Res\Sql\1_database.sql.template" />
-    <EmbeddedResource Include="Res\Sql\2_tables.sql.template" />
-    <EmbeddedResource Include="Res\Sql\3_standard_inserts.sql.template" />
-    <EmbeddedResource Include="Res\Sql\4_stored_procedures.sql.template" />
-    <EmbeddedResource Include="Res\Sql\5_security.sql.template" />
-    <EmbeddedResource Include="Res\Sql\1_1_user.sql.template" />
     <Content Include="adm\web.config">
       <SubType>Designer</SubType>
     </Content>

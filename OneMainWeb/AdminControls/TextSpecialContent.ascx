@@ -25,15 +25,21 @@
                         <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
                      </div>
                 </section>
-                <section class="module full">
+                <div class="adminSection form-horizontal">
                     <asp:Panel runat="server" ID="PanelEditor">
                         <one:TextContentControl ID="TextContentEditor" runat="server" />
-                        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                        
 				        <div class="form-group">
-					        <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
+                            <div class="col-sm-3">
+                                 <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                            </div>
+                            <div class="col-sm-9">
+                                <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
                             <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
+                            </div>
+					        
 				        </div>
                     </asp:Panel>
-                </section>
+                </div>
              </div>
        </div> 

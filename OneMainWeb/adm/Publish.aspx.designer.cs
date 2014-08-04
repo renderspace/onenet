@@ -67,13 +67,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView articleGridView;
         
         /// <summary>
-        /// ObjectDataSourceArticleList control.
+        /// TwoPostbackPager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourceArticleList;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
         
         /// <summary>
         /// PublishArticlesButton control.
@@ -82,7 +82,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PublishArticlesButton;
+        protected global::System.Web.UI.WebControls.LinkButton PublishArticlesButton;
         
         /// <summary>
         /// View2 control.
@@ -103,13 +103,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView pageGridView;
         
         /// <summary>
-        /// ObjectDataSourcePageList control.
+        /// TwoPostbackPager2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSourcePageList;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager2;
         
         /// <summary>
         /// PublishPagesButton control.
@@ -118,6 +118,6 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PublishPagesButton;
+        protected global::System.Web.UI.WebControls.LinkButton PublishPagesButton;
     }
 }

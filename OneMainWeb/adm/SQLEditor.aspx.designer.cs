@@ -46,7 +46,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdExec;
+        protected global::System.Web.UI.WebControls.LinkButton cmdExec;
         
         /// <summary>
         /// sqlGrid control.
@@ -55,6 +55,6 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid sqlGrid;
+        protected global::System.Web.UI.WebControls.GridView sqlGrid;
     }
 }

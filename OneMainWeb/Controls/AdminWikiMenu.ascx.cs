@@ -64,10 +64,10 @@ namespace OneMainWeb.Controls
                     Response.Redirect(ParentPageUrl);
                     break;
                 case BWebsite.DeletePageByIdResult.HasChildren:
-                    Notifier1.Warning = ResourceManager.GetString("$has_children_delete_not_possible");
+                    Notifier1.Warning = "$has_children_delete_not_possible";
                     break;
                 case BWebsite.DeletePageByIdResult.Error:
-                    Notifier1.Warning = ResourceManager.GetString("$delete_page_error");
+                    Notifier1.Warning = "$delete_page_error";
                     break;
             }
         }

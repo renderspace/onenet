@@ -46,69 +46,69 @@
                         </h3>
                         
                     </div>
-			        <div class="pageproperties">
-                        <div class="input">
-                            <div class="layout-left">
+			        <div class="pageproperties form-horizontal">
+                         <div class="form-group">
+                                <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="TextBoxTitle" ID="LabelTitle" Text="Title" runat="server"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett"></asp:TextBox>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="input multi-row">
-                            <div class="layout-left">
+                         <div class="form-group">
+                        <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="" ID="LabelDescription" Text="Description" runat="server"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett"></asp:TextBox>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
-			            <div class="select">
-                            <div class="layout-left">
+			             <div class="form-group">
+                        <div class="col-sm-4">
 			                    <asp:label id="lblTemplate1" runat="server"	Text="Template" AssociatedControlID="ddlPageTemplate" />
                             </div>
-                            <div class="layout-right">
-				                <asp:dropdownlist id="ddlPageTemplate" Runat="server"></asp:dropdownlist>
+                            <div class="col-sm-8">
+				                <asp:dropdownlist id="ddlPageTemplate" Runat="server" CssClass="form-control"></asp:dropdownlist>
                             </div>
 			            </div>
-                        <div class="input uri">
-                            <div class="layout-left">
+                        <div class="form-group">
+                        <div class="col-sm-4">
                                 <asp:Label ID="Label1" runat="server" AssociatedControlID="TextBoxUri" Text="URL"></asp:Label>
                             </div>
-                            <div class="layout-mid">
+                           <div class="col-sm-2">
                                 <asp:Label runat="server" ID="LabelUriPart"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:TextBox runat="server" ID="TextBoxUri" ValidationGroup="PageSett"></asp:TextBox>
+                           <div class="col-sm-6">
+                                <asp:TextBox runat="server" ID="TextBoxUri" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
 
-                        <div class="input">
-                            <div class="layout-left">
+                         <div class="form-group">
+                        <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="TextBoxMenuGroup" ID="Label2" Text="Menu group" runat="server"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number"></asp:TextBox>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
 
                         
 
-                        <div class="input">
-                            <div class="layout-left">
+                         <div class="form-group">
+                        <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="InputRedirectToUrl1" ID="Label7" Text="Redirect to URL" runat="server"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url"></asp:TextBox>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
 
-                        <div class="checkbox">
-                            <div class="layout-left">
+                         <div class="form-group">
+                        <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="CheckBoxBreakPersitence" ID="Label6" Text="Break persistance" runat="server"></asp:Label>
                             </div>
-                            <div class="layout-right">
-                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" />
+                            <div class="col-sm-8">
+                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" CssClass="form-control" />
                             </div>
                         </div>
  
@@ -116,15 +116,18 @@
                         
 			        </div>
                     
-				    <div class="submit-links">
-						<uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+				    <div class="form-group">
+                        <div class="col-sm-4">
+						    <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                        </div>
 
-
-					    <asp:button id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
-			            <asp:button ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
-			            <asp:button ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
-			            <asp:button ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" />
-                        <asp:button	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                        <div class="col-sm-8">
+					        <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
+			                <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
+			                <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
+			                <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" />
+                            <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                        </div>
 				    </div>
                     
                 </section>

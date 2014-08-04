@@ -213,7 +213,7 @@ namespace OneMainWeb.adm
             List<BOModule> modules = BWebsite.ListModules();
             foreach (BOModule module in modules)
             {
-                ddlModuleTypes.Items.Add(new ListItem(ResourceManager.GetString("$" + module.Name), module.Id.ToString()));
+                ddlModuleTypes.Items.Add(new ListItem(module.Name, module.Id.ToString()));
             }
         }
 
@@ -492,7 +492,7 @@ namespace OneMainWeb.adm
             }
             strExtension = "<img src='" + strExtension + "' alt='' />";
 
-            return ResourceManager.GetString("$" + name.ToString()) + " " + strExtension + " [" + id.ToString() + "]";
+            return "$" + name.ToString() + " " + strExtension + " [" + id.ToString() + "]";
         }
 
         protected string RenderPageStatus()
@@ -596,10 +596,10 @@ namespace OneMainWeb.adm
                     InitializeControls();
                     break;
                 case BWebsite.DeletePageByIdResult.HasChildren:
-                    Notifier1.Warning = ResourceManager.GetString("$has_children_delete_not_possible");
+                    Notifier1.Warning = "$has_children_delete_not_possible";
                     break;
                 case BWebsite.DeletePageByIdResult.Error:
-                    Notifier1.Warning = ResourceManager.GetString("$delete_page_error");
+                    Notifier1.Warning = "$delete_page_error";
                     break;
             }
         }

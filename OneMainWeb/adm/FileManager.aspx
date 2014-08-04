@@ -9,7 +9,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         
 <one:Notifier runat="server" ID="Notifier1" />
-    <div class="searchFull">
+    <div class="adminSection">
 		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4">
             <asp:FileUpload ID="fileUpload" runat="server" />
             <asp:LinkButton ID="cmdUpload" ValidationGroup="upload" OnClick="cmdUpload_Click"  runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Upload" CssClass="btn btn-success" />

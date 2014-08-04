@@ -24,6 +24,8 @@ namespace One.Net.BLL
 			this.ContentId = contentID;
 		}
 
+        public string PreviewUrl { get; set; }
+
 		public Dictionary<string, BOSetting> Settings
 		{
 			get { return siteSettings; }

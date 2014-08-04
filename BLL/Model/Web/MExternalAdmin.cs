@@ -40,18 +40,6 @@ namespace One.Net.BLL.Web
         {
             get { return Thread.CurrentThread.CurrentCulture.LCID; }
         }
-
-        public static string LocalizationFile { get; set;}
-
-        protected void Page_PreRender(object sender, EventArgs e)
-        {
-            AdminHelper.TranslateControls(Controls, LocalizationFile);
-        }
-
-        public static string GetString(string keyword)
-        {
-            return ResourceManager.GetString(keyword, LocalizationFile);
-        }
     }
 
     public class AdminExternalEventArgs : EventArgs

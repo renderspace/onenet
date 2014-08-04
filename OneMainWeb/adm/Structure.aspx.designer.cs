@@ -289,7 +289,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonDelete;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
         
         /// <summary>
         /// ButtonUndoDelete control.
@@ -298,7 +298,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonUndoDelete;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonUndoDelete;
         
         /// <summary>
         /// ButtonPublish control.
@@ -307,7 +307,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonPublish;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonPublish;
         
         /// <summary>
         /// ButtonUnPublish control.
@@ -316,7 +316,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonUnPublish;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonUnPublish;
         
         /// <summary>
         /// cmdSave control.
@@ -325,7 +325,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSave;
+        protected global::System.Web.UI.WebControls.LinkButton cmdSave;
         
         /// <summary>
         /// LiteralModulesOnPage control.

@@ -33,6 +33,33 @@ namespace OneMainWeb
         protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
 
+        public int GridViewPageSize
+        {
+            get { return 15; }
+        }
+
+        protected string GridViewSortExpression
+        {
+            get
+            {
+                if (ViewState["sortField"] == null)
+                    ViewState["sortField"] = "";
+                return (string)ViewState["sortField"];
+            }
+            set { ViewState["sortField"] = value; }
+        }
+
+        public SortDir GridViewSortDirection
+        {
+            get
+            {
+                if (ViewState["sortDirection"] == null)
+                    ViewState["sortDirection"] = SortDir.Ascending;
+                return (SortDir)ViewState["sortDirection"];
+            }
+            set { ViewState["sortDirection"] = value; }
+        }
+
         public AuthorizationHelper Authorization
         {
             get { return authorizationHelper; }
@@ -131,45 +158,6 @@ namespace OneMainWeb
         }
 
 
-       
-
-        override protected void OnInit(EventArgs e)
-        {
-            base.OnInit(e);
-            PreRenderComplete += AdminMetaPage2_PreRenderComplete;
-        }
-
-        private void AdminMetaPage2_PreRenderComplete(object sender, EventArgs e)
-        {
-            AdminHelper.TranslateControls(Controls, ResourceManager.DEFAULT_RESOURCE_FILE);
-            if (Master != null)
-                TranslateMasterControls(Master.Controls);
-        }
-
-        private static void TranslateMasterControls(ControlCollection controls)
-        {
-            foreach (Control ctrl in controls)
-            {
-                if (ctrl is Menu)
-                {
-                    Menu menu = ctrl as Menu;
-                    TranslateMenuItems(menu.Items);
-                }
-
-                TranslateMasterControls(ctrl.Controls);
-            }
-        }
-
-        private static void TranslateMenuItems(MenuItemCollection items)
-        {
-            foreach (MenuItem item in items)
-            {
-                item.Text = ResourceManager.GetString(item.Text);
-                TranslateMenuItems(item.ChildItems);
-            }            
-        }
-
-
         protected string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
         {
             string strReturn = "";
@@ -195,7 +183,7 @@ namespace OneMainWeb
         protected static void AddEmptyItem(System.Web.UI.WebControls.DropDownList ddl)
         {
             if (ddl.Items.FindByValue("-1") == null)
-                ddl.Items.Insert(0, new ListItem(ResourceManager.GetString("$label_no_filter"), "-1"));
+                ddl.Items.Insert(0, new ListItem("$label_no_filter", "-1"));
         }
 
         

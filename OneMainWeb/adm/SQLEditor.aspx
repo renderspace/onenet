@@ -3,28 +3,28 @@
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
-    <div class="topStructure">
-
-    </div>
     
-    <div class="searchFull">
-<%--
-		<two:DropDownList id="DropDownConnection" runat="server" />
---%>
-        <asp:DropDownList id="DropDownConnection" runat="server" />
-	    <div class="input"><asp:TextBox id="txtSql" runat="server" TextMode="MultiLine" Width="100%" Rows="10" /></div>
-	    <div class="save"><asp:Button id="cmdExec" runat="server" OnClick="CmdExec_Click" Text="$execute" /></div>
+    <div class="adminSection form-horizontal">
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <asp:DropDownList id="DropDownConnection" runat="server" />
+            </div>
+        </div>
+	    <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <asp:TextBox id="txtSql" runat="server" TextMode="MultiLine" Rows="20" CssClass="form-control" />
+            </div>
+	    </div>
+
+	    <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <asp:LinkButton id="cmdExec" runat="server" OnClick="CmdExec_Click" Text="Execute" CssClass="btn btn-danger" />
+            </div>     
+        </div>		
     </div>
-    <div class="centerFull">      
-        
-	
-		<div class="biggv">   
-			<asp:DataGrid id="sqlGrid" Runat="server" AutoGenerateColumns="true" CssClass="gv" BorderWidth="0">
-				<AlternatingItemStyle CssClass="talt" />
-				<HeaderStyle CssClass="theader" />
-				<FooterStyle CssClass="tfooter" />
-			</asp:DataGrid>
-		</div>
-    </div>
+
+    <asp:GridView id="sqlGrid" Runat="server" AutoGenerateColumns="true" CssClass="table table-hover" BorderWidth="0">
+			</asp:GridView>
 		
 </asp:Content>

@@ -10,6 +10,7 @@ using OneMainWeb.AdminControls;
 
 using One.Net.BLL.Utility;
 using System.Globalization;
+using System.IO;
 
 namespace OneMainWeb.adm
 {
@@ -17,16 +18,11 @@ namespace OneMainWeb.adm
     {
         BWebsite websiteB = new BWebsite();
 
-        private List<BOWebSite> Websites
-        {
-            get { return ViewState["Websites"] != null ? ViewState["Websites"] as List<BOWebSite> : null; }
-            set { ViewState["Websites"] = value; }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                GridViewWebsitesLoad();
                 var languages = websiteB.ListLanguages();
                 foreach (var language in languages)
                     DropDownList1.Items.Add(new ListItem((new CultureInfo(language)).EnglishName, language.ToString()));
@@ -35,29 +31,37 @@ namespace OneMainWeb.adm
 
         
 
-        private void GridViewWebsitesLoad(bool reloadData)
+        private void GridViewWebsitesLoad()
         {
-            if (Websites == null || reloadData)
-                Websites = websiteB.List();
-            GridViewWebsites.DataSource = Websites;
+            GridViewWebsites.DataSource = websiteB.List();
             GridViewWebsites.DataBind();
         }
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
         {
-            var title = InputTitle.Text;
-            var lcid = Int32.Parse(DropDownList1.SelectedValue);
-
             var website = new BOWebSite();
-            website.Title = title;
+            website.Title = InputTitle.Text;
             website.SubTitle = "";
             website.Teaser = "";
             website.Html = "";
-            website.LanguageId = lcid;
+            website.LanguageId = Int32.Parse(DropDownList1.SelectedValue);
             website.ContentId = null;
             website.PrincipalCreated = User.Identity.Name;
-            websiteB.ChangeWebsite(website);
-            MultiView1.ActiveViewIndex = 0;
+            website.PreviewUrl = TextBoxPreviewUrl.Text;
+
+            var testConnString = "server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=test2;Pooling=true;";
+
+            var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), testConnString);
+            if (result == BWebsite.AddWebSiteResult.Success)
+            {
+                Notifier1.Title = "Created";
+                MultiView1.ActiveViewIndex = 0;
+            }
+            else
+            {
+                Notifier1.ExceptionName = "Failed";
+                Notifier1.ExceptionMessage = result.ToString();
+            }
         }
 
         protected void ButtonStartWizard_Click(object sender, EventArgs e)
@@ -70,8 +74,7 @@ namespace OneMainWeb.adm
             switch (MultiView1.ActiveViewIndex)
             { 
                 case 0:
-                    GridViewWebsitesLoad(true);
-                    
+                    GridViewWebsitesLoad();
                     break;
                 case 1:
                     

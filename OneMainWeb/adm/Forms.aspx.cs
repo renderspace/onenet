@@ -157,7 +157,7 @@ namespace OneMainWeb
                             ddlFormTypes.SelectedValue = BOForm.FORM_TYPE_POLL;
                             txtFormThankYouNote.Visible = false;
 
-                            txtFormDescription.Value = SessionForm.Teaser;
+                            txtFormDescription.Text = SessionForm.Teaser;
                             txtFormDescription.Visible = true;
 
                             chkAllowModifyInSubmission.Visible = false;
@@ -166,10 +166,10 @@ namespace OneMainWeb
                     case FormTypes.Questionaire:
                         {
                             ddlFormTypes.SelectedValue = BOForm.FORM_TYPE_QUESTIONAIRE;
-                            txtFormThankYouNote.Value = SessionForm.Html;
+                            txtFormThankYouNote.Text = SessionForm.Html;
                             txtFormThankYouNote.Visible = true;
 
-                            txtFormDescription.Value = SessionForm.Teaser;
+                            txtFormDescription.Text = SessionForm.Teaser;
                             txtFormDescription.Visible = true;
 
                             if ( SessionForm.FirstSectionKey.HasValue )
@@ -181,12 +181,12 @@ namespace OneMainWeb
                         }
                 }
 
-                txtFormName.Value = SessionForm.Title;
-                InputFormPrivateName.Value = SessionForm.SubTitle;
-                txtSendTo.Value = SessionForm.SendToString;
+                txtFormName.Text = SessionForm.Title;
+                InputFormPrivateName.Text = SessionForm.SubTitle;
+                txtSendTo.Text = SessionForm.SendToString;
                 chkAllowModifyInSubmission.Checked = SessionForm.AllowModifyInSubmission;
                 chkAllowMultipleSubmissions.Checked = SessionForm.AllowMultipleSubmissions;
-                InputCompletionRedirect.Value = SessionForm.CompletionRedirect;
+                InputCompletionRedirect.Text = SessionForm.CompletionRedirect;
 
                 ddlFormTypes.Enabled = (SessionForm.Sections.Count == 0 && SessionForm.SubmissionCount == 0);
                 ddlUpdateSectionTypes.Enabled = (SessionForm.Sections.Count <= 1 && SessionForm.SubmissionCount == 0);
@@ -241,10 +241,10 @@ namespace OneMainWeb
                 // Now load Session values
                 ddlUpdateSectionTypes.SelectedValue = SessionForm.Sections[sectionId].SectionType.ToString();
 
-                txtSectionName.Value = SessionForm.Sections[sectionId].Title;
-                InputSectionDescription.Value = SessionForm.Sections[sectionId].Teaser;
+                txtSectionName.Text = SessionForm.Sections[sectionId].Title;
+                InputSectionDescription.Text = SessionForm.Sections[sectionId].Teaser;
 
-                InputSectionOnClientClick.Value = SessionForm.Sections[sectionId].OnClientClick;
+                InputSectionOnClientClick.Text = SessionForm.Sections[sectionId].OnClientClick;
                 ddlUpdateSectionTypes.Enabled = (SessionForm.Sections.Count <= 1 && SessionForm.SubmissionCount == 0);
             }
         }
@@ -263,8 +263,8 @@ namespace OneMainWeb
                 plhUpdateQuestion.Visible = true;
 
                 // Load common Session values for Poll and Questionaire
-                txtQuestionText.Value = question.Title;
-                txtQuestionDescription.Value = question.Teaser;
+                txtQuestionText.Text = question.Title;
+                txtQuestionDescription.Text = question.Teaser;
                 chkAnswerIsRequired.Checked = question.IsAnswerRequired;
 
                 if (SessionForm.SubmissionCount > 0)
@@ -372,7 +372,7 @@ namespace OneMainWeb
                 question.Answers[question.FirstAnswerKey.Value] != null &&
                 question.Answers[question.FirstAnswerKey.Value].MaxChars.HasValue)
             {
-                txtMaxChars.Value = question.Answers[question.FirstAnswerKey.Value].MaxChars.Value.ToString();
+                txtMaxChars.Text = question.Answers[question.FirstAnswerKey.Value].MaxChars.Value.ToString();
             }
         }
 
@@ -385,11 +385,11 @@ namespace OneMainWeb
             {
                 if (question.Answers[question.FirstAnswerKey.Value].MaxChars.HasValue)
                 {
-                    txtMaxChars.Value = question.Answers[question.FirstAnswerKey.Value].MaxChars.Value.ToString();
+                    txtMaxChars.Text = question.Answers[question.FirstAnswerKey.Value].MaxChars.Value.ToString();
                 }
                 if (question.Answers[question.FirstAnswerKey.Value].NumberOfRows.HasValue)
                 {
-                    txtNumberOfRows.Value = question.Answers[question.FirstAnswerKey.Value].NumberOfRows.Value.ToString();
+                    txtNumberOfRows.Text = question.Answers[question.FirstAnswerKey.Value].NumberOfRows.Value.ToString();
                 }
             }
         }
@@ -441,10 +441,10 @@ namespace OneMainWeb
                 chkAllowBlankAnswersInMenu.Visible = false;
             }
 
-            txtAnswers.Value = "";
+            txtAnswers.Text = "";
             foreach (BOAnswer answer in question.Answers.Values)
             {
-                txtAnswers.Value += answer.Title + "\n";
+                txtAnswers.Text += answer.Title + "\n";
             }
         }
 
@@ -464,7 +464,7 @@ namespace OneMainWeb
             {
                 if (question.Answers[question.FirstAnswerKey.Value].MaxFileSize.HasValue)
                 {
-                    txtMaximumFileSize.Value = question.Answers[question.FirstAnswerKey.Value].MaxFileSize.Value.ToString();
+                    txtMaximumFileSize.Text = question.Answers[question.FirstAnswerKey.Value].MaxFileSize.Value.ToString();
                 }
 
                 string[] mimeTypes = question.Answers[question.FirstAnswerKey.Value].AllowedMimeTypes.Split('|');
@@ -496,7 +496,7 @@ namespace OneMainWeb
         {
             foreach (ListItem item in ddlFormTypes.Items)
             {
-                item.Text = ResourceManager.GetString("$" + item.Text);
+                item.Text = item.Text;
             }
         }
 
@@ -504,7 +504,7 @@ namespace OneMainWeb
         {
             foreach (ListItem item in ddlUpdateSectionTypes.Items)
             {
-                item.Text = ResourceManager.GetString("$" + item.Text);
+                item.Text = item.Text;
             }
         }
 
@@ -603,7 +603,7 @@ namespace OneMainWeb
                             answerValue.InnerText = SessionSubmission.SubmittedQuestions[answer.ParentId.Value].SubmittedAnswers[answer.Id.Value].SubmittedFile.Name;
                             if (SessionSubmission.SubmittedQuestions[answer.ParentId.Value].SubmittedAnswers[answer.Id.Value].SubmittedFile.Folder == null )
                             {
-                                answerValue.InnerText = ResourceManager.GetString("$file_removed_from_folder") + " " + answerValue.InnerText;
+                                answerValue.InnerText = "$file_removed_from_folder" + " " + answerValue.InnerText;
                             }
                         }
                     }
@@ -695,7 +695,7 @@ namespace OneMainWeb
                 Response.Clear();
                 Response.Buffer = true;
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + ResourceManager.GetString("$label_export_form_submission_trend_data_file_name") + "-" + formId.ToString() + ".xls\";");
+                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$label_export_form_submission_trend_data_file_name" + "-" + formId.ToString() + ".xls\";");
                 Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
                 Response.Charset = "";
 
@@ -731,8 +731,8 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_date_and_time") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_total_forms_submitted") + @"</th>
+                            <th class=""generalsmall"">" + "$label_date_and_time" + @"</th>
+                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
                         </tr>");
 
                 Dictionary<DateTime, int> daysHours = new Dictionary<DateTime, int>();
@@ -755,8 +755,8 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_day") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_total_forms_submitted") + @"</th>
+                            <th class=""generalsmall"">" + "$label_day" + @"</th>
+                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
                         </tr>");
 
                 Dictionary<DateTime, int> days = new Dictionary<DateTime, int>();
@@ -779,8 +779,8 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_hour") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_total_forms_submitted") + @"</th>
+                            <th class=""generalsmall"">" + "$label_hour" + @"</th>
+                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
                         </tr>");
 
                 Dictionary<DateTime, int> hours = new Dictionary<DateTime, int>();
@@ -826,7 +826,7 @@ namespace OneMainWeb
                 Response.Clear();
                 Response.Buffer = true;
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + ResourceManager.GetString("$export_open_submissions_file_name") + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
+                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$export_open_submissions_file_name" + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
                 Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.Charset = "";
@@ -863,16 +863,16 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$answer_legend") + @"</th>
+                            <th class=""generalsmall"">" + "$answer_legend" + @"</th>
                         </tr>
                         <tr>
-                            <td class=""singleAnswer"">" + ResourceManager.GetString("$single_answer") + @"</td>
+                            <td class=""singleAnswer"">" + "$single_answer" + @"</td>
                         </tr>                        
                         <tr>
-                            <td class=""openAnswer"">" + ResourceManager.GetString("$open_answer") + @"</td>
+                            <td class=""openAnswer"">" + "$open_answer" + @"</td>
                         </tr>
                         <tr>
-                            <td class=""multipleChoiceAnswer"">" + ResourceManager.GetString("$multiple_choice_answer") + @"</td>
+                            <td class=""multipleChoiceAnswer"">" + "$multiple_choice_answer" + @"</td>
                         </tr></table><br />");
 
                 strw.GetStringBuilder().Append(
@@ -956,7 +956,7 @@ namespace OneMainWeb
                 Response.Clear();
                 Response.Buffer = true;
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + ResourceManager.GetString("$export_aggregate_submissions_file_name") + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
+                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$export_aggregate_submissions_file_name" + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
                 Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
                 Response.Charset = "";
 
@@ -992,18 +992,18 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>    
-                            <th class=""generalsmall"" colspan=""2"">" + ResourceManager.GetString("$export_details") + @"</th>
+                            <th class=""generalsmall"" colspan=""2"">" + "$export_details" + @"</th>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$export_date") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$export_date" + @"</td>
                             <td class=""general"" align=""right"">" + DateTime.Now.ToShortDateString() + @"</td>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$export_time") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$export_time" + @"</td>
                             <td class=""general"" align=""right"">" + DateTime.Now.ToShortTimeString() + @"</td>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$export_principal") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$export_principal" + @"</td>
                             <td class=""general"" align=""right"">" + this.User.Identity.Name + @"</td>
                         </tr>
                     </table><br />");
@@ -1011,18 +1011,18 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"" colspan=""2"">" + ResourceManager.GetString("$form_details") + @"</th>
+                            <th class=""generalsmall"" colspan=""2"">" + "$form_details" + @"</th>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$form_title") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$form_title" + @"</td>
                             <td class=""general"" align=""right"">" + SessionForm.Title + @"</td>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$form_type") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$form_type" + @"</td>
                             <td class=""general"" align=""right"">" + SessionForm.FormType + @"</td>
                         </tr>
                         <tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$form_submission_count") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$form_submission_count" + @"</td>
                             <td class=""general"" align=""right"">" + SessionForm.SubmissionCount + @"</td>
                         </tr>");
 
@@ -1030,7 +1030,7 @@ namespace OneMainWeb
                 {
                     strw.GetStringBuilder().Append(
                         @"<tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$first_form_submission_date") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$first_form_submission_date" + @"</td>
                             <td class=""general"" align=""right"">" + SessionForm.FirstSubmissionDate.Value + @"</td>
                           </tr>");
                 }
@@ -1039,7 +1039,7 @@ namespace OneMainWeb
                 {
                     strw.GetStringBuilder().Append(
                         @"<tr>
-                            <td class=""generalsmall"" align=""center"">" + ResourceManager.GetString("$last_form_submission_date") + @"</td>
+                            <td class=""generalsmall"" align=""center"">" + "$last_form_submission_date" + @"</td>
                             <td class=""general"" align=""right"">" + SessionForm.LastSubmissionDate.Value + @"</td>
                           </tr>");
                 }
@@ -1049,28 +1049,28 @@ namespace OneMainWeb
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$answer_legend") + @"</th>
+                            <th class=""generalsmall"">" + "$answer_legend" + @"</th>
                         </tr>
                         <tr>
-                            <td class=""singleAnswer"">" + ResourceManager.GetString("$single_answer") + @"</td>
+                            <td class=""singleAnswer"">" + "$single_answer" + @"</td>
                         </tr>                        
                         <tr>
-                            <td class=""openAnswer"">" + ResourceManager.GetString("$open_answer") + @"</td>
+                            <td class=""openAnswer"">" + "$open_answer" + @"</td>
                         </tr>
                         <tr>
-                            <td class=""multipleChoiceAnswer"">" + ResourceManager.GetString("$multiple_choice_answer") + @"</td>
+                            <td class=""multipleChoiceAnswer"">" + "$multiple_choice_answer" + @"</td>
                         </tr></table><br />");
 
 
                 strw.GetStringBuilder().Append(
                     @"<table border=""1px"">
                         <tr>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_form_section_idx_question_idx") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_form_question") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_form_question_total_answers") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_form_question_answers") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$label_form_question_total_individual_answers") + @"</th>
-                            <th class=""generalsmall"">" + ResourceManager.GetString("$percentage_for_all_submissions") + @"</th>
+                            <th class=""generalsmall"">" + "$label_form_section_idx_question_idx" + @"</th>
+                            <th class=""generalsmall"">" + "$label_form_question" + @"</th>
+                            <th class=""generalsmall"">" + "$label_form_question_total_answers" + @"</th>
+                            <th class=""generalsmall"">" + "$label_form_question_answers" + @"</th>
+                            <th class=""generalsmall"">" + "$label_form_question_total_individual_answers" + @"</th>
+                            <th class=""generalsmall"">" + "$percentage_for_all_submissions" + @"</th>
                         </tr>");
 
 
@@ -1092,11 +1092,11 @@ namespace OneMainWeb
                             string answerTitle = "";
                             if (answer.AnswerType == AnswerTypes.SingleText)
                             {
-                                answerTitle = ResourceManager.GetString("$TextualAnswer");
+                                answerTitle = "$TextualAnswer";
                             }
                             else if (answer.AnswerType == AnswerTypes.SingleFile)
                             {
-                                answerTitle = ResourceManager.GetString("$FileAnswer");
+                                answerTitle = "$FileAnswer";
                             }
                             else
                             {
@@ -1548,7 +1548,7 @@ namespace OneMainWeb
             Random rand = new Random();
             form.Id = rand.Next();
 
-            form.Title = txtAddForm.Value;
+            form.Title = txtAddForm.Text;
             form.SendToString = "";
             form.SubTitle = "";
             form.Teaser = "";
@@ -1566,7 +1566,7 @@ namespace OneMainWeb
             ElementMap.Add(ElementStringId, new BOAdminFormElement(ElementStringId, "", false, true, form.Title));
 
             FormSubmissions = null;
-            txtAddForm.Value = "";
+            txtAddForm.Text = "";
             FormTree_DataBind();
             LoadFormTabControls();
         }
@@ -1575,16 +1575,16 @@ namespace OneMainWeb
         {
             if (SessionForm != null)
             {
-                ElementMap["Form" + SessionForm.Id.Value].Title = txtFormName.Value;
-                SessionForm.Title = txtFormName.Value;
-                SessionForm.SubTitle = InputFormPrivateName.Value;
-                SessionForm.Html = txtFormThankYouNote.Value;
-                SessionForm.Teaser = txtFormDescription.Value;
-                SessionForm.SendToString = txtSendTo.Value;
+                ElementMap["Form" + SessionForm.Id.Value].Title = txtFormName.Text;
+                SessionForm.Title = txtFormName.Text;
+                SessionForm.SubTitle = InputFormPrivateName.Text;
+                SessionForm.Html = txtFormThankYouNote.Text;
+                SessionForm.Teaser = txtFormDescription.Text;
+                SessionForm.SendToString = txtSendTo.Text;
                 SessionForm.FormType = (FormTypes)Enum.Parse(typeof(FormTypes), ddlFormTypes.SelectedValue);
                 SessionForm.AllowModifyInSubmission = chkAllowModifyInSubmission.Checked;
                 SessionForm.AllowMultipleSubmissions = chkAllowMultipleSubmissions.Checked;
-                SessionForm.CompletionRedirect = InputCompletionRedirect.Value;
+                SessionForm.CompletionRedirect = InputCompletionRedirect.Text;
 
                 foreach (BOSection section in SessionForm.Sections.Values)
                 {
@@ -1608,7 +1608,7 @@ namespace OneMainWeb
             section.Id = rand.Next();
             section.ParentId = SessionForm.Id;
             section.Idx = SessionForm.Sections.Count + 1;
-            section.Title = txtAddSection.Value;
+            section.Title = txtAddSection.Text;
             section.SubTitle = "";
             section.Teaser = "";
             section.Html = "";
@@ -1624,7 +1624,7 @@ namespace OneMainWeb
 
             ElementMap.Add("Section" + section.Id.Value, new BOAdminFormElement("Section" + section.Id.Value, "Form" + SessionForm.Id.Value, false, true, section.Title));
             SessionForm.Sections.Add(section.Id.Value, section);
-            txtAddSection.Value = "";
+            txtAddSection.Text = "";
             FormTree_DataBind();
             LoadFormTabControls();
         }
@@ -1637,10 +1637,10 @@ namespace OneMainWeb
             {
                 BOSection section = SessionForm.Sections[sectionId];
 
-                section.Title = txtSectionName.Value;
-                section.Teaser = InputSectionDescription.Value;
-                section.OnClientClick = InputSectionOnClientClick.Value;
-                ElementMap["Section" + section.Id.Value].Title = txtSectionName.Value;
+                section.Title = txtSectionName.Text;
+                section.Teaser = InputSectionDescription.Text;
+                section.OnClientClick = InputSectionOnClientClick.Text;
+                ElementMap["Section" + section.Id.Value].Title = txtSectionName.Text;
 
                 FormTree_DataBind();
                 LoadFormTabControls();
@@ -1660,7 +1660,7 @@ namespace OneMainWeb
                 question.Id = rand.Next();
                 question.ParentId = sectionId;
                 question.Idx = section.Questions.Count + 1;
-                question.Title = txtAddQuestion.Value;
+                question.Title = txtAddQuestion.Text;
                 question.SubTitle = "";
                 question.Teaser = "";
                 question.Html = "";
@@ -1675,7 +1675,7 @@ namespace OneMainWeb
                 BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "","", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 255, 0, AdditionalFieldTypes.None, false);
                 question.Answers.Add(answer.Id.Value, answer);
                 section.Questions.Add(question.Id.Value, question);
-                txtAddQuestion.Value = "";
+                txtAddQuestion.Text = "";
                 FormTree_DataBind();
                 LoadFormTabControls();
             }
@@ -1736,9 +1736,9 @@ namespace OneMainWeb
 
             if (question != null && question.Id.HasValue && question.ParentId.HasValue)
             {
-                ElementMap["Question" + question.Id.Value].Title = txtQuestionText.Value;
-                question.Title = txtQuestionText.Value;
-                question.Teaser = txtQuestionDescription.Value;
+                ElementMap["Question" + question.Id.Value].Title = txtQuestionText.Text;
+                question.Title = txtQuestionText.Text;
+                question.Teaser = txtQuestionDescription.Text;
                 question.IsAnswerRequired = chkAnswerIsRequired.Checked;
                 question.Answers.Clear();
 
@@ -1772,7 +1772,7 @@ namespace OneMainWeb
                                     case FormHelper.FrontEndMenuTypes.CheckBox: answerType = AnswerTypes.Checkbox; break;
                                 }
 
-                                string[] answerStrings = txtAnswers.Value.Trim().Split('\n');
+                                string[] answerStrings = txtAnswers.Text.Trim().Split('\n');
                                 foreach (string answerText in answerStrings)
                                 {
                                     rand = (question.LastAnswerKey.HasValue ? new Random(question.LastAnswerKey.Value) : new Random());
@@ -1801,7 +1801,7 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.SingleLineOfText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), 0, AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Captcha:
@@ -1814,14 +1814,14 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.MultiLineText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Value), FormatTool.GetInteger(txtNumberOfRows.Value), AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), FormatTool.GetInteger(txtNumberOfRows.Text), AdditionalFieldTypes.None, false);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.FileUpload:
                         {
                             question.ValidationType = ValidationTypes.None;
                             BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleFile, 0, 0, AdditionalFieldTypes.None, false);
-                            answer.MaxFileSize = (FormatTool.GetInteger(txtMaximumFileSize.Value) <= 0 ? (int?)null : FormatTool.GetInteger(txtMaximumFileSize.Value));
+                            answer.MaxFileSize = (FormatTool.GetInteger(txtMaximumFileSize.Text) <= 0 ? (int?)null : FormatTool.GetInteger(txtMaximumFileSize.Text));
                             foreach (ListItem item in chkAllowedMimeTypes.Items)
                             {
                                 if (item.Selected)
@@ -2085,7 +2085,7 @@ namespace OneMainWeb
 
             foreach (int val in Enum.GetValues(typeof(FrontEndQuestionTypes)))
             {
-                types.Add(val, ResourceManager.GetString("$" + Enum.GetName(typeof(FrontEndQuestionTypes), val)));
+                types.Add(val, Enum.GetName(typeof(FrontEndQuestionTypes), val));
             }
 
             return types;
@@ -2097,7 +2097,7 @@ namespace OneMainWeb
 
             foreach (int val in Enum.GetValues(typeof(FrontEndMenuTypes)))
             {
-                types.Add(val, ResourceManager.GetString("$" + Enum.GetName(typeof(FrontEndMenuTypes), val)));
+                types.Add(val, Enum.GetName(typeof(FrontEndMenuTypes), val));
             }
 
             return types;
