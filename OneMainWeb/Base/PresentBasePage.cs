@@ -79,40 +79,37 @@ namespace OneMainWeb
             var customBodyCode = "";
             var customHeadCode = "";
 
-            if (webSite.Settings.ContainsKey("GoogleAnalyticsCode"))
+            if (webSite.HasGoogleAnalytics)
             {
                 string code = webSite.Settings["GoogleAnalyticsCode"].Value;
-                if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
+                var enableCookieConsent = false;
+                if (webSite.Settings.ContainsKey("GAEnableCookieConsent"))
                 {
-                    var enableCookieConsent = false;
-                    if (webSite.Settings.ContainsKey("GAEnableCookieConsent"))
-                    {
-                        enableCookieConsent = FormatTool.GetBoolean(webSite.Settings["GAEnableCookieConsent"].Value);
-                    }
+                    enableCookieConsent = FormatTool.GetBoolean(webSite.Settings["GAEnableCookieConsent"].Value);
+                }
 
-                    Literal gaCode = new Literal();
-                    if (PublishFlag)
-                    {
-                        gaCode.Text += enableCookieConsent ? @"<script type=""text/plain"" class=""cc-onconsent-analytics"">" : @"<script type=""text/javascript"">";
-                        gaCode.Text += @"
+                Literal gaCode = new Literal();
+                if (PublishFlag)
+                {
+                    gaCode.Text += enableCookieConsent ? @"<script type=""text/plain"" class=""cc-onconsent-analytics"">" : @"<script type=""text/javascript"">";
+                    gaCode.Text += @"
 //<![CDATA[
 var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '" + code + @"']);
-  _gaq.push(['_trackPageview']);
+_gaq.push(['_setAccount', '" + code + @"']);
+_gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 //]]>
 </script>";
-                    }
-                    else
-                        gaCode.Text = "<!-- GoogleAnalyticsCode will appear here on production servers -->";
-
-                    customBodyCode += gaCode.Text;
                 }
+                else
+                    gaCode.Text = "<!-- GoogleAnalyticsCode will appear here on production servers -->";
+
+                customBodyCode += gaCode.Text;
             }
 
 
@@ -168,15 +165,22 @@ var _gaq = _gaq || [];
                 Page.Header.Controls.Add(metaUnicode);
 
 
-                if (page.Settings.ContainsKey("MetaDescription"))
+                if (!string.IsNullOrWhiteSpace(page.Teaser))
                 {
                     HtmlMeta metaDescription = new HtmlMeta();
-                    metaDescription.ID = "HtmlMetaDescription";
+                    metaDescription.ID = "HtmlMetaDescription1";
                     metaDescription.Name = "description";
-                    metaDescription.Content = StringTool.StripHtmlTags(page.Settings["MetaDescription"].Value);
+                    metaDescription.Content = StringTool.StripHtmlTags(page.Teaser);
 
                     if (metaDescription.Content.Length > 1)
                         Page.Header.Controls.Add(metaDescription);
+
+                    HtmlMeta metaOgDescription = new HtmlMeta();
+                    metaOgDescription.ID = "OgDescription1";
+                    metaOgDescription.Attributes.Add("property", "og:description");
+                    metaOgDescription.Content = HttpUtility.HtmlEncode(page.Teaser);
+                    if (metaOgDescription.Content.Length > 0)
+                        Page.Header.Controls.Add(metaOgDescription);
                 }
 
                 if (page.Settings.ContainsKey("MetaKeywords"))
@@ -189,15 +193,6 @@ var _gaq = _gaq || [];
                         Page.Header.Controls.Add(metaKeywords);
                 }
 
-                if (page.Settings.ContainsKey("PageOgDescription"))
-                {
-                    HtmlMeta metaOgDescription = new HtmlMeta();
-                    metaOgDescription.ID = "OgDescription1";
-                    metaOgDescription.Attributes.Add("property", "og:description");
-                    metaOgDescription.Content = HttpUtility.HtmlEncode(page.Settings["PageOgDescription"].Value);
-                    if (metaOgDescription.Content.Length > 0)
-                        Page.Header.Controls.Add(metaOgDescription);
-                }
 
                 if (page.Settings.ContainsKey("RobotsIndex") && page.Settings.ContainsKey("RobotsFollow"))
                 {

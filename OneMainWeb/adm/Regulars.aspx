@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Regulars.aspx.cs" Inherits="OneMainWeb.adm.Regulars" %>
+﻿<%@ Page Title="One.NET Regulars" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Regulars.aspx.cs" Inherits="OneMainWeb.adm.Regulars" %>
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>

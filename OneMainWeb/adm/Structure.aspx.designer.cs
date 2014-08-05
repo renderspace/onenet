@@ -49,13 +49,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonAddSubPage;
         
         /// <summary>
-        /// pageTree control.
+        /// TreeViewPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TreeView pageTree;
+        protected global::System.Web.UI.WebControls.TreeView TreeViewPages;
         
         /// <summary>
         /// MultiView1 control.
@@ -65,24 +65,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.MultiView MultiView1;
-        
-        /// <summary>
-        /// View0 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View0;
-        
-        /// <summary>
-        /// LiteralNoAccess control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralNoAccess;
         
         /// <summary>
         /// View1 control.
@@ -130,15 +112,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Button cmdMovePageDown;
         
         /// <summary>
-        /// LabelTitle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelTitle;
-        
-        /// <summary>
         /// TextBoxTitle control.
         /// </summary>
         /// <remarks>
@@ -146,15 +119,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxTitle;
-        
-        /// <summary>
-        /// LabelDescription control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelDescription;
         
         /// <summary>
         /// TextBoxDescription control.
@@ -166,15 +130,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TextBox TextBoxDescription;
         
         /// <summary>
-        /// lblTemplate1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTemplate1;
-        
-        /// <summary>
         /// ddlPageTemplate control.
         /// </summary>
         /// <remarks>
@@ -182,15 +137,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPageTemplate;
-        
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// LabelUriPart control.
@@ -211,15 +157,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TextBox TextBoxUri;
         
         /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
         /// TextBoxMenuGroup control.
         /// </summary>
         /// <remarks>
@@ -229,15 +166,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.TextBox TextBoxMenuGroup;
         
         /// <summary>
-        /// Label7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label7;
-        
-        /// <summary>
         /// InputRedirectToUrl1 control.
         /// </summary>
         /// <remarks>
@@ -245,6 +173,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox InputRedirectToUrl1;
+        
+        /// <summary>
+        /// TextBoxSubtitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxSubtitle;
         
         /// <summary>
         /// CheckBoxBreakPersitence control.
@@ -373,13 +310,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
-        /// LabelNoRoot control.
+        /// LabelMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelNoRoot;
+        protected global::System.Web.UI.WebControls.Label LabelMessage;
         
         /// <summary>
         /// View3 control.

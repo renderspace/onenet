@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Structure.aspx.cs" Inherits="OneMainWeb.adm.Structure" Title="$structure" EnableEventValidation="false" ValidateRequest="false"  %>
+<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Structure.aspx.cs" Inherits="OneMainWeb.adm.Structure" Title="One.NET site structure" EnableEventValidation="false" ValidateRequest="false"  %>
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
@@ -15,22 +15,17 @@
                 <header><h3 class="tabs_involved">Tree structure</h3>
                     <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
                         <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
-                        <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="cmdAddChild_Click" CssClass="btn btn-success" />
+                        <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="ButtonAddPage_Click" CssClass="btn btn-success" />
                     </asp:Panel>
                 </header>
                 <div class="treeview">
-	                <asp:TreeView OnUnload="pageTree_Unload" EnableViewState="false" ID="pageTree" runat="server" OnAdaptedSelectedNodeChanged="pageTree_SelectedNodeChanged" OnSelectedNodeChanged="pageTree_SelectedNodeChanged" PopulateNodesFromClient="false" />
+	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
                 </div>
             </section>
         </div>
         <div class="col-md-9">
             <div class="page-and-module-settings">
         <asp:MultiView ID="MultiView1" runat="server">
-            <asp:View ID="View0" runat="server">
-                <section class="module">
-                    <h1><asp:Literal ID="LiteralNoAccess" runat="server" EnableViewState="false"></asp:Literal></h1>
-                </section>
-            </asp:View>
             <asp:View ID="View1" runat="server">
                 <section class="module page-settings">
                     <div class="with_buttons">
@@ -47,60 +42,60 @@
                     </div>
 			        <div class="pageproperties form-horizontal">
                          <div class="form-group">
-                                <div class="col-sm-4">
-                                <asp:Label AssociatedControlID="TextBoxTitle" ID="LabelTitle" Text="Title" runat="server"></asp:Label>
-                            </div>
+                            <label class="col-sm-4 control-label">Title</label>
                             <div class="col-sm-8">
                                 <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
                             </div>
                         </div>
                          <div class="form-group">
-                        <div class="col-sm-4">
-                                <asp:Label AssociatedControlID="" ID="LabelDescription" Text="Description" runat="server"></asp:Label>
-                            </div>
+                            <label class="col-sm-4 control-label">Description</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control" placeholder="Short description of the page, used on menus and also displayed in Google and Facebook results. Important for SEO. Some modules may override this text."></asp:TextBox>
                             </div>
                         </div>
 			             <div class="form-group">
-                        <div class="col-sm-4">
-			                    <asp:label id="lblTemplate1" runat="server"	Text="Template" AssociatedControlID="ddlPageTemplate" />
-                            </div>
+                            <label class="col-sm-4 control-label">Template</label>
                             <div class="col-sm-8">
 				                <asp:dropdownlist id="ddlPageTemplate" Runat="server" CssClass="form-control"></asp:dropdownlist>
                             </div>
 			            </div>
                         <div class="form-group">
-                        <div class="col-sm-4">
-                                <asp:Label ID="Label1" runat="server" AssociatedControlID="TextBoxUri" Text="URL"></asp:Label>
-                            </div>
+                            <label class="col-sm-4 control-label">URL</label>
                            <div class="col-sm-2">
                                 <asp:Label runat="server" ID="LabelUriPart"></asp:Label>
                             </div>
                            <div class="col-sm-6">
                                 <asp:TextBox runat="server" ID="TextBoxUri" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
+                                <p class="help-block">Important for SEO, please user short text and minus sign to signify space.</p>
                             </div>
                         </div>
 
                          <div class="form-group">
-                            <div class="col-sm-4">
-                                <asp:Label AssociatedControlID="TextBoxMenuGroup" ID="Label2" Text="Menu group" runat="server"></asp:Label>
-                            </div>
-                            <div class="col-sm-8">
+                            <label class="col-sm-4 control-label">Menu group</label>
+                            <div class="col-sm-2">
                                 <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control"></asp:TextBox>
+                            </div>
+                             <div class="col-sm-6">
+                                <p class="help-block">Signifies in which navigation menu will this page be displayed.<br /> Menu numbers are defined in template.</p>
                             </div>
                         </div>
 
                         
 
                          <div class="form-group">
-                        <div class="col-sm-4">
-                                <asp:Label AssociatedControlID="InputRedirectToUrl1" ID="Label7" Text="Redirect to URL" runat="server"></asp:Label>
-                            </div>
+                            <label class="col-sm-4 control-label">Redirect to URL</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
                             </div>
                         </div>
+                        <div class="form-group">
+                             <label class="col-sm-4 control-label">Image</label>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="TextBoxSubtitle" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control" placeholder="Image used by Facebook when sharing. Use at least 1200 x 630 pixels and absolute path. Some modules may override it."></asp:TextBox>
+                            </div>
+                        </div>
+
+                        
 
                         <div class="checkbox">
                             <label class="col-sm-offset-4 col-sm-8">
@@ -121,9 +116,9 @@
 
                         <div class="col-sm-8">
 					        <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
-			                <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="cmdUnDelete_Click" Visible="false" />
+			                <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
-			                <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" />
+			                <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
                             <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
                         </div>
 				    </div>
@@ -209,7 +204,7 @@
             </asp:View>
              <asp:View ID="View2" runat="server">
                 <section class="module">
-                     <asp:Label runat="server" ID="LabelNoRoot" Text="Website doesn't have a root page. Use form on the left to add it."></asp:Label>
+                    <asp:Label runat="server" ID="LabelMessage"></asp:Label>
                 </section>
              </asp:View>
              <asp:View ID="View3" runat="server">

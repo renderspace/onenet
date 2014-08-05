@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SQLEditor.aspx.cs" Inherits="OneMainWeb.adm.SQLEditor" Title="$sql_edit" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SQLEditor.aspx.cs" Inherits="OneMainWeb.adm.SQLEditor" Title="One.NET SQL" %>
 
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">

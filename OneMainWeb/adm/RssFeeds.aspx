@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="RssFeeds.aspx.cs" Inherits="OneMainWeb.RssFeeds" Title="$rss_feeds" EnableEventValidation="false" %>
+<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="RssFeeds.aspx.cs" Inherits="OneMainWeb.RssFeeds" Title="One.NET RSS" EnableEventValidation="false" %>
 <%@ Import Namespace="One.Net.BLL.WebConfig"%>
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ Import Namespace="System.Collections.Generic"%>
