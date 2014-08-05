@@ -325,6 +325,13 @@
     <Compile Include="CommonModules\CustomWidget.ascx.designer.cs">
       <DependentUpon>CustomWidget.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\Form.ascx.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\Form.ascx.designer.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\Menu.ascx.cs">
       <DependentUpon>Menu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -414,6 +421,7 @@
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
+    <Content Include="CommonModules\Form.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
@@ -501,13 +509,6 @@
     </Compile>
     <Compile Include="AdminControls\TextContentControl.ascx.designer.cs">
       <DependentUpon>TextContentControl.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="AdminControls\TreeCategorization.ascx.cs">
-      <DependentUpon>TreeCategorization.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\TreeCategorization.ascx.designer.cs">
-      <DependentUpon>TreeCategorization.ascx</DependentUpon>
     </Compile>
     <Compile Include="AdminControls\OneSettings.ascx.cs">
       <DependentUpon>OneSettings.ascx</DependentUpon>
@@ -771,7 +772,6 @@
     <Content Include="CommonModules\TextContent.ascx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AdminControls\TreeCategorization.ascx" />
     <Content Include="AdminControls\OneSettings.ascx" />
     <Content Include="adm\Dictionary.aspx" />
     <Content Include="adm\FileManager.aspx" />
@@ -859,7 +859,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminControls\TextContentControl.ascx" />
-    <Content Include="AdminControls\toolbar_close.gif" />
     <Content Include="adm\Redirects.aspx" />
     <Content Include="adm\SpecialContentEdit.aspx" />
     <Content Include="adm\SQLEditor.aspx" />

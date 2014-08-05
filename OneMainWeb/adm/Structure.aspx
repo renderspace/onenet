@@ -102,14 +102,13 @@
                             </div>
                         </div>
 
-                         <div class="form-group">
-                        <div class="col-sm-4">
-                                <asp:Label AssociatedControlID="CheckBoxBreakPersitence" ID="Label6" Text="Break persistance" runat="server"></asp:Label>
-                            </div>
-                            <div class="col-sm-8">
-                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" CssClass="form-control" />
-                            </div>
+                        <div class="checkbox">
+                            <label class="col-sm-offset-4 col-sm-8">
+                                <asp:CheckBox runat="server" ID="CheckBoxBreakPersitence"  ValidationGroup="PageSett" />
+                                Break persistance
+                            </label>
                         </div>
+
  
                         <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="Page settings" DisplayCommands="false"  />	
                         
@@ -216,6 +215,11 @@
              <asp:View ID="View3" runat="server">
                 <section class="module">
                     <asp:Label runat="server" ID="LabelNoWebSite" Text="$no_web_site"></asp:Label>
+                </section>
+             </asp:View>
+            <asp:View ID="View4" runat="server">
+                <section class="module">
+                    Please select page
                 </section>
              </asp:View>
         </asp:MultiView>

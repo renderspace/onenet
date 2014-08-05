@@ -295,8 +295,8 @@ namespace OneMainWeb
 
         private void LoadQuestionControls(BOQuestion question, FormHelper.FrontEndQuestionTypes userQuestionType)
         {
-            separateInput.Visible = txtNumberOfRows.Visible = txtMaxChars.Visible = txtMaximumFileSize.Visible =
-            chkFirstAnswerIsFake.Visible = chkAllowBlankAnswersInMenu.Visible = divAllowedMimeTypes.Visible = txtAnswers.Visible = 
+            separateInput.Visible = PanelNoOfLines.Visible = txtMaxChars.Visible = PanelMaxFileSize.Visible =
+            chkFirstAnswerIsFake.Visible = chkAllowBlankAnswersInMenu.Visible = divAllowedMimeTypes.Visible = PanelAnswersList.Visible = 
             divAnswerPresentationTypes.Visible = divFrontEndQuestionTypes.Visible = false;
 
             chkAnswerIsRequired.Checked = false;
@@ -422,7 +422,7 @@ namespace OneMainWeb
 
         private void ShowMultiTextLineControls(BOQuestion question)
         {
-            separateInput.Visible = txtNumberOfRows.Visible = txtMaxChars.Visible = true;
+            separateInput.Visible = PanelNoOfLines.Visible = txtMaxChars.Visible = true;
 
             if (question.FirstAnswerKey.HasValue &&
                 question.Answers[question.FirstAnswerKey.Value] != null)
@@ -440,7 +440,7 @@ namespace OneMainWeb
 
         private void ShowMenuToChooseFromControls(BOQuestion question, FormHelper.FrontEndMenuTypes presentationType)
         {
-            separateInput.Visible = chkFirstAnswerIsFake.Visible = txtAnswers.Visible = chkAllowBlankAnswersInMenu.Visible = divAnswerPresentationTypes.Visible = true;
+            separateInput.Visible = chkFirstAnswerIsFake.Visible = PanelAnswersList.Visible = chkAllowBlankAnswersInMenu.Visible = divAnswerPresentationTypes.Visible = true;
 
             if (radAnswerPresentationTypes.Items.Count == 0)
             {
@@ -494,7 +494,7 @@ namespace OneMainWeb
 
         private void ShowFileUploadControls(BOQuestion question)
         {
-            separateInput.Visible = txtMaximumFileSize.Visible = divAllowedMimeTypes.Visible = true;
+            separateInput.Visible = PanelMaxFileSize.Visible = divAllowedMimeTypes.Visible = true;
             if (chkAllowedMimeTypes.Items.Count == 0)
             {
                 chkAllowedMimeTypes.DataSource = FormHelper.ListAllowedFileTypes();
@@ -682,15 +682,19 @@ namespace OneMainWeb
         {
             if (e.Row.DataItem != null)
             {
-                var HyperLinkExport1 = e.Row.FindControl("HyperLinkExport1") as Control;
-                var HyperLinkExport2 = e.Row.FindControl("HyperLinkExport2") as Control;
+                var HyperLinkExport1 = e.Row.FindControl("HyperLinkExport1") as HyperLink;
+                var HyperLinkExport2 = e.Row.FindControl("HyperLinkExport2") as HyperLink;
 
-                BOForm form = e.Row.DataItem as BOForm;
+                var form = e.Row.DataItem as BOForm;
 
                 if (HyperLinkExport1 != null && HyperLinkExport2 != null && form != null)
                 {
                     HyperLinkExport1.Visible = form.SubmissionCount > 0;
                     HyperLinkExport2.Visible = form.SubmissionCount > 0;
+
+                    HyperLinkExport1.NavigateUrl = string.Format(HyperLinkExport1.NavigateUrl, form.Id);
+                    HyperLinkExport2.NavigateUrl = string.Format(HyperLinkExport2.NavigateUrl, form.Id);
+
                 }
             }
         }
