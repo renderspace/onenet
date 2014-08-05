@@ -43,12 +43,6 @@ namespace One.Net.BLL
 			set { id = value; }
 		}
 
-        public int MaxDepth
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         public int? RootPageId
         {
             get { return rootPageId; }
@@ -59,8 +53,15 @@ namespace One.Net.BLL
         {
             get
             {
-                CultureInfo TempCultureInfo = new CultureInfo(LanguageId);
-                return Title + " [" + TempCultureInfo.ThreeLetterISOLanguageName + "]";
+                return Title + " [" + Culture.ThreeLetterISOLanguageName + "]";
+            }
+        }
+
+        public CultureInfo Culture
+        {
+            get
+            {
+                return new CultureInfo(LanguageId);
             }
         }
 

@@ -504,7 +504,7 @@ if(window.jQuery)
                                                         FormSubmission.SubmittedQuestions[firstAnswer.ParentId.Value].SubmittedAnswers[firstAnswer.Id.Value] != null &&
                                                         FormSubmission.SubmittedQuestions[firstAnswer.ParentId.Value].SubmittedAnswers[firstAnswer.Id.Value].SubmittedText != null)
                                                     {
-                                                        answerInput.Value = FormSubmission.SubmittedQuestions[firstAnswer.ParentId.Value].SubmittedAnswers[firstAnswer.Id.Value].SubmittedText;
+                                                        answerInput.Text = FormSubmission.SubmittedQuestions[firstAnswer.ParentId.Value].SubmittedAnswers[firstAnswer.Id.Value].SubmittedText;
                                                     }
 
                                                     if (question.ValidationType == ValidationTypes.Captcha)
@@ -635,13 +635,13 @@ if(window.jQuery)
                                 }
                             case AnswerTypes.SingleText:
                                 {
-                                    ValidInput answerInput = new ValidInput();
+                                    TextBox answerInput = new TextBox();
                                     answerInput.ID = "AnswerSingleText" + firstAnswer.Id;
-                                    answerInput.Required = question.IsAnswerRequired;
+                                    // answerInput.Required = question.IsAnswerRequired;
                                     answerInput.ValidationGroup = "FormID" + FormId + InstanceId;
                                     answerInput.Text = question.Title;
-                                    answerInput.RequiredMessage = Translate("field_is_required");
 
+                                    /*
                                     switch (question.ValidationType)
                                     {
                                         case ValidationTypes.Time:
@@ -671,7 +671,7 @@ if(window.jQuery)
                                                 questionDiv.Controls.Add(captchaDiv);
                                                 break;
                                             }
-                                    }
+                                    } */
 
                                     if (firstAnswer.MaxChars.HasValue && firstAnswer.MaxChars > 0)
                                     {
@@ -1029,7 +1029,7 @@ if(window.jQuery)
                                 }
                                 case AnswerTypes.SingleText:
                                     {
-                                        ValidInput answerInput = questionDiv.FindControl("AnswerSingleText" + firstAnswer.Id) as ValidInput;
+                                        var answerInput = questionDiv.FindControl("AnswerSingleText" + firstAnswer.Id) as TextBox;
 
                                         if (answerInput != null)
                                         {
@@ -1037,7 +1037,7 @@ if(window.jQuery)
                                             submittedAnswer.Answer = firstAnswer;
                                             submittedAnswer.SubmissionId = null;
                                             submittedAnswer.SubmittedFile = null;
-                                            submittedAnswer.SubmittedText = answerInput.Value;
+                                            submittedAnswer.SubmittedText = answerInput.Text;
                                             submittedQuestion.SubmittedAnswers.Add(firstAnswer.Id.Value, submittedAnswer);
                                         }
 

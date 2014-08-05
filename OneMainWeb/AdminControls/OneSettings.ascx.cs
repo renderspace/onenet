@@ -142,7 +142,7 @@ namespace OneMainWeb.AdminControls
                 {
                     TextBox TextBox1 = item.FindControl("TextBox1") as TextBox;
                     var LiteralKey = item.FindControl("LiteralKey") as Literal;
-                    LabeledCheckBox CheckBox1 = item.FindControl("CheckBox1") as LabeledCheckBox;
+                    var CheckBox1 = item.FindControl("CheckBox1") as CheckBox;
                     DropDownList DropDownList1 = item.FindControl("DropDownList1") as DropDownList;
 
                     BOSetting setting = Settings[LiteralKey.Text];

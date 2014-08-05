@@ -406,7 +406,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAnswerIsRequired;
+        protected global::System.Web.UI.WebControls.CheckBox chkAnswerIsRequired;
         
         /// <summary>
         /// divFrontEndQuestionTypes control.
@@ -416,15 +416,6 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFrontEndQuestionTypes;
-        
-        /// <summary>
-        /// lblFrontEndQuestionTypes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFrontEndQuestionTypes;
         
         /// <summary>
         /// radFrontEndQuestionTypes control.
@@ -442,7 +433,16 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl separateInput;
+        protected global::System.Web.UI.WebControls.PlaceHolder separateInput;
+        
+        /// <summary>
+        /// PanelNoOfLines control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelNoOfLines;
         
         /// <summary>
         /// txtNumberOfRows control.
@@ -463,6 +463,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.TextBox txtMaxChars;
         
         /// <summary>
+        /// PanelMaxFileSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelMaxFileSize;
+        
+        /// <summary>
         /// txtMaximumFileSize control.
         /// </summary>
         /// <remarks>
@@ -479,15 +488,6 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAllowedMimeTypes;
-        
-        /// <summary>
-        /// lblAllowedMimeTypes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAllowedMimeTypes;
         
         /// <summary>
         /// chkAllowedMimeTypes control.
@@ -508,15 +508,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAnswerPresentationTypes;
         
         /// <summary>
-        /// lblAnswerPresentationTypes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAnswerPresentationTypes;
-        
-        /// <summary>
         /// radAnswerPresentationTypes control.
         /// </summary>
         /// <remarks>
@@ -532,7 +523,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowBlankAnswersInMenu;
+        protected global::System.Web.UI.WebControls.CheckBox chkAllowBlankAnswersInMenu;
         
         /// <summary>
         /// chkFirstAnswerIsFake control.
@@ -541,7 +532,16 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkFirstAnswerIsFake;
+        protected global::System.Web.UI.WebControls.CheckBox chkFirstAnswerIsFake;
+        
+        /// <summary>
+        /// PanelAnswersList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelAnswersList;
         
         /// <summary>
         /// txtAnswers control.

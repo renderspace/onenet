@@ -20,6 +20,7 @@
                 <div class="col-sm-9">
                     <asp:TextBox ID="TextBox1" runat="server"   CssClass="form-control" ValidationGroup="ModuleInstanceSettings" Visible="false" />
                     <asp:Label  runat="server" ID="LabelValue" Visible="false"></asp:Label>
+                    <asp:Label  runat="server" ID="LabelHiddenInfo" Visible="false"></asp:Label>
                     <asp:DropDownList ID="DropDownList1" runat="server" ValidationGroup="ModuleInstanceSettings"  Visible="false"></asp:DropDownList>
                 </div>
                 </asp:Panel>       
