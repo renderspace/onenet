@@ -68,6 +68,19 @@ namespace One.Net.BLL.Forms
             }
         }
 
+        public List<BOQuestion> Questions
+        {
+            get 
+            {
+                var result = new List<BOQuestion>();
+                foreach (var s in Sections.Values)
+                {
+                    result.AddRange(s.Questions.Values);
+                }
+                return result;
+            }
+        }
+
         public static BOQuestion FindQuestion(BOForm form, int questionId)
         {
             if (form != null)

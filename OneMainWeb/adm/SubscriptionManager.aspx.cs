@@ -64,6 +64,9 @@ namespace OneMainWeb
         {
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+
                 plhCSLSubs.Visible = false;
                 plhSubscriptions.Visible = true;
 
@@ -93,7 +96,7 @@ namespace OneMainWeb
             TwoPostbackPager1.TotalRecords = subscriptions.AllRecords;
             TwoPostbackPager1.DetermineData();
             subscriptionGridView.DataSource = subscriptions;
-            Subscriptions_DataBind();
+            subscriptionGridView.DataBind();
         }
 
         public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
@@ -194,14 +197,6 @@ namespace OneMainWeb
                 emailBuilder.Append(sub.Email + "; ");
             }
             txtCSV.Text = emailBuilder.ToString();
-        }
-
-        protected void SubscriptionSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
         }
 
         protected void subscriptionGridView_RowCommand(object sender, GridViewCommandEventArgs e)

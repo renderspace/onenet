@@ -13,15 +13,6 @@ namespace OneMainWeb.AdminControls {
     public partial class OneSettings {
         
         /// <summary>
-        /// ValidationSummary1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-        
-        /// <summary>
         /// RepeaterSettings control.
         /// </summary>
         /// <remarks>
@@ -46,6 +37,6 @@ namespace OneMainWeb.AdminControls {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSaveChanges;
+        protected global::System.Web.UI.WebControls.LinkButton cmdSaveChanges;
     }
 }

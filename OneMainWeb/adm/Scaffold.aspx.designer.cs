@@ -13,6 +13,15 @@ namespace OneMainWeb.adm {
     public partial class Scaffold {
         
         /// <summary>
+        /// Notifier1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::OneMainWeb.AdminControls.Notifier Notifier1;
+        
+        /// <summary>
         /// MultiView1 control.
         /// </summary>
         /// <remarks>
@@ -31,13 +40,67 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
-        /// MainPagedList1 control.
+        /// ButtonInsert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::OneMainWeb.AdminControls.ScaffoldMainPagedList MainPagedList1;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonInsert;
+        
+        /// <summary>
+        /// TextBoxId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxId;
+        
+        /// <summary>
+        /// ButtonDisplayById control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        
+        /// <summary>
+        /// ButtonExportToExcel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonExportToExcel;
+        
+        /// <summary>
+        /// GridViewItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewItems;
+        
+        /// <summary>
+        /// PostbackPager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::One.Net.BLL.WebControls.PostbackPager PostbackPager1;
+        
+        /// <summary>
+        /// ButtonDeleteSelected control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDeleteSelected;
         
         /// <summary>
         /// View2 control.
@@ -49,21 +112,12 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
-        /// Label1 control.
+        /// DynamicEditor1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// ButtonCreateTables control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonCreateTables;
+        protected global::OneMainWeb.AdminControls.ScaffoldDynamicEditor DynamicEditor1;
     }
 }

@@ -140,12 +140,12 @@ namespace OneMainWeb.AdminControls
 
                 foreach (RepeaterItem item in RepeaterSettings.Items)
                 {
-                    TextBox ValidInput1 = item.FindControl("ValidInput1") as TextBox;
-                    Label KeyLabel1 = item.FindControl("KeyLabel1") as Label;
+                    TextBox TextBox1 = item.FindControl("TextBox1") as TextBox;
+                    var LiteralKey = item.FindControl("LiteralKey") as Literal;
                     LabeledCheckBox CheckBox1 = item.FindControl("CheckBox1") as LabeledCheckBox;
                     DropDownList DropDownList1 = item.FindControl("DropDownList1") as DropDownList;
 
-                    BOSetting setting = Settings[KeyLabel1.Text];
+                    BOSetting setting = Settings[LiteralKey.Text];
 
                     if (setting.UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL && setting.UserVisibility != BOSetting.USER_VISIBILITY_MULTILINE)
                     {
@@ -159,7 +159,7 @@ namespace OneMainWeb.AdminControls
                                             setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
                                     }
                                     else
-                                        setting.Value = FormatTool.GetInteger(ValidInput1.Text).ToString();
+                                        setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
                                     break;
                                 }
                             case "Bool":
@@ -169,7 +169,7 @@ namespace OneMainWeb.AdminControls
                                 }
                             case "PageId":
                                 {
-                                    setting.Value = FormatTool.GetInteger(ValidInput1.Text).ToString();
+                                    setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
                                     break;
                                 }
                             default:
@@ -177,7 +177,7 @@ namespace OneMainWeb.AdminControls
                                     if (setting.HasOptions)
                                         setting.Value = DropDownList1.SelectedValue;
                                     else
-                                        setting.Value = ValidInput1.Text;
+                                        setting.Value = TextBox1.Text;
                                     break;
                                 }
                         }
@@ -188,7 +188,7 @@ namespace OneMainWeb.AdminControls
                         switch (setting.Type)
                         {
                             case "String":
-                                setting.Value = ValidInput1.Text;
+                                setting.Value = TextBox1.Text;
                                 break;
                             default: break;
                         }
@@ -250,23 +250,26 @@ namespace OneMainWeb.AdminControls
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                LabeledCheckBox CheckBox1 = e.Item.FindControl("CheckBox1") as LabeledCheckBox;
-                TextBox ValidInput1 = e.Item.FindControl("ValidInput1") as TextBox;
-                Label KeyLabel1 = e.Item.FindControl("KeyLabel1") as Label;
+                var CheckBox1 = e.Item.FindControl("CheckBox1") as CheckBox;
+                var TextBox1 = e.Item.FindControl("TextBox1") as TextBox;
+                var LiteralKey = e.Item.FindControl("LiteralKey") as Literal;
 
-                var PanelInfo = e.Item.FindControl("PanelInfo") as Panel;
+                
                 var LabelKey = e.Item.FindControl("LabelKey") as Label;
                 var LabelValue = e.Item.FindControl("LabelValue") as Label;
 
-                DropDownList DropDownList1 = e.Item.FindControl("DropDownList1") as DropDownList;
-                Panel PanelSelect1 = e.Item.FindControl("PanelSelect1") as Panel;
-                Label LabelHiddenInfo = e.Item.FindControl("LabelHiddenInfo") as Label;
+                var DropDownList1 = e.Item.FindControl("DropDownList1") as DropDownList;
+                
+                var LabelHiddenInfo = e.Item.FindControl("LabelHiddenInfo") as Label;
+
+                var PanelCheckbox = e.Item.FindControl("PanelCheckbox") as Panel;
+                var PanelInput = e.Item.FindControl("PanelInput") as Panel;
 
                 if (e.Item.DataItem != null)
                 {
-                    CheckBox1.Visible = false;
-                    ValidInput1.Visible = false;
-                    PanelInfo.Visible = false;
+                    TextBox1.Visible = false;
+                    PanelCheckbox.Visible = false;
+                    PanelInput.Visible = false;
 
 
                     BOSetting setting = ((KeyValuePair<string, BOSetting>)e.Item.DataItem).Value;
@@ -275,7 +278,7 @@ namespace OneMainWeb.AdminControls
                     {
                         if (setting.HasOptions)
                         {
-                            PanelSelect1.Visible = true;
+                            DropDownList1.Visible = true;
                             DropDownList1.DataTextField = "Value";
                             DropDownList1.DataValueField = "Key";
                             DropDownList1.DataSource = setting.Options;
@@ -292,38 +295,31 @@ namespace OneMainWeb.AdminControls
                             {
                                 case "Int":
                                     {
-                                        if (setting.UserVisibility == BOSetting.USER_VISIBILITY_COMMON)
-                                        {
-                                        }
-                                        ValidInput1.Visible = true;
+                                        PanelInput.Visible = true;
+                                        TextBox1.Visible = true;
                                         break;
                                     }
                                 case "String":
                                     {
-                                        if (setting.UserVisibility == BOSetting.USER_VISIBILITY_COMMON)
-                                        {
-                                        }
-                                        ValidInput1.Visible = true;
+                                        PanelInput.Visible = true;
+                                        TextBox1.Visible = true;
                                         break;
                                     }
                                 case "Bool":
                                     {
-                                        if (setting.UserVisibility == BOSetting.USER_VISIBILITY_COMMON)
-                                        {
-                                            CheckBox1.ContainerCssClass = "checkbox checkbox_common";
-                                        }
-                                        CheckBox1.Visible = true;
+                                        PanelCheckbox.Visible = true;
                                         CheckBox1.Checked = FormatTool.GetBoolean(setting.Value);
                                         break;
                                     }
                                 case "PageId":
                                     {
-                                        ValidInput1.Visible = true;
+                                        PanelInput.Visible = true;
+                                        TextBox1.Visible = true;
                                         break;
                                     }
                                 default:
                                     {
-                                        PanelInfo.Visible = true;
+                                        PanelInput.Visible = true;
                                         break;
                                     }
                             }
@@ -335,9 +331,9 @@ namespace OneMainWeb.AdminControls
                         {
                             case "String":
                                 {
-                                    ValidInput1.Visible = true;
-                                    ValidInput1.Rows = 5;
-                                    ValidInput1.TextMode = TextBoxMode.MultiLine;
+                                    TextBox1.Visible = true;
+                                    TextBox1.Rows = 5;
+                                    TextBox1.TextMode = TextBoxMode.MultiLine;
                                     break;
                                 }
                             default: break;
@@ -345,23 +341,9 @@ namespace OneMainWeb.AdminControls
                     }
                     else
                     {
-                        PanelInfo.Visible = true;
+                        LabelValue.Visible = true;
                     }
                 }
-            }
-        }
-
-        protected void RepeaterSettings_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                var setting = (KeyValuePair<string, BOSetting>) e.Item.DataItem;
-
-                    var LabelKey = e.Item.FindControl("LabelKey") as Label;
-                    var LabelValue = e.Item.FindControl("LabelValue") as Label;
-                    var KeyLabel1 = e.Item.FindControl("KeyLabel1") as Label;
-
-                    LabelKey.Text = KeyLabel1.Text = setting.Key;
             }
         }
     }

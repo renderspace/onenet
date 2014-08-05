@@ -20,6 +20,8 @@ namespace OneMainWeb
     {
         #region Variables
 
+        protected static BForm formB = new BForm();
+
         FormHelper helper = new FormHelper();
 
         #endregion Variables
@@ -56,12 +58,6 @@ namespace OneMainWeb
             set { Session["FormSubmissions"] = value; }
         }
 
-        protected List<BOQuestion> AllQuestions
-        {
-            get { return (Session["AllQuestions"] != null ? (List<BOQuestion>)Session["AllQuestions"] : new List<BOQuestion>()); }
-            set { Session["AllQuestions"] = value; }
-        }
-
         #endregion Properties
 
         #region Initialization
@@ -74,6 +70,54 @@ namespace OneMainWeb
             {
                 MultiView1.ActiveViewIndex = 0;
             }
+        }
+        protected void Multiview1_ActiveViewChanged(object sender, EventArgs e)
+        {
+            if (((MultiView)sender).ActiveViewIndex == 0)
+            {
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+                GridViewSortExpression = "";
+                FormsList_DataBind();
+                ClearSessionValues();
+            }
+            else if (((MultiView)sender).ActiveViewIndex == 1)
+            {
+                LoadFormTabControls();
+            }
+
+
+            bool formIsNewlyAdded = false;
+
+            if (SessionForm != null && ElementMap != null && ElementMap["Form" + SessionForm.Id.Value] != null)
+            {
+                formIsNewlyAdded = ElementMap["Form" + SessionForm.Id.Value].NewlyAdded;
+            }
+
+            /*
+            tabMultiview.Views[1].Selectable = (tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible);
+            tabMultiview.Views[2].Selectable = tabMultiview.Views[3].Selectable = tabMultiview.Views[4].Selectable = ((tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible ) && SessionForm != null && !formIsNewlyAdded);
+            tabMultiview.Views[5].Selectable = tabMultiview.Views[5].Visible && SessionForm != null && !formIsNewlyAdded;*/
+        }
+
+        private void FormsList_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            var forms = formB.ListUnCached(state, ShowUntranslated, Thread.CurrentThread.CurrentCulture.LCID);
+            TwoPostbackPager1.TotalRecords = forms.AllRecords;
+            TwoPostbackPager1.DetermineData();
+            formGridView.DataSource = forms;
+            formGridView.DataBind(); 
+        }
+
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            FormsList_DataBind();
         }
 
         private void LoadFormTabControls()
@@ -636,593 +680,17 @@ namespace OneMainWeb
 
         protected void formGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.Cells.Count >= 3)
+            if (e.Row.DataItem != null)
             {
-                LinkButton cmdEdit = e.Row.Cells[2].FindControl("cmdEdit") as LinkButton;
-                ImageButton cmdEditButton = e.Row.Cells[2].FindControl("cmdEditButton") as ImageButton;
-                LinkButton cmdDelete = e.Row.Cells[3].FindControl("cmdDelete") as LinkButton;
-                LinkButton LinkButtonAggregate = e.Row.Cells[2].FindControl("LinkButtonAggregate") as LinkButton;
-                LinkButton LinkButtonAll = e.Row.Cells[2].FindControl("LinkButtonAll") as LinkButton;
+                var HyperLinkExport1 = e.Row.FindControl("HyperLinkExport1") as Control;
+                var HyperLinkExport2 = e.Row.FindControl("HyperLinkExport2") as Control;
 
                 BOForm form = e.Row.DataItem as BOForm;
 
-                if (LinkButtonAll != null && LinkButtonAggregate != null && cmdEdit != null && cmdDelete != null && form != null)
+                if (HyperLinkExport1 != null && HyperLinkExport2 != null && form != null)
                 {
-                    cmdEditButton.ImageUrl = Page.ClientScript.GetWebResourceUrl(typeof(OneMainWeb.OneMain), "OneMainWeb.Res.edit.gif");
-                    if (form.SubmissionCount > 0)
-                    {
-                        LinkButtonAggregate.Enabled = true;
-                        LinkButtonAll.Enabled = true;
-                        cmdDelete.Enabled = false;
-                    }
-                    else
-                    {
-                        LinkButtonAggregate.Enabled = false;
-                        LinkButtonAll.Enabled = false;
-                        cmdDelete.Enabled = true;
-                    }
-                }
-            }
-        }
-
-
-        protected void ObjectDataSourceSubmissionList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-            else
-            {
-                int formId = 0;
-                if (SessionForm != null)
-                {
-                    formId = SessionForm.Id.Value;
-                }
-                e.InputParameters.Add("formId", formId);
-            }
-        }
-
-        protected void cmdExportTrends_Click(object sender, EventArgs e)
-        {
-            int formId = SessionForm.Id.Value;
-
-            BOForm formToExport = helper.Get(formId);
-            List<BOFormSubmission> submissions = helper.ListFormSubmissions(formId);
-
-            if (formToExport != null && submissions != null)
-            {
-                Response.Clear();
-                Response.Buffer = true;
-                Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$label_export_form_submission_trend_data_file_name" + "-" + formId.ToString() + ".xls\";");
-                Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
-                Response.Charset = "";
-
-                // Prepare to export the data
-                System.IO.StringWriter strw = new System.IO.StringWriter();
-                System.Web.UI.HtmlTextWriter htmlw = new System.Web.UI.HtmlTextWriter(strw);
-
-                // START head
-                strw.GetStringBuilder().Append(
-                    @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
-                      <head>
-                            <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
-                            <meta name=ProgId content=Excel.Sheet>
-                            <meta name=Generator content=""Microsoft Excel 11"">
-                            <style>
-                                <!-- 
-
-                                .general {color:black; font-size:13.0pt; font-weight:400;}
-                                .generalsmall {color:black; font-size:9.0pt; font-weight:bold;}
-                                .question { background:#CCCCFF; color:black; font-size:13.0pt; font-weight:400; }
-                                .openAnswer { 	background:lime; color:black; font-size:13.0pt; font-weight:400; }
-                                .singleAnswer { background:#FF9900; color:black; font-size:13.0pt; font-weight:400; }
-                                .multipleChoiceAnswer { background:#FF6600; color:black; font-size:13.0pt; font-weight:400; }
-
-                                -->
-                            </style>
-                      </head>
-                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
-                // END head
-
-                // START DETAIL
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$label_date_and_time" + @"</th>
-                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
-                        </tr>");
-
-                Dictionary<DateTime, int> daysHours = new Dictionary<DateTime, int>();
-                foreach (BOFormSubmission submission in submissions)
-                {
-                    DateTime dt = new DateTime(submission.Finished.Value.Year, submission.Finished.Value.Month, submission.Finished.Value.Day, submission.Finished.Value.Hour, 0, 0);
-                    daysHours[dt] = (daysHours.ContainsKey(dt) ? daysHours[dt] + 1 : 1);
-                }
-
-                foreach (DateTime key in daysHours.Keys)
-                {
-                    strw.GetStringBuilder().Append(
-                        @"<tr>
-                            <td class=""general"" align=""center"">" + key.ToString("dd.MM.yyyy HH:mm") + @"</td>
-                            <td class=""general"" align=""center"">" + daysHours[key].ToString() + @"</td>
-                          </tr>");
-                }
-
-                strw.GetStringBuilder().Append("</table><br />");
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$label_day" + @"</th>
-                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
-                        </tr>");
-
-                Dictionary<DateTime, int> days = new Dictionary<DateTime, int>();
-                foreach (BOFormSubmission submission in submissions)
-                {
-                    DateTime dt = new DateTime(submission.Finished.Value.Year, submission.Finished.Value.Month, submission.Finished.Value.Day);
-                    days[dt] = (days.ContainsKey(dt) ? days[dt] + 1 : 1);
-                }
-
-                foreach (DateTime key in days.Keys)
-                {
-                    strw.GetStringBuilder().Append(
-                        @"<tr>
-                            <td class=""general"" align=""center"">" + key.ToString("dd.MM.yyyy") + @"</td>
-                            <td class=""general"" align=""center"">" + days[key].ToString() + @"</td>
-                          </tr>");
-                }
-
-                strw.GetStringBuilder().Append("</table><br />");
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$label_hour" + @"</th>
-                            <th class=""generalsmall"">" + "$label_total_forms_submitted" + @"</th>
-                        </tr>");
-
-                Dictionary<DateTime, int> hours = new Dictionary<DateTime, int>();
-                for (int i = 0; i < 24; i++)
-                {
-                    hours.Add(new DateTime(DateTime.MinValue.Year, DateTime.MinValue.Month, DateTime.MinValue.Day, i, DateTime.MinValue.Minute, DateTime.MinValue.Second), 0);
-                }
-
-                foreach (BOFormSubmission submission in submissions)
-                {
-                    DateTime dt = new DateTime(DateTime.MinValue.Year, DateTime.MinValue.Month, DateTime.MinValue.Day, submission.Finished.Value.Hour, DateTime.MinValue.Minute, DateTime.MinValue.Second);
-                    hours[dt] = (hours.ContainsKey(dt) ? hours[dt] + 1 : 1);
-                }
-
-                foreach (DateTime key in hours.Keys)
-                {
-                    strw.GetStringBuilder().Append(
-                        @"<tr>
-                            <td class=""general"" align=""center"">" + key.ToString("HH:mm") + @"</td>
-                            <td class=""general"" align=""center"">" + hours[key].ToString() + @"</td>
-                         </tr>");
-                }
-
-                strw.GetStringBuilder().Append("</table>");
-
-                // END DETAIL
-
-                // START tail
-                strw.GetStringBuilder().Append("</div></body></html>");
-                // END tail
-
-                Response.Write(strw.ToString());
-                Response.End();
-            }
-        }
-
-        protected void cmdExportAll_Click(object sender, EventArgs e)
-        {
-            if (SessionForm != null && AllQuestions != null)
-            {
-                List<BOFormSubmission> submissions = helper.ListFormSubmissions(SessionForm.Id.Value);
-
-                Response.Clear();
-                Response.Buffer = true;
-                Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$export_open_submissions_file_name" + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
-                Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
-                Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                Response.Charset = "";
-
-                // Prepare to export the data
-                System.IO.StringWriter strw = new System.IO.StringWriter();
-                System.Web.UI.HtmlTextWriter htmlw = new System.Web.UI.HtmlTextWriter(strw);
-
-                // START head
-                strw.GetStringBuilder().Append(
-                    @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
-                      <head>
-                            <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
-                            <meta name=ProgId content=Excel.Sheet>
-                            <meta name=Generator content=""Microsoft Excel 11"">
-                            <style>
-                                <!-- 
-
-                                .general {mso-number-format:\@; color:black; font-size:13.0pt; font-weight:400;}
-                                .generalsmall {mso-number-format:\@; color:black; font-size:9.0pt; font-weight:bold;}
-                                .question {mso-number-format:\@; background:#CCCCFF; color:black; font-size:13.0pt; font-weight:400; }
-                                .openAnswer {mso-number-format:\@; background:lime; color:black; font-size:13.0pt; font-weight:400; }
-                                .singleAnswer {mso-number-format:\@; background:#FF9900; color:black; font-size:13.0pt; font-weight:400; }
-                                .multipleChoiceAnswer { background:#FF6600; color:black; font-size:13.0pt; font-weight:400; }
-
-                                -->
-                            </style>
-                      </head>
-                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
-                // END head
-
-                // START DETAIL
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$answer_legend" + @"</th>
-                        </tr>
-                        <tr>
-                            <td class=""singleAnswer"">" + "$single_answer" + @"</td>
-                        </tr>                        
-                        <tr>
-                            <td class=""openAnswer"">" + "$open_answer" + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""multipleChoiceAnswer"">" + "$multiple_choice_answer" + @"</td>
-                        </tr></table><br />");
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px""><tr>");
-                strw.GetStringBuilder().Append(@"<th class=""generalsmall"">Id</th>");
-                foreach (BOQuestion question in AllQuestions)
-                {
-                    strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + question.Title + @"</th>");
-                }
-                strw.GetStringBuilder().Append("</tr>");
-
-                foreach (BOFormSubmission submission in submissions)
-                {
-                    strw.GetStringBuilder().Append("<tr>");
-                    strw.GetStringBuilder().Append(@"<td class=""general"" align=""center"">" + submission.Id.Value + @"</td>");
-                    foreach (BOQuestion question in AllQuestions)
-                    {
-                        strw.GetStringBuilder().Append(@"<td align=""center"">");
-
-                        if (submission.SubmittedQuestions.ContainsKey(question.Id.Value))
-                        {
-                            strw.GetStringBuilder().Append(@"<table border=""1px"">");
-                            foreach (BOSubmittedAnswer submittedAnswer in submission.SubmittedQuestions[question.Id.Value].SubmittedAnswers.Values)
-                            {
-                                string answerCssClass = "";
-
-                                if (submittedAnswer.Answer.AnswerType == AnswerTypes.Checkbox || submittedAnswer.Answer.AnswerType == AnswerTypes.DropDown || submittedAnswer.Answer.AnswerType == AnswerTypes.Radio)
-                                {
-                                    answerCssClass = @"multipleChoiceAnswer";
-                                    if (submittedAnswer.Answer.AdditionalFieldType == AdditionalFieldTypes.Text)
-                                    {
-                                        answerCssClass = @"openAnswer";
-                                    }
-                                }
-                                else if (submittedAnswer.Answer.AnswerType == AnswerTypes.SingleText)
-                                {
-                                    answerCssClass = @"singleAnswer";
-                                }
-
-                                strw.GetStringBuilder().Append(@"<tr><td align=""center"" class=""" + answerCssClass + @""">");
-
-                                if (submittedAnswer.Answer.AnswerType == AnswerTypes.SingleText ||
-                                    submittedAnswer.Answer.AdditionalFieldType == AdditionalFieldTypes.Text)
-                                {
-                                    strw.GetStringBuilder().Append(submittedAnswer.SubmittedText);
-                                }
-                                else if (submittedAnswer.Answer.AnswerType == AnswerTypes.SingleFile && submittedAnswer.SubmittedFile != null)
-                                {
-                                    strw.GetStringBuilder().Append(submittedAnswer.SubmittedFile.Name);
-                                }
-                                else
-                                {
-                                    strw.GetStringBuilder().Append(submittedAnswer.Answer.Title);
-                                }
-
-                                strw.GetStringBuilder().Append(@"</td></tr>");
-                            }
-                            strw.GetStringBuilder().Append(@"</table>");
-                        }
-                        strw.GetStringBuilder().Append(@"</td>");
-                    }
-                    strw.GetStringBuilder().Append("</tr>");
-                }
-
-                strw.GetStringBuilder().Append("</table><br />");
-                // END DETAIL
-
-                // START tail
-                strw.GetStringBuilder().Append("</div></body></html>");
-                // END tail
-
-                Response.Write(strw.ToString());
-                Response.End();
-            }
-        }
-
-        protected void cmdExportAggregate_Click(object sender, EventArgs e)
-        {
-            if (SessionForm != null)
-            {
-                Response.Clear();
-                Response.Buffer = true;
-                Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "$export_aggregate_submissions_file_name" + "-" + SessionForm.Id.Value.ToString() + ".xls\";");
-                Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
-                Response.Charset = "";
-
-                // Prepare to export the data
-                System.IO.StringWriter strw = new System.IO.StringWriter();
-                System.Web.UI.HtmlTextWriter htmlw = new System.Web.UI.HtmlTextWriter(strw);
-
-                // START head
-                strw.GetStringBuilder().Append(
-                    @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
-                      <head>
-                            <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
-                            <meta name=ProgId content=Excel.Sheet>
-                            <meta name=Generator content=""Microsoft Excel 11"">
-                            <style>
-                                <!-- 
-                                
-                                .general {color:black; font-size:13.0pt; font-weight:400;}
-                                .generalsmall {color:black; font-size:9.0pt; font-weight:bold;}
-                                .question { background:#CCCCFF; color:black; font-size:13.0pt; font-weight:400; }
-                                .openAnswer { 	background:lime; color:black; font-size:13.0pt; font-weight:400; }
-                                .singleAnswer { background:#FF9900; color:black; font-size:13.0pt; font-weight:400; }
-                                .multipleChoiceAnswer { background:#FF6600; color:black; font-size:13.0pt; font-weight:400; }
-
-                                -->
-                            </style>
-                      </head>
-                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
-                // END head
-
-                // START DETAIL
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>    
-                            <th class=""generalsmall"" colspan=""2"">" + "$export_details" + @"</th>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$export_date" + @"</td>
-                            <td class=""general"" align=""right"">" + DateTime.Now.ToShortDateString() + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$export_time" + @"</td>
-                            <td class=""general"" align=""right"">" + DateTime.Now.ToShortTimeString() + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$export_principal" + @"</td>
-                            <td class=""general"" align=""right"">" + this.User.Identity.Name + @"</td>
-                        </tr>
-                    </table><br />");
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"" colspan=""2"">" + "$form_details" + @"</th>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$form_title" + @"</td>
-                            <td class=""general"" align=""right"">" + SessionForm.Title + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$form_type" + @"</td>
-                            <td class=""general"" align=""right"">" + SessionForm.FormType + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""generalsmall"" align=""center"">" + "$form_submission_count" + @"</td>
-                            <td class=""general"" align=""right"">" + SessionForm.SubmissionCount + @"</td>
-                        </tr>");
-
-                if (SessionForm.FirstSubmissionDate.HasValue)
-                {
-                    strw.GetStringBuilder().Append(
-                        @"<tr>
-                            <td class=""generalsmall"" align=""center"">" + "$first_form_submission_date" + @"</td>
-                            <td class=""general"" align=""right"">" + SessionForm.FirstSubmissionDate.Value + @"</td>
-                          </tr>");
-                }
-
-                if (SessionForm.LastSubmissionDate.HasValue)
-                {
-                    strw.GetStringBuilder().Append(
-                        @"<tr>
-                            <td class=""generalsmall"" align=""center"">" + "$last_form_submission_date" + @"</td>
-                            <td class=""general"" align=""right"">" + SessionForm.LastSubmissionDate.Value + @"</td>
-                          </tr>");
-                }
-
-                strw.GetStringBuilder().Append("</table><br />");
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$answer_legend" + @"</th>
-                        </tr>
-                        <tr>
-                            <td class=""singleAnswer"">" + "$single_answer" + @"</td>
-                        </tr>                        
-                        <tr>
-                            <td class=""openAnswer"">" + "$open_answer" + @"</td>
-                        </tr>
-                        <tr>
-                            <td class=""multipleChoiceAnswer"">" + "$multiple_choice_answer" + @"</td>
-                        </tr></table><br />");
-
-
-                strw.GetStringBuilder().Append(
-                    @"<table border=""1px"">
-                        <tr>
-                            <th class=""generalsmall"">" + "$label_form_section_idx_question_idx" + @"</th>
-                            <th class=""generalsmall"">" + "$label_form_question" + @"</th>
-                            <th class=""generalsmall"">" + "$label_form_question_total_answers" + @"</th>
-                            <th class=""generalsmall"">" + "$label_form_question_answers" + @"</th>
-                            <th class=""generalsmall"">" + "$label_form_question_total_individual_answers" + @"</th>
-                            <th class=""generalsmall"">" + "$percentage_for_all_submissions" + @"</th>
-                        </tr>");
-
-
-                foreach (BOSection section in SessionForm.Sections.Values)
-                {
-
-                    foreach (BOQuestion question in section.Questions.Values)
-                    {
-                        strw.GetStringBuilder().Append(
-                            @"<tr>
-                                <td class=""general"" align=""center"">[" + section.Idx.ToString() + @"]/[" + question.Idx.ToString() + @"]</td>
-                                <td class=""question"" align=""center"">" + question.Title + @"</td>
-                                <td class=""general"" align=""center"">" + question.TimesAnswered + @"</td>
-                                <td align=""center"">");
-
-                        strw.GetStringBuilder().Append(@"<table border=""1px"">");
-                        foreach (BOAnswer answer in question.Answers.Values)
-                        {
-                            string answerTitle = "";
-                            if (answer.AnswerType == AnswerTypes.SingleText)
-                            {
-                                answerTitle = "$TextualAnswer";
-                            }
-                            else if (answer.AnswerType == AnswerTypes.SingleFile)
-                            {
-                                answerTitle = "$FileAnswer";
-                            }
-                            else
-                            {
-                                answerTitle = answer.Title;
-                            }
-
-                            string answerCssClass = "";
-
-                            if (answer.AnswerType == AnswerTypes.Checkbox || answer.AnswerType == AnswerTypes.DropDown || answer.AnswerType == AnswerTypes.Radio)
-                            {
-                                answerCssClass = @"multipleChoiceAnswer";
-                                if (answer.AdditionalFieldType == AdditionalFieldTypes.Text)
-                                {
-                                    answerCssClass = @"openAnswer";
-                                }
-                            }
-                            else if (answer.AnswerType == AnswerTypes.SingleText)
-                            {
-                                answerCssClass = @"singleAnswer";
-                            }
-
-                            if (!answer.IsFake)
-                            {
-                                strw.GetStringBuilder().Append(@"<tr><td class=""" + answerCssClass + @""">" + answerTitle + @"</td></tr>");
-                            }
-                        }
-                        strw.GetStringBuilder().Append("</table>");
-
-                        strw.GetStringBuilder().Append(@"</td><td class=""general"" align=""center"">");
-
-                        strw.GetStringBuilder().Append(@"<table border=""1px"">");
-                        foreach (BOAnswer answer in question.Answers.Values)
-                        {
-                            strw.GetStringBuilder().Append(@"<tr><td class=""general"" align=""center"">" + answer.TimesAnswered + @"</td></tr>");
-                        }
-                        strw.GetStringBuilder().Append("</table>");
-
-                        strw.GetStringBuilder().Append(@"</td><td class=""general"" align=""center"">");
-
-                        strw.GetStringBuilder().Append(@"<table border=""1px"">");
-                        foreach (BOAnswer answer in question.Answers.Values)
-                        {
-                            strw.GetStringBuilder().Append(@"<tr><td class=""general"" align=""center"">");
-                            if ( answer.AnswerType != AnswerTypes.SingleText && answer.AnswerType != AnswerTypes.SingleFile )
-                            {
-                                strw.GetStringBuilder().Append(string.Format("{0:#0.00'%}", answer.PercentageAnswered));
-                            }
-                            strw.GetStringBuilder().Append(@"</td></tr>");
-                        }
-                        strw.GetStringBuilder().Append("</table>");
-
-                        strw.GetStringBuilder().Append(@"</td><td class=""general"" align=""center"">");
-
-                        strw.GetStringBuilder().Append(@"<table border=""1px"">");
-                        foreach (BOAnswer answer in question.Answers.Values)
-                        {
-                            strw.GetStringBuilder().Append(@"<tr><td class=""general"" align=""center"">" + string.Format("{0:#0.00'%}", answer.OverallPercentageAnswered) + @"</td></tr>");
-                        }
-                        strw.GetStringBuilder().Append("</table>");
-
-                        strw.GetStringBuilder().Append(@"</td></tr>");
-                    }
-                }
-
-                strw.GetStringBuilder().Append("</table><br />");
-                // END DETAIL
-
-                // START tail
-                strw.GetStringBuilder().Append("</div></body></html>");
-                // END tail
-
-                Response.Write(strw.ToString());
-                Response.End();
-            }
-        }
-
-        protected void rptAggregateSections_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem ) && e.Item.DataItem != null)
-            {
-                BOSection section = e.Item.DataItem as BOSection;
-                Repeater rptAggregateQuestions = e.Item.FindControl("rptAggregateQuestions") as Repeater;
-
-                rptAggregateQuestions.DataSource = section.Questions.Values;
-                rptAggregateQuestions.DataBind();
-            }
-        }
-
-        protected void rptAggregateQuestions_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            if ((e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem ) && e.Item.DataItem != null)
-            {
-                BOQuestion question = e.Item.DataItem as BOQuestion;
-                Repeater rptAggregateAnswers = e.Item.FindControl("rptAggregateAnswers") as Repeater;
-
-                if (question.FirstAnswerKey.HasValue)
-                {
-                    if (question.Answers[question.FirstAnswerKey.Value].IsFake)
-                    {
-                        question.Answers.Remove(question.FirstAnswerKey.Value);
-                    }
-                }
-
-                rptAggregateAnswers.DataSource = question.Answers.Values;
-                rptAggregateAnswers.DataBind();
-            }
-        }
-
-        protected void submissionGridView_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandArgument != null)
-            {
-                int submissionId = FormatTool.GetInteger(e.CommandArgument);
-                if (submissionId > 0)
-                {
-                    string command = e.CommandName;
-
-                    switch (command)
-                    {
-                        case "ViewFormSubmission":
-                            {
-                                SessionSubmission = helper.GetFormSubmission(submissionId);
-                                MultiView1.ActiveViewIndex = 5;
-                                break;
-                            }
-                    }
+                    HyperLinkExport1.Visible = form.SubmissionCount > 0;
+                    HyperLinkExport2.Visible = form.SubmissionCount > 0;
                 }
             }
         }
@@ -1238,19 +706,6 @@ namespace OneMainWeb
 
                 switch (command)
                 {
-                    case "ExportResults":
-                        {
-                            SessionForm = helper.Get(formId);
-                            cmdExportAll_Click(null, null);
-                            break;
-                        }
-                    case "ExportAggregateResults":
-                        {
-                            SessionForm = helper.Get(formId);
-                            cmdExportAggregate_Click(null, null);
-                            break;
-                        }
-
                     case "EditForm":
                         {
                             ElementStringId = "Form" + formId;
@@ -1379,39 +834,6 @@ namespace OneMainWeb
                             break;
                         }
                 }
-            }
-        }
-
-        protected void FormListSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
-            }
-        }
-
-        protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
-        {
-            bool formIsNewlyAdded = false;
-
-            if (SessionForm != null && ElementMap != null && ElementMap["Form" + SessionForm.Id.Value] != null)
-            {
-                formIsNewlyAdded = ElementMap["Form" + SessionForm.Id.Value].NewlyAdded;
-            }
-
-            /*
-            tabMultiview.Views[1].Selectable = (tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible);
-            tabMultiview.Views[2].Selectable = tabMultiview.Views[3].Selectable = tabMultiview.Views[4].Selectable = ((tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible ) && SessionForm != null && !formIsNewlyAdded);
-            tabMultiview.Views[5].Selectable = tabMultiview.Views[5].Visible && SessionForm != null && !formIsNewlyAdded;*/
-
-            if (((MultiView)sender).ActiveViewIndex == 0)
-            {
-                ClearSessionValues();
-                formGridView.DataBind();
-            }
-            else if (((MultiView)sender).ActiveViewIndex == 1)
-            {
-                LoadFormTabControls();
             }
         }
 
@@ -1909,14 +1331,6 @@ namespace OneMainWeb
             else
             {
                 FormTree.Nodes.Clear();
-            }
-        }
-
-        protected static void submissionSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            if (e.ExecutingSelectCount)
-            {
-                e.InputParameters.Clear();
             }
         }
 

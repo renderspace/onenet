@@ -10,7 +10,6 @@
 
     <uc1:Notifier ID="Notifier1" runat="server" />
     
-    <div class="row">
         <div class="col-md-3">
             <section class="module tall">
                 <header><h3 class="tabs_involved">Tree structure</h3>
@@ -84,7 +83,7 @@
                         </div>
 
                          <div class="form-group">
-                        <div class="col-sm-4">
+                            <div class="col-sm-4">
                                 <asp:Label AssociatedControlID="TextBoxMenuGroup" ID="Label2" Text="Menu group" runat="server"></asp:Label>
                             </div>
                             <div class="col-sm-8">
@@ -144,10 +143,8 @@
                 <%-- *************************************** Module instances ********************************************* --%>	
 		        <asp:Repeater ID="RepeaterModuleInstances" runat="server" OnItemDataBound="RepaterModuleInstances_ItemDataBound" OnItemCommand="RepeaterModuleInstances_ItemCommand" >
                     <HeaderTemplate>
-                        <div class="moduleInstances">
                     </HeaderTemplate>
                     <FooterTemplate>
-                        </div>
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
@@ -171,29 +168,41 @@
 								</span>
                             </h4>
 
-                            <details runat="server" id="HtmlDetails">
-                                <summary>
-                                    <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
-                                </summary>
-                                    <asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
-                                        <div class="select">
-							                <asp:Label ID="LabelPlaceHolder" runat="server" Text="Placeholder" AssociatedControlID="ddlPlaceHolder"></asp:Label>
-							                <asp:DropDownList runat="server" ID="ddlPlaceHolder" />
-							            </div>
-							            <div class="select">
-								            <asp:Label ID="Label10" runat="server" Text="$l_from" AssociatedControlID="ddlPersistentFromDGrid"></asp:Label>
-								            <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid"  />
-							            </div>
-                                        <div class="select">    
-                                            <asp:Label ID="Label11" runat="server" Text="$l_to" AssociatedControlID="ddlPersistentToDGrid"></asp:Label>
-                                            <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	/>
-							            </div>
-
-                                        <asp:Button ID="cmdUpdateDetails" Runat="server" CssClass="save-btn" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='$update' ValidationGroup="MI"  />
-                                    </asp:PlaceHolder>
-                            </details>
-
-                            <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
+                            <div class="col-sm-4">
+                                <details runat="server" id="HtmlDetails"  class="form-horizontal">
+                                    <summary>
+                                        <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
+                                    </summary>
+                                        <asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
+                                            <div class="form-group">
+							                    <label class="col-sm-3 control-label">Placeholder</label>
+                                                <div class="col-sm-9">
+							                        <asp:DropDownList runat="server" ID="ddlPlaceHolder" CssClass="form-control" />
+                                                </div>
+							                </div>
+							                <div class="form-group">
+								                <label class="col-sm-3 control-label">Inherited from depth</label>
+                                                <div class="col-sm-9">
+								                    <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid" CssClass="form-control" />
+                                                </div>
+							                </div>
+                                            <div class="form-group">
+                                               <label class="col-sm-3 control-label">Inherited to</label>
+                                                <div class="col-sm-9">
+                                                    <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	CssClass="form-control" />
+                                                </div>
+							                </div>
+                                            <div class="form-group">
+                                                 <div class="col-sm-offset-3 col-sm-9">
+                                                    <asp:LinkButton ID="cmdUpdateDetails" Runat="server" CssClass="btn btn-success" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='Save' ValidationGroup="MI"  />
+                                                 </div>
+                                            </div>
+                                        </asp:PlaceHolder>
+                                </details>
+                            </div>
+                            <div class="col-sm-8">
+                                <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
+                            </div>
                         </div>
 		            </ItemTemplate>
 		        </asp:Repeater>
@@ -212,5 +221,4 @@
         </asp:MultiView>
     </div>
         </div>
-    </div>
 </asp:Content>

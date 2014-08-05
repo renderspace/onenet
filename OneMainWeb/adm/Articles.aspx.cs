@@ -210,23 +210,6 @@ namespace OneMainWeb
             }
         }
 
-        protected void ObjectDataSourceArticleList_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
-        {
-            e.InputParameters["showUntranslated"] = ShowUntranslated;
-
-            int articleId = FormatTool.GetInteger(TextBoxShowById.Text);
-
-            if (articleId == -1)
-                e.InputParameters["titleSearch"] = TextBoxShowById.Text;
-            else
-                e.InputParameters["titleSearch"] = "";              
-
-            if (e.ExecutingSelectCount)
-                e.InputParameters.Clear();
-        }
-
-       
-
         private void SaveArticle(bool close)
         {
             try
