@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SubscriptionManager.aspx.cs" Inherits="OneMainWeb.SubscriptionManager" Title="$sub_manager" %>
+<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="SubscriptionManager.aspx.cs" Inherits="OneMainWeb.SubscriptionManager" Title="One.NET Newsletter" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Import Namespace="System.IO" %>

@@ -85,5 +85,21 @@ namespace One.Net.BLL
                 siteSettings["PrimaryLanguageId"] = setting;
             }
         }
-	}
+
+        public bool HasGoogleAnalytics 
+        { 
+            get 
+            {
+                if (Settings.ContainsKey("GoogleAnalyticsCode"))
+                {
+                    string code = Settings["GoogleAnalyticsCode"].Value;
+                    if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            } 
+        }
+    }
 }

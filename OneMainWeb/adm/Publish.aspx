@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Publish.aspx.cs" Inherits="OneMainWeb.Publish" Title="$publishing" %>
+<%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Publish.aspx.cs" Inherits="OneMainWeb.Publish" Title="One.NET Publishing" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Import Namespace="One.Net.BLL" %>

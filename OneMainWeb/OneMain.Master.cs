@@ -184,17 +184,28 @@ namespace OneMainWeb
 
         protected void DropDownListWebSiteCombined_SelectedIndexChanged(object sender, EventArgs e)
         {
+            var numberOfRedirects = 0;
+            if (Request["redirect"] != null)
+            {
+                int.TryParse(Request["redirect"].ToString(), out numberOfRedirects);
+            }
+
             var websiteId = 0;
             int.TryParse(DropDownListWebSiteCombined.SelectedValue, out websiteId);
             if (websiteId > 0)
             {
                 SelectedWebSiteId = websiteId;
-                if (Request["redirect"] == null)
+                if (numberOfRedirects < 30)
                 {
+                    numberOfRedirects++;
                     UrlBuilder builder = new UrlBuilder(Request.Url);
-                    builder.QueryString["redirect"] = "true";
+                    builder.QueryString["redirect"] = numberOfRedirects.ToString();
                     log.Info("redirecting from SelectSiteFromEncodedString");
                     builder.Navigate();
+                }
+                else
+                {
+                    throw new Exception("Looks like infite redirect. Please refresh page");
                 }
             }
         }

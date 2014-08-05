@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="ScaffoldConfig.aspx.cs" Inherits="OneMainWeb.adm.ScaffoldConfig" %>
+﻿<%@ Page Title="One.NET config" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="ScaffoldConfig.aspx.cs" Inherits="OneMainWeb.adm.ScaffoldConfig" %>
 <%@ Register TagPrefix="cc1" TagName="ScaffoldConfig" Src="~/AdminControls/ScaffoldConfig.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">

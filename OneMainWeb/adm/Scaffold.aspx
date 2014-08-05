@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Scaffold.aspx.cs" Inherits="OneMainWeb.adm.Scaffold" %>
+﻿<%@ Page Title="One.NET admin" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Scaffold.aspx.cs" Inherits="OneMainWeb.adm.Scaffold" %>
 <%@ Register TagPrefix="bll" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="cc1" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register src="~/AdminControls/ScaffoldDynamicEditor.ascx" tagname="ScaffoldDynamicEditor" tagprefix="uc1" %>
