@@ -183,7 +183,7 @@ namespace OneMainWeb
         protected static void AddEmptyItem(System.Web.UI.WebControls.DropDownList ddl)
         {
             if (ddl.Items.FindByValue("-1") == null)
-                ddl.Items.Insert(0, new ListItem("$label_no_filter", "-1"));
+                ddl.Items.Insert(0, new ListItem("please select filter...", "-1"));
         }
 
         

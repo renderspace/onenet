@@ -83,13 +83,6 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
            <nav>
-
-			<p style="display: none">
- ID="Menu2" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar"
-                    ItemWrap="True" StaticDisplayLevels="4" IncludeStyleBlock="false" EnableViewState="false" 
-                    RenderingMode="List" SkipLinkText=""
-                </p>
-				
 				<asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar" RenderingMode="List"
                     ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" />
   

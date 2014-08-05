@@ -46,7 +46,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdShowAddForm;
+        protected global::System.Web.UI.WebControls.LinkButton cmdShowAddForm;
         
         /// <summary>
         /// formGridView control.
@@ -58,13 +58,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView formGridView;
         
         /// <summary>
-        /// FormListSource control.
+        /// TwoPostbackPager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource FormListSource;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
         
         /// <summary>
         /// View2 control.
@@ -271,7 +271,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowMultipleSubmissions;
+        protected global::System.Web.UI.WebControls.CheckBox chkAllowMultipleSubmissions;
         
         /// <summary>
         /// chkAllowModifyInSubmission control.
@@ -280,7 +280,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::One.Net.BLL.WebControls.LabeledCheckBox chkAllowModifyInSubmission;
+        protected global::System.Web.UI.WebControls.CheckBox chkAllowModifyInSubmission;
         
         /// <summary>
         /// txtSendTo control.
@@ -595,7 +595,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdCancelButton;
+        protected global::System.Web.UI.WebControls.LinkButton cmdCancelButton;
         
         /// <summary>
         /// cmdSaveForm control.
@@ -604,7 +604,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSaveForm;
+        protected global::System.Web.UI.WebControls.LinkButton cmdSaveForm;
         
         /// <summary>
         /// cmdSaveFormAndClose control.
@@ -613,6 +613,6 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdSaveFormAndClose;
+        protected global::System.Web.UI.WebControls.LinkButton cmdSaveFormAndClose;
     }
 }

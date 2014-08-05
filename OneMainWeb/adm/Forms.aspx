@@ -5,158 +5,183 @@
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" Runat="Server">
     <one:Notifier runat="server" ID="Notifier1" />
-        <asp:MultiView runat="server" ID="MultiView1"  OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
+        <asp:MultiView runat="server" ID="MultiView1"  OnActiveViewChanged="Multiview1_ActiveViewChanged">
             <asp:View ID="View1" runat="server">
-                 <div class="adminSection">
-                   
-                                <asp:Button ID="cmdShowAddForm" runat="server" Text="$add_form" OnClick="cmdShowAddForm_Click" />
-                   
-                  </div>
-         
-                            <asp:GridView ID="formGridView" runat="server" PageSize="10" PageIndex="0"
-                                PagerSettings-Mode="NumericFirstLast"
-                                PagerSettings-LastPageText="$last"
-                                PagerSettings-FirstPageText="$first"
-                                PagerSettings-PageButtonCount="7" 
-                                AllowSorting="True" 
-                                AllowPaging="True" 
-                                AutoGenerateColumns="False"
-                                DataSourceID="FormListSource" 
-                                DataKeyNames="Id"
-                                OnRowDataBound="formGridView_RowDataBound"
-                                OnRowCommand="formGridView_RowCommand">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="$form_id">
-                                        <ItemTemplate>
-                                                <%# Eval("Id") %>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="$form">
-                                        <ItemTemplate>
-                                                <%# Eval("Title") %>
-                                                <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : "") ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="$form_type">
-                                        <ItemTemplate>
-                                                <%# Eval("FormType").ToString() %>
-                                        </ItemTemplate>
-                                    </asp:TemplateField> 
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                                <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>                           
-                                    <asp:TemplateField HeaderText="$form_submission_count">
-                                        <ItemTemplate>
-                                                <span style="margin-left: 20px;" ><%# Eval("SubmissionCount") %></span>
-                                        </ItemTemplate>
-                                    </asp:TemplateField> 
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                                <asp:LinkButton Text="$copy_as_new" CommandName="CopyAsNew" CommandArgument='<%# Eval("Id") %>' ID="cmdCopyAsNew" runat="server" /><br />
-                                        </ItemTemplate>
-                                    </asp:TemplateField> 
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                                <asp:LinkButton Text="Export Aggregate" CommandName="ExportAggregateResults" CommandArgument='<%# Eval("Id") %>' ID="LinkButtonAggregate" runat="server" />
-                                                <asp:LinkButton Text="Export All" CommandName="ExportResults" CommandArgument='<%# Eval("Id") %>' ID="LinkAll" runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <ItemTemplate>
-                                                <asp:ImageButton CommandName="EditForm"	CommandArgument='<%# Eval("Id") %>' ID="cmdEditButton" runat="server" Enabled='<%# !(bool)Eval("MissingTranslation") %>'  />
-                                                <asp:LinkButton Text="$edit" CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" Enabled='<%# !(bool)Eval("MissingTranslation") %>' runat="server" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>                            
-                                </Columns>
-                                <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-                                    PageButtonCount="7" />
-                            </asp:GridView>
-                           <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-                                EnablePaging="True" ID="FormListSource" runat="server" SelectMethod="Select"
-                                TypeName="OneMainWeb.FormHelper" DeleteMethod="DeleteForm" OnSelecting="FormListSource_Selecting" SelectCountMethod="SelectCount" SortParameterName="sortBy">
-                                <SelectParameters>
-                                    <asp:Parameter Name="sortDirection" DefaultValue="ASC" Type="string" />
-                                </SelectParameters> 
-                           </asp:ObjectDataSource>
-                  
-
+                <div class="adminSection">
+                     <div class="col-md-2">
+                         <asp:LinkButton ID="cmdShowAddForm" runat="server" text="<span class='glyphicon glyphicon-plus'></span> Add" OnClick="cmdShowAddForm_Click" CssClass="btn btn-success" />			
+			        </div>
+                    
+                </div>
+                <asp:GridView ID="formGridView" runat="server" CssClass="table table-hover"
+                    AllowSorting="True" 
+                    AutoGenerateColumns="False"
+                    DataKeyNames="Id"
+                    OnRowDataBound="formGridView_RowDataBound"
+                    OnRowCommand="formGridView_RowCommand">
+                    <Columns>
+                        <asp:TemplateField HeaderText="Id">
+                            <ItemTemplate>
+                                    <%# Eval("Id") %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Title">
+                            <ItemTemplate>
+                                    <%# Eval("Title") %>
+                                    <%# String.IsNullOrEmpty(Eval("SubTitle") != null? Eval("SubTitle").ToString() : "") ? "" : ("<br/><em>" + Eval("SubTitle") + "</em>")%>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="Type">
+                            <ItemTemplate>
+                                    <%# Eval("FormType").ToString() %>
+                            </ItemTemplate>
+                        </asp:TemplateField>                          
+                        <asp:TemplateField HeaderText="Submissions">
+                            <ItemTemplate>
+                                    <span style="margin-left: 20px;" ><%# Eval("SubmissionCount") %></span>
+                            </ItemTemplate>
+                        </asp:TemplateField> 
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                    <asp:LinkButton Text="Copy as new" CommandName="CopyAsNew" CommandArgument='<%# Eval("Id") %>' ID="cmdCopyAsNew" runat="server" CssClass="btn btn-info btn-xs" />	
+                            </ItemTemplate>
+                        </asp:TemplateField> 
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:HyperLink ID="HyperLinkExport1" runat="server" NavigateUrl='/adm/ExcelExport.ashx?id=<%# Eval("Id") %>&type=form_agregate' Text="Export Aggregate" CssClass="btn btn-default btn-xs" />	
+                                <asp:HyperLink ID="HyperLinkExport2" runat="server" NavigateUrl='/adm/ExcelExport.ashx?id=<%# Eval("Id") %>&type=form_all_submissions' Text="Export All" CssClass="btn btn-default btn-xs" />	
+                                   
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                    <asp:LinkButton Text='<span class=\"glyphicon glyphicon-pencil\"></span> Edit' CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" Enabled='<%# !(bool)Eval("MissingTranslation") %>' runat="server" CssClass="btn btn-info btn-xs" />	
+                            </ItemTemplate>
+                        </asp:TemplateField>                            
+                    </Columns>
+                </asp:GridView>
+                <div class="text-center">
+                    <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
+                </div>	  
             </asp:View>
             <asp:View ID="View2" runat="server">
-                <div class="searchFull">
-                 </div>
-                    <div class="centerStructure formStructure">     
-                        <asp:PlaceHolder ID="plhAddForm" runat="server">
-		                    <asp:TextBox ID="txtAddForm" runat="server" Text="$add_new_form" />
-		                    <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
-		                </asp:PlaceHolder>
+                 <div class="col-md-3">
+                     <div class="adminSection">
+                            <asp:PlaceHolder ID="plhAddForm" runat="server">
+		                        <asp:TextBox ID="txtAddForm" runat="server" Text="$add_new_form" />
+		                        <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
+		                    </asp:PlaceHolder>
 		        
-		                <asp:PlaceHolder id="plhAddSection" runat="server">
-		                    <asp:TextBox Required="false" ID="txtAddSection" runat="server" text="$add_section" />
-		                    <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
-		                </asp:PlaceHolder>
+		                    <asp:PlaceHolder id="plhAddSection" runat="server">
+		                        <asp:TextBox Required="false" ID="txtAddSection" runat="server" text="$add_section" />
+		                        <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
+		                    </asp:PlaceHolder>
 		        
-		                <asp:PlaceHolder ID="plhAddQuestion" runat="server">
-		                    <asp:TextBox ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
-		                    <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
-		                </asp:PlaceHolder>
-		                <div style="width: 100%;">&nbsp;</div>
-		                <br style="clear: both;" />                
-                        <div id="treeHolder" class="treeHolder">                            
-	                        <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" 
-		                        BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" Width="270" />
-                        </div>		
+		                    <asp:PlaceHolder ID="plhAddQuestion" runat="server">
+		                        <asp:TextBox ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
+		                        <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
+		                    </asp:PlaceHolder>
+		                    <div style="width: 100%;">&nbsp;</div>
+		                    <br style="clear: both;" />                
+                            <div id="treeHolder" class="treeView">                            
+	                            <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" 
+		                            BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" Width="270" />
+                            </div>	
+                        </div>	
            	        </div>        
-		            <div class="mainEditor formEditor">
-		                <div class="contentEntry">
+		            <div class="col-md-9">
+                        <div class="adminSection form-horizontal">
 		                    <asp:PlaceHolder ID="plhUpdateForm" runat="server">
-		                        <asp:TextBox Required="false" ID="txtFormName" runat="server" Text="$form_name" />
-		                        <asp:TextBox Required="false" ID="InputFormPrivateName" runat="server" Text="$form_private_name" />
-		                        <asp:TextBox Required="false" ID="txtFormThankYouNote" runat="server" Text="$form_thank_you_note" Rows="3" TextMode="multiLine" />
-		                        <asp:TextBox Required="false" ID="txtFormDescription" runat="server" Text="$form_desc" Rows="3" TextMode="multiLine" />
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Form name</label>
+                                    <div class="col-sm-9">
+                                        <asp:TextBox  ID="txtFormName" runat="server" CssClass="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Private name</label>
+                                    <div class="col-sm-9">
+                                        <asp:TextBox Required="false" ID="InputFormPrivateName" runat="server" CssClass="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Thank you note</label>
+                                    <div class="col-sm-9">
+                                       <asp:TextBox Required="false" ID="txtFormThankYouNote" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <asp:TextBox Required="false" ID="txtFormDescription" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
+                                    </div>
+                                </div>
+		                        
 		                
-                                <div class="select">
-                                    <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes"
-                                        Text="$form_type" />
+                                 <div class="form-group">
+                                    <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes" CssClass="col-sm-3 control-label"
+                                        Text="Form type" />
+                                     <div class="col-sm-9">
                                     <asp:DropDownList AppendDataBoundItems="False" 
                                         ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
-                                        />
+                                         CssClass="form-control" />
                                     <asp:ObjectDataSource ID="FormTypesSource" runat="server"
                                         SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
-                                    </asp:ObjectDataSource>                        
+                                    </asp:ObjectDataSource>
+                                        </div>                        
                                 </div>
                         
-                                <div class="select">
-                                    <asp:Label AssociatedControlID="ddlUpdateSectionTypes" runat="server" ID="lblUpdateSectionTypes"
-                                        Text="$section_type" />
+                                <div class="form-group">
+                                    <asp:Label AssociatedControlID="ddlUpdateSectionTypes" runat="server" ID="lblUpdateSectionTypes"  CssClass="col-sm-3 control-label"
+                                        Text="Section type" />
+                                     <div class="col-sm-9">
                                     <asp:DropDownList AppendDataBoundItems="False" 
                                         ID="ddlUpdateSectionTypes" OnDataBound="ddlUpdateSectionTypes_DataBound" runat="server" DataSourceID="SectionTypesSource"
-                                        />
+                                         CssClass="form-control" />
                                     <asp:ObjectDataSource ID="SectionTypesSource" runat="server"
                                         SelectMethod="ListSectionTypes" TypeName="OneMainWeb.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
-                                    </asp:ObjectDataSource>    
+                                    </asp:ObjectDataSource>
+                                        </div>    
                                 </div> 
-                         
-                                <two:LabeledCheckBox runat="server" Text="$allow_multiple_submissions" ID="chkAllowMultipleSubmissions" />
-                                <two:LabeledCheckBox runat="server" Text="$allow_modify_in_submission" ID="chkAllowModifyInSubmission" />                                                
+
+                                <div class="checkbox">
+                                    <label class="col-sm-offset-3 col-sm-9">
+                                        <asp:CheckBox runat="server" ID="chkAllowMultipleSubmissions" />
+                                        Allow multiple submissions
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="col-sm-offset-3 col-sm-9">
+                                        <asp:CheckBox runat="server" ID="chkAllowModifyInSubmission"  />
+                                        Allow_modify_in_submission
+                                    </label>
+                                </div>                                            
 
                                 <div class="form-group">
-                                    <label>form_send_to</label>
-                                    <asp:TextBox runat="server" ID="txtSendTo" type="email"></asp:TextBox>
+                                    <label class="col-sm-3 control-label">Sent to email</label>
+                                    <div class="col-sm-9">
+                                        <asp:TextBox type="email" runat="server" ID="txtSendTo" CssClass="form-control" />
+                                    </div>
                                 </div>
 
-                                
-                                
-                                <asp:TextBox Required="false" ID="InputCompletionRedirect" runat="server" Text="$form_completion_redirect" />
-                                <div class="save">
-		                            <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Redirect to URL after completion</label>
+                                    <div class="col-sm-9">
+                                        <asp:TextBox type="url" ID="InputCompletionRedirect" runat="server" CssClass="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+		                                <asp:button	id="cmdUpdateForm" Runat="server" CssClass="button" Text="$update_form" OnClick="cmdUpdateForm_Click" />
+                                    </div>
 		                        </div>
 		                    </asp:PlaceHolder>
+
 		                    <asp:PlaceHolder ID="plhUpdateSection" runat="server">
 		                        <asp:TextBox Required="false" runat="server" ID="txtSectionName" Text="$section_name" />
 		                        <asp:TextBox Required="false" ID="InputSectionDescription" runat="server" Text="$section_desc" Rows="3" TextMode="multiLine" />
@@ -168,8 +193,13 @@
 		                        </div>
 		                    </asp:PlaceHolder>
 		                    <asp:PlaceHolder ID="plhUpdateQuestion" runat="server">
-		                        <asp:TextBox id="txtQuestionText" runat="server" Text="$question_text" />
-		                        <asp:TextBox Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" Text="$question_description" />
+
+                                <label>Question</label>
+		                        <asp:TextBox id="txtQuestionText" runat="server"  />
+
+                                <label>Description</label>
+		                        <asp:TextBox Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" />
+
                                 <two:LabeledCheckBox runat="server" Text="$question_requires_answer" ID="chkAnswerIsRequired" />
                                 <div class="radiobuttonlist" id="divFrontEndQuestionTypes" runat="server">
                                     <asp:Label CssClass="radiobuttonlistTitle" ID="lblFrontEndQuestionTypes" runat="server" Text="$user_question_types" />
@@ -230,15 +260,15 @@
 		                            <asp:button	id="cmdUpdateQuestion" Runat="server" CssClass="button" Text="$update_question" OnClick="cmdUpdateQuestion_Click" />			            
 		                        </div>
 		                    </asp:PlaceHolder>
+                             <div class="form-group" id="overallButtons" runat="server">
+                                 <div class="col-sm-offset-3 col-sm-9">
+                                    <asp:LinkButton ID="cmdCancelButton" OnClick="cmdCancelButton_Click" runat="server" Text="Cancel" CssClass="btn btn-default" />
+                                    <asp:LinkButton ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="Save" CssClass="btn btn-success" />
+                                    <asp:LinkButton ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="Save and close" CssClass="btn btn-success" />
+                                 </div>
+                            </div>    
                         </div>
                     </div>
-                    <div class="searchFull" id="overallButtons" runat="server">
-                        <p class="save">
-                            <asp:Button ID="cmdCancelButton" OnClick="cmdCancelButton_Click" runat="server" Text="$cancel" />
-                            <asp:Button ID="cmdSaveForm" OnClick="cmdSaveForm_Click" runat="server" Text="Save" />
-                            <asp:Button ID="cmdSaveFormAndClose" OnClick="cmdSaveFormAndClose_Click" runat="server" Text="Save and close" />
-                        </p> 				    
-                    </div>       
             </asp:View>
         </asp:MultiView>
 </asp:Content>

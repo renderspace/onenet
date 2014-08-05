@@ -225,13 +225,6 @@
     <Compile Include="AdminControls\ScaffoldDynamicEditor.ascx.designer.cs">
       <DependentUpon>ScaffoldDynamicEditor.ascx</DependentUpon>
     </Compile>
-    <Compile Include="AdminControls\ScaffoldMainPagedList.ascx.cs">
-      <DependentUpon>ScaffoldMainPagedList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\ScaffoldMainPagedList.ascx.designer.cs">
-      <DependentUpon>ScaffoldMainPagedList.ascx</DependentUpon>
-    </Compile>
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -247,6 +240,9 @@
       <DependentUpon>TextSpecialContent.ascx</DependentUpon>
     </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
+    <Compile Include="adm\ExcelExport.ashx.cs">
+      <DependentUpon>ExcelExport.ashx</DependentUpon>
+    </Compile>
     <Compile Include="adm\Forms.aspx.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -397,7 +393,6 @@
     <Content Include="AdminControls\LastChangeAndHistory.ascx" />
     <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
-    <Content Include="AdminControls\ScaffoldMainPagedList.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\TextSpecialContent.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
@@ -743,6 +738,7 @@
     <Content Include="adm\css\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="adm\ExcelExport.ashx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />

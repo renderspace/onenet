@@ -5,6 +5,6 @@
 <HeaderTemplate><ul></HeaderTemplate>
 <FooterTemplate></ul></FooterTemplate>
 <ItemTemplate>
-    <li><a href="/adm/Scaffold.aspx?<%# ScaffoldMainPagedList.REQUEST_VIRTUAL_TABLE_ID %>=<%# Eval("Id") %>"><%# Eval("FriendlyName") %></a></li>
+    <li><a href="/adm/Scaffold.aspx?<%# OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID %>=<%# Eval("Id") %>"><%# Eval("FriendlyName") %></a></li>
 </ItemTemplate>
 </asp:Repeater>

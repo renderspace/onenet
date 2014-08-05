@@ -29,7 +29,7 @@ input[type="number"]  {width: 70px;}
 
 .right.buttons {float: right;}
 
-.moduleInstance {border-bottom: 1px #ccc solid; padding: 15px 0;}
+
 
 .navbar-brand {font-size: 10px!important;}
 .navbar-brand img {margin-right: 10px;}
@@ -49,9 +49,7 @@ input[type="number"]  {width: 70px;}
 .extline {margin: 10px 0; cursor: pointer;}
 summary {margin: 10px 0 0 0; cursor: pointer; text-decoration: underline;}
 summary.nolink {text-decoration: none;}
-details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0; overflow: auto;}
-details input[type='submit'] {float: right;}
-details .select {margin: 10px 0 0 0;}
+
 
 .module h3 {border-bottom: 1px #ccc solid; padding-bottom: 10px; margin-bottom: 10px;}
 .module .submit-links {float: right; padding-top: 10px; margin-top: 10px;}
@@ -192,8 +190,8 @@ input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
 
 .required {display: none!important;}
 /**/
-.moduleInstance {background: #EEEEEE; padding: 15px; margin-top: 15px;}
-.moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
+
+
 .m-ops {float: left;}
 .m-btns {float: right;}
 .s-btn {margin: 0 0 0 10px!important;}
@@ -470,3 +468,10 @@ div.calendar
 .full {width: 100%; float: left;}
 
 .adminSection {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}
+
+.moduleInstance {border-bottom: 1px #ccc solid; background: #EEEEEE; padding: 15px; margin-top: 15px; width: 100%; float: left;}
+.moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
+
+details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0; }
+details input[type='submit'] {float: right;}
+details .select {margin: 10px 0 0 0;}

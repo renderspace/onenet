@@ -492,7 +492,7 @@ namespace OneMainWeb.adm
             }
             strExtension = "<img src='" + strExtension + "' alt='' />";
 
-            return "$" + name.ToString() + " " + strExtension + " [" + id.ToString() + "]";
+            return name.ToString() + " " + strExtension + " [" + id.ToString() + "]";
         }
 
         protected string RenderPageStatus()
