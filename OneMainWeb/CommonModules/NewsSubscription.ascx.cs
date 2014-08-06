@@ -40,7 +40,7 @@ namespace OneMainWeb.CommonModules
         protected string CancelationPage { get { return GetStringSetting("CancelationPage"); } }
         protected string SubscriptionEmailSubject { get { return GetStringSetting("SubscriptionEmailSubject"); } }
         protected List<int> NewsletterIds { get { return StringTool.SplitStringToIntegers(GetStringSetting("NewsletterId")); } }
-        protected bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
+
         protected string SubscriptionEmailBody { get { return GetStringSetting("SubscriptionEmailBody"); } }
 
         

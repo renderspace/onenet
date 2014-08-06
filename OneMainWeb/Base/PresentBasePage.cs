@@ -81,35 +81,30 @@ namespace OneMainWeb
 
             if (webSite.HasGoogleAnalytics)
             {
-                string code = webSite.Settings["GoogleAnalyticsCode"].Value;
+                string code = webSite.Settings["GoogleAnalyticsWebPropertyID"].Value;
                 var enableCookieConsent = false;
-                if (webSite.Settings.ContainsKey("GAEnableCookieConsent"))
+                if (webSite.Settings.ContainsKey("GoogleAnalyticsConsent"))
                 {
-                    enableCookieConsent = FormatTool.GetBoolean(webSite.Settings["GAEnableCookieConsent"].Value);
+                    enableCookieConsent = FormatTool.GetBoolean(webSite.Settings["GoogleAnalyticsConsent"].Value);
                 }
 
-                Literal gaCode = new Literal();
+                var gaCode = "<!-- Google Analytics UNIVERSAL will appear here on production servers -->";
                 if (PublishFlag)
                 {
-                    gaCode.Text += enableCookieConsent ? @"<script type=""text/plain"" class=""cc-onconsent-analytics"">" : @"<script type=""text/javascript"">";
-                    gaCode.Text += @"
-//<![CDATA[
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '" + code + @"']);
-_gaq.push(['_trackPageview']);
+                    gaCode += "<!-- Google Analytics -->";
+                    gaCode += enableCookieConsent ? @"<script type=""text/plain"" class=""cc-onconsent-analytics"">" : @"<script type=""text/javascript"">";
+                    gaCode += @"(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-//]]>
-</script>";
+ga('create', '" + code + @"', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->";
                 }
-                else
-                    gaCode.Text = "<!-- GoogleAnalyticsCode will appear here on production servers -->";
-
-                customBodyCode += gaCode.Text;
+                customHeadCode += gaCode;
             }
 
 
@@ -230,32 +225,24 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
                     }
                 }
 
-                if (webSite.Settings.ContainsKey("DefaultOgImage") && !string.IsNullOrEmpty(webSite.Settings["DefaultOgImage"].Value) && !string.IsNullOrEmpty(webSite.Settings["DefaultOgImage"].Value.Trim()))
+                if (!string.IsNullOrWhiteSpace(page.OgImage))
                 {
                     HtmlMeta metaOgImage = new HtmlMeta();
                     metaOgImage.ID = "OgImage";
                     metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(webSite.Settings["DefaultOgImage"].Value);
-                    if (metaOgImage.Content.Length > 0)
-                        Page.Header.Controls.Add(metaOgImage);
-                }
-
-                if (page.Settings.ContainsKey("PageOgImage") && !string.IsNullOrEmpty(page.Settings["PageOgImage"].Value.Trim()))
+                    metaOgImage.Content = HttpUtility.HtmlEncode(page.OgImage);
+                    Page.Header.Controls.Add(metaOgImage);
+                } 
+                else if (!string.IsNullOrWhiteSpace(webSite.DefaultOgImage))
                 {
-                    var metaOgImage = Page.Header.FindControl("OgImage") as HtmlMeta;
-
-                    if (metaOgImage == null)
-                    {
-                        metaOgImage = new HtmlMeta();
-                        metaOgImage.ID = "OgImage";
-                        if (page.Settings["PageOgImage"].Value.Length > 0)
-                            Header.Controls.Add(metaOgImage);
-                    }
-
-                    metaOgImage.Attributes.Clear();
+                    HtmlMeta metaOgImage = new HtmlMeta();
+                    metaOgImage.ID = "OgImage";
                     metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(page.Settings["PageOgImage"].Value);
+                    metaOgImage.Content = HttpUtility.HtmlEncode(webSite.DefaultOgImage);
+                    Page.Header.Controls.Add(metaOgImage);
                 }
+
+                
                 if (page.IsRedirected)
                 {
                     log.Info("RedirectToUrl to external link: " + page.RedirectToUrl);
@@ -362,8 +349,6 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
                                 if (null != control)
                                     p.Controls.Add(control);
 
-                                bool isViewable = true;
-
                                 MModule mod = null;
 
                                 if (control is MModule)
@@ -383,13 +368,9 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
                                     mod.WebSiteTitle = webSite.Title;
                                     mod.Settings = module.Settings;
                                     mod.RelativePageUri = this.page.URI;
-                                    isViewable = mod.IsViewableByCurrentPrincipal;
-
-                                    if (isViewable)
-                                        activeModules.Add(mod);
+                                    activeModules.Add(mod);
                                 }
-                                if (isViewable)
-                                    contentPlaceHolders[module.PlaceHolderId].Controls.Add(p);
+                                contentPlaceHolders[module.PlaceHolderId].Controls.Add(p);
                             }
                         }
                     }
@@ -698,46 +679,12 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         {
             var pageTitle = "";
             var titlePrefix = "";
-            if (SiteMap.CurrentNode["_pageID"] == SiteMap.RootNode["_pageID"])
-            {
-                if (webSite.Settings.ContainsKey("Headline") && !string.IsNullOrEmpty(webSite.Settings["Headline"].Value) && !string.IsNullOrEmpty(webSite.Settings["Headline"].Value.Trim()))
-                    titlePrefix = webSite.Settings["Headline"].Value;
-            }
 
-            var CondensedPageTitle = false;
-            if (webSite.Settings.ContainsKey("CondensedPageTitle") && !string.IsNullOrEmpty(webSite.Settings["CondensedPageTitle"].Value) && !string.IsNullOrEmpty(webSite.Settings["CondensedPageTitle"].Value.Trim()))
-                Boolean.TryParse(webSite.Settings["CondensedPageTitle"].Value, out CondensedPageTitle);
-
-            var MaxPageTitleDepth = 6;
-            if (webSite.Settings.ContainsKey("MaxPageTitleDepth") && !string.IsNullOrEmpty(webSite.Settings["MaxPageTitleDepth"].Value) && !string.IsNullOrEmpty(webSite.Settings["MaxPageTitleDepth"].Value.Trim()))
-                Int32.TryParse(webSite.Settings["MaxPageTitleDepth"].Value, out MaxPageTitleDepth);
-
-            if (CondensedPageTitle)
-            {
-                var currentLevel = FormatTool.GetInteger(SiteMap.CurrentNode["_absDepth"]);
-
-                if (currentLevel == 0)
-                    pageTitle = webSite.Title;
-                else if (currentLevel == 1)
-                    pageTitle = SiteMap.CurrentNode["_pageTitle"] + " - " + webSite.Title;
-                else if (currentLevel <= MaxPageTitleDepth)
-                    pageTitle = SiteMap.CurrentNode["_pageTitle"] + " - " + FindLevelTitle(Int32.Parse(SiteMap.CurrentNode["_pageID"]), 1) + " - " + webSite.Title;
-                else
-                {
-                    if (MaxPageTitleDepth == 1)
-                        pageTitle = FindLevelTitle(Int32.Parse(SiteMap.CurrentNode["_pageID"]), 1) + " - " + webSite.Title;
-                    else
-                        pageTitle = FindLevelTitle(Int32.Parse(SiteMap.CurrentNode["_pageID"]), MaxPageTitleDepth) + " - " + FindLevelTitle(Int32.Parse(SiteMap.CurrentNode["_pageID"]), 1) + " - " + webSite.Title;
-                }
-
-            }
+            if (providedPageName.Length == 0)
+                pageTitle = webSite.Title + " - " + SiteMap.CurrentNode["_pageTitle"];
             else
-            {
-                if (providedPageName.Length == 0)
-                    pageTitle = webSite.Title + " - " + SiteMap.CurrentNode["_pageTitle"];
-                else
-                    pageTitle = webSite.Title + " - " + providedPageName;
-            }
+                pageTitle = webSite.Title + " - " + providedPageName;
+            
 
             return titlePrefix + pageTitle;
         }

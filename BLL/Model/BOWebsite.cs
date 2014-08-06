@@ -24,8 +24,6 @@ namespace One.Net.BLL
 			this.ContentId = contentID;
 		}
 
-        public string PreviewUrl { get; set; }
-
 		public Dictionary<string, BOSetting> Settings
 		{
 			get { return siteSettings; }
@@ -86,13 +84,55 @@ namespace One.Net.BLL
             }
         }
 
+        public string DefaultOgImage
+        {
+            get
+            {
+                return SubTitle;
+            }  
+        }
+
+        public string PreviewUrl
+        {
+            get
+            {
+                if (Settings.ContainsKey("PreviewUrl"))
+                {
+                    var url = Settings["PreviewUrl"].Value;
+                    if (url.StartsWith("http"))
+                        return url;
+                }
+                return "";
+            }
+            set
+            {
+                if (Settings.ContainsKey("PreviewUrl"))
+                    Settings["PreviewUrl"].Value = value;
+                else
+                    Settings.Add("PreviewUrl", new BOSetting("PreviewUrl", "Url", value, BOSetting.USER_VISIBILITY_NORMAL));
+            }
+        }
+        public string ProductionUrl
+        {
+            get
+            {
+                if (Settings.ContainsKey("ProductionUrl"))
+                {
+                    var url = Settings["ProductionUrl"].Value;
+                    if (url.StartsWith("http"))
+                        return url;
+                }
+                return "";
+            }
+        }
+
         public bool HasGoogleAnalytics 
         { 
             get 
             {
-                if (Settings.ContainsKey("GoogleAnalyticsCode"))
+                if (Settings.ContainsKey("GoogleAnalyticsWebPropertyID"))
                 {
-                    string code = Settings["GoogleAnalyticsCode"].Value;
+                    string code = Settings["GoogleAnalyticsWebPropertyID"].Value;
                     if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
                     {
                         return true;

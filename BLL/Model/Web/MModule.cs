@@ -10,30 +10,11 @@ namespace One.Net.BLL.Web
 {
     public abstract class MModule : UserControl
     {
-        private string extracssclass;
-        private int instanceId;
-        private int pageId;
-        private int webSiteId;
-        private string webSiteTitle;
-        private string relativePageUri;
-        private Dictionary<string, BOSetting> settings;
-
         public SiteMapNode CurrentSiteMapNode
         {
             get
             {
                 return SiteMap.CurrentNode;
-            }
-        }
-
-        public int CurrentPageId
-        {
-            get
-            {
-                if (CurrentSiteMapNode == null)
-                    return 0;
-                var currentPageId = int.Parse(CurrentSiteMapNode["_pageID"]);
-                return currentPageId;
             }
         }
 
@@ -48,17 +29,6 @@ namespace One.Net.BLL.Web
             }
         }
 
-
-
-        public int CurrentWebSiteId
-        {
-            get
-            {
-                var currentWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"]);
-                return currentWebSiteId;
-            }
-        }
-
         protected string TranslateComplex(string keyword)
         {
             if (UniqueTranslation)
@@ -67,11 +37,7 @@ namespace One.Net.BLL.Web
                 return BContent.GetComplexMeaningRendered(keyword);
         }
 
-        public string ExtraCssClass
-        {
-            get { return extracssclass; }
-            set { extracssclass = value; }
-        }
+        public string ExtraCssClass { get; set; }
 
         protected string TranslateText(string keyword)
         {
@@ -94,83 +60,17 @@ namespace One.Net.BLL.Web
             get { return GetBooleanSetting("UniqueTranslation"); }
         }
 
-        public string RelativePageUri
-        {
-            get { return relativePageUri; }
-            set { relativePageUri = value; }
-        }
+        public string RelativePageUri { get; set; }
 
-        public bool SettingsLoaded
-        {
-            get { return settings != null; }
-        }
+        public int InstanceId { get; set; }
 
-        public int InstanceId
-        {
-            get { return instanceId; }
-            set { instanceId = value; }
-        }
+        public int PageId { get; set; }
 
-        public int PageId
-        {
-            get { return pageId; }
-            set { pageId = value; }
-        }
+        public int WebSiteId {get; set; }
 
-        public int WebSiteId
-        {
-            get { return webSiteId; }
-            set { webSiteId = value; }
-        }
+        public string WebSiteTitle { get; set; }
 
-        public string WebSiteTitle
-        {
-            get { return webSiteTitle; }
-            set { webSiteTitle = value; }
-        }
-
-        public bool IsViewableByCurrentPrincipal
-        {
-            get
-            {
-                if (FrontEndRequireGroupList.Length == 0)
-                    return true;
-
-                if (FrontEndRequireGroupList.Contains("UNAUTH"))
-                {
-                    return !Thread.CurrentPrincipal.Identity.IsAuthenticated;
-                }
-
-                string[] roles = FrontEndRequireGroupList.Split(new char[] { ',', ';' });
-                bool isViewable = false;
-
-                foreach (string s in roles)
-                {
-                    string roleName = s;
-                    if (s.StartsWith("!"))
-                    {
-                        roleName = s.TrimStart(new char[] { '!' });
-                        isViewable = !Thread.CurrentPrincipal.IsInRole(roleName);
-                    }
-                    else
-                    {
-                        isViewable = Thread.CurrentPrincipal.IsInRole(roleName);
-                    }
-                }
-                return isViewable;
-            }
-        }
-
-        public string FrontEndRequireGroupList
-        {
-            get { return GetStringSetting("RequireGroupList"); }
-        }
-
-        public Dictionary<string, BOSetting> Settings
-        {
-            get { return settings; }
-            set { settings = value; }
-        }
+        public Dictionary<string, BOSetting> Settings { get; set; }
 
         public List<int> GetIntegerListSetting(string settingName)
         {
@@ -178,7 +78,7 @@ namespace One.Net.BLL.Web
                 return new List<int>();
 
             BOSetting setting = Settings[settingName];
-            if (!(setting.Type.Equals("String") || setting.Type.Equals("IntList")) )
+            if (!(setting.Type.Equals("CSInteger")))
             {
                 throw new ApplicationException("not a string/IntList setting; probably error in database");
             }
@@ -192,7 +92,7 @@ namespace One.Net.BLL.Web
                 return defaultValue;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("String"))
+            if (!setting.Type.Equals("String") && !(setting.Type.Equals("CSInteger")))
             {
                 throw new ApplicationException("not a String setting; probably error in database " + settingName);
             }
@@ -214,7 +114,6 @@ namespace One.Net.BLL.Web
             }
             return Int32.Parse(setting.Value.ToString());
         }
-
 
         public bool GetBooleanSetting(string settingName)
         {

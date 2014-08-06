@@ -1,6 +1,5 @@
 USE [master]
 GO
---g:\Program Files\Microsoft SQL Server\MSSQL.1\MSSQL\Data\
 
 IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'@INITIAL_CATALOG@')
 	PRINT 'Database exists'

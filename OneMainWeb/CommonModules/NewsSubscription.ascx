@@ -2,9 +2,7 @@
 
 <%@ Import Namespace="One.Net.BLL"  %>
 
-<% if (ShowModuleTitle ) { %>
-    <h1><%=Translate("newsletter_module_title") %></h1>
-<% } %>
+<h1><%=Translate("newsletter_module_title") %></h1>
 
 <asp:PlaceHolder id="PlaceHolderSubscribe" runat="server">
 

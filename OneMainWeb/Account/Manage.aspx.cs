@@ -44,7 +44,7 @@ namespace OneMainWeb.Account
                 }
                 CanRemoveExternalLogins = manager.GetLogins(User.Identity.GetUserId()).Count() > 1;
 
-                // Render success message
+                // Render weHaveDatabase message
                 var message = Request.QueryString["m"];
                 if (message != null)
                 {
