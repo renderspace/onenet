@@ -194,6 +194,10 @@ namespace OneMainWeb.AdminControls
                         }
                         SettingsForSaving.Add(setting.Name, setting);
                     }
+                    else if (setting.UserVisibility == BOSetting.USER_VISIBILITY_SPECIAL)
+                    {
+                        SettingsForSaving.Add(setting.Name, setting);
+                    }
                 }
 
                 switch (Mode)
@@ -273,6 +277,8 @@ namespace OneMainWeb.AdminControls
 
 
                     BOSetting setting = ((KeyValuePair<string, BOSetting>)e.Item.DataItem).Value;
+                    TextBox1.Text = setting.Value;
+                    LabelValue.Text = setting.Value;
 
                     if (setting.UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL && setting.UserVisibility != BOSetting.USER_VISIBILITY_MULTILINE)
                     {

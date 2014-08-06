@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="One.NET Websites" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Website.aspx.cs" Inherits="OneMainWeb.adm.Website" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
+<%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
+<%@ Register src="~/AdminControls/LastChangeAndHistory.ascx" tagname="LastChangeAndHistory" tagprefix="uc2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <one:Notifier runat="server" ID="Notifier1" />
@@ -18,11 +20,19 @@
 					AutoGenerateColumns="false"
 					AllowPaging="false"
 					AllowSorting="false"
-					DataKeyNames="Id">
+					DataKeyNames="Id" OnSelectedIndexChanged="GridViewWebsites_SelectedIndexChanged">
 		        <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
                     <asp:BoundField HeaderText="Title" DataField="DisplayName" />
+                    <asp:BoundField HeaderText="Title" DataField="DisplayName" />
+                    <asp:BoundField HeaderText="PreviewUrl" DataField="PreviewUrl" />
+                    <asp:BoundField HeaderText="ProductionUrl" DataField="ProductionUrl" />
                     <asp:BoundField HeaderText="Last Changed" DataField="DisplayLastChanged" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
+					    </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 
@@ -47,23 +57,48 @@
                         <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPreviewUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="typically http://sitename.w.renderspace.net (in general: http://preview.example.com)" />
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Production website address</label>
                     <div class="col-sm-9">
                         <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="http://www.example.com" />
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <div class="checkbox">
                             <label>
-                                <asp:CheckBox runat="server" ID="CheckboxNewDatabase" CssClass="j_control_new_database" /> Create new database (you'll need admin password for database).
+                                <asp:CheckBox runat="server" ID="CheckboxNewDatabase" CssClass="j_control_new_database" ClientIDMode="Static" /> Create new database (you'll need admin password for database).
                             </label>
                         </div>
                     </div>
                 </div>
+                 <div class="new_database_fields" style="display: none;">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Server name</label>
+                        <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxServer" runat="server" CssClass="form-control" MaxLength="255" placeholder="Microsoft SQL server name. Example: server.example.com" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Username</label>
+                        <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxUsername" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database username. Provided by system administrator. Example: sa" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPassword" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database password. Provided by system administrator." />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">New database name</label>
+                        <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxDatabaseName" runat="server" CssClass="form-control" MaxLength="255" placeholder="Make sure that the name is in agreement with company rules. Example: name should match client's name." />
+                        </div>
+                    </div>
+                 </div>
+
                  <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <asp:LinkButton  ValidationGroup="website" id="ButtonAdd" runat="server" OnClick="ButtonAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Create website" CssClass="btn btn-success" />
@@ -71,7 +106,65 @@
                </div>
             </div>
         </asp:View>
+        <asp:View ID="View1" runat="server">
+             <div class="adminSection form-horizontal">
+                 <div class="form-group">
+                        <label class="col-sm-3 control-label">ID</label> 
+                        <div class="col-sm-9">
+                            <asp:Label runat="server" ID="LabelID"></asp:Label>
+                        </div>
+                    </div>
+                 <div class="form-group">
+                        <label class="col-sm-3 control-label">Language</label> 
+                        <div class="col-sm-9">
+                            <asp:Label runat="server" ID="LabelLanguage"></asp:Label>
+                        </div>
+                    </div>
+
+                  <div class="form-group">
+                        <label class="col-sm-3 control-label">PreviewUrl</label> 
+                        <div class="col-sm-9">
+                            <asp:Label runat="server" ID="LabelPreviewUrl"></asp:Label>
+                        </div>
+                    </div>
+                  <div class="form-group">
+                        <label class="col-sm-3 control-label">ProductionUrl</label> 
+                        <div class="col-sm-9">
+                            <asp:Label runat="server" ID="LabelProductionUrl"></asp:Label>
+                        </div>
+                    </div>
+                 <div class="form-group">
+                    <label class="col-sm-3 control-label">Website title</label>
+                    <div class="col-sm-9">
+                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-3 control-label">Description</label>
+                    <div class="col-sm-9">
+                        <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control" placeholder="Short description of the website."></asp:TextBox>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label class="col-sm-3 control-label">Default og:image</label>
+                    <div class="col-sm-9">
+                        <asp:TextBox runat="server" ID="TextBoxOgImage" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control" placeholder="Default image used by Facebook when sharing. Use at least 1200 x 630 pixels and absolute path."></asp:TextBox>
+                    </div>
+                </div>
+                 <one:onesettings ID="OneSettingsWebsite" runat="server" Mode="Page" Text="Website settings" DisplayCommands="false" />	
+                  <div class="form-group">
+                        <div class="col-sm-3">
+						    <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                        </div>
+                        <div class="col-sm-9">
+                            <asp:LinkButton ID="ButtonCancel" runat="server" CausesValidation="false" Text="Cancel" CssClass="btn btn-default" OnClick="ButtonCancel_Click" />
+                            <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn" Text="Save page"  ValidationGroup="PageSett" OnClick="ButtonSave_Click" />
+                        </div>
+				    </div>
+              </div>
+    </asp:View>
     </asp:MultiView>
+     
 
 	
 </asp:Content>

@@ -23,7 +23,17 @@ namespace OneMainWeb.CommonModules
         private static readonly BArticle articleB = new BArticle();
 
         #region Settings
-        protected string RegularsList { get { return GetStringSetting("RegularsList"); } }
+        protected string CategoriesList 
+        { 
+            get 
+            {
+                var list = GetStringSetting("CategoriesList");
+                if (string.IsNullOrWhiteSpace(list))
+                    return GetStringSetting("RegularsList"); 
+                else
+                    return list;
+            } 
+        }
         protected string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
         protected bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
         protected int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
@@ -89,7 +99,7 @@ namespace OneMainWeb.CommonModules
                     SortByColumn);
                 listingState.OffSet = OffSet; 
 
-           var articles = articleB.ListArticles(RegularsList, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
+           var articles = articleB.ListArticles(CategoriesList, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
 
            RepeaterArticles.DataSource = articles;
            RepeaterArticles.DataBind();

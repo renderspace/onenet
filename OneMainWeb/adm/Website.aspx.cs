@@ -39,6 +39,38 @@ namespace OneMainWeb.adm
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
         {
+            return;
+            var connString = "";
+            if (CheckboxNewDatabase.Checked)
+            {
+                var weHaveDatabase = false;
+                connString = DatabaseHelper.BuildConnectionString(TextBoxServer.Text, TextBoxDatabaseName.Text, TextBoxUsername.Text, TextBoxPassword.Text);
+                var connectivityTest = DatabaseHelper.CheckDbConnectivity(connString);
+                switch (connectivityTest)
+                { 
+                    case DatabaseHelper.DbConnectivityResult.CantConnect:
+                        Notifier1.ExceptionName = "Can't connect to database. Please check connection details.";
+                        weHaveDatabase = false;
+                        break;
+                    case DatabaseHelper.DbConnectivityResult.NotEmpty:
+                        Notifier1.ExceptionName = "Database is not empty, please select another one.";
+                        weHaveDatabase = false;
+                        break;
+                    case DatabaseHelper.DbConnectivityResult.Empty:
+                        weHaveDatabase = true;
+                        break;
+                    case DatabaseHelper.DbConnectivityResult.DoesnExist:
+                        weHaveDatabase = websiteB.CreateNewDatabase(connString);
+                        if (!weHaveDatabase)
+                            Notifier1.ExceptionName = "Can't create database.";
+                        break;
+                }
+                if (!weHaveDatabase)
+                {
+                    return;
+                }
+            }
+
             var website = new BOWebSite();
             website.Title = InputTitle.Text;
             website.SubTitle = "";
@@ -48,10 +80,7 @@ namespace OneMainWeb.adm
             website.ContentId = null;
             website.PrincipalCreated = User.Identity.Name;
             website.PreviewUrl = TextBoxPreviewUrl.Text;
-
-            var testConnString = "server=tartar.netinet.si;uid=zrsz;pwd=zrsz;database=test2;Pooling=true;";
-
-            var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), testConnString);
+            var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), connString);
             if (result == BWebsite.AddWebSiteResult.Success)
             {
                 Notifier1.Title = "Created";
@@ -81,6 +110,69 @@ namespace OneMainWeb.adm
 
                     break;
             }
+        }
+
+        protected void GridViewWebsites_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var websiteId = int.Parse(GridViewWebsites.SelectedValue.ToString());
+            LabelID.Text = websiteId.ToString();
+            var website = websiteB.Get(websiteId);
+
+            if (website == null)
+            {
+                return;
+            }
+
+            MultiView1.ActiveViewIndex = 2;
+            LabelLanguage.Text = website.Culture.EnglishName;
+            TextBoxTitle.Text = website.Title;
+            TextBoxDescription.Text = website.Teaser;
+            TextBoxOgImage.Text = website.SubTitle;
+            LastChangeAndHistory1.Text = website.DisplayLastChanged;
+            LastChangeAndHistory1.SelectedContentId = website.ContentId.Value;
+            
+
+            OneSettingsWebsite.ItemId = websiteId;
+            OneSettingsWebsite.Mode = AdminControls.OneSettings.SettingMode.Website;
+            OneSettingsWebsite.LoadSettingsControls(website.Settings);
+            OneSettingsWebsite.LoadSettings();
+            
+
+        }
+
+        protected void ButtonCancel_Click(object sender, EventArgs e)
+        {
+            LabelLanguage.Text = "";
+            TextBoxTitle.Text = "";
+            TextBoxDescription.Text = "";
+            TextBoxOgImage.Text = "";
+            LastChangeAndHistory1.Text = "";
+            LastChangeAndHistory1.SelectedContentId = 0;
+            OneSettingsWebsite.ItemId = 0;
+            MultiView1.ActiveViewIndex = 0;
+        }
+
+        protected void ButtonSave_Click(object sender, EventArgs e)
+        {
+
+            var websiteId = int.Parse(LabelID.Text);
+            var website = websiteB.Get(websiteId);
+            if (website == null)
+            {
+                MultiView1.ActiveViewIndex = 0;
+                Notifier1.ExceptionName = "Website doesn't exist.";
+                return;
+            }
+
+            website.Title = TextBoxTitle.Text;        
+            website.Teaser = TextBoxDescription.Text;
+            website.SubTitle = TextBoxOgImage.Text;
+            website.Html = "";
+            OneSettingsWebsite.Save();
+            websiteB.ChangeWebsite(website);
+            MultiView1.ActiveViewIndex = 0;
+            Notifier1.Title = "Saved.";
+
         }
 
     }

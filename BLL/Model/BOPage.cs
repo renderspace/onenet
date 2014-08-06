@@ -69,6 +69,14 @@ namespace One.Net.BLL
             }
         }
 
+        public string OgImage
+        {
+            get
+            {
+                return SubTitle;
+            }
+        }
+
 		public string URI
 		{ 
 			get {return this.uri;}

@@ -182,7 +182,6 @@ function files_databind(selectedFolderId) {
 
 
 var folderTree = $('#tree');
-
 if (folderTree.is("div")) {
     getTree(function (d1) {
         var selectedFolderId = $('#HiddenSelectedFolderId').val();
@@ -195,9 +194,6 @@ if (folderTree.is("div")) {
     folderTree.removeClass("treeview");
 }
 
-
-
-
 $('#tree').on('nodeSelected', function (event, node) {
     if (node.id > 0) {
         files_databind(node.id);
@@ -207,3 +203,23 @@ $('#tree').on('nodeSelected', function (event, node) {
         $('#files-table tbody').empty();
     }
 });
+
+$('#CheckboxNewDatabase').on("click", function (event) {
+    var $this = $(this);
+    if ($this.is(':checked')) {
+        $(".new_database_fields").show();
+    } else {
+        $(".new_database_fields").hide();
+    }
+});
+
+var CheckboxNewDatabase = $('#CheckboxNewDatabase');
+if (CheckboxNewDatabase.length > 0) {
+    if (CheckboxNewDatabase.is(':checked')) {
+        $(".new_database_fields").show();
+    } else {
+        $(".new_database_fields").hide();
+    }
+}
+
+

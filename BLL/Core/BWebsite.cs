@@ -34,12 +34,7 @@ namespace One.Net.BLL
 
         public BOWebSite Get(int websiteID)
         {
-            List<BOWebSite> webSiteList = List();
-
-            foreach (BOWebSite webSite in webSiteList)
-                if (webSite.Id == websiteID)
-                    return webSite;
-            return null;
+            return List().Where(s => s.Id == websiteID).FirstOrDefault();
         }
 
         public int? GetRootPageId(int webSiteId)
@@ -803,15 +798,19 @@ namespace One.Net.BLL
             if (websites == null)
             {
                 websites = webSiteDb.List();
-                foreach (BOWebSite site in websites)
-                {
-                    site.LoadContent(intContentB.Get(site.ContentId.Value, site.LanguageId));
-                }
+                
                 lock (cacheLockingWebSiteList)
                 {
                     List<BOWebSite> tempWebsites = OCache.Get(CACHE_SITE_LIST) as List<BOWebSite>;
                     if (null == tempWebsites)
                         OCache.Max(CACHE_SITE_LIST, websites);
+                }
+            }
+            if (websites != null)
+            {
+                foreach (BOWebSite site in websites)
+                {
+                    site.LoadContent(intContentB.Get(site.ContentId.Value, site.LanguageId));
                 }
             }
             return websites;
@@ -905,7 +904,7 @@ namespace One.Net.BLL
                     sm.CommitChanges();
                 }
             }
-            else if (CreateDatabase(builder))
+            else if (PopulateNewDatabase(builder))
             {
                 using (var sm = new ServerManager())
                 {
@@ -924,20 +923,25 @@ namespace One.Net.BLL
             return AddWebSiteResult.Success;
         }
 
-        private bool CreateDatabase(SqlConnectionStringBuilder builder)
+        public bool CreateNewDatabase(string connString)
         {
+            var builder = new SqlConnectionStringBuilder(connString);
             var databaseSql = DatabaseHelper.GetFileContentFromResource("Sql.1_database.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            builder.InitialCatalog = "";
+            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, databaseSql))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool PopulateNewDatabase(SqlConnectionStringBuilder builder)
+        {
             var userSql = DatabaseHelper.GetFileContentFromResource("Sql.1_1_user.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             var tablesSql = DatabaseHelper.GetFileContentFromResource("Sql.2_tables.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             var insertsSql = DatabaseHelper.GetFileContentFromResource("Sql.3_standard_inserts.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             var spsSql = DatabaseHelper.GetFileContentFromResource("Sql.4_stored_procedures.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             var securitySql = DatabaseHelper.GetFileContentFromResource("Sql.5_security.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
-
-
-            if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, databaseSql));
-            {
-                return false;
-            }
 
             if (!DatabaseHelper.RunSqlScript(builder.ConnectionString, userSql))
             {

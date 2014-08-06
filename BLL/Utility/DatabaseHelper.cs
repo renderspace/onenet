@@ -31,7 +31,6 @@ namespace One.Net.BLL.Utility
                     list.Add((string)reader["name"]);
                 }
             }
-
             return list;
         }
 
@@ -48,27 +47,30 @@ namespace One.Net.BLL.Utility
             return result;
         }
 
-        public static bool CheckDbCredentials(string connectionString)
+        public enum DbConnectivityResult { NotEmpty, Empty, DoesnExist, CantConnect };
+
+        public static DbConnectivityResult CheckDbConnectivity(string connectionString)
         {
-            var success = false;
-
-            var connection = new SqlConnection(connectionString);
-
+            var connBuilder = new SqlConnectionStringBuilder(connectionString);
+            var database = connBuilder.DataSource;
+            connBuilder.DataSource = "";
             try
             {
-                connection.Open();
-                success = true;
+                var sql = @"SELECT COUNT(name) FROM [sys].[databases] WHERE name = @database";
+                var databaseExists = ((int)SqlHelper.ExecuteScalar(connBuilder.ConnectionString, CommandType.Text, sql, new SqlParameter("@database", database)) > 0);
+                if (!string.IsNullOrWhiteSpace(database) && databaseExists)
+                {
+                    sql = "SELECT COUNT(*) FROM [sysobjects] WHERE [type]  IN ('U', 'V', 'P')";
+                    var isEmpty = ((int)SqlHelper.ExecuteScalar(connectionString, CommandType.Text, sql) == 0);
+                    return isEmpty ? DbConnectivityResult.Empty : DbConnectivityResult.NotEmpty;
+                }
+                return DbConnectivityResult.DoesnExist;
             }
             catch (Exception ex)
             {
                 log.Error(ex);
             }
-            finally
-            {
-                connection.Close();
-            }
-
-            return success;
+            return DbConnectivityResult.CantConnect;
         }
 
         public static string BuildConnectionString(string serverName, string dbName, string dbUsername, string dbPassword)

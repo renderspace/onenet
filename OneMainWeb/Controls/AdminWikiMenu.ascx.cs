@@ -50,7 +50,7 @@ namespace OneMainWeb.Controls
 
         protected void LinkButtonDelete_Click(object sender, EventArgs e)
         {
-            var result = webSiteB.DeletePageById(CurrentPageId);
+            var result = webSiteB.DeletePageById(PageId);
             switch (result)
             {
                 case BWebsite.DeletePageByIdResult.DeletedRoot:
@@ -82,12 +82,12 @@ namespace OneMainWeb.Controls
 
         protected void LinkButtonNewPage_Click(object sender, EventArgs e)
         {
-            if (CurrentPageId == 0)
+            if (PageId == 0)
                 throw new Exception("Couldn't find current page ID");
 
             var TextBoxPageTitle = LoginView1.FindControl("TextBoxPageTitle") as TextBox;
 
-            var result = webSiteB.AddSubPage(TextBoxPageTitle.Text, CurrentWebSiteId, CurrentPageId);
+            var result = webSiteB.AddSubPage(TextBoxPageTitle.Text, WebSiteId, PageId);
             switch (result)
             {
                 case BWebsite.AddSubPageResult.Ok:

@@ -47,9 +47,7 @@ namespace OneMainWeb.CommonModules
 
         protected int FormId { get { return GetIntegerSetting("FormId"); } }
         protected int UploadFolderId { get { return GetIntegerSetting("UploadFolderId"); } }
-        protected bool ShowValidationSummary { get { return GetBooleanSetting("ShowValidationSummary"); } }
-        protected bool ShowSectionTitle { get { return GetBooleanSetting("ShowSectionTitle"); } }
-        protected bool ShowModuleTitleWhenSubmitted { get { return GetBooleanSetting("ShowModuleTitleWhenSubmitted"); } }
+
 
         #endregion Settings
 
@@ -304,7 +302,6 @@ if(window.jQuery)
                         plhForm.Controls.Add(DivDescription);
                     }
 
-                    CreateValidationSummary();
                     CreateSectionControls(sections);
 
                     // hide show form buttons
@@ -340,7 +337,7 @@ if(window.jQuery)
                     // show results place holder
                     plhResults.Visible = true;
 
-                    DivFormTitle.Visible = ShowModuleTitleWhenSubmitted;
+                    DivFormTitle.Visible = true;
 
                     // hide both inner placeholders
                     divQuestionaireThankYouNote.Visible = rptPollResults.Visible = false;
@@ -538,17 +535,6 @@ if(window.jQuery)
             }
         }
 
-        private void CreateValidationSummary()
-        {
-            if ( ShowValidationSummary )
-            {
-                ValidationSummary summary = new ValidationSummary();
-                summary.CssClass = "valSum";
-                summary.ValidationGroup = "FormID" + FormId + InstanceId;
-                plhForm.Controls.Add(summary);
-            }
-        }
-
         private void CreateSectionControls(IEnumerable<BOSection> sections)
         {
             foreach (BOSection section in sections)
@@ -557,7 +543,7 @@ if(window.jQuery)
                 sectionDiv.ID = "SectionDiv" + section.Id;
                 sectionDiv.Attributes.Add("class", "section");
 
-                if (!string.IsNullOrEmpty(section.Title) && ShowSectionTitle)
+                if (!string.IsNullOrEmpty(section.Title))
                 {
                     HtmlGenericControl sectionTitleP = new HtmlGenericControl("p");
                     sectionTitleP.Attributes.Add("class", "sectionTitle");
