@@ -22,6 +22,12 @@ namespace OneMainWeb.AdminControls
             set { ViewState["SelectedContentId"] = value; }
         }
 
+        public int SelectedLanguageId
+        {
+            get { return ViewState["SelectedLanguageId"] != null ? (int)ViewState["SelectedLanguageId"] : 0; }
+            set { ViewState["SelectedLanguageId"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

@@ -216,7 +216,7 @@ namespace One.Net.BLL.DAL
 			return websiteList;
 		}
 
-		public void Change(BOWebSite website)
+		public void Change(BOWebSite website, string connString = "")
 		{
             SqlParameter[] parms;
             if (website.IsNew)
@@ -232,7 +232,7 @@ namespace One.Net.BLL.DAL
                 parms[1].Direction = ParameterDirection.Output;
                 parms[1].DbType = DbType.Int32;
 
-                SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text,
+                SqlHelper.ExecuteNonQuery(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.Text,
                 @"INSERT INTO [dbo].[web_site] (content_fk_id) VALUES (@ContentId); SET @id=SCOPE_IDENTITY()", parms);
                 website.Id = (int)parms[1].Value;
 
@@ -242,7 +242,7 @@ namespace One.Net.BLL.DAL
                     new SqlParameter("@Value", website.LanguageId)
                 };
 
-                SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[ChangeWebSiteSetting]", parms);
+                SqlHelper.ExecuteNonQuery(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.StoredProcedure, "[dbo].[ChangeWebSiteSetting]", parms);
             }
 
             parms = new SqlParameter[] {
@@ -255,7 +255,7 @@ namespace One.Net.BLL.DAL
             {
                 parms[1].Value = setting.Name;
                 parms[2].Value = setting.Value;
-                SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "ChangeWebSiteSetting", parms);
+                SqlHelper.ExecuteNonQuery(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.StoredProcedure, "ChangeWebSiteSetting", parms);
             }
 		}
 

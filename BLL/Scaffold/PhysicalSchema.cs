@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using One.Net.BLL.Scaffold.Model;
 using System.Data.SqlClient;
-using One.Net.BLL.Scaffold.DAL;
 using System.Reflection;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -18,7 +17,7 @@ namespace One.Net.BLL.Scaffold
         public static bool CheckDatabaseConfiguration()
         {
             // check if we have connection string
-            if (String.IsNullOrEmpty(DbHelper.ConnectionString))
+            if (String.IsNullOrEmpty(Schema.ConnectionString))
                 return false;
 
             List<VirtualTable> physicalTables = null;
@@ -41,11 +40,11 @@ namespace One.Net.BLL.Scaffold
 
             if (physicalTables == null)
                 return false;
-            if (physicalTables.Where(t => DbHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_col").Count() < 1)
+            if (physicalTables.Where(t => SqlHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_col").Count() < 1)
                 return false;
-            if (physicalTables.Where(t => DbHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_relation").Count() < 1)
+            if (physicalTables.Where(t => SqlHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_relation").Count() < 1)
                 return false;
-            if (physicalTables.Where(t => DbHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_table").Count() < 1)
+            if (physicalTables.Where(t => SqlHelper.GetTableQualifier(t.StartingPhysicalTable) == "_virtual_table").Count() < 1)
                 return false;
 
             return true;
@@ -72,7 +71,7 @@ namespace One.Net.BLL.Scaffold
                 {
                     try
                     {
-                        var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, query);
+                        var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, query);
                     }
                     catch (SqlException sex)
                     {
@@ -91,8 +90,8 @@ namespace One.Net.BLL.Scaffold
             var virtualTables = Schema.ListVirtualTables();
 
             var result = new List<VirtualTable>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure, "[dbo].[sp_fkeys]",
-                new SqlParameter("@fktable_name", DbHelper.GetTableQualifier(foreginKeyVirtualTable.StartingPhysicalTable))))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure, "[dbo].[sp_fkeys]",
+                new SqlParameter("@fktable_name", SqlHelper.GetTableQualifier(foreginKeyVirtualTable.StartingPhysicalTable))))
             {
                 while (reader.Read())
                 {
@@ -117,8 +116,8 @@ namespace One.Net.BLL.Scaffold
             var virtualTables = Schema.ListVirtualTables();
 
             var result = new List<VirtualTable>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure, "[dbo].[sp_fkeys]",
-                        new SqlParameter("@pktable_name", DbHelper.GetTableQualifier(primaryKeyVirtualTable.StartingPhysicalTable))))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure, "[dbo].[sp_fkeys]",
+                        new SqlParameter("@pktable_name", SqlHelper.GetTableQualifier(primaryKeyVirtualTable.StartingPhysicalTable))))
             {
                 while (reader.Read())
                 {
@@ -140,8 +139,8 @@ namespace One.Net.BLL.Scaffold
         internal static List<VirtualColumn> ListPhysicalColumns(VirtualTable virtualTable)
         {
             var result = new List<VirtualColumn>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure,
-                                                        "sp_columns", new SqlParameter("@table_name", DbHelper.GetTableQualifier(virtualTable.StartingPhysicalTable))))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure,
+                                                        "sp_columns", new SqlParameter("@table_name", SqlHelper.GetTableQualifier(virtualTable.StartingPhysicalTable))))
             {
                 while (reader.Read())
                 {
@@ -154,13 +153,13 @@ namespace One.Net.BLL.Scaffold
                     virtualColumn.IsPartOfPrimaryKey = virtualTable.PrimaryKeys.Contains(virtualColumn.Name);
                     virtualColumn.IsNullable = ((short)reader["NULLABLE"]) > 0;
                     virtualColumn.IsIdentity = ((string)reader["TYPE_NAME"]).Contains("identity");
-                    virtualColumn.DbType = DbHelper.GetDbType(reader.GetInt16(4));
+                    virtualColumn.DbType = SqlHelper.GetDbType(reader.GetInt16(4));
                     result.Add(virtualColumn);
                 }
             }
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure,
-                                                        "[dbo].[sp_fkeys]", new SqlParameter("@fktable_name", DbHelper.GetTableQualifier(virtualTable.StartingPhysicalTable))))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure,
+                                                        "[dbo].[sp_fkeys]", new SqlParameter("@fktable_name", SqlHelper.GetTableQualifier(virtualTable.StartingPhysicalTable))))
             {
                 while (reader.Read())
                 {
@@ -188,7 +187,7 @@ namespace One.Net.BLL.Scaffold
         public static List<VirtualTable> ListPhysicalTables()
         {
             var result = new List<VirtualTable>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure,
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure,
                                                         "sp_tables", new SqlParameter("@table_type", "'TABLE'")))
             {
                 while (reader.Read())

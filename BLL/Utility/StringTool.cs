@@ -5,12 +5,27 @@ using System.Text.RegularExpressions;
 using System.Web;
 
 using System.Text;
+using System.Reflection;
+using System.IO;
 
 namespace One.Net.BLL
 {
     public class StringTool
     {
         private static readonly Random random = new Random();
+
+        public static string GetFileContentFromResource(string fileName)
+        {
+            string result = "";
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("One.Net.BLL." + fileName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+            return result;
+        }
 
         public static List<string> SplitString(string toSplit, char separator)
         {

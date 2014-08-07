@@ -111,6 +111,7 @@ namespace OneMainWeb.AdminControls
                         TextContentEditor.Html = textContentModel.Html;
                         LastChangeAndHistory1.Text = textContentModel.DisplayLastChanged;
                         LastChangeAndHistory1.SelectedContentId = textContentModel.ContentId.Value;
+                        LastChangeAndHistory1.SelectedLanguageId = textContentModel.LanguageId;
                     }
                     else
                     {

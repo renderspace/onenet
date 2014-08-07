@@ -1,22 +1,6 @@
 USE [master]
 GO
-
-IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'@INITIAL_CATALOG@')
-	PRINT 'Database exists'
-ELSE
-BEGIN
-	CREATE DATABASE [@INITIAL_CATALOG@] ON  PRIMARY 
-	( NAME = N'@INITIAL_CATALOG@_Data',  SIZE = 10MB,  MAXSIZE = UNLIMITED, FILEGROWTH = 10%) LOG ON 
-	( NAME = N'@INITIAL_CATALOG@_Log', SIZE = 512KB, MAXSIZE = UNLIMITED, FILEGROWTH = 10%) COLLATE Slovenian_CI_AS
-END
-	
-GO
-EXEC dbo.sp_dbcmptlevel @dbname=N'@INITIAL_CATALOG@', @new_cmptlevel=90
-GO
---IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
---begin
---EXEC [@INITIAL_CATALOG@].[dbo].[sp_fulltext_database] @action = 'enable'
---end
+CREATE DATABASE [@INITIAL_CATALOG@]
 GO
 ALTER DATABASE [@INITIAL_CATALOG@] SET ANSI_NULL_DEFAULT ON 
 GO

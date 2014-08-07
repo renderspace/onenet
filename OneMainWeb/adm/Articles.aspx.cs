@@ -171,6 +171,7 @@ namespace OneMainWeb
                     {
                         LastChangeAndHistory1.SelectedContentId = SelectedArticle.ContentId.Value;
                         LastChangeAndHistory1.Text = SelectedArticle.DisplayLastChanged;
+                        LastChangeAndHistory1.SelectedLanguageId = SelectedArticle.LanguageId;
                         LabelId.Text = SelectedArticle.Id.Value.ToString();
                        
                     }

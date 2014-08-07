@@ -172,6 +172,9 @@ namespace OneMainWeb.adm
                 TextBoxUri.Visible = SelectedPageId != RootNodeID;
                 LastChangeAndHistory1.Text = SelectedPage.DisplayLastChanged;
                 LastChangeAndHistory1.SelectedContentId = SelectedPage.ContentId.Value;
+                LastChangeAndHistory1.SelectedLanguageId = SelectedPage.LanguageId;
+
+
                 TextBoxTitle.Text = SelectedPage.Title;
                 TextBoxSubtitle.Text = SelectedPage.SubTitle;
                 TextBoxDescription.Text = SelectedPage.Teaser;

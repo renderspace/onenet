@@ -120,6 +120,12 @@ namespace One.Net.BLL
             ClearLanguageVariations(CACHE_ID + content.ContentId.Value);
         }
 
+        internal void Change(BOInternalContent content, string connString)
+        {
+            content.MissingTranslation = false;
+            contentDb.ChangeContent(content, connString);
+        }
+
         public void Vote(int votedScore, int contentId)
         {
             contentDb.SaveVote(votedScore, contentId);

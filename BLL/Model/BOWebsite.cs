@@ -106,6 +106,9 @@ namespace One.Net.BLL
             }
             set
             {
+                if (!value.StartsWith("http"))
+                    throw new ArgumentException("URL must start with http");
+
                 if (Settings.ContainsKey("PreviewUrl"))
                     Settings["PreviewUrl"].Value = value;
                 else
@@ -123,6 +126,16 @@ namespace One.Net.BLL
                         return url;
                 }
                 return "";
+            }
+            set
+            {
+                if (!value.StartsWith("http"))
+                    throw new ArgumentException("URL must start with http");
+
+                if (Settings.ContainsKey("ProductionUrl"))
+                    Settings["ProductionUrl"].Value = value;
+                else
+                    Settings.Add("ProductionUrl", new BOSetting("ProductionUrl", "Url", value, BOSetting.USER_VISIBILITY_NORMAL));
             }
         }
 

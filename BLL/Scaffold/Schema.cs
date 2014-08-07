@@ -4,18 +4,23 @@ using System.Linq;
 using System.Text;
 using One.Net.BLL.Scaffold.Model;
 using MsSqlDBUtility;
-using One.Net.BLL.Scaffold.DAL;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace One.Net.BLL.Scaffold
 {
     public static class Schema
     {
+        public static string ConnectionString
+        {
+            get { return ConfigurationManager.ConnectionStrings["Bamboo"].ConnectionString; }
+        }
+
         public static List<VirtualTable> ListVirtualTables()
         {
             var result = new List<VirtualTable>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(ConnectionString, CommandType.Text,
                 "SELECT id, starting_table, order_col, show_on_menu, condition, friendly_name FROM _virtual_table"))
             {
                 while (reader.Read())
@@ -36,7 +41,7 @@ namespace One.Net.BLL.Scaffold
         public static VirtualTable GetVirtualTable(int virtualTableId)
         {
             VirtualTable virtualTable = null;
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                                    "SELECT starting_table, show_on_menu, order_col, condition FROM _virtual_table WHERE id = @virtualTableId",
                                    new SqlParameter("@virtualTableId", virtualTableId)))
             {
@@ -67,8 +72,8 @@ namespace One.Net.BLL.Scaffold
         {
             var primaryKeys = new List<string>();
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.StoredProcedure,
-                "sp_pkeys", new SqlParameter("@table_name", DbHelper.GetTableQualifier(tableIdentifier))))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure,
+                "sp_pkeys", new SqlParameter("@table_name", SqlHelper.GetTableQualifier(tableIdentifier))))
             {
                 while (reader.Read())
                 {
@@ -84,7 +89,7 @@ namespace One.Net.BLL.Scaffold
             if (virtualTable.VirtualColumns.Count() > 0)
             {
                 var physicalColumns = virtualTable.VirtualColumns;
-                using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+                using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                     "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTable.Id)))
                 {
                     while (reader.Read())
@@ -123,7 +128,7 @@ namespace One.Net.BLL.Scaffold
             var physicalColumns = PhysicalSchema.ListPhysicalColumns(virtualTableId);
             if (physicalColumns.Count() > 0)
             {
-                using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+                using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                     "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTableId)))
                 {
                     while (reader.Read())
@@ -147,7 +152,7 @@ namespace One.Net.BLL.Scaffold
 
         public static bool DeleteVirtualTable(int id)
         {
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text,
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text,
                                                    "DELETE FROM _virtual_table WHERE id = @Id",
                                                    new SqlParameter("@Id", id));
             return result > 0;
@@ -172,7 +177,7 @@ namespace One.Net.BLL.Scaffold
                           ? "UPDATE _virtual_table SET starting_table = @StartingTable, order_col = @OrderColumn, show_on_menu = @ShowOnMenu, condition = @Condition, friendly_name = @FriendlyName  WHERE id = @Id"
                           : "INSERT INTO _virtual_table (starting_table,order_col,show_on_menu,condition, friendly_name) VALUES (@StartingTable, @OrderColumn,@ShowOnMenu,@Condition,@FriendlyName); SET @Id = (SELECT @@IDENTITY) ";
 
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, sql, p);
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, p);
 
             if (virtualTable.Id == 0)
                 virtualTable.Id = int.Parse(p[0].Value.ToString());
@@ -201,7 +206,7 @@ namespace One.Net.BLL.Scaffold
                           ? "UPDATE _virtual_col SET friendly_name = @FriendlyName, virtual_table_id = @VirtualTableId, col_name = @Name, form_type = @FormType, is_multilanguage_content = @IsMultilanguageContent, show_on_list=@ShowOnList WHERE id = @Id"
                           : "INSERT INTO _virtual_col (friendly_name, virtual_table_id,col_name,form_type,is_multilanguage_content, show_on_list) VALUES (@FriendlyName, @VirtualTableId, @Name, @FormType, @IsMultilanguageContent, @ShowOnList); SET @Id = (SELECT @@IDENTITY) ";
 
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, sql, p);
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, p);
 
             if (virtualColumn.Id == 0)
                 virtualColumn.Id = int.Parse(p[0].Value.ToString());
@@ -221,14 +226,14 @@ namespace One.Net.BLL.Scaffold
                 new SqlParameter("@ForeignKeyDisplayColumn", foreignKeyDisplayColumn)
 			};
 
-            if (((int)SqlHelper.ExecuteScalar(DbHelper.ConnectionString, CommandType.Text,
+            if (((int)SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text,
                 "SELECT COUNT(*) FROM _virtual_relation WHERE pk_virtual_table_id = @PrimaryTableId AND fk_virtual_table_id = @ForeignKeySourceTableId", p)) > 0)
             {
                 // relationship already exists
                 return false;
             }
 
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text,
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text,
                @"INSERT INTO _virtual_relation (pk_virtual_table_id, fk_virtual_table_id, pk_display_col) 
                 VALUES (@PrimaryTableId, @ForeignKeySourceTableId, @ForeignKeyDisplayColumn) ",
                p);
@@ -244,7 +249,7 @@ namespace One.Net.BLL.Scaffold
 				new SqlParameter("@ForeignKeySourceTableId", foreignKeySourceTableId)
 			};
 
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text,
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text,
                "DELETE FROM _virtual_relation WHERE pk_virtual_table_id = @PrimaryTableId AND fk_virtual_table_id = @ForeignKeySourceTableId",
                p);
 
@@ -253,7 +258,7 @@ namespace One.Net.BLL.Scaffold
 
         public static bool RemoveVirtualColumn(int virtualColumnId)
         {
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text,
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text,
                "DELETE FROM [dbo].[_virtual_col] WHERE id = @virtualColumnId",
                new SqlParameter("@virtualColumnId", virtualColumnId));
             return result > 0;
@@ -262,7 +267,7 @@ namespace One.Net.BLL.Scaffold
         public static Relation GetRelation(int relationId)
         {
             Relation result = null;
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                 @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt3.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id
@@ -281,7 +286,7 @@ namespace One.Net.BLL.Scaffold
         public static List<Relation> ListManyToManyRelations(int xrefPrimaryKeyVirtualTableId)
         {
             var result = new List<Relation>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                 @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt2.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id
@@ -301,7 +306,7 @@ namespace One.Net.BLL.Scaffold
         public static List<Relation> ListRelations(int primaryVirtualTableId)
         {
             var result = new List<Relation>();
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
                 @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, NULL AS xref_pk_virtual_table, NULL AS pk_xref_virtual_table_id, vr.is_multilanguage_content
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id

@@ -34,10 +34,23 @@ namespace One.Net.BLL.Utility
             {
                 if (!string.IsNullOrWhiteSpace(header))
                 {
-                    var binding = site.Bindings.CreateElement();
-                    binding.BindingInformation = "*" + ":80:" + header;
-                    binding.Protocol = "http";
-                    site.Bindings.Add(binding);
+                    var url = new UrlBuilder(header);
+                    try
+                    {
+                        var binding = site.Bindings.CreateElement();
+                        binding.BindingInformation = "*" + ":80:" + url.Host;
+                        binding.Protocol = url.Scheme; // http or http
+                        site.Bindings.Add(binding);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("duplicate"))
+                        {
+                            log.Error("duplicate binding: " + url.ToString());
+                        }
+                        else 
+                            throw ex;
+                    }
                 }
             }
 
@@ -208,13 +221,19 @@ namespace One.Net.BLL.Utility
 
             foreach (DirectoryInfo subdir in dirs)
             {
-                if (copyAdminFolders || (!copyAdminFolders && subdir.Name != "adm" &&
-                    subdir.Name != "Languages" &&
+                if (copyAdminFolders || 
+                    (!copyAdminFolders && 
+                    subdir.Name != "adm" &&
+                    subdir.Name != "ckeditor" &&
+                    subdir.Name != "ckfinder" &&
                     subdir.Name != "AdminControls" &&
                     subdir.Name != "AdminExtensions"))
                 {
-                    string temppath = Path.Combine(destDir.FullName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, new DirectoryInfo(temppath), copyAdminFolders);
+                    if (subdir.Name != "ckeditor" && subdir.Name != "ckfinder")
+                    { 
+                        string temppath = Path.Combine(destDir.FullName, subdir.Name);
+                        DirectoryCopy(subdir.FullName, new DirectoryInfo(temppath), copyAdminFolders);
+                    }
                 }
             }
         }
