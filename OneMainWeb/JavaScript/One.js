@@ -122,9 +122,10 @@ $('.scaffold-edit-button a').addClass("btn btn-info btn-xs");
 $('#audit-history').on('show.bs.modal', function (e) {
     //var selectedItemId =  $('#audit-history').data('selected-item-id');
     var selectedItemId = $(this).data('content-id');
+    var languageId =  $(this).data('language-id');
     if (selectedItemId > 0) {
         $.ajax({
-            url: "/AdminService/GetContentHistory?contentId=" + selectedItemId,
+            url: "/AdminService/GetContentHistory?contentId=" + selectedItemId + "&languageId=" + languageId,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             type: "GET",

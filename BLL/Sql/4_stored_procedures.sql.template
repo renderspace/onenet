@@ -2005,7 +2005,7 @@ GO
 CREATE PROCEDURE [dbo].[DeletePrefixedSPs]
 @prefix VARCHAR(100)
 AS
-
+BEGIN
 	IF (len(@prefix) < 3 )
 		RAISERROR('Prefix too short.', 16, 1)
 	
@@ -2036,4 +2036,4 @@ AS
 
 	CLOSE GETSPNAME
 	DEALLOCATE GETSPNAME
-GO
+END

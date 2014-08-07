@@ -55,6 +55,9 @@
                     <label class="col-sm-3 control-label">Preview website address</label>
                     <div class="col-sm-9">
                         <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPreviewUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="typically http://sitename.w.renderspace.net (in general: http://preview.example.com)" />
+                        <asp:RequiredFieldValidator runat="server" ControlToValidate="TextBoxPreviewUrl" CssClass="text-danger" ErrorMessage="Preview website address is required." />
+                        <asp:RegularExpressionValidator runat="server" ControlToValidate="TextBoxPreviewUrl" CssClass="text-danger" ErrorMessage="Preview website URL must start with http." 
+                            ValidationExpression="^http(s)?://([\w-]+.)+[\w-]+(/[\w- ./?%&=])?$" />
                     </div>
                 </div>
                 <div class="form-group">

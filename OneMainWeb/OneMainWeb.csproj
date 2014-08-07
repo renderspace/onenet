@@ -701,7 +701,6 @@
     <Compile Include="Utils\VirtualTable.ashx.cs">
       <DependentUpon>VirtualTable.ashx</DependentUpon>
     </Compile>
-    <Compile Include="WebProfile.cs" />
     <Content Include="AdminControls\Notifier.ascx" />
     <Content Include="Global.asax" />
     <Content Include="JavaScript\One.js" />

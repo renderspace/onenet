@@ -10,7 +10,6 @@ using MsSqlDBUtility;
 using System.Threading;
 using One.Net.BLL.Web;
 using One.Net.BLL.Scaffold.Model;
-using One.Net.BLL.Scaffold.DAL;
 using System.Configuration;
 
 namespace One.Net.BLL.Scaffold
@@ -96,7 +95,7 @@ namespace One.Net.BLL.Scaffold
                 var foreignKeys = from e in virtualColumns
                                   where
                                       e.IsPartOfForeignKey &&
-                                      DbHelper.GetTableQualifier(e.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.PrimaryKeySourceTableName)
+                                      SqlHelper.GetTableQualifier(e.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.PrimaryKeySourceTableName)
                                   select e;
 
                 if (foreignKeys.Count() == 0)
@@ -164,7 +163,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             //try
             //{
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql, prm))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, prm))
             {
                 while (reader.Read())
                 {
@@ -211,11 +210,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             var foreignKeyColumns = Schema.ListVirtualColumns(relation.ForeignKeyTableId);
 
-            var filterColumns = foreignKeyColumns.Where(c => DbHelper.GetTableQualifier(c.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.XrefPrimaryKeyTableName));
+            var filterColumns = foreignKeyColumns.Where(c => SqlHelper.GetTableQualifier(c.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.XrefPrimaryKeyTableName));
             if (filterColumns.Count() != 1)
                 throw new Exception("We can't do a N:M join if xref table doesn't contain exactly one primary key.");
 
-            var joinColumns = foreignKeyColumns.Where(c => DbHelper.GetTableQualifier(c.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
+            var joinColumns = foreignKeyColumns.Where(c => SqlHelper.GetTableQualifier(c.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
             if (joinColumns.Count() != 1)
                 throw new Exception("We can't do a N:M join if primary key table doesn't contain exactly one primary key.");
 
@@ -233,7 +232,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             var p = new SqlParameter("@mainFilter", dataKey);
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql, p))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, p))
             {
                 while (reader.Read())
                 {
@@ -259,7 +258,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             if (foreignKeyTablePrimaryKeys.Count() != 1)
                 throw new Exception("Table which contains foreign key doesn't have singular primary key.");
 
-            var foreignKeys = virtualColumns.Where(c => c.IsPartOfForeignKey && DbHelper.GetTableQualifier(c.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
+            var foreignKeys = virtualColumns.Where(c => c.IsPartOfForeignKey && SqlHelper.GetTableQualifier(c.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
 
             if (foreignKeys.Count() != 1)
                 throw new Exception("Can't do a 1:n join if we don't have a singular foreign key.");
@@ -269,7 +268,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                       " LEFT JOIN " + relation.PrimaryKeySourceTableName + " ON " + relation.FQPrimaryKeyName + "=" + foreignKeys.First().FQName +
                       " WHERE " + foreignKeyTablePrimaryKeys.First().FQName + "= @mainFilter";
 
-            var result = SqlHelper.ExecuteScalar(DbHelper.ConnectionString, CommandType.Text, sql,
+            var result = SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text, sql,
                 new SqlParameter("@mainFilter", foreignKeyTablePrimaryKeyValue));
             if (result == DBNull.Value)
                 return "";
@@ -320,7 +319,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 var foreignKeys = from e in virtualColumns
                                   where
                                       e.IsPartOfForeignKey &&
-                                      DbHelper.GetTableQualifier(e.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.PrimaryKeySourceTableName)
+                                      SqlHelper.GetTableQualifier(e.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.PrimaryKeySourceTableName)
                                   select e;
 
                 if (foreignKeys.Count() != 1)
@@ -358,9 +357,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 return item;
 
             var sql = "SELECT TOP(2) " + mainSql + " FROM " + virtualTable.StartingPhysicalTable + " WHERE 1=1";
-            var parameters = DbHelper.PreparePrimaryKeyParameters(dataKeys, ref sql);
+            var parameters = SqlHelper.PreparePrimaryKeyParameters(dataKeys, ref sql);
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql, parameters))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, parameters))
             {
                 if (reader.Read())
                 {
@@ -424,11 +423,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
                     var foreignKeyColumns = Schema.ListVirtualColumns(relation.ForeignKeyTableId);
 
-                    var filterColumns = foreignKeyColumns.Where(c => DbHelper.GetTableQualifier(c.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.XrefPrimaryKeyTableName));
+                    var filterColumns = foreignKeyColumns.Where(c => SqlHelper.GetTableQualifier(c.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.XrefPrimaryKeyTableName));
                     if (filterColumns.Count() != 1)
                         throw new Exception("We can't do a N:M join if xref table doesn't contain exactly one primary key.");
 
-                    var joinColumns = foreignKeyColumns.Where(c => DbHelper.GetTableQualifier(c.PrimaryKeyTableName) == DbHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
+                    var joinColumns = foreignKeyColumns.Where(c => SqlHelper.GetTableQualifier(c.PrimaryKeyTableName) == SqlHelper.GetTableQualifier(relation.PrimaryKeySourceTableName));
                     if (joinColumns.Count() != 1)
                         throw new Exception("We can't do a N:M join if primary key table doesn't contain exactly one primary key.");
 
@@ -522,11 +521,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     }
                 }
                 sql = sql.Substring(0, sql.Length - 2) + " WHERE 1=1";
-                var primaryKeyParameters = DbHelper.PreparePrimaryKeyParameters(primaryKeys, ref sql);
+                var primaryKeyParameters = SqlHelper.PreparePrimaryKeyParameters(primaryKeys, ref sql);
                 parameters.AddRange(primaryKeyParameters);
             }
             var paramsToPass = parameters.ToArray();
-            var result = SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, sql, paramsToPass);
+            var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, paramsToPass);
 
             if (isInsert)
             {
@@ -555,7 +554,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                       " WHERE LOWER(" + relation.PrimaryKeyDisplayColumn + ") LIKE LOWER(@Search)" +
                       " ORDER BY " + relation.PrimaryKeyDisplayColumn;
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql, new SqlParameter("@Search", search + "%")))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, new SqlParameter("@Search", search + "%")))
             {
                 while (reader.Read())
                 {
@@ -575,7 +574,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var sql = limit > 0 ? "SELECT TOP(" + limit + ") " : "SELECT ";
             sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, sql))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql))
             {
                 while (reader.Read())
                 {
@@ -593,9 +592,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var virtualTable = Schema.GetVirtualTable(virtualTableId);
             // TODO: add delete of depndent stuff, especially content table.
             var sql = "DELETE FROM " + virtualTable.StartingPhysicalTable + " WHERE 1=1";
-            var parameters = DbHelper.PreparePrimaryKeyParameters(dataKeys, ref sql);
+            var parameters = SqlHelper.PreparePrimaryKeyParameters(dataKeys, ref sql);
 
-            return SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, sql, parameters) > 0;
+            return SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, parameters) > 0;
         }
 
         /// <summary>
@@ -612,7 +611,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var deleteXrefs = new List<int>();
             var insertXrefs = new List<int>(foreignKeyValues);
 
-            using (var reader = SqlHelper.ExecuteReader(DbHelper.ConnectionString, CommandType.Text, selectSql, p[0]))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, selectSql, p[0]))
             {
                 while (reader.Read())
                 {
@@ -635,14 +634,14 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             foreach (var foreignKeyValue in insertXrefs)
             {
                 p[1] = new SqlParameter("@join", foreignKeyValue);
-                SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, insertSql, p);
+                SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, insertSql, p);
                 //currentXrefs.Remove(foreignKeyValue);
             }
 
             foreach (var leftOver in deleteXrefs)
             {
                 p[1] = new SqlParameter("@join", leftOver);
-                SqlHelper.ExecuteNonQuery(DbHelper.ConnectionString, CommandType.Text, deleteSql, p);
+                SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, deleteSql, p);
             }
         }
 
@@ -661,7 +660,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                         var contentDbBuilder = new SqlConnectionStringBuilder(MsSqlDBUtility.SqlHelper.ConnStringMain);
 
                         // check if content exists
-                        var result = SqlHelper.ExecuteScalar(DbHelper.ConnectionString, CommandType.Text,
+                        var result = SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text,
                             "SELECT TOP(1) content_fk_id FROM [" + contentDbBuilder.InitialCatalog + "].[dbo].[content_data_store] WHERE content_fk_id = @id_content", new SqlParameter("@id_content", column.ValueInteger));
 
                         isInsert = result == null;
@@ -689,7 +688,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             var contentDbBuilder = new SqlConnectionStringBuilder(MsSqlDBUtility.SqlHelper.ConnStringMain);
 
                             var sql = "SELECT TOP(1) content_fk_id FROM [" + contentDbBuilder.InitialCatalog + "].[dbo].[content_data_store] WHERE content_fk_id = @id_content AND language_fk_id = @id_language";
-                            var result = SqlHelper.ExecuteScalar(DbHelper.ConnectionString, CommandType.Text, sql, p);
+                            var result = SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text, sql, p);
 
                             if (isInsert && result != null)
                                 throw new Exception("This should be insert.");

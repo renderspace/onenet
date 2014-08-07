@@ -68,7 +68,7 @@ namespace One.Net.BLL.DAL
             }
         }
 
-        public void ChangeContent(BOInternalContent content)
+        public void ChangeContent(BOInternalContent content, string connString = "")
         {
             if (!content.IsComplete)
                 throw new ApplicationException("Trying to save uncomplete BOInternalContent.");
@@ -85,7 +85,7 @@ namespace One.Net.BLL.DAL
                 paramsToPass[7] = SqlHelper.GetNullable("score", 0);
                 paramsToPass[8] = new SqlParameter("@votes", 0);
 
-                object result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
+                object result = SqlHelper.ExecuteScalar(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
 
                 if (content.ContentId == null) // Inserted
                 {

@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LastChangeAndHistory.ascx.cs" Inherits="OneMainWeb.AdminControls.LastChangeAndHistory" %>
 <div class="lastChange"><a href="#" class="popup-audit-history" data-toggle="modal" data-target="#audit-history"><asp:Label runat="server" ID="LabelChanged"></asp:Label></a></div>
 
-<div class="modal" id="audit-history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-content-id="<%: SelectedContentId %>">
+<div class="modal" id="audit-history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-content-id="<%: SelectedContentId %>" data-language-id="<%: SelectedLanguageId %>">
     <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">

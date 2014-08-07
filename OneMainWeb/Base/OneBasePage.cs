@@ -29,7 +29,6 @@ namespace OneMainWeb
     {
         protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(OneBasePage));
 
-        WebProfile profile = null;
         protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
 

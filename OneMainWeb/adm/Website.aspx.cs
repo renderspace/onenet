@@ -11,6 +11,7 @@ using OneMainWeb.AdminControls;
 using One.Net.BLL.Utility;
 using System.Globalization;
 using System.IO;
+using MsSqlDBUtility;
 
 namespace OneMainWeb.adm
 {
@@ -39,27 +40,26 @@ namespace OneMainWeb.adm
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
         {
-            return;
             var connString = "";
             if (CheckboxNewDatabase.Checked)
             {
                 var weHaveDatabase = false;
-                connString = DatabaseHelper.BuildConnectionString(TextBoxServer.Text, TextBoxDatabaseName.Text, TextBoxUsername.Text, TextBoxPassword.Text);
-                var connectivityTest = DatabaseHelper.CheckDbConnectivity(connString);
+                connString = SqlHelper.BuildConnectionString(TextBoxServer.Text, TextBoxDatabaseName.Text, TextBoxUsername.Text, TextBoxPassword.Text);
+                var connectivityTest = SqlHelper.CheckDbConnectivity(connString);
                 switch (connectivityTest)
-                { 
-                    case DatabaseHelper.DbConnectivityResult.CantConnect:
+                {
+                    case SqlHelper.DbConnectivityResult.CantConnect:
                         Notifier1.ExceptionName = "Can't connect to database. Please check connection details.";
                         weHaveDatabase = false;
                         break;
-                    case DatabaseHelper.DbConnectivityResult.NotEmpty:
-                        Notifier1.ExceptionName = "Database is not empty, please select another one.";
-                        weHaveDatabase = false;
-                        break;
-                    case DatabaseHelper.DbConnectivityResult.Empty:
+                    case SqlHelper.DbConnectivityResult.NotEmpty:
+                        Notifier1.Warning = "Database is not empty, please select another one.";
                         weHaveDatabase = true;
                         break;
-                    case DatabaseHelper.DbConnectivityResult.DoesnExist:
+                    case SqlHelper.DbConnectivityResult.Empty:
+                        weHaveDatabase = true;
+                        break;
+                    case SqlHelper.DbConnectivityResult.DoesnExist:
                         weHaveDatabase = websiteB.CreateNewDatabase(connString);
                         if (!weHaveDatabase)
                             Notifier1.ExceptionName = "Can't create database.";
@@ -78,6 +78,8 @@ namespace OneMainWeb.adm
             website.Html = "";
             website.LanguageId = Int32.Parse(DropDownList1.SelectedValue);
             website.ContentId = null;
+            website.PreviewUrl = TextBoxPreviewUrl.Text;
+            website.ProductionUrl = TextBoxProductionUrl.Text;
             website.PrincipalCreated = User.Identity.Name;
             website.PreviewUrl = TextBoxPreviewUrl.Text;
             var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), connString);
@@ -130,6 +132,7 @@ namespace OneMainWeb.adm
             TextBoxOgImage.Text = website.SubTitle;
             LastChangeAndHistory1.Text = website.DisplayLastChanged;
             LastChangeAndHistory1.SelectedContentId = website.ContentId.Value;
+            LastChangeAndHistory1.SelectedLanguageId = website.LanguageId;
             
 
             OneSettingsWebsite.ItemId = websiteId;

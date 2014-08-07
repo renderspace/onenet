@@ -8,11 +8,10 @@ namespace One.Net.BLL
     public class BAudit
     {
         private static readonly BInternalContent contentB = new BInternalContent();
-        protected static int LanguageId { get { return Thread.CurrentThread.CurrentCulture.LCID; } }
 
-        public List<BOInternalContentAudit> ListAudits(int contentId)
+        public List<BOInternalContentAudit> ListAudits(int contentId, int languageId)
         {
-            return contentB.ListAudits(contentId, LanguageId);
+            return contentB.ListAudits(contentId, languageId);
         }
 
         public BOInternalContentAudit GetAudit(string guid)

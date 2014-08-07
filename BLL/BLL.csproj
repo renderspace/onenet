@@ -163,7 +163,6 @@
     <Compile Include="Paths\TURLProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSSProviderSQL.cs" />
-    <Compile Include="Scaffold\DAL\DbHelper.cs" />
     <Compile Include="Scaffold\Data.cs" />
     <Compile Include="Scaffold\Model\EditableItem.cs" />
     <Compile Include="Scaffold\Model\Relation.cs" />
@@ -175,7 +174,6 @@
     <Compile Include="Service\FormService.cs" />
     <Compile Include="Service\IAdminService.cs" />
     <Compile Include="Service\IFormService.cs" />
-    <Compile Include="Utility\DatabaseHelper.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />
     <Compile Include="Utility\FolderRightsReader.cs" />
     <Compile Include="Utility\FormatTool.cs" />

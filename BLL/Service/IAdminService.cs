@@ -17,9 +17,9 @@ namespace One.Net.BLL.Service
         [Description(" public Ping()")]
         string Ping();
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContentHistory?contentId={contentId}")]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContentHistory?contentId={contentId}&languageId={languageId}")]
         [Description("GetContentHistory(int contentId)")]
-        IEnumerable<DTOAuditItem> GetContentHistory(int contentId);
+        IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId);
 
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFolderTree?selectedId={selectedId}")]
         [Description("GetFolderTree")]

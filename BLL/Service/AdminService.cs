@@ -19,10 +19,10 @@ namespace One.Net.BLL.Service
             return "AdminService";
         }
 
-        public IEnumerable<DTOAuditItem> GetContentHistory(int contentId)
+        public IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId)
         {
             BAudit auditB = new BAudit();
-            var audits = auditB.ListAudits(contentId);
+            var audits = auditB.ListAudits(contentId, languageId);
 
             var result = new List<DTOAuditItem>();
             foreach (var a in audits)
