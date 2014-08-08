@@ -29,7 +29,7 @@ namespace OneMainWeb.Account
             {
                 // Validate the user password
                 var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
+                OneNetUser user = manager.Find(UserName.Text, Password.Text);
                 if (user != null)
                 {
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);

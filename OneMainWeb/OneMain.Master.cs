@@ -50,26 +50,6 @@ namespace OneMainWeb
             }
         }
 
-        protected string SelectedCulture
-        {
-            get
-            {
-                return authorizationHelper.SelectedCulture;
-            }
-        }
-
-        protected int SelectedCultureId
-        {
-            get
-            {
-                return authorizationHelper.SelectedCultureId;
-            }
-            set
-            {
-                authorizationHelper.SelectedCultureId = value;
-            }
-        }
-
         protected string TracingFlag
         {
             get { return (!PresentBasePage.ReadPublishFlag()).ToString().ToLower(); }

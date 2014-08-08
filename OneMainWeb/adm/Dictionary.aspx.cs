@@ -93,15 +93,15 @@ namespace OneMainWeb
 
                     txtKeyword.Visible = false;
                     LabelKeyword.Visible = true;
-                    InsertUpdateButton.Text = "$update";
-                    InsertUpdateCloseButton.Text = "$update_close";
+                    InsertUpdateButton.Text = "Update";
+                    InsertUpdateCloseButton.Text = "Update and close";
                 }
                 else
                 {
                     txtKeyword.Visible = true;
                     LabelKeyword.Visible = false;
-                    InsertUpdateButton.Text = "$insert";
-                    InsertUpdateCloseButton.Text = "$insert_close";
+                    InsertUpdateButton.Text = "Insert";
+                    InsertUpdateCloseButton.Text = "Insert and close";
                 }
             }
             else if (((MultiView)sender).ActiveViewIndex == 2)

@@ -21,12 +21,12 @@ namespace One.Net.BLL.Service
         [Description("GetContentHistory(int contentId)")]
         IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId);
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFolderTree?selectedId={selectedId}")]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFolderTree?selectedId={selectedId}&languageId={languageId}")]
         [Description("GetFolderTree")]
-        string GetFolderTree(int selectedId);
+        string GetFolderTree(int selectedId, int languageId);
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListFiles?folderId={folderId}")]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListFiles?folderId={folderId}&languageId={languageId}")]
         [Description("List<DTOFile> ListFiles(int folderId)")]
-        List<DTOFile> ListFiles(int folderId);
+        List<DTOFile> ListFiles(int folderId, int languageId);
     }
 }

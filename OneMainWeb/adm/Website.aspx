@@ -16,9 +16,8 @@
             </div>
             <asp:GridView	ID="GridViewWebsites"
 					runat="server"
-					CssClass="gv"
+					CssClass="table table-hover"
 					AutoGenerateColumns="false"
-					AllowPaging="false"
 					AllowSorting="false"
 					DataKeyNames="Id" OnSelectedIndexChanged="GridViewWebsites_SelectedIndexChanged">
 		        <Columns>

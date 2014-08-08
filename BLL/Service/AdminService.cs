@@ -8,6 +8,8 @@ using System.Runtime.Serialization;
 using One.Net.BLL.DAL;
 using One.Net.BLL.Forms;
 using Newtonsoft.Json;
+using System.Threading;
+using System.Globalization;
 
 namespace One.Net.BLL.Service
 {
@@ -32,9 +34,11 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        public List<DTOFile> ListFiles(int folderId)
+        public List<DTOFile> ListFiles(int folderId, int languageId)
         {
             var fileB = new BFileSystem();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+
             var files = fileB.List(folderId);
 
             var result = new List<DTOFile>();
@@ -45,10 +49,10 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        public string GetFolderTree(int selectedId)
+        public string GetFolderTree(int selectedId, int languageId)
         {
             var fileB = new BFileSystem();
-
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
             var folders = fileB.ListFolders();
 
             var rootFolder = folders.Where(f => !f.ParentId.HasValue).FirstOrDefault();

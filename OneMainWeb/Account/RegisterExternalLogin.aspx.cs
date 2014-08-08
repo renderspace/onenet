@@ -81,7 +81,7 @@ namespace OneMainWeb.Account
                 return;
             }
             var manager = new UserManager();
-            var user = new ApplicationUser() { UserName = userName.Text };
+            var user = new OneNetUser() { UserName = userName.Text };
             IdentityResult result = manager.Create(user);
             if (result.Succeeded)
             {

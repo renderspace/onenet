@@ -25,6 +25,9 @@
         <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, Everyone" />
         <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, Everyone" />
         <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Everyone" />
+        <siteMapNode url="adm/Users.aspx" title="Users" description="" roles="admin" />
+
+        
       </siteMapNode>
       
     </siteMapNode>

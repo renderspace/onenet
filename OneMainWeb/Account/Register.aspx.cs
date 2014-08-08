@@ -13,7 +13,7 @@ namespace OneMainWeb.Account
         protected void CreateUser_Click(object sender, EventArgs e)
         {
             var manager = new UserManager();
-            var user = new ApplicationUser() { UserName = UserName.Text, Email = TextBoxEmail.Text };
+            var user = new OneNetUser() { UserName = UserName.Text, Email = TextBoxEmail.Text };
             IdentityResult result = manager.Create(user, Password.Text);
             if (result.Succeeded)
             {

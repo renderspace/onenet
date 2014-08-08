@@ -44,7 +44,7 @@ namespace OneMainWeb.adm
         {
             SelectedWebsite_ValidateDataBind();
             TreeView1_DataBind();
-            TextContentEditor.UseCkEditor = !IsSpecialContent;
+            
             if (!IsPostBack)
             {
                 if (Request["instanceId"] != null)
@@ -52,10 +52,17 @@ namespace OneMainWeb.adm
                     int instanceId = FormatTool.GetInteger(Request["instanceId"]);
                     BOModuleInstance requestInstance = webSiteB.GetModuleInstance(instanceId, false);
 
-                    if (requestInstance != null && (requestInstance.Name.Contains("SpecialContent") || requestInstance.Name.Contains("TextContent")))
+                    if (requestInstance != null && requestInstance.Name.Contains("SpecialContent"))
                     {
                         SelectedModuleInstanceId = instanceId;
+                        TextContentEditor.UseCkEditor = false;
                     }
+                    else if (requestInstance != null && requestInstance.Name.Contains("TextContent"))
+                    {
+                        SelectedModuleInstanceId = instanceId;
+                        TextContentEditor.UseCkEditor = true;
+                    }
+
                 }
                 DropDownListModuleInstances_DataBind();
                 InitializeControls();

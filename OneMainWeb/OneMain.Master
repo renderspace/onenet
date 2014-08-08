@@ -16,6 +16,7 @@
     <link href="/adm/css/dashboard.css" rel="stylesheet">
     <script>
         tracing = <%: TracingFlag %>;
+        languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
     </script>
 	
     <script src="/Scripts/jquery-2.1.1.min.js"></script>

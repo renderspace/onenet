@@ -149,7 +149,7 @@ function getTree(callback) {
     if (selectedFolderId < 1)
         selectedFolderId = 0;
     $.ajax({
-        url: "/AdminService/GetFolderTree?selectedId=" + selectedFolderId,
+        url: "/AdminService/GetFolderTree?selectedId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: "GET",
@@ -160,7 +160,7 @@ function getTree(callback) {
 
 function files_databind(selectedFolderId) {
     $.ajax({
-        url: "/AdminService/ListFiles?folderId=" + selectedFolderId,
+        url: "/AdminService/ListFiles?folderId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: "GET",
