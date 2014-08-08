@@ -164,22 +164,23 @@ namespace OneMainWeb
                 }
                 DropDownListWebSiteCombined.DataBind();
 
-                if (!webSiteIsSelected && webSiteList.Count > 0)
+                if (!webSiteIsSelected && !Request.Url.AbsoluteUri.Contains("/adm/Website.aspx?newsite=true"))
                 {
-                    var requestedWebSiteId = Int32.Parse(ConfigurationManager.AppSettings["WebSiteId"]);
-                    var webSite = webSiteB.Get(requestedWebSiteId);
-                    if (webSite != null)
+                    if (webSiteList.Count == 0)
                     {
-                        SelectedWebSiteId = webSite.Id;
+                        Response.Redirect("/adm/Website.aspx?newsite=true");
+                    } 
+                    else 
+                    {
+                        SelectedWebSiteId = webSiteList[0].Id;
                     }
-                    Response.Redirect(Request.Url.LocalPath + "?newsite=true");
                 }
             }
-                 
 
             VirtualTableList1.Visible = false;
             if (Page.User.IsInRole("ScaffoldVirtualTables") || Page.User.IsInRole("admin"))
                 VirtualTableList1.Visible = true;
+
         }
 
         protected void DropDownListWebSiteCombined_SelectedIndexChanged(object sender, EventArgs e)

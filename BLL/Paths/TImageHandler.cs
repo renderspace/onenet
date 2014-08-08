@@ -80,6 +80,16 @@ namespace One.Net.BLL
                 return temp;
             }
         }
+
+        public bool PublishFlag
+        {
+            get
+            {
+                var publishFlag = false;
+                bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);
+                return publishFlag;
+            }
+        }
         
         public void ProcessRequest(HttpContext context)
         {
@@ -122,11 +132,18 @@ namespace One.Net.BLL
                 catch {}
             }
 
-            //context.Response.Clear();
-            context.Response.Cache.SetExpires(DateTime.Now.Add(new TimeSpan(1, 0, 0)));
-            context.Response.Cache.AppendCacheExtension("post-check=900,pre-check=3600");
-            context.Response.Cache.SetCacheability(HttpCacheability.Private);
-            context.Response.Cache.SetValidUntilExpires(false);
+            if (PublishFlag)
+            {
+                context.Response.Cache.SetCacheability(HttpCacheability.Public);
+                context.Response.Cache.SetExpires(DateTime.Now.Add(new TimeSpan(28, 0, 0, 0)));
+            }
+            else
+            {
+                context.Response.Cache.SetExpires(DateTime.Now.Add(new TimeSpan(1, 0, 0)));
+                context.Response.Cache.SetCacheability(HttpCacheability.Private);
+                context.Response.Cache.AppendCacheExtension("post-check=900,pre-check=3600");
+                context.Response.Cache.SetValidUntilExpires(false);
+            }
             
             try 
             {
