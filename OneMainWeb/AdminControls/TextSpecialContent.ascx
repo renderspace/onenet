@@ -18,6 +18,8 @@
             </section>
         </div>
          <div class="col-md-9">
+              <asp:MultiView ID="MultiView1" runat="server">
+            <asp:View ID="View1" runat="server">
                 <section class="module full">
                      <div>
                         <asp:DropDownList CssClass="selectTextContentInstance" ID="DropDownListModuleInstances" runat="server" ValidationGroup="MI"></asp:DropDownList>
@@ -41,5 +43,13 @@
 				        </div>
                     </asp:Panel>
                 </div>
+                 </asp:View>
+                  <asp:View ID="View2" runat="server">
+                       <section class="module">
+                    <asp:Label runat="server" ID="LabelMessage"></asp:Label>
+                </section>
+                      </asp:View>
+                </asp:MultiView>
              </div>
+           
        </div> 

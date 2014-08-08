@@ -228,7 +228,7 @@ namespace One.Net.BLL
 
         public string PrepareParLink(string parLink)
         {
-            return CleanStringForUrl((parLink.ToLower()).Replace(" ", "_")); ;
+            return CleanStringForUrl((parLink.ToLower()).Replace(" ", "-")); ;
         }
 
         /// <summary>

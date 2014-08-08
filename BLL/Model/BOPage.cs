@@ -209,11 +209,7 @@ namespace One.Net.BLL
 	        set { editRequireGroupList = value; }
 	    }
 
-	    public bool RequireSSL
-	    {
-	        get { return requireSSL; }
-	        set { requireSSL = value; }
-	    }
+	    public bool RequireSSL { get; set; }
 
 	    public override string ToString()
         {

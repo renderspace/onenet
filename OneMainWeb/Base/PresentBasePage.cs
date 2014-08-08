@@ -152,6 +152,12 @@ ga('send', 'pageview');
         {
             if (page != null)
             {
+                if (page.IsRedirected)
+                {
+                    log.Info("RedirectToUrl to external link: " + page.RedirectToUrl);
+                    Response.Redirect(page.RedirectToUrl);
+                }
+
                 log.Debug("-OnInit (add Meta Data)");
 
                 HtmlMeta metaUnicode = new HtmlMeta();
@@ -159,23 +165,50 @@ ga('send', 'pageview');
                 metaUnicode.Content = "text/html; charset=utf-8";
                 Page.Header.Controls.Add(metaUnicode);
 
+                if (!string.IsNullOrWhiteSpace(webSite.Title))
+                {
+                    var HtmlMetaSiteTitle = new HtmlMeta();
+                    HtmlMetaSiteTitle.Name = "og:site_name";
+                    HtmlMetaSiteTitle.Content = StringTool.StripHtmlTags(webSite.Title);
+                    Page.Header.Controls.Add(HtmlMetaSiteTitle);
+                }
+
+                var HtmlMetaLanguage = new HtmlMeta();
+                HtmlMetaLanguage.Name = "og:locale";
+                HtmlMetaLanguage.Content = Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_');
+                Page.Header.Controls.Add(HtmlMetaLanguage);
+
+                var HtmlMetaUrl = new HtmlMeta();
+                HtmlMetaUrl.Name = "og:url";
+                HtmlMetaUrl.Content = Request.Url.AbsoluteUri;
+                Page.Header.Controls.Add(HtmlMetaUrl);
+
+                
+
+                if (webSite.Settings.ContainsKey("FacebookApplicationID"))
+                {
+                    var appId = webSite.Settings["FacebookApplicationID"].Value;
+                    if (!string.IsNullOrWhiteSpace(appId))
+                    {
+                        var HtmlMetaAppId = new HtmlMeta();
+                        HtmlMetaAppId.Name = "fb:app_id";
+                        HtmlMetaAppId.Content = appId;
+                        Page.Header.Controls.Add(HtmlMetaAppId);
+                    }
+                }
+                
 
                 if (!string.IsNullOrWhiteSpace(page.Teaser))
                 {
                     HtmlMeta metaDescription = new HtmlMeta();
-                    metaDescription.ID = "HtmlMetaDescription1";
                     metaDescription.Name = "description";
                     metaDescription.Content = StringTool.StripHtmlTags(page.Teaser);
-
-                    if (metaDescription.Content.Length > 1)
-                        Page.Header.Controls.Add(metaDescription);
+                    Page.Header.Controls.Add(metaDescription);
 
                     HtmlMeta metaOgDescription = new HtmlMeta();
-                    metaOgDescription.ID = "OgDescription1";
                     metaOgDescription.Attributes.Add("property", "og:description");
                     metaOgDescription.Content = HttpUtility.HtmlEncode(page.Teaser);
-                    if (metaOgDescription.Content.Length > 0)
-                        Page.Header.Controls.Add(metaOgDescription);
+                    Page.Header.Controls.Add(metaOgDescription);
                 }
 
                 if (page.Settings.ContainsKey("MetaKeywords"))
@@ -228,7 +261,6 @@ ga('send', 'pageview');
                 if (!string.IsNullOrWhiteSpace(page.OgImage))
                 {
                     HtmlMeta metaOgImage = new HtmlMeta();
-                    metaOgImage.ID = "OgImage";
                     metaOgImage.Attributes.Add("property", "og:image");
                     metaOgImage.Content = HttpUtility.HtmlEncode(page.OgImage);
                     Page.Header.Controls.Add(metaOgImage);
@@ -236,24 +268,18 @@ ga('send', 'pageview');
                 else if (!string.IsNullOrWhiteSpace(webSite.DefaultOgImage))
                 {
                     HtmlMeta metaOgImage = new HtmlMeta();
-                    metaOgImage.ID = "OgImage";
                     metaOgImage.Attributes.Add("property", "og:image");
                     metaOgImage.Content = HttpUtility.HtmlEncode(webSite.DefaultOgImage);
                     Page.Header.Controls.Add(metaOgImage);
                 }
-
                 
-                if (page.IsRedirected)
-                {
-                    log.Info("RedirectToUrl to external link: " + page.RedirectToUrl);
-                    Response.Redirect(page.RedirectToUrl);
-                }
 
+                /*
                 if (!PublishFlag && Master.Controls.Count > 2)
                 {
                     var control = LoadControl("~/Controls/AdminWikiMenu.ascx");
                     Master.Controls[3].Controls.AddAt(0, control);
-                }
+                } */
 
                 if (page.RequireSSL && !Request.IsSecureConnection)
                 {
@@ -387,7 +413,10 @@ ga('send', 'pageview');
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            if(!PublishFlag)
+            { 
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            }
         }
 
         private void InsertDebugBanner()

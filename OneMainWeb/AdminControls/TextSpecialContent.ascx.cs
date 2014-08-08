@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using One.Net.BLL;
 using One.Net.BLL.Utility;
 using OneMainWeb.adm;
+using System.Threading;
 
 namespace OneMainWeb.AdminControls
 {
@@ -18,6 +19,7 @@ namespace OneMainWeb.AdminControls
         private static readonly BTextContent textContentB = new BTextContent();
 
 
+        public BOPage SelectedPage { get; set; }
         public int SelectedWebSiteId { get; set; }
         public int SelectedPageId { get; set; }
         public bool EnableXHTMLValidator { get; set; }
@@ -33,6 +35,7 @@ namespace OneMainWeb.AdminControls
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SelectedWebsite_ValidateDataBind();
             TreeView1_DataBind();
             TextContentEditor.UseCkEditor = !IsSpecialContent;
             if (!IsPostBack)
@@ -47,12 +50,71 @@ namespace OneMainWeb.AdminControls
                         SelectedModuleInstanceId = instanceId;
                     }
                 }
-
-                
-
                 DropDownListModuleInstances_DataBind();
                 InitializeControls();
             }
+        }
+
+        protected void SelectedWebsite_ValidateDataBind()
+        {
+            BOWebSite TempWebSite = webSiteB.Get(SelectedWebSiteId);
+            if (SelectedWebSiteId < 1 || TempWebSite == null)
+            {
+                // if session is lost, we need to select a default website and delete the possibly incorrect SelectedPageId
+                SelectedWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
+                SelectedPageId = -1;
+                if (TempWebSite == null)
+                {
+                    TempWebSite = webSiteB.Get(SelectedWebSiteId);
+                }
+            }
+
+            if (TempWebSite == null)
+            {
+                ResetAllControlsToDefault("No website selected or no website in database");
+                return;
+            }
+
+            Thread.CurrentThread.CurrentCulture = TempWebSite.Culture;
+
+            var RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
+
+            if (!RootNodeID.HasValue)
+            {
+                ResetAllControlsToDefault("Website doesn't have a root page. Use structure menu.");
+                return;
+            }
+
+            if (SelectedPageId < 1)
+                SelectedPageId = RootNodeID.Value;
+
+            SelectedPage = webSiteB.GetPage(SelectedPageId);
+
+            if (SelectedPage == null || SelectedPage.WebSiteId != SelectedWebSiteId || SelectedPage.LanguageId != Thread.CurrentThread.CurrentCulture.LCID)
+            {
+                ResetAllControlsToDefault("Please select a page on the left;");
+                return;
+            }
+
+            if (!SelectedPage.IsEditabledByCurrentPrincipal)
+            {
+                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select a page on the left.");
+                return;
+            }
+
+            MultiView1.ActiveViewIndex = 0;
+
+        }
+
+        protected void ResetAllControlsToDefault(string message)
+        {
+            TreeView1.Nodes.Clear();
+            TreeView1.DataBind();
+            LastChangeAndHistory1.Text = "";
+            LastChangeAndHistory1.SelectedContentId = 0;
+            MultiView1.ActiveViewIndex = 1;
+
+            //LabelMessage
         }
 
         protected void TreeView1_Unload(object sender, EventArgs e)
@@ -166,11 +228,13 @@ namespace OneMainWeb.AdminControls
 
         public void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
         {
+            
             SelectedPageId = FormatTool.GetInteger(TreeView1.SelectedNode.Value);
             TreeView1.CollapseAll();
             ExpandLoop(TreeView1.SelectedNode);
             SelectedModuleInstanceId = null;
             DropDownListModuleInstances_DataBind();
+            SelectedWebsite_ValidateDataBind();
             InitializeControls();
         }
 

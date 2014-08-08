@@ -23,8 +23,7 @@
 					DataKeyNames="Id" OnSelectedIndexChanged="GridViewWebsites_SelectedIndexChanged">
 		        <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
-                    <asp:BoundField HeaderText="Title" DataField="DisplayName" />
-                    <asp:BoundField HeaderText="Title" DataField="DisplayName" />
+                    <asp:BoundField HeaderText="Website name" DataField="DisplayName" />
                     <asp:BoundField HeaderText="PreviewUrl" DataField="PreviewUrl" />
                     <asp:BoundField HeaderText="ProductionUrl" DataField="ProductionUrl" />
                     <asp:BoundField HeaderText="Last Changed" DataField="DisplayLastChanged" />
@@ -40,9 +39,9 @@
         <asp:View runat="server">
              <div class="adminSection form-horizontal">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Website title</label>
+                    <label class="col-sm-3 control-label">Website name</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="InputTitle" runat="server" CssClass="form-control" MaxLength="255" placeholder="website title is important for SEO" />
+                        <asp:TextBox ValidationGroup="website" Text="" ID="InputTitle" runat="server" CssClass="form-control" MaxLength="255" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too." />
                     </div>
                 </div>
                 <div class="form-group">
@@ -137,9 +136,9 @@
                         </div>
                     </div>
                  <div class="form-group">
-                    <label class="col-sm-3 control-label">Website title</label>
+                    <label class="col-sm-3 control-label">Website name</label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too."></asp:TextBox>
                     </div>
                 </div>
                  <div class="form-group">

@@ -86,6 +86,7 @@ namespace OneMainWeb.adm
             if (!SelectedPage.IsEditabledByCurrentPrincipal)
             {
                 ResetAllControlsToDefault("You do not have the rights to edit this page. Please select a page on the left.");
+                return;
             }
 
             MultiView1.ActiveViewIndex = 0;
