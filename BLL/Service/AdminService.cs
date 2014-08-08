@@ -60,7 +60,9 @@ namespace One.Net.BLL.Service
                 return "";
 
             var result = new StringBuilder();
-            result.Append("[ {\"text\": \"" + rootFolder.Title + "\", \"id\": \"" + rootFolder.Id + "\", " + (selectedId == rootFolder.Id ? "\"selected\":\"true\"," : "") + "  \"nodes\": [");
+            result.Append(@"[ {""text"": """ + rootFolder.Title.Replace('"', ' ') + "\", \"id\": \"" + rootFolder.Id + "\", " + (selectedId == rootFolder.Id ? "\"selected\":\"true\"," : "") + "  \"nodes\": [");
+
+            
             AddChildren(rootFolder, folders, result, selectedId);
             result.Append("] } ]");
 
@@ -75,7 +77,7 @@ namespace One.Net.BLL.Service
             {
                 if (category.ParentId.HasValue && category.ParentId.Value == parent.Id.Value)
                 {
-                    result.Append(" {\"text\": \"" + category.Title + "\", \"id\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
+                    result.Append(" {\"text\": \"" + category.Title.Replace('"', ' ') + "\", \"id\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
                         (selectedId == category.Id ? "\"selected\":\"true\"," : "") + " \"nodes\": [");
                     if (category.ChildCount.Value > 0)
                     {

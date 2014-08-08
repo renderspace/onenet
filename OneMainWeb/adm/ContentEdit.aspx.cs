@@ -181,6 +181,17 @@ namespace OneMainWeb.adm
                         textContentModel.ContentId.HasValue &&
                         textContentModel.ContentId.Value > 0)
                     {
+
+                        if (moduleInstanceModel.Name.Contains("SpecialContent"))
+                        {
+                            TextContentEditor.UseCkEditor = false;
+                        }
+                        else if (moduleInstanceModel.Name.Contains("TextContent"))
+                        {
+                            TextContentEditor.UseCkEditor = true;
+                        }
+                        
+
                         TextContentEditor.Title = textContentModel.Title;
                         TextContentEditor.SubTitle = textContentModel.SubTitle;
                         TextContentEditor.Teaser = textContentModel.Teaser;
