@@ -3,7 +3,6 @@
 	<siteMapNode url="" title="" description="" roles="*">
 		<siteMapNode url="" title="Website" description="" roles="*">
 			<siteMapNode url="~/adm/ContentEdit.aspx" title="Content" description="" roles="all, Everyone"/>
-			<siteMapNode url="~/adm/SpecialContentEdit.aspx" title="Special content" description="" roles="all, Everyone, admin, specialcontent"/>
 			<siteMapNode url="~/adm/Structure.aspx" title="Tree structure" description="" roles="all, Everyone" />
 			<siteMapNode url="~/adm/Publish.aspx" title="Publishing" description="" roles="all, Everyone" />
 		</siteMapNode>

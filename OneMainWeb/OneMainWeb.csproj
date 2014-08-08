@@ -232,13 +232,6 @@
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.designer.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
     </Compile>
-    <Compile Include="AdminControls\TextSpecialContent.ascx.cs">
-      <DependentUpon>TextSpecialContent.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\TextSpecialContent.ascx.designer.cs">
-      <DependentUpon>TextSpecialContent.ascx</DependentUpon>
-    </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
@@ -401,7 +394,6 @@
     <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
-    <Content Include="AdminControls\TextSpecialContent.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
     <Content Include="adm\css\bootstrap.min.css" />
     <Content Include="adm\css\dashboard.css" />
@@ -572,13 +564,6 @@
     </Compile>
     <Compile Include="adm\RssFeeds.aspx.designer.cs">
       <DependentUpon>RssFeeds.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="adm\SpecialContentEdit.aspx.cs">
-      <DependentUpon>SpecialContentEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\SpecialContentEdit.aspx.designer.cs">
-      <DependentUpon>SpecialContentEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\SQLEditor.aspx.cs">
       <DependentUpon>SQLEditor.aspx</DependentUpon>
@@ -860,7 +845,6 @@
   <ItemGroup>
     <Content Include="AdminControls\TextContentControl.ascx" />
     <Content Include="adm\Redirects.aspx" />
-    <Content Include="adm\SpecialContentEdit.aspx" />
     <Content Include="adm\SQLEditor.aspx" />
     <Content Include="App_Browsers\one.browser" />
     <Content Include="CommonModules\SpecialContent.ascx" />
