@@ -53,6 +53,8 @@ namespace OneMainWeb
         {
             if (!IsPostBack)
             {
+                HiddenFieldLanguageId.Value = Thread.CurrentThread.CurrentCulture.LCID.ToString();
+
                 if (SelectedFolderId < 1)
                 {
                     var folders = fileB.ListFolders();

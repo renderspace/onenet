@@ -17,8 +17,8 @@ namespace OneMainWeb.adm
 {
     public class AuthorizationHelper
     {
-        UserManager<ApplicationUser> manager = null;
-        ApplicationUser currentUser = null;
+        UserManager<OneNetUser> manager = null;
+        OneNetUser currentUser = null;
 
         protected HttpContext Context { get; set; }
         protected HttpSessionState Session { get { return Context.Session; } }
@@ -26,46 +26,8 @@ namespace OneMainWeb.adm
         public AuthorizationHelper(HttpContext context)
         {
             Context = context;
-            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            manager = new UserManager<OneNetUser>(new UserStore<OneNetUser>(new ApplicationDbContext()));
             currentUser = manager.FindById(Thread.CurrentPrincipal.Identity.GetUserId());
-        }
-
-        public string SelectedCulture
-        {
-            get
-            {
-                var sc = new CultureInfo(SelectedCultureId);
-                return sc.Name;
-            }
-        }
-
-        public int SelectedCultureId
-        {
-            get
-            {
-                if (Session["SelectedCultureId"] == null && currentUser != null)
-                {
-                    Session["SelectedCultureId"] = currentUser.SelectedCultureId;
-                }
-                var r = 0;
-                if (Session["SelectedCultureId"] == null ||
-                    string.IsNullOrWhiteSpace(Session["SelectedCultureId"].ToString()) ||
-                    !int.TryParse(Session["SelectedCultureId"].ToString(), out r))
-                {
-                    Session["SelectedCultureId"] = Thread.CurrentThread.CurrentCulture.LCID.ToString();
-                }
-                return int.Parse(Session["SelectedCultureId"].ToString());
-            }
-            set
-            {
-                var sc = new CultureInfo(value);
-                Session["SelectedCultureId"] = sc.LCID;
-                if (currentUser != null)
-                {
-                    currentUser.SelectedCultureId = sc.LCID.ToString();
-                    manager.Update(currentUser);
-                }
-            }
         }
 
         public int SelectedPageId
@@ -143,6 +105,8 @@ namespace OneMainWeb.adm
             var website = webSiteB.Get(webSiteId);
             if (website != null)
             {
+                Thread.CurrentThread.CurrentCulture = website.Culture;
+                /*
                 AuthenticationSection authenticationSection = ConfigurationManager.GetSection("system.web/authentication") as AuthenticationSection;
                 AuthenticationMode currentMode = AuthenticationMode.Windows;
                 if (authenticationSection != null)
@@ -161,7 +125,7 @@ namespace OneMainWeb.adm
                             break;
                         }
                     }
-                }
+                }*/
             }
         }
     }

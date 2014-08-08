@@ -285,6 +285,13 @@
     <Compile Include="adm\StructureDelete.aspx.designer.cs">
       <DependentUpon>StructureDelete.aspx</DependentUpon>
     </Compile>
+    <Compile Include="adm\Users.aspx.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Users.aspx.designer.cs">
+      <DependentUpon>Users.aspx</DependentUpon>
+    </Compile>
     <Compile Include="adm\Website.aspx.cs">
       <DependentUpon>Website.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -409,6 +416,7 @@
     <Content Include="adm\ScaffoldConfig.aspx" />
     <Content Include="adm\StructureCopy.aspx" />
     <Content Include="adm\StructureDelete.aspx" />
+    <Content Include="adm\Users.aspx" />
     <Content Include="adm\Website.aspx" />
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />

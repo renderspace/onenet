@@ -37,6 +37,7 @@
         </header>
         <div id="tree"></div>
         <asp:HiddenField runat="server" ID="HiddenSelectedFolderId" ClientIDMode="Static" />
+        <asp:HiddenField runat="server" ID="HiddenFieldLanguageId" ClientIDMode="Static" />
     </section>
 </div>
 

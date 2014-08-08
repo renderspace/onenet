@@ -210,12 +210,13 @@ namespace OneMainWeb.AdminControls
                         var v1 = Data.GetForeignKeyOptions(column.PartOfRelationId, SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT);
                         if (v1.Values.Count >= SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT)
                         {
-                            PrepareRelationSuggestOptions(column, PanelField, ref validationJQueryRules, false);
+                            PrepareRelationSuggestOptions(column, PanelRight, ref validationJQueryRules, false);
                         }
                         else
                         {
-                            PrepareRelationOptions(column, PanelField, v1, ref validationJQueryRules);
+                            PrepareRelationOptions(column, PanelRight, v1, ref validationJQueryRules);
                         }
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.ManyToMany:
                         var PanelSubLeft = new Panel { CssClass = "col-sm-5" };
