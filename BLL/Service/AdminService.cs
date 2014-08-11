@@ -44,7 +44,7 @@ namespace One.Net.BLL.Service
             var result = new List<DTOFile>();
             foreach (var f in files)
             {
-                result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60) });
+                result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString() });
             }
             return result;
         }
@@ -104,7 +104,7 @@ namespace One.Net.BLL.Service
             }
             else
             {
-                // ret += OneHelper.GetFileIcon(this.Page, "OneMainWeb.Res.mime_icons.", extension.Trim('.').ToLower());
+                ret += "/adm/Icons.ashx?extension=" + extension.Trim('.').ToLower();
             }
 
             return ret;
@@ -125,6 +125,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string Icon { get; set; }
+
+        [DataMember, JsonProperty]
+        public string ContentId { get; set; }
     }
 
     
