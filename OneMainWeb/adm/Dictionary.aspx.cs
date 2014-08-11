@@ -377,7 +377,7 @@ namespace OneMainWeb
                                 foreach (XmlElement translation in translationList)
                                 {
                                     var languageId = FormatTool.GetInteger(translation.GetAttribute("language_id"));
-                                    var titleList = translation.GetElementsByTagName("title");
+                                    var titleList = translation.GetElementsByTagName("description");
                                     var subtitleList = translation.GetElementsByTagName("subtitle");
                                     var teaserList = translation.GetElementsByTagName("teaser");
                                     var htmlList = translation.GetElementsByTagName("html");
@@ -484,7 +484,7 @@ namespace OneMainWeb
                         XmlElement translation = doc.CreateElement("translation");
                         translation.SetAttribute("language_id", e.LanguageId.ToString());
 
-                        XmlElement title = doc.CreateElement("title");
+                        XmlElement title = doc.CreateElement("description");
                         XmlText translationText1 = doc.CreateTextNode(e.Title);
                         title.AppendChild(translationText1);
                         translation.AppendChild(title);

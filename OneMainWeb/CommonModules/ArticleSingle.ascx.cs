@@ -9,7 +9,7 @@ using One.Net.BLL.Web;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class ArticleSingle : MModule
+    public partial class ArticleSingle : MModule, IBasicSEOProvider
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
@@ -46,13 +46,13 @@ namespace OneMainWeb.CommonModules
                 Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
                 var id = article.Id.Value;
                 HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
-                
-                H1Title.InnerHtml = article.Title;
+
+                Title = H1Title.InnerHtml = article.Title;
                 H2SubTitle.Visible = ShowSubTitle;
                 H2SubTitle.InnerHtml = article.SubTitle;
                 Time2.Visible = false;
                 SectionTeaser.Visible = ShowTeaser;
-                SectionTeaser.InnerHtml = article.Teaser;
+                Description = SectionTeaser.InnerHtml = article.Teaser;
                 SectionHtml.InnerHtml = article.Html;
                 DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
             }
@@ -60,6 +60,28 @@ namespace OneMainWeb.CommonModules
             {
                 MultiView1.ActiveViewIndex = 0;
             }
+        }
+
+        public string Description
+        {
+            get;
+            set;
+        }
+
+        public bool HasDescription
+        {
+            get { return !string.IsNullOrWhiteSpace(Description); }
+        }
+
+        public bool HasTitle
+        {
+            get { return !string.IsNullOrWhiteSpace(Title); }
+        }
+
+        public string Title
+        {
+            get;
+            set;
         }
     }
 }

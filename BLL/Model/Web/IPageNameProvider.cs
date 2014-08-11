@@ -4,9 +4,12 @@ using System.Text;
 
 namespace One.Net.BLL.Web
 {
-    public interface IPageNameProvider
+    public interface IBasicSEOProvider
     {
-        bool HasPageName { get; }
-        string PageName { get; }
+        bool HasTitle { get; }
+        string Title { get; }
+
+        bool HasDescription { get; }
+        string Description { get; }
     }
 }

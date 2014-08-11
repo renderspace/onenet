@@ -361,11 +361,13 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     gallery.Images = imagesOnThisPage;
                 }
 
-                if (mod is IPageNameProvider)
+                if (mod is IBasicSEOProvider)
                 {
-                    IPageNameProvider pageNameProvider = (IPageNameProvider)mod;
-                    if (pageNameProvider.HasPageName)
-                        providedPageName += pageNameProvider.PageName + " ";
+                    IBasicSEOProvider pageNameProvider = (IBasicSEOProvider)mod;
+                    if (pageNameProvider.HasTitle)
+                        providedPageName += pageNameProvider.Title+ " ";
+                    if (pageNameProvider.HasDescription)
+                        providedDescription += pageNameProvider.Description + " ";
                 }
 
                 if (mod is IImageListProvider)
@@ -452,31 +454,51 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
         protected void RenderOgImage(string provided)
         {
-            var ogImage = provided;
+            var ogImage = "";
+            if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
+                ogImage = CurrentWebsite.Title;
             if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
-                ogImage = CurrentPage.OgImage;
-            else if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
-                ogImage = CurrentWebsite.DefaultOgImage;
+                ogImage = CurrentPage.Title;
+            if (!string.IsNullOrWhiteSpace(provided))
+                ogImage = provided;
+
             AddMetaProperty("og:image", ogImage);
         }
 
         protected void RenderTitle(string provided)
         {
-            var title = provided;
+            // 1. provided
+            // 2. page
+            // 3. website
+            var title = "";
+            if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
+                title = CurrentWebsite.Title;
             if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
                 title = CurrentPage.Title;
-            else if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
-                title = CurrentWebsite.Title;
+            if (!string.IsNullOrWhiteSpace(provided))
+                title = provided;
 
+            title = title.Replace('\n', ' ').Replace('\r', ' ');
+            title = StringTool.StripHtmlTags(title);
             AddMetaProperty("og:title", title);
             Header.Title = title;
         }
 
         protected void RenderDescription(string provided)
         {
-            var description = CurrentPage.Teaser;
+            var description = "";
+            if (!string.IsNullOrWhiteSpace(CurrentWebsite.Teaser))
+                description = CurrentWebsite.Title;
+            if (!string.IsNullOrWhiteSpace(CurrentPage.Teaser))
+                description = CurrentPage.Title;
             if (!string.IsNullOrWhiteSpace(provided))
                 description = provided;
+
+            description = description.Replace('\n', ' ').Replace('\r', ' ');
+            description = StringTool.StripHtmlTags(description);
+            if (description.Length > 160)
+                description = description.Substring(0, 160);
+
             AddMetaTag("description", description);
             AddMetaProperty("og:description", description);
         }
@@ -531,7 +553,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                         {
                             HtmlLink rssLink = new HtmlLink();
                             rssLink.Attributes.Add("rel", "alternate");
-                            rssLink.Attributes.Add("title", feed.Title);
+                            rssLink.Attributes.Add("description", feed.Title);
                             rssLink.Attributes.Add("type", "application/rss+xml");
                             rssLink.Href = pagePath + feed.Id;
                             Page.Header.Controls.Add(rssLink);
