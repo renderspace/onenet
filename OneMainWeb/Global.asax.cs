@@ -26,6 +26,7 @@ using System.Net;
 using System.Web.Optimization;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.Models;
+using OneMainWeb.Base;
 
 namespace OneMainWeb
 {
@@ -92,8 +93,14 @@ namespace OneMainWeb
             RouteTable.Routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
             RouteTable.Routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
 
-            //RouteTable.Routes.MapPageRoute("robots", "robots.txt", "~/site_specific/robots.txt");
+            
             //RouteTable.Routes.MapPageRoute("favicon", "favicon.ico", "~/site_specific/favicon.ico"); 
+
+
+            RouteTable.Routes.Add(new Route("sitemap.xml", new HttpHandlerRoute("~/Utils/SiteMapHandler.ashx")));
+            RouteTable.Routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
+
+            
 
 
             // 
