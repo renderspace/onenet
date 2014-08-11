@@ -415,9 +415,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 }
             }
 
-            
-            
-
             try
             {
                 RenderDescription(providedDescription);
