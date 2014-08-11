@@ -14,6 +14,10 @@ namespace One.Net.BLL.DAL
 	{
         public PagedList<BOPage> ListUnpublishedPages(int webSiteId, ListingState state, int languageId)
         {
+            return ListPages(webSiteId, state, languageId, false, true);
+        }
+        public PagedList<BOPage> ListPages(int webSiteId, ListingState state, int languageId, bool publishFlag, bool filterChanged = false)
+        {
             PagedList<BOPage> pages = new PagedList<BOPage>();
             int toRecordIndex = 0, fromRecordIndex = 0;
 
@@ -26,12 +30,16 @@ namespace One.Net.BLL.DAL
             SqlParameter[] paramsToPass = new SqlParameter[8];
             paramsToPass[0] = new SqlParameter("@websiteID", webSiteId);
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
-            paramsToPass[2] = new SqlParameter("@publishFlag", false);
+            paramsToPass[2] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[3] = new SqlParameter("@fromRecordIndex", fromRecordIndex);
             paramsToPass[4] = new SqlParameter("@toRecordIndex", toRecordIndex);
             paramsToPass[5] = state.SortField.Length < 2 ? new SqlParameter("@sortByColumn", DBNull.Value) : new SqlParameter("@sortByColumn", state.SortField);
             paramsToPass[6] = new SqlParameter("@sortOrder", state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
-            paramsToPass[7] = new SqlParameter("@changed", true);
+
+            if (filterChanged)
+                paramsToPass[7] = new SqlParameter("@changed", true);
+            else
+                paramsToPass[7] = new SqlParameter("@changed", DBNull.Value);
 
             string sql = "[dbo].[ListPagedPages]";
 
@@ -42,6 +50,8 @@ namespace One.Net.BLL.DAL
                 {
                     BOPage page = new BOPage();
                     PopulatePage(rdr, page, languageId);
+                    LoadPageLinks(page, publishFlag, languageId);
+                    LoadPageSettings(page, publishFlag);
                     pages.Add(page);
                 }
 
@@ -53,7 +63,7 @@ namespace One.Net.BLL.DAL
                     }
                 }
             }
-            
+
             return pages;
         }
 
@@ -70,8 +80,9 @@ namespace One.Net.BLL.DAL
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.teaser AS Teaser, 
                     t.name AS Template, t.id AS TemplateID, p.content_fk_id AS ContentID, menu_group, idx, changed, pending_delete, 
-                    p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL]
+                    p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL], date_modified, date_created
                      FROM [dbo].pages p
+                     INNER JOIN [dbo].content  sc1 ON sc1.id = p.content_fk_id 
                      INNER JOIN [dbo].content_data_store sc2 ON sc2.content_fk_id = p.content_fk_id AND sc2.language_fk_id = @LCID
                      INNER JOIN [dbo].template t ON t.id = p.template_fk_id
                      INNER JOIN [dbo].int_link il ON il.pages_fk_id = p.id AND il.pages_fk_publish= @publishFlag AND il.language_fk_id = @LCID
@@ -131,6 +142,9 @@ namespace One.Net.BLL.DAL
                     sitePage.FrontEndRequireGroupList = rdr.GetString(_indexViewGroups);
                     sitePage.EditRequireGroupList = rdr.GetString(_indexEditGroups);
                     sitePage.RequireSSL = rdr.GetBoolean(_indexRequireSSL);
+
+                    sitePage.DateCreated = (DateTime) rdr["date_created"];
+                    sitePage.DateModified = rdr["date_modified"] == DBNull.Value ? new DateTime?() : (DateTime) rdr["date_modified"];
                     structure.Add(sitePage);
                 }
             }
@@ -337,7 +351,7 @@ namespace One.Net.BLL.DAL
         {
             //cacheDep = null;
             //SqlCacheDependency sqlCacheDep = null;
-            BOPage sitePage = null;
+            BOPage page = null;
             SqlParameter[] parms = new SqlParameter[] {
 					new SqlParameter("@pageID", pageId),
 					new SqlParameter("@LCID", languageId),
@@ -358,23 +372,23 @@ namespace One.Net.BLL.DAL
 
                 if (rdr.Read())
                 {
-                    sitePage = new BOPage();
-                    PopulatePage(rdr, sitePage, languageId);
+                    page = new BOPage();
+                    PopulatePage(rdr, page, languageId);
                 }
             }
-            if (sitePage == null)
+            if (page == null)
             {
                 return null;
             }
 
-            if (sitePage.IsChanged && !sitePage.PublishFlag)  
+            if (page.IsChanged && !page.PublishFlag)  
             {
                 // under these two conditions it makes sense to check if the page has an online version at all
                 object result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text,
                     @"SELECT id FROM [dbo].[pages] WHERE id = @pageID AND publish = 1", parms);
                 if (result == null)
                 {
-                    sitePage.IsNew = true;
+                    page.IsNew = true;
                 }
             }
 
@@ -382,12 +396,22 @@ namespace One.Net.BLL.DAL
             {
                 while (rdr.Read())
                 {
-                    PopulateModuleInstances(rdr, sitePage);
+                    PopulateModuleInstances(rdr, page);
                 }
             }
 
-            parms = new SqlParameter[] {
-					new SqlParameter("@CurrentNodeID", pageId),
+            LoadPageLinks(page, publishFlag, languageId);
+            LoadPageSettings(page, publishFlag);
+
+            
+
+            return page;
+        }
+
+        protected void LoadPageLinks(BOPage page, bool publishFlag, int languageId)
+        {
+            var parms = new SqlParameter[] {
+					new SqlParameter("@CurrentNodeID", page.Id),
 					new SqlParameter("@CurrentPublishFlag", publishFlag),
                     new SqlParameter("@LanguageID", languageId)
                     };
@@ -397,26 +421,29 @@ namespace One.Net.BLL.DAL
                 while (rdr.Read())
                 {
                     par_link = rdr.GetString(1);
-                    if(par_link.Length != 0)
+                    if (par_link.Length != 0)
                     {
-                        sitePage.URI += "/" + par_link;
+                        page.URI += "/" + par_link;
                     }
                     int parPageId = rdr.GetInt32(0);
-                    if (parPageId != pageId)
+                    if (parPageId != page.Id)
                     {
-                        sitePage.parentPagesSimpleList += "pp" + parPageId + " ";
+                        page.parentPagesSimpleList += "pp" + parPageId + " ";
                     }
                 }
             }
-            if (sitePage.URI.Length == 0)
+            if (page.IsRoot)
             {
-                sitePage.URI = "/";
+                page.URI = "/";
             }
 
-            sitePage.ParLink = par_link;
+            page.ParLink = par_link;
+        }
 
-            parms = new SqlParameter[] {
-					new SqlParameter("@PageId", pageId),
+        protected void LoadPageSettings(BOPage page, bool publishFlag)
+        {
+            var parms = new SqlParameter[] {
+					new SqlParameter("@PageId", page.Id),
 					new SqlParameter("@PublishFlag", publishFlag)
                     };
 
@@ -429,11 +456,9 @@ namespace One.Net.BLL.DAL
             {
                 while (rdr.Read())
                 {
-                    sitePage.Settings.Add(rdr["SettingName"].ToString(), new BOSetting(rdr["SettingName"].ToString(), rdr["Type"].ToString(), rdr["Value"].ToString(), rdr["UserVisibility"].ToString()));
+                    page.Settings.Add(rdr["SettingName"].ToString(), new BOSetting(rdr["SettingName"].ToString(), rdr["Type"].ToString(), rdr["Value"].ToString(), rdr["UserVisibility"].ToString()));
                 }
             }
-
-            return sitePage;
         }
 
         private static void PopulatePage(IDataReader rdr, BOPage sitePage, int languageId)

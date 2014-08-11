@@ -10,50 +10,38 @@ namespace One.Net.BLL
 	/// </summary>
     public class BOPage : PublishableInternalContent
 	{
-		int id = -1;
-        int webSiteId;
 		BOTemplate template;
-		string uri = "";
 		Dictionary<string, BOSetting> pageSettings;
         Dictionary<int, BOPlaceHolder> placeHolders = new Dictionary<int, BOPlaceHolder>();
-
-        int level, order;
         string parLink;
 
 	    public string parentPagesSimpleList = "";
 
-        string redirectToUrl = "";
-        int menuGroup;
 	    private string frontEndRequireGroupList = "";
 	    private string editRequireGroupList = "";
-	    private bool requireSSL = false;
-
-        bool breakPersistance = false;
-
-        private int? parentId;
 
         public bool IsRoot
         {
             get { return !ParentId.HasValue; }
         }
 
-		public int Id
-		{ 
-			get {return this.id;}
-			set { id = value;}
-		}
+		public int Id { get; set; }
 
-        public int? ParentId
-        {
-            get { return this.parentId; }
-            set { parentId = value; }
-        }
+        public int? ParentId { get; set; }
 
         public bool IsRedirected
         {
             get 
             {
                 return (RedirectToUrl.StartsWith("http") || RedirectToUrl.StartsWith("/"));
+            }
+        }
+
+        public bool RobotsIndex
+        {
+            get
+            {
+                return bool.Parse(Settings["RobotsIndex"].Value);
             }
         }
 
@@ -77,23 +65,11 @@ namespace One.Net.BLL
             }
         }
 
-		public string URI
-		{ 
-			get {return this.uri;}
-			set { uri = value;}
-		}
+        public string URI { get; set; }
 
-        public string RedirectToUrl
-        {
-            get { return this.redirectToUrl; }
-            set { redirectToUrl = value; }
-        }
+        public string RedirectToUrl { get; set; }
 
-		public int WebSiteId
-		{
-			get {return this.webSiteId;}
-			set { webSiteId = value; }
-		}
+        public int WebSiteId { get; set; }
 
 		public Dictionary<string, BOSetting> Settings
 		{
@@ -118,29 +94,13 @@ namespace One.Net.BLL
 			set { template = value; }
 		}
 
-        public int Order
-        {
-            get { return order; }
-            set { this.order = value; }
-        }
+        public int Order { get; set; }
 
-        public int MenuGroup
-        {
-            get { return menuGroup;}
-            set { this.menuGroup = value; }
-        }
+        public int MenuGroup { get; set; }
 
-        public bool BreakPersistance
-        {
-            get { return breakPersistance; }
-            set { this.breakPersistance = value; }
-        }
+        public bool BreakPersistance { get; set; }
 
-        public int Level
-        {
-            get { return this.level; }
-            set { level = value; }
-        }
+        public int Level { get; set; }
 
         public string ParLink
         {

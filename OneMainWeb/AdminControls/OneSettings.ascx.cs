@@ -317,7 +317,7 @@ namespace OneMainWeb.AdminControls
                                         CheckBox1.Checked = FormatTool.GetBoolean(setting.Value);
                                         break;
                                     }
-                                case "PageId":
+                                case "Url":
                                     {
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
@@ -326,6 +326,7 @@ namespace OneMainWeb.AdminControls
                                 default:
                                     {
                                         PanelInput.Visible = true;
+                                        TextBox1.Visible = true;
                                         break;
                                     }
                             }

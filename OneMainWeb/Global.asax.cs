@@ -91,14 +91,21 @@ namespace OneMainWeb
             
             RouteTable.Routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
             RouteTable.Routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
-
-            
+            // RouteTable.Routes.MapPageRoute("SiteMap", "sitemap.xml", "~/Utils/SiteMapGenerator.aspx");
 
             //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
             /*
             RouteTable.Routes.MapPageRoute("EvalRoutes", "Evals/{type}/New.aspx", "~/spored", false);
 
             RouteTable.Routes.MapPageRoute("EvalRoutes2", "mijav", "~/Login.aspx");*/
+
+            /* tole gre v sitemap provider:
+             * 
+             * if (page.Id == 3) 
+            {
+                RouteTable.Routes.Add(new Route("spored/{action}", new One.Net.BLL.Paths.CustomRouteHandler(node["_template"])));
+            }
+             * */
 
             
         }

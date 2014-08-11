@@ -25,10 +25,9 @@ namespace OneMainWeb
 {
     public class PresentBasePage : Page
     {
-        BOPage page;
-        BWebsite websiteB;
+        protected BWebsite websiteB;
         private readonly string customModulesFolder;
-        private BOWebSite webSite;
+        
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger("PresentBasePage");
 
@@ -45,6 +44,9 @@ namespace OneMainWeb
 
         public bool PublishFlag { get; set; }
 
+        public BOPage CurrentPage { get; set; }
+        public BOWebSite CurrentWebsite { get; set; }
+
         protected internal string CustomModulesFolder
         {
             get { return customModulesFolder; }
@@ -57,6 +59,25 @@ namespace OneMainWeb
             return publishFlag;
         }
 
+        public static int ReadWebSiteId()
+        {
+            var websiteId = 0;
+            int.TryParse(ConfigurationManager.AppSettings["WebSiteId"], out websiteId);
+            return websiteId;
+        }
+
+        protected override void OnPreInit(EventArgs e)
+        {
+            var websiteB = new BWebsite();
+
+            CurrentPage = websiteB.GetPage(PageId);
+            CurrentWebsite = websiteB.Get(CurrentPage.WebSiteId);
+
+            base.OnPreInit(e);
+            
+        }
+        /**/
+
         public PresentBasePage()
         {
             customModulesFolder = "site_specific/custom_modules";
@@ -66,26 +87,22 @@ namespace OneMainWeb
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(int.Parse(SiteMap.CurrentNode["_languageId"]));
             }
             PublishFlag = ReadPublishFlag();
-
-            PreInit += Page_PreInit;
         }
 
         protected override void Render(HtmlTextWriter writer)
         {
-            var websiteB = new BWebsite();
-            var page = websiteB.GetPage(PageId);
-            var webSite = websiteB.Get(page.WebSiteId);
+            
 
             var customBodyCode = "";
             var customHeadCode = "";
 
-            if (webSite.HasGoogleAnalytics)
+            if (CurrentWebsite.HasGoogleAnalytics)
             {
-                string code = webSite.Settings["GoogleAnalyticsWebPropertyID"].Value;
+                string code = CurrentWebsite.Settings["GoogleAnalyticsWebPropertyID"].Value;
                 var enableCookieConsent = false;
-                if (webSite.Settings.ContainsKey("GoogleAnalyticsConsent"))
+                if (CurrentWebsite.Settings.ContainsKey("GoogleAnalyticsConsent"))
                 {
-                    enableCookieConsent = FormatTool.GetBoolean(webSite.Settings["GoogleAnalyticsConsent"].Value);
+                    enableCookieConsent = FormatTool.GetBoolean(CurrentWebsite.Settings["GoogleAnalyticsConsent"].Value);
                 }
 
                 var gaCode = "<!-- Google Analytics UNIVERSAL will appear here on production servers -->";
@@ -108,14 +125,14 @@ ga('send', 'pageview');
             }
 
 
-            if (webSite.Settings.ContainsKey("CustomBodyJs"))
+            if (CurrentWebsite.Settings.ContainsKey("CustomBodyJs"))
             {
-                customBodyCode += webSite.Settings["CustomBodyJs"].Value;
+                customBodyCode += CurrentWebsite.Settings["CustomBodyJs"].Value;
             }
 
-            if (webSite.Settings.ContainsKey("CustomHeadJs"))
+            if (CurrentWebsite.Settings.ContainsKey("CustomHeadJs"))
             {
-                customHeadCode = webSite.Settings["CustomHeadJs"].Value;
+                customHeadCode = CurrentWebsite.Settings["CustomHeadJs"].Value;
             }
 
             if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode))
@@ -141,21 +158,14 @@ ga('send', 'pageview');
             }
         }
 
-        protected void Page_PreInit(object sender, EventArgs e)
-        {
-            websiteB = new BWebsite();
-            page = websiteB.GetPage(PageId);
-            webSite = websiteB.Get(page.WebSiteId);
-        }
-
         protected override void OnInit(EventArgs e)
         {
-            if (page != null)
+            if (CurrentPage != null)
             {
-                if (page.IsRedirected)
+                if (CurrentPage.IsRedirected)
                 {
-                    log.Info("RedirectToUrl to external link: " + page.RedirectToUrl);
-                    Response.Redirect(page.RedirectToUrl);
+                    log.Info("RedirectToUrl to external link: " + CurrentPage.RedirectToUrl);
+                    Response.Redirect(CurrentPage.RedirectToUrl);
                 }
 
                 log.Debug("-OnInit (add Meta Data)");
@@ -165,11 +175,11 @@ ga('send', 'pageview');
                 metaUnicode.Content = "text/html; charset=utf-8";
                 Page.Header.Controls.Add(metaUnicode);
 
-                if (!string.IsNullOrWhiteSpace(webSite.Title))
+                if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
                 {
                     var HtmlMetaSiteTitle = new HtmlMeta();
                     HtmlMetaSiteTitle.Name = "og:site_name";
-                    HtmlMetaSiteTitle.Content = StringTool.StripHtmlTags(webSite.Title);
+                    HtmlMetaSiteTitle.Content = StringTool.StripHtmlTags(CurrentWebsite.Title);
                     Page.Header.Controls.Add(HtmlMetaSiteTitle);
                 }
 
@@ -185,9 +195,9 @@ ga('send', 'pageview');
 
                 
 
-                if (webSite.Settings.ContainsKey("FacebookApplicationID"))
+                if (CurrentWebsite.Settings.ContainsKey("FacebookApplicationID"))
                 {
-                    var appId = webSite.Settings["FacebookApplicationID"].Value;
+                    var appId = CurrentWebsite.Settings["FacebookApplicationID"].Value;
                     if (!string.IsNullOrWhiteSpace(appId))
                     {
                         var HtmlMetaAppId = new HtmlMeta();
@@ -196,50 +206,50 @@ ga('send', 'pageview');
                         Page.Header.Controls.Add(HtmlMetaAppId);
                     }
                 }
-                
 
-                if (!string.IsNullOrWhiteSpace(page.Teaser))
+
+                if (!string.IsNullOrWhiteSpace(CurrentPage.Teaser))
                 {
                     HtmlMeta metaDescription = new HtmlMeta();
                     metaDescription.Name = "description";
-                    metaDescription.Content = StringTool.StripHtmlTags(page.Teaser);
+                    metaDescription.Content = StringTool.StripHtmlTags(CurrentPage.Teaser);
                     Page.Header.Controls.Add(metaDescription);
 
                     HtmlMeta metaOgDescription = new HtmlMeta();
                     metaOgDescription.Attributes.Add("property", "og:description");
-                    metaOgDescription.Content = HttpUtility.HtmlEncode(page.Teaser);
+                    metaOgDescription.Content = HttpUtility.HtmlEncode(CurrentPage.Teaser);
                     Page.Header.Controls.Add(metaOgDescription);
                 }
 
-                if (page.Settings.ContainsKey("MetaKeywords"))
+                if (CurrentPage.Settings.ContainsKey("MetaKeywords"))
                 {
                     HtmlMeta metaKeywords = new HtmlMeta();
                     metaKeywords.ID = "HtmlMetaKeywords";
                     metaKeywords.Name = "keywords";
-                    metaKeywords.Content = StringTool.StripHtmlTags(page.Settings["MetaKeywords"].Value);
+                    metaKeywords.Content = StringTool.StripHtmlTags(CurrentPage.Settings["MetaKeywords"].Value);
                     if (metaKeywords.Content.Length > 1)
                         Page.Header.Controls.Add(metaKeywords);
                 }
 
 
-                if (page.Settings.ContainsKey("RobotsIndex") && page.Settings.ContainsKey("RobotsFollow"))
+                if (CurrentPage.Settings.ContainsKey("RobotsIndex") && CurrentPage.Settings.ContainsKey("RobotsFollow"))
                 {
                     HtmlMeta metaRobots = new HtmlMeta();
                     metaRobots.Name = "robots";
                     if (PublishFlag)
                     {
-                        metaRobots.Content = bool.Parse(page.Settings["RobotsIndex"].Value) ? "index" : "noindex";
+                        metaRobots.Content = CurrentPage.RobotsIndex ? "index" : "noindex";
                         metaRobots.Content += ",";
-                        metaRobots.Content += bool.Parse(page.Settings["RobotsFollow"].Value) ? "follow" : "nofollow";
+                        metaRobots.Content += bool.Parse(CurrentPage.Settings["RobotsFollow"].Value) ? "follow" : "nofollow";
                     }
                     else
                         metaRobots.Content = "noindex,nofollow";
                     Page.Header.Controls.Add(metaRobots);
                 }
 
-                if (webSite.Settings.ContainsKey("RSSChannels"))
+                if (CurrentWebsite.Settings.ContainsKey("RSSChannels"))
                 {
-                    string rssChannels = webSite.Settings["RSSChannels"].Value;
+                    string rssChannels = CurrentWebsite.Settings["RSSChannels"].Value;
                     List<int> rssIds = StringTool.SplitStringToIntegers(rssChannels);
                     BRssFeed rssFeedB = new BRssFeed();
                     string pagePath = "/Utils/Rss.aspx?id=";
@@ -258,18 +268,18 @@ ga('send', 'pageview');
                     }
                 }
 
-                if (!string.IsNullOrWhiteSpace(page.OgImage))
+                if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
                 {
                     HtmlMeta metaOgImage = new HtmlMeta();
                     metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(page.OgImage);
+                    metaOgImage.Content = HttpUtility.HtmlEncode(CurrentPage.OgImage);
                     Page.Header.Controls.Add(metaOgImage);
                 } 
-                else if (!string.IsNullOrWhiteSpace(webSite.DefaultOgImage))
+                else if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
                 {
                     HtmlMeta metaOgImage = new HtmlMeta();
                     metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(webSite.DefaultOgImage);
+                    metaOgImage.Content = HttpUtility.HtmlEncode(CurrentWebsite.DefaultOgImage);
                     Page.Header.Controls.Add(metaOgImage);
                 }
                 
@@ -281,7 +291,7 @@ ga('send', 'pageview');
                     Master.Controls[3].Controls.AddAt(0, control);
                 } */
 
-                if (page.RequireSSL && !Request.IsSecureConnection)
+                if (CurrentPage.RequireSSL && !Request.IsSecureConnection)
                 {
                     Response.StatusCode = 403;
                     Response.StatusDescription =
@@ -292,7 +302,7 @@ ga('send', 'pageview');
                     Response.End();
                 }
 
-                if (!page.IsViewableByCurrentPrincipal)
+                if (!CurrentPage.IsViewableByCurrentPrincipal)
                 {
                     if (!FormsAuthentication.LoginUrl.Contains("/Account/Login.aspx"))
                     {
@@ -314,8 +324,8 @@ ga('send', 'pageview');
                 try
                 {
                     Form.Attributes.Add("class",
-                        Thread.CurrentThread.CurrentCulture.Name + " page" + page.Id + " depth" + page.Level +
-                        " " + page.parentPagesSimpleList + " " + (Page.User != null && Page.User.Identity != null && Page.User.Identity.IsAuthenticated ? "isAuth" : "notAuth") + " T" + (page.Template != null ? page.Template.Name : ""));
+                        Thread.CurrentThread.CurrentCulture.Name + " page" + CurrentPage.Id + " depth" + CurrentPage.Level +
+                        " " + CurrentPage.parentPagesSimpleList + " " + (Page.User != null && Page.User.Identity != null && Page.User.Identity.IsAuthenticated ? "isAuth" : "notAuth") + " T" + (CurrentPage.Template != null ? CurrentPage.Template.Name : ""));
                 }
                 catch
                 { }
@@ -324,7 +334,7 @@ ga('send', 'pageview');
 
                 Dictionary<int, ContentPlaceHolder> contentPlaceHolders = new Dictionary<int, ContentPlaceHolder>(10);
 
-                foreach (BOPlaceHolder placeHolder in page.PlaceHolders.Values)
+                foreach (BOPlaceHolder placeHolder in CurrentPage.PlaceHolders.Values)
                 {
                     ContentPlaceHolder contentPlaceHolder = (ContentPlaceHolder)Master.FindControl(placeHolder.Name);
                     if (contentPlaceHolder != null)
@@ -333,7 +343,7 @@ ga('send', 'pageview');
 
                         foreach (BOModuleInstance module in placeHolder.ModuleInstances)
                         {
-                            if (module.PersistFrom <= page.Level && (PublishFlag || !module.PendingDelete))
+                            if (module.PersistFrom <= CurrentPage.Level && (PublishFlag || !module.PendingDelete))
                             {
                                 var p = new Section();
                                 p.CssClass = "mi " + module.Name.ToLower();
@@ -390,10 +400,10 @@ ga('send', 'pageview');
 
                                     mod.InstanceId = module.Id;
                                     mod.PageId = module.PageId;
-                                    mod.WebSiteId = page.WebSiteId;
-                                    mod.WebSiteTitle = webSite.Title;
+                                    mod.WebSiteId = CurrentPage.WebSiteId;
+                                    mod.WebSiteTitle = CurrentWebsite.Title;
                                     mod.Settings = module.Settings;
-                                    mod.RelativePageUri = this.page.URI;
+                                    mod.RelativePageUri = CurrentPage.URI;
                                     activeModules.Add(mod);
                                 }
                                 contentPlaceHolders[module.PlaceHolderId].Controls.Add(p);
@@ -675,7 +685,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     }
                 }
 
-                var pageTitle = DetermingPageTitle(webSite, providedPageName);
+                var pageTitle = DetermingPageTitle(CurrentWebsite, providedPageName);
 
                 bool addMetaOgTitle = false;
                 var metaOgTitle = Page.Header.FindControl("OgTitle") as HtmlMeta;
@@ -686,10 +696,10 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 }
                 metaOgTitle.ID = "OgTitle";
                 metaOgTitle.Attributes.Add("property", "og:title");
-                if (string.IsNullOrEmpty(page.Settings["OgTitle"].Value) && string.IsNullOrEmpty(page.Settings["OgTitle"].Value.Trim()))
+                if (string.IsNullOrEmpty(CurrentPage.Settings["OgTitle"].Value) && string.IsNullOrEmpty(CurrentPage.Settings["OgTitle"].Value.Trim()))
                     metaOgTitle.Content = pageTitle;
                 else
-                    metaOgTitle.Content = HttpUtility.HtmlEncode(page.Settings["OgTitle"].Value);
+                    metaOgTitle.Content = HttpUtility.HtmlEncode(CurrentPage.Settings["OgTitle"].Value);
 
                 if (addMetaOgTitle)
                     Page.Header.Controls.Add(metaOgTitle);
