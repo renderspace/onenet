@@ -91,7 +91,12 @@ namespace OneMainWeb
             
             RouteTable.Routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
             RouteTable.Routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
-            // RouteTable.Routes.MapPageRoute("SiteMap", "sitemap.xml", "~/Utils/SiteMapGenerator.aspx");
+
+            //RouteTable.Routes.MapPageRoute("robots", "robots.txt", "~/site_specific/robots.txt");
+            //RouteTable.Routes.MapPageRoute("favicon", "favicon.ico", "~/site_specific/favicon.ico"); 
+
+
+            // 
 
             //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
             /*
