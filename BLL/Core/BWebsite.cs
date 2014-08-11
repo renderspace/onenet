@@ -15,6 +15,8 @@ using System.Security.Principal;
 using System.Data.SqlClient;
 using MsSqlDBUtility;
 using System.Data;
+using System.Text;
+using System.Xml;
 
 namespace One.Net.BLL
 {
@@ -999,7 +1001,6 @@ namespace One.Net.BLL
                  }
             
             }
-            return false;
         }
 
         private bool PopulateNewDatabase(SqlConnectionStringBuilder builder) 
@@ -1269,5 +1270,69 @@ namespace One.Net.BLL
         }
 
         #endregion Moving sites
+
+        public string GetGoogleSiteMap(int webSiteId)
+        {
+            var website = Get(webSiteId);
+            if (website == null)
+                return "";
+
+            var rootUrl = publishFlag ? website.ProductionUrl : website.PreviewUrl;
+
+            BOPage _root = null;
+
+            var state = new ListingState(10000, 0, SortDir.Ascending, "PageId");
+
+            List<BOPage> pages = webSiteDb.ListPages(webSiteId, state, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
+
+            var siteMap = new Dictionary<int, BOPage>();
+
+            foreach (var p in pages)
+            {
+                if (_root == null && p.IsRoot)
+                {
+                    p.URI = "/";
+                    _root = p;
+                    siteMap.Add(p.Id, p);
+                }
+                else if (_root != null)
+                {
+                    var parent = siteMap[p.ParentId.Value];
+                    if (parent != null)
+                    {
+                        
+                        p.URI = parent.IsRoot ? ("/" + p.ParLink) : (parent.URI + "/" + p.ParLink);
+                        siteMap.Add(p.Id, p);
+                    }
+                }
+            }
+
+
+            var builder = new StringBuilder();
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.Encoding = Encoding.UTF8;
+            settings.CloseOutput = true;
+
+            using (XmlWriter writer = XmlWriter.Create(builder, settings))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+                foreach (var p in siteMap.Values)
+                {
+                    if (!p.IsRedirected && p.RobotsIndex)
+                    {
+                        writer.WriteStartElement("url");
+                        writer.WriteElementString("loc", rootUrl + p.URI.Trim().Trim('\n').Trim('\r'));
+                        //writer.WriteElementString("lastmod", p.LastChanged.ToString("yyyy-mm-dd"));
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+            return builder.ToString();
+        }
     }
 }

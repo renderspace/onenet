@@ -103,9 +103,6 @@ namespace One.Net.BLL
                 OCache.Add(_cacheDependencyName, new object(), null, Cache.NoAbsoluteExpiration, 
                     new TimeSpan(1,0,0), CacheItemPriority.AboveNormal, 
                     OnSiteMapChanged);
-
-                
-
                 return _root;
             }
         }
@@ -152,11 +149,6 @@ namespace One.Net.BLL
             node["_absDepth"] = depth.ToString();
             node["_IsRedirected"] = page.IsRedirected.ToString();
             node["_redirectToUrl"] = page.RedirectToUrl;
-
-            if (page.Id == 3) 
-            {
-                RouteTable.Routes.Add(new Route("spored/{action}", new One.Net.BLL.Paths.CustomRouteHandler(node["_template"])));
-            }
 
             _nodes.Add(page.Id, node);
             return node;

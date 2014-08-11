@@ -1,2 +1,5 @@
 User-agent: *
-Disallow:
+Sitemap: /Utils/SiteMapHandler.ashx
+Disallow: /adm/
+Disallow: /Account/
+Allow: /

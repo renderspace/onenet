@@ -124,30 +124,20 @@
     <Compile Include="Model\BOSetting.cs" />
     <Compile Include="Model\BOTemplate.cs" />
     <Compile Include="Model\BOWebsite.cs" />
-    <Compile Include="Model\Web\IArticleIdConsumer.cs" />
-    <Compile Include="Model\Web\IArticleIdProvider.cs" />
-    <Compile Include="Model\Web\IContentIdConsumer.cs" />
-    <Compile Include="Model\Web\IContentIdProvider.cs" />
-    <Compile Include="Model\Web\IDefaultArticleIdConsumer.cs" />
-    <Compile Include="Model\Web\IDefaultArticleIdProvider.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />
     <Compile Include="Model\Web\IMetaDataProvider.cs" />
     <Compile Include="Model\Web\IPageNameProvider.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Web\IRegularIdConsumer.cs" />
-    <Compile Include="Model\Web\IRegularIdProvider.cs" />
     <Compile Include="Model\Web\MExternalAdmin.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Model\Web\ICategorizable.cs" />
-    <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListProvider.cs" />
     <Compile Include="Model\Web\IModuleInstancePublisher.cs" />
     <Compile Include="Model\Web\IPublishable.cs" />
     <Compile Include="Model\Web\IPublisher.cs" />
-    <Compile Include="Model\Web\IRssProvider.cs" />
     <Compile Include="Model\Web\ListingState.cs" />
     <Compile Include="Model\Web\MModule.cs">
       <SubType>ASPXCodeBehind</SubType>
