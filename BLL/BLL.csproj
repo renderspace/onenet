@@ -194,6 +194,75 @@
     <EmbeddedResource Include="Sql\4_stored_procedures.sql.template" />
     <EmbeddedResource Include="Sql\5_security.sql.template" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\ai.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\avi.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\cs.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\default.icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\dll.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\doc.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\exe.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\fla.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\htm.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\html.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\js.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\mdb.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\mp3.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\pdf.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\ppt.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\rdp.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\swf.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\swt.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\txt.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\vsd.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\xls.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\xml.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Utility\mime_icons\zip.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -43,10 +43,15 @@
 
 <div class="col-md-9">
     <div class="mainEditor ce-it-2">
-        <div class="contentEntry">
-            <asp:Button OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="$recursive_delete" />
-            <asp:CheckBox ID="CheckBoxConfirm" runat="server" />
-        </div> 
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="col-sm-6 pull-right">
+                    <asp:CheckBox ID="CheckBoxConfirm" runat="server" Text="Confirm delete folder and all subfolders"  />    
+                </div>
+                <div class="col-sm-6 pull-right">
+                    
+                        <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger" />
+                </div>
+            </div>
 
         <table id="files-table" class="table">
             <thead>
@@ -62,7 +67,7 @@
             <tbody></tbody>
         </table>
 
-        <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
+        <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
         
     </div>
 </div>     

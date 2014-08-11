@@ -168,13 +168,15 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-                $('#files-table tbody').append('<tr><td><input type="checkbox" /></td><td>' + item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name + '</td><td><a href="#" data-id="' + item.Id + '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
+                $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' + item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name + '</td><td><a href="#" data-id="' + item.Id + '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
             });
             trace(data.length);
             if (data.length == 0) {
                 $('#files-table thead').hide();
+                $('#ButtonDelete').hide();
             } else {
                 $('#files-table thead').show();
+                $('#ButtonDelete').show();
             }
         },
         error: logError

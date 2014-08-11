@@ -250,6 +250,9 @@
     <Compile Include="adm\Forms.aspx.designer.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
     </Compile>
+    <Compile Include="adm\Icons.ashx.cs">
+      <DependentUpon>Icons.ashx</DependentUpon>
+    </Compile>
     <Compile Include="adm\Publish.aspx.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -738,6 +741,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="adm\ExcelExport.ashx" />
+    <Content Include="adm\Icons.ashx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
@@ -795,55 +799,6 @@
     <Content Include="Res\menu.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Res\mime_icons\ai.gif" />
-    <EmbeddedResource Include="Res\mime_icons\avi.gif" />
-    <EmbeddedResource Include="Res\mime_icons\cs.gif" />
-    <EmbeddedResource Include="Res\mime_icons\default.icon.gif" />
-    <EmbeddedResource Include="Res\mime_icons\dll.gif" />
-    <EmbeddedResource Include="Res\mime_icons\doc.gif" />
-    <EmbeddedResource Include="Res\mime_icons\exe.gif" />
-    <EmbeddedResource Include="Res\mime_icons\fla.gif" />
-    <EmbeddedResource Include="Res\mime_icons\htm.gif" />
-    <EmbeddedResource Include="Res\mime_icons\html.gif" />
-    <EmbeddedResource Include="Res\mime_icons\js.gif" />
-    <EmbeddedResource Include="Res\mime_icons\mdb.gif" />
-    <EmbeddedResource Include="Res\mime_icons\mp3.gif" />
-    <EmbeddedResource Include="Res\mime_icons\pdf.gif" />
-    <EmbeddedResource Include="Res\mime_icons\ppt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\rdp.gif" />
-    <EmbeddedResource Include="Res\mime_icons\swf.gif" />
-    <EmbeddedResource Include="Res\mime_icons\swt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\txt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\vsd.gif" />
-    <EmbeddedResource Include="Res\mime_icons\xls.gif" />
-    <EmbeddedResource Include="Res\mime_icons\xml.gif" />
-    <EmbeddedResource Include="Res\mime_icons\zip.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\ai.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\avi.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\bmp.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\cs.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\default.icon.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\dll.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\doc.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\exe.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\fla.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\gif.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\htm.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\html.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\jpg.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\js.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\mdb.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\mp3.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\pdf.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\ppt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\rdp.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\swf.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\swt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\txt.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\vsd.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\xls.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\xml.gif" />
-    <EmbeddedResource Include="Res\mime_icons\x16\zip.gif" />
     <Content Include="Res\one_logo.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

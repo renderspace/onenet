@@ -44,6 +44,9 @@ using System.Runtime.InteropServices;
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.objava.gif", "image/gif")]
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.objavljeno.gif", "image/gif")]
 //[assembly: System.Web.UI.WebResource("OneMainWeb.Res.brisanje.gif", "image/gif")]
+
+
+/*
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.edit.gif", "image/gif")]
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.mime_icons.ai.gif", "image/gif")]
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.mime_icons.avi.gif", "image/gif")]
@@ -99,4 +102,4 @@ using System.Runtime.InteropServices;
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.Sql.2_tables.sql.template", "text")]
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.Sql.3_standard_inserts.sql.template", "text")]
 [assembly: System.Web.UI.WebResource("OneMainWeb.Res.Sql.4_stored_procedures.sql.template", "text")]
-[assembly: System.Web.UI.WebResource("OneMainWeb.Res.Sql.5_security.sql.template", "text")]
+[assembly: System.Web.UI.WebResource("OneMainWeb.Res.Sql.5_security.sql.template", "text")] */

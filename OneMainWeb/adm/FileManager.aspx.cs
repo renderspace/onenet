@@ -114,30 +114,20 @@ namespace OneMainWeb
 
         protected void cmdSearch_Click(object sender, EventArgs e)
         {
-            /*
-            int searchId = FormatTool.GetInteger(TextBoxSearch.Text);
-
             BOFile existingFile = null;
-
+            int searchId = FormatTool.GetInteger(TextBoxSearch.Text);
             if (searchId > -1)
             {
                 existingFile = fileB.Get(searchId);
             }
-
             if (existingFile != null)
             {
-                categorization.SelectNode(existingFile.Folder);
-                FileManager_DataBind();
-                lblSearchMessage.Text = "$file_found");
+                SelectedFolderId = existingFile.Folder.Id.Value;
             }
             else
             {
-                lblSearchMessage.Text = "$file_not_found");
+                Notifier1.Warning = "File ID not found";
             }
-
-            lblSearchMessage.Visible = true;
-
-            GridViewFiles.DataBind(); */
         }
 
         protected void cmdUpload_Click(object sender, EventArgs e)
@@ -225,23 +215,19 @@ namespace OneMainWeb
         {
             base.OnPreRender(e);
         }
-        
-        /*
+
         protected IEnumerable<int> GetCheckedIds()
         {
             var result = new List<int>();
-            foreach (GridViewRow row in GridViewFiles.Rows)
+            var post = Request.Form["fileIdToDelete"];
+            if (!string.IsNullOrWhiteSpace(post))
             {
-                CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
-                Literal litArticleId = row.FindControl("litId") as Literal;
-
-                if (litArticleId != null && chkForPublish != null && chkForPublish.Checked)
+                var filesList = post.Split(',').ToList();
+                foreach (var f in filesList)
                 {
-                    int articleId = FormatTool.GetInteger(litArticleId.Text);
-                    if (articleId > 0)
-                    {
-                        result.Add(articleId);
-                    }
+                    int fileId = FormatTool.GetInteger(f);
+                    if (fileId > 0)
+                        result.Add(fileId);
                 }
             }
             return result;
@@ -253,21 +239,18 @@ namespace OneMainWeb
             var list = GetCheckedIds();
             foreach (var i in list)
             {
-                /*
-                if (fileB.ListFileUses(selectedFile.Id.Value).Count > 0)
-                    cmdDelete.OnClientClick = @"return confirm('" + "$label_file_is_linked_confirm_delete") + @"');";
-
-                if (fileB.Delete(i))
+                if (fileB.ListFileUses(i).Count == 0)
                 {
-                    deletedCount++;
-                }*//*
+                    if (fileB.Delete(i))
+                    {
+                        deletedCount++;
+                    }
+                }
             }
             if (deletedCount > 0)
             {
                 Notifier1.Title = string.Format("Deleted {0} files", deletedCount);
-                //RegularDataBind();
             }
         }
-*/
     }
 }
