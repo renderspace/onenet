@@ -124,12 +124,14 @@
     <Compile Include="Model\BOSetting.cs" />
     <Compile Include="Model\BOTemplate.cs" />
     <Compile Include="Model\BOWebsite.cs" />
+    <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />
     <Compile Include="Model\Web\IMetaDataProvider.cs" />
     <Compile Include="Model\Web\IPageNameProvider.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Web\IRssProvider.cs" />
     <Compile Include="Model\Web\MExternalAdmin.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -43,7 +43,6 @@ namespace OneMainWeb
         }
 
         public bool PublishFlag { get; set; }
-
         public BOPage CurrentPage { get; set; }
         public BOWebSite CurrentWebsite { get; set; }
 
@@ -66,20 +65,11 @@ namespace OneMainWeb
             return websiteId;
         }
 
-        protected override void OnPreInit(EventArgs e)
-        {
-            var websiteB = new BWebsite();
-
-            CurrentPage = websiteB.GetPage(PageId);
-            CurrentWebsite = websiteB.Get(CurrentPage.WebSiteId);
-
-            base.OnPreInit(e);
-            
-        }
-        /**/
-
         public PresentBasePage()
         {
+            var websiteB = new BWebsite();
+            CurrentPage = websiteB.GetPage(PageId);
+            CurrentWebsite = websiteB.Get(CurrentPage.WebSiteId);
             customModulesFolder = "site_specific/custom_modules";
             // main language setup.
             if (SiteMap.CurrentNode != null)
@@ -158,6 +148,28 @@ ga('send', 'pageview');
             }
         }
 
+        protected void AddMetaTag(string name, string content)
+        {
+            if (!string.IsNullOrWhiteSpace(content))
+            { 
+                var HtmlMetaTag = new HtmlMeta();
+                HtmlMetaTag.Name = name;
+                HtmlMetaTag.Content = StringTool.StripHtmlTags(content);
+                Page.Header.Controls.Add(HtmlMetaTag);
+            }
+        }
+
+        protected void AddMetaProperty(string name, string content)
+        {
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                var HtmlMetaTag = new HtmlMeta();
+                HtmlMetaTag.Attributes.Add("property", name);
+                HtmlMetaTag.Content = StringTool.StripHtmlTags(content);
+                Page.Header.Controls.Add(HtmlMetaTag);
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             if (CurrentPage != null)
@@ -167,122 +179,6 @@ ga('send', 'pageview');
                     log.Info("RedirectToUrl to external link: " + CurrentPage.RedirectToUrl);
                     Response.Redirect(CurrentPage.RedirectToUrl);
                 }
-
-                log.Debug("-OnInit (add Meta Data)");
-
-                HtmlMeta metaUnicode = new HtmlMeta();
-                metaUnicode.HttpEquiv = "Content-Type";
-                metaUnicode.Content = "text/html; charset=utf-8";
-                Page.Header.Controls.Add(metaUnicode);
-
-                if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
-                {
-                    var HtmlMetaSiteTitle = new HtmlMeta();
-                    HtmlMetaSiteTitle.Name = "og:site_name";
-                    HtmlMetaSiteTitle.Content = StringTool.StripHtmlTags(CurrentWebsite.Title);
-                    Page.Header.Controls.Add(HtmlMetaSiteTitle);
-                }
-
-                var HtmlMetaLanguage = new HtmlMeta();
-                HtmlMetaLanguage.Name = "og:locale";
-                HtmlMetaLanguage.Content = Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_');
-                Page.Header.Controls.Add(HtmlMetaLanguage);
-
-                var HtmlMetaUrl = new HtmlMeta();
-                HtmlMetaUrl.Name = "og:url";
-                HtmlMetaUrl.Content = Request.Url.AbsoluteUri;
-                Page.Header.Controls.Add(HtmlMetaUrl);
-
-                
-
-                if (CurrentWebsite.Settings.ContainsKey("FacebookApplicationID"))
-                {
-                    var appId = CurrentWebsite.Settings["FacebookApplicationID"].Value;
-                    if (!string.IsNullOrWhiteSpace(appId))
-                    {
-                        var HtmlMetaAppId = new HtmlMeta();
-                        HtmlMetaAppId.Name = "fb:app_id";
-                        HtmlMetaAppId.Content = appId;
-                        Page.Header.Controls.Add(HtmlMetaAppId);
-                    }
-                }
-
-
-                if (!string.IsNullOrWhiteSpace(CurrentPage.Teaser))
-                {
-                    HtmlMeta metaDescription = new HtmlMeta();
-                    metaDescription.Name = "description";
-                    metaDescription.Content = StringTool.StripHtmlTags(CurrentPage.Teaser);
-                    Page.Header.Controls.Add(metaDescription);
-
-                    HtmlMeta metaOgDescription = new HtmlMeta();
-                    metaOgDescription.Attributes.Add("property", "og:description");
-                    metaOgDescription.Content = HttpUtility.HtmlEncode(CurrentPage.Teaser);
-                    Page.Header.Controls.Add(metaOgDescription);
-                }
-
-                if (CurrentPage.Settings.ContainsKey("MetaKeywords"))
-                {
-                    HtmlMeta metaKeywords = new HtmlMeta();
-                    metaKeywords.ID = "HtmlMetaKeywords";
-                    metaKeywords.Name = "keywords";
-                    metaKeywords.Content = StringTool.StripHtmlTags(CurrentPage.Settings["MetaKeywords"].Value);
-                    if (metaKeywords.Content.Length > 1)
-                        Page.Header.Controls.Add(metaKeywords);
-                }
-
-
-                if (CurrentPage.Settings.ContainsKey("RobotsIndex") && CurrentPage.Settings.ContainsKey("RobotsFollow"))
-                {
-                    HtmlMeta metaRobots = new HtmlMeta();
-                    metaRobots.Name = "robots";
-                    if (PublishFlag)
-                    {
-                        metaRobots.Content = CurrentPage.RobotsIndex ? "index" : "noindex";
-                        metaRobots.Content += ",";
-                        metaRobots.Content += bool.Parse(CurrentPage.Settings["RobotsFollow"].Value) ? "follow" : "nofollow";
-                    }
-                    else
-                        metaRobots.Content = "noindex,nofollow";
-                    Page.Header.Controls.Add(metaRobots);
-                }
-
-                if (CurrentWebsite.Settings.ContainsKey("RSSChannels"))
-                {
-                    string rssChannels = CurrentWebsite.Settings["RSSChannels"].Value;
-                    List<int> rssIds = StringTool.SplitStringToIntegers(rssChannels);
-                    BRssFeed rssFeedB = new BRssFeed();
-                    string pagePath = "/Utils/Rss.aspx?id=";
-                    foreach (int id in rssIds)
-                    {
-                        BORssFeed feed = rssFeedB.Get(id);
-                        if (feed != null)
-                        {
-                            HtmlLink rssLink = new HtmlLink();
-                            rssLink.Attributes.Add("rel", "alternate");
-                            rssLink.Attributes.Add("title", feed.Title);
-                            rssLink.Attributes.Add("type", "application/rss+xml");
-                            rssLink.Href = pagePath + feed.Id;
-                            Page.Header.Controls.Add(rssLink);
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
-                {
-                    HtmlMeta metaOgImage = new HtmlMeta();
-                    metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(CurrentPage.OgImage);
-                    Page.Header.Controls.Add(metaOgImage);
-                } 
-                else if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
-                {
-                    HtmlMeta metaOgImage = new HtmlMeta();
-                    metaOgImage.Attributes.Add("property", "og:image");
-                    metaOgImage.Content = HttpUtility.HtmlEncode(CurrentWebsite.DefaultOgImage);
-                    Page.Header.Controls.Add(metaOgImage);
-                }
-                
 
                 /*
                 if (!PublishFlag && Master.Controls.Count > 2)
@@ -447,56 +343,38 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         {
             // Load ContentId for comments module
             // Only one module on a page can be a ICommentProvider
-            IContentIdProvider contentIdProvider = null;
-            IArticleIdProvider articleIdProvider = null;
-            IDefaultArticleIdProvider defaultArticleIdProvider = null;
-            IRegularIdProvider regularIdProvider = null;
 
-            string providedPageName = "";
-            string providedDescription = "";
-            string providedKeywords = "";
-            string providedTitle = "";
+
+            var providedDescription = "";
+            var providedKeywords = "";
+            var providedTitle = "";
+            var providedOgImage = "";
+            var providedPageName = "";
             Dictionary<string, string> providedLinkTags = new Dictionary<string, string>();
             Dictionary<string, string> providedMetaTags = new Dictionary<string, string>();
 
             foreach (MModule mod in activeModules)
             {
-                if (mod is IImageListProvider)
+                if (mod is IImageListConsumer)
                 {
-                    IImageListProvider imgListProv = (IImageListProvider)mod;
-                    if (imgListProv.ListImages != null)
-                        imagesOnThisPage.AddRange(imgListProv.ListImages);
+                    IImageListConsumer gallery = (IImageListConsumer)mod;
+                    gallery.Images = imagesOnThisPage;
                 }
+
                 if (mod is IPageNameProvider)
                 {
                     IPageNameProvider pageNameProvider = (IPageNameProvider)mod;
                     if (pageNameProvider.HasPageName)
                         providedPageName += pageNameProvider.PageName + " ";
                 }
-                if (mod is IContentIdProvider)
+
+                if (mod is IImageListProvider)
                 {
-                    IContentIdProvider tempContentIdProvider = (IContentIdProvider)mod;
-                    if (tempContentIdProvider.EnableContentIdProvider)
-                        contentIdProvider = tempContentIdProvider;
+                    IImageListProvider imgListProv = (IImageListProvider)mod;
+                    if (imgListProv.ListImages != null)
+                        imagesOnThisPage.AddRange(imgListProv.ListImages);
                 }
-                if (mod is IArticleIdProvider)
-                {
-                    IArticleIdProvider tempArticleIdProvider = (IArticleIdProvider)mod;
-                    if (tempArticleIdProvider.EnableArticleIdProvider)
-                        articleIdProvider = tempArticleIdProvider;
-                }
-                if (mod is IRegularIdProvider)
-                {
-                    IRegularIdProvider tempRegularIdProvider = (IRegularIdProvider)mod;
-                    if (tempRegularIdProvider.EnableRegularIdProvider)
-                        regularIdProvider = tempRegularIdProvider;
-                }
-                if (mod is IDefaultArticleIdProvider)
-                {
-                    IDefaultArticleIdProvider tempArticleIdProvider = (IDefaultArticleIdProvider)mod;
-                    if (tempArticleIdProvider.EnableDefaultArticleIdProvider)
-                        defaultArticleIdProvider = tempArticleIdProvider;
-                }
+                
                 if (mod is IMetaDataProvider)
                 {
                     IMetaDataProvider tempMetaDataProvider = (IMetaDataProvider)mod;
@@ -535,112 +413,16 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 }
             }
 
-            if (defaultArticleIdProvider != null)
-            {
-                foreach (MModule mod in activeModules)
-                {
-                    if (mod is IDefaultArticleIdConsumer)
-                    {
-                        IDefaultArticleIdConsumer consumer = mod as IDefaultArticleIdConsumer;
-                        consumer.DefaultArticleId = defaultArticleIdProvider.DefaultArticleId;
-                        log.Info("IDefaultArticleIdConsumer wired to module instance " + mod.InstanceId);
-                    }
-                }
-            }
-
-            // find a contentid consumer module and assign it the contentIdProvider contentId
-            if (contentIdProvider != null)
-            {
-                foreach (MModule mod in activeModules)
-                {
-                    if (mod is IContentIdConsumer)
-                    {
-                        IContentIdConsumer consumer = mod as IContentIdConsumer;
-                        consumer.ContentId = contentIdProvider.ContentId;
-                        consumer.Title = contentIdProvider.Title;
-                        consumer.TeaserImageId = contentIdProvider.TeaserImageId;
-                        consumer.Teaser = contentIdProvider.Teaser;
-                        log.Info("IContentIdProvider wired to module instance " + mod.InstanceId);
-                    }
-                }
-            }
-
-            if (articleIdProvider != null)
-            {
-                foreach (MModule mod in activeModules)
-                {
-                    if (mod is IArticleIdConsumer)
-                    {
-                        IArticleIdConsumer consumer = mod as IArticleIdConsumer;
-                        consumer.ArticleId = articleIdProvider.ArticleId;
-                        log.Info("IArticleIdConsumer wired to module instance " + mod.InstanceId);
-                    }
-                }
-            }
-
-            if (regularIdProvider != null)
-            {
-                foreach (MModule mod in activeModules)
-                {
-                    if (mod is IRegularIdConsumer)
-                    {
-                        IRegularIdConsumer consumer = mod as IRegularIdConsumer;
-                        consumer.RegularIds = regularIdProvider.RegularIds;
-                        log.Info("IRegularIdConsumer wired to module instance " + mod.InstanceId);
-                    }
-                }
-            }
-
-            log.Info("IImageListProviders provided " + imagesOnThisPage.Count + " images");
-            foreach (MModule mod in activeModules)
-            {
-                if (mod is IImageListConsumer)
-                {
-                    IImageListConsumer gallery = (IImageListConsumer)mod;
-                    gallery.Images = imagesOnThisPage;
-                }
-            }
+            
+            
 
             try
             {
-                if (providedDescription.Length > 0)
-                {
-                    var metaDescription = FindControl("HtmlMetaDescription") as HtmlMeta;
-                    if (metaDescription == null)
-                    {
-                        metaDescription = new HtmlMeta();
-                        metaDescription.Name = "description";
-                        metaDescription.Content = StringTool.StripHtmlTags(providedDescription);
-                        Header.Controls.Add(metaDescription);
-                    }
-                    else
-                    {
-                        metaDescription.Content += " " + StringTool.StripHtmlTags(providedDescription);
-                    }
-                }
-                if (providedKeywords.Length > 0)
-                {
-                    var metaKeywords = FindControl("HtmlMetaKeywords") as HtmlMeta;
-                    if (metaKeywords == null)
-                    {
-                        metaKeywords = new HtmlMeta();
-                        metaKeywords.Name = "keywords";
-                        metaKeywords.Content = StringTool.StripHtmlTags(providedKeywords);
-                        Header.Controls.Add(metaKeywords);
-                    }
-                    else
-                    {
-                        metaKeywords.Content += " " + StringTool.StripHtmlTags(providedKeywords);
-                    }
-                }
-                //var tempTitle = DetermingPageTitle(webSite, providedTitle);
-                //if (tempTitle.Length > 0)
-                //{
-                //    var metaTitle = new HtmlMeta();
-                //    metaTitle.Name = "title";
-                //    metaTitle.Content = StringTool.StripHtmlTags(tempTitle);
-                //    Header.Controls.Add(metaTitle);
-                //}
+                RenderDescription(providedDescription);
+                RenderTitle(providedPageName);
+                RenderOgImage(providedOgImage);
+                RenderMetaData();
+                RenderKeywords(providedKeywords);
 
                 if (providedLinkTags != null && providedLinkTags.Keys != null && providedLinkTags.Keys.Count > 0)
                 {
@@ -652,59 +434,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                         Header.Controls.Add(linkTag);
                     }
                 }
-
-                if (providedMetaTags != null && providedMetaTags.Keys != null && providedMetaTags.Keys.Count > 0)
-                {
-                    foreach (string key in providedMetaTags.Keys)
-                    {
-                        HtmlMeta metaControl = null;
-                        string controlName = "";
-
-                        if (key.ToLowerInvariant() == "og:image")
-                            controlName = "OgImage";
-                        else if (key.ToLowerInvariant() == "og:description")
-                            controlName = "OgDescription";
-                        else if (key.ToLowerInvariant() == "og:url")
-                            controlName = "OgUrl";
-
-                        if (!string.IsNullOrEmpty(controlName))
-                        {
-                            metaControl = Page.Header.FindControl(controlName) as HtmlMeta;
-
-                            if (metaControl == null)
-                            {
-                                metaControl = new HtmlMeta();
-                                metaControl.ID = controlName;
-                                Header.Controls.Add(metaControl);
-                            }
-
-                            metaControl.Attributes.Clear();
-                            metaControl.Attributes["property"] = HttpUtility.HtmlEncode(key);
-                            metaControl.Content = HttpUtility.HtmlEncode(providedMetaTags[key]);
-                        }
-                    }
-                }
-
-                var pageTitle = DetermingPageTitle(CurrentWebsite, providedPageName);
-
-                bool addMetaOgTitle = false;
-                var metaOgTitle = Page.Header.FindControl("OgTitle") as HtmlMeta;
-                if (metaOgTitle == null)
-                {
-                    addMetaOgTitle = true;
-                    metaOgTitle = new HtmlMeta();
-                }
-                metaOgTitle.ID = "OgTitle";
-                metaOgTitle.Attributes.Add("property", "og:title");
-                if (string.IsNullOrEmpty(CurrentPage.Settings["OgTitle"].Value) && string.IsNullOrEmpty(CurrentPage.Settings["OgTitle"].Value.Trim()))
-                    metaOgTitle.Content = pageTitle;
-                else
-                    metaOgTitle.Content = HttpUtility.HtmlEncode(CurrentPage.Settings["OgTitle"].Value);
-
-                if (addMetaOgTitle)
-                    Page.Header.Controls.Add(metaOgTitle);
-                Header.Title = pageTitle;
-
             }
             catch (Exception ex)
             {
@@ -714,29 +443,102 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             base.OnLoadComplete(e);
         }
 
-        private static string DetermingPageTitle(BOWebSite webSite, string providedPageName)
+        protected void RenderKeywords(string provided)
         {
-            var pageTitle = "";
-            var titlePrefix = "";
+            var keywords = provided;
 
-            if (providedPageName.Length == 0)
-                pageTitle = webSite.Title + " - " + SiteMap.CurrentNode["_pageTitle"];
-            else
-                pageTitle = webSite.Title + " - " + providedPageName;
-            
-
-            return titlePrefix + pageTitle;
+            AddMetaTag("keywords", keywords);
         }
 
-        private static string FindLevelTitle(int pageId, int level)
+        protected void RenderOgImage(string provided)
         {
-            var websiteB = new BWebsite();
-            var page = websiteB.GetPage(pageId);
-            if (page.IsRoot)
-                return "";
-            if (page.Level == level)
-                return page.Title;
-            return FindLevelTitle(page.ParentId.Value, level);
+            var ogImage = provided;
+            if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
+                ogImage = CurrentPage.OgImage;
+            else if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
+                ogImage = CurrentWebsite.DefaultOgImage;
+            AddMetaProperty("og:image", ogImage);
+        }
+
+        protected void RenderTitle(string provided)
+        {
+            var title = provided;
+            if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
+                title = CurrentPage.Title;
+            else if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
+                title = CurrentWebsite.Title;
+
+            AddMetaProperty("og:title", title);
+            Header.Title = title;
+        }
+
+        protected void RenderDescription(string provided)
+        {
+            var description = CurrentPage.Teaser;
+            if (!string.IsNullOrWhiteSpace(provided))
+                description = provided;
+            AddMetaTag("description", description);
+            AddMetaProperty("og:description", description);
+        }
+
+        protected void RenderMetaData()
+        {
+            log.Debug("-OnInit (add Meta Data)");
+            if(CurrentPage != null)
+            { 
+                HtmlMeta metaUnicode = new HtmlMeta();
+                metaUnicode.HttpEquiv = "Content-Type";
+                metaUnicode.Content = "text/html; charset=utf-8";
+                Page.Header.Controls.Add(metaUnicode);
+
+                AddMetaProperty("og:site_name", CurrentWebsite.Title);
+                AddMetaProperty("og:locale", Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_'));
+                AddMetaProperty("og:url", Request.Url.AbsoluteUri);
+
+                if (CurrentWebsite.Settings.ContainsKey("FacebookApplicationID"))
+                {
+                    var appId = CurrentWebsite.Settings["FacebookApplicationID"].Value;
+                    AddMetaProperty("fb:app_id", appId);
+                }
+                
+
+                if (CurrentPage.Settings.ContainsKey("MetaKeywords"))
+                {
+                    AddMetaTag("keywords", CurrentPage.Settings["MetaKeywords"].Value);
+                }
+                if (CurrentPage.Settings.ContainsKey("RobotsIndex") && CurrentPage.Settings.ContainsKey("RobotsFollow"))
+                {
+                    if (PublishFlag)
+                    {
+                        AddMetaTag("robots", (CurrentPage.RobotsIndex ? "index" : "noindex") + "," + (bool.Parse(CurrentPage.Settings["RobotsFollow"].Value) ? "follow" : "nofollow"));
+                    }
+                    else
+                    {
+                        AddMetaTag("robots", "noindex,nofollow");
+                    }
+                }
+
+                if (CurrentWebsite.Settings.ContainsKey("RSSChannels"))
+                {
+                    string rssChannels = CurrentWebsite.Settings["RSSChannels"].Value;
+                    List<int> rssIds = StringTool.SplitStringToIntegers(rssChannels);
+                    BRssFeed rssFeedB = new BRssFeed();
+                    string pagePath = "/Utils/Rss.aspx?id=";
+                    foreach (int id in rssIds)
+                    {
+                        BORssFeed feed = rssFeedB.Get(id);
+                        if (feed != null)
+                        {
+                            HtmlLink rssLink = new HtmlLink();
+                            rssLink.Attributes.Add("rel", "alternate");
+                            rssLink.Attributes.Add("title", feed.Title);
+                            rssLink.Attributes.Add("type", "application/rss+xml");
+                            rssLink.Href = pagePath + feed.Id;
+                            Page.Header.Controls.Add(rssLink);
+                        }
+                    }
+                }
+            }
         }
     }
 }
