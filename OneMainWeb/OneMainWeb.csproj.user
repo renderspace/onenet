@@ -6,7 +6,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <NameOfLastUsedPublishProfile>DISK</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>Disk</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

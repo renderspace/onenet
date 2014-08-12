@@ -12,10 +12,11 @@ namespace One.Net.BLL
 	{
         private int id = -1;
         private int? rootPageId;
-        private Dictionary<string, BOSetting> siteSettings = new Dictionary<string, BOSetting>();
         private List<int> languages = new List<int>();
 
-        public BOWebSite() { }
+        public BOWebSite() { 
+            Settings = new Dictionary<string, BOSetting>();
+        }
 
         public BOWebSite(int id, int contentID) 
             : base()
@@ -24,11 +25,22 @@ namespace One.Net.BLL
 			this.ContentId = contentID;
 		}
 
-		public Dictionary<string, BOSetting> Settings
-		{
-			get { return siteSettings; }
-			set { siteSettings = value; }
-		}
+		public Dictionary<string, BOSetting> Settings { get; set;}
+
+        public string GetSettingValue(string key)
+        {
+            if (Settings == null || Settings.Count == 0 || !Settings.ContainsKey(key))
+                return "";
+            return Settings[key].Value;
+        }
+
+        public int GetSettingValueInt(string key)
+        {
+            var result = -1;
+            var v = GetSettingValue(key);
+            int.TryParse(v, out result);
+            return result;
+        }
 
         public bool IsNew
         {
@@ -68,19 +80,12 @@ namespace One.Net.BLL
         {
             get 
             {
-                if (siteSettings.ContainsKey("PrimaryLanguageId"))
-                {
-                    return int.Parse(siteSettings["PrimaryLanguageId"].Value);
-                }
-                else
-                {
-                    return -1;
-                }
+                return GetSettingValueInt("PrimaryLanguageId");
             }
             set 
             {
                 BOSetting setting = new BOSetting("PrimaryLanguageId", "int", value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
-                siteSettings["PrimaryLanguageId"] = setting;
+                Settings["PrimaryLanguageId"] = setting;
             }
         }
 
@@ -96,12 +101,9 @@ namespace One.Net.BLL
         {
             get
             {
-                if (Settings.ContainsKey("PreviewUrl"))
-                {
-                    var url = Settings["PreviewUrl"].Value;
-                    if (url.StartsWith("http"))
-                        return url;
-                }
+                var url = GetSettingValue("PreviewUrl");
+                if (url.StartsWith("http"))
+                    return url;
                 return "";
             }
             set
@@ -119,12 +121,9 @@ namespace One.Net.BLL
         {
             get
             {
-                if (Settings.ContainsKey("ProductionUrl"))
-                {
-                    var url = Settings["ProductionUrl"].Value;
-                    if (url.StartsWith("http"))
-                        return url;
-                }
+                var url = GetSettingValue("ProductionUrl");
+                if (url.StartsWith("http"))
+                    return url;
                 return "";
             }
             set
@@ -143,14 +142,9 @@ namespace One.Net.BLL
         { 
             get 
             {
-                if (Settings.ContainsKey("GoogleAnalyticsWebPropertyID"))
-                {
-                    string code = Settings["GoogleAnalyticsWebPropertyID"].Value;
-                    if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
-                    {
-                        return true;
-                    }
-                }
+                var code = GetSettingValue("GoogleAnalyticsWebPropertyID");
+                if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
+                    return true;
                 return false;
             } 
         }

@@ -5,15 +5,6 @@ namespace One.Net.BLL.Model.Web
 {
 	public interface IMetaDataProvider
 	{
-		bool HasDescription { get; }
-		string MetaDescription { get; }
-
-		bool HasKeyWords { get; }
-		string MetaKeyWords { get; }
-
-		bool HasTitle { get; }
-		string MetaTitle { get; }
-
 		/// <summary>
 		/// Add extra link tags in the head, useful for facebook
 		/// at least.

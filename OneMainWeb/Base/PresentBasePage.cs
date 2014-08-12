@@ -381,16 +381,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 {
                     IMetaDataProvider tempMetaDataProvider = (IMetaDataProvider)mod;
 
-                    if (tempMetaDataProvider.HasDescription)
-                    {
-                        providedDescription += tempMetaDataProvider.MetaDescription + " ";
-                    }
-                    if (tempMetaDataProvider.HasKeyWords)
-                        providedKeywords += tempMetaDataProvider.MetaKeyWords + " ";
-                    if (tempMetaDataProvider.HasTitle)
-                        providedTitle += tempMetaDataProvider.MetaTitle + " ";
-
-
                     if (tempMetaDataProvider.ExtraLinkTags != null)
                     {
                         if (providedLinkTags == null)
@@ -444,8 +434,15 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
         protected void RenderKeywords(string provided)
         {
-            var keywords = provided;
-
+            var keywords = "";
+            var webSiteKeywords = CurrentWebsite.GetSettingValue("MetaKeywords");
+            var pageKeywords = CurrentPage.GetSettingValue("MetaKeywords");
+            if (!string.IsNullOrWhiteSpace(webSiteKeywords))
+                keywords = webSiteKeywords;
+            if (!string.IsNullOrWhiteSpace(pageKeywords))
+                keywords = pageKeywords;
+            if (!string.IsNullOrWhiteSpace(provided))
+                keywords = provided;
             AddMetaTag("keywords", keywords);
         }
 
@@ -453,12 +450,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         {
             var ogImage = "";
             if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
-                ogImage = CurrentWebsite.Title;
+                ogImage = CurrentWebsite.DefaultOgImage;
             if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
-                ogImage = CurrentPage.Title;
+                ogImage = CurrentPage.OgImage;
             if (!string.IsNullOrWhiteSpace(provided))
                 ogImage = provided;
-
             AddMetaProperty("og:image", ogImage);
         }
 
@@ -466,10 +462,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         {
             // 1. provided
             // 2. page
-            // 3. website
             var title = "";
-            if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
-                title = CurrentWebsite.Title;
             if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
                 title = CurrentPage.Title;
             if (!string.IsNullOrWhiteSpace(provided))
@@ -484,20 +477,21 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         protected void RenderDescription(string provided)
         {
             var description = "";
-            if (!string.IsNullOrWhiteSpace(CurrentWebsite.Teaser))
-                description = CurrentWebsite.Title;
             if (!string.IsNullOrWhiteSpace(CurrentPage.Teaser))
-                description = CurrentPage.Title;
+                description = CurrentPage.Teaser;
             if (!string.IsNullOrWhiteSpace(provided))
                 description = provided;
 
             description = description.Replace('\n', ' ').Replace('\r', ' ');
             description = StringTool.StripHtmlTags(description);
+
+            if (description.Length > 1000)
+                description = description.Substring(0, 1000);
+            AddMetaProperty("og:description", description);
+
             if (description.Length > 160)
                 description = description.Substring(0, 160);
-
             AddMetaTag("description", description);
-            AddMetaProperty("og:description", description);
         }
 
         protected void RenderMetaData()
@@ -513,28 +507,17 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 AddMetaProperty("og:site_name", CurrentWebsite.Title);
                 AddMetaProperty("og:locale", Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_'));
                 AddMetaProperty("og:url", Request.Url.AbsoluteUri);
-
-                if (CurrentWebsite.Settings.ContainsKey("FacebookApplicationID"))
+                var appId = CurrentWebsite.GetSettingValue("FacebookApplicationID");
+                AddMetaProperty("fb:app_id", appId);
+                var webmasterToolsId = CurrentWebsite.GetSettingValue("GoogleSiteVerification");
+                AddMetaTag("google-site-verification", webmasterToolsId);
+                if (!PublishFlag)
                 {
-                    var appId = CurrentWebsite.Settings["FacebookApplicationID"].Value;
-                    AddMetaProperty("fb:app_id", appId);
+                    AddMetaTag("robots", "noindex,nofollow");
                 }
-                
-
-                if (CurrentPage.Settings.ContainsKey("MetaKeywords"))
+                else
                 {
-                    AddMetaTag("keywords", CurrentPage.Settings["MetaKeywords"].Value);
-                }
-                if (CurrentPage.Settings.ContainsKey("RobotsIndex") && CurrentPage.Settings.ContainsKey("RobotsFollow"))
-                {
-                    if (PublishFlag)
-                    {
-                        AddMetaTag("robots", (CurrentPage.RobotsIndex ? "index" : "noindex") + "," + (bool.Parse(CurrentPage.Settings["RobotsFollow"].Value) ? "follow" : "nofollow"));
-                    }
-                    else
-                    {
-                        AddMetaTag("robots", "noindex,nofollow");
-                    }
+                    AddMetaTag("robots", (CurrentPage.RobotsIndex ? "index" : "noindex") + "," + (bool.Parse(CurrentPage.Settings["RobotsFollow"].Value) ? "follow" : "nofollow"));
                 }
 
                 if (CurrentWebsite.Settings.ContainsKey("RSSChannels"))
