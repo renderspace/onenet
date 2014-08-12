@@ -233,13 +233,6 @@
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
     </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
-    <Compile Include="adm\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
     </Compile>
@@ -249,6 +242,9 @@
     </Compile>
     <Compile Include="adm\Forms.aspx.designer.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\Icons.ashx.cs">
+      <DependentUpon>Icons.ashx</DependentUpon>
     </Compile>
     <Compile Include="adm\Publish.aspx.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
@@ -413,7 +409,6 @@
     <Content Include="adm\css\dashboard.css" />
     <Content Include="adm\css\default_editor.css" />
     <Content Include="adm\css\one.css" />
-    <Content Include="adm\Default.aspx" />
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -742,6 +737,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="adm\ExcelExport.ashx" />
+    <Content Include="adm\Icons.ashx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
