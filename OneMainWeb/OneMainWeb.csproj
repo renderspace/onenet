@@ -250,9 +250,6 @@
     <Compile Include="adm\Forms.aspx.designer.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
     </Compile>
-    <Compile Include="adm\Icons.ashx.cs">
-      <DependentUpon>Icons.ashx</DependentUpon>
-    </Compile>
     <Compile Include="adm\Publish.aspx.cs">
       <DependentUpon>Publish.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -745,7 +742,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="adm\ExcelExport.ashx" />
-    <Content Include="adm\Icons.ashx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />

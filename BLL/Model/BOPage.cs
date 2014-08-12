@@ -10,15 +10,16 @@ namespace One.Net.BLL
 	/// </summary>
     public class BOPage : PublishableInternalContent
 	{
-		BOTemplate template;
-		Dictionary<string, BOSetting> pageSettings;
-        Dictionary<int, BOPlaceHolder> placeHolders = new Dictionary<int, BOPlaceHolder>();
-        string parLink;
-
+        private string parLink = "";
 	    public string parentPagesSimpleList = "";
-
 	    private string frontEndRequireGroupList = "";
 	    private string editRequireGroupList = "";
+
+        public BOPage()
+        {
+            Settings = new Dictionary<string, BOSetting>();
+            PlaceHolders = new Dictionary<int, BOPlaceHolder>();
+        }
 
         public bool IsRoot
         {
@@ -71,28 +72,26 @@ namespace One.Net.BLL
 
         public int WebSiteId { get; set; }
 
-		public Dictionary<string, BOSetting> Settings
-		{
-			get
-			{
-				if (this.pageSettings == null)
-					this.pageSettings = new Dictionary<string, BOSetting> ();
-				return this.pageSettings;
-			}
-			set { pageSettings = value; }
-		}
+		public Dictionary<string, BOSetting> Settings { get; set;}
 
-        public Dictionary<int, BOPlaceHolder> PlaceHolders
+        public string GetSettingValue(string key)
         {
-            get { return placeHolders; }
-            set { placeHolders = value; }
+            if (Settings == null || Settings.Count == 0 || !Settings.ContainsKey(key))
+                return "";
+            return Settings[key].Value;
         }
 
-		public BOTemplate Template
-		{
-			get {return this.template;}
-			set { template = value; }
-		}
+        public int GetSettingValueInt(string key)
+        {
+            var result = -1;
+            var v = GetSettingValue(key);
+            int.TryParse(v, out result);
+            return result;
+        }
+
+        public Dictionary<int, BOPlaceHolder> PlaceHolders { get; set; }
+
+		public BOTemplate Template { get; set; }
 
         public int Order { get; set; }
 
