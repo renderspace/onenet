@@ -104,7 +104,7 @@ namespace One.Net.BLL.Service
             }
             else
             {
-                ret += "/adm/Icons.ashx?extension=" + extension.Trim('.').ToLower();
+                ret += "<img src=\"/adm/Icons.ashx?extension=" + extension.Trim('.').ToLower() + "\" />";
             }
 
             return ret;

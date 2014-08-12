@@ -952,7 +952,7 @@ namespace One.Net.BLL
             var builder = new SqlConnectionStringBuilder(connString);
             if (string.IsNullOrWhiteSpace(builder.InitialCatalog))
                 return false;
-            var databaseSql = StringTool.GetFileContentFromResource("Sql.1_database.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var databaseSql = StringTool.GetTextContentFromResource("Sql.1_database.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             builder.InitialCatalog = "";
 
             try
@@ -1006,10 +1006,10 @@ namespace One.Net.BLL
         private bool PopulateNewDatabase(SqlConnectionStringBuilder builder) 
         {
 
-            var tablesSql = StringTool.GetFileContentFromResource("Sql.2_tables.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
-            var insertsSql = StringTool.GetFileContentFromResource("Sql.3_standard_inserts.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
-            var spsSql = StringTool.GetFileContentFromResource("Sql.4_stored_procedures.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
-            var securitySql = StringTool.GetFileContentFromResource("Sql.5_security.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var tablesSql = StringTool.GetTextContentFromResource("Sql.2_tables.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var insertsSql = StringTool.GetTextContentFromResource("Sql.3_standard_inserts.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var spsSql = StringTool.GetTextContentFromResource("Sql.4_stored_procedures.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
+            var securitySql = StringTool.GetTextContentFromResource("Sql.5_security.sql.template").Replace("@INITIAL_CATALOG@", builder.InitialCatalog);
             try
             {
                 SqlHelper.RunScript(builder.ConnectionString, tablesSql);
