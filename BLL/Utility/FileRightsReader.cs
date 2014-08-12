@@ -9,8 +9,23 @@ using System.Text;
 
 namespace One.Net.BLL.Utility
 {
-    public class FileRightsReader
+    public static class FileRightsReader
     {
+
+        public static byte[] ReadAllBytes(this BinaryReader reader)
+        {
+            const int bufferSize = 4096;
+            using (var ms = new MemoryStream())
+            {
+                byte[] buffer = new byte[bufferSize];
+                int count;
+                while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
+                    ms.Write(buffer, 0, count);
+                return ms.ToArray();
+            }
+
+        }
+
         /// <summary>
         /// NTFS ACL based check
         /// </summary>
@@ -117,7 +132,7 @@ namespace One.Net.BLL.Utility
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        protected static bool HasWritePermissions(string fileName)
+        public static bool HasWritePermissions(string fileName)
         {
             FileIOPermission oPerm = new FileIOPermission(FileIOPermissionAccess.Write, fileName);
             return CheckPermission(oPerm);

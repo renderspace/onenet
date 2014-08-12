@@ -7,6 +7,7 @@ using System.Web;
 using System.Text;
 using System.Reflection;
 using System.IO;
+using One.Net.BLL.Utility;
 
 namespace One.Net.BLL
 {
@@ -14,7 +15,7 @@ namespace One.Net.BLL
     {
         private static readonly Random random = new Random();
 
-        public static string GetFileContentFromResource(string fileName)
+        public static string GetTextContentFromResource(string fileName)
         {
             string result = "";
             using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("One.Net.BLL." + fileName))
@@ -22,6 +23,19 @@ namespace One.Net.BLL
                 using (StreamReader reader = new StreamReader(stream))
                 {
                     result = reader.ReadToEnd();
+                }
+            }
+            return result;
+        }
+
+        public static byte[] GetFileContentFromResource(string fileName)
+        {
+            byte[] result = null;
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("One.Net.BLL." + fileName))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    result = reader.ReadAllBytes();
                 }
             }
             return result;

@@ -18,7 +18,7 @@ namespace OneMainWeb.adm
 
             var ext = context.Request["extension"];
             var result = BFileSystem.GetFileIcon(ext);
-            context.Response.Write(result);
+            context.Response.BinaryWrite(result);
             context.Response.Flush();
         }
 

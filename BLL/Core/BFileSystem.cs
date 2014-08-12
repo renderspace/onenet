@@ -413,89 +413,86 @@ namespace One.Net.BLL
             return filesList;
         }
 
-        public static string GetFileIcon(string extension)
+        public static byte[] GetFileIcon(string extension)
         {
             var location = "Utility.mime_icons.";
-            string ret = "";
+            byte[] ret = null;
             switch (extension)
             {
                 case "ai":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "avi":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "cs":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
-                    break;
-                case "css":
-                    ret += StringTool.GetFileContentFromResource( location + "default.icon.gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "dll":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "doc":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "exe":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "fla":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "gif":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "htm":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "html":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "jpg":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "js":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "mdb":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "mp3":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "pdf":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "ppt":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "rdp":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "swf":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "swt":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "txt":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "vsd":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "xls":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "xml":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 case "zip":
-                    ret += StringTool.GetFileContentFromResource( location + extension + ".gif");
+                    ret = StringTool.GetFileContentFromResource( location + extension + ".gif");
                     break;
                 default:
-                    ret += StringTool.GetFileContentFromResource( location + "default.icon.gif");
+                    ret = StringTool.GetFileContentFromResource( location + "default.icon.gif");
                     break;
             }
             return ret;
