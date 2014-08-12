@@ -58,6 +58,32 @@ namespace OneMainWeb.adm
             }
         }
 
+        public bool IsInRole(string roleName)
+        {
+            return currentUser.Roles.Where(r => r.Role.Name == roleName).Any();
+        }
+
+        public IEnumerable<BOWebSite> ListAllowedWebsites()
+        { 
+             var webSiteB = new BWebsite();
+             var list = webSiteB.List();
+
+
+            var roles = IdentityManager.ListRoles();
+            if (roles.Where(r => r.Name == "admin").Count() == 1)
+                return list;
+
+            var websiteroles = new List<string>();
+            foreach(var r in roles.Where(r => r.Name.StartsWith("http")))
+            {
+                websiteroles.Add(r.Name);            
+            }
+
+            var result = list.Where(w => !string.IsNullOrWhiteSpace(w.PreviewUrl) && websiteroles.Contains(w.PreviewUrl));
+            return result;
+        }
+
+
         public int SelectedWebSiteId
         {
             get

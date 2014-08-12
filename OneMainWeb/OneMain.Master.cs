@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Threading;
 
 using One.Net.BLL;
+using System.Linq;
 using System.Net;
 using One.Net.BLL.Utility;
 using OneMainWeb.adm;
@@ -129,8 +130,7 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                BWebsite webSiteB = new BWebsite();
-                List<BOWebSite> webSiteList = webSiteB.List();
+                var webSiteList = authorizationHelper.ListAllowedWebsites();
 
                 bool webSiteIsSelected = false;
                 foreach (BOWebSite webSite in webSiteList)
@@ -146,19 +146,23 @@ namespace OneMainWeb
 
                 if (!webSiteIsSelected && !Request.Url.AbsoluteUri.Contains("/adm/Website.aspx?newsite=true"))
                 {
-                    if (webSiteList.Count == 0)
+                    if (!webSiteList.Any() && (authorizationHelper.IsInRole("admin") || authorizationHelper.IsInRole("Website")) )
                     {
                         Response.Redirect("/adm/Website.aspx?newsite=true");
-                    } 
-                    else 
+                    }
+                    else if (!webSiteList.Any())
                     {
-                        SelectedWebSiteId = webSiteList[0].Id;
+                        Response.Redirect("/");
+                    }
+                    else
+                    {
+                        SelectedWebSiteId = webSiteList.First().Id;
                     }
                 }
             }
 
             VirtualTableList1.Visible = false;
-            if (Page.User.IsInRole("ScaffoldVirtualTables") || Page.User.IsInRole("admin"))
+            if (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin"))
                 VirtualTableList1.Visible = true;
 
         }
