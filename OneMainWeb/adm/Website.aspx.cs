@@ -23,6 +23,8 @@ namespace OneMainWeb.adm
         {
             if (!IsPostBack)
             {
+                ButtonStartWizard.Visible = ButtonAdd.Visible = Authorization.IsInRole("admin");
+
                 GridViewWebsitesLoad();
                 var languages = websiteB.ListLanguages();
                 foreach (var language in languages)
@@ -34,7 +36,7 @@ namespace OneMainWeb.adm
 
         private void GridViewWebsitesLoad()
         {
-            GridViewWebsites.DataSource = websiteB.List();
+            GridViewWebsites.DataSource = Authorization.ListAllowedWebsites();
             GridViewWebsites.DataBind();
         }
 

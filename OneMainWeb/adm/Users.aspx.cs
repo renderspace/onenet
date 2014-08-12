@@ -38,7 +38,13 @@ namespace OneMainWeb.adm
         protected void User_DataBind()
         {
             LabelUsername.Text = SelectedUser;
-            var roles = IdentityManager.ListRoles();
+
+            var regularRoles = IdentityManager.ListRoles().Where(r => !r.Name.StartsWith("http"));
+            var websiteRoles = IdentityManager.ListRoles().Where(r => r.Name.StartsWith("http"));
+
+            var roles = new List<IdentityRole>();
+            roles.AddRange(regularRoles.OrderBy(r => r.Name));
+            roles.AddRange(websiteRoles.OrderBy(r => r.Name));
             RepeaterRoles.DataSource = roles;
             RepeaterRoles.DataBind();
         }

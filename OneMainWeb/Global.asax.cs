@@ -71,6 +71,37 @@ namespace OneMainWeb
             // RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            var publishFlag = PresentBasePage.ReadPublishFlag();
+            if (!publishFlag)
+            {
+                IdentityManager.CreateRoleIfNotExists("admin");
+                IdentityManager.CreateRoleIfNotExists("ContentEdit");
+                IdentityManager.CreateRoleIfNotExists("all");
+                IdentityManager.CreateRoleIfNotExists("Structure");
+                IdentityManager.CreateRoleIfNotExists("Publish");
+                IdentityManager.CreateRoleIfNotExists("Scaffold");
+                IdentityManager.CreateRoleIfNotExists("Forms");
+                IdentityManager.CreateRoleIfNotExists("Articles");
+                IdentityManager.CreateRoleIfNotExists("Subscriptions");
+                IdentityManager.CreateRoleIfNotExists("Dictionary");
+                IdentityManager.CreateRoleIfNotExists("FileManager");
+                IdentityManager.CreateRoleIfNotExists("Redirects");
+                IdentityManager.CreateRoleIfNotExists("Website");
+
+                var websiteB = new BWebsite();
+                var list = websiteB.List();
+                foreach (var w in list)
+                {
+                    var previewUrl = w.PreviewUrl;
+                    if (!string.IsNullOrWhiteSpace(previewUrl))
+                    {
+                        IdentityManager.CreateRoleIfNotExists(previewUrl);
+                    }
+                }
+            }
+            
+
+
             /*
             var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             if (!rm.RoleExists("admin"))

@@ -21,11 +21,11 @@
       
 
       <siteMapNode url="" title="Advanced" description="" roles="*">
-        <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, Everyone" />
-        <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, Everyone" />
-        <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, Everyone" />
-        <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Everyone" />
-        <siteMapNode url="adm/Users.aspx" title="Users" description="" roles="admin" />
+        <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, RssFeeds" />
+        <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, ScaffoldConfig" />
+        <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all" />
+        <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, Website" />
+        <siteMapNode url="adm/Users.aspx" title="Users" description="" roles="admin, Users" />
 
         
       </siteMapNode>

@@ -35,6 +35,7 @@ namespace OneMainWeb.Models
 
             return users;
         }
+
     }
 
     public static class IdentityManager
@@ -86,6 +87,18 @@ namespace OneMainWeb.Models
             var context = new ApplicationDbContext();
             var roles = context.Roles.ToList();
             return roles;
+        }
+
+        public static void CreateRoleIfNotExists(string roleName)
+        {
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var role = rm.FindByName(roleName);
+
+            if (role == null)
+            {
+                role = new IdentityRole(roleName);
+                var roleresult = rm.Create(role);
+            }
         }
     }
 
