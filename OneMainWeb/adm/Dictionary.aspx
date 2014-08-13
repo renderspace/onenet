@@ -1,6 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Dictionary.aspx.cs" Inherits="OneMainWeb.Dictionary" Title="One.NET Dictionary" ValidateRequest="false" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Register TagPrefix="one" TagName="TextContentControl" Src="~/AdminControls/TextContentControl.ascx" %>
+<%@ Register TagPrefix="uc2" TagName="LastChangeAndHistory" src="~/AdminControls/LastChangeAndHistory.ascx"   %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL"%>
 
@@ -77,7 +78,10 @@
 		            TeaserLabel="$dict_entry_teaser" HtmlLabel="$dict_entry_html" HtmlRows="10" />
 
 		            <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
+                        <div class="col-sm-3">
+						        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                            </div>
+                        <div class="col-sm-9">
 			                <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" CssClass="btn btn-default" />
 			                <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" CssClass="btn btn-success" />
 			                <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success" />

@@ -117,8 +117,10 @@
 
                 <one:TextContentControl ID="TextContentEditor" runat="server" />
 			    <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                    <div class="col-sm-3">
+						<uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                    </div>
+                    <div class="col-sm-9">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
 				        <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" CssClass="btn btn-primary" />
 				        <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success" />
