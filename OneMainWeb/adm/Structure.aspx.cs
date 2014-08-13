@@ -22,7 +22,6 @@ namespace OneMainWeb.adm
         protected static BTextContent textContentB = new BTextContent();
         protected static BTextContent specialContentB = new BTextContent();
         BOPage SelectedPage { get; set; }
-        BOWebSite SelectedWebsite { get; set;  }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,28 +41,16 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void LoadSelectedWebsite()
-        {
-            SelectedWebsite = Authorization.ListAllowedWebsites().Where(w => w.Id == SelectedWebSiteId).FirstOrDefault();
-        }
 
         protected void SelectedWebsite_ValidateDataBind()
         {
             // WEBSITE
-            LoadSelectedWebsite();
             if (SelectedWebsite == null)
             {
-                SelectedWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
-                SelectedPageId = 0;
-                LoadSelectedWebsite();
-            }
-            if (SelectedWebsite == null)
-            { 
                 ResetAllControlsToDefault("You don't have permissions for any site or there are no websites defined in database.");
                 return;
             }
             // ROOT PAGE
-            Thread.CurrentThread.CurrentCulture = SelectedWebsite.Culture;
             RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
             if (!RootNodeID.HasValue)
             {

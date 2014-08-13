@@ -20,6 +20,7 @@ namespace OneMainWeb.adm
         UserManager<OneNetUser> manager = null;
         OneNetUser currentUser = null;
 
+
         protected HttpContext Context { get; set; }
         protected HttpSessionState Session { get { return Context.Session; } }
 
@@ -83,6 +84,29 @@ namespace OneMainWeb.adm
             return result;
         }
 
+        public BOWebSite SelectedWebSite
+        {
+            get
+            {
+                var website = ListAllowedWebsites().Where(w => w.Id == SelectedWebSiteId).FirstOrDefault();
+                if (website == null)
+                {
+                    SelectedWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
+                    SelectedPageId = 0;
+                    website = ListAllowedWebsites().Where(w => w.Id == SelectedWebSiteId).FirstOrDefault();
+                }
+                if (website == null)
+                {
+                    SelectedWebSiteId = 0;
+                }
+                else
+                {
+                    Thread.CurrentThread.CurrentCulture = website.Culture;
+                }
+                return website;
+            }
+        }
+
 
         public int SelectedWebSiteId
         {
@@ -100,7 +124,6 @@ namespace OneMainWeb.adm
                     Session["SelectedWebSiteId"] = Int32.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
                 }
                 r = int.Parse(Session["SelectedWebSiteId"].ToString());
-                CheckWebSiteRole(r);
                 return r;
             }
             set
@@ -120,38 +143,6 @@ namespace OneMainWeb.adm
             {
                 bool publishRole = manager != null ? manager.IsInRole(Thread.CurrentPrincipal.Identity.GetUserId(), "publisher") : Roles.IsUserInRole("publisher");
                 return publishRole;
-            }
-        }
-
-        private void CheckWebSiteRole(int webSiteId)
-        {
-            var webSiteB = new BWebsite();
-            // the following code is used to fix specific issue where web.config specified website is 
-            // loaded on first load to users that may not have permissions to view this website.
-            var website = webSiteB.Get(webSiteId);
-            if (website != null)
-            {
-                Thread.CurrentThread.CurrentCulture = website.Culture;
-                /*
-                AuthenticationSection authenticationSection = ConfigurationManager.GetSection("system.web/authentication") as AuthenticationSection;
-                AuthenticationMode currentMode = AuthenticationMode.Windows;
-                if (authenticationSection != null)
-                    currentMode = authenticationSection.Mode;
-
-                bool adminRole = manager != null ? manager.IsInRole(Thread.CurrentPrincipal.Identity.GetUserId(), "admin") : Roles.IsUserInRole("admin");
-                if (!(adminRole || currentMode == AuthenticationMode.Windows || Roles.IsUserInRole("website_" + website.Title.ToLower())))
-                {
-                    // website with id SelectedWebSiteId is not accessible to user - so use another website id.
-                    List<BOWebSite> webSiteList = webSiteB.List();
-                    foreach (BOWebSite webSite2 in webSiteList)
-                    {
-                        if (Roles.IsUserInRole("website_" + webSite2.Title.ToLower()))
-                        {
-                            SelectedWebSiteId = webSite2.Id;
-                            break;
-                        }
-                    }
-                }*/
             }
         }
     }

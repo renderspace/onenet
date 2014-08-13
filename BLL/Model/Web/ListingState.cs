@@ -62,6 +62,10 @@ namespace One.Net.BLL
                 fromRecordIndex = FirstRecordIndex.Value + 1 + offSet;
                 toRecordIndex = (fromRecordIndex + RecordsPerPage.Value) - 1 + offSet;
             }
+            if (fromRecordIndex < 0)
+                fromRecordIndex = 0;
+            if (toRecordIndex < RecordsPerPage.Value - 1 + offSet)
+                toRecordIndex = RecordsPerPage.Value - 1 + offSet;
         }
 
         public int DbFromRecordIndex
