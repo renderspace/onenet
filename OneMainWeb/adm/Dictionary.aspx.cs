@@ -29,19 +29,6 @@ namespace OneMainWeb
             set { ViewState["SelectedDictionaryEntry"] = value; }
         }
 
-        
-
-        protected string GridViewSortExpression
-        {
-            get
-            {
-                if (ViewState["sortField"] == null)
-                    ViewState["sortField"] = "";
-                return (string)ViewState["sortField"];
-            }
-            set { ViewState["sortField"] = value; }
-        }
-
         protected string SearchTermNoResults
         {
             get
@@ -60,15 +47,22 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             LabelNoResults.Text = "$no_search_results";
 
+            if (SelectedWebsite == null)
+            {
+                Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
+                return;
+            }
+
             if (!IsPostBack)
             {
+                // WEBSITE
+                
                 SearchTermNoResults = "";
 
                 MultiView1.ActiveViewIndex = 0;
 
                 TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
                 TwoPostbackPager1.SelectedPage = 1;
-                LoadAll(false);
             }
         }
 
@@ -79,8 +73,7 @@ namespace OneMainWeb
 
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
-                if (IsPostBack)
-                    LoadAll(false);
+                LoadAll(false);
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
@@ -145,7 +138,7 @@ namespace OneMainWeb
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
 
-            PagedList<BODictionaryEntry> entries = contentB.ListDictionaryEntries(state, ShowUntranslated, TextBoxSearch.Text);
+            PagedList<BODictionaryEntry> entries = contentB.ListDictionaryEntries(state, true, TextBoxSearch.Text);
 
             TwoPostbackPager1.TotalRecords = entries.AllRecords;
             TwoPostbackPager1.DetermineData();

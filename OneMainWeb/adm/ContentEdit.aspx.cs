@@ -71,53 +71,38 @@ namespace OneMainWeb.adm
 
         protected void SelectedWebsite_ValidateDataBind()
         {
-            BOWebSite TempWebSite = webSiteB.Get(SelectedWebSiteId);
-            if (SelectedWebSiteId < 1 || TempWebSite == null)
+            // WEBSITE
+            if (SelectedWebsite == null)
             {
-                // if session is lost, we need to select a default website and delete the possibly incorrect SelectedPageId
-                SelectedWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
-                SelectedPageId = -1;
-                if (TempWebSite == null)
-                {
-                    TempWebSite = webSiteB.Get(SelectedWebSiteId);
-                }
-            }
-
-            if (TempWebSite == null)
-            {
-                ResetAllControlsToDefault("No website selected or no website in database");
+                ResetAllControlsToDefault("You don't have permissions for any site or there are no websites defined in database.");
                 return;
             }
-
-            Thread.CurrentThread.CurrentCulture = TempWebSite.Culture;
-
-            var RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
-
+            // ROOT PAGE
+            RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
             if (!RootNodeID.HasValue)
             {
-                ResetAllControlsToDefault("Website doesn't have a root page. Use structure menu.");
+                ResetAllControlsToDefault("Website doesn't have a root page. ");
+                Notifier1.Warning = "Website doesn't have a root page. ";
+                MultiView1.ActiveViewIndex = 0;
                 return;
             }
-
+            // SELECTED PAGE
             if (SelectedPageId < 1)
                 SelectedPageId = RootNodeID.Value;
 
             SelectedPage = webSiteB.GetPage(SelectedPageId);
-
             if (SelectedPage == null || SelectedPage.WebSiteId != SelectedWebSiteId || SelectedPage.LanguageId != Thread.CurrentThread.CurrentCulture.LCID)
             {
                 ResetAllControlsToDefault("Please select a page on the left;");
                 return;
             }
-
             if (!SelectedPage.IsEditabledByCurrentPrincipal)
             {
-                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select a page on the left.");
+                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select another page on the left.");
                 return;
             }
 
             MultiView1.ActiveViewIndex = 0;
-
         }
 
         protected void ResetAllControlsToDefault(string message)

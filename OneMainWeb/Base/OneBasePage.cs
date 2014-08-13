@@ -71,16 +71,24 @@ namespace OneMainWeb
             bool.TryParse(ConfigurationManager.AppSettings["EnableXHTMLValidator"], out EnableXHTMLValidator);        
         }
 
+        protected BOWebSite SelectedWebsite
+        {
+            get
+            {
+                return authorizationHelper.SelectedWebSite;
+            }
+        }
+
         protected int SelectedWebSiteId
         {
             get
             {
                 return authorizationHelper.SelectedWebSiteId;
             }
-            set
+            /*set
             {
                 authorizationHelper.SelectedWebSiteId = value;
-            }
+            }*/
         }
 
         protected int SelectedPageId
