@@ -11,5 +11,7 @@ namespace One.Net.BLL.Model
         public bool IsNew { get; set;}
         public bool IsChanged { get; set;}
         public bool MarkedForDeletion { get; set;}
+
+        public bool IsPublished { get { return !MarkedForDeletion && !IsNew; } }
     }
 }

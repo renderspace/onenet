@@ -12,12 +12,6 @@ namespace OneMainWeb.adm
     {
         BWebsite websiteB = new BWebsite();
 
-        private List<BOWebSite> Websites
-        {
-            get { return ViewState["Websites"] != null ? ViewState["Websites"] as List<BOWebSite> : null; }
-            set { ViewState["Websites"] = value; }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,7 +22,6 @@ namespace OneMainWeb.adm
 
         protected void TreeView1_Unload(object sender, EventArgs e)
         {
-            // save the state of all nodes.
             TreeViewState.SaveTreeView(TreeView1, this.GetType().ToString());
         }
 
@@ -49,7 +42,7 @@ namespace OneMainWeb.adm
             if (TreeView1.Nodes.Count > 0)
                 TreeView1.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, Page, currentExpandLevel);
+            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
             if (tree != null)
             {
                 TreeView1.Nodes.Add(tree);
@@ -76,15 +69,15 @@ namespace OneMainWeb.adm
         {
             TreeView1_DataBind();
 
-            Websites = websiteB.List();
+            var websites = Authorization.ListAllowedWebsites();
             var emptyList = new List<BOWebSite>();
-            foreach (var website in Websites)
+            foreach (var website in websites)
             {
                 if (!website.RootPageId.HasValue)
                     emptyList.Add(website);
             }
             CheckBoxListEmptyWebSites.DataSource = emptyList;
-            CheckBoxListEmptyWebSites.DataTextField = "Title";
+            CheckBoxListEmptyWebSites.DataTextField = "DisplayName";
             CheckBoxListEmptyWebSites.DataValueField = "Id";
             CheckBoxListEmptyWebSites.DataBind();
         }

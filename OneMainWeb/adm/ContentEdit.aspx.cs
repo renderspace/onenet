@@ -146,7 +146,7 @@ namespace OneMainWeb.adm
             if (TreeView1.Nodes.Count > 0)
                 TreeView1.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, Page, currentExpandLevel);
+            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
             if (tree != null)
             {
                 TreeView1.Nodes.Add(tree);

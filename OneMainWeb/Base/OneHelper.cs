@@ -17,7 +17,7 @@ namespace OneMainWeb
 {
     public class OneHelper
     {
-        public static TreeNode PopulateTreeViewControl(List<BOPage> pagesList, TreeNode parentNode, int selectedNodeId, Page callingPageObject, int expandToLevel)
+        public static TreeNode PopulateTreeViewControl(List<BOPage> pagesList, TreeNode parentNode, int selectedNodeId, int expandToLevel)
         {
             TreeNode childNode = null;
 
@@ -69,7 +69,7 @@ namespace OneMainWeb
                         childNode.Expanded = true;
                     }
 
-                    PopulateTreeViewControl(pagesList, childNode, selectedNodeId, callingPageObject, expandToLevel);
+                    PopulateTreeViewControl(pagesList, childNode, selectedNodeId, expandToLevel);
                     parentNode.ChildNodes.Add(childNode);
                 }
             }

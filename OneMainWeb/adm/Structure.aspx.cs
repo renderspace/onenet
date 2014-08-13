@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Linq;
 using System.Threading;
 using System.Globalization;
 using One.Net.BLL;
@@ -21,7 +21,8 @@ namespace OneMainWeb.adm
         protected static BContent contentB = new BContent();
         protected static BTextContent textContentB = new BTextContent();
         protected static BTextContent specialContentB = new BTextContent();
-        BOPage SelectedPage;
+        BOPage SelectedPage { get; set; }
+        BOWebSite SelectedWebsite { get; set;  }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,58 +42,57 @@ namespace OneMainWeb.adm
             }
         }
 
+        protected void LoadSelectedWebsite()
+        {
+            SelectedWebsite = Authorization.ListAllowedWebsites().Where(w => w.Id == SelectedWebSiteId).FirstOrDefault();
+        }
+
         protected void SelectedWebsite_ValidateDataBind()
         {
-            BOWebSite TempWebSite = webSiteB.Get(SelectedWebSiteId);
-            if (SelectedWebSiteId < 1 || TempWebSite == null)
+            // WEBSITE
+            LoadSelectedWebsite();
+            if (SelectedWebsite == null)
             {
-                // if session is lost, we need to select a default website and delete the possibly incorrect SelectedPageId
                 SelectedWebSiteId = int.Parse(ConfigurationManager.AppSettings["WebSiteId"].ToString());
-                SelectedPageId = -1;
-                if (TempWebSite == null)
-                {
-                    TempWebSite = webSiteB.Get(SelectedWebSiteId);
-                }
+                SelectedPageId = 0;
+                LoadSelectedWebsite();
             }
-
-            if (TempWebSite == null)
+            if (SelectedWebsite == null)
             { 
-                ResetAllControlsToDefault("No website selected or no website in database");
+                ResetAllControlsToDefault("You don't have permissions for any site or there are no websites defined in database.");
                 return;
             }
-
-            Thread.CurrentThread.CurrentCulture = TempWebSite.Culture;
-
+            // ROOT PAGE
+            Thread.CurrentThread.CurrentCulture = SelectedWebsite.Culture;
             RootNodeID = webSiteB.GetRootPageId(SelectedWebSiteId);
-
             if (!RootNodeID.HasValue)
             {
                 ResetAllControlsToDefault("Website doesn't have a root page. Use form on the left to add it.");
+                Notifier1.Warning = "Website doesn't have a root page. Use form on the left to add it.";
+                MultiView1.ActiveViewIndex = 0;
                 PanelAddSubPage.Visible = true;
                 return;
             }
-
+            // SELECTED PAGE
             if (SelectedPageId < 1)
                 SelectedPageId = RootNodeID.Value;
 
             SelectedPage = webSiteB.GetPage(SelectedPageId);
-
             if (SelectedPage == null || SelectedPage.WebSiteId != SelectedWebSiteId || SelectedPage.LanguageId != Thread.CurrentThread.CurrentCulture.LCID)
             {
                 ResetAllControlsToDefault("Please select a page on the left;");
                 return;
             }
-
             if (!SelectedPage.IsEditabledByCurrentPrincipal)
             {
-                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select a page on the left.");
+                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select another page on the left.");
                 return;
             }
 
             MultiView1.ActiveViewIndex = 0;
             PanelAddSubPage.Visible = true;
 
-            if (RootNodeID.Value == SelectedPageId && !TempWebSite.HasGoogleAnalytics)
+            if (RootNodeID.Value == SelectedPageId && !SelectedWebsite.HasGoogleAnalytics)
             {
                 Notifier1.Warning = "Please consider enabling Google Analytics on this website.";
             }
@@ -100,6 +100,8 @@ namespace OneMainWeb.adm
 
         protected void ResetAllControlsToDefault(string message)
         {
+            SelectedPageId = 0;
+            PanelFbDebug.Visible = false;
             TreeViewPages.Nodes.Clear();
             TreeViewPages.DataBind();
             RepeaterModuleInstances.DataSource = null;
@@ -149,20 +151,14 @@ namespace OneMainWeb.adm
             if (TreeViewPages.Nodes.Count > 0)
                 TreeViewPages.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, Page, currentExpandLevel);
-
+            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
             if (tree != null)
             {
                 TreeViewPages.Nodes.Add(tree);
-
-                // get the saved state of all nodes.
                 new OneMainWeb.adm.TreeViewState().RestoreTreeView(TreeViewPages, this.GetType().ToString());
-
                 TreeViewPages.ExpandDepth = currentExpandLevel;
             }
         }
-
-        
 
         protected void InitializeControls()
         {
@@ -238,6 +234,15 @@ namespace OneMainWeb.adm
                     cmdMovePageUp.Visible = false;
                 }
                 RepeaterModuleInstances_DataBind();
+
+                if (SelectedPage.IsPublished && SelectedWebsite.ProductionUrl.StartsWith("http"))
+                {
+                    PanelFbDebug.Visible = true;
+                    var url = SelectedWebsite.ProductionUrl.TrimEnd('/') + SelectedPage.URI;
+                    HyperLinkFBDebug.NavigateUrl = "https://developers.facebook.com/tools/debug/og/object?q=" + url;
+                }
+
+                
             }
         }
 
