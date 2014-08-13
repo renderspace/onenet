@@ -38,12 +38,12 @@
 							        <asp:CheckBox ID="chkFor" runat="server" Text="" />
 							    </ItemTemplate>
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="$keyword" SortExpression="keyword">
+							<asp:TemplateField HeaderText="Keyword" SortExpression="keyword">
 								<ItemTemplate>
 								    <asp:Label ID="LabelKeyWord" runat="server" Text='<%# Eval("KeyWord") %>' />
 								</ItemTemplate>
 							</asp:TemplateField>
-							<asp:TemplateField HeaderText="$meaning">
+							<asp:TemplateField HeaderText="Translation">
                                 <ItemTemplate><%# Eval("Title") %></ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField>

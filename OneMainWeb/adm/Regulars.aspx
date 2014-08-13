@@ -13,7 +13,7 @@
 		        <asp:TextBox runat="server" ID="TextBoxRegular" MaxLength="255" placeholder="New article category"></asp:TextBox>
                 <asp:LinkButton ID="cmdAddRegular" text="<span class='glyphicon glyphicon-plus'></span> Add" runat="server" OnClick="cmdAddRegular_Click"  CssClass="btn btn-success" />		
 		    </div>
-	        <asp:GridView OnSelectedIndexChanged="regularGridView_SelectedIndexChanged" ID="regularGridView" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id">
+	        <asp:GridView OnSelectedIndexChanged="GridViewRegular_SelectedIndexChanged" ID="GridViewRegular" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id" OnSorting="GridViewRegular_Sorting">
 		        <Columns>
                         <asp:TemplateField>
                         <HeaderTemplate>
@@ -24,8 +24,8 @@
 							<asp:CheckBox ID="chkFor" runat="server" Text="" />
 						</ItemTemplate>
 					</asp:TemplateField>
-			        <asp:BoundField HeaderText="$id" DataField="Id" SortExpression="Id" ReadOnly="True" />
-			        <asp:BoundField HeaderText="$title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
+			        <asp:BoundField HeaderText="Id" DataField="Id" SortExpression="Id" ReadOnly="True" />
+			        <asp:BoundField HeaderText="Category title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
                     <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton  CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs" CausesValidation="false" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" />

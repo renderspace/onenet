@@ -23,14 +23,20 @@ namespace OneMainWeb.adm
         {
             if (!IsPostBack)
             {
+                GridViewSortExpression = "id";
+                GridViewSortDirection = SortDir.Ascending;
                 RegularDataBind();
             }
         }
 
         protected void RegularDataBind()
         {
-            regularGridView.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
-            regularGridView.DataBind();
+            ListingState state = new ListingState();
+            state.SortDirection = GridViewSortDirection;
+            state.SortField = GridViewSortExpression;
+
+            GridViewRegular.DataSource = articleB.ListRegulars(state, ShowUntranslated, null, null);
+            GridViewRegular.DataBind();
         }
 
         protected void Multiview1_ActiveViewChanged(object sender, EventArgs e)
@@ -64,7 +70,7 @@ namespace OneMainWeb.adm
         protected IEnumerable<int> GetCheckedIds()
         {
             var result = new List<int>();
-            foreach (GridViewRow row in regularGridView.Rows)
+            foreach (GridViewRow row in GridViewRegular.Rows)
             {
                 CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
                 Literal litArticleId = row.FindControl("litId") as Literal;
@@ -103,7 +109,7 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void regularGridView_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GridViewRegular_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridView grid = sender as GridView;
             if (grid != null && grid.SelectedValue != null)
@@ -144,7 +150,7 @@ namespace OneMainWeb.adm
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
-            regularGridView.DataBind();
+            GridViewRegular.DataBind();
         }
 
         protected void RegularCancelButton_Click(object sender, EventArgs e)
@@ -161,6 +167,12 @@ namespace OneMainWeb.adm
         protected void RegularInsertUpdateCloseButton_Click(object sender, EventArgs e)
         {
             SaveRegular(true);
+        }
+
+        protected void GridViewRegular_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            GridViewSorting(e);
+            RegularDataBind();
         } 
     }
 }

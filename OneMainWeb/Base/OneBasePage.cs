@@ -48,6 +48,21 @@ namespace OneMainWeb
             set { ViewState["sortField"] = value; }
         }
 
+        protected void GridViewSorting(GridViewSortEventArgs e)
+        {
+            if (GridViewSortExpression == e.SortExpression)
+            {
+                GridViewSortDirection = SortDir.Ascending == GridViewSortDirection
+                                            ? SortDir.Descending
+                                            : SortDir.Ascending;
+            }
+            else
+            {
+                GridViewSortExpression = e.SortExpression;
+                GridViewSortDirection = SortDir.Ascending;
+            } 
+        }
+
         public SortDir GridViewSortDirection
         {
             get

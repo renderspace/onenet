@@ -14,11 +14,11 @@
     <asp:MultiView runat="server" ID="Multiview1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
         <asp:View ID="View1" runat="server">
             
-					    <asp:GridView ID="articleGridView" runat="server" CssClass="table table-hover"
+					    <asp:GridView ID="GridViewArticles" runat="server" CssClass="table table-hover" OnSorting="GridViewArticles_Sorting"
 						    AllowSorting="True"
 						    AutoGenerateColumns="False"
 						    DataKeyNames="Id"
-						    OnRowCommand="articleGridView_RowCommand">
+						    OnRowCommand="GridViewArticles_RowCommand">
 						    <Columns>
                                 <asp:TemplateField>
                                     <HeaderTemplate>
@@ -55,11 +55,11 @@
                 </div>
         </asp:View>
         <asp:View ID="View2" runat="server">
-				<asp:GridView ID="pageGridView" runat="server"  CssClass="table table-hover"
+				<asp:GridView ID="GridViewPages" runat="server"  CssClass="table table-hover" OnSorting="GridViewPages_Sorting"
 					AllowSorting="True"
 					AutoGenerateColumns="False"
 					DataKeyNames="Id"
-					OnRowCommand="pageGridView_RowCommand">
+					OnRowCommand="GridViewPages_RowCommand">
 					<Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>

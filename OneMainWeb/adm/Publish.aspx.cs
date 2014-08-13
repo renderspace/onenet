@@ -51,8 +51,8 @@ namespace OneMainWeb
             PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
             TwoPostbackPager1.TotalRecords = articles.AllRecords;
             TwoPostbackPager1.DetermineData();
-            articleGridView.DataSource = articles;
-            articleGridView.DataBind();
+            GridViewArticles.DataSource = articles;
+            GridViewArticles.DataBind();
         }
 
         private void Pages_DataBind()
@@ -65,8 +65,8 @@ namespace OneMainWeb
             PagedList<BOPage> pages = webSiteB.ListUnpublishedPages(SelectedWebSiteId, state);
             TwoPostbackPager2.TotalRecords = pages.AllRecords;
             TwoPostbackPager2.DetermineData();
-            pageGridView.DataSource = pages;
-            pageGridView.DataBind();
+            GridViewPages.DataSource = pages;
+            GridViewPages.DataBind();
         }
 
         public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
@@ -81,36 +81,36 @@ namespace OneMainWeb
             Pages_DataBind();
         }
 
-        protected void articleGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void GridViewArticles_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             switch (e.CommandName)
             {
                 case "Schedule":
                     var ei = Int32.Parse(e.CommandArgument.ToString());
-                    articleGridView.EditIndex = ei;
+                    GridViewArticles.EditIndex = ei;
                     break;
                 case "Save":
                     var arg = Int32.Parse(e.CommandArgument.ToString());
                     break;
                 case "Cancel":
-                    articleGridView.EditIndex = -1;
+                    GridViewArticles.EditIndex = -1;
                     break;
             }
         }
 
-        protected void pageGridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void GridViewPages_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             string command = e.CommandName;
             switch (command)
             {
                 case "Schedule":
                     int ei = Int32.Parse(e.CommandArgument.ToString());
-                    pageGridView.EditIndex = ei;
+                    GridViewPages.EditIndex = ei;
                     break;
                 case "Save":
                     break;
                 case "Cancel":
-                    pageGridView.EditIndex = -1;
+                    GridViewPages.EditIndex = -1;
                     break;
             }
         }
@@ -120,7 +120,7 @@ namespace OneMainWeb
             int publishCount = 0;
             int failedCount = 0;
 
-            foreach (GridViewRow row in articleGridView.Rows)
+            foreach (GridViewRow row in GridViewArticles.Rows)
             {
                 CheckBox chkForPublish = row.FindControl("chkForPublish") as CheckBox;
                 Literal litArticleId = row.FindControl("litArticleId") as Literal;
@@ -142,7 +142,7 @@ namespace OneMainWeb
             {
                 // note, resource file has to contain "Uspjesno objavio {0} clanaka"
                 Notifier1.Message = string.Format("$successfully_published_n_articles", publishCount);
-                articleGridView.DataBind();
+                GridViewArticles.DataBind();
             }
 
             if (failedCount > 0)
@@ -162,7 +162,7 @@ namespace OneMainWeb
             int publishedCount = 0;
             int failedCount = 0;
 
-            foreach (GridViewRow row in pageGridView.Rows)
+            foreach (GridViewRow row in GridViewPages.Rows)
             {
                 CheckBox chkForPublish = row.FindControl("chkForPublish") as CheckBox;
                 Literal litPageId = row.FindControl("litPageId") as Literal;
@@ -184,18 +184,18 @@ namespace OneMainWeb
             {
                 // note, resource file has to contain "Uspjesno objavio {0} stranica"
                 Notifier1.Message = string.Format("$successfully_published_n_pages", publishedCount);
-                pageGridView.DataBind();
+                GridViewPages.DataBind();
             }
             
             if ( failedCount > 0 )
             {
                 // note, resource file has to contain "Nije objavio {0} stranice"
-                Notifier1.Warning = string.Format("$failed_to_publish_n_pages", failedCount);
+                Notifier1.Warning = string.Format("Failed_to_publish_n_pages", failedCount);
             }
 
             if (failedCount == 0 && publishedCount == 0)
             {
-                Notifier1.Warning = "$nothing_to_publish";
+                Notifier1.Warning = "Nothing to publish";
             }
         }
 
@@ -207,6 +207,18 @@ namespace OneMainWeb
         protected void LinkButtonPages_Click(object sender, EventArgs e)
         {
             Multiview1.ActiveViewIndex = 1;
+        }
+
+        protected void GridViewArticles_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            GridViewSorting(e);
+            Articles_DataBind();
+        }
+
+        protected void GridViewPages_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            GridViewSorting(e);
+            Pages_DataBind();
         }
     }
 }

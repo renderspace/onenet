@@ -79,7 +79,7 @@ namespace OneMainWeb
             else
             {
                 // text provided was not a number... so do text search
-                articleGridView.DataBind();
+                GridViewArticles.DataBind();
             }
         }
 
@@ -113,7 +113,7 @@ namespace OneMainWeb
         
         protected void cmdFilterArticles_Click(object sender, EventArgs e)
         {
-            articleGridView.DataBind();
+            GridViewArticles.DataBind();
         }
 
         private void Regulars_DataBind(ListControl lb)
@@ -133,7 +133,8 @@ namespace OneMainWeb
             {
                 TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
                 TwoPostbackPager1.SelectedPage = 1;
-                GridViewSortExpression = "";
+                GridViewSortExpression = "display_date";
+                GridViewSortDirection = SortDir.Descending;
                 Articles_DataBind();
 
             }
@@ -181,27 +182,7 @@ namespace OneMainWeb
             }
         }
 
-        private void Articles_DataBind()
-        {
-            ListingState state = new ListingState();
-            state.RecordsPerPage = GridViewPageSize;
-            state.SortDirection = GridViewSortDirection;
-            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
-            state.SortField = GridViewSortExpression;
-            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
-            TwoPostbackPager1.TotalRecords = articles.AllRecords;
-            TwoPostbackPager1.DetermineData();
-            articleGridView.DataSource = articles;
-            articleGridView.DataBind();
-        }
-
-        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
-        {
-            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
-            Articles_DataBind();
-        }
-
-        protected void articleGridView_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GridViewArticles_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridView grid = sender as GridView;
             if (grid != null && grid.SelectedValue != null)
@@ -344,7 +325,7 @@ namespace OneMainWeb
         protected IEnumerable<int> GetCheckedIds()
         {
             var result = new List<int>();
-            foreach (GridViewRow row in articleGridView.Rows)
+            foreach (GridViewRow row in GridViewArticles.Rows)
             {
                 CheckBox chkForPublish = row.FindControl("chkFor") as CheckBox;
                 Literal litArticleId = row.FindControl("litId") as Literal;
@@ -375,7 +356,7 @@ namespace OneMainWeb
             if (deletedCount > 0)
             {
                 Notifier1.Title = string.Format("Marked {0} articles for delete", deletedCount);
-                articleGridView.DataBind();
+                GridViewArticles.DataBind();
             }
         }
 
@@ -393,7 +374,7 @@ namespace OneMainWeb
             if (publishCount > 0)
             {
                 Notifier1.Title = string.Format("Published {0} articles", publishCount);
-                articleGridView.DataBind();
+                GridViewArticles.DataBind();
             }
         }
 
@@ -413,8 +394,34 @@ namespace OneMainWeb
             if (revertCount > 0)
             {
                 Notifier1.Title = string.Format("Reverted to published {0} articles", revertCount);
-                articleGridView.DataBind();
+                GridViewArticles.DataBind();
             }
+        }
+
+        private void Articles_DataBind()
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
+            TwoPostbackPager1.TotalRecords = articles.AllRecords;
+            TwoPostbackPager1.DetermineData();
+            GridViewArticles.DataSource = articles;
+            GridViewArticles.DataBind();
+        }
+
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
+        {
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Articles_DataBind();
+        }
+
+        protected void GridViewArticles_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            GridViewSorting(e);
+            Articles_DataBind();
         }
     }
 
