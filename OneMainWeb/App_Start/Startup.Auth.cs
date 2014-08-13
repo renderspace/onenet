@@ -2,6 +2,7 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using System.Configuration;
 
 namespace OneMainWeb
 {
@@ -29,14 +30,43 @@ namespace OneMainWeb
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "862156870463013",
-               appSecret: "3b42f9b2a5267c59748b79cf52686d8b");
 
-            app.UseGoogleAuthentication(
-               clientId: "326977998446-hs33i2nd3qmbaq0u54uliun972iv2k4v.apps.googleusercontent.com",
-               clientSecret: "CfdmRC7svWrj99e7rIgVV9BV");
+            var FacebookAppId = ConfigurationManager.AppSettings["FacebookAppId"];
+            var FacebookAppSecret = ConfigurationManager.AppSettings["FacebookAppSecret"];
+            if (!string.IsNullOrWhiteSpace(FacebookAppId) && !string.IsNullOrWhiteSpace(FacebookAppSecret))
+            {
+                app.UseFacebookAuthentication(
+                   appId: FacebookAppId,
+                   appSecret: FacebookAppSecret);
+            }
 
+            var GoogleClientId = ConfigurationManager.AppSettings["GoogleClientId"];
+            var GoogleClientSecret = ConfigurationManager.AppSettings["GoogleClientSecret"];
+
+            if (!string.IsNullOrWhiteSpace(GoogleClientId) && !string.IsNullOrWhiteSpace(GoogleClientSecret))
+            {
+                var googleOptions = new Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions
+                {
+
+                    ClientId = GoogleClientId,
+                    ClientSecret = GoogleClientSecret,
+                    CallbackPath = new PathString("/callbacks/google"), // /callbacks/google this is never called by MVC 
+                    /*
+                    Provider = new GoogleOAuth2AuthenticationProvider
+                    {
+                        OnAuthenticated = (context) =>
+                        {
+                            context.Identity.AddClaim(new Claim("picture", context.User.GetValue("picture").ToString()));
+                            context.Identity.AddClaim(new Claim("profile", context.User.GetValue("profile").ToString()));
+                            return Task.FromResult(0);
+                        }
+
+                    }*/
+                };
+
+                googleOptions.Scope.Add("email");
+                app.UseGoogleAuthentication(googleOptions);
+            }
         }
     }
 }
