@@ -620,10 +620,10 @@ namespace OneMainWeb.adm
                     InitializeControls();
                     break;
                 case BWebsite.DeletePageByIdResult.HasChildren:
-                    Notifier1.Warning = "$has_children_delete_not_possible";
+                    Notifier1.Warning = "Page has children, please delete them first.";
                     break;
                 case BWebsite.DeletePageByIdResult.Error:
-                    Notifier1.Warning = "$delete_page_error";
+                    Notifier1.Warning = "Delete page error";
                     break;
             }
         }
@@ -634,50 +634,36 @@ namespace OneMainWeb.adm
 
             if (page != null)
             {
-                bool breakPersistance = CheckBoxBreakPersitence.Checked;
-                string redirectToUrl = InputRedirectToUrl1.Text;
                 int menuGroupID = FormatTool.GetInteger(TextBoxMenuGroup.Text);
                 int selectedTemplateID = FormatTool.GetInteger(ddlPageTemplate.SelectedValue);
-
+                string newParLink = BWebsite.CleanStringForUrl(TextBoxUri.Text);
+                bool validParLink = true;
+                int parentPageID = page.ParentId.Value;
                 if (!page.IsRoot)
                 {
-                    int parentPageID = page.ParentId.Value;
-                    string newParLink = BWebsite.CleanStringForUrl(TextBoxUri.Text);
-
-                    // check whether new par_link already exists in system
-                    bool validParLink = webSiteB.ValidateParLinkAgainstDB(parentPageID, SelectedPageId, newParLink, SelectedWebSiteId);
-
-                    if (validParLink || page.ParLink == newParLink || SelectedPageId == parentPageID)
-                    {
-                        page.MenuGroup = menuGroupID;
-                        page.Template = new BOTemplate { Id = selectedTemplateID };
-                        page.Title = TextBoxTitle.Text;
-                        page.SubTitle = TextBoxSubtitle.Text;
-                        page.Teaser = TextBoxDescription.Text;
-                        page.ParLink = newParLink;
-                        page.BreakPersistance = breakPersistance;
-                        page.RedirectToUrl = redirectToUrl;
-                        webSiteB.ChangePage(page);
-                    }
-                    else if (!validParLink)
+                    
+                    validParLink = webSiteB.ValidateParLinkAgainstDB(parentPageID, SelectedPageId, newParLink, SelectedWebSiteId);
+                    if (!validParLink && page.ParLink != newParLink &&  SelectedPageId != parentPageID)
                     {
                         Notifier1.Warning = "This URL cannot be updated because the URL already exists at this level for this parent page!";
+                        return;
                     }
                 }
-                else  // page.IsRoot
+                else
                 {
-                    var site = webSiteB.Get(SelectedWebSiteId);
-
-                    page.MenuGroup = menuGroupID;
-                    page.Template = new BOTemplate { Id = selectedTemplateID };
-                    page.Title = TextBoxTitle.Text;
-                    page.SubTitle = TextBoxSubtitle.Text;
-                    page.Teaser = TextBoxDescription.Text;
-                    page.ParLink = ""; // page.IsRoot
-                    page.BreakPersistance = breakPersistance;
-                    page.RedirectToUrl = redirectToUrl;
-                    webSiteB.ChangePage(page);
+                    newParLink= "";
                 }
+
+                page.MenuGroup = menuGroupID;
+                page.Template = new BOTemplate { Id = selectedTemplateID };
+                page.Title = TextBoxTitle.Text;
+                page.SubTitle = TextBoxSubtitle.Text;
+                page.Teaser = TextBoxDescription.Text;
+                page.ParLink = newParLink;
+                page.BreakPersistance = CheckBoxBreakPersitence.Checked;
+                page.RedirectToUrl = InputRedirectToUrl1.Text;
+                webSiteB.ChangePage(page);
+
                 OneSettingsPageSettings.Save();
                 InitializeControls();
                 TreeViewPages_DataBind();
