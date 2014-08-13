@@ -57,7 +57,7 @@ namespace OneMainWeb.adm
             if (TreeView2.Nodes.Count > 0)
                 TreeView2.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, Page, currentExpandLevel);
+            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
             if (tree != null)
             {
                 TreeView2.Nodes.Add(tree);

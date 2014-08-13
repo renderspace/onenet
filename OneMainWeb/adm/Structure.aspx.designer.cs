@@ -193,6 +193,24 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxBreakPersitence;
         
         /// <summary>
+        /// PanelFbDebug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelFbDebug;
+        
+        /// <summary>
+        /// HyperLinkFBDebug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkFBDebug;
+        
+        /// <summary>
         /// OneSettingsPageSettings control.
         /// </summary>
         /// <remarks>

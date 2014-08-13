@@ -104,25 +104,26 @@
                             </label>
                         </div>
 
- 
-                        <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="Page settings" DisplayCommands="false"  />	
-                        
-			        </div>
-                    
-				    <div class="form-group">
-                        <div class="col-sm-4">
-						    <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
-                        </div>
+                        <asp:Panel CssClass="form-group" runat="server" ID="PanelFbDebug" Visible="false">
+                             <label class="col-sm-4 control-label"><asp:HyperLink runat="server" ID="HyperLinkFBDebug" Target="_blank">FB Debug</asp:HyperLink></label>
+                        </asp:Panel>
 
-                        <div class="col-sm-8">
-					        <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
-			                <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
-			                <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
-			                <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
-                            <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
-                        </div>
-				    </div>
+                        <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="Page settings" DisplayCommands="false"  />	                        
                     
+				        <div class="form-group">
+                            <div class="col-sm-4">
+						        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                            </div>
+
+                            <div class="col-sm-8">
+					            <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
+			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
+			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
+			                    <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
+                                <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                            </div>
+				        </div>
+                    </div>
                 </section>
                 <section class="module module-settings">
                 <div class="with_buttons">
