@@ -74,6 +74,9 @@ namespace OneMainWeb
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)
         {
+            LastChangeAndHistory1.SelectedContentId = 0;
+            LastChangeAndHistory1.Text = "";
+
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
                 if (IsPostBack)
@@ -85,6 +88,10 @@ namespace OneMainWeb
 
                 if (SelectedDictionaryEntry != null && !string.IsNullOrEmpty(SelectedDictionaryEntry.KeyWord))
                 {
+                    LastChangeAndHistory1.SelectedContentId = SelectedDictionaryEntry.ContentId.Value;
+                    LastChangeAndHistory1.Text = SelectedDictionaryEntry.DisplayLastChanged;
+                    LastChangeAndHistory1.SelectedLanguageId = SelectedDictionaryEntry.LanguageId;
+
                     txtTextContent.Title = SelectedDictionaryEntry.Title;
                     txtTextContent.SubTitle = SelectedDictionaryEntry.SubTitle;
                     txtTextContent.Teaser = SelectedDictionaryEntry.Teaser;
@@ -93,8 +100,8 @@ namespace OneMainWeb
 
                     txtKeyword.Visible = false;
                     LabelKeyword.Visible = true;
-                    InsertUpdateButton.Text = "Update";
-                    InsertUpdateCloseButton.Text = "Update and close";
+                    InsertUpdateButton.Text = "Save";
+                    InsertUpdateCloseButton.Text = "Save and close";
                 }
                 else
                 {
