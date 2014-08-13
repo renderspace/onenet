@@ -195,17 +195,7 @@ namespace OneMainWeb.adm
 
         protected void GridViewItems_Sorting(object sender, GridViewSortEventArgs e)
         {
-            if (GridViewSortExpression == e.SortExpression)
-            {
-                GridViewSortDirection = SortDir.Ascending == GridViewSortDirection
-                                            ? SortDir.Descending
-                                            : SortDir.Ascending;
-            }
-            else
-            {
-                GridViewSortExpression = e.SortExpression;
-                GridViewSortDirection = SortDir.Ascending;
-            }
+            GridViewSorting(e);
             GridViewItemsDataBind();
         }
 

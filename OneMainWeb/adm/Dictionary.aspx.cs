@@ -61,8 +61,7 @@ namespace OneMainWeb
 
                 MultiView1.ActiveViewIndex = 0;
 
-                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
-                TwoPostbackPager1.SelectedPage = 1;
+                
             }
         }
 
@@ -73,6 +72,10 @@ namespace OneMainWeb
 
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+                GridViewSortExpression = "keyword";
+                GridViewSortDirection = SortDir.Ascending;
                 LoadAll(false);
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
@@ -115,17 +118,7 @@ namespace OneMainWeb
 
         protected void GridViewEntries_Sorting(object sender, GridViewSortEventArgs e)
         {
-            if (GridViewSortExpression == e.SortExpression)
-            {
-                GridViewSortDirection = SortDir.Ascending == GridViewSortDirection
-                                            ? SortDir.Descending
-                                            : SortDir.Ascending;
-            }
-            else
-            {
-                GridViewSortExpression = e.SortExpression;
-                GridViewSortDirection = SortDir.Ascending;
-            }
+            GridViewSorting(e);
             LoadAll(false);
         }
 
@@ -271,11 +264,11 @@ namespace OneMainWeb
                     if(contentB.DeleteDictionaryEntry(keyword))
                     {
                         LoadAll(false);
-                        Notifier1.Message = "$deleted";
+                        Notifier1.Message = "Deleted";
                     }
                     else
                     {
-                        Notifier1.Warning = "$delete_failed";
+                        Notifier1.Warning = "Delete failed";
                     }
                 }
             }

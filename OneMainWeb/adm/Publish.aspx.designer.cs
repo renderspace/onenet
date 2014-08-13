@@ -58,13 +58,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
-        /// articleGridView control.
+        /// GridViewArticles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView articleGridView;
+        protected global::System.Web.UI.WebControls.GridView GridViewArticles;
         
         /// <summary>
         /// TwoPostbackPager1 control.
@@ -94,13 +94,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
-        /// pageGridView control.
+        /// GridViewPages control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView pageGridView;
+        protected global::System.Web.UI.WebControls.GridView GridViewPages;
         
         /// <summary>
         /// TwoPostbackPager2 control.

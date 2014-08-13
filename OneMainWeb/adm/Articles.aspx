@@ -27,11 +27,11 @@
 			     </div>
             </div>
 			
-				<asp:GridView ID="articleGridView" runat="server" CssClass="table table-hover"
+				<asp:GridView ID="GridViewArticles" runat="server" CssClass="table table-hover" OnSorting="GridViewArticles_Sorting"
 					AllowSorting="True"
 					AutoGenerateColumns="False"
 					DataKeyNames="Id"
-					OnSelectedIndexChanged="articleGridView_SelectedIndexChanged">
+					OnSelectedIndexChanged="GridViewArticles_SelectedIndexChanged">
 					<Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>

@@ -452,14 +452,9 @@ namespace OneMainWeb.adm
                         }
                     case "COMMAND_EDIT_INSTANCE":
                         {
-                            if (moduleInstance.Name == "TextContent")
+                            if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
                             {
                                 string redirectTo = Request.ApplicationPath + "adm/ContentEdit.aspx?instanceId=" + moduleInstanceID;
-                                Response.Redirect(redirectTo);
-                            }
-                            else if (moduleInstance.Name == "SpecialContent")
-                            {
-                                string redirectTo = Request.ApplicationPath + "adm/SpecialContentEdit.aspx?instanceId=" + moduleInstanceID;
                                 Response.Redirect(redirectTo);
                             }
                             else
