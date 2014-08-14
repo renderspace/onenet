@@ -17,8 +17,8 @@ namespace One.Net.BLL.Service
         [Description(" public Ping()")]
         string Ping();
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Get?id={id}")]
-        [Description("Get(int id)")]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Get?contentId={contentId}")]
+        [Description("Get(int contentId)")]
         DTOForm Get(int id);
     }
 }

@@ -190,10 +190,18 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
     if (button == null) {
         return false;
     }
+    $(".modal-body .col-sm-9").hide();
+    $(".modal-footer .btn-success").hide();
+    $(".modal-body input").val("");
+    $(".modal-body textarea").val("");
     var fileId = $(button).data('id');
+    $(".j_control_file_id").val(fileId);
     var me = $(this);
     var languageId = $(this).data('language-id');
-    $(".j_control_languege").html(languageId);
+    trace("languageId:" + languageId);
+    $(".j_control_language_id").val(languageId);
+    $(".j_control_content_id").val("");
+    $(".j_control_language").html($(this).data('language'));
     if (fileId > 0) {
         $.ajax({
             url: "/AdminService/GetFileForEditing?id=" + fileId + "&languageId=" + languageId,
@@ -212,11 +220,16 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
                             $("#content-title").val(content.Title);
                             $("#content-subtitle").val(content.Subtitle);
                             $("#content-teaser").val(content.Teaser);
+                            $(".j_control_content_id").val(data.ContentId);
+                            $(".modal-body .col-sm-9").show();
+                            $(".modal-footer .btn-success").show();
                         },
                         error: logError
                     });
+                } else {
+                    $(".modal-body .col-sm-9").show();
+                    $(".modal-footer .btn-success").show();
                 }
-
                 $(".j_control_file").empty().append(data.Icon);
 
             },
@@ -232,8 +245,9 @@ $('#text-content-modal a.btn-success').on('click', function (e) {
     content['Title'] = $("#content-title").val();
     content['Subtitle'] = $("#content-subtitle").val();
     content['Teaser'] = $("#content-teaser").val();
-    content['LanguageId'] = $(".j_control_languege").html();
-    // content['ContentId'] = $(".j_control_languege").html();
+    content['LanguageId'] = $(".j_control_language_id").val();
+    content['ContentId'] = $(".j_control_content_id").val();
+    content['FileId'] = $(".j_control_file_id").val();
     $.ajax({
         url: "/AdminService/ChangeContent",
         data: JSON.stringify(content),
@@ -241,6 +255,12 @@ $('#text-content-modal a.btn-success').on('click', function (e) {
         dataType: 'json',
         type: "POST",
         success: function (data) {
+            if (data === true) {
+                $('#text-content-modal').modal('hide');
+            }
+            else {
+                console.log("data:" + data);
+            }
         }
     });
 });

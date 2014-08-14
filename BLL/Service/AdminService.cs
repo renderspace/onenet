@@ -37,7 +37,7 @@ namespace One.Net.BLL.Service
         public DTOContent GetContent(int id, int languageId)
         {
             var contentB = new BInternalContent();
-            var content = contentB.Get(id, languageId);
+            var content = contentB.GetUnCached(id, languageId);
             var result = new DTOContent(content);
             return result;
         }
@@ -47,20 +47,51 @@ namespace One.Net.BLL.Service
             if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))
                 return false;
 
-            var id = 0;
-            int.TryParse(content.ContentId, out id);
+            var contentId = 0;
+            int.TryParse(content.ContentId, out contentId);
             var languageId = 0;
             int.TryParse(content.LanguageId, out languageId);
-            var contentB = new BInternalContent();
-            var existingContent = contentB.Get(id, languageId);
-            if (existingContent == null)
-                existingContent = new BOInternalContent { LanguageId = languageId };
+            var fileId = 0;
+            int.TryParse(content.FileId, out fileId);
 
+            if (content.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))
+                return false;
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var fileB = new BFileSystem();
+            BOFile file = null;
+            if (fileId > 0)
+            {
+                
+                file = fileB.Get(fileId);
+                if (file.Content != null && file.ContentId != contentId)
+                {
+                    return false;
+                }
+            }
+
+            var contentB = new BInternalContent();
+
+            var existingContent = (file != null && file.Content != null) ? file.Content : contentB.Get(contentId, languageId);
+            if (existingContent == null)
+                existingContent = new BOInternalContent();
+            
+            existingContent.LanguageId = languageId;
             existingContent.Title = content.Title;
             existingContent.SubTitle = content.Subtitle;
-            existingContent.Teaser= content.Teaser;
-            contentB.Change(existingContent);
-            return true;
+            existingContent.Teaser = content.Teaser;
+
+            if (file == null)
+            {
+                contentB.Change(existingContent);
+                return true;
+            }
+            else
+            {
+                file.Content = existingContent;
+                fileB.Change(file);
+                return true;
+            }
         }
 
         public List<DTOFile> ListFiles(int folderId, int languageId)
@@ -115,7 +146,7 @@ namespace One.Net.BLL.Service
             {
                 if (category.ParentId.HasValue && category.ParentId.Value == parent.Id.Value)
                 {
-                    result.Append(" {\"text\": \"" + category.Title.Replace('"', ' ') + "\", \"id\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
+                    result.Append(" {\"text\": \"" + category.Title.Replace('"', ' ') + "\", \"contentId\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
                         (selectedId == category.Id ? "\"selected\":\"true\"," : "") + " \"nodes\": [");
                     if (category.ChildCount.Value > 0)
                     {
@@ -187,6 +218,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string LanguageId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string FileId { get; set; }
 
         public DTOContent()
         { }
