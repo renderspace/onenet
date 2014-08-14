@@ -2,6 +2,9 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
+<%@ Register TagPrefix="one" TagName="TextContentModal" Src="~/AdminControls/TextContentModal.ascx" %>
+
+
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL" %>
 
@@ -68,7 +71,7 @@
         </table>
 
         <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
-        
+        <one:TextContentModal runat="server" ID="TextContentModal1" />
     </div>
 </div>     
 </asp:Content>

@@ -140,8 +140,6 @@ $('#audit-history').on('show.bs.modal', function (e) {
             error: logError
         });
     }
-
-
 });
 
 function getTree(callback) {
@@ -168,7 +166,10 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-                $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' + item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name + '</td><td><a href="#" data-id="' + item.Id + '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
+                $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
+                    item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name +
+                    '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-id="' + item.Id +
+                    '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
             });
             trace(data.length);
             if (data.length == 0) {
@@ -182,6 +183,67 @@ function files_databind(selectedFolderId) {
         error: logError
     });
 };
+
+
+$('#text-content-modal').on('show.bs.modal', function (e) {
+    var button = e.relatedTarget;
+    if (button == null) {
+        return false;
+    }
+    var fileId = $(button).data('id');
+    var me = $(this);
+    var languageId = $(this).data('language-id');
+    $(".j_control_languege").html(languageId);
+    if (fileId > 0) {
+        $.ajax({
+            url: "/AdminService/GetFileForEditing?id=" + fileId + "&languageId=" + languageId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            success: function (data) {
+                trace("GetFileForEditing success");
+                if (data.ContentId > 0) {
+                    $.ajax({
+                        url: "/AdminService/GetContent?id=" + data.ContentId + "&languageId=" + languageId,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "GET",
+                        success: function (content) {
+                            $("#content-title").val(content.Title);
+                            $("#content-subtitle").val(content.Subtitle);
+                            $("#content-teaser").val(content.Teaser);
+                        },
+                        error: logError
+                    });
+                }
+
+                $(".j_control_file").empty().append(data.Icon);
+
+            },
+            error: logError
+        });
+    }
+});
+
+
+$('#text-content-modal a.btn-success').on('click', function (e) {
+    console.log("mijav");
+    var content = new Object();
+    content['Title'] = $("#content-title").val();
+    content['Subtitle'] = $("#content-subtitle").val();
+    content['Teaser'] = $("#content-teaser").val();
+    content['LanguageId'] = $(".j_control_languege").html();
+    // content['ContentId'] = $(".j_control_languege").html();
+    $.ajax({
+        url: "/AdminService/ChangeContent",
+        data: JSON.stringify(content),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "POST",
+        success: function (data) {
+        }
+    });
+});
 
 
 var folderTree = $('#tree');
@@ -226,3 +288,6 @@ if (CheckboxNewDatabase.length > 0) {
 }
 
 
+/*
+
+*/
