@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TextContentModal.ascx.cs" Inherits="OneMainWeb.AdminControls.TextContentModal" EnableViewState="false" %>
-<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>">
+<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>" data-language="<%: SelectedLanguage %>">
     
     <div class="modal-dialog">
         <div class="modal-content">
@@ -7,11 +7,15 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">File description edit</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body form-horizontal">
+                <input type="hidden" class="j_control_language_id" />
+                <input type="hidden" class="j_control_content_id" />
+                <input type="hidden" class="j_control_file_id" />
+                
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Language</label> 
                     <div class="col-sm-3">
-                        <span class="j_control_languege"></span>
+                        <span class="j_control_language"></span>
                     </div>
                     <div class="col-sm-3 j_control_file">
                    

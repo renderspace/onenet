@@ -10,6 +10,14 @@ namespace OneMainWeb.AdminControls
 {
     public partial class TextContentModal : System.Web.UI.UserControl
     {
+        public string SelectedLanguage
+        {
+            get
+            {
+                return Thread.CurrentThread.CurrentCulture.EnglishName;
+            }
+        }
+
         public string SelectedLanguageId 
         { 
             get 

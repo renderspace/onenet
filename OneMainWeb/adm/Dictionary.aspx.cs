@@ -56,13 +56,8 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                // WEBSITE
-                
                 SearchTermNoResults = "";
-
                 MultiView1.ActiveViewIndex = 0;
-
-                
             }
         }
 
@@ -187,7 +182,7 @@ namespace OneMainWeb
             try
             {
 
-                if (txtTextContent.Title.Contains("[No translation]"))
+                if (txtTextContent.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))
                 {
                     Notifier1.Warning = "Please translate the entry first.";
                     return;

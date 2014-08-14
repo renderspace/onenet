@@ -71,6 +71,9 @@ namespace One.Net.BLL
 
         public BOInternalContent GetUnCached(int contentID, int languageID)
         {
+            if (contentID < 1)
+                return null;
+
             BOInternalContent content = contentDb.GetContent(contentID, languageID);
 
             if (content == null)
@@ -89,7 +92,7 @@ namespace One.Net.BLL
 
 
         /// <summary>
-        /// Clones and owerwrites all content on target content id. Use with caution!
+        /// Clones and owerwrites all content on target content contentId. Use with caution!
         /// </summary>
         /// <param name="offlineContentId">Source</param>
         /// <param name="onlineContentId">Target</param>
