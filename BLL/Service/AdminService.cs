@@ -34,6 +34,35 @@ namespace One.Net.BLL.Service
             return result;
         }
 
+        public DTOContent GetContent(int id, int languageId)
+        {
+            var contentB = new BInternalContent();
+            var content = contentB.Get(id, languageId);
+            var result = new DTOContent(content);
+            return result;
+        }
+
+        public bool ChangeContent(DTOContent content)
+        {
+            if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))
+                return false;
+
+            var id = 0;
+            int.TryParse(content.ContentId, out id);
+            var languageId = 0;
+            int.TryParse(content.LanguageId, out languageId);
+            var contentB = new BInternalContent();
+            var existingContent = contentB.Get(id, languageId);
+            if (existingContent == null)
+                existingContent = new BOInternalContent { LanguageId = languageId };
+
+            existingContent.Title = content.Title;
+            existingContent.SubTitle = content.Subtitle;
+            existingContent.Teaser= content.Teaser;
+            contentB.Change(existingContent);
+            return true;
+        }
+
         public List<DTOFile> ListFiles(int folderId, int languageId)
         {
             var fileB = new BFileSystem();
@@ -46,6 +75,15 @@ namespace One.Net.BLL.Service
             {
                 result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString() });
             }
+            return result;
+        }
+
+        public DTOFile GetFileForEditing(int id, int languageId)
+        {
+            var fileB = new BFileSystem();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var f = fileB.Get(id);
+            var result = new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString() };
             return result;
         }
 
@@ -91,6 +129,8 @@ namespace One.Net.BLL.Service
                 result.Remove(result.Length - 2, 2);
         }
 
+        
+
         private static string GenerateFileIcon(BOFile file, int width)
         {
             string extension = file.Extension.ToLower().Replace(".", "");
@@ -130,7 +170,37 @@ namespace One.Net.BLL.Service
         public string ContentId { get; set; }
     }
 
-    
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOContent
+    {
+        [DataMember, JsonProperty]
+        public string Title { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Subtitle { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Teaser { get; set; }
+
+        [DataMember, JsonProperty]
+        public string ContentId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string LanguageId { get; set; }
+
+        public DTOContent()
+        { }
+
+        public DTOContent(BOInternalContent c)
+        {
+            if (c.ContentId.HasValue)
+                ContentId = c.ContentId.Value.ToString();
+            Title = c.Title;
+            Subtitle = c.SubTitle;
+            Teaser = c.Teaser;
+            LanguageId = c.LanguageId.ToString();
+        }
+    }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
     public class DTOAuditItem

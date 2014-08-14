@@ -28,5 +28,17 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListFiles?folderId={folderId}&languageId={languageId}")]
         [Description("List<DTOFile> ListFiles(int folderId)")]
         List<DTOFile> ListFiles(int folderId, int languageId);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFileForEditing?id={id}&languageId={languageId}")]
+        [Description("DTOFile GetFileForEditing(int id, int languageId)")]
+        DTOFile GetFileForEditing(int id, int languageId);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ChangeContent")]
+        [Description("bool ChangeContent(DTOContent content)")]
+        bool ChangeContent(DTOContent content);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContent?id={id}&languageId={languageId}")]
+        [Description("DTOContent GetContent(int id, int languageId)")]
+        DTOContent GetContent(int id, int languageId);
     }
 }

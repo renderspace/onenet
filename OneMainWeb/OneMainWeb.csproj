@@ -232,6 +232,13 @@
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.designer.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AdminControls\TextContentModal.ascx.cs">
+      <DependentUpon>TextContentModal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\TextContentModal.ascx.designer.cs">
+      <DependentUpon>TextContentModal.ascx</DependentUpon>
+    </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
@@ -404,6 +411,7 @@
     <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
+    <Content Include="AdminControls\TextContentModal.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
     <Content Include="adm\css\bootstrap.min.css" />
     <Content Include="adm\css\dashboard.css" />

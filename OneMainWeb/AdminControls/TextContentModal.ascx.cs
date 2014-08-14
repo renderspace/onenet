@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace OneMainWeb.AdminControls
+{
+    public partial class TextContentModal : System.Web.UI.UserControl
+    {
+        public string SelectedLanguageId 
+        { 
+            get 
+            { 
+                return Thread.CurrentThread.CurrentCulture.LCID.ToString(); 
+            }
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
