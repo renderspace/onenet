@@ -139,6 +139,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.TextBox txtKeyword;
         
         /// <summary>
+        /// LabelLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelLanguage;
+        
+        /// <summary>
         /// txtTextContent control.
         /// </summary>
         /// <remarks>
