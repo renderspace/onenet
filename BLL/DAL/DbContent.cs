@@ -345,7 +345,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return entry;
         }
 
-        public BODictionaryEntry GetDictionaryEntry(string keyWord, int languageId)
+        public BODictionaryEntry GetDictionaryEntry(string keyWord, int languageId, bool showUntranslated = false)
         {
             BODictionaryEntry entry = null;
 
@@ -355,10 +355,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             string sql = DbHelper.CONTENT_SELECT_PART +
                          @"d.content_fk_id, d.keyword
-FROM [dbo].[dictionary] d
-INNER JOIN [dbo].[content] c ON c.id=d.content_fk_id
-INNER JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId
-WHERE keyword=@keyWord COLLATE SQL_Latin1_General_CP1_CS_AS";
+                            FROM [dbo].[dictionary] d
+                            INNER JOIN [dbo].[content] c ON c.id=d.content_fk_id";
+            sql += showUntranslated ? " LEFT " : " INNER ";
+            sql += @"JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId
+                          WHERE keyword=@keyWord COLLATE SQL_Latin1_General_CP1_CS_AS";
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {

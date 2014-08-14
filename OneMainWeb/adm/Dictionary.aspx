@@ -72,6 +72,12 @@
                             <asp:TextBox ID="txtKeyword" runat="server" CssClass="form-control" />
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Language</label> 
+                        <div class="col-sm-9">
+                            <asp:Label runat="server" ID="LabelLanguage"></asp:Label>
+                        </div>
+                    </div>
 
 		            <one:TextContentControl ID="txtTextContent" runat="server" 
 		            TitleLabel="$dict_entry_title" SubTitleLabel="$dict_entry_sub_title" 

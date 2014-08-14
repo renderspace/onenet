@@ -221,11 +221,14 @@ namespace One.Net.BLL
             return entry;
         }
 
-        public BODictionaryEntry GetDictionaryEntry(string keyWord)
+        public BODictionaryEntry GetDictionaryEntryForEditing(string keyWord)
         {
             if (string.IsNullOrEmpty(keyWord))
                 return null;
-            BODictionaryEntry entry = contentDb.GetDictionaryEntry(keyWord, LanguageId);
+            BODictionaryEntry entry = contentDb.GetDictionaryEntry(keyWord, LanguageId, true);
+
+            if (entry.ContentId.HasValue && entry.MissingTranslation)
+                    entry.Title = BInternalContent.GetContentTitleInAnyLanguage(entry.ContentId.Value);
             return entry;
         }
 

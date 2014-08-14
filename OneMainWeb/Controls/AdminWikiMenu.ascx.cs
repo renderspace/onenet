@@ -115,7 +115,7 @@ namespace OneMainWeb.Controls
             }
             /*
             pageTree_DataBind();
-            InitializeControls();
+            SelectedPage_DataBind();
             MultiView1.Visible = (pageTree.Nodes.Count != 0); */
         }
     }

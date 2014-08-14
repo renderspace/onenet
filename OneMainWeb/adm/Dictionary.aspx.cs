@@ -16,6 +16,7 @@ using System.IO;
 using One.Net.BLL;
 
 using OneMainWeb.AdminControls;
+using System.Globalization;
 
 namespace OneMainWeb
 {
@@ -86,7 +87,9 @@ namespace OneMainWeb
                 {
                     LastChangeAndHistory1.SelectedContentId = SelectedDictionaryEntry.ContentId.Value;
                     LastChangeAndHistory1.Text = SelectedDictionaryEntry.DisplayLastChanged;
-                    LastChangeAndHistory1.SelectedLanguageId = SelectedDictionaryEntry.LanguageId;
+                    LastChangeAndHistory1.SelectedLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+
+                    LabelLanguage.Text = Thread.CurrentThread.CurrentCulture.EnglishName;
 
                     txtTextContent.Title = SelectedDictionaryEntry.Title;
                     txtTextContent.SubTitle = SelectedDictionaryEntry.SubTitle;
@@ -183,6 +186,13 @@ namespace OneMainWeb
         {
             try
             {
+
+                if (txtTextContent.Title.Contains("[No translation]"))
+                {
+                    Notifier1.Warning = "Please translate the entry first.";
+                    return;
+                }
+
                 // we're inserting
                 if (null == SelectedDictionaryEntry) 
                 {
@@ -279,8 +289,8 @@ namespace OneMainWeb
             GridView grid = sender as GridView;
             if (grid != null && grid.SelectedValue != null)
             {
-                SelectedDictionaryEntry = contentB.GetDictionaryEntry(grid.SelectedValue.ToString());
-                if (null == SelectedDictionaryEntry || SelectedDictionaryEntry.MissingTranslation)
+                SelectedDictionaryEntry = contentB.GetDictionaryEntryForEditing(grid.SelectedValue.ToString());
+                if (null == SelectedDictionaryEntry)
                 {
                     SelectedDictionaryEntry = new BODictionaryEntry();
                     SelectedDictionaryEntry.KeyWord = grid.SelectedValue.ToString();

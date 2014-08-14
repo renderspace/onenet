@@ -37,7 +37,7 @@ namespace OneMainWeb.adm
             {
                 Modules_DataBind();
                 Templates_DataBind();
-                InitializeControls();   
+                SelectedPage_DataBind();   
             }
         }
 
@@ -83,6 +83,7 @@ namespace OneMainWeb.adm
             {
                 Notifier1.Warning = "Please consider enabling Google Analytics on this website.";
             }
+            SelectedPage_DataBind();
         }
 
         protected void ResetAllControlsToDefault(string message)
@@ -147,7 +148,7 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void InitializeControls()
+        protected void SelectedPage_DataBind()
         {
             if (SelectedPage != null)
             {
@@ -228,8 +229,6 @@ namespace OneMainWeb.adm
                     var url = SelectedWebsite.ProductionUrl.TrimEnd('/') + SelectedPage.URI;
                     HyperLinkFBDebug.NavigateUrl = "https://developers.facebook.com/tools/debug/og/object?q=" + url;
                 }
-
-                
             }
         }
 
@@ -379,8 +378,7 @@ namespace OneMainWeb.adm
 
         protected void moduleSettings_SettingsSaved(object sender, EventArgs e)
         {
-            InitializeControls();
-            TreeViewPages_DataBind();
+            SelectedPage_DataBind();
         }
 
         protected void RepeaterModuleInstances_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -418,7 +416,6 @@ namespace OneMainWeb.adm
                                 if (adjacentInstance != null)
                                 {
                                     webSiteB.SwapModuleInstances(moduleInstance, adjacentInstance);
-                                    InitializeControls();
                                     TreeViewPages_DataBind();
                                 }
                             }
@@ -444,7 +441,6 @@ namespace OneMainWeb.adm
                                 if (adjacentInstance != null)
                                 {
                                     webSiteB.SwapModuleInstances(moduleInstance, adjacentInstance);
-                                    InitializeControls();
                                     TreeViewPages_DataBind();
                                 }
                             }
@@ -466,13 +462,11 @@ namespace OneMainWeb.adm
                     case "COMMAND_UNDELETE":
                         {
                             webSiteB.UnDeleteModuleInstance(moduleInstanceID);
-                            InitializeControls();
                             break;
                         }
                     case "COMMAND_DELETE":
                         {
                             webSiteB.DeleteModuleInstance(moduleInstanceID);
-                            InitializeControls();
                             break;
                         }
                     case "COMMAND_SAVE_INSTANCE":
@@ -492,7 +486,7 @@ namespace OneMainWeb.adm
                             break;
                         }
                 }
-                InitializeControls();
+                SelectedPage_DataBind();
             }
         }
 
@@ -567,7 +561,7 @@ namespace OneMainWeb.adm
             }
 
             TreeViewPages_DataBind();
-            InitializeControls();
+            SelectedPage_DataBind();
             MultiView1.Visible = (TreeViewPages.Nodes.Count != 0);
         }
 
@@ -577,7 +571,6 @@ namespace OneMainWeb.adm
             TreeViewPages.CollapseAll();
             ExpandLoop(TreeViewPages.SelectedNode);
             SelectedWebsite_ValidateDataBind();
-            InitializeControls();
         }
 
         private static void ExpandLoop(TreeNode node)
@@ -595,7 +588,7 @@ namespace OneMainWeb.adm
             {
                 webSiteB.UndeletePage(SelectedPageId);
                 TreeViewPages_DataBind();
-                InitializeControls();
+                SelectedPage_DataBind();
             }
         }
 
@@ -608,11 +601,11 @@ namespace OneMainWeb.adm
                     SelectedPageId = -1;
                     RootNodeID = null;
                     TreeViewPages_DataBind();
-                    InitializeControls();
+                    SelectedPage_DataBind();
                     break;
                 case BWebsite.DeletePageByIdResult.Deleted:
                     TreeViewPages_DataBind();
-                    InitializeControls();
+                    SelectedPage_DataBind();
                     break;
                 case BWebsite.DeletePageByIdResult.HasChildren:
                     Notifier1.Warning = "Page has children, please delete them first.";
@@ -660,7 +653,7 @@ namespace OneMainWeb.adm
                 webSiteB.ChangePage(page);
 
                 OneSettingsPageSettings.Save();
-                InitializeControls();
+                SelectedPage_DataBind();
                 TreeViewPages_DataBind();
             }
             else
@@ -699,7 +692,7 @@ namespace OneMainWeb.adm
                     }
                 }
                 TreeViewPages_DataBind();
-                InitializeControls();
+                SelectedPage_DataBind();
             }
         }
 
@@ -714,7 +707,7 @@ namespace OneMainWeb.adm
             var result = webSiteB.AddModulesInstance(SelectedPageId, selectedPlaceHolder, selectedModuleID);
             if (result)
             {
-                InitializeControls();
+                SelectedPage_DataBind();
                 TreeViewPages_DataBind();
             }
         }
@@ -762,7 +755,7 @@ namespace OneMainWeb.adm
             {
                 Notifier1.ExceptionName = "Trying to publish nonexisting page.";
             }
-            InitializeControls();
+            SelectedPage_DataBind();
             TreeViewPages_DataBind();
         }
 
@@ -783,18 +776,18 @@ namespace OneMainWeb.adm
 
                 if (webSiteB.UnPublishPage(SelectedPageId))
                 {
-                    Notifier1.Message = "$unpublish_successfull";
+                    Notifier1.Message = "Unpublish successfull";
                 }
                 else
                 {
-                    Notifier1.Warning = "$unpublish_unsuccessfull";
+                    Notifier1.Warning = "Unpublish unsuccessfull";
                 }
             }
             else
             {
-                Notifier1.ExceptionName = "$page_never_published";
+                Notifier1.ExceptionName = "Page was never published";
             }
-            InitializeControls();
+            SelectedPage_DataBind();
             TreeViewPages_DataBind();
         }
     }
