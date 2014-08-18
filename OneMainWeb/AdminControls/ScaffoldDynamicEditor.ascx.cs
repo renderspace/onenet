@@ -124,18 +124,16 @@ namespace OneMainWeb.AdminControls
                             }
                             break;
                         case FieldType.OneToMany:
-
                             var DropDownListRegular = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as DropDownList;
-                            if (DropDownListRegular != null)
+                            if (DropDownListRegular != null && DropDownListRegular.Items.FindByValue(primaryKey.ToString()) != null)
                             {
-
+                                DropDownListRegular.SelectedValue = primaryKey.ToString();
                             }
                             var HiddenFieldPrimaryKey = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as HiddenField;
                             if (HiddenFieldPrimaryKey != null)
                             {
-
+                                HiddenFieldPrimaryKey.Value = primaryKey.ToString();
                             }
-
                             var TextBoxSuggest = PanelFieldsHolder.FindControl("TBFI" + column.Ordinal) as TextBox;
 
                             if (TextBoxSuggest != null)
@@ -725,7 +723,7 @@ jQuery.validator.addMethod(
                                 }
                                 break;
                             }
-                            var HiddenFieldPrimaryKey = PanelField.FindControl("FI" + field.Ordinal) as HiddenField;
+                            var HiddenFieldPrimaryKey = PanelField.FindControl("PKFI" + field.Ordinal) as HiddenField;
                             if (HiddenFieldPrimaryKey != null)
                             {
                                 if (HiddenFieldPrimaryKey.Value == "0" || HiddenFieldPrimaryKey.Value == NULL || string.IsNullOrWhiteSpace(HiddenFieldPrimaryKey.Value))
