@@ -83,7 +83,6 @@ namespace OneMainWeb.adm
             {
                 Notifier1.Warning = "Please consider enabling Google Analytics on this website.";
             }
-            SelectedPage_DataBind();
         }
 
         protected void ResetAllControlsToDefault(string message)
@@ -571,6 +570,7 @@ namespace OneMainWeb.adm
             TreeViewPages.CollapseAll();
             ExpandLoop(TreeViewPages.SelectedNode);
             SelectedWebsite_ValidateDataBind();
+            SelectedPage_DataBind();
         }
 
         private static void ExpandLoop(TreeNode node)
