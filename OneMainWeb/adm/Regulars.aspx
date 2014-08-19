@@ -34,21 +34,20 @@
 		        </Columns>
 	        </asp:GridView>
             <div class="form-group">
-                    <div class="col-sm-12">
-                        <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
-                    </div>
+                <div class="col-sm-12">
+                    <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
                 </div>
+            </div>
         </asp:View>
         <asp:View ID="View3" runat="server">
-            <div class="adminSection form-horizontal">
-			        <one:TextContentControl ID="TxtRegularContent" runat="server" TitleLabel="$regular_title" SubTitleLabel="$regular_sub_title" TeaserLabel="$regular_teaser" HtmlLabel="$regular_html" HtmlRows="10" />
-			        <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-				            <asp:LinkButton ID="RegularCancelButton" runat="server" CausesValidation="false" CommandName="Cancel" Text="$cancel" OnClick="RegularCancelButton_Click" CssClass="btn btn-primary" />
-				            <asp:LinkButton ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success" />
-				            <asp:LinkButton ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click"  Text="Save & close" CssClass="btn btn-success" />
-                        </div>
-			        </div>
+            <div class="adminSection form-horizontal validationGroup">
+			    <one:TextContentControl ID="TxtRegularContent" runat="server" HtmlRows="10" />
+			    <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+				        <asp:LinkButton ID="RegularCancelButton" runat="server" CausesValidation="false" CommandName="Cancel" Text="$cancel" OnClick="RegularCancelButton_Click" CssClass="btn btn-primary" />
+				        <asp:LinkButton ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click"  Text="Save & close" CssClass="btn btn-success causesValidation" />
+                    </div>
 			    </div>
 			</div>
         </asp:View>
