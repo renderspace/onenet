@@ -309,5 +309,60 @@ if (CheckboxNewDatabase.length > 0) {
 
 
 /*
-
+VALIDATION
 */
+
+$(document).ready(function () {
+    $("#form1").validate({
+        onsubmit: false,
+        highlight: function (element) {
+            console.log('highlight');
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            console.log('unhighlight');
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length || element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    $('.validationGroup .causesValidation').on('click', Validate);
+    $('.validationGroup :text').on('keydown', function (evt) {
+        if (evt.keyCode == 13) {
+            // Find and store the next input element that comes after the
+            // one in which the enter key was pressed.
+            var $nextInput = $(this).nextAll(':input:first');
+            // If the next input is a submit button, go into validation.
+            // Else, focus the next form element as if enter == tab.
+            if ($nextInput.is(':submit')) {
+                Validate(evt);
+            }
+            else {
+                evt.preventDefault();
+                $nextInput.focus();
+            }
+        }
+    });
+});
+
+function Validate(evt) {
+    console.log('Validate evt');
+    var $group = $(this).parents('.validationGroup');
+    var isValid = true;
+    $group.find(':input').each(function (i, item) {
+        if (!$(item).valid()) {
+            isValid = false;
+            $(item).closest('.form-group').addClass('has-error');
+        }
+            
+    });
+    if (!isValid)
+        evt.preventDefault();
+}

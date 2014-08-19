@@ -9,7 +9,7 @@ input[type="text"], select {min-width: 220px;}
 select, select:hover, select:focus {color: #000!important;}
 textarea {display: inline-block; padding: 3px 5px; border: 1px #ccc solid!important;}
 input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!important;}
-input[type="text"], select { border: 1px #ccc solid!important;}
+/*input[type="text"], */select { border: 1px #ccc solid!important;}
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {width: 20px;}
 .input, .select, .buttons {margin-bottom: 10px; display: inline-block;}
 .input, .select {width: 100%;}
@@ -188,7 +188,6 @@ input.delete-btn {color: #fff; background-color: #c9302c; border-color: #ac2925;
 input.save-btn, input.changeTextContentInstance {color: #fff; background-color: #5cb85c; border-color: #4cae4c;}
 input.alt_btn {color: #fff; background-color: #ec971f; border-color: #d58512;}
 
-.required {display: none!important;}
 /**/
 
 

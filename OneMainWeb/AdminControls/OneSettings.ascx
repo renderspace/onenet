@@ -3,7 +3,7 @@
 <%@ Import Namespace="One.Net.BLL" %>
 <%@ Import Namespace="System.Collections.Generic" %>
 <%@ Import Namespace="One.Net.BLL" %>
-<details class="form-horizontal">
+<details class="form-horizontal validationGroup">
     <summary>Advanced settings</summary>
     <asp:Repeater ID="RepeaterSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated">
         <ItemTemplate>
@@ -28,7 +28,7 @@
     </asp:Repeater>
     <asp:Panel runat="server" ID="PanelCommands"  CssClass="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-            <asp:LinkButton ID="cmdSaveChanges" runat="server" OnClick="cmdSaveChanges_Click" Text="Save" ValidationGroup="ModuleInstanceSettings"  CssClass="btn btn-success" />
+            <asp:LinkButton ID="cmdSaveChanges" runat="server" OnClick="cmdSaveChanges_Click" Text="Save" ValidationGroup="ModuleInstanceSettings"  CssClass="btn btn-success causesValidation" />
         </div>
     </asp:Panel>
 </details>
