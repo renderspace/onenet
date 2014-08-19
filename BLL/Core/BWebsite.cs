@@ -216,7 +216,8 @@ namespace One.Net.BLL
                 BreakPersistance = false,
                 ParLink = newParLink,
                 Order = newOrder,
-                RedirectToUrl = ""
+                RedirectToUrl = "",
+                URI = ""
             };
 
             if (currentPageId > 0)
