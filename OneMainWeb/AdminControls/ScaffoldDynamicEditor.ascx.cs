@@ -481,15 +481,20 @@ jQuery.validator.addMethod(
                 MaxLength = 11 //(-2,147,483,648 to 2,147,483,647)
             };
             TextBox4.Attributes.Add("type", "number");
+            TextBox4.CssClass += " digits";
+            if (!column.IsNullable)
+                TextBox4.CssClass += " required";
             PanelField.Controls.Add(TextBox4);
-
-            validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBox4.UniqueID);
+            // validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBox4.UniqueID);
         }
 
         private static string CreateValidateRule(bool required, string rules, string uniqueId)
         {
+            return "";
+            /*
             var requiredString = string.IsNullOrEmpty(rules.Trim()) ? "required:true" : "required:true, ";
             return " " + uniqueId + ": {" + (required ? requiredString : "") + rules + "},";
+             * */
         }
 
         private static void PrepareDecimalInput(VirtualColumn column, Panel PanelField, ref string validationJQueryRules)
@@ -501,6 +506,11 @@ jQuery.validator.addMethod(
                 CssClass = "form-control",
                 MaxLength = 16
             };
+            TextBox4.Attributes.Add("type", "number");
+            TextBox4.Attributes.Add("step", "any");
+            TextBox4.CssClass += " decimal";
+            if (!column.IsNullable)
+                TextBox4.CssClass += " required";
             PanelField.Controls.Add(TextBox4);
 
             validationJQueryRules += CreateValidateRule(!column.IsNullable, "decimal:true", TextBox4.UniqueID);
@@ -577,7 +587,10 @@ jQuery.validator.addMethod(
 
             var TextBoxSuggest = new TextBox();
             TextBoxSuggest.ID = "TB" + suggestIdentification;
-            TextBoxSuggest.CssClass = " suggest form-control";
+            if(!column.IsNullable)
+                TextBoxSuggest.CssClass += " required";
+
+            TextBoxSuggest.CssClass += " form-control";
             //   if (!skipSelectedLookup)
             //       TextBoxSuggest.Text = BData.GetForeignKeySelectedOption(column.PartOfRelationId, column.ValueInteger);
 
@@ -585,6 +598,8 @@ jQuery.validator.addMethod(
             HiddenFieldPrimaryKey.ID = "PK" + suggestIdentification;
             //TextBoxPrimaryKey.ReadOnly = true;
             // HiddenFieldPrimaryKey.CssClass = "PK" + TextBoxSuggestIdentification + " suggest_pk";
+
+            
             HiddenFieldPrimaryKey.Value = column.ValueInteger.ToString();
             // HiddenFieldPrimaryKey.Attributes.Add("onfocus", "blur()");
 
@@ -593,11 +608,9 @@ jQuery.validator.addMethod(
             //TextBoxPrimaryKey.Attributes.Add("style", "display: none;");
             var LiteralSuggest = new Literal();
             LiteralSuggest.Text = "<script type=\"text/javascript\">$(document).ready(function() {";
-
-            // LiteralSuggest.Text += " $(\"." + suggestIdentification + " input.suggest\").autocomplete();";
             LiteralSuggest.Text += " $(\"." + suggestIdentification + @" .suggest"").autocomplete({
     source: ""/Utils/BambooOneToManyData.ashx?limit=10&relationId=" + column.PartOfRelationId + @""",
-    minLength: 3,
+    minLength: 2,
     select: function( event, ui ) {
         console.log(ui.item);
                     $(""." + suggestIdentification + @" input[type=hidden]"").val(ui.item.value);

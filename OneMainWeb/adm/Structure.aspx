@@ -13,9 +13,11 @@
         <div class="col-md-3">
             <section class="module tall">
                 <header><h3 class="tabs_involved">Tree structure</h3>
-                    <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff">
-                        <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page"></asp:TextBox>
-                        <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="ButtonAddPage_Click" CssClass="btn btn-success" />
+                    <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
+                        <div class="form-group">
+                            <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
+                            <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
+                        </div>
                     </asp:Panel>
                 </header>
                 <div class="treeview">
@@ -40,11 +42,11 @@
                         </h3>
                         
                     </div>
-			        <div class="pageproperties form-horizontal">
+			        <div class="pageproperties form-horizontal validationGroup">
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Title</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control required"></asp:TextBox>
                             </div>
                         </div>
                          <div class="form-group">
@@ -73,7 +75,7 @@
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Menu group</label>
                             <div class="col-sm-2">
-                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control required digits"></asp:TextBox>
                             </div>
                              <div class="col-sm-6">
                                 <p class="help-block">Signifies in which navigation menu will this page be displayed.<br /> Menu numbers are defined in template.</p>
@@ -85,7 +87,7 @@
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Redirect to URL</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
+                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control url" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">
@@ -120,7 +122,7 @@
 			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
 			                    <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
-                                <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                                <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
                             </div>
 				        </div>
                     </div>

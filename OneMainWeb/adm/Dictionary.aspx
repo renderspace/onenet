@@ -64,12 +64,12 @@
                 
             </asp:View>
             <asp:View ID="View2" runat="server">
-                <div class="adminSection form-horizontal">
+                <div class="adminSection form-horizontal validationGroup">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Keyword</label> 
                         <div class="col-sm-9">
                             <asp:Label runat="server" ID="LabelKeyword"></asp:Label>
-                            <asp:TextBox ID="txtKeyword" runat="server" CssClass="form-control" />
+                            <asp:TextBox ID="txtKeyword" runat="server" CssClass="form-control required" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -89,8 +89,8 @@
                             </div>
                         <div class="col-sm-9">
 			                <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" CssClass="btn btn-default" />
-			                <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" CssClass="btn btn-success" />
-			                <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success" />
+			                <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" CssClass="btn btn-success causesValidation" />
+			                <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
                         </div>
 		            </div>
 		        </div>	
