@@ -36,11 +36,11 @@
 
         </asp:View>
         <asp:View runat="server">
-             <div class="adminSection form-horizontal">
+             <div class="adminSection form-horizontal validationGroup">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Website name</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="InputTitle" runat="server" CssClass="form-control" MaxLength="255" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too." />
+                        <asp:TextBox ValidationGroup="website" Text="" ID="InputTitle" runat="server" CssClass="form-control required" MaxLength="255" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too." />
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Preview website address</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPreviewUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="typically http://sitename.w.renderspace.net (in general: http://preview.example.com)" />
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPreviewUrl" runat="server" CssClass="form-control required" MaxLength="255" placeholder="typically http://sitename.w.renderspace.net (in general: http://preview.example.com)" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="TextBoxPreviewUrl" CssClass="text-danger" ErrorMessage="Preview website address is required." />
                         <asp:RegularExpressionValidator runat="server" ControlToValidate="TextBoxPreviewUrl" CssClass="text-danger" ErrorMessage="Preview website URL must start with http." 
                             ValidationExpression="^http(s)?://([\w-]+.)+[\w-]+(/[\w- ./?%&=])?$" />
@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Production website address</label>
                     <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control" MaxLength="255" placeholder="http://www.example.com" />
+                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control url" MaxLength="255" placeholder="http://www.example.com" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -102,13 +102,13 @@
 
                  <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <asp:LinkButton  ValidationGroup="website" id="ButtonAdd" runat="server" OnClick="ButtonAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Create website" CssClass="btn btn-success" />
+                        <asp:LinkButton  ValidationGroup="website" id="ButtonAdd" runat="server" OnClick="ButtonAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Create website" CssClass="btn btn-success causesValidation" />
                     </div>
                </div>
             </div>
         </asp:View>
         <asp:View ID="View1" runat="server">
-             <div class="adminSection form-horizontal">
+             <div class="adminSection form-horizontal validationGroup">
                  <div class="form-group">
                         <label class="col-sm-3 control-label">ID</label> 
                         <div class="col-sm-9">
@@ -137,13 +137,13 @@
                  <div class="form-group">
                     <label class="col-sm-3 control-label">Website name</label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too."></asp:TextBox>
+                        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control required" placeholder="The name of your website. Not the URL, but the name. (i.e. 'IMDb' not 'imdb.com'.) Used at least by Facebook, possible other uses, too."></asp:TextBox>
                     </div>
                 </div>
                  <div class="form-group">
                     <label class="col-sm-3 control-label">Description</label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control" placeholder="Short description of the website."></asp:TextBox>
+                        <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control required" placeholder="Short description of the website."></asp:TextBox>
                     </div>
                 </div>
                  <div class="form-group">
@@ -159,7 +159,7 @@
                         </div>
                         <div class="col-sm-9">
                             <asp:LinkButton ID="ButtonCancel" runat="server" CausesValidation="false" Text="Cancel" CssClass="btn btn-default" OnClick="ButtonCancel_Click" />
-                            <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn" Text="Save page"  ValidationGroup="PageSett" OnClick="ButtonSave_Click" />
+                            <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn" Text="Save page"  ValidationGroup="PageSett" OnClick="ButtonSave_Click causesValidation" />
                         </div>
 				    </div>
               </div>
