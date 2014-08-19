@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
     
-    <div class="adminSection form-horizontal">
+    <div class="adminSection form-horizontal validationGroup">
 
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
@@ -13,13 +13,13 @@
         </div>
 	    <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <asp:TextBox id="txtSql" runat="server" TextMode="MultiLine" Rows="20" CssClass="form-control" />
+                <asp:TextBox id="txtSql" runat="server" TextMode="MultiLine" Rows="20" CssClass="form-control required" />
             </div>
 	    </div>
 
 	    <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
-                <asp:LinkButton id="cmdExec" runat="server" OnClick="CmdExec_Click" Text="Execute" CssClass="btn btn-danger" />
+                <asp:LinkButton id="cmdExec" runat="server" OnClick="CmdExec_Click" Text="Execute" CssClass="btn btn-danger causesValidation" />
             </div>     
         </div>		
     </div>

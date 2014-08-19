@@ -79,9 +79,7 @@
                         </div>
                     </div>
 
-		            <one:TextContentControl ID="txtTextContent" runat="server" 
-		            TitleLabel="$dict_entry_title" SubTitleLabel="$dict_entry_sub_title" 
-		            TeaserLabel="$dict_entry_teaser" HtmlLabel="$dict_entry_html" HtmlRows="10" />
+		            <one:TextContentControl ID="txtTextContent" runat="server" HtmlRows="10" />
 
 		            <div class="form-group">
                         <div class="col-sm-3">
