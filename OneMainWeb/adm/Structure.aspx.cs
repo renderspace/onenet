@@ -159,7 +159,6 @@ namespace OneMainWeb.adm
                     SelectedPage = webSiteB.GetPage(SelectedPageId);
                 }
 
-                SelectedPage_DataBind();
                 MultiView1.Visible = (TreeViewPages.Nodes.Count != 0);
                 MultiView1.ActiveViewIndex = 0;
 
