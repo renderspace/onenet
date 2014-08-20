@@ -291,15 +291,14 @@ ga('send', 'pageview');
 
                                 if (mod != null)
                                 {
-                                    if (!string.IsNullOrEmpty(mod.ExtraCssClass))
-                                        p.CssClass += " " + mod.ExtraCssClass;
-
                                     mod.InstanceId = module.Id;
                                     mod.PageId = module.PageId;
                                     mod.WebSiteId = CurrentPage.WebSiteId;
                                     mod.WebSiteTitle = CurrentWebsite.Title;
                                     mod.Settings = module.Settings;
                                     mod.RelativePageUri = CurrentPage.URI;
+                                    if (!string.IsNullOrEmpty(mod.ExtraCssClass))
+                                        p.CssClass += " " + mod.ExtraCssClass;
                                     activeModules.Add(mod);
                                 }
                                 contentPlaceHolders[module.PlaceHolderId].Controls.Add(p);

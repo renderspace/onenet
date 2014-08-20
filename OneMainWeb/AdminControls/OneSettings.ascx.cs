@@ -105,127 +105,6 @@ namespace OneMainWeb.AdminControls
             base.LoadControlState(cSBase);
         }
 
-        protected void cmdShowModuleSettings_Click(object sender, EventArgs e)
-        {
-            ShowSettings = true;
-
-            switch (this.Mode)
-            {
-                case SettingMode.Module:
-                    this.Settings = webSiteB.GetModuleInstance(ItemId).Settings;
-                    break;
-                case SettingMode.Page:
-                    this.Settings = webSiteB.GetPage(ItemId).Settings;
-                    break;
-                case SettingMode.Website:
-                    this.Settings = webSiteB.Get(ItemId).Settings;
-                    break;
-            }
-
-            LoadSettings();
-        }
-
-        protected void cmdHideModuleSettings_Click(object sender, EventArgs e)
-        {
-            Settings = null;
-            ShowSettings = false;
-            LoadSettings();
-        }
-
-        public void Save(EventArgs e = null)
-        {
-            if (ItemId > 0 && Settings != null)
-            {
-                Dictionary<string, BOSetting> SettingsForSaving = new Dictionary<string, BOSetting>();
-
-                foreach (RepeaterItem item in RepeaterSettings.Items)
-                {
-                    TextBox TextBox1 = item.FindControl("TextBox1") as TextBox;
-                    var LiteralKey = item.FindControl("LiteralKey") as Literal;
-                    var CheckBox1 = item.FindControl("CheckBox1") as CheckBox;
-                    DropDownList DropDownList1 = item.FindControl("DropDownList1") as DropDownList;
-
-                    BOSetting setting = Settings[LiteralKey.Text];
-
-                    if (setting.UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL && setting.UserVisibility != BOSetting.USER_VISIBILITY_MULTILINE)
-                    {
-                        switch (setting.Type)
-                        {
-                            case "Int":
-                                {
-                                    if (setting.HasOptions)
-                                    {
-                                        if (setting.Options.ContainsKey(DropDownList1.SelectedValue))
-                                            setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
-                                    }
-                                    else
-                                        setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
-                                    break;
-                                }
-                            case "Bool":
-                                {
-                                    setting.Value = CheckBox1.Checked.ToString();
-                                    break;
-                                }
-                            case "PageId":
-                                {
-                                    setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
-                                    break;
-                                }
-                            default:
-                                {
-                                    if (setting.HasOptions)
-                                        setting.Value = DropDownList1.SelectedValue;
-                                    else
-                                        setting.Value = TextBox1.Text;
-                                    break;
-                                }
-                        }
-                        SettingsForSaving.Add(setting.Name, setting);
-                    }
-                    else if (setting.UserVisibility == BOSetting.USER_VISIBILITY_MULTILINE)
-                    {
-                        switch (setting.Type)
-                        {
-                            case "String":
-                                setting.Value = TextBox1.Text;
-                                break;
-                            default: break;
-                        }
-                        SettingsForSaving.Add(setting.Name, setting);
-                    }
-                    else if (setting.UserVisibility == BOSetting.USER_VISIBILITY_SPECIAL)
-                    {
-                        SettingsForSaving.Add(setting.Name, setting);
-                    }
-                }
-
-                switch (Mode)
-                {
-                    case SettingMode.Page:
-                        {
-                            BOPage page = webSiteB.GetPage(ItemId);
-                            page.Settings = SettingsForSaving;
-                            webSiteB.ChangePage(page);
-                            break;
-                        }
-                    case SettingMode.Website:
-                        {
-                            webSiteB.ChangeSettings(SettingsForSaving, ItemId);
-                            break;
-                        }
-                    case SettingMode.Module:
-                        {
-                            webSiteB.ChangeModuleInstanceSettings(SettingsForSaving, ItemId);
-                            break;
-                        }
-                }
-
-                ShowSettings = false;
-                OnSettingsSaved(e);
-            }
-        }
-
         protected void cmdSaveChanges_Click(object sender, EventArgs e)
         {
             Save(e);
@@ -250,7 +129,7 @@ namespace OneMainWeb.AdminControls
             }
         }
 
-        protected void rptSettings_ItemCreated(object sender, RepeaterItemEventArgs e)
+        protected void RepeaterSettings_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
@@ -353,6 +232,95 @@ namespace OneMainWeb.AdminControls
                         LabelValue.Visible = true;
                     }
                 }
+            }
+        }
+
+        public void Save(EventArgs e = null)
+        {
+            if (ItemId > 0 && Settings != null)
+            {
+                Dictionary<string, BOSetting> SettingsForSaving = new Dictionary<string, BOSetting>();
+
+                foreach (RepeaterItem item in RepeaterSettings.Items)
+                {
+                    TextBox TextBox1 = item.FindControl("TextBox1") as TextBox;
+                    var LiteralKey = item.FindControl("LiteralKey") as Literal;
+                    var CheckBox1 = item.FindControl("CheckBox1") as CheckBox;
+                    DropDownList DropDownList1 = item.FindControl("DropDownList1") as DropDownList;
+
+                    BOSetting setting = Settings[LiteralKey.Text];
+
+                    if (setting.UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL && setting.UserVisibility != BOSetting.USER_VISIBILITY_MULTILINE)
+                    {
+                        switch (setting.Type)
+                        {
+                            case "Int":
+                                {
+                                    if (setting.HasOptions)
+                                    {
+                                        if (setting.Options.ContainsKey(DropDownList1.SelectedValue))
+                                            setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
+                                    }
+                                    else
+                                        setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
+                                    break;
+                                }
+                            case "Bool":
+                                {
+                                    setting.Value = CheckBox1.Checked.ToString();
+                                    break;
+                                }
+                            case "PageId":
+                                {
+                                    setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
+                                    break;
+                                }
+                            default:
+                                {
+                                    if (setting.HasOptions)
+                                        setting.Value = DropDownList1.SelectedValue;
+                                    else
+                                        setting.Value = TextBox1.Text;
+                                    break;
+                                }
+                        }
+                    }
+                    else if (setting.UserVisibility == BOSetting.USER_VISIBILITY_MULTILINE)
+                    {
+                        switch (setting.Type)
+                        {
+                            case "String":
+                                setting.Value = TextBox1.Text;
+                                break;
+                            default: break;
+                        }
+                    }
+                    SettingsForSaving.Add(setting.Name, setting);
+                }
+
+                switch (Mode)
+                {
+                    case SettingMode.Page:
+                        {
+                            BOPage page = webSiteB.GetPage(ItemId);
+                            page.Settings = SettingsForSaving;
+                            webSiteB.ChangePage(page);
+                            break;
+                        }
+                    case SettingMode.Website:
+                        {
+                            webSiteB.ChangeSettings(SettingsForSaving, ItemId);
+                            break;
+                        }
+                    case SettingMode.Module:
+                        {
+                            webSiteB.ChangeModuleInstanceSettings(SettingsForSaving, ItemId);
+                            break;
+                        }
+                }
+
+                ShowSettings = false;
+                OnSettingsSaved(e);
             }
         }
     }

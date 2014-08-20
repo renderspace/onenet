@@ -37,7 +37,13 @@ namespace One.Net.BLL.Web
                 return BContent.GetComplexMeaningRendered(keyword);
         }
 
-        public string ExtraCssClass { get; set; }
+        public string ExtraCssClass 
+        { 
+            get 
+            {
+                return GetStringSetting("ExtraCssClass");
+            } 
+        }
 
         protected string TranslateText(string keyword)
         {

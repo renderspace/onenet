@@ -5,7 +5,7 @@
 <%@ Import Namespace="One.Net.BLL" %>
 <details class="form-horizontal validationGroup">
     <summary>Advanced settings</summary>
-    <asp:Repeater ID="RepeaterSettings" EnableViewState="true" runat="server" OnItemCreated="rptSettings_ItemCreated">
+    <asp:Repeater ID="RepeaterSettings" EnableViewState="true" runat="server" OnItemDataBound="RepeaterSettings_ItemDataBound">
         <ItemTemplate>
             <asp:Literal ID="LiteralKey" runat="server" Visible="false" Text='<%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Key %>'></asp:Literal>
             <asp:Panel runat="server" CssClass="checkbox" ID="PanelCheckbox">
