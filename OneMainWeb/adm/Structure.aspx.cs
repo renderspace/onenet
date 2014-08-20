@@ -543,19 +543,20 @@ namespace OneMainWeb.adm
                     Notifier1.Message = "There are no availible templates in the database!";
                     break;
                 case BWebsite.AddSubPageResult.OkRootPage:
-                    Notifier1.Message = "$label_insert_root_par_link_as_blank";
+                    Notifier1.Title = "Added new root page.";
+                    Notifier1.Message = "URL was autmatically set as blank";
                     TextBoxSubPage.Text = "";
                     break;
                 case BWebsite.AddSubPageResult.PartialLinkExistsOnThisLevel:
-                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Warning = "Sucessfull add page";
                     Notifier1.Message = "This child page cannot be added because the page URL already exists at this level under this parent page!";
                     break;
                 case BWebsite.AddSubPageResult.PartialLinkNotValid:
-                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Warning = "Unsucessfull add page";
                     Notifier1.Message = "This URL cannot be updated because it contains invalid characters! Valid characters are a to z, A to Z and 0 to 9";
                     break;
                 case BWebsite.AddSubPageResult.TriedToAddRootPageToNonEmptySite:
-                    Notifier1.Warning = "$trying_to_add_root_page_to_nonempty_website";
+                    Notifier1.Warning = "Trying to add root page to nonempty website";
                     break;
             }
 

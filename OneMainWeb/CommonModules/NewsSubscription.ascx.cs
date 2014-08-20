@@ -282,7 +282,6 @@ namespace OneMainWeb.CommonModules
             UrlBuilder builder = new UrlBuilder(page);
             if (!string.IsNullOrEmpty(settingValue))
             {
-                #warning TODO We need some other form of URL handling
                 if (settingValue.StartsWith("http"))
                     builder = new UrlBuilder(settingValue);
                 else
