@@ -36,6 +36,12 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (SelectedWebsite == null)
+            {
+                Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
+                return;
+            }
+
             Notifier1.Visible = true;
             AutoPublishWarning.Visible = AutoPublish;
             if (!IsPostBack)

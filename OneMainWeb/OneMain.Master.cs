@@ -34,7 +34,6 @@ namespace OneMainWeb
             {
                 if (version == null)
                     version = Page.GetType().BaseType.Assembly.GetName().Version;
-
                 return version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision; //+ version.
             }
         }

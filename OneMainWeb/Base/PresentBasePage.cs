@@ -341,13 +341,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
         protected override void OnLoadComplete(EventArgs e)
         {
-            // Load ContentId for comments module
-            // Only one module on a page can be a ICommentProvider
-
-
             var providedDescription = "";
             var providedKeywords = "";
-            var providedTitle = "";
             var providedOgImage = "";
             var providedPageName = "";
             Dictionary<string, string> providedLinkTags = new Dictionary<string, string>();
