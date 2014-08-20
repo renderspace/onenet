@@ -626,10 +626,9 @@ namespace OneMainWeb.adm
                 int selectedTemplateID = FormatTool.GetInteger(ddlPageTemplate.SelectedValue);
                 string newParLink = BWebsite.CleanStringForUrl(TextBoxUri.Text);
                 bool validParLink = true;
-                int parentPageID = page.ParentId.Value;
                 if (!page.IsRoot)
                 {
-                    
+                    int parentPageID = page.ParentId.Value;    
                     validParLink = webSiteB.ValidateParLinkAgainstDB(parentPageID, SelectedPageId, newParLink, SelectedWebSiteId);
                     if (!validParLink && page.ParLink != newParLink &&  SelectedPageId != parentPageID)
                     {
