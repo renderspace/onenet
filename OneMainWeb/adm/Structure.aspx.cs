@@ -28,7 +28,6 @@ namespace OneMainWeb.adm
             LiteralLegend.Text = "Selected page";
             LiteralModulesOnPage.Text = "Module instances on current page";
 
-
             SelectedWebsite_ValidateDataBind();
 
             TreeViewPages_DataBind();
@@ -56,7 +55,8 @@ namespace OneMainWeb.adm
             {
                 ResetAllControlsToDefault("Website doesn't have a root page. Use form on the left to add it.");
                 Notifier1.Warning = "Website doesn't have a root page. Use form on the left to add it.";
-                MultiView1.ActiveViewIndex = 0;
+                LabelMessage.Text = "Website doesn't have a root page. Use form on the left to add it.";
+                MultiView1.ActiveViewIndex = 1;
                 PanelAddSubPage.Visible = true;
                 return;
             }
@@ -138,11 +138,31 @@ namespace OneMainWeb.adm
             if (TreeViewPages.Nodes.Count > 0)
                 TreeViewPages.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
+            TreeNode selectedNode = null;
+            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel, ref selectedNode);
+
             if (tree != null)
             {
                 TreeViewPages.Nodes.Add(tree);
                 new OneMainWeb.adm.TreeViewState().RestoreTreeView(TreeViewPages, this.GetType().ToString());
+
+                if (selectedNode != null)
+                {
+                    TreeViewPages.FindNode(selectedNode.ValuePath).Selected = true;
+                    SelectedPageId = Int32.Parse(selectedNode.Value);
+                    SelectedPage = webSiteB.GetPage(SelectedPageId);
+                }
+                else
+                {
+                    tree.Selected = true;
+                    SelectedPageId = Int32.Parse(tree.Value);
+                    SelectedPage = webSiteB.GetPage(SelectedPageId);
+                }
+
+                SelectedPage_DataBind();
+                MultiView1.Visible = (TreeViewPages.Nodes.Count != 0);
+                MultiView1.ActiveViewIndex = 0;
+
                 TreeViewPages.ExpandDepth = currentExpandLevel;
             }
         }
@@ -158,7 +178,6 @@ namespace OneMainWeb.adm
                 LastChangeAndHistory1.SelectedContentId = SelectedPage.ContentId.Value;
                 LastChangeAndHistory1.SelectedLanguageId = SelectedPage.LanguageId;
 
-
                 TextBoxTitle.Text = SelectedPage.Title;
                 TextBoxSubtitle.Text = SelectedPage.SubTitle;
                 TextBoxDescription.Text = SelectedPage.Teaser;
@@ -169,6 +188,7 @@ namespace OneMainWeb.adm
                 PanelAddSubPage.Visible = PanelAddSubPage.Visible && !SelectedPage.MarkedForDeletion;
                 ButtonPublish.Text = SelectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
                 ImagePageStatus.Visible = true;
+
                 if (SelectedPage.MarkedForDeletion)
                 {
                     ImagePageStatus.ImageUrl = "/Res/brisanje.gif";
@@ -181,6 +201,7 @@ namespace OneMainWeb.adm
                 {
                     ImagePageStatus.ImageUrl = "/Res/objavljeno.gif";
                 }
+
                 LabelUriPart.Text = SelectedPage.ParentURI;
                 TextBoxUri.Text = SelectedPage.ParLink;
                 TextBoxMenuGroup.Text = SelectedPage.MenuGroup.ToString();
@@ -190,6 +211,7 @@ namespace OneMainWeb.adm
                 {
                     selItem.Selected = true;
                 }
+
                 CheckBoxBreakPersitence.Checked = SelectedPage.BreakPersistance;
                 InputRedirectToUrl1.Text = SelectedPage.RedirectToUrl;
                 if (SelectedPage.ParentId.HasValue)
@@ -210,16 +232,19 @@ namespace OneMainWeb.adm
                         }
                     }
                 }
+                
                 //                    OneSettingsPageSettings.Settings = SelectedPage.Settings;
                 OneSettingsPageSettings.ItemId = SelectedPage.Id;
                 OneSettingsPageSettings.Mode = AdminControls.OneSettings.SettingMode.Page;
                 OneSettingsPageSettings.LoadSettingsControls(SelectedPage.Settings);
                 OneSettingsPageSettings.LoadSettings();
+                
                 if (SelectedPageId == RootNodeID)
                 {
                     cmdMovePageDown.Visible = false;
                     cmdMovePageUp.Visible = false;
                 }
+
                 RepeaterModuleInstances_DataBind();
 
                 if (SelectedPage.IsPublished && SelectedWebsite.ProductionUrl.StartsWith("http"))
@@ -270,8 +295,7 @@ namespace OneMainWeb.adm
             Label lblPlaceHolder = (Label)(e.Item.FindControl("lblPlaceHolder"));
             Label LabelModuleDistinctName = (Label)(e.Item.FindControl("LabelModuleDistinctName"));
             var PlaceHolderNotInherited1 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited1"));
-            var PlaceHolderNotInherited2 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited2"));
-            
+            var PlaceHolderNotInherited2 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited2"));          
             
 
             BOModuleInstance moduleInstance = e.Item.DataItem as BOModuleInstance;

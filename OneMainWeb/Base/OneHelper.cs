@@ -17,7 +17,7 @@ namespace OneMainWeb
 {
     public class OneHelper
     {
-        public static TreeNode PopulateTreeViewControl(List<BOPage> pagesList, TreeNode parentNode, int selectedNodeId, int expandToLevel)
+        public static TreeNode PopulateTreeViewControl(List<BOPage> pagesList, TreeNode parentNode, int selectedNodeId, int expandToLevel, ref TreeNode selectedNode)
         {
             TreeNode childNode = null;
 
@@ -30,46 +30,23 @@ namespace OneMainWeb
 
                     string title = GetCssClass(page) + "<em>[" + page.MenuGroup + "]</em> " + page.Title + "</span>";
                     parentNode = new TreeNode(title, page.Id.ToString());
-                    
-                    if (page.Level <= expandToLevel)
-                    {
-                        parentNode.Expanded = true;
-                    }
-                    else
-                    {
-                        parentNode.Expanded = false;
-                    }
+
+                    parentNode.Expanded = (page.Level <= expandToLevel || page.Id == selectedNodeId);
 
                     if (page.Id == selectedNodeId)
-                    {
-                        parentNode.Selected = true;
-                        parentNode.Expanded = true;
-                    }
-
+                        selectedNode = parentNode;
                 }
 
                 if (page.ParentId.ToString() == parentNode.Value.ToString())
                 {
-
                     string title = GetCssClass(page) + "<em>[" + page.MenuGroup + "]</em> " + page.Title + "</span>";
                     childNode = new TreeNode(title, page.Id.ToString());
-
-                    if (page.Level <= expandToLevel)
-                    {
-                        childNode.Expanded = true;
-                    }
-                    else
-                    {
-                        childNode.Expanded = false;
-                    }
+                    childNode.Expanded = (page.Level <= expandToLevel || page.Id == selectedNodeId);
 
                     if (page.Id == selectedNodeId)
-                    {
-                        childNode.Selected = true;
-                        childNode.Expanded = true;
-                    }
+                        selectedNode = childNode;
 
-                    PopulateTreeViewControl(pagesList, childNode, selectedNodeId, expandToLevel);
+                    PopulateTreeViewControl(pagesList, childNode, selectedNodeId, expandToLevel, ref selectedNode);
                     parentNode.ChildNodes.Add(childNode);
                 }
             }
