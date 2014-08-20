@@ -54,9 +54,6 @@ namespace OneMainWeb.adm
             if (!RootNodeID.HasValue)
             {
                 ResetAllControlsToDefault("Website doesn't have a root page. Use form on the left to add it.");
-                Notifier1.Warning = "Website doesn't have a root page. Use form on the left to add it.";
-                LabelMessage.Text = "Website doesn't have a root page. Use form on the left to add it.";
-                MultiView1.ActiveViewIndex = 1;
                 PanelAddSubPage.Visible = true;
                 return;
             }
