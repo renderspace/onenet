@@ -42,7 +42,8 @@ namespace OneMainWeb.adm
             if (TreeView1.Nodes.Count > 0)
                 TreeView1.Nodes.Clear();
 
-            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel);
+            TreeNode selectedNode = null;
+            TreeNode tree = OneHelper.PopulateTreeViewControl(websiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel, ref selectedNode);
             if (tree != null)
             {
                 TreeView1.Nodes.Add(tree);
@@ -50,7 +51,12 @@ namespace OneMainWeb.adm
                 // get the saved state of all nodes.
                 new OneMainWeb.adm.TreeViewState().RestoreTreeView(TreeView1, this.GetType().ToString());
 
-                if (SelectedPageId == -1)
+                if (selectedNode != null)
+                {
+                    TreeView1.FindNode(selectedNode.ValuePath).Selected = true;
+                    SelectedPageId = Int32.Parse(selectedNode.Value);
+                }
+                else
                 {
                     tree.Selected = true;
                     SelectedPageId = Int32.Parse(tree.Value);
