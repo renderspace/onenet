@@ -19,10 +19,10 @@
 	        <asp:LinkButton ID="cmdOverwrite" ValidationGroup="upload"  runat="server" Text="Overwrite" CssClass="btn btn-warning" Visible="false" /> 
                         
 		</asp:Panel>
-		<div class="col-md-4">
+		<div class="col-md-4 validationGroup">
             <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
-            <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" ValidationGroup="search"></asp:TextBox>
-            <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info" OnClick="cmdSearch_Click" ValidationGroup="search" />
+            <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
+            <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
 		</div>
 		<div class="col-md-4">
                        

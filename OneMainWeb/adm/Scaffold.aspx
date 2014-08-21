@@ -11,12 +11,12 @@
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="View1" runat="server">
 
-        <div class="adminSection validationGroup">
+        <div class="adminSection">
 			<div class="col-md-2">
                 <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
 			</div>
-			<div class="col-md-6">
-                <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID" CssClass="required digits"></asp:TextBox>
+			<div class="col-md-6 validationGroup">
+                <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID" CssClass="required digits "></asp:TextBox>
                 <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" CssClass="btn btn-info causesValidation" />
 			</div>
 			<div class="col-md-4">

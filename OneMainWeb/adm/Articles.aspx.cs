@@ -24,7 +24,6 @@ namespace OneMainWeb
     public partial class Articles : OneBasePage
     {
         private static readonly BArticle articleB = new BArticle();
-        private static readonly ArticleDataSource articleDS = new ArticleDataSource();
 
         protected BOArticle SelectedArticle
         {
@@ -46,8 +45,9 @@ namespace OneMainWeb
             AutoPublishWarning.Visible = AutoPublish;
             if (!IsPostBack)
             {
-                ddlRegularFilter.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
-                ddlRegularFilter.DataBind();
+                Multiview1.ActiveViewIndex = 0;
+                DropDownListRegularFilter.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
+                DropDownListRegularFilter.DataBind();
             }
             
         }
@@ -64,38 +64,13 @@ namespace OneMainWeb
             SelectedArticle.PublishFlag = false;
         }
 
-        protected void cmdShowById_Click(object sender, EventArgs e)
-        {
-            int id = FormatTool.GetInteger(TextBoxShowById.Text);
-
-            if ( id > -1)
-            {
-                SelectedArticle = articleB.GetArticle(id, ShowUntranslated);
-
-                if (SelectedArticle != null)
-                {
-                    Multiview1.ActiveViewIndex = 1;
-                }
-                else
-                {
-                    Notifier1.Message = "$article_does_not_exist";
-                    Notifier1.Visible = true;
-                }
-            }
-            else
-            {
-                // text provided was not a number... so do text search
-                GridViewArticles.DataBind();
-            }
-        }
-
         protected void cmdAddArticle_Click(object sender, EventArgs e)
         {
             PrepareEmptyArticle();
             Multiview1.ActiveViewIndex = 1;
         }
 
-        protected void ddlRegularFilter_DataBound(object sender, EventArgs e)
+        protected void DropDownListRegularFilter_DataBound(object sender, EventArgs e)
         {
             //add an empty item on top of the list
             AddEmptyItem((System.Web.UI.WebControls.DropDownList)sender);
@@ -115,11 +90,6 @@ namespace OneMainWeb
         protected void InsertUpdateCloseButton_Click(object sender, EventArgs e)
         {
             SaveArticle(true);
-        }
-        
-        protected void cmdFilterArticles_Click(object sender, EventArgs e)
-        {
-            GridViewArticles.DataBind();
         }
 
         private void Regulars_DataBind(ListControl lb)
@@ -300,8 +270,6 @@ namespace OneMainWeb
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
         }
-        
-       
 
         protected void cmdAssignRegularToArticle_Click(object sender, EventArgs e)
         {
@@ -362,7 +330,7 @@ namespace OneMainWeb
             if (deletedCount > 0)
             {
                 Notifier1.Title = string.Format("Marked {0} articles for delete", deletedCount);
-                GridViewArticles.DataBind();
+                Articles_DataBind();
             }
         }
 
@@ -380,11 +348,9 @@ namespace OneMainWeb
             if (publishCount > 0)
             {
                 Notifier1.Title = string.Format("Published {0} articles", publishCount);
-                GridViewArticles.DataBind();
+                Articles_DataBind();
             }
         }
-
-        
 
         protected void ButtonRevert_Click(object sender, EventArgs e)
         {
@@ -400,22 +366,56 @@ namespace OneMainWeb
             if (revertCount > 0)
             {
                 Notifier1.Title = string.Format("Reverted to published {0} articles", revertCount);
-                GridViewArticles.DataBind();
+                Articles_DataBind();
             }
         }
 
         private void Articles_DataBind()
+        {
+            Articles_DataBind("", "");
+        }
+
+        private void Articles_DataBind(string searchBy, string regularsFilter)
         {
             ListingState state = new ListingState();
             state.RecordsPerPage = GridViewPageSize;
             state.SortDirection = GridViewSortDirection;
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
-            PagedList<BOArticle> articles = articleB.ListUnpublishedArticles(state);
+            PagedList<BOArticle> articles = articleB.ListArticles(regularsFilter, null, null, state, searchBy);
             TwoPostbackPager1.TotalRecords = articles.AllRecords;
             TwoPostbackPager1.DetermineData();
             GridViewArticles.DataSource = articles;
             GridViewArticles.DataBind();
+        }
+
+        protected void cmdFilterArticles_Click(object sender, EventArgs e)
+        {
+            Articles_DataBind("", DropDownListRegularFilter.SelectedValue);
+        }
+
+        protected void cmdShowById_Click(object sender, EventArgs e)
+        {
+            int id = FormatTool.GetInteger(TextBoxShowById.Text);
+
+            if (id > -1)
+            {
+                SelectedArticle = articleB.GetArticle(id, ShowUntranslated);
+
+                if (SelectedArticle != null)
+                {
+                    Multiview1.ActiveViewIndex = 1;
+                }
+                else
+                {
+                    Notifier1.Message = "Article by this ID does not exist";
+                    Notifier1.Visible = true;
+                }
+            }
+            else
+            {
+                Articles_DataBind(TextBoxShowById.Text, "");
+            }
         }
 
         public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
@@ -430,61 +430,4 @@ namespace OneMainWeb
             Articles_DataBind();
         }
     }
-
-    [Serializable]
-    public class ArticleDataSource
-    {
-        private readonly static BArticle articleB = new BArticle();
-
-        public ArticleDataSource()
-        { }
-
-        public int SelectArticleCount()
-        {
-            return (int)HttpContext.Current.Items["rowCount"];
-        }
-
-        public BOArticle GetArticle(int id)
-        {
-            return articleB.GetArticle(id, false);
-        }
-
-        public PagedList<BOArticle> SelectArticles(int recordsPerPage, int firstRecordIndex, string sortBy, string strRegularId, bool showUntranslated, string titleSearch)
-        {
-            int regularId = FormatTool.GetInteger(strRegularId);
-            string regularFilter = "";
-            if (regularId > 0)
-            {
-                regularFilter = regularId.ToString();
-            }
-            
-            PagedList<BOArticle> articles = articleB.ListArticles(regularFilter, showUntranslated,
-                new ListingState(recordsPerPage, firstRecordIndex, (sortBy.Contains("ASC") || !sortBy.Contains("DESC") ? SortDir.Ascending : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", "")), titleSearch, null, null);
-
-            HttpContext.Current.Items["rowCount"] = articles.AllRecords;
-            return articles;
-        }
-
-        public void ChangeArticle(BOArticle article, out BOArticle articleOut)
-        {
-            articleB.ChangeArticle(article);
-            articleOut = article;
-        }
-
-        public void ChangeArticle(BOArticle article)
-        {
-            articleB.ChangeArticle(article);
-        }
-
-        public void ChangeRegular(BORegular regular)
-        {
-            articleB.ChangeRegular(regular);
-        }
-
-        public void MarkForDeletion(int id)
-        {
-            articleB.MarkForDeletion(id);
-        }
-    }
-
 }

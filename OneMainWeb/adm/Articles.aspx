@@ -10,20 +10,20 @@
 	<one:Notifier runat="server" ID="Notifier1" />
 
 
-    <asp:MultiView ID="Multiview1" runat="server" ActiveViewIndex="0" OnActiveViewChanged="Multiview1_ActiveViewChanged">
+    <asp:MultiView ID="Multiview1" runat="server" OnActiveViewChanged="Multiview1_ActiveViewChanged">
         <asp:View ID="View1" runat="server">
 
             <div class="adminSection">
 			    <div class="col-md-2">
 			        <asp:LinkButton ID="cmdAddArticle" runat="server" text="<span class='glyphicon glyphicon-plus'></span> Add" OnClick="cmdAddArticle_Click" CssClass="btn btn-success" />			
 			    </div>
-			    <div class="col-md-6">
-                    <asp:TextBox runat="server" ID="TextBoxShowById" placeholder="Search by ID or title" ValidationGroup="ShowById"></asp:TextBox>
-                    <asp:LinkButton runat="server"  OnClick="cmdShowById_Click" ID="LinkButtonShowById" CssClass="btn btn-info" ValidationGroup="ShowById" Text="Search"></asp:LinkButton>
+			    <div class="col-md-6 validationGroup">
+                    <asp:TextBox runat="server" ID="TextBoxShowById" placeholder="Search by ID or title" CssClass="required"></asp:TextBox>
+                    <asp:LinkButton runat="server"  OnClick="cmdShowById_Click" ID="LinkButtonShowById" CssClass="btn btn-info causesValidation" Text="Search"></asp:LinkButton>
 			    </div>
-			    <div class="col-md-4">
-                    <asp:DropDownList OnDataBound="ddlRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="ddlRegularFilter" runat="server"   />                  
-    	            <asp:LinkButton ID="cmdFilterArticles" runat="server" Text="Filter" OnClick="cmdFilterArticles_Click" CssClass="btn btn-info" />                                    
+			    <div class="col-md-4 validationGroup">
+                    <asp:DropDownList OnDataBound="DropDownListRegularFilter_DataBound" DataTextField="Title" DataValueField="Id" AppendDataBoundItems="False" ID="DropDownListRegularFilter" runat="server"   />                  
+    	            <asp:LinkButton ID="cmdFilterArticles" runat="server" Text="Filter" OnClick="cmdFilterArticles_Click" CssClass="btn btn-info causesValidation" />                                    
 			     </div>
             </div>
 			
