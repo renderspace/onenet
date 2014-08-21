@@ -341,9 +341,16 @@ $(document).ready(function () {
             // Find and store the next input element that comes after the
             // one in which the enter key was pressed.
             var $nextInput = $(this).nextAll(':input:first');
+            var $nextLinkButton = $(this).nextAll('a:first');
+            console.log($nextLinkButton);
             // If the next input is a submit button, go into validation.
             // Else, focus the next form element as if enter == tab.
-            if ($nextInput.is(':submit')) {
+            if ($nextLinkButton.is('.causesValidation')) {
+                if (Validate(evt)) {
+                    trace("mijav2");
+                    // eval($nextLinkButton.attr('href'));
+                }
+            } else if ($nextInput.is(':submit')) {
                 Validate(evt);
             }
             else {
@@ -367,4 +374,6 @@ function Validate(evt) {
     });
     if (!isValid)
         evt.preventDefault();
+    trace(isValid);
+    return isValid;
 }

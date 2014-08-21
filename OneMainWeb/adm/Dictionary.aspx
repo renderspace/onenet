@@ -14,9 +14,9 @@
 			        <div class="col-md-2">
                         <asp:LinkButton ID="ButtonInsert" runat="server" onclick="cmdAddDictionaryEntry_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
 			        </div>
-			        <div class="col-md-6">
-                        <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search by keyword or text" ValidationGroup="search"></asp:TextBox>
-                        <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search" OnClick="cmdSearch_Click" CssClass="btn btn-info" ValidationGroup="search" />
+			        <div class="col-md-6 validationGroup">
+                        <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search by keyword or text" CssClass="required"></asp:TextBox>
+                        <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search" OnClick="cmdSearch_Click" CssClass="btn btn-info causesValidation"  />
 			        </div>
 			        <div class="col-md-4">
                         <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click" CssClass="btn btn-info" Text="Import / export keywords" />
