@@ -252,9 +252,7 @@
 
                 node.nodeId = self.nodes.length;
                 self.nodes.push(node);
-                trace(self.selectedNode);
                 if (node.selected && jQuery.isEmptyObject(self.selectedNode)) {
-                    trace("selected node");
                     self.selectedNode = node;
                 }
 
