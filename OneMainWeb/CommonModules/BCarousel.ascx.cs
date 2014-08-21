@@ -20,7 +20,7 @@ namespace OneMainWeb.CommonModules
         protected void Page_Load(object sender, EventArgs e)
         {
             var fileB = new BFileSystem();
-            var files = fileB.List(GetIntegerSetting("FolderId"));
+            var files = fileB.List(GetIntegerSetting("FolderId")).Where(f => f.IsImage);
 
             RepeaterImages.DataSource = files;
             RepeaterImages.DataBind();
@@ -35,7 +35,7 @@ namespace OneMainWeb.CommonModules
             {
                 var LiteralImage = e.Item.FindControl("LiteralImage") as Literal;
                 var css = e.Item.ItemIndex == 0 ? "class=\"active item\"" : "class=\"item\"";
-                LiteralImage.Text = "<div " + css + "><img src=\"" + file.RelativeUrl + "\" alt=\"Second slide\" >";
+                LiteralImage.Text = "<div " + css + "><img src=\"" + file.RelativeUrl + "\" alt=\"" + file.EncodedAlt + "\" >";
                 if (file.Content != null)
                 {
 

@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 
 namespace One.Net.BLL
 {
@@ -36,6 +37,15 @@ namespace One.Net.BLL
             get 
             {
                 return "/_files/" + Id.ToString() + "/" + Name;
+            }
+        }
+
+        public string EncodedAlt
+        {
+            get
+            {
+                return HttpUtility.HtmlEncode(Content != null ? Content.Title : Name);
+
             }
         }
 
