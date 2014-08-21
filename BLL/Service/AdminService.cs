@@ -38,6 +38,8 @@ namespace One.Net.BLL.Service
         {
             var contentB = new BInternalContent();
             var content = contentB.GetUnCached(id, languageId);
+            if (content.ContentId.HasValue && content.MissingTranslation)
+                content.Title = BInternalContent.GetContentTitleInAnyLanguage(content.ContentId.Value);
             var result = new DTOContent(content);
             return result;
         }
