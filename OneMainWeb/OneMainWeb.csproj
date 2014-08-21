@@ -45,6 +45,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdaptedCSSFriendly">
@@ -329,6 +330,13 @@
     <Compile Include="CommonModules\ArticleSingle.ascx.designer.cs">
       <DependentUpon>ArticleSingle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\BCarousel.ascx.cs">
+      <DependentUpon>BCarousel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\BCarousel.ascx.designer.cs">
+      <DependentUpon>BCarousel.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\CustomWidget.ascx.cs">
       <DependentUpon>CustomWidget.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -431,6 +439,7 @@
     <Content Include="adm\Website.aspx" />
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
+    <Content Include="CommonModules\BCarousel.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
     <Content Include="CommonModules\Form.ascx" />
     <Content Include="CommonModules\Menu.ascx" />

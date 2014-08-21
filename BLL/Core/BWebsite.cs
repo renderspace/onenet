@@ -1101,6 +1101,7 @@ namespace One.Net.BLL
         public void ChangeTemplate(BOTemplate template)
         {
             webSiteDb.ChangeTemplate(template);
+            OCache.Remove("ListTemplates");
         }
 
         /// <summary>

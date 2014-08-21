@@ -73,13 +73,18 @@
                 <div class="text-center">
                     <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
                 </div>	       
-                <div class="form-group">
+                <asp:Panel runat="server" ID="PanelGridButtons" CssClass="form-group">
                     <div class="col-sm-12">
                         <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
                         <asp:LinkButton CssClass="btn btn-warning" ID="ButtonPublish" OnClick="ButtonPublish_Click" runat="server" CausesValidation="false" Text="Publish selected" />
                         <asp:LinkButton CssClass="btn btn-info" ID="ButtonRevert" OnClick="ButtonRevert_Click" runat="server" CausesValidation="false" Text="Revert selected to published state" />
                     </div>
-                </div>
+                </asp:Panel>
+                <asp:Panel runat="server" ID="PanelNoResults"  CssClass="col-md-12">
+                     <div class="alert alert-info" role="alert">
+                        No articles to show.
+                         </div>
+                </asp:Panel>
 			 
         </asp:View>
         <asp:View ID="View2" runat="server">

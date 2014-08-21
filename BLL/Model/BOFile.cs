@@ -15,14 +15,7 @@ namespace One.Net.BLL
 
         #region Variables
 
-        private BOInternalContent content = null;
-        private BOCategory folder = null;
-        private int? id = null;
-        private int idx;
         private int size = 0;
-        private string name = "";
-        private string extension = "";
-        private string mimeType = "";
         private byte[] file = null;
 
         #endregion Variables
@@ -31,47 +24,49 @@ namespace One.Net.BLL
 
         public BOFile() { }
 
-        public BOInternalContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
+        public BOInternalContent Content { get; set; }
 
 	    public bool IsImage
 	    {
             get { return MimeType.Contains("image"); }
 	    }
 
+        public string RelativeUrl
+        {
+            get 
+            {
+                return "/_files/" + Id.ToString() + "/" + Name;
+            }
+        }
 
-        /// <summary>
-        /// Internal file id
-        /// </summary>
-        public int? Id { get { return id; } set { id = value; } }
 
-        public int Idx { get { return idx; } set { idx = value; } }
 
-        public int? ContentId { get { return (content != null ? content.ContentId : null); } }
+        public int? Id { get; set; }
+
+        public int Idx { get; set; }
+
+        public int? ContentId { get { return (Content != null ? Content.ContentId : null); } }
 
         /// <summary>
         /// File name, excluding extension
         /// </summary>
-        public string Name { get { return name; } set { name = value; } }
+        public string Name { get; set; }
 
-        public string Extension { get { return extension; } set { extension = value; } }
+        public string Extension { get; set; }
 
-        public byte[] File { get { return file; } set { file = value; } }
+        public byte[] File { get; set; }
 
         /// <summary>
         /// Size of file byte[]
         /// </summary>
-        public int Size { get { return size; } set { size = value; } }
+        public int Size { get; set; }
         
         /// <summary>
         /// Folder representation
         /// </summary>
-        public BOCategory Folder { get { return folder; } set { folder = value; } }
+        public BOCategory Folder { get; set; }
 
-        public string MimeType { get { return mimeType; } set { mimeType = value; } }
+        public string MimeType { get; set; }
 
         /// <summary>
         /// Determines whether allocated Size property equals the actual size of the byte[] File.
@@ -80,7 +75,7 @@ namespace One.Net.BLL
 
         public string Title
         {
-            get { return (content != null ? content.Title : ""); }
+            get { return (Content != null ? Content.Title : ""); }
         }
 
         public override string ToString()

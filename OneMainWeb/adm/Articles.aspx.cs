@@ -387,6 +387,10 @@ namespace OneMainWeb
             TwoPostbackPager1.DetermineData();
             GridViewArticles.DataSource = articles;
             GridViewArticles.DataBind();
+            PanelGridButtons.Visible = (articles.Count != 0);
+            TwoPostbackPager1.Visible = (articles.Count != 0);
+            GridViewArticles.Visible = (articles.Count != 0);
+            PanelNoResults.Visible = (articles.Count == 0);
         }
 
         protected void cmdFilterArticles_Click(object sender, EventArgs e)

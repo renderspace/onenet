@@ -100,7 +100,7 @@ namespace One.Net.BLL.DAL
             LEFT JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId
             WHERE f.id = @Id";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using ( SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 sql, paramsToPass))
             {
                 if (reader.Read())
