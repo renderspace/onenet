@@ -49,6 +49,42 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.GridView GridViewWebsites;
         
         /// <summary>
+        /// PlaceHolderTemplates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolderTemplates;
+        
+        /// <summary>
+        /// TextBoxTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxTemplate;
+        
+        /// <summary>
+        /// LinkButtonAddTemplate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonAddTemplate;
+        
+        /// <summary>
+        /// GridViewTemplates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewTemplates;
+        
+        /// <summary>
         /// InputTitle control.
         /// </summary>
         /// <remarks>

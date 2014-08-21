@@ -36,8 +36,20 @@ namespace OneMainWeb.adm
 
         private void GridViewWebsitesLoad()
         {
-            GridViewWebsites.DataSource = Authorization.ListAllowedWebsites();
+            var websites = Authorization.ListAllowedWebsites();
+            GridViewWebsites.DataSource = websites;
             GridViewWebsites.DataBind();
+
+            if (websites.Count() > 0)
+            {
+                PlaceHolderTemplates.Visible = true;
+                var templates = BWebsite.ListTemplates("3");
+                GridViewTemplates.DataSource = templates;
+                GridViewTemplates.DataBind();
+            }
+            else
+                PlaceHolderTemplates.Visible = false;
+
         }
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
@@ -178,6 +190,24 @@ namespace OneMainWeb.adm
             MultiView1.ActiveViewIndex = 0;
             Notifier1.Title = "Saved.";
 
+        }
+
+        protected void LinkButtonAddTemplate_Click(object sender, EventArgs e)
+        {
+
+            var templates = BWebsite.ListTemplates("");
+
+            if (templates.Where(t => t.Name.ToLower() == TextBoxTemplate.Text.ToLower()).Count() > 0)
+            {
+                Notifier1.Warning = "Template with this name already exists";
+            } 
+            else
+            {
+                var template = new BOTemplate { Name = TextBoxTemplate.Text, Type = "3" };
+                websiteB.ChangeTemplate(template);
+                Notifier1.Title = "Template created";
+            }
+            GridViewWebsitesLoad();
         }
 
     }

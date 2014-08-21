@@ -30,19 +30,6 @@ namespace OneMainWeb
             set { ViewState["SelectedDictionaryEntry"] = value; }
         }
 
-        protected string SearchTermNoResults
-        {
-            get
-            {
-                if (ViewState["SearchReturnedNoResults"] == null)
-                    ViewState["SearchReturnedNoResults"] = "";
-                return (string)ViewState["SearchReturnedNoResults"];
-            }
-            set { ViewState["SearchReturnedNoResults"] = value; }
-        }
-
-        
-
         protected void Page_Load(object sender, EventArgs e)
         {
             Notifier1.Visible = true;
@@ -56,7 +43,7 @@ namespace OneMainWeb
 
             if (!IsPostBack)
             {
-                SearchTermNoResults = "";
+                TextBoxSearch.Text = "";
                 MultiView1.ActiveViewIndex = 0;
             }
         }
@@ -138,18 +125,13 @@ namespace OneMainWeb
 
             if (!string.IsNullOrEmpty(TextBoxSearch.Text) && entries.AllRecords == 0)
             {
-                if (!ShowUntranslated)
-                    Notifier1.Warning = "$you_can_get_more_results_if_tick_show_untranslated";
-
                 GridViewEntries.Visible = false;
                 LabelNoResults.Visible = true;
-                SearchTermNoResults = TextBoxSearch.Text;
             }
             else
             {
                 GridViewEntries.Visible = true;
                 LabelNoResults.Visible = false;
-                SearchTermNoResults = "";
             }
 
             TwoPostbackPager1.Visible = entries.AllRecords > 0;
@@ -249,12 +231,12 @@ namespace OneMainWeb
         protected void cmdAddDictionaryEntry_Click(object sender, EventArgs e)
         {
             SelectedDictionaryEntry = null;
-            txtKeyword.Text = SearchTermNoResults;
+            txtKeyword.Text = TextBoxSearch.Text;
             txtTextContent.Title = "";
             txtTextContent.SubTitle = "";
             txtTextContent.Teaser = "";
             txtTextContent.Html = "";
-            LabelKeyword.Text= SearchTermNoResults;
+            LabelKeyword.Text = TextBoxSearch.Text;
             MultiView1.ActiveViewIndex = 1;
         }
 

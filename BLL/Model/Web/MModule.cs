@@ -45,6 +45,8 @@ namespace One.Net.BLL.Web
             } 
         }
 
+        public string CustomClientID { get; set; }
+
         protected string TranslateText(string keyword)
         {
             if (UniqueTranslation)
@@ -145,6 +147,12 @@ namespace One.Net.BLL.Web
             {
                 throw new ApplicationException("");
             }
+        }
+
+        public Dictionary<string, string> ExtraAttributes
+        {
+            get;
+            set;
         }
 
         public static string RenderOrder(int idx)

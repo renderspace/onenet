@@ -8,7 +8,7 @@ using System.Security;
 #else
 [assembly: SecurityRules(SecurityRuleSet.Level1)]
 #endif
-[assembly: AllowPartiallyTrustedCallers]
+// [assembly: AllowPartiallyTrustedCallers]
 [assembly: AssemblyTitle("One.Net.BLL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

@@ -103,6 +103,15 @@ namespace OneMainWeb {
         protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
         
         /// <summary>
+        /// PanelGridButtons control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelGridButtons;
+        
+        /// <summary>
         /// ButtonDelete control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonRevert;
+        
+        /// <summary>
+        /// PanelNoResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelNoResults;
         
         /// <summary>
         /// View2 control.

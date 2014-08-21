@@ -1,0 +1,84 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="System.Web.UI.MasterPage" %>
+<%@ Register TagPrefix="Controls" Namespace="OneMainWeb.Controls" Assembly="OneMainWeb" %>
+<%@ Register Src="../custom_modules/CookieConsent.ascx" TagName="CookieConsent" TagPrefix="uc1" %>
+<%@ Import Namespace="One.Net.BLL" %>
+
+<!DOCTYPE HTML>
+<html>
+<head runat="server">
+
+<!-- Bootstrap core CSS -->
+<link href="/adm/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/_css/demo.css" rel="stylesheet">
+
+<script>
+	languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
+</script>
+</head>
+<body role="document">
+    <form id="form1" runat="server">
+		 <div class="container">
+	
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="navbar-default" role="navigation">
+					<div class="navbar-header">
+					  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					  </button>
+					  <a class="navbar-brand" href="/">Home</a>
+					  <span class="visible-xs navbar-brand">Main menu</span>
+					</div>
+					<div class="navbar-collapse collapse main-navbar-collapse">
+					
+					  <Controls:MenuGroup ID="TopNavig" runat="server" LocalExpand="true" MinDepth="1" MaxDepth="1" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
+
+					</div><!--/.nav-collapse -->
+				  </div>
+			</div>
+        	<div class="col-xs-12"><h1></h1></div>
+        </div>
+
+		<div class="row">
+          <div class="col-sm-3">
+            <div class="sidebar-nav">
+              <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <span class="visible-xs navbar-brand">Left menu</span>
+                </div>
+                <div class="navbar-collapse collapse sidebar-navbar-collapse">
+				
+				  <Controls:MenuGroup ID="LeftNavig" runat="server" LocalExpand="true" MinDepth="2" MaxDepth="3" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
+
+                </div><!--/.nav-collapse -->
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-9">
+				<asp:ContentPlaceHolder ID="centerContainer" runat="server">
+				</asp:ContentPlaceHolder>
+		  </div>
+		</div>
+
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/JavaScript/bootstrap.min.js"></script>
+
+    </form>
+</body>
+</html>

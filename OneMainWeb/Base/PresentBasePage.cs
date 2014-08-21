@@ -291,6 +291,7 @@ ga('send', 'pageview');
 
                                 if (mod != null)
                                 {
+                                    mod.CustomClientID = p.CustomClientID = "Mi" + module.Id;
                                     mod.InstanceId = module.Id;
                                     mod.PageId = module.PageId;
                                     mod.WebSiteId = CurrentPage.WebSiteId;
@@ -299,6 +300,15 @@ ga('send', 'pageview');
                                     mod.RelativePageUri = CurrentPage.URI;
                                     if (!string.IsNullOrEmpty(mod.ExtraCssClass))
                                         p.CssClass += " " + mod.ExtraCssClass;
+
+                                    if (mod.ExtraAttributes != null)
+                                    {
+                                        foreach (var a in mod.ExtraAttributes)
+                                        {
+                                            p.Attributes.Add(a.Key, a.Value);
+                                        }
+                                    }
+
                                     activeModules.Add(mod);
                                 }
                                 contentPlaceHolders[module.PlaceHolderId].Controls.Add(p);

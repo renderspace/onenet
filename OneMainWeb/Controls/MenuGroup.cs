@@ -178,7 +178,7 @@ namespace OneMainWeb.Controls
                     {
                         dataItemSelected = true;
                         levelSelected = true;
-                        cssClass += " sel ";
+                        cssClass += " sel active ";
                         linkCssClass += " asel ";
                     }
                     else if (url == _selectedParentUrl)

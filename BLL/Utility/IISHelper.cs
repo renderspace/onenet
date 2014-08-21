@@ -49,7 +49,7 @@ namespace One.Net.BLL.Utility
                             log.Error("duplicate binding: " + url.ToString());
                         }
                         else 
-                            throw ex;
+                            throw;
                     }
                 }
             }

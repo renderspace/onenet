@@ -347,8 +347,7 @@ $(document).ready(function () {
             // Else, focus the next form element as if enter == tab.
             if ($nextLinkButton.is('.causesValidation')) {
                 if (Validate(evt)) {
-                    trace("mijav2");
-                    // eval($nextLinkButton.attr('href'));
+                    eval($nextLinkButton.attr('href'));
                 }
             } else if ($nextInput.is(':submit')) {
                 Validate(evt);
