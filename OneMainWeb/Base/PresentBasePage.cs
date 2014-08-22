@@ -19,6 +19,7 @@ using One.Net.BLL.Web;
 using One.Net.BLL.Model;
 using One.Net.BLL.WebConfig;
 using OneMainWeb.Base;
+using One.Net.BLL.Utility;
 
 
 namespace OneMainWeb
@@ -368,10 +369,21 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 if (mod is IBasicSEOProvider)
                 {
                     IBasicSEOProvider pageNameProvider = (IBasicSEOProvider)mod;
-                    if (pageNameProvider.HasTitle)
+                    if (!string.IsNullOrWhiteSpace(pageNameProvider.Title))
                         providedPageName += pageNameProvider.Title+ " ";
-                    if (pageNameProvider.HasDescription)
+                    if (!string.IsNullOrWhiteSpace(pageNameProvider.Description))
                         providedDescription += pageNameProvider.Description + " ";
+
+                    if (!string.IsNullOrWhiteSpace(pageNameProvider.OgImageUrl) && pageNameProvider.OgImageUrl.StartsWith("/"))
+                    {
+                        var builder = new UrlBuilder(Request.Url.AbsoluteUri);
+                        builder.Path = pageNameProvider.OgImageUrl;
+                        providedOgImage = builder.ToString();
+                    }
+                    else if (!string.IsNullOrWhiteSpace(pageNameProvider.OgImageUrl) && pageNameProvider.OgImageUrl.StartsWith("http"))
+                    {
+                        providedOgImage = pageNameProvider.OgImageUrl;
+                    }
                 }
 
                 if (mod is IImageListProvider)
@@ -511,8 +523,13 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 AddMetaProperty("og:site_name", CurrentWebsite.Title);
                 AddMetaProperty("og:locale", Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_'));
                 AddMetaProperty("og:url", Request.Url.AbsoluteUri);
-                var appId = CurrentWebsite.GetSettingValue("FacebookApplicationID");
-                AddMetaProperty("fb:app_id", appId);
+                var appIdStr = CurrentWebsite.GetSettingValue("FacebookApplicationID");
+                var appId = 0;
+                int.TryParse(appIdStr, out appId);
+                if (appId > 0)
+                {
+                    AddMetaProperty("fb:app_id", appIdStr);
+                }
                 var webmasterToolsId = CurrentWebsite.GetSettingValue("GoogleSiteVerification");
                 AddMetaTag("google-site-verification", webmasterToolsId);
                 if (!PublishFlag)

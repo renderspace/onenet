@@ -68,17 +68,13 @@ namespace OneMainWeb.CommonModules
             set;
         }
 
-        public bool HasDescription
-        {
-            get { return !string.IsNullOrWhiteSpace(Description); }
-        }
-
-        public bool HasTitle
-        {
-            get { return !string.IsNullOrWhiteSpace(Title); }
-        }
-
         public string Title
+        {
+            get;
+            set;
+        }
+
+        public string OgImageUrl
         {
             get;
             set;

@@ -13,9 +13,7 @@
 <!-- Custom styles for this template -->
 <link href="/_css/demo.css" rel="stylesheet">
 
-<script>
-	languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
-</script>
+<Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 </head>
 <body role="document">
     <form id="form1" runat="server">
