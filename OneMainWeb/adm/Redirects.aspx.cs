@@ -35,7 +35,11 @@ namespace OneMainWeb
         {   
             if (((MultiView)sender).ActiveViewIndex == 0)
             {
-                GridViewRedirects.DataBind();
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+                GridViewSortExpression = "id";
+                GridViewSortDirection = SortDir.Descending;
+                Redirects_DataBind();
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
@@ -52,6 +56,33 @@ namespace OneMainWeb
             }
         }
 
+        private void Redirects_DataBind()
+        {
+            Redirects_DataBind("", "");
+        }
+
+        private void Redirects_DataBind(string searchBy, string regularsFilter)
+        {
+            ListingState state = new ListingState();
+            state.RecordsPerPage = GridViewPageSize;
+            state.SortDirection = GridViewSortDirection;
+            state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
+            state.SortField = GridViewSortExpression;
+
+            var redirects = BRedirects.List(state);
+
+            TwoPostbackPager1.TotalRecords = redirects.AllRecords;
+            TwoPostbackPager1.DetermineData();
+
+            GridViewRedirects.DataSource = redirects;
+            GridViewRedirects.DataBind();
+
+            PanelGridButtons.Visible = (redirects.Count != 0);
+            TwoPostbackPager1.Visible = (redirects.Count != 0);
+            GridViewRedirects.Visible = (redirects.Count != 0);
+            PanelNoResults.Visible = (redirects.Count == 0);
+        }
+
         protected void CmdSave_Click(object sender, EventArgs e)
         {
             if (CurrentItem == null)
@@ -63,7 +94,7 @@ namespace OneMainWeb
             var redirect = CurrentItem;
             BRedirects.Change(CurrentItem);
 
-            var button = sender as Button;
+            var button = sender as LinkButton;
             if (button.CommandName == "SAVE_CLOSE")
             {
                 MultiView1.ActiveViewIndex = 0;
@@ -83,55 +114,68 @@ namespace OneMainWeb
             MultiView1.ActiveViewIndex = 1;
         }
 
-        protected void RedirectListSource_Deleted(object sender, ObjectDataSourceStatusEventArgs e)
-        {
-            GridViewRedirects.DataBind();
-        }
-
-        protected void GridViewRedirects_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Select")
-            {
-                CurrentItem = BRedirects.Get(int.Parse(e.CommandArgument.ToString()));
-
-                if (CurrentItem != null && CurrentItem.Id.HasValue)
-                {
-                    MultiView1.ActiveViewIndex = 1;
-                }
-            }
-        }
-
         protected void RedirectListSource_Selecting(object sender, ObjectDataSourceSelectingEventArgs e)
         {
             if (e.ExecutingSelectCount)
                 e.InputParameters.Clear();
         }
-    }
 
-    public class RedirectHelper
-    {
-        public int SelectCount()
+        protected void ButtonDelete_Click(object sender, EventArgs e)
         {
-            return (int)HttpContext.Current.Items["rowCount"];
+            int deletedCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                BRedirects.Delete(i);
+                deletedCount++;
+            }
+            if (deletedCount > 0)
+            {
+                Notifier1.Title = string.Format("Deleted {0} redirects", deletedCount);
+                Redirects_DataBind();
+            }
         }
 
-        public PagedList<BORedirect> Select(int recordsPerPage, int firstRecordIndex, string sortDirection, string sortBy)
+        public void TwoPostbackPager1_Command(object sender, CommandEventArgs e)
         {
-            if (string.IsNullOrEmpty(sortBy.Trim()))
-                sortBy = "id";
-            var list = BRedirects.List(new ListingState(recordsPerPage, firstRecordIndex, (sortDirection.ToLower() == "asc" ? SortDir.Ascending : SortDir.Descending), sortBy));
-            HttpContext.Current.Items["rowCount"] = list.AllRecords;
-            return list;
+            TwoPostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
+            Redirects_DataBind();
         }
 
-        public void DeleteRedirect(int Id)
+        protected void GridViewRedirects_Sorting(object sender, GridViewSortEventArgs e)
         {
-            BRedirects.Delete(Id);
+            GridViewSorting(e);
+            Redirects_DataBind();
         }
 
-        public BORedirect Get(int Id)
+        protected void GridViewRedirects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            return BRedirects.Get(Id);
+            GridView grid = sender as GridView;
+            if (grid != null && grid.SelectedValue != null)
+            {
+                CurrentItem = BRedirects.Get(Int32.Parse(grid.SelectedValue.ToString()));
+                MultiView1.ActiveViewIndex = 1;
+            }
+        }
+
+        protected IEnumerable<int> GetCheckedIds()
+        {
+            var result = new List<int>();
+            foreach (GridViewRow row in GridViewRedirects.Rows)
+            {
+                var chkForPublish = row.FindControl("chkFor") as CheckBox;
+                var litRedirectId = row.FindControl("litId") as Literal;
+
+                if (litRedirectId != null && chkForPublish != null && chkForPublish.Checked)
+                {
+                    int redirectId = FormatTool.GetInteger(litRedirectId.Text);
+                    if (redirectId > 0)
+                    {
+                        result.Add(redirectId);
+                    }
+                }
+            }
+            return result;
         }
     }
 }

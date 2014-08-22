@@ -9,69 +9,81 @@
         <asp:View ID="View1" runat="server">
             <div class="adminSection">
                 <div class="col-md-2">
-                    <asp:Button ID="cmdShowAddRedirect" runat="server" Text="$add_redirect" CssClass="btn btn-success" OnClick="cmdShowAddRedirect_Click" />
+                    <asp:LinkButton ID="cmdShowAddRedirect" runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" OnClick="cmdShowAddRedirect_Click" />
                 </div>
             </div>  
-            <asp:GridView ID="GridViewRedirects" runat="server" PageSize="10" PageIndex="0"
-                PagerSettings-Mode="NumericFirstLast"
-                PagerSettings-LastPageText="$last"
-                PagerSettings-FirstPageText="$first"
-                PagerSettings-PageButtonCount="7" 
+            <asp:GridView ID="GridViewRedirects" runat="server"
                 AllowSorting="True" 
-                AllowPaging="True" 
                 AutoGenerateColumns="False"
-                DataSourceID="RedirectListSource" 
                 DataKeyNames="Id"
                 CssClass="table table-hover"
-                OnRowCommand="GridViewRedirects_RowCommand">
+                OnSorting="GridViewRedirects_Sorting"
+                OnSelectedIndexChanged="GridViewRedirects_SelectedIndexChanged">
                 <Columns>
-                    <asp:TemplateField HeaderText="$from_link" SortExpression="from_link">
+                    <asp:TemplateField>
+                        <HeaderTemplate>
+                            <input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" />
+                        </HeaderTemplate>								    
+						<ItemTemplate>
+							<asp:Literal ID="litId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
+							<asp:CheckBox ID="chkFor" runat="server" Text="" />
+						</ItemTemplate>
+					</asp:TemplateField>
+                    <asp:TemplateField HeaderText="Id" SortExpression="a.id">
+						<ItemTemplate>
+							<%# Eval("Id") %>
+						</ItemTemplate>
+					</asp:TemplateField>
+                    <asp:TemplateField HeaderText="From" SortExpression="from_link">
 	                    <ItemTemplate><%# Eval("FromLink") %></ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="$to_link" SortExpression="to_link">
+                    <asp:TemplateField HeaderText="True" SortExpression="to_link">
 	                    <ItemTemplate><%# Eval("ToLink") %></ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
 	                    <ItemTemplate>
-		                    <asp:LinkButton ID="LinkButton1" runat="server" CommandArgument='<%# Eval("Id") %>' Text='$cmd_edit' CommandName="Select" CssClass="btn btn-info btn-xs  "  />
-		                    <asp:LinkButton ID="LinkButton2" runat="server" CommandArgument='<%# Eval("Id") %>' Text='$cmd_delete' CommandName="Delete" CssClass="btn btn-warning btn-xs  " />
+		                    <asp:LinkButton ID="LinkButton1" runat="server" CommandArgument='<%# Eval("Id") %>' Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CssClass="btn btn-info btn-xs  "  />
 	                    </ItemTemplate>
                     </asp:TemplateField>                        
                 </Columns>
-                <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-                    PageButtonCount="7" />                        
             </asp:GridView>
+            <div class="text-center">
+                <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
+            </div>	       
+            <asp:Panel runat="server" ID="PanelGridButtons" CssClass="form-group">
+                <div class="col-sm-12">
+                    <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
+                </div>
+            </asp:Panel>
 
-            <asp:ObjectDataSource OnDeleted="RedirectListSource_Deleted" MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-                EnablePaging="True" ID="RedirectListSource" runat="server" SelectMethod="Select"
-                TypeName="OneMainWeb.RedirectHelper" DeleteMethod="DeleteRedirect" OnSelecting="RedirectListSource_Selecting" SelectCountMethod="SelectCount" SortParameterName="sortBy">
-                <SelectParameters>
-                    <asp:Parameter Name="sortDirection" DefaultValue="ASC" Type="string" />
-                </SelectParameters> 
-            </asp:ObjectDataSource>                     
+            <asp:Panel runat="server" ID="PanelNoResults"  CssClass="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    No redirects to show.
+                </div>
+            </asp:Panel>
      
         </asp:View>
         <asp:View ID="View2" runat="server">
              <div class="adminSection form-horizontal validationGroup">
                 <div class="form-group">
-                    <asp:Label runat="server" Text="$from_link" CssClass="col-sm-3 control-label" AssociatedControlID="InputFromLink" />
+                    <asp:Label runat="server" Text="From link" CssClass="col-sm-3 control-label" AssociatedControlID="InputFromLink" />
 			        <div class="col-sm-9">
-                        <asp:TextBox CssClass="form-control required" id="InputFromLink" runat="server" Text="$from_link" ValidationGroup="REDIRECTS" />
+                        <asp:TextBox CssClass="form-control required" id="InputFromLink" runat="server" Text="" ValidationGroup="REDIRECTS" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="InputFromLink" CssClass="text-danger" ValidationGroup="REDIRECTS" ErrorMessage="From link is required." />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label runat="server" Text="$to_link" CssClass="col-sm-3 control-label" AssociatedControlID="InputToLink" />
+                    <asp:Label runat="server" Text="To link" CssClass="col-sm-3 control-label" AssociatedControlID="InputToLink" />
                     <div class="col-sm-9">
-			            <asp:TextBox CssClass="form-control required" id="InputToLink" runat="server" Text="$to_link" ValidationGroup="REDIRECTS" />
+			            <asp:TextBox CssClass="form-control required" id="InputToLink" runat="server" Text="" ValidationGroup="REDIRECTS" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="InputToLink" CssClass="text-danger" ValidationGroup="REDIRECTS" ErrorMessage="To link is required." />
                     </div>
                 </div>
 			    <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-				        <asp:button CssClass="btn btn-success" ID="button3" runat="server" Text="$cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
-				        <asp:button CssClass="btn btn-success causesValidation" ID="button4" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
-				        <asp:button CssClass="btn btn-success causesValidation" ID="button5" CommandName="SAVE_CLOSE" runat="server" Text="Save and close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
+				        <asp:LinkButton CssClass="btn btn-primary" ID="CmdCancel" runat="server" Text="Cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
+				        <asp:LinkButton CssClass="btn btn-success causesValidation" ID="CmdSave" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
+				        <asp:LinkButton CssClass="btn btn-success causesValidation" ID="CmdSaveClose" CommandName="SAVE_CLOSE" runat="server" Text="Save and close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
                     </div>
 			    </div>
 			</div>
