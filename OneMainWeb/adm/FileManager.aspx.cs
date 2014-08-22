@@ -45,6 +45,7 @@ namespace OneMainWeb
             }
             set
             {
+                LabelFolderId.Text = value.ToString();
                 HiddenSelectedFolderId.Value = value.ToString();
             }
         }
@@ -63,21 +64,31 @@ namespace OneMainWeb
 
                 if (SelectedFolderId < 1)
                 {
-                    var folders = fileB.ListFolders();
-                    var rootFolder = folders.Where(f => !f.ParentId.HasValue).FirstOrDefault();
-                    if (rootFolder != null)
-                        SelectedFolderId = rootFolder.Id.Value;
+                    SetRootAsSelected();
                 }
             }
         }
 
+        private void SetRootAsSelected()
+        {
+            var folders = fileB.ListFolders();
+            var rootFolder = folders.Where(f => !f.ParentId.HasValue).FirstOrDefault();
+            if (rootFolder != null)
+                SelectedFolderId = rootFolder.Id.Value;
+        }
+
         protected void CmdRecursiveDelete_Click(object sender, EventArgs e)
         {
-            if (CheckBoxConfirm.Checked && SelectedFolderId  > 0)
+            if (CheckBoxConfirm.Checked && SelectedFolderId > 0)
             {
                 fileB.RecursiveFolderDelete(SelectedFolderId);
-                Notifier1.Message = "$recursive_delete_success";
+                Notifier1.Message = "Folder deleted";
                 CheckBoxConfirm.Checked = false;
+                SetRootAsSelected();
+            }
+            else
+            {
+                Notifier1.Warning = "Please use checkbox to confirm recursive delete";
             }
         }
 
@@ -144,41 +155,13 @@ namespace OneMainWeb
             {
                 fileB.Change(uploadedFile);
                 //GridViewFiles.DataBind();
-                Notifier1.Message = "$file_successfully_uploaded";
+                Notifier1.Message = "Uploaded";
             }
             else
             {
-                Notifier1.Warning = "$file_upload_failed";
+                Notifier1.Warning = "Upload failed";
             }
         }
-
-        /*
-        protected void cmdOverwrite_Click(object sender, EventArgs e)
-        {
-            if (SelectedFileId.HasValue)
-            {
-                BOFile uploadedFile = RetrieveSubmittedFile();
-                BOFile existingFile = fileB.Get(SelectedFileId.Value);
-
-                if (uploadedFile != null && existingFile != null)
-                {
-                    existingFile.File = uploadedFile.File;
-                    existingFile.Size = uploadedFile.Size;
-                    existingFile.MimeType = uploadedFile.MimeType;
-                    existingFile.Extension = uploadedFile.Extension;
-                    existingFile.Content = null; // BLL will not change content if it is null
-
-                    fileB.Change(existingFile);
-                    GridViewFiles.DataBind();
-                    LoadFiles();
-                    Notifier1.Message = "$file_successfully_overwritten");
-                }
-                else
-                {
-                    Notifier1.Warning = "$file_overwritte_failed");
-                }
-            }
-        }*/
 
         private BOFile RetrieveSubmittedFile()
         {

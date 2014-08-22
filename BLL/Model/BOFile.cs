@@ -16,9 +16,6 @@ namespace One.Net.BLL
 
         #region Variables
 
-        private int size = 0;
-        private byte[] file = null;
-
         #endregion Variables
 
         #region Properties
@@ -81,7 +78,7 @@ namespace One.Net.BLL
         /// <summary>
         /// Determines whether allocated Size property equals the actual size of the byte[] File.
         /// </summary>
-        public bool BinaryDataMissing { get { return (file == null || size != file.Length || size == 0); } }
+        public bool BinaryDataMissing { get { return (File == null || Size != File.Length || Size == 0); } }
 
         public string Title
         {

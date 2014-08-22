@@ -139,6 +139,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxConfirm;
         
         /// <summary>
+        /// LabelFolderId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelFolderId;
+        
+        /// <summary>
         /// CmdRecursiveDelete control.
         /// </summary>
         /// <remarks>

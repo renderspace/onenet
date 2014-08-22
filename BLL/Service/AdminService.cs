@@ -148,7 +148,7 @@ namespace One.Net.BLL.Service
             {
                 if (category.ParentId.HasValue && category.ParentId.Value == parent.Id.Value)
                 {
-                    result.Append(" {\"text\": \"" + category.Title.Replace('"', ' ') + "\", \"contentId\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
+                    result.Append(" {\"text\": \"" + category.Title.Replace('"', ' ') + "\", \"id\": \"" + category.Id + "\", \"noChildren\": \"" + category.ChildCount.Value.ToString() + "\", " +
                         (selectedId == category.Id ? "\"selected\":\"true\"," : "") + " \"nodes\": [");
                     if (category.ChildCount.Value > 0)
                     {
