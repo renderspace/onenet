@@ -6,10 +6,8 @@ namespace One.Net.BLL.Web
 {
     public interface IBasicSEOProvider
     {
-        bool HasTitle { get; }
         string Title { get; }
-
-        bool HasDescription { get; }
         string Description { get; }
+        string OgImageUrl { get; }
     }
 }
