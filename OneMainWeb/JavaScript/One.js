@@ -166,7 +166,7 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-				console.log(item);
+				//console.log(item);
                 $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
                     item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name +
                     '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-id="' + item.Id +
@@ -275,17 +275,19 @@ if (folderTree.is("div")) {
             files_databind(selectedFolderId);
         }
     });
-
     folderTree.removeClass("treeview");
 }
 
 $('#tree').on('nodeSelected', function (event, node) {
-	trace("nodeSelected");
+    var folderId = node.id;
+    trace("folderId " + folderId);
 	trace(node);
-    if (node.nodeId > 0) {
-        files_databind(node.nodeId);
-        trace("nodeSelected:" + node.nodeId);
-        $('#HiddenSelectedFolderId').val(node.nodeId);
+	if (folderId > 0) {
+	    files_databind(folderId);
+	    trace("nodeSelected:" + folderId);
+	    $('#HiddenSelectedFolderId').val(folderId);
+	    $('#LabelFolderId').text(folderId);
+        
     } else {
         $('#files-table tbody').empty();
     }

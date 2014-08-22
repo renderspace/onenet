@@ -249,7 +249,6 @@
 
             var self = this;
             $.each(nodes, function addNodes(id, node) {
-
                 node.nodeId = self.nodes.length;
                 self.nodes.push(node);
                 if (node.selected && jQuery.isEmptyObject(self.selectedNode)) {

@@ -51,7 +51,7 @@
                     <asp:CheckBox ID="CheckBoxConfirm" runat="server" Text="Confirm delete folder and all subfolders"  />    
                 </div>
                 <div class="col-sm-6 pull-right">
-                    
+                        <asp:Label runat="server" ID="LabelFolderId" ClientIDMode="Static"></asp:Label>
                         <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger" />
                 </div>
             </div>
