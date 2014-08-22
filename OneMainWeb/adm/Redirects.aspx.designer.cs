@@ -46,7 +46,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdShowAddRedirect;
+        protected global::System.Web.UI.WebControls.LinkButton cmdShowAddRedirect;
         
         /// <summary>
         /// GridViewRedirects control.
@@ -58,13 +58,40 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.GridView GridViewRedirects;
         
         /// <summary>
-        /// RedirectListSource control.
+        /// TwoPostbackPager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ObjectDataSource RedirectListSource;
+        protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
+        
+        /// <summary>
+        /// PanelGridButtons control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelGridButtons;
+        
+        /// <summary>
+        /// ButtonDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
+        
+        /// <summary>
+        /// PanelNoResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelNoResults;
         
         /// <summary>
         /// View2 control.
@@ -94,30 +121,30 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.TextBox InputToLink;
         
         /// <summary>
-        /// button3 control.
+        /// CmdCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button3;
+        protected global::System.Web.UI.WebControls.LinkButton CmdCancel;
         
         /// <summary>
-        /// button4 control.
+        /// CmdSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button4;
+        protected global::System.Web.UI.WebControls.LinkButton CmdSave;
         
         /// <summary>
-        /// button5 control.
+        /// CmdSaveClose control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button5;
+        protected global::System.Web.UI.WebControls.LinkButton CmdSaveClose;
     }
 }
