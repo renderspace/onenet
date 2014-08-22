@@ -378,6 +378,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     {
                         var builder = new UrlBuilder(Request.Url.AbsoluteUri);
                         builder.Path = pageNameProvider.OgImageUrl;
+                        builder.Query = "";
                         providedOgImage = builder.ToString();
                     }
                     else if (!string.IsNullOrWhiteSpace(pageNameProvider.OgImageUrl) && pageNameProvider.OgImageUrl.StartsWith("http"))
