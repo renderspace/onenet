@@ -12,6 +12,17 @@ namespace OneMainWeb
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
         {
+
+            bundles.Add(new ScriptBundle("~/Optimized/_js").IncludeDirectory("~/site_specific/_js", "*.js"));
+
+            bundles.Add(new ScriptBundle("~/Optimized/Bootstrap").Include("~/JavaScript/bootstrap.min.js"));
+
+            bundles.Add(new ScriptBundle("~/Optimized/JavaScript").IncludeDirectory("~/JavaScript", "*.js"));
+            bundles.Add(new ScriptBundle("~/Optimized/Scripts").IncludeDirectory("~/Scripts", "*.js"));
+
+            bundles.Add(new StyleBundle("~/Optimized/adm/css").IncludeDirectory("~/adm/css", "*.css"));
+            bundles.Add(new StyleBundle("~/Optimized/_css").IncludeDirectory("~/site_specific/_css", "*.css"));
+
             /*
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
                             "~/Scripts/WebForms/WebForms.js",
