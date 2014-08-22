@@ -13,6 +13,8 @@
 <!-- Custom styles for this template -->
 <link href="/_css/demo.css" rel="stylesheet">
 
+<!-- %: System.Web.Optimization.Styles.Render("~/Optimized/_css") % -->
+
 <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 </head>
 <body role="document">
@@ -70,12 +72,11 @@
 		</div>
 
     </div> <!-- /container -->
+	
+	<%: System.Web.Optimization.Scripts.Render("~/Optimized/Scripts") %>
+	<%: System.Web.Optimization.Scripts.Render("~/Optimized/Bootstrap") %>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="/JavaScript/bootstrap.min.js"></script>
+	
 
     </form>
 </body>
