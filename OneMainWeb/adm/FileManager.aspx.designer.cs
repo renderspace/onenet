@@ -31,33 +31,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Panel PanelUpload;
         
         /// <summary>
-        /// fileUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
-        
-        /// <summary>
-        /// cmdUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton cmdUpload;
-        
-        /// <summary>
-        /// cmdOverwrite control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton cmdOverwrite;
-        
-        /// <summary>
         /// lblSearchMessage control.
         /// </summary>
         /// <remarks>
