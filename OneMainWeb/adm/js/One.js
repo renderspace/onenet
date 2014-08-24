@@ -9,64 +9,45 @@ function logError(XMLHttpRequest, textStatus, errorThrown) {
     //    _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
 }
 
+$('.ckeditor4').each(function (index) {
+    console.log("CKEDITOR " + index + ": " + this.id);
+    CKEDITOR.replace(this.id, {
+        customConfig: '',
+        entities_greek: false,
+        forcePasteAsPlainText: true,
+        entities: false,
+        entities_latin: false,
+        toolbar: [
 
-if (window.CKEDITOR) {
-    (function () {
-        var showCompatibilityMsg = function () {
-            var env = CKEDITOR.env;
+    ['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
+    ['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat'],
+        ],
 
-            var html = '<p><strong>Your browser is not compatible with CKEditor.</strong>';
+        filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+        filebrowserWindowWidth: '830',
+        filebrowserWindowHeight: '600',
 
-            var browsers =
-    {
-        gecko: 'Firefox 2.0',
-        ie: 'Internet Explorer 6.0',
-        opera: 'Opera 9.5',
-        webkit: 'Safari 3.0'
-    };
+        filebrowserImageBrowseLinkUrl: '/ckfinder/ckfinder.html?type:Images',
+        filebrowserImageWindowWidth: '830',
+        filebrowserImageWindowHeight: '600',
 
-            var alsoBrowsers = '';
+        filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type:Flash',
+        filebrowserFlashWindowWidth: '830',
+        filebrowserFlashWindowHeight: '600',
 
-            for (var key in env) {
-                if (browsers[key]) {
-                    if (env[key])
-                        html += ' CKEditor is compatible with ' + browsers[key] + ' or higher.';
-                    else
-                        alsoBrowsers += browsers[key] + '+, ';
-                }
-            }
+        disableObjectResizing: true,
+        resize_enabled: false,
 
-            alsoBrowsers = alsoBrowsers.replace(/\+,([^,]+), $/, '+ and $1');
+        //customConfig : '/_js/custom_ckeditor.js',
+        stylesCombo_stylesSet: 'one_default_styles',
+        templates: 'one_default_templates',
+        // contentsCss : '/Utils/default_editor.css',
 
-            html += ' It is also compatible with ' + alsoBrowsers + '.';
-
-            html += '</p><p>With non compatible browsers, you should still be able to see and edit the contents (HTML) in a plain text field.</p>';
-
-            var alertsEl = document.getElementById('alerts');
-            alertsEl && (alertsEl.innerHTML = html);
-        };
-
-        var onload = function () {
-            // Show a friendly compatibility message as soon as the page is loaded,
-            // for those browsers that are not compatible with CKEditor.
-            if (!CKEDITOR.env.isCompatible)
-                showCompatibilityMsg();
-        };
-
-        // Register the onload listener.
-        if (window.addEventListener)
-            window.addEventListener('load', onload, false);
-        else if (window.attachEvent)
-            window.attachEvent('onload', onload);
-    })();
-}
-
-
-function swapIt(name_open, name_close) 
-{ 
-    document.getElementById(name_open).style.display = 'block';
-    document.getElementById(name_close).style.display = 'none'; 
-}
+        disableObjectResizing: true,
+        resize_enabled: false,
+        allowedContent: true
+    });
+});
 
 function GetUrlParam( paramName )
 {

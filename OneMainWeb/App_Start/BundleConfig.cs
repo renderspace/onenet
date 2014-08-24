@@ -23,8 +23,8 @@ namespace OneMainWeb
 
             // ADMIN
             bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.min.css"));
-            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/JavaScript/bootstrap.min.js"));
-            bundles.Add(new ScriptBundle("~/Bundles/JavaScript").IncludeDirectory("~/JavaScript", "*.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js"));
             bundles.Add(new ScriptBundle("~/Bundles/Scripts").IncludeDirectory("~/Scripts", "*.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
             // END ADMIN
