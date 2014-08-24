@@ -44,7 +44,7 @@
 			    <one:TextContentControl ID="TxtRegularContent" runat="server" HtmlRows="10" />
 			    <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-				        <asp:LinkButton ID="RegularCancelButton" runat="server" CausesValidation="false" CommandName="Cancel" Text="$cancel" OnClick="RegularCancelButton_Click" CssClass="btn btn-primary" />
+				        <asp:LinkButton ID="RegularCancelButton" runat="server" CausesValidation="false" CommandName="Cancel" Text="Cancel" OnClick="RegularCancelButton_Click" CssClass="btn btn-primary" />
 				        <asp:LinkButton ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success causesValidation" />
 				        <asp:LinkButton ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click"  Text="Save & close" CssClass="btn btn-success causesValidation" />
                     </div>

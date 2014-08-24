@@ -58,7 +58,7 @@
         <div class="form-horizontal">
             <div class="form-group">
                  <div class="col-sm-12">
-                    <asp:LinkButton ID="CmdCancel" runat="server" Text="$cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
+                    <asp:LinkButton ID="CmdCancel" runat="server" Text="Cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
 
                     <asp:LinkButton ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="btn btn-success" />
                 </div>

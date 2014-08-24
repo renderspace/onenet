@@ -60,9 +60,15 @@
     <Reference Include="BundleTransformer.SassAndScss">
       <HintPath>..\packages\BundleTransformer.SassAndScss.1.9.13\lib\net40\BundleTransformer.SassAndScss.dll</HintPath>
     </Reference>
+    <Reference Include="BundleTransformer.Yui">
+      <HintPath>..\packages\BundleTransformer.Yui.1.9.15\lib\net40\BundleTransformer.Yui.dll</HintPath>
+    </Reference>
     <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ckfinder\_source\bin\Release\CKFinder.dll</HintPath>
+    </Reference>
+    <Reference Include="EcmaScript.NET">
+      <HintPath>..\packages\EcmaScript.Net.1.0.1.0\lib\net20\EcmaScript.NET.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
@@ -178,6 +184,9 @@
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Yahoo.Yui.Compressor">
+      <HintPath>..\packages\YUICompressor.NET.2.5.0.0\lib\NET20\Yahoo.Yui.Compressor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -449,6 +458,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\Forms.aspx" />
+    <Content Include="adm\js\bootstrap-treeview.js" />
+    <Content Include="adm\js\bootstrap.min.js" />
+    <Content Include="adm\js\jquery.details.js" />
+    <Content Include="adm\js\jquery.ui.datepicker-sl.js" />
+    <Content Include="adm\js\One.js" />
     <Content Include="adm\Publish.aspx" />
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
@@ -531,12 +545,6 @@
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
-    <Content Include="JavaScript\bootstrap-treeview.js" />
-    <Content Include="JavaScript\bootstrap.min.js" />
-    <Content Include="JavaScript\ck.js" />
-    <Content Include="JavaScript\default_custom_ckeditor.js" />
-    <Content Include="JavaScript\jquery.details.js" />
-    <Content Include="JavaScript\jquery.ui.datepicker-sl.js" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -735,7 +743,6 @@
     </Compile>
     <Content Include="AdminControls\Notifier.ascx" />
     <Content Include="Global.asax" />
-    <Content Include="JavaScript\One.js" />
     <Content Include="Res\browsers\ch.png" />
     <Content Include="Res\browsers\ff.png" />
     <Content Include="Res\browsers\ie.png" />

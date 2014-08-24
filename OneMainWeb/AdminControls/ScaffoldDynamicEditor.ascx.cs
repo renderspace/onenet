@@ -332,7 +332,7 @@ namespace OneMainWeb.AdminControls
             if (datepickerJQueryCall.Length > 0)
             {
                 var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
-                JQueryCode += "<script src=\"/Javascript/jquery.ui.datepicker-sl.js\"></script>";
+                JQueryCode += "";
                 // JQueryCode += "<script type=\"text/javascript\" src=\"/_js/i18n/ui.datepicker-" + currentCulture.TwoLetterISOLanguageName + ".js\"></script>\n";
             }
             /*

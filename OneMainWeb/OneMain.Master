@@ -14,19 +14,14 @@
     <link href="/adm/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
+
+
     <script>
         tracing = <%: TracingFlag %>;
         languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
     </script>
-	
-    <script src="/Scripts/jquery-2.1.1.min.js"></script>
-    <script src="/Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script> 
-    
-    
-    <script src="/Javascript/bootstrap-treeview.js"></script>
-	
-	
+    <%: System.Web.Optimization.Scripts.Render("~/Bundles/Scripts") %>
+
 	<style type="text/css">
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
     	.browser-logos { padding-top: 20px; }
@@ -103,9 +98,7 @@
 	 </div>
     </div>
     <script src="/ckeditor4/ckeditor.js"></script>
-    <script src="/JavaScript/bootstrap.min.js"></script>
-    <script src="/JavaScript/jquery.details.js"></script> 
-    <script src="/JavaScript/one.js"></script>    
+    <%: System.Web.Optimization.Scripts.Render("~/Bundles/AdmJS") %>  
     </form>
 </body>
 </html>

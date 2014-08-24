@@ -89,7 +89,6 @@
         </asp:View>
         <asp:View ID="View2" runat="server">
 
-            <script src="/Javascript/jquery.ui.datepicker-sl.js"></script>
             <script type="text/javascript" charset="utf-8">
                 $(document).ready(function () {
                     $("#TextBoxDate").datepicker();
@@ -114,7 +113,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="$display_date" Cssclass="col-sm-3 control-label"></asp:Label>
+                    <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="Display date" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
                         <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate" CssClass="form-control" />
                     </div>
@@ -127,7 +126,7 @@
                     </div>
                     <div class="col-sm-9">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				        <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="$cancel" CssClass="btn btn-primary" />
+				        <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" CssClass="btn btn-primary" />
 				        <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
 				        <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
 				        <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>
