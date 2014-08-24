@@ -8,7 +8,7 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL" %>
 
-<asp:Content ID="Head" runat="server">
+<asp:Content ContentPlaceHolderID="Head" runat="server">
      <style>
     html, body {
       height: 100%;
@@ -75,7 +75,7 @@
     <div class="adminSection">
 		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4 ">
 
-            <div>
+           <div class="fallback">
                 <input name="file" type="file" multiple />
             </div>
 
