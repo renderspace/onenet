@@ -17,6 +17,7 @@ using System.Linq;
 
 using One.Net.BLL;
 using One.Net.BLL.WebControls;
+using System.IO;
 
 namespace OneMainWeb
 {
@@ -58,6 +59,8 @@ namespace OneMainWeb
                 return;
             }
 
+            RetrieveSubmittedFiles();
+
             if (!IsPostBack)
             {
                 HiddenFieldLanguageId.Value = Thread.CurrentThread.CurrentCulture.LCID.ToString();
@@ -67,6 +70,80 @@ namespace OneMainWeb
                     SetRootAsSelected();
                 }
             }
+        }
+
+        private void RetrieveSubmittedFiles()
+        {
+            var count = 0;
+            BOFile file = null;
+            if (SelectedFolderId > 0)
+            {
+                BOCategory folder = fileB.GetFolder(SelectedFolderId);
+                if (folder != null)
+                {
+                    foreach (string s in Request.Files)
+                    {
+                        HttpPostedFile postedFile = Request.Files[s];
+
+                        int fileSizeInBytes = postedFile.ContentLength;
+                        string fileName = postedFile.FileName; // Request.Headers["X-File-Name"];
+                        string fileExtension = "";
+
+                        if (!string.IsNullOrEmpty(fileName))
+                        {
+                            fileExtension = Path.GetExtension(fileName);
+
+                            byte[] fileData = new Byte[postedFile.InputStream.Length];
+                            postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
+                            postedFile.InputStream.Close();
+
+                            file = new BOFile
+                            {
+                                File = fileData,
+                                Id = null,
+                                Folder = folder,
+                                Name = fileName,
+                                Extension = fileExtension,
+                                MimeType = postedFile.ContentType,
+                                Size = ((int)fileData.Length)
+                            };
+                            fileB.Change(file);
+                        }
+                    }
+                    Notifier1.Message = "Uploaded " + count + " files.";
+                }
+            }
+
+            /*
+            if (fileUpload != null && fileUpload.HasFile &&)
+            {
+                
+
+                string filePath = fileUpload.PostedFile.FileName;
+                var fi = new System.IO.FileInfo(filePath);
+
+                if (folder != null)
+                {
+                    byte[] fileData;
+                    using (fileUpload.PostedFile.InputStream)
+                    {
+                        fileData = new Byte[fileUpload.PostedFile.InputStream.Length];
+                        fileUpload.PostedFile.InputStream.Read(fileData, 0, (int)fileUpload.PostedFile.InputStream.Length);
+                        fileUpload.PostedFile.InputStream.Close();
+                    }
+
+                    file = new BOFile
+                    {
+                        File = fileData,
+                        Id = null,
+                        Folder = folder,
+                        Name = fi.Name,
+                        Extension = fi.Extension,
+                        MimeType = fileUpload.PostedFile.ContentType,
+                        Size = ((int)fileData.Length)
+                    };
+                }
+            }*/
         }
 
         private void SetRootAsSelected()
@@ -145,59 +222,6 @@ namespace OneMainWeb
             {
                 Notifier1.Warning = "File ID not found";
             }
-        }
-
-        protected void cmdUpload_Click(object sender, EventArgs e)
-        {
-            BOFile uploadedFile = RetrieveSubmittedFile();
-
-            if (uploadedFile != null)
-            {
-                fileB.Change(uploadedFile);
-                //GridViewFiles.DataBind();
-                Notifier1.Message = "Uploaded";
-            }
-            else
-            {
-                Notifier1.Warning = "Upload failed";
-            }
-        }
-
-        private BOFile RetrieveSubmittedFile()
-        {
-            BOFile file = null;
-
-            if (fileUpload != null && fileUpload.HasFile && SelectedFolderId > 0)
-            {
-                BOCategory folder = fileB.GetFolder(SelectedFolderId);
-
-                string filePath = fileUpload.PostedFile.FileName;
-                var fi = new System.IO.FileInfo(filePath);
-
-                if (folder != null)
-                {
-                    byte[] fileData;
-                    using (fileUpload.PostedFile.InputStream)
-                    {
-                        fileData = new Byte[fileUpload.PostedFile.InputStream.Length];
-                        fileUpload.PostedFile.InputStream.Read(fileData, 0, (int)fileUpload.PostedFile.InputStream.Length);
-                        fileUpload.PostedFile.InputStream.Close();
-                    }
-
-                    file = new BOFile
-                    {
-                        File = fileData,
-                        Id = null,
-                        Folder = folder,
-                        Name = fi.Name,
-                        Extension = fi.Extension,
-                        MimeType = fileUpload.PostedFile.ContentType,
-                        Size = ((int)fileData.Length)
-                    };
-                }
-            }
-
-            return file;
         }
 
         protected override void OnPreRender(EventArgs e)

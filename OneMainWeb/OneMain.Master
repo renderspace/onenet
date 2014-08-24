@@ -15,6 +15,8 @@
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
 
+    <link href="/Scripts/dropzone/css/dropzone.css" rel="stylesheet">
+
 
     <script>
         tracing = <%: TracingFlag %>;
@@ -49,7 +51,7 @@
     <asp:contentplaceholder id="Head" runat="server" />
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" class="dropzone">
 
 		
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

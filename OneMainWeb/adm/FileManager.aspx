@@ -8,15 +8,106 @@
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="One.Net.BLL" %>
 
+<asp:Content ID="Head" runat="server">
+     <style>
+    html, body {
+      height: 100%;
+    }
+    #actions {
+      margin: 2em 0;
+    }
+
+
+    /* Mimic table appearance */
+    div.table {
+      display: table;
+    }
+    div.table .file-row {
+      display: table-row;
+    }
+    div.table .file-row > div {
+      display: table-cell;
+      vertical-align: top;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+    }
+    div.table .file-row:nth-child(odd) {
+      background: #f9f9f9;
+    }
+
+
+
+    /* The total progress gets shown by event listeners */
+    #total-progress {
+      opacity: 0;
+      transition: opacity 0.3s linear;
+    }
+
+    /* Hide the progress bar when finished */
+    #previews .file-row.dz-success .progress {
+      opacity: 0;
+      transition: opacity 0.3s linear;
+    }
+
+    /* Hide the delete button initially */
+    #previews .file-row .delete {
+      display: none;
+    }
+
+    /* Hide the start and cancel buttons and show the delete button */
+
+    #previews .file-row.dz-success .start,
+    #previews .file-row.dz-success .cancel {
+      display: none;
+    }
+    #previews .file-row.dz-success .delete {
+      display: block;
+    }
+
+    //http://www.dropzonejs.com/bootstrap.html
+  </style>
+
+</asp:Content>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         
 <one:Notifier runat="server" ID="Notifier1" />
     <div class="adminSection">
-		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4">
-            <asp:FileUpload ID="fileUpload" runat="server" />
-            <asp:LinkButton ID="cmdUpload" ValidationGroup="upload" OnClick="cmdUpload_Click"  runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Upload" CssClass="btn btn-success" />
-	        <asp:LinkButton ID="cmdOverwrite" ValidationGroup="upload"  runat="server" Text="Overwrite" CssClass="btn btn-warning" Visible="false" /> 
+		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4 ">
+
+            <div>
+                <input name="file" type="file" multiple />
+            </div>
+
+             <div id="actions" class="row">
+
+                <div class="col-lg-7">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                </span>
+                <button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                </div>
+
+                <div class="col-lg-5">
+                <!-- The global file processing state -->
+                <span class="fileupload-process">
+                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                    </div>
+                </span>
+                </div>
+
+            </div>
+            
                         
 		</asp:Panel>
 		<div class="col-md-4 validationGroup">
