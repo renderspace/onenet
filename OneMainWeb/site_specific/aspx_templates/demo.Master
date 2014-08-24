@@ -7,14 +7,11 @@
 <html>
 <head runat="server">
 
-<!-- Bootstrap core CSS -->
-<link href="/adm/css/bootstrap.min.css" rel="stylesheet">
+<%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
+<%: System.Web.Optimization.Styles.Render("~/Bundles/Sass") %>
 
-<!-- Custom styles for this template -->
-<link href="/_css/demo.css" rel="stylesheet">
 
-<!-- %: System.Web.Optimization.Styles.Render("~/Optimized/_css") % -->
-
+<%: System.Web.Optimization.Scripts.Render("~/Bundles/Jquery") %>
 <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 </head>
 <body role="document">
@@ -71,13 +68,8 @@
 		  </div>
 		</div>
 
-    </div> <!-- /container -->
-	
-	<%: System.Web.Optimization.Scripts.Render("~/Optimized/Scripts") %>
-	<%: System.Web.Optimization.Scripts.Render("~/Optimized/Bootstrap") %>
-
-	
-
+    </div> <!-- /container -->	
+	<%: System.Web.Optimization.Scripts.Render("~/Bundles/BootstrapJS") %>
     </form>
 </body>
 </html>
