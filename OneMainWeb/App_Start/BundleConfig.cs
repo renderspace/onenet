@@ -1,4 +1,8 @@
-﻿using System;
+﻿using BundleTransformer.Core.Builders;
+using BundleTransformer.Core.Orderers;
+using BundleTransformer.Core.Transformers;
+using BundleTransformer.SassAndScss.Translators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,19 +13,46 @@ namespace OneMainWeb
 {
     public class BundleConfig
     {
-        // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles)
         {
+            var saasTransformer = new SassAndScssTranslator();
+            var nullBuilder = new NullBuilder();
+            var scriptTransformer = new ScriptTransformer();
+            var styleTransformer = new StyleTransformer();
+            var nullOrderer = new NullOrderer();
 
-            bundles.Add(new ScriptBundle("~/Optimized/_js").IncludeDirectory("~/site_specific/_js", "*.js"));
+            // ADMIN
+            bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.min.css"));
+            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/JavaScript/bootstrap.min.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/JavaScript").IncludeDirectory("~/JavaScript", "*.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/Scripts").IncludeDirectory("~/Scripts", "*.js"));
+            bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
+            // END ADMIN
 
-            bundles.Add(new ScriptBundle("~/Optimized/Bootstrap").Include("~/JavaScript/bootstrap.min.js"));
+            // JQUERY
+            var jQueryBundle = new Bundle("~/Bundles/Jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js");
+            jQueryBundle.Include("~/Scripts/jquery-{version}.js");
+            jQueryBundle.Builder = nullBuilder;
+            jQueryBundle.Transforms.Add(scriptTransformer);
+            jQueryBundle.Orderer = nullOrderer;
+            jQueryBundle.CdnFallbackExpression = "window.jquery";
+            bundles.Add(jQueryBundle);
 
-            bundles.Add(new ScriptBundle("~/Optimized/JavaScript").IncludeDirectory("~/JavaScript", "*.js"));
-            bundles.Add(new ScriptBundle("~/Optimized/Scripts").IncludeDirectory("~/Scripts", "*.js"));
+            // REGULAR SITE CSS
+            bundles.Add(new StyleBundle("~/Bundles/_css").IncludeDirectory("~/site_specific/_css", "*.css"));
+            // REGULAR SITE JS
+            bundles.Add(new ScriptBundle("~/Bundles/_js").IncludeDirectory("~/site_specific/_js", "*.js"));
+            // REGULAR SaSS
+            var saasBundle = new Bundle("~/Bundles/Sass").IncludeDirectory("~/site_specific/_sass", "*.sass").IncludeDirectory("~/site_specific/_sass", "*.scss");
+            saasBundle.Builder = nullBuilder;
+            saasBundle.Transforms.Add(styleTransformer);
+            saasBundle.Orderer = nullOrderer;
+            bundles.Add(saasBundle);
 
-            bundles.Add(new StyleBundle("~/Optimized/adm/css").IncludeDirectory("~/adm/css", "*.css"));
-            bundles.Add(new StyleBundle("~/Optimized/_css").IncludeDirectory("~/site_specific/_css", "*.css"));
+            if (PresentBasePage.ReadPublishFlag())
+            {
+                BundleTable.EnableOptimizations = true;
+            }
 
             /*
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
