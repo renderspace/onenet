@@ -23,7 +23,7 @@ namespace OneMainWeb.Models
 
     public class ApplicationDbContext : IdentityDbContext<OneNetUser>
     {
-        public ApplicationDbContext() : base("DefaultConnection")
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
         public DbSet<IdentityUserLogin> Logins { get; set; }
