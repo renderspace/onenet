@@ -49,8 +49,7 @@
 						</asp:TemplateField>
                         <asp:TemplateField HeaderText="Status">
 							<ItemTemplate>
-								    <img src='<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>' alt="" />
-								</div>
+							<img src='<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>' alt="" />
 							</ItemTemplate>
 						</asp:TemplateField>
 						<asp:TemplateField HeaderText="Title" SortExpression="cds.title">
@@ -103,9 +102,11 @@
                             <asp:ListBox ID="lbRegulars" runat="server" Rows="5" CssClass="form-control" />
                         </div>
                         <div class="col-sm-2">
-                            <asp:Button ValidationGroup="ATR" ID="cmdAssignRegularToArticle" runat="server" Text="$assign" OnClick="cmdAssignRegularToArticle_Click" /><br />
-							<asp:Button ValidationGroup="ATR" ID="cmdRemoveRegularFromArticle" runat="Server" Text="$remove"
-								OnClick="cmdRemoveRegularFromArticle_Click" />
+                            <asp:LinkButton ValidationGroup="ATR" ID="cmdAssignRegularToArticle" runat="server"  OnClick="cmdAssignRegularToArticle_Click" CssClass="btn btn-info"> 
+                                <span class="glyphicon glyphicon-arrow-right"></span></asp:LinkButton>
+                                <br />
+							<asp:LinkButton ValidationGroup="ATR" ID="cmdRemoveRegularFromArticle" runat="Server" CssClass="btn btn-info" OnClick="cmdRemoveRegularFromArticle_Click" >
+                                <span class="glyphicon glyphicon-arrow-left"></span></asp:LinkButton>
                         </div>
                         <div class="col-sm-6">
 								<asp:ListBox ID="lbRegularsAssignedToArticle" runat="server" Rows="5" CssClass="form-control" />
