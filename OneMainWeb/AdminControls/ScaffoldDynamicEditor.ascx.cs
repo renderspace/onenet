@@ -590,7 +590,7 @@ jQuery.validator.addMethod(
             if(!column.IsNullable)
                 TextBoxSuggest.CssClass += " required";
 
-            TextBoxSuggest.CssClass += " form-control";
+            TextBoxSuggest.CssClass += " form-control suggest ";
             //   if (!skipSelectedLookup)
             //       TextBoxSuggest.Text = BData.GetForeignKeySelectedOption(column.PartOfRelationId, column.ValueInteger);
 
