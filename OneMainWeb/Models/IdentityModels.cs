@@ -58,12 +58,14 @@ namespace OneMainWeb.Models
         public static void ClearUserRoles(string userName)
         {
             var um = new UserManager<OneNetUser>(new UserStore<OneNetUser>(new ApplicationDbContext()));
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
             var user = um.FindByName(userName);
             var currentRoles = new List<IdentityUserRole>();
             currentRoles.AddRange(user.Roles);
             foreach (var role in currentRoles)
             {
-                um.RemoveFromRole(user.Id, role.Role.Name);
+                var r = rm.FindById(role.RoleId);
+                um.RemoveFromRole(user.Id, r.Name);
             }
         }
 

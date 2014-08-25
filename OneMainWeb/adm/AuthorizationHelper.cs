@@ -61,7 +61,9 @@ namespace OneMainWeb.adm
 
         public bool IsInRole(string roleName)
         {
-            return currentUser.Roles.Where(r => r.Role.Name == roleName).Any();
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var role = rm.FindByName(roleName);
+            return currentUser.Roles.Where(r => r.RoleId == role.Id).Any();
         }
 
         public IEnumerable<BOWebSite> ListAllowedWebsites()
