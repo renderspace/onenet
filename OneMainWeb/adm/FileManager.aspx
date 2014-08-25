@@ -64,8 +64,8 @@
       display: block;
     }
 
-    #PanelUpload {  height: 120px;  background-image: url('/Scripts/dropzone/images/spritemap.png'); background-repeat: no-repeat; }
-    #PanelUpload:hover { background-color: azure;  }
+    #PanelUpload {  height: 120px;  background: url('/adm/images/drag.png') no-repeat center center; padding: 20px; cursor: pointer; border: 2px #ccc dashed; }
+    #PanelUpload:hover { background-color: #eee;  }
 
   </style>
     <script>
@@ -101,7 +101,7 @@
                     $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
                     //$(".alert").remove();
                     $("#previews").empty();
-                    
+
                 }
             });
 
