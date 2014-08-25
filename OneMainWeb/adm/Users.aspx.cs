@@ -92,7 +92,7 @@ namespace OneMainWeb.adm
             {
                 var CheckBox1 = e.Item.FindControl("Checkbox1") as CheckBox;
 
-                var temp = userRoles.Where(r => r.Role.Name == item.Name).FirstOrDefault();
+                var temp = userRoles.Where(r => r.RoleId == item.Id).FirstOrDefault();
                 if (temp != null)
                 {
                     CheckBox1.Checked = true;
