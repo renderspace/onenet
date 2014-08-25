@@ -51,7 +51,7 @@
     <asp:contentplaceholder id="Head" runat="server" />
 </head>
 <body>
-    <form id="form1" runat="server" class="dropzone">
+    <form id="form1" runat="server">
 
 		
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

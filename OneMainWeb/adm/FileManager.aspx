@@ -64,8 +64,52 @@
       display: block;
     }
 
-    //http://www.dropzonejs.com/bootstrap.html
+    #PanelUpload { width: 500px; height: 120px; border: 1px solid black; background-image: url('/Scripts/dropzone/images/spritemap.png'); background-repeat: no-repeat; }
+    #PanelUpload:hover { background-color: azure;  }
+
   </style>
+    <script>
+        Dropzone.autoDiscover = false;
+        $(document).ready(function () {
+            var previewNode = document.querySelector("#template");
+            previewNode.id = "";
+            var previewTemplate = previewNode.parentNode.innerHTML;
+            previewNode.parentNode.removeChild(previewNode);
+
+            var myDropzone = new Dropzone("div#PanelUpload", {
+                url: "/adm/FileManager.aspx",
+                autoProcessQueue: true,
+                thumbnailWidth: 80,
+                thumbnailHeight: 80,
+                parallelUploads: 20,
+                previewTemplate: previewTemplate,
+                previewsContainer: "#previews" // Define the container to display the previews
+            });
+
+            myDropzone.on("sending", function (file, xhr, formData) {
+                var selectedFolderId = $('#HiddenSelectedFolderId').val();
+                console.log("sending to: " + selectedFolderId);
+                formData.append("SelectedFolderId", selectedFolderId);
+            });
+
+            myDropzone.on("complete", function (file) {
+                console.log("complete");
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    var selectedFolderId = $('#HiddenSelectedFolderId').val();
+                    console.log("complete: " + selectedFolderId);
+                    files_databind(selectedFolderId);
+                    //$(".alert").remove();
+                    $("#previews").empty();
+                    $(".adminSection").insertBefore('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
+                }
+            });
+
+            myDropzone.on("totaluploadprogress", function (progress) {
+                document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+            });
+
+        });
+    </script>
 
 </asp:Content>
 
@@ -73,52 +117,56 @@
         
 <one:Notifier runat="server" ID="Notifier1" />
     <div class="adminSection">
-		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4 ">
+		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4" ClientIDMode="static">
 
            <div class="fallback">
                 <input name="file" type="file" multiple />
             </div>
 
-             <div id="actions" class="row">
-
-                <div class="col-lg-7">
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Add files...</span>
-                </span>
-                <button type="submit" class="btn btn-primary start">
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start upload</span>
-                </button>
-                <button type="reset" class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel upload</span>
-                </button>
-                </div>
-
-                <div class="col-lg-5">
-                <!-- The global file processing state -->
-                <span class="fileupload-process">
-                    <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                    </div>
-                </span>
-                </div>
-
-            </div>
             
-                        
 		</asp:Panel>
 		<div class="col-md-4 validationGroup">
             <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
             <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
             <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
+
 		</div>
 		<div class="col-md-4">
-                       
+            <span class="fileupload-process">
+                <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                </div>
+            </span>                       
 		</div>
     </div>
+
+    <div class="table table-striped" class="files" id="previews">
+
+      <div id="template" class="file-row">
+        <!-- This is used as the file preview template -->
+        <div>
+            <span class="preview"><img data-dz-thumbnail /></span>
+        </div>
+        <div>
+            <p class="name" data-dz-name></p>
+            <strong class="error text-danger" data-dz-errormessage></strong>
+        </div>
+        <div>
+            <p class="size" data-dz-size></p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+            </div>
+        </div>
+        <div>
+          <button data-dz-remove class="btn btn-warning cancel">
+              <i class="glyphicon glyphicon-ban-circle"></i>
+              <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+ 
 
 
 <div class="col-md-3">

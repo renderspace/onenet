@@ -76,8 +76,11 @@ namespace OneMainWeb
         {
             var count = 0;
             BOFile file = null;
-            if (SelectedFolderId > 0)
+            var parameterFolderId = 0;
+            if (SelectedFolderId > 0 || (Request["SelectedFolderId"] != null && int.TryParse(Request["SelectedFolderId"], out parameterFolderId)))
             {
+                if (parameterFolderId > 0)
+                    SelectedFolderId = parameterFolderId;
                 BOCategory folder = fileB.GetFolder(SelectedFolderId);
                 if (folder != null)
                 {
