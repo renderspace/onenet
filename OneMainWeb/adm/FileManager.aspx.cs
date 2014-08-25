@@ -113,7 +113,10 @@ namespace OneMainWeb
                             fileB.Change(file);
                         }
                     }
-                    Notifier1.Message = "Uploaded " + count + " files.";
+                    if (count > 0)
+                    {
+                        Notifier1.Message = "Uploaded " + count + " files.";
+                    }
                 }
             }
 

@@ -64,7 +64,7 @@
       display: block;
     }
 
-    #PanelUpload { width: 500px; height: 120px; border: 1px solid black; background-image: url('/Scripts/dropzone/images/spritemap.png'); background-repeat: no-repeat; }
+    #PanelUpload {  height: 120px;  background-image: url('/Scripts/dropzone/images/spritemap.png'); background-repeat: no-repeat; }
     #PanelUpload:hover { background-color: azure;  }
 
   </style>
@@ -98,15 +98,16 @@
                     var selectedFolderId = $('#HiddenSelectedFolderId').val();
                     console.log("complete: " + selectedFolderId);
                     files_databind(selectedFolderId);
+                    $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
                     //$(".alert").remove();
                     $("#previews").empty();
-                    $(".adminSection").insertBefore('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
+                    
                 }
             });
 
-            myDropzone.on("totaluploadprogress", function (progress) {
-                document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-            });
+            //myDropzone.on("totaluploadprogress", function (progress) {
+            //    document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+            //});
 
         });
     </script>
@@ -117,30 +118,21 @@
         
 <one:Notifier runat="server" ID="Notifier1" />
     <div class="adminSection">
-		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-4" ClientIDMode="static">
-
-           <div class="fallback">
-                <input name="file" type="file" multiple />
-            </div>
-
-            
-		</asp:Panel>
+		
 		<div class="col-md-4 validationGroup">
             <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
             <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
             <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
 
 		</div>
-		<div class="col-md-4">
-            <span class="fileupload-process">
-                <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                </div>
-            </span>                       
-		</div>
+		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-8" ClientIDMode="static">
+           <div class="fallback">
+                <input name="file" type="file" multiple />
+            </div>
+		</asp:Panel>
     </div>
 
-    <div class="table table-striped" class="files" id="previews">
+    <div class="table table-striped files" id="previews">
 
       <div id="template" class="file-row">
         <!-- This is used as the file preview template -->
