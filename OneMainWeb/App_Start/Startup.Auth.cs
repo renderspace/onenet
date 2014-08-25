@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using One.Net.BLL;
 using Owin;
 using System.Configuration;
+using System.Reflection;
+using System.Web.Hosting;
 
 namespace OneMainWeb
 {
+
     public partial class Startup {
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301883
