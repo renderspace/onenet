@@ -477,7 +477,6 @@
     <Content Include="AdminControls\TextContentModal.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
     <Content Include="adm\css\bootstrap.css" />
-    <Content Include="adm\css\bootstrap.min.css" />
     <Content Include="adm\css\dashboard.css" />
     <Content Include="adm\css\default_editor.css" />
     <Content Include="adm\css\one.css" />
@@ -854,7 +853,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\ContentEdit.aspx" />
-    <Content Include="adm\css\one-fm.css" />
     <Content Include="adm\Structure.aspx" />
     <Content Include="CommonModules\NewsSubscription.ascx" />
     <Content Include="CommonModules\TextContent.ascx" />
