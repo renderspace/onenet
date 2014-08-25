@@ -935,6 +935,7 @@
     <Folder Include="adm\ashx\" />
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
+    <Folder Include="site_specific\NewFolder1\" />
     <Folder Include="site_specific\_css\" />
   </ItemGroup>
   <ItemGroup>
