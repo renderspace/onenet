@@ -192,6 +192,7 @@ namespace One.Net.BLL
                 {
                     return AddSubPageResult.TriedToAddRootPageToNonEmptySite;
                 }
+                newParLink = "";
             }
 
             List<BOTemplate> templateData = ListTemplates("3");
