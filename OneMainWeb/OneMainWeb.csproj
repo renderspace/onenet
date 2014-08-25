@@ -280,9 +280,6 @@
     <Compile Include="AdminControls\TextContentModal.ascx.designer.cs">
       <DependentUpon>TextContentModal.ascx</DependentUpon>
     </Compile>
-    <Compile Include="adm\ashx\HandlerUpload.ashx.cs">
-      <DependentUpon>HandlerUpload.ashx</DependentUpon>
-    </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
@@ -794,7 +791,6 @@
     </Content>
     <Content Include="adm\ExcelExport.ashx" />
     <Content Include="adm\Icons.ashx" />
-    <Content Include="adm\ashx\HandlerUpload.ashx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -919,6 +915,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AdminExtensions\" />
+    <Folder Include="adm\ashx\" />
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
     <Folder Include="site_specific\_css\" />

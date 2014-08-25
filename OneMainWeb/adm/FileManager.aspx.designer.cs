@@ -22,15 +22,6 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
-        /// PanelUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelUpload;
-        
-        /// <summary>
         /// lblSearchMessage control.
         /// </summary>
         /// <remarks>
@@ -56,6 +47,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        
+        /// <summary>
+        /// PanelUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelUpload;
         
         /// <summary>
         /// PanelAddFolder control.
