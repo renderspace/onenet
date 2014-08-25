@@ -476,6 +476,7 @@
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\TextContentModal.ascx" />
     <Content Include="adm\css\adminWikiMenu.css" />
+    <Content Include="adm\css\bootstrap.css" />
     <Content Include="adm\css\bootstrap.min.css" />
     <Content Include="adm\css\dashboard.css" />
     <Content Include="adm\css\default_editor.css" />
@@ -486,7 +487,7 @@
     <Content Include="adm\Forms.aspx" />
     <Content Include="adm\images\drag.png" />
     <Content Include="adm\js\bootstrap-treeview.js" />
-    <Content Include="adm\js\bootstrap.min.js" />
+    <Content Include="adm\js\bootstrap.js" />
     <Content Include="adm\js\jquery.details.js" />
     <Content Include="adm\js\jquery.ui.datepicker-en.js" />
     <Content Include="adm\js\One.js" />
