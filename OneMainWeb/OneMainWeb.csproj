@@ -833,6 +833,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\custom_modules\CookieConsent.ascx" />
+    <Content Include="site_specific\_css\default.html" />
+    <Content Include="site_specific\_js\default.html" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\TestException.aspx" />
     <Content Include="web.config">
@@ -935,8 +937,6 @@
     <Folder Include="adm\ashx\" />
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
-    <Folder Include="site_specific\NewFolder1\" />
-    <Folder Include="site_specific\_css\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
