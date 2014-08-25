@@ -906,7 +906,7 @@ namespace One.Net.BLL
                 }
                 if (!IISHelper.AppPoolExists(sm, appPoolName))
                 {
-                    IISHelper.CreateNewAppPool(sm, appPoolName, "v4.5");
+                    IISHelper.CreateNewAppPool(sm, appPoolName, "v4.0");
                 }
                 IISHelper.CreateWebSite(sm, siteUrl.Host, appPoolName, website.PreviewUrl, newWebsiteRoot.FullName);
                 sm.CommitChanges();
