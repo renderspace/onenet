@@ -40,7 +40,6 @@ namespace OneMainWeb.adm
             }
         }
 
-
         protected void SelectedWebsite_ValidateDataBind()
         {
             // WEBSITE
@@ -120,7 +119,6 @@ namespace OneMainWeb.adm
 
             //LabelMessage
         }
-
 
         protected void TreeViewPages_Unload(object sender, EventArgs e)
         {
@@ -754,6 +752,8 @@ namespace OneMainWeb.adm
                     if (publishingPage.MarkedForDeletion && !publishingPage.IsRoot)
                     {
                         SelectedPageId = publishingPage.ParentId.Value;
+                        SelectedPage = webSiteB.GetPage(SelectedPageId);
+
                         Notifier1.Message = "Page was successfully completely deleted.";
                     }
                     else if (publishingPage.MarkedForDeletion)
