@@ -20,7 +20,7 @@ $('.ckeditor4').each(function (index) {
         toolbar: [
 
     ['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
-    ['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat'],
+    ['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat', 'Source'],
         ],
 
         filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
@@ -45,7 +45,7 @@ $('.ckeditor4').each(function (index) {
 
         disableObjectResizing: true,
         resize_enabled: false,
-        allowedContent: true
+        allowedContent: true //,extraPlugins: 'youtube'
     });
 });
 
