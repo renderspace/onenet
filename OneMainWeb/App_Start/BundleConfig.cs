@@ -23,9 +23,19 @@ namespace OneMainWeb
 
             // ADMIN
             bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Bundles/JqueryUI").Include(
+                "~/Content/themes/base/core.css").Include(
+                "~/Content/themes/base/datepicker.css").Include(
+                "~/Content/themes/base/theme.css"));
+
             bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.js"));
             bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js"));
-            bundles.Add(new ScriptBundle("~/Bundles/Scripts").IncludeDirectory("~/Scripts", "*.js").Include("~/Scripts/dropzone/dropzone.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/Scripts").Include(
+                    "~/Scripts/jquery-{version}.js").Include(
+                    "~/Scripts/jquery.validate.js").Include(
+                    "~/Scripts/jquery-ui-{version}.js").Include(
+                    "~/Scripts/dropzone/dropzone.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
             // END ADMIN
 
