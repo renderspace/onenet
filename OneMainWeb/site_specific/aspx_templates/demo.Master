@@ -6,70 +6,68 @@
 <!DOCTYPE HTML>
 <html>
 <head runat="server">
-
-<%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
-<%: System.Web.Optimization.Styles.Render("~/Bundles/Sass") %>
-
-
-<%: System.Web.Optimization.Scripts.Render("~/Bundles/Jquery") %>
-<Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
+    <Controls:BundleRender ID="BundleRender3" runat="server" Path="~/Bundles/BoostrapCSS" />
+    <Controls:BundleRender ID="BundleRender2" runat="server" Path="~/Bundles/Sass" />
+    <Controls:BundleRender ID="BundleRender1" runat="server" Path="~/Bundles/Jquery" IsScript="true" />
+    <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 </head>
 <body role="document">
     <form id="form1" runat="server">
 		 <div class="container">
 	
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="navbar-default" role="navigation">
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					  </button>
-					  <a class="navbar-brand" href="/">Home</a>
-					  <span class="visible-xs navbar-brand">Main menu</span>
-					</div>
-					<div class="navbar-collapse collapse main-navbar-collapse">
+		    <div class="row">
+			    <div class="col-sm-12">
+				    <div class="navbar-default" role="navigation">
+					    <div class="navbar-header">
+					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navbar-collapse">
+						    <span class="sr-only">Toggle navigation</span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+					      </button>
+					      <a class="navbar-brand" href="/">Home</a>
+					      <span class="visible-xs navbar-brand">Main menu</span>
+					    </div>
+					    <div class="navbar-collapse collapse main-navbar-collapse">
 					
-					  <Controls:MenuGroup ID="TopNavig" runat="server" LocalExpand="true" MinDepth="1" MaxDepth="1" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
+					      <Controls:MenuGroup ID="TopNavig" runat="server" LocalExpand="true" MinDepth="1" MaxDepth="1" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
 
-					</div><!--/.nav-collapse -->
-				  </div>
-			</div>
-        	<div class="col-xs-12"><h1></h1></div>
-        </div>
-
-		<div class="row">
-          <div class="col-sm-3">
-            <div class="sidebar-nav">
-              <div class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <span class="visible-xs navbar-brand">Left menu</span>
-                </div>
-                <div class="navbar-collapse collapse sidebar-navbar-collapse">
-				
-				  <Controls:MenuGroup ID="LeftNavig" runat="server" LocalExpand="true" MinDepth="2" MaxDepth="3" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
-
-                </div><!--/.nav-collapse -->
-              </div>
+					    </div><!--/.nav-collapse -->
+				      </div>
+			    </div>
+        	    <div class="col-xs-12"><h1></h1></div>
             </div>
-          </div>
-          <div class="col-sm-9">
-				<asp:ContentPlaceHolder ID="centerContainer" runat="server">
-				</asp:ContentPlaceHolder>
-		  </div>
-		</div>
 
-    </div> <!-- /container -->	
-	<%: System.Web.Optimization.Scripts.Render("~/Bundles/BootstrapJS") %>
+		    <div class="row">
+              <div class="col-sm-3">
+                <div class="sidebar-nav">
+                  <div class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <span class="visible-xs navbar-brand">Left menu</span>
+                    </div>
+                    <div class="navbar-collapse collapse sidebar-navbar-collapse">
+				
+				      <Controls:MenuGroup ID="LeftNavig" runat="server" LocalExpand="true" MinDepth="2" MaxDepth="3" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
+
+                    </div><!--/.nav-collapse -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-9">
+				    <asp:ContentPlaceHolder ID="centerContainer" runat="server">
+				    </asp:ContentPlaceHolder>
+		      </div>
+		    </div>
+
+        </div> <!-- /container -->	
+
+        <Controls:BundleRender ID="BundleRender4" runat="server" Path="~/Bundles/BootstrapJS" IsScript="true" />
     </form>
 </body>
 </html>

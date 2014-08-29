@@ -218,14 +218,9 @@ ga('send', 'pageview');
                 if (!PublishFlag)
                     InsertDebugBanner();
 
-                try
-                {
-                    Form.Attributes.Add("class",
-                        Thread.CurrentThread.CurrentCulture.Name + " page" + CurrentPage.Id + " depth" + CurrentPage.Level +
-                        " " + CurrentPage.parentPagesSimpleList + " " + (Page.User != null && Page.User.Identity != null && Page.User.Identity.IsAuthenticated ? "isAuth" : "notAuth") + " T" + (CurrentPage.Template != null ? CurrentPage.Template.Name : ""));
-                }
-                catch
-                { }
+                Form.Attributes.Add("class",
+                    Thread.CurrentThread.CurrentCulture.Name + " page" + CurrentPage.Id + " depth" + CurrentPage.Level +
+                    " " + CurrentPage.parentPagesSimpleList + " " + (Page.User != null && Page.User.Identity != null && Page.User.Identity.IsAuthenticated ? "isAuth" : "notAuth") + " T" + (CurrentPage.Template != null ? CurrentPage.Template.Name : ""));
 
                 log.Debug("-OnInit (load ModuleInstances)");
 
@@ -422,28 +417,21 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 }
             }
 
-            try
-            {
-                RenderDescription(providedDescription);
-                RenderTitle(providedPageName);
-                RenderOgImage(providedOgImage);
-                RenderMetaData();
-                RenderKeywords(providedKeywords);
+            RenderDescription(providedDescription);
+            RenderTitle(providedPageName);
+            RenderOgImage(providedOgImage);
+            RenderMetaData();
+            RenderKeywords(providedKeywords);
 
-                if (providedLinkTags != null && providedLinkTags.Keys != null && providedLinkTags.Keys.Count > 0)
-                {
-                    foreach (string key in providedLinkTags.Keys)
-                    {
-                        var linkTag = new HtmlLink();
-                        linkTag.Attributes.Add("rel", HttpUtility.HtmlEncode(key));
-                        linkTag.Href = HttpUtility.HtmlEncode(providedLinkTags[key]);
-                        Header.Controls.Add(linkTag);
-                    }
-                }
-            }
-            catch (Exception ex)
+            if (providedLinkTags != null && providedLinkTags.Keys != null && providedLinkTags.Keys.Count > 0)
             {
-                log.Fatal("Header", ex);
+                foreach (string key in providedLinkTags.Keys)
+                {
+                    var linkTag = new HtmlLink();
+                    linkTag.Attributes.Add("rel", HttpUtility.HtmlEncode(key));
+                    linkTag.Href = HttpUtility.HtmlEncode(providedLinkTags[key]);
+                    Header.Controls.Add(linkTag);
+                }
             }
 
             base.OnLoadComplete(e);
