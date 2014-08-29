@@ -49,7 +49,7 @@ namespace OneMainWeb.Account
                 if (message != null)
                 {
                     // Strip the query string from action
-                    Form.Action = ResolveUrl("~/Account/Manage");
+                    Form.Action = ResolveUrl("~/Account/Manage.aspx");
 
                     SuccessMessage =
                         message == "ChangePwdSuccess" ? "Your password has been changed."
@@ -69,7 +69,7 @@ namespace OneMainWeb.Account
                 IdentityResult result = manager.ChangePassword(User.Identity.GetUserId(), CurrentPassword.Text, NewPassword.Text);
                 if (result.Succeeded)
                 {
-                    Response.Redirect("~/Account/Manage?m=ChangePwdSuccess");
+                    Response.Redirect("~/Account/Manage.aspx?m=ChangePwdSuccess");
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace OneMainWeb.Account
                 IdentityResult result = manager.AddPassword(User.Identity.GetUserId(), password.Text);
                 if (result.Succeeded)
                 {
-                    Response.Redirect("~/Account/Manage?m=SetPwdSuccess");
+                    Response.Redirect("~/Account/Manage.aspx?m=SetPwdSuccess");
                 }
                 else
                 {
