@@ -8,16 +8,9 @@
 <html>
 <head runat="server">
     <title></title>
-    <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
     <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
     <%: System.Web.Optimization.Styles.Render("~/Bundles/JqueryUI") %>
-
-    <!-- Custom styles for this template -->
-    <link href="/adm/css/dashboard.css" rel="stylesheet">
-
-    <link href="/Scripts/dropzone/css/dropzone.css" rel="stylesheet">
-
-
+    <%: System.Web.Optimization.Styles.Render("~/Bundles/AdmCSS") %>
     <script>
         tracing = <%: TracingFlag %>;
         languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
