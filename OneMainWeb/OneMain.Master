@@ -67,7 +67,7 @@
 			</div>
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-right">
-                  <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                  <li><a runat="server" href="~/Account/Manage.aspx" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
                     <li><a><asp:DropDownList CssClass="headSelect" runat="server" ID="DropDownListWebSiteCombined" AutoPostBack="true" OnSelectedIndexChanged="DropDownListWebSiteCombined_SelectedIndexChanged"></asp:DropDownList></a></li>
 				    <li><asp:Hyperlink ID="HyperLinkHelp" Target="_blank" NavigateUrl="http://prirocnik.renderspace.net" runat="server" EnableViewState="false">Help</asp:Hyperlink></li>
                     <li>
