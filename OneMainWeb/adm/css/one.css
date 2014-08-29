@@ -1,6 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext);
 
-body {font-family: 'Roboto', sans-serif!important; font-size: 13px; margin: 0; padding: 0;}
+body {font-size: 13px; margin: 0; padding: 0;}
 ul:focus, .nav-sidebar li a:focus {outline:0px !important; -webkit-appearance:none;}
 h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 .radio, .checkbox {padding-left: 0!important;}
