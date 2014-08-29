@@ -5,19 +5,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-     <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
     <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
-    <!-- Bootstrap core CSS -->
-    <link href="/adm/css/bootstrap.min.css" rel="stylesheet">
-	
+    <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
-	
-    <script type="text/javascript" src="/Scripts/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.validate.min.js"></script> 
+
+    <link href="/Scripts/dropzone/css/dropzone.css" rel="stylesheet">
+
+
     
-	<script src="/JavaScript/bootstrap.min.js"></script>
+    <%: System.Web.Optimization.Scripts.Render("~/Bundles/Scripts") %>
+
+	<style type="text/css">
+    	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
+    	.browser-logos { padding-top: 20px; }
+    </style>
 
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -29,5 +32,7 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </div>
     </form>
+    <%: System.Web.Optimization.Scripts.Render("~/Bundles/BootstrapJS") %>  
+    <%: System.Web.Optimization.Scripts.Render("~/Bundles/AdmJS") %>  
 </body>
 </html>
