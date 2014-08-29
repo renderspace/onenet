@@ -18,6 +18,7 @@ namespace OneMainWeb.adm
     public partial class Website : OneBasePage
     {
         BWebsite websiteB = new BWebsite();
+        bool isFirstWebsite = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,9 +31,7 @@ namespace OneMainWeb.adm
                 foreach (var language in languages)
                     DropDownList1.Items.Add(new ListItem((new CultureInfo(language)).EnglishName, language.ToString()));
             }
-        }
-
-        
+        }        
 
         private void GridViewWebsitesLoad()
         {
@@ -48,8 +47,10 @@ namespace OneMainWeb.adm
                 GridViewTemplates.DataBind();
             }
             else
+            {
                 PlaceHolderTemplates.Visible = false;
-
+                isFirstWebsite = true;
+            }
         }
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace OneMainWeb.adm
             website.ProductionUrl = TextBoxProductionUrl.Text;
             website.PrincipalCreated = User.Identity.Name;
             website.PreviewUrl = TextBoxPreviewUrl.Text;
-            var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), connString);
+            var result = websiteB.AddWebSite(website, CheckboxNewDatabase.Checked, new DirectoryInfo(Server.MapPath("~")), connString, isFirstWebsite);
             if (result == BWebsite.AddWebSiteResult.Success)
             {
                 Notifier1.Title = "Created";
