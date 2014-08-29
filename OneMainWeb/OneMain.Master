@@ -100,7 +100,6 @@
 	 </div>
     </div>
     <script src="/ckeditor4/ckeditor.js"></script>
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/BootstrapJS") %>  
     <%: System.Web.Optimization.Scripts.Render("~/Bundles/AdmJS") %>  
     </form>
 </body>
