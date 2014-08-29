@@ -111,7 +111,7 @@ namespace OneMainWeb.Account
             var msg = result.Succeeded
                 ? "?m=RemoveLoginSuccess"
                 : String.Empty;
-            Response.Redirect("~/Account/Manage" + msg);
+            Response.Redirect("~/Account/Manage.aspx" + msg);
         }
 
         private void AddErrors(IdentityResult result)
