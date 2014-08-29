@@ -23,6 +23,10 @@ namespace OneMainWeb
 
             // ADMIN
             bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
+            bundles.Add(new StyleBundle("~/Bundles/AdmCSS").Include(
+                "~/Scripts/dropzone/css/dropzone.css").Include(
+                "~/adm/css/one.css").Include(
+                "~/adm/css/dashboard.css"));
 
             bundles.Add(new StyleBundle("~/Bundles/JqueryUI").Include(
                 "~/Content/themes/base/core.css").Include(
@@ -63,34 +67,6 @@ namespace OneMainWeb
             {
                 BundleTable.EnableOptimizations = true;
             }
-
-            /*
-            bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
-                            "~/Scripts/WebForms/WebForms.js",
-                            "~/Scripts/WebForms/WebUIValidation.js",
-                            "~/Scripts/WebForms/MenuStandards.js",
-                            "~/Scripts/WebForms/Focus.js",
-                            "~/Scripts/WebForms/GridView.js",
-                            "~/Scripts/WebForms/DetailsView.js",
-                            "~/Scripts/WebForms/TreeView.js",
-                            "~/Scripts/WebForms/WebParts.js"));
-
-            // Order is very important for these files to work, they have explicit dependencies
-            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
-
-            
-
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "respond",
-                new ScriptResourceDefinition
-                {
-                    Path = "~/Scripts/respond.min.js",
-                    DebugPath = "~/Scripts/respond.js",
-                }); */
         }
     }
 }
