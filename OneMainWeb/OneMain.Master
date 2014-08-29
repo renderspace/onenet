@@ -10,8 +10,7 @@
     <title></title>
     <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
     <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
-    <!-- Bootstrap core CSS -->
-    <link href="/adm/css/bootstrap.min.css" rel="stylesheet">
+    <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
 
