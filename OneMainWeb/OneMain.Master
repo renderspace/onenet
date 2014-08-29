@@ -9,8 +9,9 @@
 <head runat="server">
     <title></title>
     <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
-    <link href="/Content/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" media="all"  />
     <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
+    <%: System.Web.Optimization.Styles.Render("~/Bundles/JqueryUI") %>
+
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet">
 
