@@ -104,7 +104,7 @@ namespace OneMainWeb.adm
             website.PreviewUrl = TextBoxPreviewUrl.Text;
 
             BWebsite.AddWebSiteResult result = BWebsite.AddWebSiteResult.Error;
-            if (!PanelEmptyDatabase.Visible) // we have an empty database
+            if (PanelEmptyDatabase.Visible) // we have an empty database
             {
                 websiteB.ChangeWebsite(website);
                 result = BWebsite.AddWebSiteResult.Success;
