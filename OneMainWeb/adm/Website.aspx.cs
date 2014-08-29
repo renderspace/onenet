@@ -18,7 +18,6 @@ namespace OneMainWeb.adm
     public partial class Website : OneBasePage
     {
         BWebsite websiteB = new BWebsite();
-        bool isFirstWebsite = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -49,12 +48,14 @@ namespace OneMainWeb.adm
             else
             {
                 PlaceHolderTemplates.Visible = false;
-                isFirstWebsite = true;
             }
         }
 
         protected void ButtonAdd_Click(object sender, EventArgs e)
         {
+            var websites = Authorization.ListAllowedWebsites();
+            var isFirstWebsite = websites.Count() == 0;
+
             var connString = "";
             if (CheckboxNewDatabase.Checked)
             {
