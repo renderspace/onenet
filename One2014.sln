@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C55BF
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knauf-igra", "..\..\one.net.2.0\library\Knauf-igra\Knauf-igra.csproj", "{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -43,16 +41,6 @@ Global
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Debug|.NET.ActiveCfg = Debug|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Release|.NET.ActiveCfg = Release|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{B031FB0E-DAC6-4C3F-B9D1-4A9E7BBAB64F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
