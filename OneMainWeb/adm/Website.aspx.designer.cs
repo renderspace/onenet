@@ -85,6 +85,15 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.GridView GridViewTemplates;
         
         /// <summary>
+        /// PanelEmptyDatabase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelEmptyDatabase;
+        
+        /// <summary>
         /// InputTitle control.
         /// </summary>
         /// <remarks>
@@ -119,6 +128,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxProductionUrl;
+        
+        /// <summary>
+        /// PlaceholderNewDatabase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder PlaceholderNewDatabase;
         
         /// <summary>
         /// CheckboxNewDatabase control.

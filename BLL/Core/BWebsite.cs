@@ -845,7 +845,7 @@ namespace One.Net.BLL
 
         public enum AddWebSiteResult { Error, IisError, NotAllowed, SameNameExistsIis, SameNameExistsDatabase, FileSystemError, CreateDatabaseError, Success }
 
-        public AddWebSiteResult AddWebSite(BOWebSite website, bool newDatabase, DirectoryInfo currentPhysicalRootPath, string connectString, bool isFirstWebsite)
+        public AddWebSiteResult AddWebSite(BOWebSite website, bool newDatabase, DirectoryInfo currentPhysicalRootPath, string connectString)
         {
             SqlConnectionStringBuilder builder = null;
             if (newDatabase && !string.IsNullOrWhiteSpace(connectString))
@@ -894,41 +894,38 @@ namespace One.Net.BLL
                 builder.Password = newPassword;
             }
 
-            if (!isFirstWebsite)
+            // IIS CREATE
+            using (var sm = new ServerManager())
             {
-                // IIS CREATE
-                using (var sm = new ServerManager())
+                if (!sm.Sites.AllowsAdd)
                 {
-                    if (!sm.Sites.AllowsAdd)
-                    {
-                        return AddWebSiteResult.NotAllowed;
-                    }
-                    if (sm.Sites.Any(t => t.Name == siteUrl.Host))
-                    {
-                        return AddWebSiteResult.SameNameExistsIis;
-                    }
-                    if (!IISHelper.AppPoolExists(sm, appPoolName))
-                    {
-                        IISHelper.CreateNewAppPool(sm, appPoolName, "v4.0");
-                    }
-                    IISHelper.CreateWebSite(sm, siteUrl.Host, appPoolName, website.PreviewUrl, newWebsiteRoot.FullName);
-                    sm.CommitChanges();
+                    return AddWebSiteResult.NotAllowed;
                 }
+                if (sm.Sites.Any(t => t.Name == siteUrl.Host))
+                {
+                    return AddWebSiteResult.SameNameExistsIis;
+                }
+                if (!IISHelper.AppPoolExists(sm, appPoolName))
+                {
+                    IISHelper.CreateNewAppPool(sm, appPoolName, "v4.0");
+                }
+                IISHelper.CreateWebSite(sm, siteUrl.Host, appPoolName, website.PreviewUrl, newWebsiteRoot.FullName);
+                sm.CommitChanges();
+            }
 
-                // FILES
-                try
-                {
-                    IISHelper.DirectoryCopy(currentPhysicalRootPath.FullName, newWebsiteRoot, copyAdminFolders: true);
-                    var dirSec = newWebsiteRoot.GetAccessControl();
-                    dirSec.SetAccessRuleProtection(false, true);
-                    dirSec.AddAccessRule(new FileSystemAccessRule(WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
-                    newWebsiteRoot.SetAccessControl(dirSec);
-                }
-                catch (Exception ex)
-                {
-                    log.Error("AddWebSite", ex);
-                    return AddWebSiteResult.FileSystemError;
-                }
+            // FILES
+            try
+            {
+                IISHelper.DirectoryCopy(currentPhysicalRootPath.FullName, newWebsiteRoot, copyAdminFolders: true);
+                var dirSec = newWebsiteRoot.GetAccessControl();
+                dirSec.SetAccessRuleProtection(false, true);
+                dirSec.AddAccessRule(new FileSystemAccessRule(WindowsIdentity.GetCurrent().Name, FileSystemRights.FullControl, AccessControlType.Allow));
+                newWebsiteRoot.SetAccessControl(dirSec);
+            }
+            catch (Exception ex)
+            {
+                log.Error("AddWebSite", ex);
+                return AddWebSiteResult.FileSystemError;
             }
 
             if (newDatabase)

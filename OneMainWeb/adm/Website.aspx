@@ -57,6 +57,11 @@
         </asp:View>
         <asp:View runat="server">
              <div class="adminSection form-horizontal validationGroup">
+
+                 <asp:Panel runat="server" CssClass="adminSection" ID="PanelEmptyDatabase">
+			        <h4>Database doesn't contain any websites. This looks like a new installation. Please add your first website below. Some additional configuration may be required.</h4>
+                </asp:Panel>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Website name</label>
                     <div class="col-sm-9">
@@ -84,41 +89,43 @@
                         <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control url" MaxLength="255" placeholder="http://www.example.com" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-9">
-                        <div class="checkbox">
-                            <label>
-                                <asp:CheckBox runat="server" ID="CheckboxNewDatabase" CssClass="j_control_new_database" ClientIDMode="Static" /> Create new database (you'll need admin password for database).
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                 <div class="new_database_fields" style="display: none;">
+                 <asp:Placeholder runat="server" ID="PlaceholderNewDatabase">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Server name</label>
-                        <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxServer" runat="server" CssClass="form-control" MaxLength="255" placeholder="Microsoft SQL server name. Example: server.example.com" />
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <div class="checkbox">
+                                <label>
+                                    <asp:CheckBox runat="server" ID="CheckboxNewDatabase" CssClass="j_control_new_database" ClientIDMode="Static" /> Create new database (you'll need admin password for database).
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Username</label>
-                        <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxUsername" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database username. Provided by system administrator. Example: sa" />
+                     <div class="new_database_fields" style="display: none;">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Server name</label>
+                            <div class="col-sm-9">
+                            <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxServer" runat="server" CssClass="form-control" MaxLength="255" placeholder="Microsoft SQL server name. Example: server.example.com" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Password</label>
-                        <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPassword" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database password. Provided by system administrator." />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Username</label>
+                            <div class="col-sm-9">
+                            <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxUsername" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database username. Provided by system administrator. Example: sa" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">New database name</label>
-                        <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxDatabaseName" runat="server" CssClass="form-control" MaxLength="255" placeholder="Make sure that the name is in agreement with company rules. Example: name should match client's name." />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9">
+                            <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxPassword" runat="server" CssClass="form-control" MaxLength="255" placeholder="Database password. Provided by system administrator." />
+                            </div>
                         </div>
-                    </div>
-                 </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">New database name</label>
+                            <div class="col-sm-9">
+                            <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxDatabaseName" runat="server" CssClass="form-control" MaxLength="255" placeholder="Make sure that the name is in agreement with company rules. Example: name should match client's name." />
+                            </div>
+                        </div>
+                     </div>
+                </asp:Placeholder>
 
                  <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
