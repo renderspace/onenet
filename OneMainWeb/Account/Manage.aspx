@@ -128,7 +128,7 @@
                     </ItemTemplate>
                 </asp:ListView>
 
-                <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage" />
+                <uc:OpenAuthProviders runat="server" ReturnUrl="~/Account/Manage.aspx" />
             </section>
 
         </div>
