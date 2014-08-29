@@ -22,8 +22,8 @@ namespace OneMainWeb
             var nullOrderer = new NullOrderer();
 
             // ADMIN
-            bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.min.css"));
-            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.min.js"));
+            bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
+            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.js"));
             bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js"));
             bundles.Add(new ScriptBundle("~/Bundles/Scripts").IncludeDirectory("~/Scripts", "*.js").Include("~/Scripts/dropzone/dropzone.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
