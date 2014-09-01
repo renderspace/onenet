@@ -113,3 +113,5 @@ body {
 .navbar-nav>li>a {line-height: 21px;}
 .nav>li:nth-child(4)>a, .nav>li:nth-child(4)>a:hover {background-color:#1e8fc6!important;}
 .tall input[type="text"] {padding: 5px;}
+
+label input {position: relative!important;}
