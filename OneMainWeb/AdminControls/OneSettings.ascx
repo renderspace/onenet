@@ -22,6 +22,49 @@
                     <asp:Label  runat="server" ID="LabelValue" Visible="false"></asp:Label>
                     <asp:Label  runat="server" ID="LabelHiddenInfo" Visible="false"></asp:Label>
                     <asp:DropDownList ID="DropDownList1" runat="server" ValidationGroup="ModuleInstanceSettings"  Visible="false"></asp:DropDownList>
+                    <asp:Panel runat="server" Visible="false" ID="PanelFile">
+                         <p id="status">File API &amp; FileReader API not supported</p>
+                         <p><input type="file" id="fileupl"></p>
+                        <asp:Literal runat="server" ID="LiteralFileDisplay"></asp:Literal>
+                        <script>
+                            var upload = $('#fileupl'),
+                                holder = $('#holder'),
+                                state = $('#status');
+
+                            
+
+                            if (typeof window.FileReader === 'undefined') {
+                                state.className = 'fail';
+                                trace('FileReader === undefined');
+                            } else {
+                                state.className = 'success';
+                                state.html('File API & FileReader available');
+                            }
+
+                            upload.onchange = function (e) {
+                                e.preventDefault();
+
+                                var file = upload.files[0];
+                                var reader = new FileReader();
+                                reader.onload = function (event) {
+                                    trace('reader.onload');
+                                    var img = new Image();
+                                    img.src = event.target.result;
+                                    // note: no onload required since we've got the dataurl...I think! :)
+                                    if (img.width > 560) { // holder width
+                                        img.width = 560;
+                                    }
+                                    holder.innerHTML = '';
+                                    holder.appendChild(img);
+                                };
+                                reader.readAsDataURL(file);
+
+                                return false;
+                            };
+                        </script>
+
+                    </asp:Panel>
+
                 </div>
                 </asp:Panel>       
         </ItemTemplate>

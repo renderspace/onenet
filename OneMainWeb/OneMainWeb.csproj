@@ -488,6 +488,7 @@
     <Content Include="adm\js\bootstrap-treeview.js" />
     <Content Include="adm\js\bootstrap.js" />
     <Content Include="adm\js\jquery.details.js" />
+    <Content Include="adm\js\jquery.fileapi.js" />
     <Content Include="adm\js\jquery.ui.datepicker-en.js" />
     <Content Include="adm\js\One.js" />
     <Content Include="adm\Publish.aspx" />
