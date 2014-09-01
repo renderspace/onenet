@@ -142,9 +142,9 @@ namespace OneMainWeb.AdminControls
                 var LabelValue = e.Item.FindControl("LabelValue") as Label;
 
                 var DropDownList1 = e.Item.FindControl("DropDownList1") as DropDownList;
-                
+                var LiteralFileDisplay = e.Item.FindControl("LiteralFileDisplay") as Literal;
                 var LabelHiddenInfo = e.Item.FindControl("LabelHiddenInfo") as Label;
-
+                var PanelFile = e.Item.FindControl("PanelFile") as Panel;
                 var PanelCheckbox = e.Item.FindControl("PanelCheckbox") as Panel;
                 var PanelInput = e.Item.FindControl("PanelInput") as Panel;
 
@@ -202,6 +202,20 @@ namespace OneMainWeb.AdminControls
                                         TextBox1.CssClass = "form-control url";
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
+                                        break;
+                                    }
+                                case "File":
+                                    {
+                                        PanelInput.Visible = true;
+                                        PanelFile.Visible = true;
+                                        if (!string.IsNullOrWhiteSpace(setting.Value))
+                                        { 
+                                            LiteralFileDisplay.Text = "<div id=\"holder\"><img src=\"data:image/x-icon;base64," + setting.Value + " \"></div>";
+                                        } 
+                                        else 
+                                        {
+                                            LiteralFileDisplay.Text = "<div id=\"holder\"></div>";
+                                        }
                                         break;
                                     }
                                 default:
@@ -273,6 +287,18 @@ namespace OneMainWeb.AdminControls
                             case "PageId":
                                 {
                                     setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
+                                    break;
+                                }
+                            case "File":
+                                {
+                                    if (Request.Files.Count > 0 && Request.Files[0] != null)
+                                    {
+                                        var postedFile = Request.Files[0];
+                                        byte[] fileData = new Byte[postedFile.InputStream.Length];
+                                        postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
+                                        postedFile.InputStream.Close();
+                                        setting.Value = Convert.ToBase64String(fileData);
+                                    }
                                     break;
                                 }
                             default:
