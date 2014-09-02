@@ -22,6 +22,11 @@
 					DataKeyNames="Id" OnSelectedIndexChanged="GridViewWebsites_SelectedIndexChanged">
 		        <Columns>
                     <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <img src='/Utils/Favicon.ashx?id=<%# Eval("id") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField HeaderText="Website name" DataField="DisplayName" />
                     <asp:BoundField HeaderText="PreviewUrl" DataField="PreviewUrl" />
                     <asp:BoundField HeaderText="ProductionUrl" DataField="ProductionUrl" />

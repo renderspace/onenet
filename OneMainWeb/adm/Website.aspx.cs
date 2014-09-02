@@ -169,6 +169,8 @@ namespace OneMainWeb.adm
             TextBoxTitle.Text = website.Title;
             TextBoxDescription.Text = website.Teaser;
             TextBoxOgImage.Text = website.SubTitle;
+            LabelPreviewUrl.Text = website.PreviewUrl;
+            LabelProductionUrl.Text = website.ProductionUrl;
             LastChangeAndHistory1.Text = website.DisplayLastChanged;
             LastChangeAndHistory1.SelectedContentId = website.ContentId.Value;
             LastChangeAndHistory1.SelectedLanguageId = website.LanguageId;
