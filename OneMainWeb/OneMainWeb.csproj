@@ -488,7 +488,6 @@
     <Content Include="adm\js\bootstrap-treeview.js" />
     <Content Include="adm\js\bootstrap.js" />
     <Content Include="adm\js\jquery.details.js" />
-    <Content Include="adm\js\jquery.fileapi.js" />
     <Content Include="adm\js\jquery.ui.datepicker-en.js" />
     <Content Include="adm\js\One.js" />
     <Content Include="adm\Publish.aspx" />
@@ -713,6 +712,9 @@
     <Compile Include="Utils\Clear.aspx.designer.cs">
       <DependentUpon>Clear.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Favicon.ashx.cs">
+      <DependentUpon>Favicon.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\MenuGroups.asmx.cs">
       <DependentUpon>MenuGroups.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -820,6 +822,7 @@
     <Content Include="Utils\Robots.ashx" />
     <Content Include="site_specific\aspx_templates\demo.Master" />
     <Content Include="site_specific\_sass\demo.sass" />
+    <Content Include="Utils\Favicon.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\ContentEdit.aspx" />

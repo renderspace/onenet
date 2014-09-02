@@ -359,3 +359,28 @@ function Validate(evt) {
     trace(isValid);
     return isValid;
 }
+
+if (typeof window.FileReader === 'undefined') {
+    $('.imageFileUploadStatus').html('File API MISSING!!');
+    trace('FileReader === undefined');
+}
+
+$('input.imageFileUploadWithPreview').on('change', function (e) {
+    e.preventDefault();
+    trace('input.imageFileUploadWithPreview.onchange');
+    var myId = $(this).attr('id');
+    var currentFileInput = $(this);
+
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        trace('reader.onload');
+        var img = new Image();
+        img.src = event.target.result;
+        if (img.width > 100) {
+            img.width = 100;
+        }
+        currentFileInput.after(img);
+    };
+    reader.readAsDataURL(document.getElementById(myId).files[0]);
+    return false;
+});

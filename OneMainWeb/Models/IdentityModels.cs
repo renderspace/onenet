@@ -18,7 +18,6 @@ namespace OneMainWeb.Models
     {
         public string SelectedWebSiteId { get; set; }
         public string SelectedPageId { get; set; }
-        public string Email { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<OneNetUser>

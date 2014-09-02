@@ -204,18 +204,14 @@ namespace OneMainWeb.AdminControls
                                         TextBox1.Visible = true;
                                         break;
                                     }
-                                case "File":
+                                case "Image":
                                     {
                                         PanelInput.Visible = true;
                                         PanelFile.Visible = true;
                                         if (!string.IsNullOrWhiteSpace(setting.Value))
-                                        { 
-                                            LiteralFileDisplay.Text = "<div id=\"holder\"><img src=\"data:image/x-icon;base64," + setting.Value + " \"></div>";
-                                        } 
-                                        else 
                                         {
-                                            LiteralFileDisplay.Text = "<div id=\"holder\"></div>";
-                                        }
+                                            LiteralFileDisplay.Text = "<img src=\"data:image/x-icon;base64," + setting.Value + " \">";
+                                        } 
                                         break;
                                     }
                                 default:
@@ -289,8 +285,9 @@ namespace OneMainWeb.AdminControls
                                     setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
                                     break;
                                 }
-                            case "File":
+                            case "Image":
                                 {
+#warning this will not work for multiple images on same page.
                                     if (Request.Files.Count > 0 && Request.Files[0] != null)
                                     {
                                         var postedFile = Request.Files[0];
