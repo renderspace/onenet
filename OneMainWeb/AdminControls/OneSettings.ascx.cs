@@ -163,6 +163,7 @@ namespace OneMainWeb.AdminControls
                     {
                         if (setting.HasOptions)
                         {
+                            PanelInput.Visible = true;
                             DropDownList1.Visible = true;
                             DropDownList1.DataTextField = "Value";
                             DropDownList1.DataValueField = "Key";
@@ -173,6 +174,7 @@ namespace OneMainWeb.AdminControls
                                 DropDownList1.ForeColor = Color.Red;
 
                             LabelHiddenInfo.Text = setting.Value;
+                            DropDownList1.DataBind();
                         }
                         else
                         {

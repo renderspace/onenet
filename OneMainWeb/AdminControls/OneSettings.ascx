@@ -21,7 +21,7 @@
                     <asp:TextBox ID="TextBox1" runat="server"   CssClass="form-control" ValidationGroup="ModuleInstanceSettings" Visible="false" />
                     <asp:Label  runat="server" ID="LabelValue" Visible="false"></asp:Label>
                     <asp:Label  runat="server" ID="LabelHiddenInfo" Visible="false"></asp:Label>
-                    <asp:DropDownList ID="DropDownList1" runat="server" ValidationGroup="ModuleInstanceSettings"  Visible="false"></asp:DropDownList>
+                    <asp:DropDownList ID="DropDownList1" runat="server"  Visible="false"></asp:DropDownList>
                     <asp:Panel runat="server" Visible="false" ID="PanelFile">
                         <p class="imageFileUploadStatus"><asp:FileUpload runat="server"  CssClass="imageFileUploadWithPreview" ID="FileUploadFromSettings" />
                             <asp:Literal runat="server" ID="LiteralFileDisplay"></asp:Literal>
