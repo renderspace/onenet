@@ -22,14 +22,21 @@ using DropDownList = System.Web.UI.WebControls.DropDownList;
 using One.Net.BLL.Web;
 using One.Net.BLL;
 using One.Net.BLL.WebControls;
+using System.Data.SqlTypes;
 
 namespace OneMainWeb.AdminControls
 {
     public class DynamicEditorEventArgs : EventArgs
     {
+        public DynamicEditorEventArgs()
+        {
+            Errors = new List<string>();
+        }
         public int InsertedId { get; set; }
         public bool IsInsert { get { return InsertedId > 0; } }
+        public List<string> Errors { get; set; }
     }
+
     public enum SubmissionStatus { None, Inserted, Updated, ValidationFailed, InternalEvent }
 
     [Serializable]
@@ -44,9 +51,11 @@ namespace OneMainWeb.AdminControls
         private const int SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 40;
         private const string NULL = "NULL";
 
+        public string DATE_FORMAT = "M/d/yyyy";
+
         public event EventHandler<EventArgs> Exit;
         public event EventHandler<DynamicEditorEventArgs> Saved;
-        public event EventHandler<EventArgs> Warning;
+        public event EventHandler<DynamicEditorEventArgs> Error;
 
         protected EditableItem Item
         {
@@ -289,7 +298,8 @@ namespace OneMainWeb.AdminControls
 
 
                         if (column.ValueDateTime != System.Data.SqlTypes.SqlDateTime.MinValue)
-                            DatePicker1.Text = ((DateTime)column.ValueDateTime).ToShortDateString();
+                            DatePicker1.Text = ((DateTime)column.ValueDateTime).ToString(DATE_FORMAT, CultureInfo.InvariantCulture );
+                                //string.Format("{0:" + DATE_FORMAT + "}", ;
 
                         PanelRight.Controls.Add(DatePicker1);
                         PanelField.Controls.Add(PanelRight);
@@ -660,9 +670,9 @@ jQuery.validator.addMethod(
                 + "},";
         }
 
-        private bool RetreiveSubmittedFields()
+        private List<string> RetreiveSubmittedFields()
         {
-            int invalidFields = 0;
+            var errors = new List<string>();
 
             var debug = "<div class=\"debug hidden\"><h4>RetreiveSubmittedFields</h4>";
 
@@ -714,12 +724,16 @@ jQuery.validator.addMethod(
                             var DatePickerCalendar = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
                             if (DatePickerCalendar != null)
                             {
-                                if (!string.IsNullOrEmpty(DatePickerCalendar.Text))
-                                    field.NewValueDateTime = DateTime.Parse(DatePickerCalendar.Text, CultureInfo.CurrentCulture);
+                                var defaultCulture = new CultureInfo(1033);
+                                DateTime parsedDate = (DateTime) SqlDateTime.MinValue;
+                                var hasDate = DateTime.TryParseExact(DatePickerCalendar.Text, DATE_FORMAT, defaultCulture, DateTimeStyles.None, out parsedDate);
+
+                                if (hasDate)
+                                    field.NewValueDateTime = parsedDate;
                                 else if (field.IsNullable)
                                     field.NewValueIsNull = true;
                                 else
-                                    field.NewValueDateTime = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+                                    errors.Add("Non-nullable date field " + field.FriendlyName + " is missing a value or value is not in correct format.");
                             }
                             break;
                         case FieldType.OneToMany:
@@ -797,14 +811,14 @@ jQuery.validator.addMethod(
                 }
             }
             LiteralResultsDebug.Text += debug + "</div>";
-            return invalidFields == 0;
+            return errors;
         }
 
         private bool Save()
         {
-            var fieldsRetreived = RetreiveSubmittedFields();
+            var errors = RetreiveSubmittedFields();
 
-            if (fieldsRetreived)
+            if (errors.Count == 0)
             {
                 var primaryKeys = PrimaryKeys;
                 Data.ChangeMultiLanguageContent(Item);
@@ -830,11 +844,15 @@ jQuery.validator.addMethod(
                     // TODO: find a way to inject PK info into controls
                     return true;
                 }
-
             }
-            if (Warning != null)
+            else
             {
-                Warning(this, new EventArgs());
+                if (Error != null)
+                {
+                    var result = new DynamicEditorEventArgs();
+                    result.Errors = errors;
+                    Error(this, result);
+                }
             }
             return false;
         }
