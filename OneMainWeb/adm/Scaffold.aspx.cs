@@ -223,6 +223,15 @@ namespace OneMainWeb.adm
             GridViewItemsDataBind();
         }
 
+        protected void DynamicEditor1_Error(object sender, DynamicEditorEventArgs e)
+        {
+            Notifier1.Warning = "Can't save";
+            foreach (var err in e.Errors)
+            {
+                Notifier1.Message += "<br>" + err;
+            }
+        }
+
         protected void ButtonExportToExcel_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Utils/BambooExcelExport.ashx?virtualTableId=" + VirtualTableId);
@@ -335,6 +344,8 @@ namespace OneMainWeb.adm
                 }
             }
         }
+
+        
         /*
         protected void ButtonCreateTables_Click(object sender, EventArgs e)
         {
