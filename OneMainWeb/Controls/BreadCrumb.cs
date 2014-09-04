@@ -55,7 +55,7 @@ namespace OneMainWeb.Controls
                 writer.Indent = 0;
                 writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
-                writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                writer.RenderBeginTag(HtmlTextWriterTag.Ol);
             }
         }
 
@@ -97,10 +97,10 @@ namespace OneMainWeb.Controls
                 var cssClass = " l" + depth + " p" + node["_pageID"];
 
                 if (SiteMap.CurrentNode["_pageID"] == node["_pageID"])
-                    item.Text = node.Title;
+                    item.Text = "<li class=\"active\">" + node.Title + "</li>";
                 else
                 {
-                    item.Text = "<a href=\"" + node.Url + "\" class=\"" + cssClass + "\">" + node.Title + "</a>";
+                    item.Text = "<li><a href=\"" + node.Url + "\" class=\"" + cssClass + "\">" + node.Title + "</a></li>";
                     Controls.AddAt(0, sep);
                 }
                 Controls.AddAt(0, item);

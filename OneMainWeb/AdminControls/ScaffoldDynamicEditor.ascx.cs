@@ -512,7 +512,7 @@ jQuery.validator.addMethod(
             var TextBox4 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
-                Text = column.Value,
+                Text = column.Value.ToString(CultureInfo.InvariantCulture).Replace(",","."),
                 CssClass = "form-control",
                 MaxLength = 16
             };
