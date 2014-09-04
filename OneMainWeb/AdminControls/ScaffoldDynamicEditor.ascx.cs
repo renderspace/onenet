@@ -133,11 +133,6 @@ namespace OneMainWeb.AdminControls
                             }
                             break;
                         case FieldType.OneToMany:
-                            var DropDownListRegular = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as DropDownList;
-                            if (DropDownListRegular != null && DropDownListRegular.Items.FindByValue(primaryKey.ToString()) != null)
-                            {
-                                DropDownListRegular.SelectedValue = primaryKey.ToString();
-                            }
                             var HiddenFieldPrimaryKey = PanelFieldsHolder.FindControl("FI" + column.Ordinal) as HiddenField;
                             if (HiddenFieldPrimaryKey != null)
                             {
@@ -464,6 +459,15 @@ jQuery.validator.addMethod(
             }
         }
 
+        private static string CreateValidateRule(bool required, string rules, string uniqueId)
+        {
+            return "";
+            /*
+            var requiredString = string.IsNullOrEmpty(rules.Trim()) ? "required:true" : "required:true, ";
+            return " " + uniqueId + ": {" + (required ? requiredString : "") + rules + "},";
+             * */
+        }
+
         private void ButtonRemoveManyToManyRelation_Click(object sender, EventArgs e)
         {
             MarkCurrentStatus(SubmissionStatus.InternalEvent);
@@ -495,16 +499,6 @@ jQuery.validator.addMethod(
             if (!column.IsNullable)
                 TextBox4.CssClass += " required";
             PanelField.Controls.Add(TextBox4);
-            // validationJQueryRules += CreateValidateRule(!column.IsNullable, "digits:true", TextBox4.UniqueID);
-        }
-
-        private static string CreateValidateRule(bool required, string rules, string uniqueId)
-        {
-            return "";
-            /*
-            var requiredString = string.IsNullOrEmpty(rules.Trim()) ? "required:true" : "required:true, ";
-            return " " + uniqueId + ": {" + (required ? requiredString : "") + rules + "},";
-             * */
         }
 
         private static void PrepareDecimalInput(VirtualColumn column, Panel PanelField, ref string validationJQueryRules)
@@ -516,14 +510,12 @@ jQuery.validator.addMethod(
                 CssClass = "form-control",
                 MaxLength = 16
             };
-            TextBox4.Attributes.Add("type", "number");
-            TextBox4.Attributes.Add("step", "any");
-            TextBox4.CssClass += " decimal";
+            //TextBox4.Attributes.Add("type", "number");
+            //TextBox4.Attributes.Add("step", "any");
+            TextBox4.CssClass += " number";
             if (!column.IsNullable)
                 TextBox4.CssClass += " required";
             PanelField.Controls.Add(TextBox4);
-
-            validationJQueryRules += CreateValidateRule(!column.IsNullable, "decimal:true", TextBox4.UniqueID);
         }
 
         private static void PrepareMultiLanguageInput(VirtualColumn column, Panel panelField, ref string validationJQueryRules)
@@ -663,11 +655,6 @@ jQuery.validator.addMethod(
                 dropDown.Items.Add(item);
             }
             panelField.Controls.Add(dropDown);
-            validationJQueryRules +=
-                " " + dropDown.UniqueID
-                + ": {"
-                + (!column.IsNullable ? "dropdownRequired:true" : "")
-                + "},";
         }
 
         private List<string> RetreiveSubmittedFields()
@@ -694,8 +681,17 @@ jQuery.validator.addMethod(
                             var TextBoxDecimal = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
                             if (TextBoxDecimal != null)
                             {
-                                field.NewValueDecimal = decimal.Parse(TextBoxDecimal.Text);
-                                field.NewValueDouble = double.Parse(TextBoxDecimal.Text);
+                                var parsedDecimal = 0m;
+                                var hasDecimal = decimal.TryParse(TextBoxDecimal.Text.Replace(',', '.'), NumberStyles.Number, CultureInfo.InvariantCulture, out parsedDecimal);
+                                if (hasDecimal)
+                                {
+                                    field.NewValueDecimal = parsedDecimal;
+                                    field.NewValueDouble = (double) parsedDecimal;
+                                }
+                                else if (field.IsNullable)
+                                    field.NewValueIsNull = true;
+                                else
+                                    errors.Add("Non-nullable decimal field " + field.FriendlyName + " is missing a value or value is not in correct format.");
                             }
                             break;
                         case FieldType.SingleText:

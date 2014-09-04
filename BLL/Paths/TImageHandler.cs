@@ -97,8 +97,12 @@ namespace One.Net.BLL
 
             if (context.Request.Params["h"] != null)
                 int.TryParse(context.Request.Params["h"], out Height);
+
             if (context.Request.Params["w"] != null)
                 int.TryParse(context.Request.Params["w"], out Width);
+            else if (context.Request.Params["width"] != null)
+                int.TryParse(context.Request.Params["width"], out Width);
+
             if (context.Request.Params["q"] != null)
                 int.TryParse(context.Request.Params["q"], out Quality);
             if (context.Request.Params["m"] != null)
