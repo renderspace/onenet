@@ -265,13 +265,6 @@
     <Compile Include="AdminControls\LastChangeAndHistory.ascx.designer.cs">
       <DependentUpon>LastChangeAndHistory.ascx</DependentUpon>
     </Compile>
-    <Compile Include="AdminControls\ScaffoldConfig.ascx.cs">
-      <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\ScaffoldConfig.ascx.designer.cs">
-      <DependentUpon>ScaffoldConfig.ascx</DependentUpon>
-    </Compile>
     <Compile Include="AdminControls\ScaffoldDynamicEditor.ascx.cs">
       <DependentUpon>ScaffoldDynamicEditor.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -471,7 +464,6 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="AdminControls\LastChangeAndHistory.ascx" />
-    <Content Include="AdminControls\ScaffoldConfig.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\TextContentModal.ascx" />
