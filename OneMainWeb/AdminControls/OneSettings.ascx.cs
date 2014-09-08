@@ -182,7 +182,7 @@ namespace OneMainWeb.AdminControls
                             {
                                 case "Int":
                                     {
-                                        TextBox1.CssClass = "form-control digits";
+                                        TextBox1.CssClass = "form-control number";
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
                                         break;

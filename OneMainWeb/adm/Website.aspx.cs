@@ -212,8 +212,8 @@ namespace OneMainWeb.adm
             website.Teaser = TextBoxDescription.Text;
             website.SubTitle = TextBoxOgImage.Text;
             website.Html = "";
-            OneSettingsWebsite.Save();
             websiteB.ChangeWebsite(website);
+            OneSettingsWebsite.Save();
             MultiView1.ActiveViewIndex = 0;
             Notifier1.Title = "Saved.";
 
