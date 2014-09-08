@@ -42,6 +42,12 @@ namespace One.Net.BLL
             return result;
         }
 
+        public bool GetSettingValueBool(string key)
+        {
+            var result = FormatTool.GetBoolean(GetSettingValue(key));
+            return result;
+        }
+
         public bool IsNew
         {
             get { return (id <= 0); }
@@ -147,6 +153,14 @@ namespace One.Net.BLL
                     return true;
                 return false;
             } 
+        }
+
+        public bool HasAdvertisingFeatures
+        {
+            get
+            {
+                return GetSettingValueBool("AdvertisingFeatures");
+            }
         }
     }
 }

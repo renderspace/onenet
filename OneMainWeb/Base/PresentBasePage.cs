@@ -99,15 +99,19 @@ namespace OneMainWeb
                 var gaCode = "<!-- Google Analytics UNIVERSAL will appear here on production servers -->";
                 if (PublishFlag)
                 {
-                    gaCode += "<!-- Google Analytics -->";
+                    gaCode = "<!-- Google Analytics -->";
                     gaCode += enableCookieConsent ? @"<script type=""text/plain"" class=""cc-onconsent-analytics"">" : @"<script type=""text/javascript"">";
                     gaCode += @"(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', '" + code + @"', 'auto');
-ga('send', 'pageview');
+ga('create', '" + code + @"', 'auto');";
+                    if (CurrentWebsite.HasGoogleAnalytics)
+                    {
+                        gaCode += "ga('require', 'displayfeatures');";
+                    }
+                    gaCode += @"ga('send', 'pageview');
 
 </script>
 <!-- End Google Analytics -->";
