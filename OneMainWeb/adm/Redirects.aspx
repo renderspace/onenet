@@ -34,10 +34,10 @@
 							<%# Eval("Id") %>
 						</ItemTemplate>
 					</asp:TemplateField>
-                    <asp:TemplateField HeaderText="From" SortExpression="from_link">
+                    <asp:TemplateField HeaderText="From relative path" SortExpression="from_link">
 	                    <ItemTemplate><%# Eval("FromLink") %></ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="True" SortExpression="to_link">
+                    <asp:TemplateField HeaderText="To relative path" SortExpression="to_link">
 	                    <ItemTemplate><%# Eval("ToLink") %></ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>
@@ -66,14 +66,14 @@
         <asp:View ID="View2" runat="server">
              <div class="adminSection form-horizontal validationGroup">
                 <div class="form-group">
-                    <asp:Label runat="server" Text="From link" CssClass="col-sm-3 control-label" AssociatedControlID="InputFromLink" />
+                    <asp:Label runat="server" Text="From relative link" CssClass="col-sm-3 control-label" AssociatedControlID="InputFromLink" />
 			        <div class="col-sm-9">
                         <asp:TextBox CssClass="form-control required" id="InputFromLink" runat="server" Text="" ValidationGroup="REDIRECTS" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="InputFromLink" CssClass="text-danger" ValidationGroup="REDIRECTS" ErrorMessage="From link is required." />
                     </div>
                 </div>
                 <div class="form-group">
-                    <asp:Label runat="server" Text="To link" CssClass="col-sm-3 control-label" AssociatedControlID="InputToLink" />
+                    <asp:Label runat="server" Text="To relative link" CssClass="col-sm-3 control-label" AssociatedControlID="InputToLink" />
                     <div class="col-sm-9">
 			            <asp:TextBox CssClass="form-control required" id="InputToLink" runat="server" Text="" ValidationGroup="REDIRECTS" />
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="InputToLink" CssClass="text-danger" ValidationGroup="REDIRECTS" ErrorMessage="To link is required." />
