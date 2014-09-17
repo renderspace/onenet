@@ -293,10 +293,13 @@ namespace OneMainWeb.AdminControls
                                     if (Request.Files.Count > 0 && Request.Files[0] != null)
                                     {
                                         var postedFile = Request.Files[0];
-                                        byte[] fileData = new Byte[postedFile.InputStream.Length];
-                                        postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
-                                        postedFile.InputStream.Close();
-                                        setting.Value = Convert.ToBase64String(fileData);
+                                        if (postedFile.InputStream.Length > 0)
+                                        { 
+                                            byte[] fileData = new Byte[postedFile.InputStream.Length];
+                                            postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
+                                            postedFile.InputStream.Close();
+                                            setting.Value = Convert.ToBase64String(fileData);
+                                        }
                                     }
                                     break;
                                 }

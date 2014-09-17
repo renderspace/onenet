@@ -99,17 +99,6 @@ namespace OneMainWeb
                     }
                 }
             }
-            
-
-
-            /*
-            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
-            if (!rm.RoleExists("admin"))
-            {
-                rm.Create(new IdentityRole("admin"));
-            } */
-
-
 
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
