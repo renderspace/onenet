@@ -988,21 +988,28 @@ namespace One.Net.BLL
         {
             var databaseName = builder.InitialCatalog;
 
-            // if this fails because user already exists.. perahps we can move on.
-            SqlHelper.ExecuteNonQuery(builder.ConnectionString, CommandType.Text, "CREATE LOGIN " + newUsername + " WITH PASSWORD = '" + newPassword + "'");
-
-            using (var conn = new SqlConnection(builder.ConnectionString))
+            try
             {
-                conn.Open();
-                using (SqlTransaction tr = conn.BeginTransaction())
-                 {
-                    SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "CREATE USER " + newUsername + " FOR LOGIN " + newUsername + "");
-                    SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.FrontEnd] ADD MEMBER  " + newUsername + "");
-                    SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.BackEnd] ADD MEMBER  " + newUsername + "");
-                    tr.Commit();
-                    return true;
-                 }
-            
+                // if this fails because user already exists.. perahps we can move on.
+                SqlHelper.ExecuteNonQuery(builder.ConnectionString, CommandType.Text, "CREATE LOGIN " + newUsername + " WITH PASSWORD = '" + newPassword + "'");
+
+                using (var conn = new SqlConnection(builder.ConnectionString))
+                {
+                    conn.Open();
+                    using (SqlTransaction tr = conn.BeginTransaction())
+                    {
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "CREATE USER " + newUsername + " FOR LOGIN " + newUsername + "");
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.FrontEnd] ADD MEMBER  " + newUsername + "");
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.BackEnd] ADD MEMBER  " + newUsername + "");
+                        tr.Commit();
+                        return true;
+                    }
+
+                }
+            }
+            catch (SqlException sex)
+            {
+                throw new Exception("AddDatabaseUser: " + newUsername, sex);
             }
         }
 
