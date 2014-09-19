@@ -112,7 +112,7 @@ namespace OneMainWeb.adm
             cmdMovePageDown.Visible = true;
             OneSettingsPageSettings.ItemId = 0;
             OneSettingsPageSettings.LoadSettings();
-            ddlPageTemplate.Items.Clear();
+            ddlPageTemplate.ClearSelection();
 
             LabelMessage.Text = message;
             MultiView1.ActiveViewIndex = 1;
@@ -562,7 +562,7 @@ namespace OneMainWeb.adm
                     break;
                 case BWebsite.AddSubPageResult.OkRootPage:
                     Notifier1.Title = "Added new root page.";
-                    Notifier1.Message = "URL was autmatically set as blank";
+                    Notifier1.Message = "URL was automatically set as blank";
                     TextBoxSubPage.Text = "";
                     break;
                 case BWebsite.AddSubPageResult.PartialLinkExistsOnThisLevel:

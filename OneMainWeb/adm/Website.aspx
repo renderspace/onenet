@@ -94,6 +94,16 @@
                         <asp:TextBox ValidationGroup="website" Text="" ID="TextBoxProductionUrl" runat="server" CssClass="form-control url" MaxLength="255" placeholder="http://www.example.com" />
                     </div>
                 </div>
+                 <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <div class="checkbox">
+                                <label>
+                                    <asp:CheckBox runat="server" ID="CheckboxManualCopy" ClientIDMode="Static" />Manual server configuration (just add website to menu).
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                  <asp:Placeholder runat="server" ID="PlaceholderNewDatabase">
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">

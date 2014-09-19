@@ -158,12 +158,11 @@ namespace OneMainWeb
                         SelectedWebSiteId = webSiteList.First().Id;
                     }
                 }
+                MainContent.Visible = !PresentBasePage.ReadPublishFlag();
+                VirtualTableList1.Visible = false;
+                if (MainContent.Visible  && (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin")))
+                    VirtualTableList1.Visible = true;
             }
-
-            VirtualTableList1.Visible = false;
-            if (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin"))
-                VirtualTableList1.Visible = true;
-
         }
 
         protected void DropDownListWebSiteCombined_SelectedIndexChanged(object sender, EventArgs e)
