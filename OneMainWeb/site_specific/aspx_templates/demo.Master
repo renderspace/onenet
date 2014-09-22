@@ -68,6 +68,7 @@
         </div> <!-- /container -->	
 
         <Controls:BundleRender ID="BundleRender4" runat="server" Path="~/Bundles/BootstrapJS" IsScript="true" />
+		<Controls:BundleRender ID="BundleRender5" runat="server" Path="~/Bundles/_js" IsScript="true" />
     </form>
 </body>
 </html>
