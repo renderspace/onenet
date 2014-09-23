@@ -559,7 +559,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdDeleteQuestion;
+        protected global::System.Web.UI.WebControls.LinkButton cmdDeleteQuestion;
         
         /// <summary>
         /// cmdUnDeleteQuestion control.
@@ -568,7 +568,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdUnDeleteQuestion;
+        protected global::System.Web.UI.WebControls.LinkButton cmdUnDeleteQuestion;
         
         /// <summary>
         /// cmdUpdateQuestion control.
@@ -577,7 +577,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdUpdateQuestion;
+        protected global::System.Web.UI.WebControls.LinkButton cmdUpdateQuestion;
         
         /// <summary>
         /// overallButtons control.

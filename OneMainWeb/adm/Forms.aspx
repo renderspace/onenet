@@ -201,9 +201,9 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-		                                <asp:button	id="cmdUpdateSection" Runat="server"  Text="$update_section" OnClick="cmdUpdateSection_Click" CssClass="btn btn-success" />			            
-		                            <asp:button	id="cmdDeleteSection" Runat="server"  Text="$mark_section_as_deleted" OnClick="cmdDeleteSection_Click" CssClass="btn btn-danger" />			            		                    
-		                            <asp:button	id="cmdUnDeleteSection" Runat="server"  Text="$undelete_section" OnClick="cmdUnDeleteSection_Click" CssClass="btn btn-default" />			            		                    		                    
+		                                <asp:button	id="cmdUpdateSection" Runat="server"  Text="Save" OnClick="cmdUpdateSection_Click" CssClass="btn btn-success" />			            
+		                            <asp:button	id="cmdDeleteSection" Runat="server"  Text="Delete" OnClick="cmdDeleteSection_Click" CssClass="btn btn-danger" />			            		                    
+		                            <asp:button	id="cmdUnDeleteSection" Runat="server"  Text="Undelete" OnClick="cmdUnDeleteSection_Click" CssClass="btn btn-default" />			            		                    		                    
                                     </div>
 		                        </div>
 		                    </asp:PlaceHolder>
@@ -239,26 +239,26 @@
 
                                 <asp:PlaceHolder runat="server" ID="separateInput">
                                      <asp:Panel runat="server" ID="PanelNoOfLines" class="form-group">
-                                        <label class="col-sm-3 control-label">number_of_lines_for_editing</label>
+                                        <label class="col-sm-3 control-label">Number of lines</label>
                                         <div class="col-sm-9">
                                             <asp:TextBox ID="txtNumberOfRows" runat="server" type="number" CssClass="form-control" />
                                         </div>
                                     </asp:Panel>
                                      <div class="form-group">
-                                        <label class="col-sm-3 control-label">max_chars</label>
+                                        <label class="col-sm-3 control-label">Max characters</label>
                                         <div class="col-sm-9">
-                                            <asp:TextBox ID="txtMaxChars" runat="server" Text="$max_chars" type="number" />
+                                            <asp:TextBox ID="txtMaxChars" runat="server" placeholder="chars" type="number" />
                                         </div>
                                     </div>
                                      <asp:Panel runat="server" ID="PanelMaxFileSize" class="form-group">
-                                       <label class="col-sm-3 control-label">maximum_file_size</label>
+                                       <label class="col-sm-3 control-label">Maximum file size</label>
                                         <div class="col-sm-9">
                                             <asp:TextBox ID="txtMaximumFileSize" runat="server" type="number" CssClass="form-control" />    
                                         </div>
                                     </asp:Panel>
                                         
                                     <div id="divAllowedMimeTypes" runat="server" class="form-group">
-                                        <label class="col-sm-3 control-label">$allowed_mime_types</label>
+                                        <label class="col-sm-3 control-label">Allowed MIME types</label>
                                         
                                        <div class="col-sm-9">
                                         <asp:CheckBoxList ID="chkAllowedMimeTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right"  />
@@ -266,7 +266,7 @@
                                     </div>
                             
                                     <div id="divAnswerPresentationTypes" runat="server" class="form-group">
-                                        <label class="col-sm-3 control-label">$type_of_information</label>
+                                        <label class="col-sm-3 control-label">Type</label>
                                         <div class="col-sm-9">
                                         <asp:RadioButtonList AutoPostBack="true" ID="radAnswerPresentationTypes" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" OnSelectedIndexChanged="radAnswerPresentationTypes_SelectIndexChanged" />
                                             </div>
@@ -282,7 +282,7 @@
                                     <div class="checkbox">
                                         <label class="col-sm-offset-3 col-sm-9">
                                             <asp:CheckBox runat="server" ID="chkFirstAnswerIsFake"  />
-                                            $first_answer_in_menu_is_fake
+                                            Nonselectable first option in menu
                                         </label>
                                     </div>   
                                 </asp:PlaceHolder>
@@ -295,10 +295,9 @@
                                     </asp:Panel>                        
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-		                                <asp:button	id="cmdDeleteQuestion" Runat="server" Text="$mark_question_as_deleted" OnClick="cmdDeleteQuestion_Click" CssClass="btn btn-default" />			            		                    		                    
-		                                <asp:button	id="cmdUnDeleteQuestion" Runat="server" Text="$undelete_question" OnClick="cmdUnDeleteQuestion_Click" CssClass="btn btn-danger" />			            		                    		                    		                    
-		                                <span>&nbsp;&nbsp;</span>
-		                                <asp:button	id="cmdUpdateQuestion" Runat="server" Text="$update_question" OnClick="cmdUpdateQuestion_Click" CssClass="btn btn-success" />	
+		                                <asp:LinkButton	id="cmdDeleteQuestion" Runat="server" Text="Delete" OnClick="cmdDeleteQuestion_Click" CssClass="btn btn-default" />			            		                    		                    
+		                                <asp:LinkButton	id="cmdUnDeleteQuestion" Runat="server" Text="Undelete" OnClick="cmdUnDeleteQuestion_Click" CssClass="btn btn-danger" />			            		                    		                    		                    
+		                                <asp:LinkButton	id="cmdUpdateQuestion" Runat="server" Text="Save" OnClick="cmdUpdateQuestion_Click" CssClass="btn btn-success" />	
 		                            </div>
 		                        </div>
 		                    </asp:PlaceHolder>
