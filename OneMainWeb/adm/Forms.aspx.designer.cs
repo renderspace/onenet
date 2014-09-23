@@ -82,7 +82,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAddForm;
+        protected global::System.Web.UI.WebControls.Panel plhAddForm;
         
         /// <summary>
         /// txtAddForm control.
@@ -100,7 +100,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdAddForm;
+        protected global::System.Web.UI.WebControls.LinkButton cmdAddForm;
         
         /// <summary>
         /// plhAddSection control.
@@ -109,7 +109,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAddSection;
+        protected global::System.Web.UI.WebControls.Panel plhAddSection;
         
         /// <summary>
         /// txtAddSection control.
@@ -127,7 +127,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdAddSection;
+        protected global::System.Web.UI.WebControls.LinkButton cmdAddSection;
         
         /// <summary>
         /// plhAddQuestion control.
@@ -136,7 +136,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder plhAddQuestion;
+        protected global::System.Web.UI.WebControls.Panel plhAddQuestion;
         
         /// <summary>
         /// txtAddQuestion control.
@@ -154,7 +154,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdAddQuestion;
+        protected global::System.Web.UI.WebControls.LinkButton cmdAddQuestion;
         
         /// <summary>
         /// FormTree control.
