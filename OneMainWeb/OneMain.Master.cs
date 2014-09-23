@@ -13,6 +13,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.Profile;
 using System.Globalization;
 using System.Threading;
+using System.Web.Optimization;
 
 using One.Net.BLL;
 using System.Linq;
@@ -125,7 +126,18 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LiteralAppVersion.Text = AppVersion; 
+            LiteralAppVersion.Text = AppVersion;
+            LiteralHead.Text = Styles.Render("~/Bundles/BoostrapCSS").ToHtmlString();
+            LiteralHead.Text += Styles.Render("~/Bundles/JqueryUI").ToHtmlString();
+            LiteralHead.Text += Styles.Render("~/Bundles/AdmCSS").ToHtmlString();
+            LiteralHead.Text += @"
+    <script>
+        tracing = " + TracingFlag + @"; 
+        languageId = " + Thread.CurrentThread.CurrentCulture.LCID.ToString() + @";
+    </script>";
+            LiteralHead.Text += Scripts.Render("~/Bundles/Scripts").ToHtmlString();
+
+            LiteralFoot.Text = Scripts.Render("~/Bundles/AdmJS").ToHtmlString(); 
 
             if (!IsPostBack)
             {
@@ -158,7 +170,7 @@ namespace OneMainWeb
                         SelectedWebSiteId = webSiteList.First().Id;
                     }
                 }
-                MainContent.Visible = !PresentBasePage.ReadPublishFlag();
+                Menu1.Visible = MainContent.Visible = !PresentBasePage.ReadPublishFlag();
                 VirtualTableList1.Visible = false;
                 if (MainContent.Visible  && (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin")))
                     VirtualTableList1.Visible = true;

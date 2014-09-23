@@ -66,28 +66,26 @@
             </asp:View>
             <asp:View ID="View2" runat="server">
                  <div class="col-md-3">
-                     <div class="adminSection">
-                            <asp:PlaceHolder ID="plhAddForm" runat="server">
-		                        <asp:TextBox ID="txtAddForm" runat="server" Text="$add_new_form" />
-		                        <asp:button CssClass="addbutton" id="cmdAddForm" Runat="server" Text="$add_new_form_button" OnClick="cmdAddForm_Click" />                    
-		                    </asp:PlaceHolder>
+                     <section class="module tall">
+                            <asp:Panel ID="plhAddForm" runat="server" CssClass="form-group validationGroup">
+		                        <asp:TextBox ID="txtAddForm" runat="server" placeholder="new form name"  CssClass="required"/>
+		                        <asp:LinkButton CssClass="btn btn-success causesValidation" Text="<span class='glyphicon glyphicon-plus'></span> Add"  id="cmdAddForm" Runat="server" OnClick="cmdAddForm_Click" />
+		                    </asp:Panel>
 		        
-		                    <asp:PlaceHolder id="plhAddSection" runat="server">
-		                        <asp:TextBox Required="false" ID="txtAddSection" runat="server" text="$add_section" />
-		                        <asp:button CssClass="addbutton" id="cmdAddSection" Runat="server" Text="$add_section_button" OnClick="cmdAddSection_Click" />                                            
-		                    </asp:PlaceHolder>
+		                    <asp:Panel id="plhAddSection" runat="server" CssClass="form-group validationGroup">
+		                        <asp:TextBox Required="false" ID="txtAddSection" runat="server" placeholder="new section name" CssClass="required"/>
+		                        <asp:LinkButton  id="cmdAddSection" Runat="server" CssClass="btn btn-success causesValidation" Text="<span class='glyphicon glyphicon-plus'></span> Add"  OnClick="cmdAddSection_Click" />                                            
+		                    </asp:Panel>
 		        
-		                    <asp:PlaceHolder ID="plhAddQuestion" runat="server">
-		                        <asp:TextBox ID="txtAddQuestion" Required="false" runat="server" Text="$add_question" />
-		                        <asp:button	CssClass="addbutton" id="cmdAddQuestion" Runat="server" Text="$add_question_button" OnClick="cmdAddQuestion_Click" />                                                                    			            
-		                    </asp:PlaceHolder>
-		                    <div style="width: 100%;">&nbsp;</div>
-		                    <br style="clear: both;" />                
-                            <div id="treeHolder" class="treeView">                            
-	                            <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" 
-		                            BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" Width="270" />
+		                    <asp:Panel ID="plhAddQuestion" runat="server" CssClass="form-group validationGroup">
+		                        <asp:TextBox ID="txtAddQuestion" Required="false" runat="server" placeholder="new question" CssClass="required"/>
+		                        <asp:LinkButton	 id="cmdAddQuestion" Runat="server" CssClass="btn btn-success causesValidation" Text="<span class='glyphicon glyphicon-plus'></span> Add"  OnClick="cmdAddQuestion_Click" />                                                                    			            
+		                    </asp:Panel>
+		                    
+                            <div class="treeview">
+	                            <asp:TreeView OnAdaptedSelectedNodeChanged="FormTree_SelectedNodeChanged" OnSelectedNodeChanged="FormTree_SelectedNodeChanged" ID="FormTree" runat="server" />
                             </div>	
-                        </div>	
+                       </section>
            	        </div>        
 		            <div class="col-md-9">
                         <div class="adminSection form-horizontal">

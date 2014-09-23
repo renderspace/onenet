@@ -8,14 +8,8 @@
 <html>
 <head runat="server">
     <title></title>
-    <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
-    <%: System.Web.Optimization.Styles.Render("~/Bundles/JqueryUI") %>
-    <%: System.Web.Optimization.Styles.Render("~/Bundles/AdmCSS") %>
-    <script>
-        tracing = <%: TracingFlag %>;
-        languageId = <%: System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() %>;
-    </script>
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/Scripts") %>
+
+     <asp:Literal runat="server" ID="LiteralHead" EnableViewState="false"></asp:Literal>
 
 	<style type="text/css">
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
@@ -93,7 +87,7 @@
 	 </div>
     </div>
     <script src="/ckeditor4/ckeditor.js"></script>
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/AdmJS") %>  
+    <asp:Literal runat="server" ID="LiteralFoot" EnableViewState="false"></asp:Literal>
     </form>
 </body>
 </html>
