@@ -161,8 +161,6 @@ namespace OneMainWeb
                                         case ValidationTypes.DateTime: userQuestionType = FormHelper.FrontEndQuestionTypes.DateTime; break;
                                         case ValidationTypes.Time: userQuestionType = FormHelper.FrontEndQuestionTypes.Time; break;
                                         case ValidationTypes.Captcha: userQuestionType = FormHelper.FrontEndQuestionTypes.Captcha; break;
-                                        case ValidationTypes.VAT: userQuestionType = FormHelper.FrontEndQuestionTypes.VAT; break;
-                                        case ValidationTypes.Telephone: userQuestionType = FormHelper.FrontEndQuestionTypes.Telephone; break;
                                     }
 
                                 } break;
@@ -1258,20 +1256,6 @@ namespace OneMainWeb
 
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
-                    case FormHelper.FrontEndQuestionTypes.VAT:
-                        {
-                            question.ValidationType = ValidationTypes.VAT;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
-                            question.Answers.Add(answer.Id.Value, answer);
-                            break;
-                        }
-                    case FormHelper.FrontEndQuestionTypes.Telephone :
-                        {
-                            question.ValidationType = ValidationTypes.Telephone;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", "", "", "", Thread.CurrentThread.CurrentCulture.LCID, AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
-                            question.Answers.Add(answer.Id.Value, answer);
-                            break;
-                        }
                     case FormHelper.FrontEndQuestionTypes.NumericalValue:
                         {
                             question.ValidationType = ValidationTypes.Numeric;

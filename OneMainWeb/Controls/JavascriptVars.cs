@@ -22,6 +22,12 @@ namespace OneMainWeb.Controls
             output.Write("<script>");
             output.Write("websiteLanguageId = " + System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() + ";");
             output.Write("tracing = " + (publishFlag ? "false" : "true") + ";");
+            output.Write(@"
+            function trace(msg) {
+    if (typeof tracing == 'undefined' || !tracing) return;
+    try { console.log(msg); } catch (ex) { }
+}
+            ");
             output.Write("</script>");
         }
     

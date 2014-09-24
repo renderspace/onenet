@@ -95,53 +95,6 @@ namespace OneMainWeb.CommonModules
             Response.AppendHeader("Expires", "0"); // Proxies.
 
             Type cstype = this.GetType();
-            var scriptName = "ValidatorCheck";
-            if (!Page.ClientScript.IsClientScriptBlockRegistered(scriptName))
-            {
-                var script = @"<script>
-if(window.jQuery)
-{
-    $(document).ready(function () {
-
-        $('.mi.form a.FormsCommandSubmit').on('click',
-            function (e) {
-                if (Page_ClientValidate()) {
-                    return true;
-                } else {
-                    addErrorClass();
-                    return false;
-                }
-            }
-        );
-
-        $('.mi.form input:text').on('blur',
-            function (e) {
-                addErrorClass();
-                return true;
-            }
-        );
-
-    });
-        
-    function addErrorClass() {
-        $('.question input:text').removeClass('error');
-        $.each(Page_Validators, function () {
-            var validator = $(this)[0];
-            var f = validator.evaluationfunction;
-            var controltovalidate = validator.controltovalidate;
-
-            ValidatorValidate(validator);
-            if (!validator.isvalid) {
-                $('#' + controltovalidate).addClass('error');
-            }
-        });
-
-    }
-}
-                 
-</script>";
-                Page.ClientScript.RegisterClientScriptBlock(cstype, scriptName, script);
-            }
 
             if (!IsPostBack)
             {
@@ -563,7 +516,7 @@ if(window.jQuery)
                 {
                     HtmlGenericControl questionDiv = new HtmlGenericControl("div");
                     questionDiv.ID = "QuestionDiv" + question.Id;
-                    questionDiv.Attributes.Add("class", question.IsAnswerRequired ? "question isRequired" : "question");
+                    questionDiv.Attributes.Add("class", question.IsAnswerRequired ? "question isRequired form-group " : "question form-group");
 
                     if (!string.IsNullOrEmpty(question.Teaser))
                     {
@@ -621,43 +574,51 @@ if(window.jQuery)
                                 }
                             case AnswerTypes.SingleText:
                                 {
-                                    TextBox answerInput = new TextBox();
+                                    var answerInput = new TextBox();
                                     answerInput.ID = "AnswerSingleText" + firstAnswer.Id;
-                                    // answerInput.Required = question.IsAnswerRequired;
                                     answerInput.ValidationGroup = "FormID" + FormId + InstanceId;
-                                    answerInput.Text = question.Title;
+                                    answerInput.Attributes.Add("placeholder", question.Title);
+                                    if (question.IsAnswerRequired)
+                                    {
+                                        answerInput.CssClass = "required ";
+                                        answerInput.Attributes.Add("required", "required");
+                                    }
 
-                                    /*
                                     switch (question.ValidationType)
                                     {
-                                        case ValidationTypes.Time:
-                                            answerInput.ErrorMessage = Translate("invalid_time"); answerInput.ValidationType = "time"; break;
-                                        case ValidationTypes.DateTime: answerInput.ErrorMessage = Translate("invalid_date"); answerInput.ValidationType = "date"; break;
-                                        case ValidationTypes.Email: answerInput.ErrorMessage = Translate("invalid_email"); answerInput.ValidationType = "email"; break;
-                                        case ValidationTypes.Integer: answerInput.ErrorMessage = Translate("invalid_integer"); answerInput.ValidationType = "integer"; break;
-                                        case ValidationTypes.Numeric: answerInput.ErrorMessage = Translate("invalid_numeric"); answerInput.ValidationType = "numeric"; break;
-                                        case ValidationTypes.AlphaNumeric: answerInput.ErrorMessage = Translate("invalid_alphanumeric"); answerInput.ValidationType = "alphanumeric"; break;
-                                        case ValidationTypes.VAT: answerInput.ErrorMessage = Translate("invalid_sloVAT"); answerInput.ValidationType = "sloVAT"; break;
-                                        case ValidationTypes.Telephone: answerInput.ErrorMessage = Translate("invalid_telephone"); answerInput.ValidationType = "telephone"; break;
+                                        case ValidationTypes.Time: 
+                                            answerInput.CssClass += "time";
+                                            break;
+                                        case ValidationTypes.DateTime: 
+                                            answerInput.CssClass += "date";
+                                            break;
+                                        case ValidationTypes.Email: 
+                                            answerInput.CssClass += "email";
+                                            break;
+                                        case ValidationTypes.Integer:
+                                            answerInput.CssClass += "digits";
+                                            break;
+                                        case ValidationTypes.Numeric:
+                                            answerInput.CssClass += "number";
+                                            break;
                                         case ValidationTypes.Captcha:
-                                            {
-                                                Label lblCaptcha = new Label();
-                                                lblCaptcha.ID = "CaptchaLabel" + firstAnswer.Id;
-                                                lblCaptcha.Visible = false;
-                                                questionDiv.Controls.Add(lblCaptcha);
+                                            Label lblCaptcha = new Label();
+                                            lblCaptcha.ID = "CaptchaLabel" + firstAnswer.Id;
+                                            lblCaptcha.Visible = false;
+                                            questionDiv.Controls.Add(lblCaptcha);
 
-                                                // Captcha image is created here, while it is loaded with data in PreRender
-                                                System.Web.UI.WebControls.Image captchaImage = new System.Web.UI.WebControls.Image();
-                                                captchaImage.ID = "CaptchaImage" + firstAnswer.Id;
+                                            // Captcha image is created here, while it is loaded with data in PreRender
+                                            System.Web.UI.WebControls.Image captchaImage = new System.Web.UI.WebControls.Image();
+                                            captchaImage.ID = "CaptchaImage" + firstAnswer.Id;
 
-                                                HtmlGenericControl captchaDiv = new HtmlGenericControl("div");
-                                                captchaDiv.ID = "CaptchaDiv" + firstAnswer.Id;
-                                                captchaDiv.Attributes.Add("class", "captcha");
-                                                captchaDiv.Controls.Add(captchaImage);
-                                                questionDiv.Controls.Add(captchaDiv);
-                                                break;
-                                            }
-                                    } */
+                                            HtmlGenericControl captchaDiv = new HtmlGenericControl("div");
+                                            captchaDiv.ID = "CaptchaDiv" + firstAnswer.Id;
+                                            captchaDiv.Attributes.Add("class", "captcha");
+                                            captchaDiv.Controls.Add(captchaImage);
+                                            questionDiv.Controls.Add(captchaDiv);
+                                            break;
+                                    }
+
 
                                     if (firstAnswer.MaxChars.HasValue && firstAnswer.MaxChars > 0)
                                     {
@@ -676,8 +637,6 @@ if(window.jQuery)
                                 }
                         }
 
-                        // Since TwoControlsLibrary validation controls are used to validate all text input
-                        // divValidationMark is basically only used for file validation messages
                         HtmlGenericControl validationDiv = new HtmlGenericControl("div");
                         validationDiv.InnerText = "";
                         validationDiv.Visible = false;

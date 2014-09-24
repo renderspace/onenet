@@ -118,8 +118,6 @@ namespace One.Net.BLL.DAL
                 case ValidationTypes.DateTime: validationType = BOQuestion.VALIDATION_TYPE_DATETIME; break;
                 case ValidationTypes.Time: validationType = BOQuestion.VALIDATION_TYPE_TIME; break;
                 case ValidationTypes.Captcha: validationType = BOQuestion.VALIDATION_TYPE_CAPTCHA; break;
-                case ValidationTypes.VAT: validationType = BOQuestion.VALIDATION_TYPE_VAT; break;
-                case ValidationTypes.Telephone: validationType = BOQuestion.VALIDATION_TYPE_TELEPHONE; break;
             }
 
             paramsToPass[5] = new SqlParameter("@ValidationType", validationType);
@@ -587,8 +585,6 @@ namespace One.Net.BLL.DAL
                             case BOQuestion.VALIDATION_TYPE_INTEGER: question.ValidationType = ValidationTypes.Integer; break;
                             case BOQuestion.VALIDATION_TYPE_NUMERIC: question.ValidationType = ValidationTypes.Numeric; break;
                             case BOQuestion.VALIDATION_TYPE_CAPTCHA: question.ValidationType = ValidationTypes.Captcha; break;
-                            case BOQuestion.VALIDATION_TYPE_VAT: question.ValidationType = ValidationTypes.VAT; break;
-                            case BOQuestion.VALIDATION_TYPE_TELEPHONE : question.ValidationType = ValidationTypes.Telephone; break;
                         }
                     }
 
