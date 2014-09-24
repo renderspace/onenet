@@ -7,7 +7,7 @@ namespace One.Net.BLL.Forms
     public enum AnswerTypes { Checkbox = 1, Radio, DropDown, SingleText, SingleFile }
     public enum AdditionalFieldTypes { Text = 1, File, None }
     public enum SectionTypes { SinglePage = 1, MultiPage }
-    public enum ValidationTypes { None = 1, AlphaNumeric, Numeric, Integer, Email, DateTime, Time, Captcha, VAT, Telephone }
+    public enum ValidationTypes { None = 1, AlphaNumeric, Numeric, Integer, Email, DateTime, Time, Captcha }
 
     [Serializable]
     public abstract class BOElement : BOInternalContent
@@ -211,8 +211,6 @@ namespace One.Net.BLL.Forms
         public const string VALIDATION_TYPE_TIME = "Time";
         public const string VALIDATION_TYPE_ALPHANUMERIC = "AlphaNumeric";
         public const string VALIDATION_TYPE_CAPTCHA = "Captcha";
-        public const string VALIDATION_TYPE_VAT = "VAT";
-        public const string VALIDATION_TYPE_TELEPHONE = "Telephone";
 
         private int idx;
         private bool isAnswerRequired = false;
