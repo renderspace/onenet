@@ -373,7 +373,7 @@ namespace OneMainWeb.adm
                 if (ddlPlaceHolder != null)
                 {
                     ddlPlaceHolder.Items.Clear();
-                    ddlPlaceHolder.DataSource = webSiteB.ListPlaceHolders();
+                    ddlPlaceHolder.DataSource = BWebsite.ListPlaceHolders();
                     ddlPlaceHolder.DataTextField = "name";
                     ddlPlaceHolder.DataValueField = "id";
                     ddlPlaceHolder.SelectedValue = moduleInstance.PlaceHolderId.ToString();
@@ -717,7 +717,7 @@ namespace OneMainWeb.adm
         protected void cmdAddInstance_Click(object sender, EventArgs e)
         {
             int selectedModuleID = FormatTool.GetInteger(ddlModuleTypes.SelectedItem.Value);
-            List<BOPlaceHolder> placeHolderData = webSiteB.ListPlaceHolders();
+            var placeHolderData = BWebsite.ListPlaceHolders();
             if (placeHolderData.Count < 1)
                 return;
 

@@ -42,8 +42,8 @@
 
             <asp:PlaceHolder runat="server" ID="PlaceHolderTemplates">
                 <div class="adminSection validationGroup">
-                        <asp:TextBox runat="server" ID="TextBoxTemplate" MaxLength="255" placeholder="New template name" CssClass="required"></asp:TextBox>
-                        <asp:LinkButton ID="LinkButtonAddTemplate" runat="server" OnClick="LinkButtonAddTemplate_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add template" CssClass="btn btn-success causesValidation" />
+                    <asp:TextBox runat="server" ID="TextBoxTemplate" MaxLength="255" placeholder="New template name" CssClass="required"></asp:TextBox>
+                    <asp:LinkButton ID="LinkButtonAddTemplate" runat="server" OnClick="LinkButtonAddTemplate_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add template" CssClass="btn btn-success causesValidation" />
                 </div>
                 <asp:GridView	ID="GridViewTemplates"
 					    runat="server"
@@ -55,6 +55,23 @@
                         <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
                         <asp:BoundField HeaderText="Name" DataField="Name" />
                         <asp:BoundField HeaderText="Type" DataField="Type" />
+                    </Columns>
+                </asp:GridView>
+
+
+                <div class="adminSection validationGroup">
+                    <asp:TextBox runat="server" ID="TextBoxPlaceholder" MaxLength="255" placeholder="New placeholder name" CssClass="required"></asp:TextBox>
+                    <asp:LinkButton ID="LinkButtonAddPlaceholder" runat="server" OnClick="LinkButtonAddPlaceholder_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add placeholder" CssClass="btn btn-success causesValidation" />
+                </div>
+                <asp:GridView	ID="GridViewPlaceholders"
+					    runat="server"
+					    CssClass="table table-hover"
+					    AutoGenerateColumns="false"
+					    AllowSorting="false"
+					    DataKeyNames="Id" >
+		            <Columns>
+                        <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
+                        <asp:BoundField HeaderText="Name" DataField="Name" />
                     </Columns>
                 </asp:GridView>
             </asp:PlaceHolder>
