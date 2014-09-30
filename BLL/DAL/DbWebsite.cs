@@ -598,18 +598,20 @@ namespace One.Net.BLL.DAL
             SqlParameter[] paramsToPass = new SqlParameter[2];
 
             paramsToPass[0] = (placeHolder.Id.HasValue ? new SqlParameter("@Id", placeHolder.Id) : new SqlParameter("@Id", DBNull.Value));
-            paramsToPass[1] = new SqlParameter("@Name", placeHolder.Name);
+            paramsToPass[1] = new SqlParameter("@PId", placeHolder.Name);
+            paramsToPass[1] = new SqlParameter("@Class", placeHolder.Name);
+            paramsToPass[1] = new SqlParameter("@Type", "0");
 
             string sql;
             if (placeHolder.Id.HasValue)
             {
-                sql = @"UPDATE [dbo].[place_holder] SET place_holder_id=@Name WHERE id=@Id";
+                sql = @"UPDATE [dbo].[place_holder] SET place_holder_id=@PId, place_holder_class = @Class WHERE id=@Id";
             }
             else
             {
                 paramsToPass[0].Direction = ParameterDirection.InputOutput;
                 paramsToPass[0].SqlDbType = SqlDbType.Int;
-                sql = @"INSERT INTO [dbo].[place_holder]  (place_holder_id) VALUES (@Name); SET @Id=SCOPE_IDENTITY();";
+                sql = @"INSERT INTO [dbo].[place_holder]  (place_holder_id, place_holder_class, place_holder_type) VALUES (@PId, @Class, @Type); SET @Id=SCOPE_IDENTITY();";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);

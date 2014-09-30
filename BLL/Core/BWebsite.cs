@@ -1116,7 +1116,7 @@ namespace One.Net.BLL
         /// List all availible placeholders in this system.
         /// </summary>
         /// <returns></returns>
-        public List<BOPlaceHolder> ListPlaceHolders()
+        public static List<BOPlaceHolder> ListPlaceHolders()
         {
             List<BOPlaceHolder> list = OCache.Get("ListPlaceHolders") as List<BOPlaceHolder>;
             if (list == null)

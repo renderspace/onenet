@@ -43,6 +43,10 @@ namespace OneMainWeb.adm
                 var templates = BWebsite.ListTemplates("3");
                 GridViewTemplates.DataSource = templates;
                 GridViewTemplates.DataBind();
+
+                var placeholders = BWebsite.ListPlaceHolders();
+                GridViewPlaceholders.DataSource = placeholders;
+                GridViewPlaceholders.DataBind();   
             }
             else
             {
@@ -237,5 +241,21 @@ namespace OneMainWeb.adm
             GridViewWebsitesLoad();
         }
 
+        protected void LinkButtonAddPlaceholder_Click(object sender, EventArgs e)
+        {
+            var placeholders = BWebsite.ListPlaceHolders();
+
+            if (placeholders.Where(t => t.Name.ToLower() == TextBoxPlaceholder.Text.ToLower()).Count() > 0)
+            {
+                Notifier1.Warning = "Placeholder with this name already exists";
+            }
+            else
+            {
+                var placeholder = new BOPlaceHolder { Name = TextBoxPlaceholder.Text  };
+                websiteB.ChangePlaceHolder(placeholder);
+                Notifier1.Title = "Placeholder created";
+            }
+            GridViewWebsitesLoad();
+        }
     }
 }
