@@ -100,6 +100,8 @@ namespace OneMainWeb
                 }
             }
 
+            log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
+
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
 
