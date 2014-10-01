@@ -24,16 +24,19 @@ namespace OneMainWeb.Utils
             context.Response.ContentType = "image/x-icon";
             var websiteB = new BWebsite();
             var website = websiteB.Get(selectedWebSiteId);
-            var content = website.GetSettingValue("Favicon");
-            if (string.IsNullOrWhiteSpace(content))
+            if (website != null)
             {
-                content = @"AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAA
+                var content = website.GetSettingValue("Favicon");
+                if (string.IsNullOrWhiteSpace(content))
+                {
+                    content = @"AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAA
 AAAAAAD///8AAAD/AP//AACzawAArqsAAK6rAACuqwAAs2cAAP//AAD//wAA//8AAP//AACZAwAA
 kTMAAIEzAACJMwAAmQMAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+                }
+                var result = Convert.FromBase64String(content);
+                context.Response.BinaryWrite(result);
             }
-            var result = Convert.FromBase64String(content);
-            context.Response.BinaryWrite(result);
         }
 
         public bool IsReusable
