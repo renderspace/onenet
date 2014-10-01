@@ -188,6 +188,7 @@
     <Compile Include="Model\Web\PagedList.cs" />
     <Compile Include="Model\Web\PublishableInternalContent.cs" />
     <Compile Include="Paths\CustomRouteHandler.cs" />
+    <Compile Include="Paths\DownloadHandler.cs" />
     <Compile Include="Paths\MimeMapping.cs" />
     <Compile Include="Paths\OneSiteMapProvider.cs" />
     <Compile Include="Paths\RedirectModule.cs" />

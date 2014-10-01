@@ -70,8 +70,6 @@ namespace One.Net.BLL
         private static BFileSystem fileB =  new BFileSystem();
         private BOFile file;
 
-        private string OriginalVirtualPath { get; set; }
-
         private FileInfo CachedFileInfo { get; set; }
 
         private static readonly object cacheLocking = new Object();
@@ -90,9 +88,7 @@ namespace One.Net.BLL
 
         public TVirtualFile(string virtualPath)
             : base(virtualPath)
-        {
-            OriginalVirtualPath = virtualPath;
-            
+        {   
             var checkPath = VirtualPathUtility.ToAppRelative(virtualPath);
             CachedFileInfo = new FileInfo(Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, virtualPath.TrimStart('/')));
             Regex reg = new Regex(TByNumberPathProvider.fileMatcher, RegexOptions.IgnoreCase);
@@ -131,8 +127,6 @@ namespace One.Net.BLL
         {
             if (file != null)
             {
-
-                
                 if (EnableDiskCache && CachedFileInfo.Exists)
                 {
                     return CachedFileInfo.OpenRead();

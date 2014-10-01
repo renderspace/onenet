@@ -29,6 +29,7 @@ namespace One.Net.BLL
         private bool Croppable = false;
         private bool DoNotUpscale = false;
         private int ResizePercentage = 100;
+        private bool IsDownload = false;
 
         private Color BackgroundColor = Color.FromName("White");
 
@@ -117,6 +118,8 @@ namespace One.Net.BLL
                 Croppable = FormatTool.GetBoolean(context.Request.Params["crop"]);
             if (context.Request.Params["dnu"] != null)
                 DoNotUpscale = FormatTool.GetBoolean(context.Request.Params["dnu"]);
+            if (context.Request.Params["d"] != null)
+                IsDownload = FormatTool.GetBoolean(context.Request.Params["d"]);
 
             if (context.Request.Params["p"] != null)
             {
@@ -158,7 +161,7 @@ namespace One.Net.BLL
                     // the underlying stream should (is) be cached.
                     using (Stream iStream = VirtualPathProvider.OpenFile(virtualPath))
                     {
-                        WriteStream(iStream, context, virtualPath);
+                        WriteStream(iStream, context, virtualPath, IsDownload);
                     }
                 }
             }
@@ -257,12 +260,23 @@ namespace One.Net.BLL
         //    
         //}
 
-        public static void WriteStream(Stream iStream, HttpContext context, string virtualPath)
+        public static void WriteStream(Stream iStream, HttpContext context, string virtualPath, bool forceDownload = false)
         {
             if (iStream != null)
             {
                 byte[] buffer = new Byte[chunkSize];
-                context.Response.AddHeader("Content-Type", GetContentType(virtualPath));
+                if (forceDownload)
+                {
+                    var file = new FileInfo(virtualPath);
+                    context.Response.AddHeader("content-disposition", string.Format("attachment; filename=\"{0}\"", file.Name));
+                }
+                else
+                {
+                    context.Response.AddHeader("Content-Type", GetContentType(virtualPath));
+                }
+
+                //context.Response.WriteFile(file.FullName, false);
+                
                 iStream.Seek(0, SeekOrigin.Begin);
                 long dataToRead = iStream.Length;
                 while (dataToRead > 0)
@@ -304,7 +318,14 @@ namespace One.Net.BLL
                 {
                     if (cachedFileInfo.Exists)
                     {
-                        context.Response.ContentType = MimeMapping.GetMimeMapping(cachedFileInfo.Name);
+                        if (IsDownload)
+                        {
+                            context.Response.AddHeader("content-disposition", string.Format("attachment; filename=\"{0}\"", cachedFileInfo.Name));
+                        }
+                        else
+                        {
+                            context.Response.ContentType = MimeMapping.GetMimeMapping(cachedFileInfo.Name);
+                        }
                         context.Response.TransmitFile(cachedFileInfo.FullName);
                         return;
                     }
@@ -375,7 +396,7 @@ namespace One.Net.BLL
             {
                 using (MemoryStream iStream = new MemoryStream(encodedImage))
                 {
-                    WriteStream(iStream, context, context.Request.Path);
+                    WriteStream(iStream, context, context.Request.Path, IsDownload);
                     // TODO: take care of big files someday
                 }
             }
