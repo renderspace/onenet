@@ -68,10 +68,12 @@ namespace One.Net.BLL
 
                 foreach (BOPage page in pages)
                 {
+                    SiteMapNode addedNode = null;
                     if (_root == null)
                     {
                         _root = AddPage(page);
                         AddNode(_root, null);
+                        addedNode = _root;
                     }
                     else
                     {
@@ -81,7 +83,7 @@ namespace One.Net.BLL
                         }
 
                         SiteMapNode node = this.AddPage(page);
-
+                        addedNode = node;
                         if (!_nodes.ContainsKey(page.ParentId.Value))
                         {
                             throw new ProviderException("Invalid parent ID");
@@ -95,9 +97,13 @@ namespace One.Net.BLL
                         {
                             log.Fatal("", iex);
                             _root = null;
-                            return _root;
+                            return null;
                         }
                     }
+                    /* EXPERIMENTAL
+                    var path = addedNode.Url.TrimStart('/');
+                    var template = "~/site_specific/aspx_templates/" + addedNode["_template"];
+                    RouteTable.Routes.MapPageRoute("Map" + page.Id.ToString(), path, template);*/
                 }
 
                 OCache.Add(_cacheDependencyName, new object(), null, Cache.NoAbsoluteExpiration, 

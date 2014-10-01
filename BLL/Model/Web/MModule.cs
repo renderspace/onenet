@@ -100,7 +100,7 @@ namespace One.Net.BLL.Web
                 return defaultValue;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("String") && !(setting.Type.Equals("CSInteger")))
+            if (!setting.Type.Equals("String") && !(setting.Type.Equals("CSInteger")) && !(setting.Type.Equals("Url")))
             {
                 throw new ApplicationException("not a String setting; probably error in database " + settingName);
             }
