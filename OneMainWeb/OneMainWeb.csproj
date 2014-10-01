@@ -483,6 +483,9 @@
     <Content Include="adm\StructureDelete.aspx" />
     <Content Include="adm\Users.aspx" />
     <Content Include="adm\Website.aspx" />
+    <Content Include="App_Data\blank.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
@@ -894,7 +897,6 @@
   <ItemGroup>
     <Folder Include="AdminExtensions\" />
     <Folder Include="adm\ashx\" />
-    <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
     <Folder Include="site_specific\custom_modules\" />
   </ItemGroup>
