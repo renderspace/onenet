@@ -123,6 +123,8 @@ namespace OneMainWeb
             RouteTable.Routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
             RouteTable.Routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
+            log.Info("-------------- MVC ROUTES ADDED --------------");
+
             // 
 
             //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
