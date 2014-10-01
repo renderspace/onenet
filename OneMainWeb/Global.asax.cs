@@ -153,6 +153,7 @@ namespace OneMainWeb
                 if (!(req.Contains("WebResource.axd") || req.Contains("_images") || req.Contains("_files")))
                 {
                     log.Debug("BeginRequest " + req);
+                    log.Debug("UserAgent: " + Request.UserAgent);
                 }
                 if (req.Contains(".asmx"))
                 {
