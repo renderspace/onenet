@@ -27,6 +27,7 @@ using System.Web.Optimization;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.Models;
 using OneMainWeb.Base;
+using System.Collections.Specialized;
 
 namespace OneMainWeb
 {
@@ -119,14 +120,29 @@ namespace OneMainWeb
             RouteTable.Routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
             log.Info("-------------- MVC ROUTES ADDED --------------");
-
-            // 
-
-            //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
             /*
-            RouteTable.Routes.MapPageRoute("EvalRoutes", "Evals/{type}/New.aspx", "~/spored", false);
+            RouteTable.Routes.MapPageRoute("EvalRoutes1", "artikli/artikel-1", "~/site_specific/aspx_templates/Demo.aspx");
+            RouteTable.Routes.MapPageRoute("EvalRoutes2", "artikli/artikel-2", "~/site_specific/aspx_templates/Demo.aspx");
+            RouteTable.Routes.MapPageRoute("EvalRoutes3", "artikli/artikel-3", "~/site_specific/aspx_templates/Demo.aspx");
 
-            RouteTable.Routes.MapPageRoute("EvalRoutes2", "mijav", "~/Login.aspx");*/
+            
+           var c = new NameValueCollection();
+           c.Add("securityTrimmingEnabled", "true");
+           c.Add("connectionStringName", "SiteMapConnectionString");
+
+           var b = new OneSiteMapProvider();
+           b.Initialize("OneSiteMapProvider", c);
+           b.BuildSiteMap();
+            
+           R
+
+           // 
+
+           //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
+           
+           RouteTable.Routes.MapPageRoute("EvalRoutes", "Evals/{type}/New.aspx", "~/spored", false);
+
+           RouteTable.Routes.MapPageRoute("EvalRoutes2", "mijav", "~/Login.aspx");*/
 
             /* tole gre v sitemap provider:
              * 
@@ -149,41 +165,9 @@ namespace OneMainWeb
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();
-                if (!(req.Contains("WebResource.axd") || req.Contains("_images") || req.Contains("_files")))
+                if (!(req.Contains("_images") || req.Contains("_files") || req.Contains("/Scripts") || req.Contains("/JavaScript")))
                 {
-                    log.Debug("BeginRequest " + req);
-                    log.Debug("UserAgent: " + Request.UserAgent);
-                }
-                if (req.Contains(".asmx"))
-                {
-                    log.Debug("asmx Request " + req);
-                    long position = Request.InputStream.Position;
-                    Request.InputStream.Seek(0, SeekOrigin.Begin);
-
-                    log.Debug("asmx Request Full read: " + Encoding.Default.GetString(ReadFully(Request.InputStream)));
-                    Request.InputStream.Position = position;
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Reads data from a stream until the end is reached. The
-        /// data is returned as a byte array. An IOException is
-        /// thrown if any of the underlying IO calls fail.
-        /// </summary>
-        /// <param name="stream">The stream to read data from</param>
-        public static byte[] ReadFully(Stream stream)
-        {
-            byte[] buffer = new byte[32768];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                while (true)
-                {
-                    int read = stream.Read(buffer, 0, buffer.Length);
-                    if (read <= 0)
-                        return ms.ToArray();
-                    ms.Write(buffer, 0, read);
+                    log.Debug("BeginRequest " + req + " / UserAgent: " + Request.UserAgent);
                 }
             }
         }
@@ -193,7 +177,7 @@ namespace OneMainWeb
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();
-                if (!(req.Contains("WebResource.axd") || req.Contains("_images") || req.Contains("_files")))
+                if (!(req.Contains("_images") || req.Contains("_files") || req.Contains("/Scripts") || req.Contains("/JavaScript")))
                 {
                     log.Debug("EndRequest " + req);
                 }

@@ -28,23 +28,9 @@ namespace One.Net.BLL
 
         private SiteMapNode AnalyseUrl(string reqUrl)
         {
-            log.Debug("VVVV AnalyseUrl");
             string[] split = reqUrl.Split(new[] { '?' }, 2);
             string requestUrl = split[0];
-            /*
-             string fileName = FormatTool.GetFileName(requestUrl);
-            string extension = FormatTool.GetFileExtension(requestUrl);
-             * 
-            if (fileName == "index.aspx" || fileName == "default.aspx" ) //extension.Length > 0
-            {
-                actualVirtualPath = requestUrl.Replace(fileName, "").TrimEnd(new char[] {'/'});
-            }
-            else
-            {*/
-            string actualVirtualPath = requestUrl;
-            //}
-            SiteMapNode smn = SiteMap.Provider.FindSiteMapNode(actualVirtualPath);
-            log.Debug("^^^^ AnalyseUrl");
+            SiteMapNode smn = SiteMap.Provider.FindSiteMapNode(requestUrl);
             return smn;
         }
 

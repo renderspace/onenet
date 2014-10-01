@@ -525,6 +525,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 AddMetaProperty("og:site_name", CurrentWebsite.Title);
                 AddMetaProperty("og:locale", Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_'));
                 AddMetaProperty("og:url", Request.Url.AbsoluteUri);
+                AddMetaProperty("og:type", "website");
+
                 var appIdStr = CurrentWebsite.GetSettingValue("FacebookApplicationID");
                 var appId = 0;
                 int.TryParse(appIdStr, out appId);
