@@ -30,22 +30,22 @@
                         <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
                      </div>
                 </section>
-                <div class="adminSection form-horizontal">
-                    <asp:Panel runat="server" ID="PanelEditor">
-                        <one:TextContentControl ID="TextContentEditor" runat="server" />
+                    <div class="adminSection form-horizontal">
+                        <asp:Panel runat="server" ID="PanelEditor">
+                            <one:TextContentControl ID="TextContentEditor" runat="server" />
                         
-				        <div class="form-group">
-                            <div class="col-sm-3">
-                                 <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
-                            </div>
-                            <div class="col-sm-9">
-                                <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
-                            <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
-                            </div>
+				            <div class="form-group">
+                                <div class="col-sm-3">
+                                     <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                                </div>
+                                <div class="col-sm-9">
+                                    <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
+                                <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
+                                </div>
 					        
-				        </div>
-                    </asp:Panel>
-                </div>
+				            </div>
+                        </asp:Panel>
+                    </div>
                  </asp:View>
                   <asp:View ID="View2" runat="server">
                        <section class="module">

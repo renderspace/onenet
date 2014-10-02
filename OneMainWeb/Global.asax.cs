@@ -99,9 +99,10 @@ namespace OneMainWeb
                         IdentityManager.CreateRoleIfNotExists(previewUrl);
                     }
                 }
+                log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
             }
 
-            log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
+            
 
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
@@ -112,31 +113,9 @@ namespace OneMainWeb
             var serializerSettings = new JsonSerializerSettings();
             serializerSettings.Converters.Add(new IsoDateTimeConverter());
 
-            RouteTable.Routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
-            RouteTable.Routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
-
-            RouteTable.Routes.Add(new Route("sitemap.xml", new HttpHandlerRoute("~/Utils/SiteMapHandler.ashx")));
-            RouteTable.Routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
-            RouteTable.Routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
-
+            RouteConfig.ReloadRoutes(RouteTable.Routes);
             log.Info("-------------- MVC ROUTES ADDED --------------");
             /*
-            RouteTable.Routes.MapPageRoute("EvalRoutes1", "artikli/artikel-1", "~/site_specific/aspx_templates/Demo.aspx");
-            RouteTable.Routes.MapPageRoute("EvalRoutes2", "artikli/artikel-2", "~/site_specific/aspx_templates/Demo.aspx");
-            RouteTable.Routes.MapPageRoute("EvalRoutes3", "artikli/artikel-3", "~/site_specific/aspx_templates/Demo.aspx");
-
-            
-           var c = new NameValueCollection();
-           c.Add("securityTrimmingEnabled", "true");
-           c.Add("connectionStringName", "SiteMapConnectionString");
-
-           var b = new OneSiteMapProvider();
-           b.Initialize("OneSiteMapProvider", c);
-           b.BuildSiteMap();
-            
-           R
-
-           // 
 
            //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
            
@@ -144,16 +123,8 @@ namespace OneMainWeb
 
            RouteTable.Routes.MapPageRoute("EvalRoutes2", "mijav", "~/Login.aspx");*/
 
-            /* tole gre v sitemap provider:
-             * 
-             * if (page.Id == 3) 
-            {
-                RouteTable.Routes.Add(new Route("spored/{action}", new One.Net.BLL.Paths.CustomRouteHandler(node["_template"])));
-            }
-             * */
-
             
-        }
+        }        
 
         protected void Application_End(object sender, EventArgs e)
         {

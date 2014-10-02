@@ -20,6 +20,7 @@ using System.Linq;
 using System.Net;
 using One.Net.BLL.Utility;
 using OneMainWeb.adm;
+using System.Web.Routing;
 
 namespace OneMainWeb
 {
@@ -209,6 +210,7 @@ namespace OneMainWeb
         {
             OCache.Clear();
             OneSiteMapProvider.ReloadSiteMap();
+            RouteConfig.ReloadRoutes(RouteTable.Routes);
         }
     }
 }
