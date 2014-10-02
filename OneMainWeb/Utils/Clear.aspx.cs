@@ -1,5 +1,6 @@
 using System;
 using One.Net.BLL;
+using System.Web.Routing;
 
 namespace OneMainWeb.Utils
 {
@@ -18,6 +19,7 @@ namespace OneMainWeb.Utils
         {
             OCache.Clear();
             OneSiteMapProvider.ReloadSiteMap();
+            RouteConfig.ReloadRoutes(RouteTable.Routes);
             Label1.Text = "Cache cleared at: " + DateTime.Now;
         }
 
@@ -25,7 +27,6 @@ namespace OneMainWeb.Utils
         {
             foreach (var key in Request.Cookies.AllKeys)
                 Response.Cookies[key].Expires = DateTime.Now.AddDays(-1);
-            OneSiteMapProvider.ReloadSiteMap();
             Label1.Text = "Cookies cleared at: " + DateTime.Now;
         } 
     }

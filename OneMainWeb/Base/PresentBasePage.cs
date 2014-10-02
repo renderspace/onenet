@@ -67,7 +67,6 @@ namespace OneMainWeb
 
         public PresentBasePage()
         {
-            log.Debug("-PresentBasePage() (start)");
             var websiteB = new BWebsite();
             CurrentPage = websiteB.GetPage(PageId);
             CurrentWebsite = websiteB.Get(CurrentPage.WebSiteId);
@@ -78,13 +77,11 @@ namespace OneMainWeb
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(int.Parse(SiteMap.CurrentNode["_languageId"]));
             }
             PublishFlag = ReadPublishFlag();
-            log.Debug("-PresentBasePage() (end)");
+            log.Debug("-PresentBasePage() contructor (end)");
         }
 
         protected override void Render(HtmlTextWriter writer)
         {
-            log.Debug("-Render (start)");
-
             var customBodyCode = "";
             var customHeadCode = "";
 
@@ -152,8 +149,6 @@ ga('create', '" + code + @"', 'auto');";
             {
                 base.Render(writer);
             }
-
-            log.Debug("+Render (end)");
         }
 
         protected void AddMetaTag(string name, string content)
@@ -355,7 +350,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
         protected override void OnLoadComplete(EventArgs e)
         {
-            log.Debug("-OnLoadComplete (start)");
             var providedDescription = "";
             var providedKeywords = "";
             var providedOgImage = "";
@@ -445,12 +439,10 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             }
 
             base.OnLoadComplete(e);
-            log.Debug("-OnLoadComplete (end)");
         }
 
         protected void RenderKeywords(string provided)
         {
-            log.Debug("-RenderKeywords (start)");
             var keywords = "";
             var webSiteKeywords = CurrentWebsite.GetSettingValue("MetaKeywords");
             var pageKeywords = CurrentPage.GetSettingValue("MetaKeywords");
@@ -461,7 +453,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             if (!string.IsNullOrWhiteSpace(provided))
                 keywords = provided;
             AddMetaTag("keywords", keywords);
-            log.Debug("-RenderKeywords (end)");
         }
 
         protected void RenderOgImage(string provided)

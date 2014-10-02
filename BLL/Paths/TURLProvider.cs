@@ -7,6 +7,7 @@ using UrlRewritingNet.Web;
 
 namespace One.Net.BLL
 {
+    /*
     public class TURLProvider : UrlRewritingProvider
     {
         public override RewriteRule CreateRewriteRule()
@@ -65,6 +66,6 @@ namespace One.Net.BLL
                 return "~/" + templatesPath + "/" + smn["_template"];
             }
             return url;
-        }
-    }
+        } 
+    } */
 }

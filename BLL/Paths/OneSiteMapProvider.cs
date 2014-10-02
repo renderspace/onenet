@@ -100,10 +100,6 @@ namespace One.Net.BLL
                             return null;
                         }
                     }
-                    /* EXPERIMENTAL
-                    var path = addedNode.Url.TrimStart('/');
-                    var template = "~/site_specific/aspx_templates/" + addedNode["_template"];
-                    RouteTable.Routes.MapPageRoute("Map" + page.Id.ToString(), path, template);*/
                 }
 
                 OCache.Add(_cacheDependencyName, new object(), null, Cache.NoAbsoluteExpiration, 
