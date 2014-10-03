@@ -25,33 +25,33 @@
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="$delete" />
+                            <asp:LinkButton CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:BoundField DataField="StartingPhysicalTable" HeaderText="$physical_table" />
+                    <asp:BoundField DataField="StartingPhysicalTable" HeaderText="Physical table" />
                     <asp:TemplateField HeaderText="Show">
                         <ItemTemplate>
                             <asp:CheckBox ID="CheckBoxShowOnMenu" runat="server" Checked='<%# Eval("ShowOnMenu") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="$name">
+                    <asp:TemplateField HeaderText="Friendly name">
                         <ItemTemplate>
                             <asp:TextBox ID="TextBoxFriendlyName" runat="server" Text='<%# Eval("FriendlyName") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="$where_condition" >
+                    <asp:TemplateField HeaderText="Where condition" >
                         <ItemTemplate>
                             <asp:TextBox ID="TextBoxWhereCondition" runat="server" Text='<%# Eval("Condition") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>  
-                    <asp:TemplateField HeaderText="$order_by">
+                    <asp:TemplateField HeaderText="Order by">
                         <ItemTemplate>
                             <asp:DropDownList runat="server" ID="DropDownListOrder" />
                         </ItemTemplate>
                     </asp:TemplateField>              
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:Button ID="CmdSelect" runat="server" Text="$edit_columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" />
+                            <asp:LinkButton ID="CmdSelect" runat="server" Text="Edit columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" CssClass="btn btn-info btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -68,62 +68,70 @@
 
         </asp:View>
         <asp:View runat="server" ID="View2">
-            <div class="physical_ListBox">
-                    <asp:ListBox ID="ListBoxPhysicalColumns" runat="server" DataTextField="Description" DataValueField="Name" Rows="15" >
-                    </asp:ListBox>
-                    <div class="add">
-                        <asp:Button ID="CmdAddAllColumns" runat="server" Text="$add_all_columns" OnClick="CmdAddAllColumns_Click" />
-                        <asp:Button ID="CmdAddColumn" runat="server" Text="$add_column" OnClick="CmdAddColumn_Click" />                    
-                    </div>                
-                </div>
-    
-                <div class="relationship_ListBox">
-                    <asp:ListBox ID="ListBoxOneToManyVirtualTables" AutoPostBack="true" OnSelectedIndexChanged="ListBoxOneToManyVirtualTables_SelectedIndexChanged" runat="server" DataTextField="Description" DataValueField="Id" Rows="8" />
-            
-                    <asp:ListBox ID="ListBoxRelationshipDisplayColumn" runat="server" DataTextField="Description" DataValueField="Name" />
-            
-                    <div class="add">
-                        <asp:Button ID="CmdAddRelationship" runat="server" Text="$add_relationship" OnClick="CmdAddRelationship_Click" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <asp:ListBox ID="ListBoxPhysicalColumns" runat="server" DataTextField="Description" DataValueField="Name" Rows="15" CssClass="form-control">
+                        </asp:ListBox>
+                        
                     </div>
+                    <div class="col-md-1">
+                        <p>
+                       <asp:LinkButton ID="CmdAddAllColumns" runat="server" Text="Add all columns" OnClick="CmdAddAllColumns_Click" CssClass="btn btn-info btn-xs" />
+                            </p>
+                        <p>
+                       <asp:LinkButton ID="CmdAddColumn" runat="server" Text="Add column" OnClick="CmdAddColumn_Click" CssClass="btn btn-success" />                  
+                        </p>
+                    </div>                
+                
+                
+                    <div class="col-md-3 col-md-offset-2">
+                        <asp:ListBox ID="ListBoxOneToManyVirtualTables" AutoPostBack="true" OnSelectedIndexChanged="ListBoxOneToManyVirtualTables_SelectedIndexChanged" runat="server" 
+                            CssClass="form-control"
+                            DataTextField="Description" DataValueField="Id" Rows="8" />
+                      
+            
+                    
+                        <asp:ListBox ID="ListBoxRelationshipDisplayColumn" runat="server" DataTextField="Description" DataValueField="Name" CssClass="form-control" />
+                    </div>
+                    <div class="col-md-1">
+                        <asp:LinkButton ID="CmdAddRelationship" runat="server" Text="Add relationship" OnClick="CmdAddRelationship_Click" CssClass="btn btn-success" />    
+                    </div>
+            
+                    
                 </div>
 
                 <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True"  CssClass="table table-hover"
                     AutoGenerateColumns="false" OnRowDeleting="GridViewItems_RowDeleting" OnRowDeleted="GridViewItems_RowDeleted" OnRowCommand="GridViewItems_RowCommand" OnRowDataBound="GridViewItems_RowDataBound">
                         <Columns>
                             <asp:BoundField HeaderText="Description" DataField="Description" />
-                            <asp:TemplateField HeaderText="$friendly_name">
+                            <asp:TemplateField HeaderText="Friendly name">
                                 <ItemTemplate>
                                     <asp:TextBox ID="TextBoxFriendlyName" runat="server" Text='<%# Eval("FriendlyName") %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="$show_on_list">
+                            <asp:TemplateField HeaderText="Show on list">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CheckBoxShowOnList" runat="server" Checked='<%# bool.Parse((string)Eval("ShowOnList")) %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>                    
-        <%--                    <asp:TemplateField HeaderText="DbType">
-                                <ItemTemplate>
-                                    <asp:DropDownList ID="DropDownListDbType" runat="server" />
-                                </ItemTemplate>
-                            </asp:TemplateField>--%>
                             <asp:BoundField HeaderText="Id" DataField="Id" />
-                            <asp:BoundField HeaderText="$column_type" DataField="ColumnType" /> 
+                            <asp:BoundField HeaderText="Column type" DataField="ColumnType" /> 
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="CmdDelete" runat="server" Text="$delete" CommandArgument='<%# Eval("Id") + "," + Eval("ColumnType") %>' CommandName="delete" />
+                                    <asp:LinkButton ID="CmdDelete" runat="server" Text="Delete" CommandArgument='<%# Eval("Id") + "," + Eval("ColumnType") %>' CommandName="delete" CssClass="btn btn-danger btn-xs" />
                                 </ItemTemplate>
                             </asp:TemplateField>                    
                         </Columns>
                 </asp:GridView>
                 <div class="buttonsMiddle">
-                    <asp:Button ID="CmdSaveColumnChanges" runat="server" Text="Save" OnClick="CmdSaveColumnChanges_Click" />
-                    <asp:Button ID="CmdCancelColumnChanges" runat="server" Text="Cancel" OnClick="CmdCancelColumnChanges_Click" />
+                    <asp:LinkButton ID="CmdSaveColumnChanges" runat="server" Text="Save" OnClick="CmdSaveColumnChanges_Click" CssClass="btn btn-success" />
+                    <asp:LinkButton ID="CmdCancelColumnChanges" runat="server" Text="Cancel" OnClick="CmdCancelColumnChanges_Click" CssClass="btn btn-info" />
                 </div>   
 
         </asp:View>
         <asp:View runat="server" ID="View3">
-            <asp:Label ID="Label1" runat="server" Text="$no_configuration_tables_found_do_you_want_to_create_them"></asp:Label>
-            <asp:Button ID="ButtonCreateTables" runat="server" Text="$create_config_tables" onclick="ButtonCreateTables_Click" />
+            <asp:Label ID="Label1" runat="server" Text="No configuration tables found. Do you want to create them?"></asp:Label>
+            <asp:LinkButton ID="ButtonCreateTables" runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Create config tables" onclick="ButtonCreateTables_Click" CssClass="btn btn-success" />	
 
         </asp:View>
     </asp:MultiView>

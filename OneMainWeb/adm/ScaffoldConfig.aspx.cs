@@ -274,11 +274,11 @@ namespace OneMainWeb.adm
         {
             foreach (GridViewRow row in GridViewVirtualTables.Rows)
             {
-                Button CmdDelete = row.FindControl("CmdDelete") as Button;
-                CheckBox CheckBoxShowOnMenu = row.FindControl("CheckBoxShowOnMenu") as CheckBox;
-                TextBox TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
-                TextBox TextBoxWhereCondition = row.FindControl("TextBoxWhereCondition") as TextBox;
-                DropDownList DropDownListOrder = row.FindControl("DropDownListOrder") as DropDownList;
+                var CmdDelete = row.FindControl("CmdDelete") as LinkButton;
+                var CheckBoxShowOnMenu = row.FindControl("CheckBoxShowOnMenu") as CheckBox;
+                var TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
+                var TextBoxWhereCondition = row.FindControl("TextBoxWhereCondition") as TextBox;
+                var DropDownListOrder = row.FindControl("DropDownListOrder") as DropDownList;
 
                 if (CmdDelete != null && CheckBoxShowOnMenu != null && TextBoxFriendlyName != null && TextBoxWhereCondition != null && DropDownListOrder != null)
                 {

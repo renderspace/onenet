@@ -109,7 +109,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdAddAllColumns;
+        protected global::System.Web.UI.WebControls.LinkButton CmdAddAllColumns;
         
         /// <summary>
         /// CmdAddColumn control.
@@ -118,7 +118,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdAddColumn;
+        protected global::System.Web.UI.WebControls.LinkButton CmdAddColumn;
         
         /// <summary>
         /// ListBoxOneToManyVirtualTables control.
@@ -145,7 +145,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdAddRelationship;
+        protected global::System.Web.UI.WebControls.LinkButton CmdAddRelationship;
         
         /// <summary>
         /// GridViewItems control.
@@ -163,7 +163,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdSaveColumnChanges;
+        protected global::System.Web.UI.WebControls.LinkButton CmdSaveColumnChanges;
         
         /// <summary>
         /// CmdCancelColumnChanges control.
@@ -172,7 +172,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CmdCancelColumnChanges;
+        protected global::System.Web.UI.WebControls.LinkButton CmdCancelColumnChanges;
         
         /// <summary>
         /// View3 control.
@@ -199,6 +199,6 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonCreateTables;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonCreateTables;
     }
 }

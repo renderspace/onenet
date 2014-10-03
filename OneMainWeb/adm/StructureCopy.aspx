@@ -35,7 +35,7 @@
                                     </div>
 
                                     <div class="col-sm-8">
-					                   <asp:Button ID="ButtonCopy" runat="server" text="$copy_pages_to_site" OnClick="ButtonCopy_Click" />
+					                   <asp:Button ID="ButtonCopy" runat="server" text="Copy pages to site" OnClick="ButtonCopy_Click" />
                                     </div>
 				                </div>
                             </div>
