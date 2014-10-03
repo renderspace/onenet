@@ -11,7 +11,7 @@ using System.Web.SessionState;
 
 //using MsSqlDBUtility;
 using System.Web.Configuration;
-using log4net;
+using NLog;
 
 using System.Web.Routing;
 using System.ServiceModel.Activation;
@@ -51,8 +51,7 @@ namespace OneMainWeb
            * Application_EndRequest
        Application_Disposed and Application_End 
        */
-        private readonly ILog log = LogManager.GetLogger("Global");
-        //		private static string LOG_SOURCE = ConfigurationManager.AppSettings["Event Log Source"];
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public static IHttpModule Module = new RedirectModule();
 
@@ -64,7 +63,6 @@ namespace OneMainWeb
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            log4net.Config.XmlConfigurator.Configure();
             Version version = this.GetType().BaseType.Assembly.GetName().Version;
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
 
@@ -136,7 +134,8 @@ namespace OneMainWeb
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();
-                if (!(req.Contains("_images") || req.Contains("_files") || req.Contains("/Scripts") || req.Contains("/JavaScript")))
+                //if (!(req.Contains("_images") || req.Contains("_files") || req.Contains("/Scripts") || req.Contains("/JavaScript")))
+                if (req.Contains(".aspx"))
                 {
                     log.Debug("BeginRequest " + req + " / UserAgent: " + Request.UserAgent);
                 }
@@ -148,7 +147,7 @@ namespace OneMainWeb
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();
-                if (!(req.Contains("_images") || req.Contains("_files") || req.Contains("/Scripts") || req.Contains("/JavaScript")))
+                if (req.Contains(".aspx"))
                 {
                     log.Debug("EndRequest " + req);
                 }

@@ -7,7 +7,7 @@ using System.Web;
 using System;
 
 using System.Diagnostics;
-using log4net;
+using NLog;
 
 namespace OneMainWeb.Controls
 {
@@ -15,7 +15,7 @@ namespace OneMainWeb.Controls
     [ToolboxData("<{0}:BreadCrumb runat=server></{0}:BreadCrumb>")]
     public class BreadCrumb : WebControl, INamingContainer
     {
-        private readonly ILog log = LogManager.GetLogger("OneMainWeb.Controls.MenuGroup");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         private bool controlsAdded = false;
 

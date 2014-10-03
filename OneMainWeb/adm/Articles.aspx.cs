@@ -35,6 +35,7 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            log.Debug("Articles Page_Load");
             if (SelectedWebsite == null)
             {
                 Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
@@ -156,6 +157,7 @@ namespace OneMainWeb
                     InsertUpdateCloseButton.Text = "Save & Close";
                 }
             }
+            log.Debug("Articles Multiview1_ActiveViewChanged (end)");
         }
 
         protected void GridViewArticles_SelectedIndexChanged(object sender, EventArgs e)

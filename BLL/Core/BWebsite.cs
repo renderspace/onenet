@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using log4net;
+using NLog;
 using One.Net.BLL.DAL;
 using One.Net.BLL.Utility;
 using System.Threading;
@@ -23,9 +23,9 @@ namespace One.Net.BLL
     [Serializable]
     public class BWebsite : BusinessBaseClass
     {
-        public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
-        protected new static readonly ILog log = LogManager.GetLogger(typeof(BWebsite));
+        public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
         static readonly DbWebsite webSiteDb = new DbWebsite();
         readonly BInternalContent intContentB = new BInternalContent();
         readonly BContent contentB = new BContent();

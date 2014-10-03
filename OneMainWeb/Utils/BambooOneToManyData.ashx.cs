@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Web;
 using System.Web.Services;
-using log4net;
+using NLog;
 using Newtonsoft.Json;
 using One.Net.BLL.Scaffold;
 
@@ -18,7 +18,7 @@ namespace OneMainWeb.Utils
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class BambooOneToManyData : IHttpHandler
     {
-        static readonly ILog log = LogManager.GetLogger(typeof(BambooOneToManyData));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public void ProcessRequest(HttpContext context)
         {

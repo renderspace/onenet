@@ -7,7 +7,7 @@ using System.Web;
 using System;
 
 using System.Diagnostics;
-using log4net;
+using NLog;
 
 namespace OneMainWeb.Controls
 {
@@ -31,7 +31,7 @@ namespace OneMainWeb.Controls
     [ToolboxData("<{0}:MenuGroup runat=server></{0}:MenuGroup>")]
     public class MenuGroup : WebControl, INamingContainer // HierarchicalDataBoundControl
     {
-        private readonly ILog log = LogManager.GetLogger("OneMainWeb.Controls.MenuGroup");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         private bool controlsAdded = false;
 

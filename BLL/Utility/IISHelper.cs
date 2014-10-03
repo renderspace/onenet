@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using log4net;
+using NLog;
 using Microsoft.Web.Administration;
 
 namespace One.Net.BLL.Utility
 {
     public class IISHelper
     {
-        protected static readonly ILog log = LogManager.GetLogger(typeof(IISHelper));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public static void CreateWebSite(ServerManager sm, string siteName, string poolName, string hostHeaders, string physicalPath)
         {

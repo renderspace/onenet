@@ -8,13 +8,15 @@ using System.IO;
 using System.Web;
 using System.Web.Hosting;
 using System.Configuration;
-using log4net;
+using NLog;
 
 namespace One.Net.BLL
 {
 
     public class TImageHandler : IHttpHandler
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         private const int DEFAULT_QUALITY = 80;
 
         private const string CACHE_ID = "TIH";
@@ -36,8 +38,6 @@ namespace One.Net.BLL
         private const int chunkSize = 65536;
 
         private static readonly object _lock = new object();
-
-        public static readonly ILog log = LogManager.GetLogger("TImageHandler");
 
         enum AnchorPosition
         {

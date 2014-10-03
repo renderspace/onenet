@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
-using log4net;
+using NLog;
 using One.Net.BLL.DAL;
 
 namespace One.Net.BLL
@@ -10,7 +10,7 @@ namespace One.Net.BLL
     [Serializable]
     public abstract class BusinessBaseClass
     {
-        protected static readonly ILog log = LogManager.GetLogger(typeof(BusinessBaseClass));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
         protected static readonly DbContent contentDb = new DbContent();
 
         protected virtual int LanguageId { get { return Thread.CurrentThread.CurrentCulture.LCID; } }

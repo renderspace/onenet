@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
+using NLog;
 using System.Web;
 using One.Net.BLL.Utility;
 
@@ -10,7 +10,8 @@ namespace One.Net.BLL
 {
     public class RedirectModule : IHttpModule
     {
-        protected static readonly ILog log = LogManager.GetLogger("RedirectHandler");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         public string ModuleName { get { return "RedirectHandler"; } }
 
         public void Init(HttpApplication application)

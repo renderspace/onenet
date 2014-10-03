@@ -8,7 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Routing;
-using log4net;
+using NLog;
 using One.Net.BLL.DAL;
 
 
@@ -20,6 +20,8 @@ namespace One.Net.BLL
 {
     public class OneSiteMapProvider : StaticSiteMapProvider
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         private static DbWebsite webSiteDb;
         private readonly object _lock = new object();
         private const string _cacheDependencyName = "__OneSiteMapCacheDependency";
@@ -29,8 +31,6 @@ namespace One.Net.BLL
         private Dictionary<int, SiteMapNode> _nodes = new Dictionary<int, SiteMapNode>(64);
 
         private static int webSiteID;
-
-        protected static readonly ILog log = LogManager.GetLogger(typeof(OneSiteMapProvider));
 
         protected bool publishFlag = false;
 

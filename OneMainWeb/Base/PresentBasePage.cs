@@ -20,16 +20,17 @@ using One.Net.BLL.Model;
 using One.Net.BLL.WebConfig;
 using OneMainWeb.Base;
 using One.Net.BLL.Utility;
+using NLog;
 
 
 namespace OneMainWeb
 {
     public class PresentBasePage : Page
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         protected BWebsite websiteB;
         private readonly string customModulesFolder;        
-
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("PresentBasePage");
 
         private readonly List<MModule> activeModules = new List<MModule>();
         private readonly List<BOIntContImage> imagesOnThisPage = new List<BOIntContImage>();

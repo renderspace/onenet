@@ -5,7 +5,7 @@ using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Hosting;
-using log4net;
+using NLog;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Configuration;
@@ -16,12 +16,12 @@ namespace One.Net.BLL
     [AspNetHostingPermission(SecurityAction.InheritanceDemand, Level = AspNetHostingPermissionLevel.High)]
     public class TByNumberPathProvider : VirtualPathProvider
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         private const string prefix = "~/_files";
         // string below is also used (copied) to BOInternalContent. If you change it here, make sure, you change it there, too.
         public const string fileMatcher = prefix + @"/([0-9]{1,6})/([a-zA-Z0-9čćðšž_\-\s\!]{1,255}\.[a-zA-Z0-9_]{2,5})";
         private const string pathMatcher = prefix + @"/([0-9]{1,6})/";
-
-        public static readonly ILog log = LogManager.GetLogger("TByNumberPathProvider");
 
         public TByNumberPathProvider()
         {

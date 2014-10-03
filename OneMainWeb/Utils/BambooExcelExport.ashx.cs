@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Services;
-using log4net;
+using NLog;
 using One.Net.BLL;
 using One.Net.BLL.Scaffold;
 
@@ -16,7 +16,7 @@ namespace OneMainWeb.Utils
     /// </summary>
     public class BambooExcelExport : IHttpHandler
     {
-        static readonly ILog log = LogManager.GetLogger(typeof(BambooExcelExport));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public void ProcessRequest(HttpContext context)
         {
