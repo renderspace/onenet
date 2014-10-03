@@ -33,11 +33,14 @@ namespace OneMainWeb
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
-                routes.MapPageRoute("Root", "", "~/site_specific/aspx_templates/" + node["_template"]);
-                var i = 0;
-                foreach (SiteMapNode n in node.GetAllNodes())
+                if (node != null)
                 {
-                    routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/'), "~/site_specific/aspx_templates/" + n["_template"]);
+                    routes.MapPageRoute("Root", "", "~/site_specific/aspx_templates/" + node["_template"]);
+                    var i = 0;
+                    foreach (SiteMapNode n in node.GetAllNodes())
+                    {
+                        routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/'), "~/site_specific/aspx_templates/" + n["_template"]);
+                    }
                 }
             }
         }

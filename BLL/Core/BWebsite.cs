@@ -999,8 +999,12 @@ namespace One.Net.BLL
                     using (SqlTransaction tr = conn.BeginTransaction())
                     {
                         SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "CREATE USER " + newUsername + " FOR LOGIN " + newUsername + "");
+
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "EXECUTE sp_addrolemember  [One.Net.FrontEnd], " + newUsername + "");
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "EXECUTE sp_addrolemember  [One.Net.BackEnd], " + newUsername + "");
+                        /*
                         SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.FrontEnd] ADD MEMBER  " + newUsername + "");
-                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.BackEnd] ADD MEMBER  " + newUsername + "");
+                        SqlHelper.ExecuteNonQuery(tr, CommandType.Text, "ALTER ROLE [One.Net.BackEnd] ADD MEMBER  " + newUsername + ""); */
                         tr.Commit();
                         return true;
                     }
