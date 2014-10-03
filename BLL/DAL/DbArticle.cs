@@ -4,14 +4,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using MsSqlDBUtility;
-using log4net;
+using NLog;
 
 
 namespace One.Net.BLL.DAL
 {
     public class DbArticle
     {
-        protected static readonly ILog log = LogManager.GetLogger(typeof(DbArticle));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public const string REGULAR_SELECT_PART =
             DbHelper.CONTENT_SELECT_PART + @" r.content_fk_id, r.id, (SELECT Count(article_fk_id) FROM regular_has_articles WHERE regular_fk_id=r.id AND article_fk_publish=@publishFlag) ArticleCount

@@ -5,7 +5,7 @@ using System.IO;
 using System.Net.Mail;
 using System.Text;
 using System.Transactions;
-using log4net;
+using NLog;
 using One.Net.BLL.DAL;
 using One.Net.BLL.Forms;
 
@@ -13,10 +13,11 @@ namespace One.Net.BLL
 {
     public class BForm
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         private static readonly DbForm formsDb = new DbForm();
         private static readonly BInternalContent contentB = new BInternalContent();
         private static readonly BFileSystem fileB = new BFileSystem();
-        private static readonly ILog log = LogManager.GetLogger("BForm");
 
         /// <summary>
         /// Change method, used to change form structure and underlying detail.

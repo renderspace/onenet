@@ -51,16 +51,6 @@ namespace OneMainWeb.Controls
                 ViewState["Complex"] = value;
             }
         }
-        /*
-        protected override void RenderContents(HtmlTextWriter output)
-        {
-            output.Write(Text);
-        }*/
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
 
         protected override void Render(HtmlTextWriter output)
         {

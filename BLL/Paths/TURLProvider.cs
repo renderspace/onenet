@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 using System.Web;
-using log4net;
+using NLog;
 using UrlRewritingNet.Configuration.Provider;
 using UrlRewritingNet.Web;
 

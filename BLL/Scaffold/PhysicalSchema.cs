@@ -14,11 +14,17 @@ namespace One.Net.BLL.Scaffold
 {
     public class PhysicalSchema
     {
+        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(PhysicalSchema));
+
         public static bool CheckDatabaseConfiguration()
         {
             // check if we have connection string
-            if (String.IsNullOrEmpty(Schema.ConnectionString))
+            if (String.IsNullOrEmpty(Schema.ConnectionString) || Schema.ConnectionString.Length < 20)
+            {
+                log.Info("CheckDatabaseConfiguration: no database connection string or string is too short to be viable.");
                 return false;
+            }
+                
 
             List<VirtualTable> physicalTables = null;
 

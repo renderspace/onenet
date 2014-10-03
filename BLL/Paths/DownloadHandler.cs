@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +12,7 @@ namespace One.Net.BLL.Paths
 {
     public class DownloadHandler : IHttpHandler
     {
-        public static readonly ILog log = LogManager.GetLogger("DownloadHandler");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         private bool IsDownload = false;
 

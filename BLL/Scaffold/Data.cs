@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using log4net;
+using NLog;
 using MsSqlDBUtility;
 using System.Threading;
 using One.Net.BLL.Web;
@@ -16,8 +16,9 @@ namespace One.Net.BLL.Scaffold
 {
     public static class Data
     {
+        static Logger log = LogManager.GetCurrentClassLogger();
+
         static readonly BInternalContent intContentB = new BInternalContent();
-        static readonly ILog log = LogManager.GetLogger(typeof(Data));
 
         public static DataTable ListItems(int virtualTableId, ListingState state)
         {

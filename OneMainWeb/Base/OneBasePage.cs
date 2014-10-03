@@ -21,13 +21,14 @@ using Microsoft.AspNet.Identity;
 using OneMainWeb.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.adm;
+using NLog;
 
 
 namespace OneMainWeb
 {
     public abstract class OneBasePage : System.Web.UI.Page
     {
-        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(OneBasePage));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
@@ -83,7 +84,8 @@ namespace OneMainWeb
         {
 
             authorizationHelper = new AuthorizationHelper(Context);
-            bool.TryParse(ConfigurationManager.AppSettings["EnableXHTMLValidator"], out EnableXHTMLValidator);        
+            bool.TryParse(ConfigurationManager.AppSettings["EnableXHTMLValidator"], out EnableXHTMLValidator);
+            log.Debug("OneBasePage() contructor (end)");
         }
 
         protected BOWebSite SelectedWebsite

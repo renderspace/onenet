@@ -21,12 +21,13 @@ using System.Net;
 using One.Net.BLL.Utility;
 using OneMainWeb.adm;
 using System.Web.Routing;
+using NLog;
 
 namespace OneMainWeb
 {
     public partial class OneMain : System.Web.UI.MasterPage
     {
-        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(OneMain));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         protected Version version;
 

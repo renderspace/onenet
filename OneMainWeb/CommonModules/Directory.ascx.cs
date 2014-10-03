@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using log4net;
+using NLog;
 using One.Net.BLL;
 
 using One.Net.BLL.Web;
@@ -24,7 +24,7 @@ namespace OneMainWeb.CommonModules
         public bool ShowCurrentPage { get { return GetBooleanSetting("ShowCurrentPage"); } }
         public List<int> ExcludeMenuGroupsList { get { return GetIntegerListSetting("ExcludeMenuGroupsList"); } }
 
-        private readonly ILog log = LogManager.GetLogger("OneMainWeb.CommonModules.Directory");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         protected override void CreateChildControls()
         {

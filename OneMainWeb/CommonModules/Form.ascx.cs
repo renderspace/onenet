@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Utility;
+using NLog;
 
 namespace OneMainWeb.CommonModules
 {
@@ -35,13 +36,10 @@ namespace OneMainWeb.CommonModules
     /// </summary>
     public partial class Form : MModule, INamingContainer
     {
-        #region Variables
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         private static readonly Random random = new Random();
         protected static BForm formB = new BForm();
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger("BForm");
-
-        #endregion Variables
 
         #region Settings
 

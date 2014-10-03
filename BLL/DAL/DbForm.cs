@@ -5,13 +5,13 @@ using System.Data.SqlClient;
 using MsSqlDBUtility;
 using One.Net.BLL.Forms;
 using System.Threading;
-using log4net;
+using NLog;
 
 namespace One.Net.BLL.DAL
 {
     public class DbForm 
     {
-        private static readonly ILog log = LogManager.GetLogger("DbForm");
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public void Change(BOForm form)
         {

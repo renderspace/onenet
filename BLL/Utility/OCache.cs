@@ -3,13 +3,15 @@ using System.Collections;
 using System.Threading;
 using System.Web;
 using System.Web.Caching;
-using log4net;
+using NLog;
 using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
     public class OCache
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         public const int Day = 17280;
 		public const int Hour = 720;
 		public const int Minute = 12;
@@ -17,7 +19,6 @@ namespace One.Net.BLL
 
         private static readonly Cache _cache;
         private static HttpRuntime _httpRuntime;
-        protected static readonly ILog log = LogManager.GetLogger(typeof(OCache));
         
         /// <summary>
         /// Static initializer should ensure we only have to look up the current cache

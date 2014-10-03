@@ -9,14 +9,14 @@ using One.Net.BLL.Web;
 using System.Net;
 using System.Xml;
 
-using log4net;
+using NLog;
 using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class NajdiSearch : MModule
     {
-        protected static readonly ILog log = LogManager.GetLogger(typeof(NajdiSearch));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         protected string SearchUri { get { return GetStringSetting("SearchUri"); } }
         protected string SearchDomain { get { return GetStringSetting("SearchDomain"); } }
