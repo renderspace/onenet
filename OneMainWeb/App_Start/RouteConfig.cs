@@ -20,15 +20,21 @@ namespace OneMainWeb
             routes.EnableFriendlyUrls(settings);
         } */
 
+        private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
+        private static readonly ServiceRoute AdminService = new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService));
+
         public static void ReloadRoutes(RouteCollection routes)
         {
             var node = SiteMap.Provider.RootNode;
-
+            
             using (routes.GetWriteLock())
             {
                 routes.Clear();
-                routes.Add(new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService)));
-                routes.Add(new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService)));
+                if (!PresentBasePage.ReadPublishFlag())
+                {
+                    routes.Add(FormService);
+                    routes.Add(AdminService);
+                }
                 routes.Add(new Route("sitemap.xml", new HttpHandlerRoute("~/Utils/SiteMapHandler.ashx")));
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));

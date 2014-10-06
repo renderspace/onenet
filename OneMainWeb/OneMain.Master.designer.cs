@@ -85,13 +85,22 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.ScaffoldVirtualTableList VirtualTableList1;
         
         /// <summary>
-        /// Button1 control.
+        /// HyperLinkPreview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Button1;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkPreview;
+        
+        /// <summary>
+        /// HyperLinkProduction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLinkProduction;
         
         /// <summary>
         /// MainContent control.
