@@ -144,7 +144,7 @@ namespace OneMainWeb
             if (!IsPostBack)
             {
                 var webSiteList = authorizationHelper.ListAllowedWebsites();
-
+                BOWebSite selectedWebsite = null;
                 bool webSiteIsSelected = false;
                 foreach (BOWebSite webSite in webSiteList)
                 {
@@ -152,6 +152,7 @@ namespace OneMainWeb
                     if (SelectedWebSiteId == webSite.Id)
                     {
                         DDListItem.Selected = webSiteIsSelected = true;
+                        selectedWebsite = webSite;
                     }
                     DropDownListWebSiteCombined.Items.Add(DDListItem);
                 }
@@ -169,13 +170,33 @@ namespace OneMainWeb
                     }
                     else
                     {
-                        SelectedWebSiteId = webSiteList.First().Id;
+                        selectedWebsite = webSiteList.First();
+                        SelectedWebSiteId = selectedWebsite.Id;
+                        webSiteIsSelected = true;
                     }
                 }
                 Menu1.Visible = MainContent.Visible = !PresentBasePage.ReadPublishFlag();
                 VirtualTableList1.Visible = false;
                 if (MainContent.Visible  && (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin")))
                     VirtualTableList1.Visible = true;
+
+                HyperLinkProduction.Visible = HyperLinkPreview.Visible = false;
+                if (webSiteIsSelected)
+                {
+                    if (selectedWebsite.PreviewUrl.StartsWith("http"))
+                    {
+                        HyperLinkPreview.NavigateUrl = selectedWebsite.PreviewUrl + "/Utils/Clear.aspx";
+                        HyperLinkPreview.Visible = true;
+                    }
+                    if (selectedWebsite.ProductionUrl.StartsWith("http"))
+                    {
+                        HyperLinkProduction.NavigateUrl = selectedWebsite.ProductionUrl + "/Utils/Clear.aspx";
+                        HyperLinkProduction.Visible = true;
+                    } 
+                }
+
+
+                    
             }
         }
 
@@ -205,13 +226,6 @@ namespace OneMainWeb
                     throw new Exception("Looks like infite redirect. Please refresh page");
                 }
             }
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            OCache.Clear();
-            OneSiteMapProvider.ReloadSiteMap();
-            RouteConfig.ReloadRoutes(RouteTable.Routes);
         }
     }
 }
