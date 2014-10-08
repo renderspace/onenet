@@ -178,7 +178,7 @@ namespace OneMainWeb.adm
 
         protected void GridViewVirtualTables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var CmdSelect = GridViewVirtualTables.SelectedRow.FindControl("CmdSelect") as Button;
+            var CmdSelect = GridViewVirtualTables.SelectedRow.FindControl("CmdSelect") as IButtonControl;
             if (CmdSelect != null)
             {
                 SelectedVirtualTableId = Int32.Parse(CmdSelect.CommandArgument.ToString());
