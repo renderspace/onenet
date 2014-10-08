@@ -595,12 +595,12 @@ namespace One.Net.BLL.DAL
 
         public void ChangePlaceHolder(BOPlaceHolder placeHolder)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[2];
+            var paramsToPass = new SqlParameter[4];
 
             paramsToPass[0] = (placeHolder.Id.HasValue ? new SqlParameter("@Id", placeHolder.Id) : new SqlParameter("@Id", DBNull.Value));
             paramsToPass[1] = new SqlParameter("@PId", placeHolder.Name);
-            paramsToPass[1] = new SqlParameter("@Class", placeHolder.Name);
-            paramsToPass[1] = new SqlParameter("@Type", "0");
+            paramsToPass[2] = new SqlParameter("@Class", placeHolder.Name);
+            paramsToPass[3] = new SqlParameter("@Type", "0");
 
             string sql;
             if (placeHolder.Id.HasValue)
