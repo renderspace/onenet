@@ -8,11 +8,6 @@ namespace OneMainWeb.Utils
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                Button1.Text = "Clear cache";
-                Button2.Text = "Clear cookies";
-            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)

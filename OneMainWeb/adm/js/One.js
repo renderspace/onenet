@@ -1,6 +1,6 @@
 function trace(msg) {
     if (typeof tracing == 'undefined' || !tracing) return;
-    try { console.log(msg); } catch (ex) { }
+    try { trace(msg); } catch (ex) { }
 }
 
 function logError(XMLHttpRequest, textStatus, errorThrown) {
@@ -10,7 +10,7 @@ function logError(XMLHttpRequest, textStatus, errorThrown) {
 }
 
 $('.ckeditor4').each(function (index) {
-    console.log("CKEDITOR " + index + ": " + this.id);
+    trace("CKEDITOR " + index + ": " + this.id);
     CKEDITOR.replace(this.id, {
         customConfig: '',
         entities_greek: false,
@@ -147,7 +147,7 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-				//console.log(item);
+				//trace(item);
                 $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
                     item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name +
                     '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-id="' + item.Id +
@@ -221,7 +221,7 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
 
 
 $('#text-content-modal a.btn-success').on('click', function (e) {
-    console.log("mijav");
+    trace("mijav");
     var content = new Object();
     content['Title'] = $("#content-title").val();
     content['Subtitle'] = $("#content-subtitle").val();
@@ -240,7 +240,7 @@ $('#text-content-modal a.btn-success').on('click', function (e) {
                 $('#text-content-modal').modal('hide');
             }
             else {
-                console.log("data:" + data);
+                trace("data:" + data);
             }
         }
     });
@@ -301,11 +301,11 @@ $(document).ready(function () {
     $("#form1").validate({
         onsubmit: false,
         highlight: function (element) {
-            console.log('highlight');
+            trace('highlight');
             $(element).closest('.form-group').addClass('has-error');
         },
         unhighlight: function (element) {
-            console.log('unhighlight');
+            trace('unhighlight');
             $(element).closest('.form-group').removeClass('has-error');
         },
         errorElement: 'span',
@@ -325,7 +325,7 @@ $(document).ready(function () {
             // one in which the enter key was pressed.
             var $nextInput = $(this).nextAll(':input:first');
             var $nextLinkButton = $(this).nextAll('a:first');
-            console.log($nextLinkButton);
+            trace($nextLinkButton);
             // If the next input is a submit button, go into validation.
             // Else, focus the next form element as if enter == tab.
             if ($nextLinkButton.is('.causesValidation')) {
@@ -344,7 +344,7 @@ $(document).ready(function () {
 });
 
 function Validate(evt) {
-    console.log('Validate evt');
+    trace('Validate evt');
     var $group = $(this).parents('.validationGroup');
     var isValid = true;
     $group.find(':input').each(function (i, item) {

@@ -10,8 +10,8 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Button2" />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" />
+            <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Clear cookies" />
             <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
         </div>
     </form>
