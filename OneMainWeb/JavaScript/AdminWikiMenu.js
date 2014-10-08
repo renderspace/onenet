@@ -45,7 +45,7 @@ function saveCkeditorData(instance, moduleInstanceId, pageIdd) {
     newData = instance.getData();
     if (newData !== savedData) {
         savedData = newData;
-        console.log('saveCkeditorData new data on mi: ' + moduleInstanceId);
+        trace('saveCkeditorData new data on mi: ' + moduleInstanceId);
 
         $.ajax({
             type: "POST",
