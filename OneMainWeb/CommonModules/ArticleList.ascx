@@ -3,7 +3,7 @@
 <h2 runat="server" id="H2ModuleTitle" noid="True" visible="false"></h2>
 <asp:Repeater runat="server" ID="RepeaterArticles" OnItemDataBound="RepeaterArticles_ItemDataBound">
     <ItemTemplate>
-		<article id="HtmlArticle" runat="server">
+		<article id="HtmlArticle" runat="server" noid="True">
 			<header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
 			    <h3 class="entry-title" id="H1Title" runat="server" noid="True"><a href="<%# RenderLink(Eval("Id"))  %>"><%# Eval("Title") %></a></h3>
