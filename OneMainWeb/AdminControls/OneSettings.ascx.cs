@@ -201,7 +201,7 @@ namespace OneMainWeb.AdminControls
                                     }
                                 case "Url":
                                     {
-                                        TextBox1.CssClass = "form-control url";
+                                        TextBox1.CssClass = "form-control absrelurl";
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
                                         break;

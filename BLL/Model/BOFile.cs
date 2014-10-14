@@ -8,15 +8,7 @@ namespace One.Net.BLL
 	[Serializable]
     public class BOFile : ICategorizable
     {
-        #region Constants
-
         public const string FOLDER_CATEGORIZATION_TYPE = "tree_file_folder";
-
-        #endregion Constants
-
-        #region Variables
-
-        #endregion Variables
 
         #region Properties
 

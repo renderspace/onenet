@@ -297,6 +297,11 @@ if (CheckboxNewDatabase.length > 0) {
 VALIDATION
 */
 
+$.validator.addMethod("absrelurl", function (value, element) {
+    trace("absrelurl");
+    return this.optional(element) || /(http:\/)?(\/[\w\.\-]+)+\/?/.test(value);
+}, "Please enter valid URL");
+
 $(document).ready(function () {
     $("#form1").validate({
         onsubmit: false,
