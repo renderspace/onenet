@@ -12,57 +12,53 @@ namespace One.Net.BLL
     [Serializable]
     public class BOImageTemplate : BOTemplate
     {
-        private int? imagePopupWidth;
-        private int? imagePopupHeight;
-
-        private int? width;
-        private int? max;
-
-        private bool isLightBox, enableCaption;
-        private bool enableImageLink;
         private string bgColor;
 
-        public string BgColor 
+        public string BgColor
         {
             get { return bgColor; }
             set { bgColor = value; }
         }
 
-        public int? Width
+        private int width;
+
+        public int Width
         {
             get { return width; }
             set { width = value; }
         }
 
-        public int? Max
+        private int max;
+
+        public int Max
         {
             get { return max; }
             set { max = value; }
         }
+        
 
-        private int? height;
+        private int height;
 
-        public int? Height
+        public int Height
         {
             get { return height; }
             set { height = value; }
         }
 
-        private int? quality;
-        public int? Quality 
+        private int quality;
+        public int Quality
         {
             get { return quality; }
             set { quality = value; }
         }
 
-        private int? overlayImageId;
+        private int overlayImageId;
 
-        public int? OverlayImageId
+        public int OverlayImageId
         {
             get { return overlayImageId; }
             set { overlayImageId = value; }
         }
-
 
         private int overlayMode;
 
@@ -72,54 +68,13 @@ namespace One.Net.BLL
             set { overlayMode = value; }
         }
 
+        private bool aspectRatioSize;
 
-        public int? ImagePopupWidth
+        public bool AspectRatioSize
         {
-            get { return imagePopupWidth; }
-            set { imagePopupWidth = value; }
+            get { return aspectRatioSize; }
+            set { aspectRatioSize = value; }
         }
-
-        public int? ImagePopupHeight
-        {
-            get { return imagePopupHeight; }
-            set { imagePopupHeight = value; }
-        }
-
-        public bool EnableImagePopup
-        {
-            get { return !IsLightBox && ImagePopupHeight.HasValue && ImagePopupHeight.Value > 0 && ImagePopupWidth.HasValue && ImagePopupWidth.Value > 0; }
-        }
-
-        public bool IsLightBox
-        {
-            get
-            {
-                return isLightBox /*&& ImagePopupHeight.HasValue && 
-                    ImagePopupHeight.Value > 0 && ImagePopupWidth.HasValue && ImagePopupWidth.Value > 0*/;
-            }
-            set { isLightBox = value; }
-        }
-
-        public bool EnableImageLink
-        {
-            get
-            {
-                return enableImageLink;
-            }
-            set { enableImageLink = value; }
-        }
-
-        public bool EnableCaption 
-        {
-            get
-            {
-                return enableCaption;
-            }
-            set { enableCaption = value; }
-        }
-
-        private bool aspectRatioSize = false;
-        public bool AspectRatioSize { get { return aspectRatioSize; } set { aspectRatioSize = value;  } }
 
         [NonSerialized]
         readonly LoosyFormatter serializer = new LoosyFormatter();
@@ -146,19 +101,8 @@ namespace One.Net.BLL
             return "?" + string.Join("&", pairs);
         }
 
-        public string RenderHtml(int w, int h, string alt, string link, string cssClass)
+        public string RenderImageLink(string link)
         {
-            return RenderHtml(w, h, 0, alt, link, cssClass, "");
-        }
-
-        public string RenderHtml(int w, int h, int max, string alt, string link, string cssClass)
-        { 
-            return RenderHtml(w, h, max, alt, link, cssClass, "");
-        }
-
-        public string RenderHtml(int w, int h, int max, string alt, string link, string cssClass, string rel)
-        {
-            string extraAttributes = "";
             string linkWithoutQuery = link;
 
             int querySeparatorOccurance = link.IndexOf("?");
@@ -182,86 +126,45 @@ namespace One.Net.BLL
                     }
                 }
             }
-
-            if (w > 0)
-                queryString["w"] = w.ToString();
-            if (h > 0)
-                queryString["h"] = h.ToString();
-            if (max > 0)
-                queryString["m"] = max.ToString();
-
-            if (this.Width.HasValue && this.Width > 0)
+            if (this.Width > 0)
                 queryString["w"] = this.Width.ToString();
-            if (this.Height.HasValue && this.Height > 0)
+            if (this.Height > 0)
                 queryString["h"] = this.Height.ToString();
-            if (this.Max.HasValue && this.Max > 0)
+            if (this.Max > 0)
                 queryString["m"] = this.Max.ToString();
-
             if (this.AspectRatioSize)
                 queryString["ars"] = "1";
-
             if (!string.IsNullOrEmpty(BgColor))
                 queryString["c"] = BgColor;
+            if (Quality > 0 && Quality <= 100)
+                queryString["q"] = Quality.ToString();
 
-            if (Quality.HasValue && Quality.Value > 0 && Quality.Value <= 100)
-                queryString["q"] = Quality.Value.ToString();
-
-
-            if (FormatTool.GetInteger(queryString.Get("w")) > 0 && !AspectRatioSize)
-                extraAttributes += " width=\"" + queryString["w"] + "\"";
-            if (FormatTool.GetInteger(queryString.Get("h")) > 0 && !AspectRatioSize)
-                extraAttributes += " height=\"" + queryString["h"] + "\"";
-
-            if (this.OverlayImageId.HasValue && this.OverlayImageId > 0)
+            if (this.OverlayImageId > 0)
             {
                 queryString["o"] = OverlayImageId.ToString();
                 queryString["om"] = OverlayMode.ToString();
             }
+            return linkWithoutQuery + EncodeQueryString(queryString);
+        }
 
-            string result = "<img src=\"" + linkWithoutQuery + EncodeQueryString(queryString) + "\" " + extraAttributes;
-            result += (!string.IsNullOrEmpty(alt) && !string.IsNullOrEmpty(alt.Trim())) ?
+
+        public string RenderHtml(string alt, string link, string cssClass, string rel = "")
+        {
+            string result = "<img src=\"" + RenderImageLink(link) + "\" " + (!string.IsNullOrWhiteSpace(rel) ? ("rel=\"" + rel + "\"") : "");
+            result += (!string.IsNullOrEmpty(alt.Trim())) ?
                             (" alt=\"" + HttpUtility.HtmlEncode(alt) + "\"" +
                             " title=\"" + HttpUtility.HtmlEncode(alt)) + "\"" : "";
-            result += " class=\"" + cssClass + "\" />";
-
-            if (IsLightBox)
-            {
-                NameValueCollection lightBoxQueryString = new NameValueCollection();
-                if (ImagePopupWidth > 0)
-                    lightBoxQueryString["w"] = ImagePopupWidth.ToString();
-
-                result = "<a rel=\"lightbox\" href = \"" + linkWithoutQuery + EncodeQueryString(lightBoxQueryString) +
-                        "\" title=\"" + HttpUtility.HtmlEncode(alt) + "\">" + result + "</a>";
-            }
-            else if (EnableImagePopup)
-            {
-                NameValueCollection popUpQueryString = new NameValueCollection();
-                popUpQueryString["w"] = (ImagePopupWidth - 20).ToString();
-
-                result = "<a href = \"javascript:void window.open('" + linkWithoutQuery + EncodeQueryString(popUpQueryString) +
-                        "', 'popup', 'width=" + ImagePopupWidth + ",height=" + ImagePopupHeight +
-                        ",resizable,scrollbars=0,status=0');\" class=\"imagePopUp\">"
-                        + result + "</a>";
-            }
-            else if (EnableImageLink)
-            {
-                result = "<a class=\"p\" rel=\"" + rel + "\" href=\"" + linkWithoutQuery + "\" title=\"" + alt + "\">" + result + "</a>";
-            }
-
-            if (EnableCaption && !string.IsNullOrEmpty(alt) && !string.IsNullOrEmpty(alt.Trim()))
-            {
-                result += "<span>" + alt + "</span>";
-            }
-
-
+            if (string.IsNullOrWhiteSpace(cssClass))
+                result += " />";
+            else
+                result += " class=\"" + cssClass + "\" />";
             return result;
         }
 
         public override string ToString()
         {
             return 
-                "BOIntContImageTemplate Width:" + (Width ?? -1) + " Height:" + (Height ??
-                -1) + " Overlay:" + (OverlayImageId ?? -1);
+                "BOIntContImageTemplate Width:" + Width + " Height:" + Height + " Overlay:" + (OverlayImageId);
         }
     }
 }

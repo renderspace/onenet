@@ -29,12 +29,20 @@ namespace One.Net.BLL
             }
         }
 
+        public string Alt
+        {
+            get
+            {
+                return Content != null ? Content.Title : Name;
+
+            }
+        }
+
         public string EncodedAlt
         {
             get
             {
-                return HttpUtility.HtmlEncode(Content != null ? Content.Title : Name);
-
+                return HttpUtility.HtmlEncode(Alt);
             }
         }
 

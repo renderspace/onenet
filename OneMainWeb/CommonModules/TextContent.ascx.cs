@@ -19,23 +19,12 @@ namespace OneMainWeb.CommonModules
     public partial class TextContent : MModule, IImageListProvider
     {
         private static readonly BTextContent textContentB = new BTextContent();
-        BOInternalContent textContentModel;
+        BOInternalContent textContent;
 
-        protected bool EnableImagePopup 
-		{ 
-			get 
-			{ 
-				return GetIntegerSetting("ImagePopupWidth") > 0 && GetIntegerSetting("ImagePopupHeight") > 0;
-			} 
-		}
         protected bool EnableImageProvider { get { return GetBooleanSetting("EnableImageProvider"); } }
         public bool EnableCommentProvider { get { return GetBooleanSetting("EnableCommentProvider"); } }
-        
 
-        protected int ImagePopupWidth { get { return GetIntegerSetting("ImagePopupWidth"); } }
-        protected int ImagePopupHeight { get { return GetIntegerSetting("ImagePopupHeight"); } }
-
-        protected int ImageTemplate { get { return GetIntegerSetting("ImageTemplate"); } }
+        protected BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
         
 
         /// <summary>
@@ -46,9 +35,9 @@ namespace OneMainWeb.CommonModules
         {
             get 
             {
-                if (textContentModel != null && EnableImageProvider)
+                if (textContent != null && EnableImageProvider)
                 {
-                    return textContentModel.Images;
+                    return textContent.Images;
                 }
                 else { return null; }
             }
@@ -56,67 +45,61 @@ namespace OneMainWeb.CommonModules
 
         protected override void OnLoad(EventArgs e)
         {
-            textContentModel = textContentB.GetTextContent(InstanceId);
+            textContent = textContentB.GetTextContent(InstanceId);
 
-            if (null != textContentModel)
+            if (null != textContent)
             {
-                // if images are supposed to be displayed somewhere else, then hide all.
                 if (EnableImageProvider)
                 {
-                    foreach (BOIntContImage image in textContentModel.Images)
+                    foreach (BOIntContImage image in textContent.Images)
                     {
-                        textContentModel.RemoveImages.Add(image);
+                        textContent.RemoveImages.Add(image);
                     }
                 }
 
-                if (ImageTemplate > 0)
-                {
-                    // load template
-                    object o = BWebsite.GetTemplate(ImageTemplate);
-                    if (o is BOImageTemplate)
-                        textContentModel.ImageTemplate = (BOImageTemplate) o;
-                }
+                if (ImageTemplate != null)
+                    textContent.ImageTemplate = ImageTemplate;
             }
             base.OnLoad(e);
         }
 
         protected override void Render(HtmlTextWriter output)
         {
-            if (textContentModel != null && textContentModel.IsComplete)
+            if (textContent != null && textContent.IsComplete)
             {
-                if (textContentModel.Title.Length > 0)
+                if (textContent.Title.Length > 0)
                 {
                     output.WriteBeginTag("h1");
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
-                    output.Write(textContentModel.Title);
+                    output.Write(textContent.Title);
                     output.WriteEndTag("h1");
                 }
 
-                if (textContentModel.SubTitle.Length > 0)
+                if (textContent.SubTitle.Length > 0)
                 {
                     output.WriteBeginTag("h2");
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
-                    output.Write(textContentModel.SubTitle);
+                    output.Write(textContent.SubTitle);
                     output.WriteEndTag("h2");
                 }
 
-                if (textContentModel.Teaser.Length > 0 && GetBooleanSetting("ShowTeaserText"))
+                if (textContent.Teaser.Length > 0 && GetBooleanSetting("ShowTeaserText"))
                 {
                     output.WriteBeginTag("div");
                     output.WriteAttribute("class", "contentTeaser", true);
                     output.Write(HtmlTextWriter.TagRightChar);
-                    output.Write(textContentModel.ProcessedTeaser);
+                    output.Write(textContent.ProcessedTeaser);
                     output.WriteEndTag("div");
                 }
 
-			    if (textContentModel.ProcessedHtml.Length > 0)
+			    if (textContent.ProcessedHtml.Length > 0)
 			    {
                     output.WriteBeginTag("div");
                     output.WriteAttribute("class", "contentHtml", true);
                     output.Write(HtmlTextWriter.TagRightChar);
-				    output.Write(textContentModel.ProcessedHtml);
+				    output.Write(textContent.ProcessedHtml);
 				    output.WriteEndTag("div");
 			    }
             }
@@ -126,12 +109,12 @@ namespace OneMainWeb.CommonModules
         {
             get 
             {
-                if (textContentModel == null)
+                if (textContent == null)
                 { 
                     return null; 
                 }
 
-                return textContentModel.ContentId;
+                return textContent.ContentId;
             }
         }
     }

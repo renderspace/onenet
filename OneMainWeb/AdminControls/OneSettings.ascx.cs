@@ -161,21 +161,33 @@ namespace OneMainWeb.AdminControls
 
                     if (setting.UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL && setting.UserVisibility != BOSetting.USER_VISIBILITY_MULTILINE)
                     {
-                        if (setting.HasOptions)
+                        if (setting.HasOptions || setting.Type == "ImageTemplate")
                         {
                             PanelInput.Visible = true;
                             DropDownList1.Visible = true;
-                            DropDownList1.DataTextField = "Value";
-                            DropDownList1.DataValueField = "Key";
-                            DropDownList1.DataSource = setting.Options;
-                            if (setting.Options.ContainsKey(setting.Value))
-                                DropDownList1.SelectedValue = setting.Value;
+                            if (setting.Type == "ImageTemplate")
+                            {
+                                var templates = BWebsite.ListTemplates("ImageTemplate");
+                                DropDownList1.DataSource = templates;
+                                DropDownList1.DataTextField = "Name";
+                                DropDownList1.DataValueField = "Id";
+                                if (templates.Where(t => t.Id.ToString() == setting.Value).FirstOrDefault() != null )
+                                    DropDownList1.SelectedValue = setting.Value;
+                            }
                             else
+                            {
+                                DropDownList1.DataSource = setting.Options;
+                                DropDownList1.DataTextField = "Value";
+                                DropDownList1.DataValueField = "Key";
+                                if (setting.Options.ContainsKey(setting.Value))
+                                    DropDownList1.SelectedValue = setting.Value;
+                            }
+                            if (string.IsNullOrWhiteSpace(DropDownList1.SelectedValue))
                                 DropDownList1.ForeColor = Color.Red;
 
                             LabelHiddenInfo.Text = setting.Value;
                             DropDownList1.DataBind();
-                        }
+                        } 
                         else
                         {
                             switch (setting.Type)
@@ -305,7 +317,7 @@ namespace OneMainWeb.AdminControls
                                 }
                             default:
                                 {
-                                    if (setting.HasOptions)
+                                    if (setting.HasOptions || setting.Type == "ImageTemplate")
                                         setting.Value = DropDownList1.SelectedValue;
                                     else
                                         setting.Value = TextBox1.Text;
