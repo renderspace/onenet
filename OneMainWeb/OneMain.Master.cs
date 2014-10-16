@@ -193,10 +193,7 @@ namespace OneMainWeb
                         HyperLinkProduction.NavigateUrl = selectedWebsite.ProductionUrl + "/Utils/Clear.aspx";
                         HyperLinkProduction.Visible = true;
                     } 
-                }
-
-
-                    
+                }       
             }
         }
 

@@ -709,7 +709,7 @@ BEGIN
 	SET NOCOUNT ON
 
 	DECLARE @SettingId int
-	SELECT @SettingId = id FROM settings_list WHERE [name] = @Name
+	SELECT @SettingId = id FROM settings_list WHERE [name] = @Name AND subsystem = 'Website'
 
 	DECLARE @Exists int
 	SELECT @Exists = COUNT(settings_list_fk_id) FROM [dbo].[web_site_settings]

@@ -111,7 +111,7 @@ namespace OneMainWeb.adm
             cmdMovePageUp.Visible = true;
             cmdMovePageDown.Visible = true;
             OneSettingsPageSettings.ItemId = 0;
-            OneSettingsPageSettings.LoadSettings();
+            OneSettingsPageSettings.Databind();
             ddlPageTemplate.ClearSelection();
 
             LabelMessage.Text = message;
@@ -231,7 +231,7 @@ namespace OneMainWeb.adm
                 OneSettingsPageSettings.ItemId = SelectedPage.Id;
                 OneSettingsPageSettings.Mode = AdminControls.OneSettings.SettingMode.Page;
                 OneSettingsPageSettings.LoadSettingsControls(SelectedPage.Settings);
-                OneSettingsPageSettings.LoadSettings();
+                OneSettingsPageSettings.Databind();
                 
                 if (SelectedPageId == RootNodeID)
                 {
@@ -350,7 +350,7 @@ namespace OneMainWeb.adm
                 moduleSettings.Mode = AdminControls.OneSettings.SettingMode.Module;
                 moduleSettings.ItemId = moduleInstance.Id;
                 moduleSettings.LoadSettingsControls(moduleInstance.Settings);
-                moduleSettings.LoadSettings();
+                moduleSettings.Databind();
                 PlaceHolderNotInherited1.Visible = PlaceHolderNotInherited2.Visible = !moduleInstance.IsInherited;
 
                 moduleSettings.Visible = moduleSettings.Visible && !moduleInstance.IsInherited;
