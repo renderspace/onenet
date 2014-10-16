@@ -100,7 +100,7 @@ namespace OneMainWeb.AdminControls
             ItemId = (int)cSThis[3];
             Mode = (SettingMode)cSThis[4];
             DisplayCommands = (bool)cSThis[5];
-            LoadSettings();
+            Databind();
 
             base.LoadControlState(cSBase);
         }
@@ -115,7 +115,7 @@ namespace OneMainWeb.AdminControls
             Settings = _settings;
         }
 
-        public void LoadSettings()
+        public void Databind()
         {
             if (ItemId > 0)
             {

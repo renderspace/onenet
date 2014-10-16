@@ -183,7 +183,7 @@ namespace OneMainWeb.adm
             OneSettingsWebsite.ItemId = websiteId;
             OneSettingsWebsite.Mode = AdminControls.OneSettings.SettingMode.Website;
             OneSettingsWebsite.LoadSettingsControls(website.Settings);
-            OneSettingsWebsite.LoadSettings();
+            OneSettingsWebsite.Databind();
             
 
         }
