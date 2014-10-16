@@ -389,6 +389,13 @@
     <Compile Include="CommonModules\Form.ascx.designer.cs">
       <DependentUpon>Form.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\MagnificGallery.ascx.cs">
+      <DependentUpon>MagnificGallery.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\MagnificGallery.ascx.designer.cs">
+      <DependentUpon>MagnificGallery.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\Menu.ascx.cs">
       <DependentUpon>Menu.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -489,6 +496,7 @@
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
     <Content Include="CommonModules\Form.ascx" />
+    <Content Include="CommonModules\MagnificGallery.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />

@@ -107,6 +107,25 @@ namespace One.Net.BLL.Web
             return setting.Value;
         }
 
+        public BOImageTemplate GetImageTemplate(string settingName)
+        {
+            if (Settings == null || !Settings.ContainsKey(settingName))
+                return null;
+
+            BOSetting setting = Settings[settingName];
+            if (!setting.Type.Equals("ImageTemplate"))
+            {
+                throw new ApplicationException("not a Image template setting; probably error in database");
+            }
+            var templateId = Int32.Parse(setting.Value.ToString());
+
+            object o = BWebsite.GetTemplate(templateId);
+            if (o is BOImageTemplate)
+                return (BOImageTemplate)o;
+            else
+                return null;
+        }
+
         public int GetIntegerSetting(string settingName)
         {
             if (Settings == null)

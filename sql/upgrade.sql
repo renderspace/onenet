@@ -28,3 +28,8 @@ BEGIN
 		(@Id, @SettingId, @Value)
 	END
 END
+
+
+
+
+ update [dbo].[settings_list] set type='ImageTemplate' WHERE name = 'ImageTemplate' AND subsystem in ('TextContent', 'ImageGallery', 'Article')

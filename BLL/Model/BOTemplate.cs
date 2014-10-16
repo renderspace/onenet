@@ -8,13 +8,7 @@ namespace One.Net.BLL
     public class BOTemplate
     {
         [NonSerialized]
-        private string physicalApplicationPath = "";
-
-        [NonSerialized]
         private string extension = "";
-
-        [NonSerialized]
-        private string templateSourceDirectory = "";
 
         public BOTemplate()
         { }
