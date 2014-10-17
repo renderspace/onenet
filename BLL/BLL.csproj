@@ -232,9 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="BundleTransformer.Configuration.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <EmbeddedResource Include="Sql\1_1_user.sql.template" />
     <EmbeddedResource Include="Sql\1_database.sql.template" />
