@@ -35,7 +35,6 @@ namespace One.Net.BLL
             get { return max; }
             set { max = value; }
         }
-        
 
         private int height;
 
@@ -164,7 +163,7 @@ namespace One.Net.BLL
         public override string ToString()
         {
             return 
-                "BOIntContImageTemplate Width:" + Width + " Height:" + Height + " Overlay:" + (OverlayImageId);
+                "ImageTemplate W:" + Width + " H:" + Height + " O:" + OverlayImageId;
         }
     }
 }
