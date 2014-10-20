@@ -43,10 +43,14 @@ namespace OneMainWeb.CommonModules
                 LiteralImageTag.Text = "<a href=\"" + ImageTemplate.RenderImageLink(file.RelativeUrl) + "\">" + ThumbTemplate.RenderHtml(file.Alt, file.RelativeUrl, "") + "</a>";
 
                 var LiteralCaption = e.Item.FindControl("LiteralCaption") as Literal;
-
                 if (file.Content != null && LiteralCaption != null)
                 {
-                    LiteralCaption.Text = file.Content.Teaser;
+                    LiteralCaption.Text = "<div class=\"ct\">" + file.Content.Teaser + "</div>";
+                }
+                var LiteralTitle = e.Item.FindControl("LiteralTitle") as Literal;
+                if (file.Content != null && LiteralTitle != null)
+                {
+                    LiteralTitle.Text = "<h3>" + file.Content.Title + "</h3>";
                 }
             }
         }

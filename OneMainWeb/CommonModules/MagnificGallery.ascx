@@ -11,6 +11,7 @@
             <figure>
                 <asp:Literal runat="server" ID="LiteralImageTag"></asp:Literal>
                 <figcaption>
+                    <asp:Literal runat="server" ID="LiteralTitle"></asp:Literal>
                     <asp:Literal runat="server" ID="LiteralCaption"></asp:Literal>
                 </figcaption>                                   
             </figure>
