@@ -55,6 +55,10 @@ namespace OneMainWeb
             // REGULAR SITE CSS
             bundles.Add(new StyleBundle("~/Bundles/_css").IncludeDirectory("~/site_specific/_css", "*.css"));
             // REGULAR SITE JS
+
+            BundleFileSetOrdering bundleFileSetOrdering = new BundleFileSetOrdering("js");
+            bundleFileSetOrdering.Files.Add("~/site_specific/_js/jquery*");
+            bundles.FileSetOrderList.Add(bundleFileSetOrdering);
             bundles.Add(new ScriptBundle("~/Bundles/_js").IncludeDirectory("~/site_specific/_js", "*.js"));
             // REGULAR SaSS
             var saasBundle = new Bundle("~/Bundles/Sass").IncludeDirectory("~/site_specific/_sass", "*.sass").IncludeDirectory("~/site_specific/_sass", "*.scss");
