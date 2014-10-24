@@ -185,12 +185,12 @@ namespace OneMainWeb
                 {
                     if (selectedWebsite.PreviewUrl.StartsWith("http"))
                     {
-                        HyperLinkPreview.NavigateUrl = selectedWebsite.PreviewUrl + "/Utils/Clear.aspx";
+                        HyperLinkPreview.NavigateUrl = selectedWebsite.PreviewUrl.TrimEnd('/') + "/Utils/Clear.aspx";
                         HyperLinkPreview.Visible = true;
                     }
                     if (selectedWebsite.ProductionUrl.StartsWith("http"))
                     {
-                        HyperLinkProduction.NavigateUrl = selectedWebsite.ProductionUrl + "/Utils/Clear.aspx";
+                        HyperLinkProduction.NavigateUrl = selectedWebsite.ProductionUrl.TrimEnd('/') + "/Utils/Clear.aspx";
                         HyperLinkProduction.Visible = true;
                     } 
                 }       

@@ -126,10 +126,37 @@ ga('create', '" + code + @"', 'auto');";
 
             if (CurrentWebsite.Settings.ContainsKey("CustomHeadJs"))
             {
-                customHeadCode = CurrentWebsite.Settings["CustomHeadJs"].Value;
+                customHeadCode += CurrentWebsite.Settings["CustomHeadJs"].Value;
             }
 
-            if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode))
+            var customAfterBodyStartCode = "";
+
+            if (CurrentWebsite.FacebookApplicationID > 0)
+            {
+                var fbCode = @"<div id=""fb-root""></div>";
+                // fbCode += "<script>";
+                fbCode += "<script type=\"text/plain\" class=\"cc-onconsent-social\">";
+
+    fbCode += @"window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '" + CurrentWebsite.FacebookApplicationID.ToString() + @"',
+      xfbml      : true,
+      version    : 'v2.1'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = ""//connect.facebook.net/" + CurrentWebsite.Languge.IetfLanguageTag.Replace("-", "_") + @"/sdk.js"";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>";
+                customAfterBodyStartCode = fbCode;
+            }
+
+            if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode) || !string.IsNullOrEmpty(customAfterBodyStartCode))
             {
                 StringBuilder sb = new StringBuilder();
                 HtmlTextWriter tw = new HtmlTextWriter(new System.IO.StringWriter(sb));
@@ -142,7 +169,8 @@ ga('create', '" + code + @"', 'auto');";
                     sContent = sContent.Replace("</body>", customBodyCode + "</body>");
                 if (!string.IsNullOrEmpty(customHeadCode))
                     sContent = sContent.Replace("</head>", customHeadCode + "</head>");
-
+                if (!string.IsNullOrEmpty(customAfterBodyStartCode))
+                    sContent = sContent.Replace("<body>", "<body>" + customAfterBodyStartCode );
                 //Now output it to the page, if you want
                 writer.Write(sContent);
             }
@@ -519,12 +547,10 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 AddMetaProperty("og:url", Request.Url.AbsoluteUri);
                 AddMetaProperty("og:type", "website");
 
-                var appIdStr = CurrentWebsite.GetSettingValue("FacebookApplicationID");
-                var appId = 0;
-                int.TryParse(appIdStr, out appId);
-                if (appId > 0)
+
+                if (CurrentWebsite.FacebookApplicationID > 0)
                 {
-                    AddMetaProperty("fb:app_id", appIdStr);
+                    AddMetaProperty("fb:app_id", CurrentWebsite.FacebookApplicationID.ToString());
                 }
                 var webmasterToolsId = CurrentWebsite.GetSettingValue("GoogleSiteVerification");
                 AddMetaTag("google-site-verification", webmasterToolsId);

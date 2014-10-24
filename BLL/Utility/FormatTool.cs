@@ -14,6 +14,16 @@ namespace One.Net.BLL
             return ret;
         }
 
+        public static long GetLong(object val)
+        {
+            long ret = -1;
+            if (val != null)
+            {
+                if (!long.TryParse(val.ToString(), out ret)) ret = -1;
+            }
+            return ret;
+        }
+
         public static bool GetBoolean(object val)
         {
             bool ret = false;
