@@ -95,6 +95,17 @@ namespace One.Net.BLL
             }
         }
 
+        public CultureInfo Languge
+        {
+            get
+            {
+                if (LanguageId > 0)
+                    return new CultureInfo(LanguageId);
+                else
+                    return null;
+            }
+        }
+
         public string DefaultOgImage
         {
             get
@@ -141,6 +152,17 @@ namespace One.Net.BLL
                     Settings["ProductionUrl"].Value = value;
                 else
                     Settings.Add("ProductionUrl", new BOSetting("ProductionUrl", "Url", value, BOSetting.USER_VISIBILITY_NORMAL));
+            }
+        }
+
+        public long FacebookApplicationID
+        {
+            get
+            {
+                var appIdStr = GetSettingValue("FacebookApplicationID");
+                long appId = 0;
+                long.TryParse(appIdStr, out appId);
+                return appId;
             }
         }
 

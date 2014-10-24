@@ -286,7 +286,10 @@ namespace OneMainWeb.AdminControls
                                             setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
                                     }
                                     else
-                                        setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
+                                    { 
+                                        var val = FormatTool.GetLong(TextBox1.Text);
+                                        setting.Value = val.ToString();
+                                    }
                                     break;
                                 }
                             case "Bool":
