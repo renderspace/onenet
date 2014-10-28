@@ -308,7 +308,7 @@ namespace OneMainWeb.adm
 
             foreach (GridViewRow row in GridViewItems.Rows)
             {
-                Button CmdDelete = row.FindControl("CmdDelete") as Button;
+                var CmdDelete = row.FindControl("CmdDelete") as IButtonControl;
                 CheckBox CheckBoxShowOnList = row.FindControl("CheckBoxShowOnList") as CheckBox;
                 TextBox TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
 
