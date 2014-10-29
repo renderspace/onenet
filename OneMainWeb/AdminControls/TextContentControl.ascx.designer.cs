@@ -13,6 +13,15 @@ namespace OneMainWeb.AdminControls {
     public partial class TextContentControl {
         
         /// <summary>
+        /// PanelTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelTitle;
+        
+        /// <summary>
         /// LabelTitle control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.TextBox TextBoxTitle;
         
         /// <summary>
+        /// PanelSubTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelSubTitle;
+        
+        /// <summary>
         /// Label1 control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,15 @@ namespace OneMainWeb.AdminControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxSubTitle;
+        
+        /// <summary>
+        /// PanelTeaser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelTeaser;
         
         /// <summary>
         /// Label2 control.
