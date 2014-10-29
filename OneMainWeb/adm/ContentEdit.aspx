@@ -9,8 +9,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
+    <asp:Literal runat="server" ID="LiteralScript"></asp:Literal>
     <div class="row">
-    
         <div class="col-md-3">
             <section class="module tall">
                 <header><h3 class="tabs_involved">Tree structure</h3></header>
@@ -27,7 +27,7 @@
                      <div>
                         <asp:DropDownList CssClass="selectTextContentInstance" ID="DropDownListModuleInstances" runat="server" ValidationGroup="MI"></asp:DropDownList>
                         <asp:Label ID="LabelModuleInstanceName" runat="server"></asp:Label>
-                        <asp:Button CssClass="changeTextContentInstance" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
+                        <asp:LinkButton CssClass="btn btn-success" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
                      </div>
                 </section>
                     <div class="adminSection form-horizontal">
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <asp:LinkButton ID="cmdRevertToPublished" runat="server" OnClick="cmdRevertToPublished_Click" ValidationGroup="RTP" Text="Revert to published" CssClass="btn btn-warning" />
-                                <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
+                                    <asp:LinkButton ID="ButtonSave" runat="server" OnClick="ButtonSave_Click" Text="Save" CssClass="btn btn-success" />
                                 </div>
 					        
 				            </div>

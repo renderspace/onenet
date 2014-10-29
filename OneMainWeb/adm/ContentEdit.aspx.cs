@@ -21,13 +21,6 @@ namespace OneMainWeb.adm
 {
     public partial class ContentEdit : OneBasePage
     {
-        /*
-
-          
-          
-          
-            TextSpecialContent1.IsSpecialContent = false;*/
-
         private static readonly BWebsite webSiteB = new BWebsite();
         private static readonly BTextContent textContentB = new BTextContent();
 
@@ -49,23 +42,10 @@ namespace OneMainWeb.adm
             {
                 if (Request["instanceId"] != null)
                 {
-                    int instanceId = FormatTool.GetInteger(Request["instanceId"]);
-                    BOModuleInstance requestInstance = webSiteB.GetModuleInstance(instanceId, false);
-
-                    if (requestInstance != null && requestInstance.Name.Contains("SpecialContent"))
-                    {
-                        SelectedModuleInstanceId = instanceId;
-                        TextContentEditor.UseCkEditor = false;
-                    }
-                    else if (requestInstance != null && requestInstance.Name.Contains("TextContent"))
-                    {
-                        SelectedModuleInstanceId = instanceId;
-                        TextContentEditor.UseCkEditor = true;
-                    }
-
+                    SelectedModuleInstanceId = FormatTool.GetInteger(Request["instanceId"]);
                 }
                 DropDownListModuleInstances_DataBind();
-                InitializeControls();
+                TextContent_DataBind();
             }
         }
 
@@ -154,12 +134,18 @@ namespace OneMainWeb.adm
             }
         }
 
-        private void InitializeControls()
+        private void TextContent_DataBind()
         {
             LastChangeAndHistory1.Text = "";
             LastChangeAndHistory1.SelectedContentId = 0;
             PanelEditor.Visible = SelectedModuleInstanceId.HasValue;
-            // MainTextBox.TextBoxCssClass = chkUseFck.Checked ? "ckeditor" : "";
+            LiteralScript.Text = "";
+            TextContentEditor.TeaserVisible = true;
+            TextContentEditor.TitleVisible = true;
+            TextContentEditor.SubTitleVisible = true;
+            TextContentEditor.Html = TextContentEditor.Title = TextContentEditor.SubTitle = TextContentEditor.Teaser = "";
+            TextContentEditor.Visible = false;
+            LastChangeAndHistory1.Visible = false;
 
             if (SelectedModuleInstanceId.HasValue)
             {
@@ -169,32 +155,32 @@ namespace OneMainWeb.adm
                 {
                     BOInternalContent textContentModel = textContentB.GetTextContent(SelectedModuleInstanceId.Value);
 
-                    if (textContentModel != null &&
-                        textContentModel.ContentId.HasValue &&
-                        textContentModel.ContentId.Value > 0)
+                    if (textContentModel != null)
                     {
-
                         if (moduleInstanceModel.Name.Contains("SpecialContent"))
                         {
+                            LiteralScript.Text = "<script>$(function () { var myCodeMirror = CodeMirror.fromTextArea(document.getElementById(\"TextBoxHtml\"), { lineNumbers: true, mode: \"htmlembedded\"  }); });</script>";
                             TextContentEditor.UseCkEditor = false;
+                            TextContentEditor.TeaserVisible = false;
+                            TextContentEditor.TitleVisible = false;
+                            TextContentEditor.SubTitleVisible = false;
                         }
                         else if (moduleInstanceModel.Name.Contains("TextContent"))
                         {
                             TextContentEditor.UseCkEditor = true;
                         }
-                        
-
+                        TextContentEditor.Visible = true;
                         TextContentEditor.Title = textContentModel.Title;
                         TextContentEditor.SubTitle = textContentModel.SubTitle;
                         TextContentEditor.Teaser = textContentModel.Teaser;
                         TextContentEditor.Html = textContentModel.Html;
                         LastChangeAndHistory1.Text = textContentModel.DisplayLastChanged;
-                        LastChangeAndHistory1.SelectedContentId = textContentModel.ContentId.Value;
-                        LastChangeAndHistory1.SelectedLanguageId = textContentModel.LanguageId;
-                    }
-                    else
-                    {
-                        TextContentEditor.Html = TextContentEditor.Title = TextContentEditor.SubTitle = TextContentEditor.Teaser = "";
+                        if (textContentModel.ContentId.HasValue)
+                        {
+                            LastChangeAndHistory1.SelectedContentId = textContentModel.ContentId.Value;
+                            LastChangeAndHistory1.SelectedLanguageId = textContentModel.LanguageId;
+                            LastChangeAndHistory1.Visible = true;
+                        }
                     }
                 }
 
@@ -214,7 +200,7 @@ namespace OneMainWeb.adm
 
             foreach (BOModuleInstance instance in moduleInstances)
             {
-                if (instance.Name == "TextContent" && !instance.IsInherited)
+                if ((instance.Name == "TextContent" || instance.Name == "SpecialContent") && !instance.IsInherited)
                     filteredModuleInstances.Add(instance);
             }
 
@@ -252,7 +238,7 @@ namespace OneMainWeb.adm
             SelectedModuleInstanceId = null;
             DropDownListModuleInstances_DataBind();
             SelectedWebsite_ValidateDataBind();
-            InitializeControls();
+            TextContent_DataBind();
         }
 
         private static void ExpandLoop(TreeNode node)
@@ -265,7 +251,7 @@ namespace OneMainWeb.adm
         protected void ButtonChangeModuleInstance_Click(object sender, EventArgs e)
         {
             SelectedModuleInstanceId = FormatTool.GetInteger(DropDownListModuleInstances.SelectedValue);
-            InitializeControls();
+            TextContent_DataBind();
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)
@@ -287,11 +273,11 @@ namespace OneMainWeb.adm
                 if (EnableXHTMLValidator && (hasErrors || hasAmpersands))
                 {
                     if (hasErrors)
-                        Notifier1.Warning += "<h3>" + "$errors" + "</h3><ul>";
+                        Notifier1.Warning += "<h3>" + "Errors" + "</h3><ul>";
 
                     foreach (var validatorError in errors)
                     {
-                        Notifier1.Warning += "<li>" + "$" + validatorError.Error;
+                        Notifier1.Warning += "<li>" + validatorError.Error;
                         if (!string.IsNullOrEmpty(validatorError.Tag))
                             Notifier1.Warning += "<span>" + validatorError.Tag + "</span>";
                         Notifier1.Warning += "</li>";
@@ -302,10 +288,10 @@ namespace OneMainWeb.adm
 
                     if (hasAmpersands)
                     {
-                        Notifier1.Warning += "<h3>" + "$ampersands" + "</h3><ul>";
+                        Notifier1.Warning += "<h3>" + "Ampersands" + "</h3><ul>";
                         foreach (int i in ampersands)
                         {
-                            Notifier1.Warning += "<li>" + "$position" + "<span>" + i + "</span></li>";
+                            Notifier1.Warning += "<li>" + "Position" + "<span>" + i + "</span></li>";
                         }
                         Notifier1.Warning += "</ul>";
                     }
@@ -318,12 +304,12 @@ namespace OneMainWeb.adm
             }
             else
             {
-                Notifier1.ExceptionName = "$because_of_inactivity_selected_module_was_not_saved";
+                Notifier1.ExceptionName = "For some reasone we're lost and we didn't save your work.";
             }
 
             TreeView1_DataBind();
             if (string.IsNullOrEmpty(error))
-                InitializeControls();
+                TextContent_DataBind();
         }
 
 
@@ -338,7 +324,7 @@ namespace OneMainWeb.adm
                     // TODO: after content is reverted to published version, the offline content should no longer be marked as changed. 
                     textContentB.ChangeTextContent(SelectedModuleInstanceId.Value, onlineContent.Title, onlineContent.SubTitle, onlineContent.Teaser, onlineContent.Html);
                     TreeView1_DataBind();
-                    InitializeControls();
+                    TextContent_DataBind();
                     Notifier1.Message = "Save sucessfull.";
                 }
             }

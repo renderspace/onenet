@@ -25,9 +25,6 @@ namespace OneMainWeb.AdminControls
         public TextBoxMode TitleTextMode { get { return TextBoxTitle.TextMode; } set { TextBoxTitle.TextMode = value; } }
         public int TitleTextRows { get { return TextBoxTitle.Rows; } set { TextBoxTitle.Rows = value; } }
 
-        public Unit HtmlHeight { get { return TextBoxHtml.Height; } set { TextBoxHtml.Height = value; } }
-        public int HtmlRows { get { return TextBoxHtml.Rows; } set { TextBoxHtml.Rows = value; } }
-
         public bool UseCkEditor
         {
             get { return useCkEditor; }
@@ -37,9 +34,9 @@ namespace OneMainWeb.AdminControls
             }
         }
 
-        public bool SubTitleVisible { get { return TextBoxSubTitle.Visible; } set { TextBoxSubTitle.Visible = value; } }
-        public bool TitleVisible { get { return TextBoxTitle.Visible; } set { TextBoxTitle.Visible = value; } }
-        public bool TeaserVisible { get { return TextBoxTeaser.Visible; } set { TextBoxTeaser.Visible = value; } }
+        public bool SubTitleVisible { get { return PanelSubTitle.Visible; } set { PanelSubTitle.Visible = value; } }
+        public bool TitleVisible { get { return PanelTitle.Visible; } set { PanelTitle.Visible = value; } }
+        public bool TeaserVisible { get { return PanelTeaser.Visible; } set { PanelTeaser.Visible = value; } }
         public bool HtmlVisible
         {
             get { return TextBoxHtml.Visible; }
@@ -62,17 +59,10 @@ namespace OneMainWeb.AdminControls
         {
             get { return TextBoxHtml.Text; }
             set { TextBoxHtml.Text = value; }
-            /*
-            get { return (useFckEditor ? fckHtml.Value : TextBoxHtml.Value); } 
-            set { fckHtml.Value = TextBoxHtml.Value = value; }*/
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (HtmlHeight == Unit.Pixel(0))
-            {
-                HtmlHeight = Unit.Pixel(400);
-            }
         }
 
         protected override void Render(HtmlTextWriter writer)

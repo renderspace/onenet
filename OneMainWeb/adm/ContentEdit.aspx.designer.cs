@@ -22,6 +22,15 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
+        /// LiteralScript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LiteralScript;
+        
+        /// <summary>
         /// treeHolder control.
         /// </summary>
         /// <remarks>
@@ -82,7 +91,7 @@ namespace OneMainWeb.adm {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonChangeModuleInstance;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonChangeModuleInstance;
         
         /// <summary>
         /// PanelEditor control.

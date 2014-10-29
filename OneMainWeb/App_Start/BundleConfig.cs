@@ -25,6 +25,7 @@ namespace OneMainWeb
             bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
             bundles.Add(new StyleBundle("~/Bundles/AdmCSS").Include(
                 "~/Scripts/dropzone/css/dropzone.css").Include(
+                "~/adm/codemirror/codemirror.css").Include(
                 "~/adm/css/one.css").Include(
                 "~/adm/css/dashboard.css"));
 
@@ -34,7 +35,14 @@ namespace OneMainWeb
                 "~/Content/themes/base/theme.css"));
 
             bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.js"));
-            bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js").Include(
+                "~/adm/codemirror/codemirror.js").Include(
+                "~/adm/codemirror/mode/htmlembedded/htmlembedded.js").Include(
+                "~/adm/codemirror/mode/htmlmixed/htmlmixed.js").Include(
+                "~/adm/codemirror/mode/javascript/javascript.js").Include(
+                "~/adm/codemirror/mode/xml/xml.js").Include(
+                "~/adm/codemirror/mode/css/css.js")
+                ); //.Include("~/adm/codemirror/mode/htmlembedded/htmlembedded.js")
             bundles.Add(new ScriptBundle("~/Bundles/Scripts").Include(
                     "~/Scripts/jquery-{version}.js").Include(
                     "~/Scripts/jquery.validate.js").Include(
