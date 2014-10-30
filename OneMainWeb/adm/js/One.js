@@ -36,13 +36,11 @@ $('.ckeditor4').each(function (index) {
         filebrowserFlashWindowHeight: '600',
 
         disableObjectResizing: true,
-        resize_enabled: false,
-
         //customConfig : '/_js/custom_ckeditor.js',
         stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
         // contentsCss : '/Utils/default_editor.css',
-
+		height:500,
         disableObjectResizing: true,
         resize_enabled: false,
         allowedContent: true //,extraPlugins: 'youtube'
