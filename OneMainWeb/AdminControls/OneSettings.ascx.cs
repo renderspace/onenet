@@ -243,6 +243,7 @@ namespace OneMainWeb.AdminControls
                         {
                             case "String":
                                 {
+                                    PanelInput.Visible = true;
                                     TextBox1.Visible = true;
                                     TextBox1.Rows = 5;
                                     TextBox1.TextMode = TextBoxMode.MultiLine;
