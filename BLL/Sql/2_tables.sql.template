@@ -698,7 +698,9 @@ ALTER TABLE [dbo].[newsletter] CHECK CONSTRAINT [FK_newsletter_template]
 GO
 
 ALTER TABLE [dbo].[web_site_settings]  WITH CHECK ADD  CONSTRAINT [FK_web_site_settings_settings_list] FOREIGN KEY([settings_list_fk_id])
-REFERENCES [dbo].[settings_list] ([id])
+REFERENCES [dbo].[settings_list] ([id]) 
+	on delete cascade 
+	on update cascade
 ALTER TABLE [dbo].[web_site_settings] CHECK CONSTRAINT [FK_web_site_settings_settings_list]
 GO
 
