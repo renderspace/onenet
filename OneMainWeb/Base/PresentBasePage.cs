@@ -134,8 +134,6 @@ ga('create', '" + code + @"', 'auto');";
                 customHeadCode += CurrentWebsite.Settings["CustomHeadJs"].Value;
             }
 
-            
-
             var customAfterBodyStartCode = "";
 
             if (CurrentWebsite.FacebookApplicationID > 0)
