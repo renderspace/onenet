@@ -105,7 +105,6 @@ namespace OneMainWeb.adm
             website.PreviewUrl = TextBoxPreviewUrl.Text;
             website.ProductionUrl = TextBoxProductionUrl.Text;
             website.PrincipalCreated = User.Identity.Name;
-            website.PreviewUrl = TextBoxPreviewUrl.Text;
 
             BWebsite.AddWebSiteResult result = BWebsite.AddWebSiteResult.Error;
             if (PanelEmptyDatabase.Visible || CheckboxManualCopy.Checked) // we have an empty database
