@@ -124,10 +124,17 @@ ga('create', '" + code + @"', 'auto');";
                 customBodyCode += CurrentWebsite.Settings["CustomBodyJs"].Value;
             }
 
+            if (CurrentWebsite.Settings.ContainsKey("CustomCss") && !string.IsNullOrWhiteSpace(CurrentWebsite.Settings["CustomCss"].Value))
+            {
+                customHeadCode += "<link rel=\"stylesheet\" href=\"" + CurrentWebsite.Settings["CustomCss"].Value + "\" type=\"text/css\" />";
+            }
+
             if (CurrentWebsite.Settings.ContainsKey("CustomHeadJs"))
             {
                 customHeadCode += CurrentWebsite.Settings["CustomHeadJs"].Value;
             }
+
+            
 
             var customAfterBodyStartCode = "";
 
