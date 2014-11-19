@@ -446,10 +446,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mobile\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="OneMain.Master.cs">
       <DependentUpon>OneMain.Master</DependentUpon>
@@ -562,7 +558,6 @@
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
-    <Content Include="Mobile\Default.aspx" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>

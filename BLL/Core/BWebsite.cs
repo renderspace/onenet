@@ -154,38 +154,41 @@ namespace One.Net.BLL
 
         public AddSubPageResult AddSubPage(string requestedPageTitle, int webSiteId, int currentPageId)
         {
-            BOPage parentPageModel = GetPage(currentPageId);
-            BOWebSite site = Get(webSiteId);
-            if (site.LanguageId < 1)
-            {
-                site.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
-            }
-            int newOrder = 0;
+            BOPage parentPage = GetPage(currentPageId);
             string newParLink = "";
 
             newParLink = PrepareParLink(requestedPageTitle);
             if (!ValidateParLinkSyntax(newParLink))
                 return AddSubPageResult.PartialLinkNotValid;
 
-            if (parentPageModel != null) // Not root
+            var page = new BOPage
             {
-                // determine page order
-                List<BOPage> pages = ListChildrenPages(parentPageModel.Id);
+                Title = requestedPageTitle,
+                PublishFlag = false,
+                LanguageId = Thread.CurrentThread.CurrentCulture.LCID,
+                MenuGroup = 0,
+                WebSiteId = webSiteId,
+                BreakPersistance = false,
+                ParLink = newParLink,
+                RedirectToUrl = "",
+                URI = ""
+            };
+
+            bool addingRootPage = false;
+            if (parentPage != null) // Not root
+            {
+                List<BOPage> pages = ListChildrenPages(parentPage.Id);
                 if (pages != null && pages.Count > 0)
                 {
-                    newOrder = pages[pages.Count - 1].Order + 1;
+                    page.Order = pages[pages.Count - 1].Order + 1;
                 }
+                page.Template = new BOTemplate { Id = parentPage.Template.Id.Value };
+                page.ParentId = parentPage.Id;
+                page.Settings = parentPage.Settings;
             }
-            else
+            else // root
             {
                 currentPageId = -1;
-            }
-
-            if (!ValidateParLinkAgainstDB(currentPageId == -1 ? (int?)null : currentPageId, -1, newParLink, webSiteId))
-                return AddSubPageResult.PartialLinkExistsOnThisLevel;
-            bool addingRootPage = false;
-            if (currentPageId == -1)
-            {
                 addingRootPage = true;
                 // check if there are no existing pages on this website
                 if (GetSiteStructure(webSiteId).Count != 0)
@@ -193,38 +196,16 @@ namespace One.Net.BLL
                     return AddSubPageResult.TriedToAddRootPageToNonEmptySite;
                 }
                 newParLink = "";
+                var templates = ListTemplates("3");
+                if (templates.Count == 0)
+                {
+                    return AddSubPageResult.NoTemplates;
+                }
+                page.Template = new BOTemplate { Id = templates[0].Id.Value };
             }
 
-            List<BOTemplate> templateData = ListTemplates("3");
-            int templateID = 1;
-            if (templateData.Count > 0)
-            {
-                templateID = templateData[0].Id.Value;
-            }
-            else
-            {
-                return AddSubPageResult.NoTemplates;
-            }
-
-            var page = new BOPage
-            {
-                Title = requestedPageTitle,
-                Template = new BOTemplate { Id = templateID },
-                PublishFlag = false,
-                LanguageId = Thread.CurrentThread.CurrentCulture.LCID,
-                MenuGroup = 0,
-                WebSiteId = webSiteId,
-                BreakPersistance = false,
-                ParLink = newParLink,
-                Order = newOrder,
-                RedirectToUrl = "",
-                URI = ""
-            };
-
-            if (currentPageId > 0)
-            {
-                page.ParentId = currentPageId;
-            }
+            if (!ValidateParLinkAgainstDB(currentPageId == -1 ? (int?)null : currentPageId, -1, newParLink, webSiteId))
+                return AddSubPageResult.PartialLinkExistsOnThisLevel;
 
             ChangePage(page);
             OneSiteMapProvider.ReloadSiteMap();
