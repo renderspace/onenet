@@ -20,7 +20,7 @@ namespace OneMainWeb
             routes.EnableFriendlyUrls(settings);
         } */
 
-        private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
+//        private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
         private static readonly ServiceRoute AdminService = new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService));
 
         public static void ReloadRoutes(RouteCollection routes)
@@ -32,7 +32,7 @@ namespace OneMainWeb
                 routes.Clear();
                 if (!PresentBasePage.ReadPublishFlag())
                 {
-                    routes.Add(FormService);
+                    // routes.Add(FormService);
                     routes.Add(AdminService);
                 }
                 routes.Add(new Route("sitemap.xml", new HttpHandlerRoute("~/Utils/SiteMapHandler.ashx")));
