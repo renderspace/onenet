@@ -5,7 +5,6 @@ using System.Threading;
 using System.Web.Caching;
 using System.Collections.Generic;
 using MsSqlDBUtility;
-using One.Net.BLL.Forms;
 
 namespace One.Net.BLL.DAL
 {
@@ -196,28 +195,28 @@ namespace One.Net.BLL.DAL
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
         }
 
-        public List<string> ListFileUses(int fileId)
-        {
-            List<string> uses = new List<string>();
+//        public List<string> ListFileUses(int fileId)
+//        {
+//            List<string> uses = new List<string>();
 
-            SqlParameter[] paramsToPass = new SqlParameter[1];
-            paramsToPass[0] = new SqlParameter("@fileId", fileId);
+//            SqlParameter[] paramsToPass = new SqlParameter[1];
+//            paramsToPass[0] = new SqlParameter("@fileId", fileId);
 
-            // Check use of files with Forms
-            string sql =
-                @"SELECT nsa.nform_answer_fk_id
-                  FROM nform_submitted_answer nsa
-                  WHERE nsa.files_fk_id=@fileId";
+//            // Check use of files with Forms
+//            string sql =
+//                @"SELECT nsa.nform_answer_fk_id
+//                  FROM nform_submitted_answer nsa
+//                  WHERE nsa.files_fk_id=@fileId";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
-            {
-                if (reader.Read())
-                {
-                    uses.Add(BOForm.FILE_USE_FORMS);
-                }
-            }
+//            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+//            {
+//                if (reader.Read())
+//                {
+//                    uses.Add(BOForm.FILE_USE_FORMS);
+//                }
+//            }
 
-            return uses;
-        }
+//            return uses;
+//        }
     }
 }
