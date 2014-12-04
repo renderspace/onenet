@@ -286,16 +286,6 @@
       <DependentUpon>TextContentModal.ascx</DependentUpon>
     </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
-    <Compile Include="adm\ExcelExport.ashx.cs">
-      <DependentUpon>ExcelExport.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="adm\Forms.aspx.cs">
-      <DependentUpon>Forms.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="adm\Forms.aspx.designer.cs">
-      <DependentUpon>Forms.aspx</DependentUpon>
-    </Compile>
     <Compile Include="adm\Icons.ashx.cs">
       <DependentUpon>Icons.ashx</DependentUpon>
     </Compile>
@@ -381,13 +371,6 @@
     </Compile>
     <Compile Include="CommonModules\CustomWidget.ascx.designer.cs">
       <DependentUpon>CustomWidget.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="CommonModules\Form.ascx.cs">
-      <DependentUpon>Form.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CommonModules\Form.ascx.designer.cs">
-      <DependentUpon>Form.ascx</DependentUpon>
     </Compile>
     <Compile Include="CommonModules\MagnificGallery.ascx.cs">
       <DependentUpon>MagnificGallery.ascx</DependentUpon>
@@ -494,7 +477,6 @@
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="adm\Forms.aspx" />
     <Content Include="adm\images\drag.png" />
     <Content Include="adm\js\bootstrap-treeview.js" />
     <Content Include="adm\js\bootstrap.js" />
@@ -516,7 +498,6 @@
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\CustomWidget.ascx" />
-    <Content Include="CommonModules\Form.ascx" />
     <Content Include="CommonModules\MagnificGallery.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />
@@ -666,13 +647,6 @@
     <Compile Include="CommonModules\Directory.ascx.designer.cs">
       <DependentUpon>Directory.ascx</DependentUpon>
     </Compile>
-    <Compile Include="CommonModules\FormSelector.ascx.cs">
-      <DependentUpon>FormSelector.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CommonModules\FormSelector.ascx.designer.cs">
-      <DependentUpon>FormSelector.ascx</DependentUpon>
-    </Compile>
     <Compile Include="CommonModules\IFrame.ascx.cs">
       <DependentUpon>IFrame.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -792,7 +766,6 @@
     <Content Include="adm\css\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="adm\ExcelExport.ashx" />
     <Content Include="adm\Icons.ashx" />
     <Content Include="adm\images\web.config" />
     <Content Include="Res\one-net-logo-vs.png" />
@@ -866,7 +839,6 @@
     <Content Include="adm\Articles.aspx" />
     <Content Include="adm\SubscriptionManager.aspx" />
     <Content Include="CommonModules\Directory.ascx" />
-    <Content Include="CommonModules\FormSelector.ascx" />
     <Content Include="CommonModules\IFrame.ascx" />
     <Content Include="CommonModules\Image.ascx" />
     <Content Include="Res\arrow_icon.gif">

@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel.Activation;
 using System.Runtime.Serialization;
-using One.Net.BLL.DAL;
-using One.Net.BLL.Forms;
 using Newtonsoft.Json;
 
 namespace One.Net.BLL.Service

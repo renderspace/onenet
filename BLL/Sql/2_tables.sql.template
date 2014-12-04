@@ -147,19 +147,6 @@ CREATE TABLE [dbo].[place_holder](
 
 GO
 
-CREATE TABLE [dbo].[nform_submitted_answer](
-	[nform_answer_fk_id] [int] NOT NULL,
-	[nform_submission_fk_id] [int] NOT NULL,
-	[submitted_text] [ntext] NULL,
-	[files_fk_id] [int] NULL,
- CONSTRAINT [PK_nform_submitted_answer] PRIMARY KEY CLUSTERED 
-(
-	[nform_answer_fk_id] ASC,
-	[nform_submission_fk_id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
 CREATE TABLE [dbo].[pages](
 	[id] [int] NOT NULL,
 	[publish] [tinyint] NOT NULL,
@@ -188,32 +175,6 @@ CREATE TABLE [dbo].[pages](
 
 GO
 
-CREATE TABLE [dbo].[nform_section](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[content_fk_id] [int] NOT NULL,
-	[nform_fk_id] [int] NOT NULL,
-	[idx] [int] NOT NULL,
-	[section_type] [varchar](255) NOT NULL,
-	[on_client_click] [varchar](255) NULL,
- CONSTRAINT [PK_nform_section] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
-CREATE TABLE [dbo].[nform_submission](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[nform_fk_id] [int] NOT NULL,
-	[finished] [datetime] NOT NULL,
- CONSTRAINT [PK_nform_submission] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
 
 CREATE TABLE [dbo].[language](
 	[id] [int] NOT NULL
@@ -240,8 +201,6 @@ CREATE TABLE [dbo].[article](
 ) ON [PRIMARY]
 
 GO
-
-
 
 CREATE TABLE [dbo].[regular](
 	[id] [int]  IDENTITY(1,1)  NOT NULL,
@@ -336,21 +295,6 @@ CREATE TABLE [dbo].[int_link](
 
 GO
 
-CREATE TABLE [dbo].[nform_question](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[content_fk_id] [int] NOT NULL,
-	[nform_section_fk_id] [int] NOT NULL,
-	[idx] [int] NOT NULL,
-	[is_answer_required] [bit] NOT NULL,
-	[validation_type] [nvarchar](255) NULL,
- CONSTRAINT [PK_nform_question] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
 CREATE TABLE [dbo].[newsletter](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[template_fk_id] [int] NOT NULL,
@@ -412,26 +356,6 @@ CREATE TABLE [dbo].[module_settings](
 
 GO
 
-CREATE TABLE [dbo].[nform_answer](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[content_fk_id] [int] NOT NULL,
-	[nform_question_fk_id] [int] NOT NULL,
-	[idx] [int] NOT NULL,
-	[answer_type] [varchar](255) NOT NULL,
-	[additional_field_type] [varchar](255) NOT NULL,
-	[max_file_size] [int] NULL,
-	[allowed_mime_types] [nvarchar](1000) NULL,
-	[max_chars] [int] NULL,
-	[number_of_rows] [int] NULL,
-	[is_fake] [bit] not null
- CONSTRAINT [PK_nform_answer] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-
-GO
-
 CREATE TABLE [dbo].[newsletter_subscription](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[newsletter_fk_id] [int] NOT NULL,
@@ -468,21 +392,6 @@ CREATE TABLE [dbo].[files](
 ) ON [PRIMARY]
 
 GO
-
-CREATE TABLE [dbo].[nform](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	[content_fk_id] [int] NOT NULL,
-	[form_type] [varchar](255) NOT NULL,
-	[send_to] [nvarchar](1000) NULL,
-	[allow_multiple_submissions] [bit] NOT NULL,
-	[allow_modify_in_submission] [bit] NOT NULL,
-	[completion_redirect] [nvarchar](255) NULL,
- CONSTRAINT [PK_nform] PRIMARY KEY CLUSTERED 
-(
-	[id] ASC
-)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-
 
 CREATE TABLE [dbo].[event_location](
 	[id] [int] IDENTITY(1,1) NOT NULL,
@@ -570,12 +479,6 @@ GO
 ALTER TABLE [dbo].[event] CHECK CONSTRAINT [FK_event_event_location]
 GO
 	 
-	 
-ALTER TABLE [dbo].[nform]  WITH CHECK ADD  CONSTRAINT [FK_nform_content] FOREIGN KEY([content_fk_id])
-REFERENCES [dbo].[content] ([id])
-ALTER TABLE [dbo].[nform] CHECK CONSTRAINT [FK_nform_content]
-GO
-
 ALTER TABLE [dbo].[dictionary]  WITH CHECK ADD  CONSTRAINT [FK_dictionary_content] FOREIGN KEY([content_fk_id])
 REFERENCES [dbo].[content] ([id]) ON DELETE CASCADE
 ALTER TABLE [dbo].[dictionary] CHECK CONSTRAINT [FK_dictionary_content]
@@ -607,16 +510,6 @@ ON DELETE CASCADE
 ALTER TABLE [dbo].[pages_settings] CHECK CONSTRAINT [FK_pages_settings_settings_list]
 GO
 
-ALTER TABLE [dbo].[nform_submitted_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_submitted_answer_files] FOREIGN KEY([files_fk_id])
-REFERENCES [dbo].[files] ([id])
-ALTER TABLE [dbo].[nform_submitted_answer] CHECK CONSTRAINT [FK_nform_submitted_answer_files]
-ALTER TABLE [dbo].[nform_submitted_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_submitted_answer_nform_answer] FOREIGN KEY([nform_answer_fk_id])
-REFERENCES [dbo].[nform_answer] ([id])
-ALTER TABLE [dbo].[nform_submitted_answer] CHECK CONSTRAINT [FK_nform_submitted_answer_nform_answer]
-ALTER TABLE [dbo].[nform_submitted_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_submitted_answer_nform_submission] FOREIGN KEY([nform_submission_fk_id])
-REFERENCES [dbo].[nform_submission] ([id]) ON DELETE CASCADE
-ALTER TABLE [dbo].[nform_submitted_answer] CHECK CONSTRAINT [FK_nform_submitted_answer_nform_submission]
-GO
 
 ALTER TABLE [dbo].[pages]  WITH CHECK ADD  CONSTRAINT [FK_pages_content] FOREIGN KEY([content_fk_id])
 REFERENCES [dbo].[content] ([id])
@@ -631,19 +524,6 @@ ALTER TABLE [dbo].[pages] CHECK CONSTRAINT [FK_pages_template]
 ALTER TABLE [dbo].[pages]  WITH CHECK ADD  CONSTRAINT [FK_pages_web_site] FOREIGN KEY([web_site_fk_id])
 REFERENCES [dbo].[web_site] ([id])
 ALTER TABLE [dbo].[pages] CHECK CONSTRAINT [FK_pages_web_site]
-GO
-
-ALTER TABLE [dbo].[nform_section]  WITH CHECK ADD  CONSTRAINT [FK_nform_section_content] FOREIGN KEY([content_fk_id])
-REFERENCES [dbo].[content] ([id])
-ALTER TABLE [dbo].[nform_section] CHECK CONSTRAINT [FK_nform_section_content]
-ALTER TABLE [dbo].[nform_section]  WITH CHECK ADD  CONSTRAINT [FK_nform_section_nform] FOREIGN KEY([nform_fk_id])
-REFERENCES [dbo].[nform] ([id])
-ALTER TABLE [dbo].[nform_section] CHECK CONSTRAINT [FK_nform_section_nform]
-GO
-
-ALTER TABLE [dbo].[nform_submission]  WITH CHECK ADD  CONSTRAINT [FK_nform_submission_nform] FOREIGN KEY([nform_fk_id])
-REFERENCES [dbo].[nform] ([id])
-ALTER TABLE [dbo].[nform_submission] CHECK CONSTRAINT [FK_nform_submission_nform]
 GO
 
 ALTER TABLE [dbo].[content_data_store]  WITH CHECK ADD  CONSTRAINT [FK_content_data_store_content] FOREIGN KEY([content_fk_id])
@@ -684,14 +564,6 @@ NOT FOR REPLICATION
 ALTER TABLE [dbo].[int_link] NOCHECK CONSTRAINT [FK_int_link_pages]
 GO
 
-ALTER TABLE [dbo].[nform_question]  WITH CHECK ADD  CONSTRAINT [FK_nform_question_content] FOREIGN KEY([content_fk_id])
-REFERENCES [dbo].[content] ([id])
-ALTER TABLE [dbo].[nform_question] CHECK CONSTRAINT [FK_nform_question_content]
-ALTER TABLE [dbo].[nform_question]  WITH CHECK ADD  CONSTRAINT [FK_nform_question_nform_section] FOREIGN KEY([nform_section_fk_id])
-REFERENCES [dbo].[nform_section] ([id])
-ALTER TABLE [dbo].[nform_question] CHECK CONSTRAINT [FK_nform_question_nform_section]
-GO
-
 ALTER TABLE [dbo].[newsletter]  WITH CHECK ADD  CONSTRAINT [FK_newsletter_template] FOREIGN KEY([template_fk_id])
 REFERENCES [dbo].[template] ([id])
 ALTER TABLE [dbo].[newsletter] CHECK CONSTRAINT [FK_newsletter_template]
@@ -720,14 +592,6 @@ ALTER TABLE [dbo].[module_settings]  WITH CHECK ADD  CONSTRAINT [FK_module_setti
 REFERENCES [dbo].[module_instance] ([id], [pages_fk_publish]) ON DELETE CASCADE
 
 ALTER TABLE [dbo].[module_settings] CHECK CONSTRAINT [FK_module_settings_module_instance]
-GO
-
-ALTER TABLE [dbo].[nform_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_answer_content] FOREIGN KEY([content_fk_id])
-REFERENCES [dbo].[content] ([id])
-ALTER TABLE [dbo].[nform_answer] CHECK CONSTRAINT [FK_nform_answer_content]
-ALTER TABLE [dbo].[nform_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_answer_nform_question] FOREIGN KEY([nform_question_fk_id])
-REFERENCES [dbo].[nform_question] ([id])
-ALTER TABLE [dbo].[nform_answer] CHECK CONSTRAINT [FK_nform_answer_nform_question]
 GO
 
 ALTER TABLE [dbo].[newsletter_subscription]  WITH CHECK ADD  CONSTRAINT [FK_newsletter_subscription_email] FOREIGN KEY([email_fk_id])

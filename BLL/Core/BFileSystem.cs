@@ -5,7 +5,6 @@ using System.Threading;
 using System.Transactions;
 using System.Web.Caching;
 using One.Net.BLL.DAL;
-using One.Net.BLL.Forms;
 
 namespace One.Net.BLL
 {
@@ -126,15 +125,15 @@ namespace One.Net.BLL
                     contentB.Delete(tempContentId);
                 }
 
-                // Check and clear file uses if any
-                List<string> fileUses = ListFileUses(Id);
-                foreach (string fileUse in fileUses)
-                {
-                    switch (fileUse)
-                    {
-                        case BOForm.FILE_USE_FORMS: fileDb.ClearFormFileUse(Id); break;
-                    }
-                }
+                //// Check and clear file uses if any
+                //List<string> fileUses = ListFileUses(Id);
+                //foreach (string fileUse in fileUses)
+                //{
+                //    switch (fileUse)
+                //    {
+                //        case BOForm.FILE_USE_FORMS: fileDb.ClearFormFileUse(Id); break;
+                //    }
+                //}
 
                 fileDb.Delete(Id);
                 OCache.Remove(CACHE_ID + Id);
@@ -282,10 +281,10 @@ namespace One.Net.BLL
             OCache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
         }
 
-        public List<string> ListFileUses(int fileId)
-        {
-            return fileDb.ListFileUses(fileId);
-        }
+        //public List<string> ListFileUses(int fileId)
+        //{
+        //    return fileDb.ListFileUses(fileId);
+        //}
         
         /// <summary>
         /// Allows change of folder if BOCategory is of BOFile.FOLDER_CATEGORIZATION_TYPE type only.

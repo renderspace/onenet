@@ -127,7 +127,6 @@
     <Compile Include="Core\BCategorization.cs" />
     <Compile Include="Core\BContent.cs" />
     <Compile Include="Core\BFileSystem.cs" />
-    <Compile Include="Core\BForm.cs" />
     <Compile Include="Core\BInternalContent.cs" />
     <Compile Include="Core\BLICategorization.cs" />
     <Compile Include="Core\BNewsLtr.cs" />
@@ -140,7 +139,6 @@
     <Compile Include="DAL\DbCategorization.cs" />
     <Compile Include="DAL\DbContent.cs" />
     <Compile Include="DAL\DbFileSystem.cs" />
-    <Compile Include="DAL\DbForm.cs" />
     <Compile Include="DAL\DbHelper.cs" />
     <Compile Include="DAL\DbMisc.cs" />
     <Compile Include="DAL\DbNewsLtr.cs" />
@@ -151,7 +149,6 @@
     <Compile Include="Model\BOCategory.cs" />
     <Compile Include="Model\BODictionary.cs" />
     <Compile Include="Model\BOFile.cs" />
-    <Compile Include="Model\BOForm.cs" />
     <Compile Include="Model\BOInternalContent.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOIntCont.cs" />
     <Compile Include="Model\BOInternalContentStructures\BOIntContImage.cs" />
@@ -170,6 +167,7 @@
     <Compile Include="Model\BOWebsite.cs" />
     <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
+    <Compile Include="Model\Web\IInstallable.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />
     <Compile Include="Model\Web\IMetaDataProvider.cs" />
     <Compile Include="Model\Web\IPageNameProvider.cs">
@@ -208,9 +206,7 @@
     <Compile Include="Scaffold\PhysicalSchema.cs" />
     <Compile Include="Scaffold\Schema.cs" />
     <Compile Include="Service\AdminService.cs" />
-    <Compile Include="Service\FormService.cs" />
     <Compile Include="Service\IAdminService.cs" />
-    <Compile Include="Service\IFormService.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />
     <Compile Include="Utility\FolderRightsReader.cs" />
     <Compile Include="Utility\FormatTool.cs" />
