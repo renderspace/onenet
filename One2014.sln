@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C55BF
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "One.Net.Forms", "One.Net.Forms\One.Net.Forms.csproj", "{7FE35F72-2777-45B2-8F18-E825249A2115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
@@ -41,6 +43,16 @@ Global
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3EC05CC8-A433-482A-86E3-AA01F9519A01}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Release|.NET.ActiveCfg = Release|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7FE35F72-2777-45B2-8F18-E825249A2115}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

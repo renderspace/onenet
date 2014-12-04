@@ -258,12 +258,9 @@ namespace OneMainWeb
             var list = GetCheckedIds();
             foreach (var i in list)
             {
-                if (fileB.ListFileUses(i).Count == 0)
+                if (fileB.Delete(i))
                 {
-                    if (fileB.Delete(i))
-                    {
-                        deletedCount++;
-                    }
+                    deletedCount++;
                 }
             }
             if (deletedCount > 0)

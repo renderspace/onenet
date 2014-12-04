@@ -167,7 +167,6 @@
     <Compile Include="Model\BOWebsite.cs" />
     <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
-    <Compile Include="Model\Web\IInstallable.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />
     <Compile Include="Model\Web\IMetaDataProvider.cs" />
     <Compile Include="Model\Web\IPageNameProvider.cs">
