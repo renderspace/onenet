@@ -31,8 +31,6 @@ GRANT EXECUTE ON GetPath TO [One.Net.FrontEnd]
 GRANT EXECUTE ON ListPageModInstances TO [One.Net.FrontEnd]  
 
 GRANT UPDATE,INSERT ON [dbo].[newsletter_subscription] TO [One.Net.FrontEnd]
-GRANT UPDATE,INSERT ON [dbo].[nform_submission] TO [One.Net.FrontEnd]
-GRANT UPDATE,INSERT ON [dbo].[nform_submitted_answer] TO [One.Net.FrontEnd]
 GRANT UPDATE,INSERT ON [dbo].[files] TO [One.Net.FrontEnd]
 
 -- for file upload on frontend
