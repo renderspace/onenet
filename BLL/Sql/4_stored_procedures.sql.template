@@ -1166,44 +1166,6 @@ END
 
 GO
 
-CREATE PROCEDURE [dbo].[ListPagedFormSubmissions] 
-	@sortBy varchar(255), 
-	@sortDirection varchar(255), 
-	@fromRecordIndex int, 
-	@toRecordIndex int,
-	@formId int 
-AS
-	declare @orderBy varchar(500)
-
-	SET @orderBy = CASE WHEN @sortBy = '' THEN '' ELSE ' ORDER BY ' + @sortBy + ' ' + @sortDirection END
-
-	CREATE TABLE #TempTable
-	(
-		TempID int IDENTITY PRIMARY KEY,
-		submissionId int,
-		dateFinished datetime
-	)
-
-	EXEC ('	INSERT INTO #TempTable (submissionId, dateFinished)
-		SELECT * FROM 
-		(
-			SELECT id, finished
-			FROM [dbo].[nform_submission]
-			WHERE nform_fk_id=' + @formId + '			
-		) [a] ' + @orderBy)
-
-
-	SELECT submissionId, dateFinished
-	FROM
-		#TempTable
-	WHERE
-		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
-
-	select count(*) from #TempTable
-
-	DROP table #TempTable
-GO
-
 CREATE PROCEDURE create_web_site
 	@websiteName varchar(255),
 	@defaultLanguageId int,
@@ -1696,90 +1658,6 @@ BEGIN
 		(@id, @publish, @contentId, @comment, @email, @name, @changed, @markedForDeletion, @commentedAt, @title);
 	END
 END
-
-GO
-
-CREATE PROCEDURE [dbo].[ListPagedForms] 
-@fromRecordIndex int, 
-@toRecordIndex int,
-@includeFormsWithoutTranslation bit,
-@languageId int,
-@sortBy varchar(255)=null, 
-@sortDirection varchar(255)=null, 
-@debug int=0
-AS
-	DECLARE @sql        nvarchar(4000),
-			@paramlist  nvarchar(4000)
-
-	SELECT @sql =
-    'SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, 
-			c.date_created, c.principal_modified_by, c.date_modified, c.votes, c.score, 
-			f.content_fk_id, f.id, f.form_type, f.send_to, 
-		(SELECT COUNT(id) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) cnt,
-        (SELECT MIN(finished) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) first_submission_date,
-        (SELECT MAX(finished) FROM [dbo].[nform_submission] WHERE nform_fk_id=f.id) last_submission_date,
-        allow_multiple_submissions,
-        allow_modify_in_submission,
-		completion_redirect
-     FROM [dbo].[nform] f 
-	 INNER JOIN [dbo].[content] c ON c.id=f.content_fk_id '
-
-	if (@includeFormsWithoutTranslation = 1)
-		SELECT @sql = @sql + ' LEFT '
-	ELSE
-		SELECT @sql = @sql + ' INNER '
-
-	SELECT @sql = @sql + ' JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=f.content_fk_id AND cds.language_fk_id=@xlanguageId '
-
-	IF @sortBy IS NOT NULL             
-		SELECT @sql = @sql + ' ORDER BY ' + @sortBy
-	IF @sortBy IS NOT NULL AND @sortDirection IS NOT NULL
-		SELECT @sql = @sql + ' ' + @sortDirection
-
-	IF @debug = 1
-		PRINT @sql 
-
-	SELECT @paramlist = '@xlanguageId int'
-
-	CREATE TABLE #pagingTable
-	(
-		title nvarchar(4000),
-		subtitle nvarchar(255),
-		teaser ntext,
-		html ntext,
-		principal_created_by varchar(255),
-		date_created datetime,
-		principal_modified_by varchar(255),
-		date_modified datetime,
-		votes int,
-		score float,
-		content_fk_id int,
-		id int,
-		form_type varchar(255),
-		send_to nvarchar(1000),
-		submission_count int,
-		first_submission_date datetime,
-		last_submission_date datetime,
-		allow_multiple_submissions bit,
-        allow_modify_in_submission bit,
-		completion_redirect nvarchar(255),
-		TempID int IDENTITY PRIMARY KEY
-	)
-
-	INSERT #pagingTable
-		EXEC sp_executesql @sql, @paramlist, @languageId
-
-	DECLARE @AllRecords int
-	SET @AllRecords = (SELECT COUNT (ID) FROM #pagingTable)
-
-	SELECT *, @AllRecords
-	FROM
-		#pagingTable
-	WHERE
-		TempID >= @fromRecordIndex AND TempID <= @toRecordIndex
-
-	DROP table #pagingTable
-	
 
 GO
 
