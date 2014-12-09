@@ -41,6 +41,9 @@
     <Reference Include="One.Net.BLL">
       <HintPath>..\OneMainWeb\bin\One.Net.BLL.dll</HintPath>
     </Reference>
+    <Reference Include="OneMainWeb">
+      <HintPath>..\OneMainWeb\bin\OneMainWeb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -53,13 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminControls\Notifier.ascx.cs">
-      <DependentUpon>Notifier.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AdminControls\Notifier.ascx.designer.cs">
-      <DependentUpon>Notifier.ascx</DependentUpon>
-    </Compile>
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
     </Compile>
@@ -86,13 +82,6 @@
     </Compile>
     <Compile Include="adm\Forms.aspx.designer.cs">
       <DependentUpon>Forms.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OneMain.Master.cs">
-      <DependentUpon>OneMain.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OneMain.Master.designer.cs">
-      <DependentUpon>OneMain.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -121,9 +110,6 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="OneMain.Master">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
     <None Include="packages.config" />
     <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
