@@ -41,13 +41,26 @@ namespace One.Net.Forms.BLL
 
             if (form.Id.HasValue)
             {
-                sql = @"UPDATE [dbo].[nform] SET form_type=@FormType, send_to=@SendTo, allow_modify_in_submission=@AllowModifyInSubmission, allow_multiple_submissions=@AllowMultipleSubmissions, completion_redirect=@CompletionRedirect WHERE id=@Id";
+                sql = @"UPDATE [dbo].[nform] 
+                        SET 
+                        form_type=@FormType, 
+                        send_to=@SendTo, 
+                        allow_modify_in_submission=@AllowModifyInSubmission, 
+                        allow_multiple_submissions=@AllowMultipleSubmissions, 
+                        completion_redirect=@CompletionRedirect,
+                        title=@Title,
+                        sub_title=@SubTitle,
+                        description=@Description,
+                        thank_you_note=@ThankYouNote
+                        WHERE id=@Id";
             }
             else
             {
                 sql = @"INSERT INTO [dbo].[nform]
-                           (form_type, send_to, allow_modify_in_submission, allow_multiple_submissions, completion_redirect)
-                           VALUES (@FormType, @SendTo, @AllowModifyInSubmission, @AllowMultipleSubmissions, @CompletionRedirect ); SET @Id=SCOPE_IDENTITY();";
+                        (form_type, send_to, allow_modify_in_submission, allow_multiple_submissions, completion_redirect, title, sub_title, description, thank_you_note)
+                        VALUES 
+                        (@FormType, @SendTo, @AllowModifyInSubmission, @AllowMultipleSubmissions, @CompletionRedirect, @Title, @SubTitle, @Description, @ThankYouNote ); 
+                        SET @Id=SCOPE_IDENTITY();";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql, paramsToPass);
@@ -86,13 +99,15 @@ namespace One.Net.Forms.BLL
 
             if (section.Id.HasValue)
             {
-                sql = @"UPDATE nform_section SET section_type=@SectionType, nform_fk_id=@FormId, idx=@Idx, on_client_click=@OnClientClick WHERE id=@Id";
+                sql = @"UPDATE nform_section SET section_type=@SectionType, nform_fk_id=@FormId, idx=@Idx, on_client_click=@OnClientClick, title=@Title, description=@Description WHERE id=@Id";
             }
             else
             {
                 sql = @"INSERT INTO nform_section
-                    (section_type, nform_fk_id, idx, on_client_click)
-                    VALUES (@SectionType, @FormId, @Idx, @OnClientClick); SET @Id=SCOPE_IDENTITY();";
+                    (section_type, nform_fk_id, idx, on_client_click, title, description)
+                    VALUES 
+                    (@SectionType, @FormId, @Idx, @OnClientClick, @Title, @Description); 
+                    SET @Id=SCOPE_IDENTITY();";
             }
 
             var recordsUpdated = SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql, paramsToPass);
@@ -134,14 +149,23 @@ namespace One.Net.Forms.BLL
 
             if (question.Id.HasValue)
             {
-                sql = @"UPDATE [dbo].[nform_question] SET is_answer_required=@IsAnswerRequired,
-                        nform_section_fk_id=@SectionId, idx=@Idx, validation_type=@ValidationType WHERE id=@Id";
+                sql = @"UPDATE [dbo].[nform_question] 
+                        SET 
+                        is_answer_required=@IsAnswerRequired,
+                        nform_section_fk_id=@SectionId, 
+                        idx=@Idx, 
+                        validation_type=@ValidationType,
+                        title=@Title,
+                        description=@Description
+                        WHERE id=@Id";
             }
             else
             {
                 sql = @"INSERT INTO nform_question
-                        (is_answer_required, nform_section_fk_id, idx, validation_type)
-                        VALUES (@IsAnswerRequired, @SectionId, @Idx, @ValidationType); SET @Id=SCOPE_IDENTITY();";
+                        (is_answer_required, nform_section_fk_id, idx, validation_type, title, description)
+                        VALUES 
+                        (@IsAnswerRequired, @SectionId, @Idx, @ValidationType, @Title, @Description); 
+                        SET @Id=SCOPE_IDENTITY();";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql, paramsToPass);
@@ -191,9 +215,11 @@ namespace One.Net.Forms.BLL
 
             string sql = "";
 
-            sql = @"INSERT INTO nform_answer
-                        (answer_type, additional_field_type, nform_question_fk_id, idx, max_chars, number_of_rows, max_file_size, allowed_mime_types, is_fake)
-                        VALUES (@AnswerType, @AdditionalFieldType, @QuestionId, @Idx, @MaxChars, @NumberOfRows, @MaxFileSize, @AllowedMimeTypes, @IsFake); SET @Id=SCOPE_IDENTITY();";
+            sql = @"    INSERT INTO nform_answer
+                        (answer_type, additional_field_type, nform_question_fk_id, idx, max_chars, number_of_rows, max_file_size, allowed_mime_types, is_fake, title, description)
+                        VALUES 
+                        (@AnswerType, @AdditionalFieldType, @QuestionId, @Idx, @MaxChars, @NumberOfRows, @MaxFileSize, @AllowedMimeTypes, @IsFake, @Title, @Description); 
+                        SET @Id=SCOPE_IDENTITY();";
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql, paramsToPass);
 
@@ -279,7 +305,7 @@ namespace One.Net.Forms.BLL
             paramsToPass[0] = new SqlParameter("@formId", formId);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, CommandType.Text,
-                @"SELECT f.id form_id, f.form_type, f.send_to, 
+                @"SELECT f.id form_id, f.title, f.sub_title, f.description, f.thank_you_note, f.form_type, f.send_to, 
                   (SELECT COUNT(id) FROM nform_submission WHERE nform_fk_id=f.id) submission_count,
                   (SELECT MIN(finished) FROM nform_submission WHERE nform_fk_id=f.id) first_submission_date,
                   (SELECT MAX(finished) FROM nform_submission WHERE nform_fk_id=f.id) last_submission_date,
@@ -297,6 +323,15 @@ namespace One.Net.Forms.BLL
             }
 
             return form;
+        }
+
+        private BOFormSubmission PopulateFormSubmission(IDataRecord reader)
+        {
+            var submission = new BOFormSubmission();
+            submission.Id = (int)reader["id"];
+            submission.Finished = (DateTime)reader["finished"];
+            submission.FormId = (int)reader["nform_fk_id"];
+            return submission;
         }
 
         private BOForm PopulateForm(IDataRecord reader)
@@ -334,7 +369,9 @@ namespace One.Net.Forms.BLL
             paramsToPass[0] = new SqlParameter("@submissionId", submissionId);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, CommandType.Text,
-                "SELECT id, nform_fk_id, finished FROM nform_submission WHERE id=@submissionId",
+                  @"SELECT id, nform_fk_id, finished 
+                    FROM [dbo].[nform_submission] 
+                    WHERE id=@submissionId",
                 paramsToPass))
             {
                 if (reader.Read())
@@ -351,38 +388,39 @@ namespace One.Net.Forms.BLL
 
         public PagedList<BOForm> List(ListingState state)
         {
-            PagedList<BOForm> forms = new PagedList<BOForm>();
+            var forms = new One.Net.BLL.PagedList<BOForm>();
+            var sql = @";
+                WITH result_set AS
+				(
+					SELECT ROW_NUMBER() OVER (ORDER BY " + state.SortField + " " + (state.SortDirection == SortDir.Ascending ? "asc" : "desc") + @") AS row_idx, COUNT(*) OVER (PARTITION BY NULL) AS row_cnt, 
+                    f.id form_id, f.title, f.sub_title, f.description, f.thank_you_note, f.form_type, f.send_to, 
+                    (SELECT COUNT(id) FROM nform_submission WHERE nform_fk_id=f.id) submission_count,
+                    (SELECT MIN(finished) FROM nform_submission WHERE nform_fk_id=f.id) first_submission_date,
+                    (SELECT MAX(finished) FROM nform_submission WHERE nform_fk_id=f.id) last_submission_date,
+                    allow_multiple_submissions,
+                    allow_modify_in_submission,
+                    completion_redirect
+                    FROM [dbo].[nform] f 
+				)
+				SELECT * FROM result_set 
+                WHERE row_idx BETWEEN @fromRecordIndex AND @toRecordIndex";
 
-            string sql;
-            CommandType commandType = CommandType.Text;
-            SqlParameter[] paramsToPass = null;
+            var paramsToPass = new[]
+				{
+					new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex),
+                    new SqlParameter("@toRecordIndex", state.DbToRecordIndex),
+				};
 
-            int toRecordIndex = 0, fromRecordIndex = 0;
-
-            if (state.FirstRecordIndex.HasValue && state.RecordsPerPage.HasValue)
-            {
-                fromRecordIndex = state.FirstRecordIndex.Value + 1;
-                toRecordIndex = (fromRecordIndex + state.RecordsPerPage.Value) - 1;
-            }
-
-            paramsToPass = new SqlParameter[4];
-            paramsToPass[0] = state.SortField.Length < 2 ? new SqlParameter("@sortBy", DBNull.Value) : new SqlParameter("@sortBy", state.SortField);
-            paramsToPass[1] = new SqlParameter("@sortDirection", state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
-            paramsToPass[2] = new SqlParameter("@fromRecordIndex", fromRecordIndex);
-            paramsToPass[3] = new SqlParameter("@toRecordIndex", toRecordIndex);
-
-            commandType = CommandType.StoredProcedure;
-
-            sql = "[dbo].[ListPagedForms]";
+            var commandType = CommandType.Text;
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, commandType, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
-                    var form = PopulateForm(reader);                    
+                    var form = PopulateForm(reader);
 
                     if (forms.AllRecords < 1)
-                        forms.AllRecords = reader.GetInt32(21);
+                        forms.AllRecords = (int)reader["row_cnt"];
 
                     forms.Add(form);
                 }
@@ -394,40 +432,39 @@ namespace One.Net.Forms.BLL
 
         public PagedList<BOFormSubmission> ListFormSubmissions(int formId, ListingState state)
         {
-            PagedList<BOFormSubmission> submissions = new PagedList<BOFormSubmission>();
+            var submissions = new PagedList<BOFormSubmission>();
 
-            string sql = "";
-            CommandType commandType = CommandType.Text;
+            var sql = "";
+            var commandType = CommandType.Text;
             SqlParameter[] paramsToPass = null;
 
             if (state.UsesPaging)
             {
-                int toRecordIndex = 0, fromRecordIndex = 0;
+                paramsToPass = new SqlParameter[] {
+                    new SqlParameter("@formId", formId),
+                    new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex),
+                    new SqlParameter("@toRecordIndex", state.DbToRecordIndex)
+                };
 
-                if (state.FirstRecordIndex.HasValue && state.RecordsPerPage.HasValue)
-                {
-                    fromRecordIndex = state.FirstRecordIndex.Value + 1;
-                    toRecordIndex = (fromRecordIndex + state.RecordsPerPage.Value) - 1;
-                }
+                sql = @";
+                WITH result_set AS
+				(
+					SELECT ROW_NUMBER() OVER (ORDER BY " + state.SortField + " " + (state.SortDirection == SortDir.Ascending ? "asc" : "desc") + @") AS row_idx, COUNT(*) OVER (PARTITION BY NULL) AS row_cnt, 
+                    ns.id,
+                    ns.finished,
+                    ns.nform_fk_id
+                    FROM [dbo].[nform_submission] ns
+                    WHERE nform_fk_id=@formId 
+				)
+				SELECT * FROM result_set 
+                WHERE row_idx BETWEEN @fromRecordIndex AND @toRecordIndex";
 
-                paramsToPass = new SqlParameter[5];
-                paramsToPass[0] = new SqlParameter("@sortBy", (string.IsNullOrEmpty(state.SortField) ? "" : state.SortField));
-                paramsToPass[1] = new SqlParameter("@sortDirection", "");
-                paramsToPass[2] = new SqlParameter("@fromRecordIndex", fromRecordIndex);
-                paramsToPass[3] = new SqlParameter("@toRecordIndex", toRecordIndex);
-                paramsToPass[4] = new SqlParameter("@formId", formId);
-
-                commandType = CommandType.StoredProcedure;
-
-                sql = "[dbo].[ListPagedFormSubmissions]";
             }
             else
             {
-                sql = @"SELECT id, finished FROM nform_submission 
-                        WHERE nform_fk_id=@formId 
+                sql = @"SELECT id, finished, nform_fk_id, COUNT(*) OVER (PARTITION BY NULL) AS row_cnt
+                        FROM [dbo].[nform_submission]                   
                         ORDER BY finished DESC";
-
-                commandType = CommandType.Text;
 
                 paramsToPass = new SqlParameter[1];
                 paramsToPass[0] = new SqlParameter("@formId", formId);
@@ -435,21 +472,15 @@ namespace One.Net.Forms.BLL
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, commandType, sql, paramsToPass))
             {
+                var totalCount = 0;
                 while (reader.Read())
                 {
-                    BOFormSubmission submission = new BOFormSubmission();
-                    submission.Id = reader.GetInt32(0);
-                    submission.FormId = formId;
-                    submission.Finished = reader.GetDateTime(1);
-                    submissions.Add(submission);
+                    if (totalCount == 0)
+                        totalCount = (int)reader["row_cnt"];
+                    submissions.Add(PopulateFormSubmission(reader));
                 }
 
-                reader.NextResult();
-
-                if (reader.Read())
-                {
-                    submissions.AllRecords = reader.GetInt32(0);
-                }
+                submissions.AllRecords = totalCount;
             }
 
             return submissions;
@@ -504,7 +535,7 @@ namespace One.Net.Forms.BLL
             paramsToPass[0] = new SqlParameter("@formId", formId);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, CommandType.Text,
-                @"SELECT id section_id, nform_fk_id, section_type, idx, on_client_click
+                @"SELECT id section_id, title, description, nform_fk_id, section_type, idx, on_client_click
                   FROM nform_section 
                   WHERE nform_fk_id=@formId 
                   ORDER BY idx ASC",
@@ -549,7 +580,7 @@ namespace One.Net.Forms.BLL
             paramsToPass[0] = new SqlParameter("@sectionId", sectionId);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, CommandType.Text,
-                @"SELECT nq.id question_id, nq.nform_section_fk_id, nq.is_answer_required, nq.idx, nq.validation_type, 
+                @"SELECT nq.id question_id, nq.title, nq.description, nq.nform_section_fk_id, nq.is_answer_required, nq.idx, nq.validation_type, 
                     (SELECT COUNT(distinct ns.id) FROM nform_submitted_answer nsa
                      INNER JOIN nform_submission ns ON ns.id=nsa.nform_submission_fk_id
                      INNER JOIN nform_answer na ON na.id=nsa.nform_answer_fk_id
@@ -612,7 +643,7 @@ namespace One.Net.Forms.BLL
             paramsToPass[0] = new SqlParameter("@questionId", questionId);
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMainCustom, CommandType.Text,
-                @"SELECT fa.id answer_id, fa.nform_question_fk_id, fa.answer_type, fa.additional_field_type, fa.idx, fa.max_chars, fa.number_of_rows, fa.max_file_size, fa.allowed_mime_types,
+                @"SELECT fa.id answer_id, fa.title, fa.description, fa.nform_question_fk_id, fa.answer_type, fa.additional_field_type, fa.idx, fa.max_chars, fa.number_of_rows, fa.max_file_size, fa.allowed_mime_types,
 		                    CASE 
 			                    WHEN (fa.answer_type = 'SingleText')
 				                    THEN
