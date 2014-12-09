@@ -389,6 +389,8 @@ namespace One.Net.Forms.BLL
         public PagedList<BOForm> List(ListingState state)
         {
             var forms = new One.Net.BLL.PagedList<BOForm>();
+            if (string.IsNullOrEmpty(state.SortField))
+                state.SortField = "f.id";
             var sql = @";
                 WITH result_set AS
 				(
@@ -584,7 +586,7 @@ namespace One.Net.Forms.BLL
                     (SELECT COUNT(distinct ns.id) FROM nform_submitted_answer nsa
                      INNER JOIN nform_submission ns ON ns.id=nsa.nform_submission_fk_id
                      INNER JOIN nform_answer na ON na.id=nsa.nform_answer_fk_id
-                     WHERE na.nform_question_fk_id=nq.id and na.is_fake=0) NoAnsweredQuestions
+                     WHERE na.nform_question_fk_id=nq.id and na.is_fake=0) times_answered
                   FROM nform_question nq
                   WHERE nq.nform_section_fk_id=@sectionId 
                   ORDER BY nq.idx ASC",
@@ -618,7 +620,7 @@ namespace One.Net.Forms.BLL
             }
             else
             {
-                switch (reader.GetString(5))
+                switch ((string)reader["validation_type"])
                 {
                     case BOQuestion.VALIDATION_TYPE_NONE: question.ValidationType = ValidationTypes.None; break;
                     case BOQuestion.VALIDATION_TYPE_DATETIME: question.ValidationType = ValidationTypes.DateTime; break;
@@ -630,7 +632,7 @@ namespace One.Net.Forms.BLL
                 }
             }
 
-            question.TimesAnswered = reader.GetInt32(6);
+            question.TimesAnswered = (int)reader["times_answered"];
 
             return question;
         }
@@ -671,7 +673,8 @@ namespace One.Net.Forms.BLL
                 {
                     var answer = PopulateAnswer(reader);
 
-                    answers.Add(answer.Id.Value, answer);
+                    if (answer != null && answer.Id.HasValue)
+                        answers.Add(answer.Id.Value, answer);
                 }
             }
 

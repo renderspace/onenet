@@ -1,7 +1,7 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Form.ascx.cs" Inherits="One.Net.Forms.Form" %>
 
 <%@ Import Namespace="One.Net.BLL" %>
-<%@ Import Namespace="One.Net.BLL.Forms" %>
+<%@ Import Namespace="One.Net.Forms.BLL" %>
 <div class="validationGroup">
     <asp:PlaceHolder ID="plhForm" runat="server" />
     <asp:PlaceHolder ID="plhResults" runat="server">

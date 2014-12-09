@@ -394,7 +394,7 @@ namespace One.Net.Forms.adm
                         case FormHelper.FrontEndQuestionTypes.MenuToChooseFrom:
                             {
                                 FormHelper.FrontEndMenuTypes presentationType = FormHelper.FrontEndMenuTypes.CheckBox;
-                                if (question.FirstAnswerKey.HasValue)
+                                if (question.FirstAnswerKey.HasValue && question.FirstAnswerKey.HasValue)
                                 {
                                     switch (question.Answers[question.FirstAnswerKey.Value].AnswerType)
                                     {
@@ -416,13 +416,16 @@ namespace One.Net.Forms.adm
                 else if (SessionForm.FormType == FormTypes.Poll)
                 {
                     FormHelper.FrontEndMenuTypes presentationType = FormHelper.FrontEndMenuTypes.CheckBox;
-                    switch (question.Answers[question.FirstAnswerKey.Value].AnswerType)
+                    if (question.FirstAnswerKey.HasValue)
                     {
-                        case AnswerTypes.Checkbox: presentationType = FormHelper.FrontEndMenuTypes.CheckBox; break;
-                        case AnswerTypes.DropDown: presentationType = FormHelper.FrontEndMenuTypes.DropDown; break;
-                        case AnswerTypes.Radio: presentationType = FormHelper.FrontEndMenuTypes.Radio; break;
+                        switch (question.Answers[question.FirstAnswerKey.Value].AnswerType)
+                        {
+                            case AnswerTypes.Checkbox: presentationType = FormHelper.FrontEndMenuTypes.CheckBox; break;
+                            case AnswerTypes.DropDown: presentationType = FormHelper.FrontEndMenuTypes.DropDown; break;
+                            case AnswerTypes.Radio: presentationType = FormHelper.FrontEndMenuTypes.Radio; break;
+                        }
+                        ShowMenuToChooseFromControls(question, presentationType);
                     }
-                    ShowMenuToChooseFromControls(question, presentationType);
                 }
             }
         }
@@ -1422,8 +1425,7 @@ namespace One.Net.Forms.adm
 
         #endregion Second tab methods
     }
-
-
+    
     public class FormHelper
     {
         public enum FrontEndQuestionTypes { SingleLineOfText = 1, MultiLineText, MenuToChooseFrom, NumericalValue, DateTime, Time, FileUpload, Integer, Email, Captcha, VAT, Telephone }
