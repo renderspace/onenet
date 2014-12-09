@@ -55,7 +55,7 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
-                                    <asp:LinkButton Text='<span class=\"glyphicon glyphicon-pencil\"></span> Edit' CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" Enabled='<%# !(bool)Eval("MissingTranslation") %>' runat="server" CssClass="btn btn-info btn-xs" />	
+                                    <asp:LinkButton Text='<span class=\"glyphicon glyphicon-pencil\"></span> Edit' CommandName="EditForm" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs" />	
                             </ItemTemplate>
                         </asp:TemplateField>                            
                     </Columns>
@@ -124,7 +124,7 @@
                                         ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
                                          CssClass="form-control" />
                                     <asp:ObjectDataSource ID="FormTypesSource" runat="server"
-                                        SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
+                                        SelectMethod="ListFormTypes" TypeName="One.Net.Forms.adm.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
                                     </asp:ObjectDataSource>
@@ -139,7 +139,7 @@
                                         ID="ddlUpdateSectionTypes" OnDataBound="ddlUpdateSectionTypes_DataBound" runat="server" DataSourceID="SectionTypesSource"
                                          CssClass="form-control" />
                                     <asp:ObjectDataSource ID="SectionTypesSource" runat="server"
-                                        SelectMethod="ListSectionTypes" TypeName="OneMainWeb.FormHelper">
+                                        SelectMethod="ListSectionTypes" TypeName="One.Net.Forms.adm.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
                                     </asp:ObjectDataSource>

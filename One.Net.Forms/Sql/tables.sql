@@ -91,9 +91,6 @@ CREATE TABLE [dbo].[nform_submitted_answer](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 ;
 
-ALTER TABLE [dbo].[nform_submitted_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_submitted_answer_files] FOREIGN KEY([files_fk_id])
-REFERENCES [dbo].[files] ([id]);
-ALTER TABLE [dbo].[nform_submitted_answer] CHECK CONSTRAINT [FK_nform_submitted_answer_files];
 ALTER TABLE [dbo].[nform_submitted_answer]  WITH CHECK ADD  CONSTRAINT [FK_nform_submitted_answer_nform_answer] FOREIGN KEY([nform_answer_fk_id])
 REFERENCES [dbo].[nform_answer] ([id]);
 ALTER TABLE [dbo].[nform_submitted_answer] CHECK CONSTRAINT [FK_nform_submitted_answer_nform_answer];
