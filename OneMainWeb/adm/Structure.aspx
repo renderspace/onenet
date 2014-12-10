@@ -87,7 +87,7 @@
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Redirect to URL</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control absrelurl" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
+                                <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control absrelurl" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
                             </div>
                         </div>
                         <div class="form-group">

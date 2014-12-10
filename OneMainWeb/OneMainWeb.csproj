@@ -55,17 +55,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="BundleTransformer.Core, Version=1.9.25.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
+    <Reference Include="BundleTransformer.Core, Version=1.9.32.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Core.1.9.25\lib\net40\BundleTransformer.Core.dll</HintPath>
+      <HintPath>..\packages\BundleTransformer.Core.1.9.32\lib\net40\BundleTransformer.Core.dll</HintPath>
     </Reference>
     <Reference Include="BundleTransformer.SassAndScss, Version=1.9.25.0, Culture=neutral, PublicKeyToken=973c344c93aac60d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\BundleTransformer.SassAndScss.1.9.25\lib\net40\BundleTransformer.SassAndScss.dll</HintPath>
     </Reference>
-    <Reference Include="BundleTransformer.Yui, Version=1.9.25.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="BundleTransformer.Yui, Version=1.9.30.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\BundleTransformer.Yui.1.9.25\lib\net40\BundleTransformer.Yui.dll</HintPath>
+      <HintPath>..\packages\BundleTransformer.Yui.1.9.30\lib\net40\BundleTransformer.Yui.dll</HintPath>
     </Reference>
     <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -83,9 +83,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="FiftyOne.Foundation, Version=3.1.7.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FiftyOne.Foundation, Version=3.1.8.3, Culture=neutral, PublicKeyToken=e967ae578dabd98e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\51Degrees.mobi.3.1.6.6\lib\NET40\FiftyOne.Foundation.dll</HintPath>
+      <HintPath>..\packages\51Degrees.mobi.3.1.8.4\lib\NET40\FiftyOne.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="IronRuby, Version=1.1.4.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -429,6 +429,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mobile\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="OneMain.Master.cs">
       <DependentUpon>OneMain.Master</DependentUpon>
@@ -503,42 +507,10 @@
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
     <Content Include="CommonModules\VirtualTable.ascx" />
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\theme.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Controls\AdminWikiMenu.ascx" />
     <Content Include="Controls\Blank.ascx" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
+    <Content Include="Mobile\Default.aspx" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -794,8 +766,6 @@
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.11.2.js" />
-    <Content Include="Scripts\jquery-ui-1.11.2.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -903,6 +873,7 @@
     <Folder Include="AdminExtensions\" />
     <Folder Include="adm\ashx\" />
     <Folder Include="App_GlobalResources\" />
+    <Folder Include="Content\themes\base\images\" />
     <Folder Include="site_specific\custom_modules\" />
   </ItemGroup>
   <ItemGroup>
