@@ -7,7 +7,6 @@
 			<siteMapNode url="~/adm/Publish.aspx" title="Publishing" description="" roles="all, admin, Publish" />
 		</siteMapNode>
 		<siteMapNode url="" title="Modules" description="" roles="*">
-			<siteMapNode url="adm/Forms.aspx" title="Forms" description="" roles="all, admin, Forms"/>
 			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, admin, Articles">
         <siteMapNode url="adm/Regulars.aspx" title="Regulars" roles="all, admin, admin, Regulars"></siteMapNode>
       </siteMapNode>
