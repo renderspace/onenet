@@ -8,7 +8,6 @@
 			<siteMapNode url="~/adm/Publish.aspx" title="$mi_publish" description="" roles="all, Everyone" />
 		</siteMapNode>
 		<siteMapNode url="" title="$mi_modules" description="" roles="*">
-			<siteMapNode url="adm/Forms.aspx" title="$mi_forms" description="" roles="all, Everyone"/>
 			<siteMapNode url="adm/Faqs.aspx" title="$mi_faqs" description="" roles="all, Everyone"/>
 			<siteMapNode url="adm/Comments.aspx" title="$mi_comments" description="" roles="all, Everyone"/>
 			<siteMapNode url="adm/Articles.aspx" title="$mi_articles" description="" roles="all, Everyone" />
