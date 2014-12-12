@@ -3,7 +3,7 @@ CREATE TABLE [dbo].[nform](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[title] [varchar](255) NOT NULL,
 	[sub_title] [varchar](255) NOT NULL,
-	[description] [varchar](max) NOT NULL,
+	[description] [varchar](max) NULL,
 	[thank_you_note] [varchar](max) NOT NULL,
 	[form_type] [varchar](255) NOT NULL,
 	[send_to] [nvarchar](1000) NULL,
@@ -20,7 +20,7 @@ CREATE TABLE [dbo].[nform](
 CREATE TABLE [dbo].[nform_answer](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[title] [varchar](255) NOT NULL,
-	[description] [varchar](max) NOT NULL,
+	[description] [varchar](max) NULL,
 	[nform_question_fk_id] [int] NOT NULL,
 	[idx] [int] NOT NULL,
 	[answer_type] [varchar](255) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE [dbo].[nform_answer](
 CREATE TABLE [dbo].[nform_question](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[title] [varchar](255) NOT NULL,
-	[description] [varchar](max) NOT NULL,
+	[description] [varchar](max) NULL,
 	[nform_section_fk_id] [int] NOT NULL,
 	[idx] [int] NOT NULL,
 	[is_answer_required] [bit] NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE [dbo].[nform_question](
 CREATE TABLE [dbo].[nform_section](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[title] [varchar](255) NOT NULL,
-	[description] [varchar](max) NOT NULL,
+	[description] [varchar](max) NULL,
 	[nform_fk_id] [int] NOT NULL,
 	[idx] [int] NOT NULL,
 	[section_type] [varchar](255) NOT NULL,

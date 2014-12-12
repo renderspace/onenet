@@ -73,12 +73,12 @@
 		                    </asp:Panel>
 		        
 		                    <asp:Panel id="plhAddSection" runat="server" CssClass="form-group validationGroup">
-		                        <asp:TextBox formnovalidate="formnovalidate" Required="false" ID="txtAddSection" runat="server" placeholder="new section name" CssClass="required"/>
+		                        <asp:TextBox formnovalidate="formnovalidate"  ID="txtAddSection" runat="server" placeholder="new section name" CssClass="required"/>
 		                        <asp:LinkButton formnovalidate="formnovalidate"  id="cmdAddSection" Runat="server" CssClass="btn btn-success causesValidation" Text="<span class='glyphicon glyphicon-plus'></span> Add"  OnClick="cmdAddSection_Click" />                                            
 		                    </asp:Panel>
 		        
 		                    <asp:Panel ID="plhAddQuestion" runat="server" CssClass="form-group validationGroup">
-		                        <asp:TextBox formnovalidate="formnovalidate" ID="txtAddQuestion" Required="false" runat="server" placeholder="new question" CssClass="required"/>
+		                        <asp:TextBox formnovalidate="formnovalidate" ID="txtAddQuestion"  runat="server" placeholder="new question" CssClass="required"/>
 		                        <asp:LinkButton formnovalidate="formnovalidate"	 id="cmdAddQuestion" Runat="server" CssClass="btn btn-success causesValidation" Text="<span class='glyphicon glyphicon-plus'></span> Add"  OnClick="cmdAddQuestion_Click" />                                                                    			            
 		                    </asp:Panel>
 		                    
@@ -100,19 +100,19 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Private name</label>
                                         <div class="col-sm-9">
-                                            <asp:TextBox formnovalidate="formnovalidate" Required="false" ID="InputFormPrivateName" runat="server" CssClass="form-control" />
+                                            <asp:TextBox formnovalidate="formnovalidate"  ID="InputFormPrivateName" runat="server" CssClass="form-control" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Thank you note</label>
                                         <div class="col-sm-9">
-                                           <asp:TextBox formnovalidate="formnovalidate" Required="false" ID="txtFormThankYouNote" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
+                                           <asp:TextBox formnovalidate="formnovalidate"  ID="txtFormThankYouNote" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <asp:TextBox formnovalidate="formnovalidate" Required="false" ID="txtFormDescription" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
+                                            <asp:TextBox formnovalidate="formnovalidate"  ID="txtFormDescription" runat="server" Rows="3" TextMode="multiLine"  CssClass="form-control" />
                                         </div>
                                     </div>
 		                        
@@ -193,7 +193,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <asp:TextBox Required="false" formnovalidate="formnovalidate"  ID="InputSectionDescription" runat="server"   Rows="3" TextMode="multiLine" CssClass="form-control" />
+                                            <asp:TextBox  formnovalidate="formnovalidate"  ID="InputSectionDescription" runat="server"   Rows="3" TextMode="multiLine" CssClass="form-control" />
                                         </div>
                                     </div>
                                     <div class="form-group">

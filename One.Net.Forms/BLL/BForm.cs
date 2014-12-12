@@ -28,8 +28,6 @@ namespace One.Net.Forms.BLL
         /// <param name="form"></param>
         public void Change(BOForm form)
         {
-            try
-            {
                 if (form.Id.HasValue)
                 {
                     BOForm existingForm = this.GetUnCached(form.Id.Value);
@@ -91,11 +89,7 @@ namespace One.Net.Forms.BLL
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                log.Error("BOForm Change method failed", ex);
-            }
+
         }
 
         /// <summary>
