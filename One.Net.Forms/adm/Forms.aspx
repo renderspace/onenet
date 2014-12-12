@@ -193,7 +193,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                         <div class="col-sm-9">
-                                            <asp:TextBox formnovalidate="formnovalidate"  ID="InputSectionDescription" runat="server"   Rows="3" TextMode="multiLine" CssClass="form-control" />
+                                            <asp:TextBox Required="false" formnovalidate="formnovalidate"  ID="InputSectionDescription" runat="server"   Rows="3" TextMode="multiLine" CssClass="form-control" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -223,7 +223,7 @@
                                      <div class="form-group">
                                         <label class="col-sm-3 control-label">Description</label>
                                          <div class="col-sm-9">
-		                                    <asp:TextBox formnovalidate="formnovalidate" Required="false" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" CssClass="form-control" />
+		                                    <asp:TextBox formnovalidate="formnovalidate" TextMode="MultiLine" Rows="3" ID="txtQuestionDescription" runat="server" CssClass="form-control" />
                                          </div>
                                       </div>
 
