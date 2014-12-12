@@ -62,6 +62,7 @@
     <Compile Include="BLL\BForm.cs" />
     <Compile Include="BLL\BOForm.cs" />
     <Compile Include="BLL\DbForm.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="custom_modules\FormSelector.ascx.cs">
       <DependentUpon>FormSelector.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -14,6 +14,7 @@ using System.IO;
 using System.Text;
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Utility;
+using One.Net.Forms.Controls;
 using NLog;
 
 namespace One.Net.Forms
@@ -143,11 +144,30 @@ namespace One.Net.Forms
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                BOSubmittedQuestion question = e.Item.DataItem as BOSubmittedQuestion;
-                Repeater rptPollSubmittedAnswers = e.Item.FindControl("rptPollSubmittedAnswers") as Repeater;
+                var question = e.Item.DataItem as BOSubmittedQuestion;
+                var rptPollSubmittedAnswers = e.Item.FindControl("rptPollSubmittedAnswers") as Repeater;
 
-                rptPollSubmittedAnswers.DataSource = question.SubmittedAnswers.Values;
-                rptPollSubmittedAnswers.DataBind();
+                if (question != null && rptPollSubmittedAnswers != null)
+                {
+                    rptPollSubmittedAnswers.DataSource = question.SubmittedAnswers.Values;
+                    rptPollSubmittedAnswers.DataBind();
+                }
+            }
+        }
+
+        protected void rptPollSubmittedAnswers_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                BOSubmittedAnswer submittedAnswer = e.Item.DataItem as BOSubmittedAnswer;
+                ProgressBar progressBar = e.Item.FindControl("progressBar") as ProgressBar;
+                Label LabelPercentage = e.Item.FindControl("LabelPercentage") as Label;
+
+                progressBar.Percentage = (int)submittedAnswer.Answer.PercentageAnswered;
+                progressBar.Visible = true;
+                progressBar.OuterCssClass = "barTotal";
+                progressBar.InnerCssClass = "barPart";
+                LabelPercentage.Text = string.Format("{0:#0.00'%}", submittedAnswer.Answer.PercentageAnswered);
             }
         }
 
