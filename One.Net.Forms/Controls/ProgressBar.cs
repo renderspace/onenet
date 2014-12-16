@@ -5,7 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 
-namespace One.Net.Forms.Controls
+namespace One.Net.Forms
 {
     /// <summary>
     /// Summary description for ProgressBar.

@@ -14,7 +14,6 @@ using System.IO;
 using System.Text;
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Utility;
-using One.Net.Forms.Controls;
 using NLog;
 
 namespace One.Net.Forms
@@ -375,7 +374,7 @@ namespace One.Net.Forms
         {
             if (FormSubmission != null)
             {
-                if (FormSubmission.CurrentSectionId.HasValue)
+                if (FormSubmission.CurrentSectionId.HasValue && FormSubmission.CurrentSectionId.HasValue)
                 {
                     plhForm.Visible = true;
 
@@ -404,7 +403,7 @@ namespace One.Net.Forms
                             {
                                 HtmlGenericControl questionDiv = sectionDiv.FindControl("QuestionDiv" + question.Id) as HtmlGenericControl;
 
-                                if (questionDiv != null)
+                                if (questionDiv != null && question.FirstAnswerKey.HasValue)
                                 {
                                     BOAnswer firstAnswer = question.Answers[question.FirstAnswerKey.Value];
 
