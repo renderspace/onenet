@@ -28,67 +28,67 @@ namespace One.Net.Forms.BLL
         /// <param name="form"></param>
         public void Change(BOForm form)
         {
-                if (form.Id.HasValue)
-                {
-                    BOForm existingForm = this.GetUnCached(form.Id.Value);
+            if (form.Id.HasValue)
+            {
+                BOForm existingForm = this.GetUnCached(form.Id.Value);
 
-                    // synchronise existing form object and current form object ( delete pending delete sections, questions, answers ).
-                    if (existingForm != null && existingForm.Id.HasValue)
+                // synchronise existing form object and current form object ( delete pending delete sections, questions, answers ).
+                if (existingForm != null && existingForm.Id.HasValue)
+                {
+                    foreach (BOSection sec in existingForm.Sections.Values)
                     {
-                        foreach (BOSection sec in existingForm.Sections.Values)
+                        if (form.Sections.ContainsKey(sec.Id.Value))
                         {
-                            if (form.Sections.ContainsKey(sec.Id.Value))
+                            foreach (BOQuestion ques in sec.Questions.Values)
                             {
-                                foreach (BOQuestion ques in sec.Questions.Values)
+                                if (form.Sections[sec.Id.Value].Questions.ContainsKey(ques.Id.Value))
                                 {
-                                    if (form.Sections[sec.Id.Value].Questions.ContainsKey(ques.Id.Value))
+                                    if (form.SubmissionCount == 0)
                                     {
-                                        if (form.SubmissionCount == 0)
+                                        // delete all answers... since they are recreated fruther down in this method
+                                        foreach (BOAnswer ans in ques.Answers.Values)
                                         {
-                                            // delete all answers... since they are recreated fruther down in this method
-                                            foreach (BOAnswer ans in ques.Answers.Values)
-                                            {
-                                                formsDb.DeleteAnswer(ans.Id.Value);
-                                            }
+                                            formsDb.DeleteAnswer(ans.Id.Value);
                                         }
                                     }
-                                    else
-                                    {
-                                        DeleteQuestion(ques);
-                                    }
+                                }
+                                else
+                                {
+                                    DeleteQuestion(ques);
                                 }
                             }
-                            else
-                            {
-                                DeleteSection(sec);
-                            }
                         }
-                    }
-                }
-
-                formsDb.Change(form);
-
-                // store all sub data of form object
-                foreach (BOSection section in form.Sections.Values)
-                {
-                    section.ParentId = form.Id;
-                    formsDb.ChangeSection(section);
-
-                    foreach (BOQuestion question in section.Questions.Values)
-                    {
-                        question.ParentId = section.Id;
-                        formsDb.ChangeQuestion(question);
-
-                        if (form.SubmissionCount == 0)
+                        else
                         {
-                            foreach (BOAnswer answer in question.Answers.Values)
-                            {
-                                answer.ParentId = question.Id;
-                                formsDb.InsertAnswer(answer);
-                            }
+                            DeleteSection(sec);
                         }
                     }
                 }
+            }
+
+            formsDb.Change(form);
+
+            // store all sub data of form object
+            foreach (BOSection section in form.Sections.Values)
+            {
+                section.ParentId = form.Id;
+                formsDb.ChangeSection(section);
+
+                foreach (BOQuestion question in section.Questions.Values)
+                {
+                    question.ParentId = section.Id;
+                    formsDb.ChangeQuestion(question);
+
+                    if (form.SubmissionCount == 0)
+                    {
+                        foreach (BOAnswer answer in question.Answers.Values)
+                        {
+                            answer.ParentId = question.Id;
+                            formsDb.InsertAnswer(answer);
+                        }
+                    }
+                }
+            }
 
         }
 
@@ -331,33 +331,27 @@ namespace One.Net.Forms.BLL
             log.Info("---------------- processing form ----------------");
             if (submission != null && form != null)
             {
-                try
-                {
-                    formsDb.InsertFormSubmission(submission);
-                    log.Info("FormSubmission saved to Database");
 
-                    foreach (BOSubmittedQuestion submittedQuestion in submission.SubmittedQuestions.Values)
+                formsDb.InsertFormSubmission(submission);
+                log.Info("FormSubmission saved to Database");
+
+                foreach (BOSubmittedQuestion submittedQuestion in submission.SubmittedQuestions.Values)
+                {
+                    foreach (BOSubmittedAnswer submittedAnswer in submittedQuestion.SubmittedAnswers.Values)
                     {
-                        foreach (BOSubmittedAnswer submittedAnswer in submittedQuestion.SubmittedAnswers.Values)
+                        submittedAnswer.SubmissionId = submission.Id;
+
+                        if (submittedAnswer.SubmittedFile != null)
                         {
-                            submittedAnswer.SubmissionId = submission.Id;
-
-                            if (submittedAnswer.SubmittedFile != null)
-                            {
-                                fileB.Change(submittedAnswer.SubmittedFile);
-                                log.Info("SubmittedFile saved to Database: " + submittedAnswer.SubmittedFile.Name);
-                            }
-
-                            formsDb.InsertSubmittedAnswer(submittedAnswer);
-                            log.Debug("SubmittedAnswer saved to Database");
+                            fileB.Change(submittedAnswer.SubmittedFile);
+                            log.Info("SubmittedFile saved to Database: " + submittedAnswer.SubmittedFile.Name);
                         }
+
+                        formsDb.InsertSubmittedAnswer(submittedAnswer);
+                        log.Debug("SubmittedAnswer saved to Database");
                     }
-                    isSubmissionComplete = true; // only set to true if all is ok
                 }
-                catch (Exception ex)
-                {
-                    log.Error("FormSubmission saving to Database failed", ex);
-                }
+                isSubmissionComplete = true; // only set to true if all is ok
 
                 // Email sending part
                 if (isSubmissionComplete)
