@@ -1428,7 +1428,7 @@ namespace One.Net.Forms.adm
     
     public class FormHelper
     {
-        public enum FrontEndQuestionTypes { SingleLineOfText = 1, MultiLineText, MenuToChooseFrom, NumericalValue, DateTime, Time, FileUpload, Integer, Email, Captcha, VAT, Telephone }
+        public enum FrontEndQuestionTypes { SingleLineOfText = 1, MultiLineText, MenuToChooseFrom, NumericalValue, DateTime, Time, FileUpload, Integer, Email, Captcha, VAT }
         public enum FrontEndMenuTypes { Radio = 1, CheckBox, DropDown }
 
         protected static BForm formB = new BForm();

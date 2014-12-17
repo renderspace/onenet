@@ -45,7 +45,7 @@ namespace One.Net.Forms
 
         protected int FormId { get { return GetIntegerSetting("FormId"); } }
         protected int UploadFolderId { get { return GetIntegerSetting("UploadFolderId"); } }
-
+        protected bool UseLabels { get { return GetBooleanSetting("UseLabels"); } }
 
         #endregion Settings
 
@@ -594,11 +594,23 @@ namespace One.Net.Forms
                                     var answerInput = new TextBox();
                                     answerInput.ID = "AnswerSingleText" + firstAnswer.Id;
                                     answerInput.ValidationGroup = "FormID" + FormId + InstanceId;
-                                    answerInput.Attributes.Add("placeholder", question.Title);
+
+                                    if (UseLabels)
+                                    {
+                                        // if using labels instead of placeholders.
+                                        var answerInputLabel = new Label();
+                                        answerInputLabel.Text = question.Title;
+                                        answerInputLabel.AssociatedControlID = answerInput.ID;
+                                        questionDiv.Controls.Add(answerInput);
+                                    }
+                                    else
+                                    {
+                                        answerInput.Attributes.Add("placeholder", question.Title);
+                                    }
+
                                     if (question.IsAnswerRequired)
                                     {
                                         answerInput.CssClass = "required ";
-                                        answerInput.Attributes.Add("required", "required");
                                     }
 
                                     switch (question.ValidationType)
