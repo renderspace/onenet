@@ -87,6 +87,9 @@ namespace One.Net.Forms
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.ClientScript.RegisterClientScriptInclude("jquery.validate", "/_js/jquery.validate.min.js");
+            Page.ClientScript.RegisterClientScriptInclude("one.net.forms", "/_js/one.net.forms.js");
+
             // http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers/2068407#2068407
             Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -601,7 +604,7 @@ namespace One.Net.Forms
                                         var answerInputLabel = new Label();
                                         answerInputLabel.Text = question.Title;
                                         answerInputLabel.AssociatedControlID = answerInput.ID;
-                                        questionDiv.Controls.Add(answerInput);
+                                        questionDiv.Controls.Add(answerInputLabel);
                                     }
                                     else
                                     {
