@@ -266,6 +266,8 @@ BEGIN
 
 	SELECT @sql = @sql + ' ( select count(ct.id) FROM [dbo].[comments] ct WHERE ct.content_fk_id=a.content_fk_id AND ct.publish=a.publish) commentCount '
 
+	SELECT @sql = @sql + ', newid() random ';
+	
 	SET @sql = @sql + ' FROM [dbo].[article] a
 		INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
 		INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish
@@ -297,6 +299,8 @@ BEGIN
 	IF @sortByColumn IS NOT NULL AND @sortOrder IS NOT NULL
 		SELECT @sql = @sql + ' ' + @sortOrder
 
+	
+		
 	IF @debug = 1
 		PRINT @sql 
 
@@ -324,7 +328,8 @@ BEGIN
 		marked_for_deletion bit, 
 		changed bit, 
 		countPublished int,		
-		commentCount int,		
+		commentCount int,	
+		random nvarchar(255),		
 		ID int IDENTITY PRIMARY KEY,
 	)
 	
