@@ -15,6 +15,7 @@ using System.Text;
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Utility;
 using NLog;
+using System.Threading;
 
 namespace One.Net.Forms
 {
@@ -88,8 +89,10 @@ namespace One.Net.Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.ClientScript.RegisterClientScriptInclude("jquery.validate", "/_js/jquery.validate.min.js");
+            if (Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName != "en")
+                Page.ClientScript.RegisterClientScriptInclude("jquery.validate", "/_js/jquery.validate.messages_" + Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName + ".js");            
             Page.ClientScript.RegisterClientScriptInclude("one.net.forms", "/_js/one.net.forms.js");
-
+            
             // http://stackoverflow.com/questions/49547/making-sure-a-web-page-is-not-cached-across-all-browsers/2068407#2068407
             Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
