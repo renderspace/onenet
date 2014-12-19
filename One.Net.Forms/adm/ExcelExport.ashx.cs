@@ -16,34 +16,40 @@ namespace One.Net.Forms.adm
 
         public void ProcessRequest(HttpContext context)
         {
-            var filename = "we_have_to_decide";
-
-            context.Response.ContentType = "text/plain";
-            context.Response.Write("Hello World");
-
-            context.Response.Clear();
-            context.Response.Buffer = true;
-            context.Response.ContentType = "application/vnd.ms-excel";
-            context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\";");
-            context.Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
-            context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            context.Response.Charset = "";
-
 
             var id = int.Parse(context.Request["id"].ToString());
-            var type = context.Request["type"].ToString();
-            string result = "";
-            switch (type)
-            { 
-                case "form_all_submissions":
-                    result = ExportAllSubmissions(id);
-                    break;
-                case "form_agregate":
-                    result = ExportAgregate(id);
-                    break;
+
+            var form = formB.Get(id);
+            if (form != null)
+            {
+                var type = context.Request["type"].ToString();
+
+                var filename = form.Title + DateTime.Now.ToString();
+
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("Hello World");
+
+                context.Response.Clear();
+                context.Response.Buffer = true;
+                context.Response.ContentType = "application/vnd.ms-excel";
+                context.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + filename + ".xls\";");
+                context.Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
+                context.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                context.Response.Charset = "";
+
+                string result = "";
+                switch (type)
+                {
+                    case "form_all_submissions":
+                        result = ExportAllSubmissions(id);
+                        break;
+                    case "form_agregate":
+                        result = ExportAgregate(id);
+                        break;
+                }
+                context.Response.Write(result);
+                context.Response.End();
             }
-            context.Response.Write(result);
-            context.Response.End();
         }
 
         public bool IsReusable
