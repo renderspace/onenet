@@ -1304,7 +1304,7 @@ namespace One.Net.BLL
             }
 
 
-            var builder = new StringBuilder();
+            var builder = new StringWriterWithEncoding(Encoding.UTF8);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -1329,6 +1329,21 @@ namespace One.Net.BLL
                 writer.WriteEndDocument();
             }
             return builder.ToString();
+        }
+    }
+
+    public sealed class StringWriterWithEncoding : StringWriter
+    {
+        private readonly Encoding encoding;
+
+        public StringWriterWithEncoding(Encoding encoding)
+        {
+            this.encoding = encoding;
+        }
+
+        public override Encoding Encoding
+        {
+            get { return encoding; }
         }
     }
 }
