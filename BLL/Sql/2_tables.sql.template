@@ -163,9 +163,10 @@ CREATE TABLE [dbo].[pages](
 	[break_persistence] [bit] NOT NULL,
 	[auth_mask] [int] NULL,
 	[redirectToUrl] nvarchar(255) NOT NULL DEFAULT '',
-	[viewGroups] varchar(255) NOT NULL DEFAULT '',
-	[editGroups] varchar(255) NOT NULL DEFAULT '',
-	[requireSSL] bit NOT NULL DEFAULT 0
+	[viewGroups] nvarchar(255) NOT NULL DEFAULT '',
+	[editGroups] nvarchar(255) NOT NULL DEFAULT '',
+	[requireSSL] bit NOT NULL DEFAULT 0,
+	[sub_route_url] nvarchar(255) NULL,
  CONSTRAINT [PK_pages] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC,

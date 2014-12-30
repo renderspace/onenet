@@ -14,9 +14,9 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Renderspace d.o.o.")]
 [assembly: AssemblyProduct("One.Net")]
-[assembly: AssemblyCopyright("Copyright 2014")]
+[assembly: AssemblyCopyright("Copyright 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("2.7")]
+[assembly: AssemblyVersion("2.8")]
 [assembly: AssemblyKeyName("")]

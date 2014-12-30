@@ -108,6 +108,7 @@ namespace OneMainWeb.adm
             TextBoxMenuGroup.Text = "";
             CheckBoxBreakPersitence.Checked = false;
             InputRedirectToUrl1.Text = "";
+            CheckBoxSubPageRouting.Checked = false;
             cmdMovePageUp.Visible = true;
             cmdMovePageDown.Visible = true;
             OneSettingsPageSettings.ItemId = 0;
@@ -208,6 +209,7 @@ namespace OneMainWeb.adm
 
                 CheckBoxBreakPersitence.Checked = SelectedPage.BreakPersistance;
                 InputRedirectToUrl1.Text = SelectedPage.RedirectToUrl;
+                CheckBoxSubPageRouting.Checked = SelectedPage.HasSubPageRouting;
                 if (SelectedPage.ParentId.HasValue)
                 {
                     List<int> pages = webSiteB.ListChildrenIds(SelectedPage.ParentId.Value);
@@ -668,6 +670,14 @@ namespace OneMainWeb.adm
                 page.ParLink = newParLink;
                 page.BreakPersistance = CheckBoxBreakPersitence.Checked;
                 page.RedirectToUrl = InputRedirectToUrl1.Text;
+                if (CheckBoxSubPageRouting.Checked)
+                {
+                    page.SubRouteUrl = "{parameter}";
+                }
+                else
+                {
+                    page.SubRouteUrl = "";
+                }
                 webSiteB.ChangePage(page);
 
                 OneSettingsPageSettings.Save();
