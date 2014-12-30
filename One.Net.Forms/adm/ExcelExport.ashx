@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="ExcelExport.ashx.cs" Class="One.Net.Forms.adm.ExcelExport" %>

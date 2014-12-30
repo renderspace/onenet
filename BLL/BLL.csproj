@@ -112,10 +112,6 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UrlRewritingNet.UrlRewriter, Version=2.0.60829.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\UrlRewritingNet.2.0.6.1\lib\UrlRewritingNet.UrlRewriter.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -194,7 +190,6 @@
     <Compile Include="Paths\RedirectModule.cs" />
     <Compile Include="Paths\TByNumberPathProvider.cs" />
     <Compile Include="Paths\TImageHandler.cs" />
-    <Compile Include="Paths\TURLProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RSSProviderSQL.cs" />
     <Compile Include="Scaffold\Data.cs" />
