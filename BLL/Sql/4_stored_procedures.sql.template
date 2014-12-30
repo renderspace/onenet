@@ -816,7 +816,8 @@ CREATE PROCEDURE [dbo].[ChangePage]
 	@redirectToUrl nvarchar(255),
 	@viewGroups varchar(255),
 	@editGroups varchar(255),
-	@requireSSL bit
+	@requireSSL bit,
+	@SubRouteUrl nvarchar(255)
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -833,7 +834,7 @@ BEGIN
 		content_fk_id = @ContentId, template_fk_id = @TemplateId,
 		pages_fk_publish = @PublishFlag, pages_fk_id = @ParentId, changed = @Changed, 
 		menu_group = @MenuGroup, idx = @Order, web_site_fk_id = @WebSiteId, pending_delete = @PendingDelete,
-		redirectToUrl = @redirectToUrl, viewGroups = @viewGroups, editGroups = @editGroups, requireSSL = @requireSSL
+		redirectToUrl = @redirectToUrl, viewGroups = @viewGroups, editGroups = @editGroups, requireSSL = @requireSSL, sub_route_url = @SubRouteUrl
 		WHERE id = @Id AND publish = @PublishFlag
 	END
 	ELSE
@@ -850,11 +851,11 @@ BEGIN
 		INSERT INTO pages 
 		(id,  break_persistence, level, publish, content_fk_id, template_fk_id,
 		pages_fk_publish, pages_fk_id, changed, menu_group, idx, web_site_fk_id, pending_delete,
-		redirectToUrl, viewGroups, editGroups, requireSSL)
+		redirectToUrl, viewGroups, editGroups, requireSSL, sub_route_url)
 		VALUES
 		(@Id, @BreakPersistance, @Level, @PublishFlag, @ContentId, @TemplateId,
 		@PublishFlag, @ParentId, @Changed, @MenuGroup, @Order, @WebSiteId, @PendingDelete,
-		@redirectToUrl, @viewGroups, @editGroups, @requireSSL )
+		@redirectToUrl, @viewGroups, @editGroups, @requireSSL, @SubRouteUrl )
 	END
 END
 

@@ -78,7 +78,7 @@ namespace One.Net.BLL.DAL
                     new SqlParameter("@publishFlag", publishFlag)
                     };
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
-                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.teaser AS Teaser, 
+                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.teaser AS Teaser, sub_route_url,
                     t.name AS Template, t.id AS TemplateID, p.content_fk_id AS ContentID, menu_group, idx, changed, pending_delete, 
                     p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL], date_modified, date_created
                      FROM [dbo].pages p
@@ -111,6 +111,10 @@ namespace One.Net.BLL.DAL
                 int _indexEditGroups = rdr.GetOrdinal("editGroups");
                 int _indexRequireSSL = rdr.GetOrdinal("requireSSL");
 
+                int _sub_route_url = rdr.GetOrdinal("sub_route_url");
+
+                
+
 
                 while (rdr.Read())
                 {
@@ -142,6 +146,8 @@ namespace One.Net.BLL.DAL
                     sitePage.FrontEndRequireGroupList = rdr.GetString(_indexViewGroups);
                     sitePage.EditRequireGroupList = rdr.GetString(_indexEditGroups);
                     sitePage.RequireSSL = rdr.GetBoolean(_indexRequireSSL);
+                    if (rdr[_sub_route_url] != DBNull.Value)
+                        sitePage.SubRouteUrl = rdr.GetString(_sub_route_url);
 
                     sitePage.DateCreated = (DateTime) rdr["date_created"];
                     sitePage.DateModified = rdr["date_modified"] == DBNull.Value ? new DateTime?() : (DateTime) rdr["date_modified"];
@@ -210,22 +216,6 @@ namespace One.Net.BLL.DAL
                         site.Settings.Add(rdr.GetString(0), setting);
                     }
                 }
-                /*
-                if (site.RootPageId.HasValue)
-                {
-                    paramsToPass = new SqlParameter("@rootPageId", site.RootPageId);
-                    using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
-                    @"SELECT language_fk_id, par_link 
-                        FROM int_link 
-                        WHERE pages_fk_id= @rootPageId AND pages_fk_publish = 0", paramsToPass))
-                    {
-                        while (rdr.Read())
-                            site.Languages.Add(rdr.GetInt32(0));
-                    }
-                }
-                else
-                    site.Languages.Add(site.PrimaryLanguageId);
-                 */
             }
 			return websiteList;
 		}
@@ -307,7 +297,8 @@ namespace One.Net.BLL.DAL
                 new SqlParameter("@redirectToUrl", page.RedirectToUrl), 
                 new SqlParameter("@viewGroups", page.FrontEndRequireGroupList),
                 new SqlParameter("@editGroups", page.EditRequireGroupList),
-                new SqlParameter("@requireSSL", page.RequireSSL)
+                new SqlParameter("@requireSSL", page.RequireSSL),
+                new SqlParameter("@SubRouteUrl", page.SubRouteUrl)
             };
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "ChangePage", parms);
@@ -359,9 +350,9 @@ namespace One.Net.BLL.DAL
                     };
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT  cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
-                          c.principal_modified_by, c.date_modified, c.votes, c.score, c.id ContentId, p.id PageId, p.pages_fk_id, p.menu_group, p.idx, 
+                          c.principal_modified_by, c.date_modified, c.votes, c.score, c.id ContentId, p.id PageId, p.pages_fk_id, p.menu_group, p.idx,
 			              t.id TemplateId, t.name, level, pending_delete, changed, 
-                          break_persistence, web_site_fk_id, redirectToUrl, [viewGroups], [editGroups], [requireSSL]
+                          break_persistence, web_site_fk_id, redirectToUrl, [viewGroups], [editGroups], [requireSSL], p.sub_route_url
                   FROM [dbo].[pages] p	
                   INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id = p.content_fk_id AND cds.language_fk_id = @LCID
                   INNER JOIN [dbo].[content] c ON c.id = p.content_fk_id
@@ -485,6 +476,10 @@ namespace One.Net.BLL.DAL
             sitePage.FrontEndRequireGroupList = rdr.GetString(23);
             sitePage.EditRequireGroupList = rdr.GetString(24);
             sitePage.RequireSSL = rdr.GetBoolean(25);
+            if (rdr["sub_route_url"] != DBNull.Value)
+                sitePage.SubRouteUrl = (string) rdr["sub_route_url"];
+            else
+                sitePage.SubRouteUrl = "";
         }
 
         private static void PopulateModuleInstances(IDataReader rdr, BOPage sitePage)

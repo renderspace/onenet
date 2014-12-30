@@ -39,18 +39,34 @@ namespace OneMainWeb
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
+                
+
                 if (node != null)
                 {
                     routes.MapPageRoute("Root", "", "~/site_specific/aspx_templates/" + node["_template"]);
                     var i = 0;
-                    foreach (SiteMapNode n in node.GetAllNodes())
-                    {
-                        routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/'), "~/site_specific/aspx_templates/" + n["_template"]);
-                        /*if (n.Url.Contains("test"))
-                        {
-                            routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/') + "/{year}", "~/site_specific/aspx_templates/" + n["_template"]);
-                        }*/
-                    }
+                    PopulateRoutes(routes, node, ref i);
+                }
+            }
+        }
+
+        private static void PopulateRoutes(RouteCollection routes, SiteMapNode node, ref int i)
+        {
+            foreach (SiteMapNode n in node.ChildNodes)
+            {
+                routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/'), "~/site_specific/aspx_templates/" + n["_template"]);
+
+                if (!string.IsNullOrWhiteSpace(n["_subRouteUrl"]) && n["_subRouteUrl"].StartsWith("{") && n.HasChildNodes && n.ChildNodes.Count == 1)
+                {
+                    // route subroute parameter is taken from parent, the rest is taken from subpage where single module should reside.
+                    var s = n.ChildNodes[0];
+                    Route additionalRoute = new Route(n.Url.TrimStart('/') + "/" + n["_subRouteUrl"], new PageRouteHandler("~/site_specific/aspx_templates/" + s["_template"]));
+                    additionalRoute.DataTokens = new RouteValueDictionary { { "_pageID", s["_pageID"] } };
+                    routes.Add(additionalRoute);
+                }
+                else
+                {
+                    PopulateRoutes(routes, n, ref i);
                 }
             }
         }

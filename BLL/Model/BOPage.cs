@@ -70,6 +70,14 @@ namespace One.Net.BLL
 
         public string RedirectToUrl { get; set; }
 
+
+        public bool HasSubPageRouting
+        {
+            get { return !string.IsNullOrWhiteSpace(SubRouteUrl) && SubRouteUrl.StartsWith("{"); }
+        }
+
+        public string SubRouteUrl { get; set; }
+
         public int WebSiteId { get; set; }
 
 		public Dictionary<string, BOSetting> Settings { get; set;}

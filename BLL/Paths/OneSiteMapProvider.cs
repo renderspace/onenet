@@ -151,6 +151,7 @@ namespace One.Net.BLL
             node["_absDepth"] = depth.ToString();
             node["_IsRedirected"] = page.IsRedirected.ToString();
             node["_redirectToUrl"] = page.RedirectToUrl;
+            node["_subRouteUrl"] = page.SubRouteUrl;
 
             _nodes.Add(page.Id, node);
             return node;

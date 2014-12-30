@@ -39,7 +39,15 @@ namespace OneMainWeb
         {
             get
             {
-                return (SiteMap.CurrentNode != null) ? FormatTool.GetInteger(SiteMap.CurrentNode["_pageID"]) : -1;
+                if (SiteMap.CurrentNode != null)
+                {
+                    return FormatTool.GetInteger(SiteMap.CurrentNode["_pageID"]);
+                }
+                if (Page.RouteData.DataTokens["_pageID"] != null)
+                {
+                    return FormatTool.GetInteger(Page.RouteData.DataTokens["_pageID"]);
+                }
+                return 0;
             }
         }
 

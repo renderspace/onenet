@@ -90,6 +90,14 @@
                                 <asp:TextBox runat="server" ID="InputRedirectToUrl1" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control absrelurl" placeholder="Force redirect to some other page. Use absolute URL. "></asp:TextBox>
                             </div>
                         </div>
+
+                        <div class="checkbox">
+                            <label class="col-sm-offset-4 col-sm-8">
+                                <asp:CheckBox runat="server" ID="CheckBoxSubPageRouting"  ValidationGroup="PageSett" />
+                                Single subpage routing (e.g. for single article module)
+                            </label>
+                        </div>
+
                         <div class="form-group">
                              <label class="col-sm-4 control-label">Image</label>
                             <div class="col-sm-8">

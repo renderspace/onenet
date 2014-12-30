@@ -171,7 +171,8 @@ namespace One.Net.BLL
                 BreakPersistance = false,
                 ParLink = newParLink,
                 RedirectToUrl = "",
-                URI = ""
+                URI = "",
+                SubRouteUrl = ""
             };
 
             bool addingRootPage = false;
