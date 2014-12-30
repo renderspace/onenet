@@ -46,6 +46,10 @@ namespace OneMainWeb
                     foreach (SiteMapNode n in node.GetAllNodes())
                     {
                         routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/'), "~/site_specific/aspx_templates/" + n["_template"]);
+                        /*if (n.Url.Contains("test"))
+                        {
+                            routes.MapPageRoute("Page" + i++.ToString(), n.Url.TrimStart('/') + "/{year}", "~/site_specific/aspx_templates/" + n["_template"]);
+                        }*/
                     }
                 }
             }

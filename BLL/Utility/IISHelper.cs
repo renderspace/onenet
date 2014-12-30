@@ -112,6 +112,7 @@ namespace One.Net.BLL.Utility
 
         public static void AddUrlRewriting(ServerManager sm, string siteName, string elementName, string attributeName, string destinationUrl, string virtualUrl)
         {
+            /*
             string configFilePath = sm.Sites[siteName].Applications[0].VirtualDirectories[0].PhysicalPath + "/web.config";
             var siteConfig = OpenConfigFile(configFilePath, siteName);
 
@@ -135,7 +136,7 @@ namespace One.Net.BLL.Utility
             }
 
             siteConfig.Sections["urlrewritingnet"].SectionInformation.SetRawXml(urlrewritingnet.ToString());
-            siteConfig.Save();
+            siteConfig.Save();*/
         }
 
         public static void AddCustomErrors(ServerManager sm, string siteName)
