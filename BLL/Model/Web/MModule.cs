@@ -68,6 +68,26 @@ namespace One.Net.BLL.Web
             get { return GetBooleanSetting("UniqueTranslation"); }
         }
 
+        public bool HasHumanReadableUrlParameter
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(HumanReadableUrlParameter);
+            }
+        }
+
+        public string HumanReadableUrlParameter
+        {
+            get
+            {
+                if (Page.RouteData.Values["parameter"] != null)
+                {
+                    return Page.RouteData.Values["parameter"] as string;
+                }
+                return null;
+            }
+        }
+
         public string RelativePageUri { get; set; }
 
         public int InstanceId { get; set; }
