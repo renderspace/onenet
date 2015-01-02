@@ -25,6 +25,11 @@ namespace OneMainWeb
 
         public static void ReloadRoutes(RouteCollection routes)
         {
+            var settings = new FriendlyUrlSettings();
+            settings.AutoRedirectMode = RedirectMode.Permanent;
+            routes.EnableFriendlyUrls(settings);
+
+
             var node = SiteMap.Provider.RootNode;
             
             using (routes.GetWriteLock())
@@ -39,7 +44,7 @@ namespace OneMainWeb
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
-                
+                routes.MapPageRoute("Pagetest", "burek/{parameter}", "~/site_specific/aspx_templates/sava_medical_home.aspx", true, new RouteValueDictionary { { "_pageID", 10 } });
 
                 if (node != null)
                 {
@@ -60,7 +65,7 @@ namespace OneMainWeb
                 {
                     // route subroute parameter is taken from parent, the rest is taken from subpage where single module should reside.
                     var s = n.ChildNodes[0];
-                    Route additionalRoute = new Route(n.Url.TrimStart('/') + "/" + n["_subRouteUrl"], new PageRouteHandler("~/site_specific/aspx_templates/" + s["_template"]));
+                    Route additionalRoute = new Route(n.Url.TrimStart('/') + "/" + n["_subRouteUrl"], new PageRouteHandler("~/site_specific/aspx_templates/" + s["_template"], false));
                     additionalRoute.DataTokens = new RouteValueDictionary { { "_pageID", s["_pageID"] } };
                     routes.Add(additionalRoute);
                 }
