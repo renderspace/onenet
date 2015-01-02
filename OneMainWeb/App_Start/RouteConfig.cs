@@ -44,8 +44,6 @@ namespace OneMainWeb
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
 
-                routes.MapPageRoute("Pagetest", "burek/{parameter}", "~/site_specific/aspx_templates/sava_medical_home.aspx", true, new RouteValueDictionary { { "_pageID", 10 } });
-
                 if (node != null)
                 {
                     routes.MapPageRoute("Root", "", "~/site_specific/aspx_templates/" + node["_template"]);
