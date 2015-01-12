@@ -87,20 +87,50 @@ namespace OneMainWeb.Controls
             _selectedNode = SiteMap.CurrentNode;
             _rootNode = SiteMap.RootNode;
 
-            if (_selectedNode != null)
+            if (_selectedNode == null && Page is PresentBasePage && string.IsNullOrEmpty(_selectedUrl))
             {
-                if (string.IsNullOrEmpty(_selectedUrl))
+                _selectedParentUrl = ((PresentBasePage)Page).CurrentPage.ParentURI;
+                if (_selectedParentUrl.Length > 1)
+                    _selectedParentUrl = _selectedParentUrl.TrimEnd('/');
+                _selectedUrl = ((PresentBasePage)Page).CurrentPage.URI;
+
+                // let's cheat and get the first subpage node of ParentNode
+
+                var coll = SiteMap.RootNode.GetAllNodes();
+                var e = coll.GetEnumerator();
+                while ((e.MoveNext()) && (e.Current != null) && _selectedNode == null)
                 {
-                    _selectedUrl = _selectedNode.Url;
-                    if (_selectedNode.ParentNode != null)
+                    if (e.Current is SiteMapNode)
                     {
-                        _selectedParentUrl = _selectedNode.ParentNode.Url;
+                        var smn = (SiteMapNode) e.Current;
+                        if (smn.Url == _selectedParentUrl)
+                        {
+                            if (smn.ChildNodes.Count == 1)
+                            {
+                                _selectedNode = smn.ChildNodes[0];
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
-                SiteMapNodeCollection coll = new SiteMapNodeCollection(SiteMap.RootNode);
+            } 
+            if (_selectedNode != null && string.IsNullOrEmpty(_selectedUrl))
+            {
+                _selectedUrl = _selectedNode.Url;
+                if (_selectedNode.ParentNode != null)
+                {
+                    _selectedParentUrl = _selectedNode.ParentNode.Url;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_selectedUrl))
+            {
                 int currentItemId = 0;
                 int preControlsCount = this.Controls.Count;
-                RecursiveCreateChildControls(coll, ref currentItemId);
+                RecursiveCreateChildControls(new SiteMapNodeCollection(SiteMap.RootNode), ref currentItemId);
                 int postControlsCount = this.Controls.Count;
 
                 if (postControlsCount > preControlsCount)
