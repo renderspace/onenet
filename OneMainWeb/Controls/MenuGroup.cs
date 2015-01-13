@@ -95,7 +95,6 @@ namespace OneMainWeb.Controls
                 _selectedUrl = ((PresentBasePage)Page).CurrentPage.URI;
 
                 // let's cheat and get the first subpage node of ParentNode
-
                 var coll = SiteMap.RootNode.GetAllNodes();
                 var e = coll.GetEnumerator();
                 while ((e.MoveNext()) && (e.Current != null) && _selectedNode == null)
