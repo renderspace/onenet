@@ -23,7 +23,7 @@ namespace OneMainWeb.Base
                 String key = (String)keys.Current;
                 writer.AddAttribute(key, Attributes[key]);
             }
-            writer.RenderBeginTag("section");
+            writer.RenderBeginTag("div");
         }
 
         public string CustomClientID

@@ -327,8 +327,7 @@ ga('create', '" + code + @"', 'auto');";
 
                                 if (control is MModule)
                                     mod = (MModule)control;
-                                else if (control is PartialCachingControl &&
-                                         ((PartialCachingControl)control).CachedControl != null)
+                                else if (control is PartialCachingControl && ((PartialCachingControl)control).CachedControl != null)
                                     mod = (MModule)((PartialCachingControl)control).CachedControl;
 
                                 if (mod != null)
