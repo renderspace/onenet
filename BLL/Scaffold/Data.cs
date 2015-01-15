@@ -290,6 +290,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             int i = 0;
 
             var item = new EditableItem();
+            item.FriendlyName= virtualTable.FriendlyName;
 
             foreach (var column in virtualColumns)
             {

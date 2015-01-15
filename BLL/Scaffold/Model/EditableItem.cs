@@ -10,6 +10,9 @@ namespace One.Net.BLL.Scaffold.Model
     public class EditableItem
     {
         public string StartingTable { get; set; }
+        public string FriendlyName { get; set; }
+
+        
 
         public List<string> PrimaryKeys { get; set; }
         public Dictionary<string, VirtualColumn> Columns { get; set; }

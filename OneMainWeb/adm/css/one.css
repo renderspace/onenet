@@ -473,3 +473,6 @@ div.calendar
 details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0; }
 details input[type='submit'] {float: right;}
 details .select {margin: 10px 0 0 0;}
+
+.nav-sidebar li.sel a { color: white;  }
+.nav-sidebar li.sel  { background-color: #428bca; }
