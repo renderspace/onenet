@@ -5,20 +5,16 @@
 			<siteMapNode url="~/adm/ContentEdit.aspx" title="Content" description="" roles="all, admin, ContentEdit"/>
 			<siteMapNode url="~/adm/Structure.aspx" title="Tree structure" description="" roles="all, admin, Structure" />
 			<siteMapNode url="~/adm/Publish.aspx" title="Publishing" description="" roles="all, admin, Publish" />
+      <siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, admin, Dictionary" />
+      <siteMapNode url="adm/FileManager.aspx" title="File manager" description="" roles="all, admin, FileManager" />
+      <siteMapNode url="adm/Redirects.aspx" title="Redirects" description="" roles="all, admin, Redirects" />
 		</siteMapNode>
 		<siteMapNode url="" title="Modules" description="" roles="*">
 			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, admin, Articles" />
       <siteMapNode url="adm/Regulars.aspx" title="Regulars" roles="all, admin, Regulars" />
       <siteMapNode url="adm/Forms.aspx" title="Forms" roles="all, admin, Forms" />
-        
-      
 			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="all, admin, Subscriptions" />
 		</siteMapNode>
-		<siteMapNode url="" title="Settings" description="" roles="*">
-			<siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, admin, Dictionary" />
-			<siteMapNode url="adm/FileManager.aspx" title="File manager" description="" roles="all, admin, FileManager" />
-      <siteMapNode url="adm/Redirects.aspx" title="Redirects" description="" roles="all, admin, Redirects" />
-    </siteMapNode>
     <siteMapNode url="" title="Advanced" description="" roles="*">
       <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, admin, RssFeeds" />
       <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, admin, Scaffold" />

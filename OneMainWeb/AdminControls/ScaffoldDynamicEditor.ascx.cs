@@ -169,11 +169,19 @@ namespace OneMainWeb.AdminControls
             var validationJQueryRules = "";
             var datepickerJQueryCall = "";
 
+            var PanelFieldT = new Panel();
+            PanelFieldT.ID = "PanelTableName";
+            PanelFieldT.CssClass = "row";
+            PanelFieldT.Attributes.Add("noid", "True");
+            PanelFieldsHolder.Controls.Add(PanelFieldT);
+            PanelFieldT.Controls.Add(new Literal { Text = "<h3 class=\"col-sm-3 text-right\">" + Item.FriendlyName + "</h3>" });
+
             foreach (var column in Item.Columns.Values)
             {
                 var PanelField = new Panel();
                 PanelField.ID = "PanelField" + column.Ordinal;
                 PanelField.CssClass = "form-group";
+                PanelField.Attributes.Add("noid", "True");
                 var LabelInfo = new Label
                 {
                     CssClass = "info",

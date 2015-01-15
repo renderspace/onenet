@@ -73,7 +73,7 @@
                     ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" />
   
                <div class="nav nav-sidebar">
-                    <span>Table</span>
+                    <span>Custom editing</span>
                     <cc2:VirtualTableList runat="server" ID="VirtualTableList1"></cc2:VirtualTableList>
                 </div>
             </nav> 
