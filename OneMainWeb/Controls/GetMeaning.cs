@@ -52,8 +52,36 @@ namespace OneMainWeb.Controls
             }
         }
 
+
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue("")]
+        [Localizable(true)]
+        public bool PlainHtml
+        {
+            get
+            {
+                if (ViewState["PlainHtml"] == null)
+                    return false;
+                return (bool)ViewState["PlainHtml"];
+            }
+
+            set
+            {
+                ViewState["PlainHtml"] = value;
+            }
+        }
+
         protected override void Render(HtmlTextWriter output)
         {
+            if (PlainHtml)
+            {
+                var meaning = BContent.GetComplexMeaning(Keyword);
+                if (meaning != null)
+                    output.Write(meaning.Html);
+                return;
+            } 
+            
             if (!Complex)
                 output.Write(BContent.GetMeaning(Keyword));
             else
