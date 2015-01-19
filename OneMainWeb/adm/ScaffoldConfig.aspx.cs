@@ -118,6 +118,7 @@ namespace OneMainWeb.adm
             table.Columns.Add(new DataColumn { ColumnName = "ColumnType", Caption = "ColumnType", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ShowOnList", Caption = "ShowOnList", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "IsWysiwyg", Caption = "Wysiwyg", ReadOnly = false });
+            table.Columns.Add(new DataColumn { ColumnName = "IsMultiLanguageContent", Caption = "Multilanguage", ReadOnly = false });
 
             /*
             var dataKeyNames = new List<string>();
@@ -137,6 +138,7 @@ namespace OneMainWeb.adm
                 row["ColumnType"] = "virtual_column";
                 row["ShowOnList"] = column.ShowOnList;
                 row["IsWysiwyg"] = column.IsWysiwyg;
+                row["IsMultiLanguageContent"] = column.IsMultiLanguageContent;
                 table.Rows.Add(row);
             }
 
@@ -149,6 +151,8 @@ namespace OneMainWeb.adm
                 row["Id"] = relation.Id;
                 row["ColumnType"] = "virtual_relation";
                 row["ShowOnList"] = false;
+                row["IsWysiwyg"] = false;
+                row["IsMultiLanguageContent"] = false;
                 table.Rows.Add(row);
             }
 
@@ -309,9 +313,10 @@ namespace OneMainWeb.adm
             foreach (GridViewRow row in GridViewItems.Rows)
             {
                 var CmdDelete = row.FindControl("CmdDelete") as IButtonControl;
-                CheckBox CheckBoxShowOnList = row.FindControl("CheckBoxShowOnList") as CheckBox;
-                CheckBox CheckBoxWysiwyg = row.FindControl("CheckBoxWysiwyg") as CheckBox;
-                TextBox TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
+                var CheckBoxShowOnList = row.FindControl("CheckBoxShowOnList") as CheckBox;
+                var CheckBoxWysiwyg = row.FindControl("CheckBoxWysiwyg") as CheckBox;
+                var TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
+                var CheckBoxIsMultiLanguageContent = row.FindControl("CheckBoxIsMultiLanguageContent") as CheckBox;
 
                 if (CmdDelete != null && CheckBoxShowOnList != null && TextBoxFriendlyName != null)
                 {
@@ -326,7 +331,7 @@ namespace OneMainWeb.adm
                         virtualColumn.FriendlyName = TextBoxFriendlyName.Text;
                         virtualColumn.ShowOnList = CheckBoxShowOnList.Checked;
                         virtualColumn.IsWysiwyg = CheckBoxWysiwyg.Checked;
-
+                        virtualColumn.IsMultiLanguageContent = CheckBoxIsMultiLanguageContent.Checked;
                         Schema.ChangeVirtualColumn(virtualColumn);
                     }
                 }
