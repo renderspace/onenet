@@ -90,7 +90,7 @@ namespace One.Net.BLL.Scaffold
             {
                 var physicalColumns = virtualTable.VirtualColumns;
                 using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTable.Id)))
+                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTable.Id)))
                 {
                     while (reader.Read())
                     {
@@ -105,6 +105,7 @@ namespace One.Net.BLL.Scaffold
                         virtualColumn.Id = id;
                         virtualColumn.FriendlyName = (string)reader["friendly_name"];
                         virtualColumn.IsMultiLanguageContent = bool.Parse(reader["is_multilanguage_content"].ToString());
+                        virtualColumn.IsWysiwyg = bool.Parse(reader["is_wysiwyg"].ToString());
                         // virtualColumn.Name = (string)reader["form_type"];
                         // if we have a column in above select, then it is part of userview:
                         virtualColumn.IsPartOfUserView = true;
@@ -129,7 +130,7 @@ namespace One.Net.BLL.Scaffold
             if (physicalColumns.Count() > 0)
             {
                 using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTableId)))
+                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTableId)))
                 {
                     while (reader.Read())
                     {
@@ -139,6 +140,7 @@ namespace One.Net.BLL.Scaffold
                         virtualColumn.Id = id;
                         virtualColumn.FriendlyName = (string)reader["friendly_name"];
                         virtualColumn.IsMultiLanguageContent = bool.Parse(reader["is_multilanguage_content"].ToString());
+                        virtualColumn.IsWysiwyg = bool.Parse(reader["is_wysiwyg"].ToString());
                         // virtualColumn.Name = (string)reader["form_type"];
                         // if we have a column in above select, then it is part of userview:
                         virtualColumn.IsPartOfUserView = true;
@@ -196,15 +198,16 @@ namespace One.Net.BLL.Scaffold
 				new SqlParameter("@FormType", virtualColumn.DbType.ToString()),
                 new SqlParameter("@IsMultilanguageContent", virtualColumn.IsMultiLanguageContent),
                 new SqlParameter("@ShowOnList", virtualColumn.ShowOnList),
-                new SqlParameter("@FriendlyName", virtualColumn.FriendlyName)
+                new SqlParameter("@FriendlyName", virtualColumn.FriendlyName),
+                new SqlParameter("@Wysiwyg", virtualColumn.IsWysiwyg)
 			};
 
             if (virtualColumn.Id == 0)
                 p[0].Direction = ParameterDirection.Output;
 
             var sql = virtualColumn.Id > 0
-                          ? "UPDATE _virtual_col SET friendly_name = @FriendlyName, virtual_table_id = @VirtualTableId, col_name = @Name, form_type = @FormType, is_multilanguage_content = @IsMultilanguageContent, show_on_list=@ShowOnList WHERE id = @Id"
-                          : "INSERT INTO _virtual_col (friendly_name, virtual_table_id,col_name,form_type,is_multilanguage_content, show_on_list) VALUES (@FriendlyName, @VirtualTableId, @Name, @FormType, @IsMultilanguageContent, @ShowOnList); SET @Id = (SELECT @@IDENTITY) ";
+                          ? "UPDATE _virtual_col SET is_wysiwyg = @Wysiwyg, friendly_name = @FriendlyName, virtual_table_id = @VirtualTableId, col_name = @Name, form_type = @FormType, is_multilanguage_content = @IsMultilanguageContent, show_on_list=@ShowOnList WHERE id = @Id"
+                          : "INSERT INTO _virtual_col (is_wysiwyg, friendly_name, virtual_table_id,col_name,form_type,is_multilanguage_content, show_on_list) VALUES (@Wysiwyg, @FriendlyName, @VirtualTableId, @Name, @FormType, @IsMultilanguageContent, @ShowOnList); SET @Id = (SELECT @@IDENTITY) ";
 
             var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, p);
 

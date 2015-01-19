@@ -117,6 +117,7 @@ namespace OneMainWeb.adm
             table.Columns.Add(new DataColumn { ColumnName = "Id", Caption = "Id", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ColumnType", Caption = "ColumnType", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ShowOnList", Caption = "ShowOnList", ReadOnly = false });
+            table.Columns.Add(new DataColumn { ColumnName = "IsWysiwyg", Caption = "Wysiwyg", ReadOnly = false });
 
             /*
             var dataKeyNames = new List<string>();
@@ -135,7 +136,7 @@ namespace OneMainWeb.adm
                 row["Id"] = column.Id;
                 row["ColumnType"] = "virtual_column";
                 row["ShowOnList"] = column.ShowOnList;
-
+                row["IsWysiwyg"] = column.IsWysiwyg;
                 table.Rows.Add(row);
             }
 
@@ -291,7 +292,6 @@ namespace OneMainWeb.adm
                         table.FriendlyName = TextBoxFriendlyName.Text;
                         table.Condition = TextBoxWhereCondition.Text;
                         table.ShowOnMenu = CheckBoxShowOnMenu.Checked;
-
                         Schema.ChangeVirtualTable(table);
                     }
                     else
@@ -310,6 +310,7 @@ namespace OneMainWeb.adm
             {
                 var CmdDelete = row.FindControl("CmdDelete") as IButtonControl;
                 CheckBox CheckBoxShowOnList = row.FindControl("CheckBoxShowOnList") as CheckBox;
+                CheckBox CheckBoxWysiwyg = row.FindControl("CheckBoxWysiwyg") as CheckBox;
                 TextBox TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
 
                 if (CmdDelete != null && CheckBoxShowOnList != null && TextBoxFriendlyName != null)
@@ -324,6 +325,7 @@ namespace OneMainWeb.adm
                     {
                         virtualColumn.FriendlyName = TextBoxFriendlyName.Text;
                         virtualColumn.ShowOnList = CheckBoxShowOnList.Checked;
+                        virtualColumn.IsWysiwyg = CheckBoxWysiwyg.Checked;
 
                         Schema.ChangeVirtualColumn(virtualColumn);
                     }
