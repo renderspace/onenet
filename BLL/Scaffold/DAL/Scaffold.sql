@@ -33,6 +33,7 @@ CREATE TABLE [dbo].[_virtual_col](
 	[friendly_name] [nvarchar](100) NOT NULL DEFAULT (''),
 	[is_multilanguage_content] bit NOT NULL DEFAULT ((0)),
 	[show_on_list] [bit] NOT NULL DEFAULT ((1)),
+	[is_wysiwyg] [bit] NOT NULL DEFAULT ((0)),
  CONSTRAINT [PK_virtual_col] PRIMARY KEY CLUSTERED  ( 	[id] ASC )
 	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
