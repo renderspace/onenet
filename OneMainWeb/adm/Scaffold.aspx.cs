@@ -34,6 +34,15 @@ namespace OneMainWeb.adm
             set { ViewState["VirtualTableId"] = value; }
         }
 
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            if (SelectedWebsite == null)
+            {
+                Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
+                return;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

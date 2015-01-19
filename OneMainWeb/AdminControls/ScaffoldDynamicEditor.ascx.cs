@@ -195,7 +195,10 @@ namespace OneMainWeb.AdminControls
 
                 var PanelRight = new Panel { CssClass = "col-sm-9" };
                 PanelFieldsHolder.Controls.Add(PanelField);
-                PanelField.Controls.Add(new Literal { Text = "<label class=\"col-sm-3 control-label\">" + column.FriendlyName + "</label>" });
+                var label = column.FriendlyName;
+                if (column.BackendType == FieldType.MultiLanguageText)
+                    label += " [" + Thread.CurrentThread.CurrentCulture.ThreeLetterISOLanguageName + "]";
+                PanelField.Controls.Add(new Literal { Text = "<label class=\"col-sm-3 control-label\">" + label + "</label>" });
 
                 
 
@@ -213,7 +216,7 @@ namespace OneMainWeb.AdminControls
                         PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.SingleText:
-                        PrepareTextBoxInput(column, PanelRight, ref validationJQueryRules);
+                        PrepareTextBoxInput(column, PanelRight, column.Value, ref validationJQueryRules);
                         PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.OneToMany:
@@ -326,7 +329,8 @@ namespace OneMainWeb.AdminControls
                         PanelField.Controls.Add(PanelRight);
                         break;
                     case FieldType.MultiLanguageText:
-                        PrepareMultiLanguageInput(column, PanelField,  ref validationJQueryRules);
+                        PrepareMultiLanguageInput(column, PanelRight, ref validationJQueryRules);
+                        PanelField.Controls.Add(PanelRight);
                         break;
                     default:
                         LabelInfo.Text = "unsupported type:" + column.DbType.Name + ";requested display type:" +
@@ -518,8 +522,6 @@ jQuery.validator.addMethod(
                 CssClass = "form-control",
                 MaxLength = 16
             };
-            //TextBox4.Attributes.Add("type", "number");
-            //TextBox4.Attributes.Add("step", "any");
             TextBox4.CssClass += " number";
             if (!column.IsNullable)
                 TextBox4.CssClass += " required";
@@ -529,42 +531,31 @@ jQuery.validator.addMethod(
         private static void PrepareMultiLanguageInput(VirtualColumn column, Panel panelField, ref string validationJQueryRules)
         {
             var languages = intContentB.ListLanguages();
+            var multiLanguageContent = intContentB.Get(column.ValueInteger, Thread.CurrentThread.CurrentCulture.LCID);
 
-            var LabelInfo = new Label { Text = column.Value, CssClass = "info" };
-            panelField.Controls.Add(new Label { Text = column.Description, AssociatedControlID = LabelInfo.ID, CssClass = "label" });
-            panelField.Controls.Add(LabelInfo);
+            var value = "";
+            if (multiLanguageContent != null)
+                value = multiLanguageContent.Html;
 
-            foreach (var l in languages)
+            var Input6 = new TextBox
             {
-                var multiLanguageContent = intContentB.Get(column.ValueInteger, l);
-                var InputMultiLanguage = new TextBox
-                {
-                    ID = ("FI" + column.Ordinal + "_" + l),
-                    MaxLength = column.Precision,
-                    Rows = 4,
-                    TextMode = TextBoxMode.MultiLine
-                };
+                ID = ("FI" + column.Ordinal + "_" + Thread.CurrentThread.CurrentCulture.LCID),
+                Text = value,
+                TextMode = TextBoxMode.MultiLine,
+                CssClass = "form-control",
+                Rows = 6
+            };
 
-                var content = multiLanguageContent;
-                if (content != null)
-                    InputMultiLanguage.Text = content.Html;
-
-                var label = new Literal();
-                var ci = new CultureInfo(l);
-                label.Text = column.FriendlyName + " [" + ci.Name + "]";
-                panelField.Controls.Add(label);
-                panelField.Controls.Add(InputMultiLanguage);
-
-                validationJQueryRules += CreateValidateRule(false, "", InputMultiLanguage.UniqueID);
-            }
+            panelField.Controls.Add(Input6);
+            validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }
 
-        private static void PrepareTextBoxInput(VirtualColumn column, Panel panelField, ref string validationJQueryRules)
+        private static void PrepareTextBoxInput(VirtualColumn column, Panel panelField, string value, ref string validationJQueryRules)
         {
             var Input6 = new TextBox
             {
                 ID = ("FI" + column.Ordinal),
-                Text = column.Value,
+                Text = value,
                 MaxLength = column.Precision,
             };
 
