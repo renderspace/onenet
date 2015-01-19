@@ -80,6 +80,8 @@ namespace OneMainWeb
             get { return authorizationHelper; }
             set { authorizationHelper = value; }
         }
+
+
         public OneBasePage()
         {
 
@@ -102,10 +104,6 @@ namespace OneMainWeb
             {
                 return authorizationHelper.SelectedWebSiteId;
             }
-            /*set
-            {
-                authorizationHelper.SelectedWebSiteId = value;
-            }*/
         }
 
         protected int SelectedPageId
