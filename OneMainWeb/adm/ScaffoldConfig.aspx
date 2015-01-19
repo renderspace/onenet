@@ -113,7 +113,12 @@
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CheckBoxWysiwyg" runat="server" Checked='<%# bool.Parse((string)Eval("IsWysiwyg")) %>' />
                                 </ItemTemplate>
-                            </asp:TemplateField>                    
+                            </asp:TemplateField>       
+                            <asp:TemplateField HeaderText="MultiLanguageContent">
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="CheckBoxIsMultiLanguageContent" runat="server" Checked='<%# bool.Parse((string)Eval("IsMultiLanguageContent")) %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>     
                             <asp:TemplateField HeaderText="Show on list">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="CheckBoxShowOnList" runat="server" Checked='<%# bool.Parse((string)Eval("ShowOnList")) %>' />
