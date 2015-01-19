@@ -7,7 +7,7 @@
         <article id="HtmlArticle" runat="server">
 	        <header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"></time>
-		        <h3 class="entry-title" id="H1Title" runat="server" noid="True"></h3>
+		        <h1 class="entry-title" id="H1Title" runat="server" noid="True"></h1>
 		        <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"></h4>
                 <time class="published" id="Time2" runat="server" noid="True"></time>
 	        </header>
