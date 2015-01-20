@@ -12,14 +12,14 @@
     
         <div class="col-md-3">
             <section class="module tall">
-                <header><h3 class="tabs_involved">Tree structure</h3>
+                <header><h3 class="tabs_involved">Tree structure  <asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn" Text="Publish all changes" OnClick="ButtonPublishAll_Click" /></h3>
                     <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
                         <div class="form-group">
                             <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
-                            <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
+                            <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
                         </div>
                     </asp:Panel>
-                    <asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn" Text="Publish all pages" OnClick="ButtonPublishAll_Click" />
+                   
                 </header>
                 <div class="treeview">
 	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
