@@ -557,9 +557,11 @@ namespace OneMainWeb.adm
             {
                 case BWebsite.AddSubPageResult.Ok:
                     TextBoxSubPage.Text = "";
+                    Notifier1.Title = "Added new page";
+                    Notifier1.Message = "Add more pages or click on the page to edit it.";
                     break;
                 case BWebsite.AddSubPageResult.NoTemplates:
-                    Notifier1.Warning = "$unsucessfull_add_page";
+                    Notifier1.Warning = "Unsucessfull add page";
                     Notifier1.Message = "There are no availible templates in the database!";
                     break;
                 case BWebsite.AddSubPageResult.OkRootPage:
