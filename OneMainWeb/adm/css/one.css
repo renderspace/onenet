@@ -476,3 +476,6 @@ details .select {margin: 10px 0 0 0;}
 
 .nav-sidebar li.sel a { color: white;  }
 .nav-sidebar li.sel  { background-color: #428bca; }
+
+.upDown { width: 75px; display: inline-block; }
+.movePage { margin: 6px 10px 0 0; font-weight: bold;} 

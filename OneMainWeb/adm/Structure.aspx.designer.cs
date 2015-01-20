@@ -22,6 +22,15 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
         
         /// <summary>
+        /// LinkButtonPublishAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonPublishAll;
+        
+        /// <summary>
         /// PanelAddSubPage control.
         /// </summary>
         /// <remarks>
@@ -49,13 +58,31 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonAddPage;
         
         /// <summary>
-        /// LinkButtonPublishAll control.
+        /// PanelMove control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButtonPublishAll;
+        protected global::System.Web.UI.WebControls.Panel PanelMove;
+        
+        /// <summary>
+        /// ButtonMovePageUp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonMovePageUp;
+        
+        /// <summary>
+        /// ButtonMovePageDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonMovePageDown;
         
         /// <summary>
         /// TreeViewPages control.
@@ -101,24 +128,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image ImagePageStatus;
-        
-        /// <summary>
-        /// cmdMovePageUp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdMovePageUp;
-        
-        /// <summary>
-        /// cmdMovePageDown control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdMovePageDown;
         
         /// <summary>
         /// TextBoxTitle control.

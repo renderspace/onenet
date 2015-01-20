@@ -109,8 +109,8 @@ namespace OneMainWeb.adm
             CheckBoxBreakPersitence.Checked = false;
             InputRedirectToUrl1.Text = "";
             CheckBoxSubPageRouting.Checked = false;
-            cmdMovePageUp.Visible = true;
-            cmdMovePageDown.Visible = true;
+            ButtonMovePageUp.Visible = true;
+            ButtonMovePageDown.Visible = true;
             OneSettingsPageSettings.ItemId = 0;
             OneSettingsPageSettings.Databind();
             ddlPageTemplate.ClearSelection();
@@ -166,8 +166,8 @@ namespace OneMainWeb.adm
         {
             if (SelectedPage != null)
             {
-                cmdMovePageDown.Visible = true;
-                cmdMovePageUp.Visible = true;
+                ButtonMovePageDown.Visible = true;
+                ButtonMovePageUp.Visible = true;
                 TextBoxUri.Visible = SelectedPageId != RootNodeID;
                 LastChangeAndHistory1.Text = SelectedPage.DisplayLastChanged;
                 LastChangeAndHistory1.SelectedContentId = SelectedPage.ContentId.Value;
@@ -219,11 +219,11 @@ namespace OneMainWeb.adm
                         {
                             if (i == 0)
                             {
-                                cmdMovePageUp.Visible = false;
+                                ButtonMovePageUp.Visible = false;
                             }
                             else if (i == pages.Count - 1)
                             {
-                                cmdMovePageDown.Visible = false;
+                                ButtonMovePageDown.Visible = false;
                             }
                         }
                     }
@@ -237,9 +237,11 @@ namespace OneMainWeb.adm
                 
                 if (SelectedPageId == RootNodeID)
                 {
-                    cmdMovePageDown.Visible = false;
-                    cmdMovePageUp.Visible = false;
+                    ButtonMovePageDown.Visible = false;
+                    ButtonMovePageUp.Visible = false;
                 }
+
+                PanelMove.Visible = ButtonMovePageDown.Visible || ButtonMovePageUp.Visible;
 
                 RepeaterModuleInstances_DataBind();
 
