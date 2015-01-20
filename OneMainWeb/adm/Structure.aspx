@@ -155,22 +155,22 @@
 		            <ItemTemplate>
                         <div class="moduleInstance">
                             <h4>
-                                <asp:LinkButton	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-trash'></span>" CssClass="btn btn-danger pull-left"  />
-                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
-                                
-                                <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
-                                </span>
-								<span class="m-btns">
-                                    
-								<asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                <asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info btn-lg" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
                                     Text='<span class="glyphicon glyphicon-pencil"></span> Edit'	/>
 
-                                <asp:PlaceHolder ID="PlaceHolderNotInherited2" runat="server">
+
+                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
+                                    <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
+                                </span>
+								<span class="m-btns">
+                                    <asp:LinkButton	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-trash'></span> Delete instance" CssClass="btn btn-danger pull-left"  />
+
+                                    <asp:PlaceHolder ID="PlaceHolderNotInherited2" runat="server">
                                     
-                                    <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' CssClass="btn" />
-						            <asp:LinkButton	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text="<span class='glyphicon glyphicon-arrow-up'></span>"  CssClass="btn s-btn" />
-						            <asp:LinkButton	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-arrow-down'></span>"  CssClass="btn s-btn" />
-                                </asp:PlaceHolder>
+                                        <asp:Button	ID="cmdUndeleteInstance" Runat="server" CommandName="COMMAND_UNDELETE" CommandArgument='<%#	Eval("Id")	 %>' Text='Undelete' CssClass="btn" />
+						                <asp:LinkButton	ID="cmdMoveUp" Runat="server" CommandName="COMMAND_MOVE_UP" CommandArgument='<%#	Eval("Id")	%>'	Text="<span class='glyphicon glyphicon-arrow-up'></span>"  CssClass="btn s-btn" />
+						                <asp:LinkButton	ID="cmdMoveDown" Runat="server"	CommandName="COMMAND_MOVE_DOWN" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-arrow-down'></span>"  CssClass="btn s-btn" />
+                                    </asp:PlaceHolder>
 								</span>
                             </h4>
 
