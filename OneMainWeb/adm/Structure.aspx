@@ -56,7 +56,7 @@
                             </div>
                         </div>
                          <div class="form-group">
-                            <label class="col-sm-4 control-label">Description</label>
+                            <label class="col-sm-4 control-label">Meta description</label>
                             <div class="col-sm-8">
                                 <asp:TextBox runat="server" ID="TextBoxDescription" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="PageSett" CssClass="form-control" placeholder="Short description of the page, used on menus and also displayed in Google and Facebook results. Important for SEO. Some modules may override this text."></asp:TextBox>
                             </div>
