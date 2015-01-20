@@ -174,9 +174,17 @@ namespace OneMainWeb
         {
             try
             {
+                var d = SqlDateTime.MinValue.Value;
+                DateTime.TryParse(TextBoxDate.Text, Thread.CurrentThread.CurrentUICulture, DateTimeStyles.None, out d);
+
                 if (lbRegularsAssignedToArticle.Items.Count == 0)
                 {
-                    Notifier1.Warning = "$minimum_one_regular_has_to_be_assigned_to_article";
+                    Notifier1.Warning = "You need to select at least one category/regular. Use the 'right' botton below.";
+                    return;
+                }
+                else if (d <= SqlDateTime.MinValue.Value)
+                {
+                    Notifier1.Warning = "Please select article date.";
                     return;
                 }
                 else
@@ -200,11 +208,11 @@ namespace OneMainWeb
                     if (EnableXHTMLValidator && (hasErrors || hasAmpersands))
                     {
                         if (hasErrors)
-                            Notifier1.Warning += "<h3>" + "$errors" + "</h3><ul>";
+                            Notifier1.Warning += "<h3>" + "Errors:" + "</h3><ul>";
 
                         foreach (var validatorError in errors)
                         {
-                            Notifier1.Warning += "<li>" + "$" + validatorError.Error;
+                            Notifier1.Warning += "<li>" + validatorError.Error;
                             if (!string.IsNullOrEmpty(validatorError.Tag))
                                 Notifier1.Warning += "<span>" + validatorError.Tag + "</span>";
                             Notifier1.Warning += "</li>";
@@ -215,10 +223,10 @@ namespace OneMainWeb
 
                         if (hasAmpersands)
                         {
-                            Notifier1.Warning += "<h3>" + "$ampersands" + "</h3><ul>";
+                            Notifier1.Warning += "<h3>" + "ampersands" + "</h3><ul>";
                             foreach (int i in ampersands)
                             {
-                                Notifier1.Warning += "<li>" + "$position" + "<span>" + i + "</span></li>";
+                                Notifier1.Warning += "<li>" + "position" + "<span>" + i + "</span></li>";
                             }
                             Notifier1.Warning += "</ul>";
                         }
@@ -229,9 +237,6 @@ namespace OneMainWeb
                         SelectedArticle.SubTitle = TextContentEditor.SubTitle;
                         SelectedArticle.Teaser = TextContentEditor.Teaser;
                         SelectedArticle.Html = TextContentEditor.Html;
-
-                        var d = SqlDateTime.MinValue.Value;
-                        DateTime.TryParse(TextBoxDate.Text, Thread.CurrentThread.CurrentUICulture, DateTimeStyles.None, out d);
                         SelectedArticle.DisplayDate = d;
                         SelectedArticle.IsChanged = true;
                         SelectedArticle.MarkedForDeletion = false;
@@ -250,7 +255,7 @@ namespace OneMainWeb
 
                         if (AutoPublish)
                             articleB.Publish(SelectedArticle.Id.Value);
-                        Notifier1.Message = "$article_saved";
+                        Notifier1.Message = "Article saved";
 
                         if (close)
                         {
@@ -267,7 +272,7 @@ namespace OneMainWeb
             catch (Exception ex)
             {
                 Notifier1.Visible = true;
-                Notifier1.ExceptionName = "$error_saving";
+                Notifier1.ExceptionName = "Error saving";
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
