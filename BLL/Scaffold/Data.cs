@@ -177,8 +177,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             row[field.FQName] = f;
                             if (table.Columns[field.Ordinal].ExtendedProperties["Relation"] != null && field.IsMultiLanguageContent)
                             {
-                                var contentId = int.Parse(row[field.FQName].ToString());
-                                row[field.FQName] = intContentB.Get(contentId).Html;
+                                row[field.FQName] = GetMultilanguageContent(field.FQName, row);
                             }
                         }
                     }
@@ -187,18 +186,23 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 }
             }
 
-            /* }
-             catch (SqlException ex)
-             {
-                 log.Error(ex);
-                 debugSql += "\n--------------\n";
-                 debugSql += ex.Message + "\n";
-                 debugSql += ex.LineNumber + "\n";
-                 debugSql += ex.Source;
-             }*/
-
             table.ExtendedProperties.Add("sql", debugSql);
             return table;
+        }
+
+        public static string GetMultilanguageContent(string fqname, DataRow row)
+        {
+            if (row[fqname] == null || row[fqname] == DBNull.Value)
+                return "";
+
+            var contentId = 0;
+            int.TryParse(row[fqname].ToString(), out contentId);
+            if (contentId < 1)
+                return "";
+            var content = intContentB.Get(contentId);
+            if (content == null || content.Html == null)
+                return "";
+            return content.Html;
         }
 
         public static Dictionary<int, string> GetManyToMany(int relationId, int dataKey)
