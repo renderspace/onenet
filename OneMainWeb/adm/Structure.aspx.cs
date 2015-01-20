@@ -820,6 +820,23 @@ namespace OneMainWeb.adm
             SelectedPage_DataBind();
             TreeViewPages_DataBind();
         }
+
+        protected void ButtonPublishAll_Click(object sender, EventArgs e)
+        {
+            var publishedCount = webSiteB.PublishAllPages(SelectedWebSiteId);
+            Notifier1.Title = "Publishing pages.";
+            if (publishedCount > 0)
+            {
+                Notifier1.Message = string.Format("Published {0} pages", publishedCount);
+                SelectedPage_DataBind();
+                TreeViewPages_DataBind();
+            }
+            else
+            {
+                Notifier1.Message = "No pages published";
+                
+            }
+        }
     }
 
     public class TreeViewState

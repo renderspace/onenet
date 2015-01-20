@@ -603,9 +603,19 @@ namespace One.Net.BLL
             return webSiteDb.GetSiteStructure(webSiteId, LanguageId, publishFlag);
         }
 
-        public PagedList<BOPage> ListUnpublishedPages(int webSiteId, ListingState state)
+        public int PublishAllPages(int webSiteId)
         {
-            return webSiteDb.ListUnpublishedPages(webSiteId, state, LanguageId);
+            var pages = webSiteDb.ListPages(webSiteId, LanguageId, false, true);
+            int publishedCount = 0;
+
+            foreach (var p in pages)
+            {
+                if (PublishPage(p.Id))
+                {
+                    publishedCount++;
+                }
+            }
+            return publishedCount;
         }
 
         #region Module Instances
@@ -1278,9 +1288,7 @@ namespace One.Net.BLL
 
             BOPage _root = null;
 
-            var state = new ListingState(10000, 0, SortDir.Ascending, "PageId");
-
-            List<BOPage> pages = webSiteDb.ListPages(webSiteId, state, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
+            List<BOPage> pages = webSiteDb.ListPages(webSiteId, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
 
             var siteMap = new Dictionary<int, BOPage>();
 

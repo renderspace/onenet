@@ -49,6 +49,15 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonAddSubPage;
         
         /// <summary>
+        /// LinkButtonPublishAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButtonPublishAll;
+        
+        /// <summary>
         /// TreeViewPages control.
         /// </summary>
         /// <remarks>
