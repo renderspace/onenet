@@ -19,6 +19,7 @@
                             <asp:LinkButton ID="ButtonAddSubPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
                         </div>
                     </asp:Panel>
+                    <asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn" Text="Publish all pages" OnClick="ButtonPublishAll_Click" />
                 </header>
                 <div class="treeview">
 	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />

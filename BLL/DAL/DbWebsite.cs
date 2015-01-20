@@ -12,38 +12,33 @@ namespace One.Net.BLL.DAL
 {
 	public class DbWebsite
 	{
-        public PagedList<BOPage> ListUnpublishedPages(int webSiteId, ListingState state, int languageId)
-        {
-            return ListPages(webSiteId, state, languageId, false, true);
-        }
-        public PagedList<BOPage> ListPages(int webSiteId, ListingState state, int languageId, bool publishFlag, bool filterChanged = false)
+        public PagedList<BOPage> ListPages(int webSiteId, int languageId, bool publishFlag, bool filterChanged = false)
         {
             PagedList<BOPage> pages = new PagedList<BOPage>();
-            int toRecordIndex = 0, fromRecordIndex = 0;
 
-            if (state.FirstRecordIndex.HasValue && state.RecordsPerPage.HasValue)
-            {
-                fromRecordIndex = state.FirstRecordIndex.Value + 1;
-                toRecordIndex = (fromRecordIndex + state.RecordsPerPage.Value) - 1;
-            }
-
-            SqlParameter[] paramsToPass = new SqlParameter[8];
+            var paramsToPass = new SqlParameter[3];
             paramsToPass[0] = new SqlParameter("@websiteID", webSiteId);
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
             paramsToPass[2] = new SqlParameter("@publishFlag", publishFlag);
-            paramsToPass[3] = new SqlParameter("@fromRecordIndex", fromRecordIndex);
-            paramsToPass[4] = new SqlParameter("@toRecordIndex", toRecordIndex);
-            paramsToPass[5] = state.SortField.Length < 2 ? new SqlParameter("@sortByColumn", DBNull.Value) : new SqlParameter("@sortByColumn", state.SortField);
-            paramsToPass[6] = new SqlParameter("@sortOrder", state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
 
-            if (filterChanged)
-                paramsToPass[7] = new SqlParameter("@changed", true);
-            else
-                paramsToPass[7] = new SqlParameter("@changed", DBNull.Value);
 
-            string sql = "[dbo].[ListPagedPages]";
+            string sql = @"SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+            c.principal_modified_by, c.date_modified, c.votes, c.score, c.id ContentId, p.id PageId, p.pages_fk_id, p.menu_group, p.idx, 
+			t.id TemplateId, t.name, level, pending_delete, changed, 
+            break_persistence, web_site_fk_id, redirectToUrl, [viewGroups], [editGroups], [requireSSL], sub_route_url
+     FROM [dbo].[pages] p	
+     INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id = p.content_fk_id AND cds.language_fk_id = @languageId
+     INNER JOIN [dbo].[content] c ON c.id = p.content_fk_id
+     INNER JOIN [dbo].[template] t ON t.id = p.template_fk_id AND template_type = 3
+	   WHERE p.publish = @publishFlag AND p.web_site_fk_id=@websiteID";
+                if (filterChanged)
+                {
+                    sql += " AND p.changed = 1";
+                }
+                    
+           sql += " ORDER BY PageId ASC";
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure,
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 sql, paramsToPass))
             {
                 while (rdr.Read())
