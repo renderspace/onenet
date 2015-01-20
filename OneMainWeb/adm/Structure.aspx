@@ -19,7 +19,17 @@
                             <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
                         </div>
                     </asp:Panel>
-                   
+                    <asp:Panel runat="server" ID="PanelMove">
+                        <span class="pull-left movePage">Move current page:</span>
+                        <div class="upDown">
+                            <span class="pull-left">
+						        <asp:Button id="ButtonMovePageUp" CommandName="Up" runat="server" Text=" &#9650; " OnClick="CmdMovePage_Click" />
+                            </span>
+                            <span class="pull-right">
+                                    <asp:Button id="ButtonMovePageDown" CommandName="Down" runat="server" Text=" &#9660; " OnClick="CmdMovePage_Click" />
+                            </span>
+                        </div>
+                    </asp:Panel>
                 </header>
                 <div class="treeview">
 	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
@@ -35,11 +45,6 @@
                         <h3>
                             <asp:Literal ID="LiteralLegend" runat="server" EnableViewState="false"></asp:Literal>  
                             <asp:Image runat="server" ID="ImagePageStatus" Visible="false" CssClass="right" />
-
-                            <span class="right buttons">
-						        <asp:Button id="cmdMovePageUp" CommandName="Up" runat="server" Text=" &#9650; " OnClick="CmdMovePage_Click" />
-						        <asp:Button id="cmdMovePageDown" CommandName="Down" runat="server" Text=" &#9660; " OnClick="CmdMovePage_Click" />
-					        </span>
                         </h3>
                         
                     </div>
