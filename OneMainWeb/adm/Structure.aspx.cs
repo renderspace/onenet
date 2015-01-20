@@ -161,6 +161,11 @@ namespace OneMainWeb.adm
             }
         }
 
+        protected string RenderModuleName(object _Changed, object _PendingDelete, object name, object id)
+        {
+            return name.ToString() + " " + RenderStatusIcons(_PendingDelete, _Changed) + " [" + id.ToString() + "]";
+        }
+
         protected void SelectedPage_DataBind()
         {
             if (SelectedPage != null)
@@ -183,16 +188,22 @@ namespace OneMainWeb.adm
                 ButtonPublish.Text = SelectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
                 ImagePageStatus.Visible = true;
 
+
+                ImagePageStatus.Attributes.Add("data-toggle", "tooltip");
+                ImagePageStatus.Attributes.Add("data-placement", "right");
                 if (SelectedPage.MarkedForDeletion)
                 {
                     ImagePageStatus.ImageUrl = "/Res/brisanje.gif";
+                    ImagePageStatus.Attributes.Add("title", "Marked for deletion");
                 }
                 else if (SelectedPage.IsChanged)
                 {
                     ImagePageStatus.ImageUrl = "/Res/objava.gif";
+                    ImagePageStatus.Attributes.Add("title", "Changes waiting for publish");
                 }
                 else
                 {
+                    ImagePageStatus.Attributes.Add("title", "Published");
                     ImagePageStatus.ImageUrl = "/Res/objavljeno.gif";
                 }
 
@@ -510,46 +521,7 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected string RenderModuleName(object _Changed, object _PendingDelete, object name, object id)
-        {
-            string strExtension = "";
-            if (FormatTool.GetBoolean(_PendingDelete))
-            {
-                strExtension = "/Res/brisanje.gif";
-            }
-            else if (FormatTool.GetBoolean(_Changed))
-            {
-                strExtension = "/Res/objava.gif";
-            }
-            else
-            {
-                strExtension = "/Res/objavljeno.gif";
-            }
-            strExtension = "<img src='" + strExtension + "' alt='' />";
-
-            return name.ToString() + " " + strExtension + " [" + id.ToString() + "]";
-        }
-
-        protected string RenderPageStatus()
-        {
-            string strReturn = "";
-            if (SelectedPage != null)
-            {
-                if (SelectedPage.MarkedForDeletion)
-                {
-                    strReturn = "/Res/brisanje.gif";
-                }
-                else if (SelectedPage.IsChanged)
-                {
-                    strReturn = "/Res/objava.gif";
-                }
-                else
-                {
-                    strReturn = "/Res/objavljeno.gif"; ;
-                }
-            }
-            return strReturn;
-        }
+        
 
         protected void ButtonAddPage_Click(object sender, EventArgs e)
         {

@@ -387,3 +387,7 @@ $('input.imageFileUploadWithPreview').on('change', function (e) {
     reader.readAsDataURL(document.getElementById(myId).files[0]);
     return false;
 });
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})

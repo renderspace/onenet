@@ -162,24 +162,28 @@ namespace OneMainWeb
 
         protected string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
         {
+
+            string title = "";
             string strReturn = "";
             if (objIsChanged != null && objMarkedForDeletion != null)
             {
                 if (bool.Parse(objMarkedForDeletion.ToString()))
                 {
                     strReturn = "/Res/brisanje.gif";
+                    title = "Marked for deletion";
                 }
                 else if (bool.Parse(objIsChanged.ToString()))
                 {
                     strReturn = "/Res/objava.gif";
+                    title = "Changes waiting for publish";
                 }
                 else
                 {
                     strReturn = "/Res/objavljeno.gif";
+                    title = "Published";
                 }
             }
-
-            return strReturn;
+            return "<img data-toggle='tooltip' data-placement='left' src='" + strReturn + "' alt='' title='" + title + "' />"; ;
         }
 
         protected static void AddEmptyItem(System.Web.UI.WebControls.DropDownList ddl)

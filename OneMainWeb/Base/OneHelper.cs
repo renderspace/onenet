@@ -56,20 +56,24 @@ namespace OneMainWeb
 
         private static string GetCssClass(BOPage page)
         {
+            string title = "";
             string ret = "<span class=\"";
             if (page.MarkedForDeletion) 
             {
                 ret += "pd";
+                title = "Marked for deletion";
             }
             else if (page.IsChanged)
             {
                 ret += "ch";
+                title = "Changes waiting for publish";
             }
             else
             {
                 ret += "pub";
+                title = "Published";
             }
-            ret += "\">";
+            ret += "\" data-toggle=\"tooltip\" data-placement=\"bottom\" + title=\"" + title + "\" >";
             return ret;
         }
     }

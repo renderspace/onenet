@@ -49,7 +49,7 @@
 						</asp:TemplateField>
                         <asp:TemplateField HeaderText="Status">
 							<ItemTemplate>
-							<img src='<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>' alt="" />
+							<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>
 							</ItemTemplate>
 						</asp:TemplateField>
 						<asp:TemplateField HeaderText="Title" SortExpression="cds.title">
