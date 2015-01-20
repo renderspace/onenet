@@ -25,7 +25,6 @@ namespace OneMainWeb.adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LiteralLegend.Text = "Selected page";
             LiteralModulesOnPage.Text = "Module instances on current page";
 
             SelectedWebsite_ValidateDataBind();

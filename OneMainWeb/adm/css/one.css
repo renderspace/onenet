@@ -479,3 +479,18 @@ details .select {margin: 10px 0 0 0;}
 
 .upDown { width: 75px; display: inline-block; }
 .movePage { margin: 6px 10px 0 0; font-weight: bold;} 
+
+.boldInput { font-weight: bold;}
+
+.form-control::-webkit-input-placeholder { 
+    color:    #CCC;
+}
+.form-control:-moz-placeholder { 
+    color:    #CCC;
+}
+.form-control::-moz-placeholder { 
+    color:    #CCC;
+}
+.form-control:-ms-input-placeholder { 
+    color:    #CCC;
+}
