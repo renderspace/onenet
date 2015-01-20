@@ -41,18 +41,11 @@
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
                 <section class="module page-settings">
-                    <div class="with_buttons">
-                        <h3>
-                            <asp:Literal ID="LiteralLegend" runat="server" EnableViewState="false"></asp:Literal>  
-                            <asp:Image runat="server" ID="ImagePageStatus" Visible="false" CssClass="right" />
-                        </h3>
-                        
-                    </div>
 			        <div class="pageproperties form-horizontal validationGroup">
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Title</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control required"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control required boldInput"></asp:TextBox>
                             </div>
                         </div>
                          <div class="form-group">
@@ -129,9 +122,11 @@
 				        <div class="form-group">
                             <div class="col-sm-4">
 						        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+                                <asp:Image runat="server" ID="ImagePageStatus" Visible="false" CssClass="right" />
                             </div>
 
                             <div class="col-sm-8">
+                                
 					            <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     

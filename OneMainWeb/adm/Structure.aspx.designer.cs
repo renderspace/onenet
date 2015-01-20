@@ -112,24 +112,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
-        /// LiteralLegend control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralLegend;
-        
-        /// <summary>
-        /// ImagePageStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
-        
-        /// <summary>
         /// TextBoxTitle control.
         /// </summary>
         /// <remarks>
@@ -254,6 +236,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
+        
+        /// <summary>
+        /// ImagePageStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
         
         /// <summary>
         /// ButtonDelete control.
