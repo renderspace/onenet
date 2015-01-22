@@ -131,7 +131,7 @@
 			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
 			                    <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
-                                <asp:LinkButton	id="cmdSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save page" onclick="cmdSave_Click" ValidationGroup="PageSett" />
+                                <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save draft" onclick="ButtonSave_Click" ValidationGroup="PageSett" />
                             </div>
 				        </div>
                     </div>
