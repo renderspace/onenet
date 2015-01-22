@@ -25,8 +25,6 @@ namespace OneMainWeb.adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LiteralModulesOnPage.Text = "Module instances on current page";
-
             SelectedWebsite_ValidateDataBind();
 
             TreeViewPages_DataBind();
@@ -86,6 +84,7 @@ namespace OneMainWeb.adm
             PanelFbDebug.Visible = false;
             TreeViewPages.Nodes.Clear();
             TreeViewPages.DataBind();
+            RepeaterModuleInstances.Visible = false;
             RepeaterModuleInstances.DataSource = null;
             RepeaterModuleInstances.DataBind();
             TextBoxUri.Visible = false;
@@ -285,7 +284,9 @@ namespace OneMainWeb.adm
 
         protected void RepeaterModuleInstances_DataBind()
         {
-            RepeaterModuleInstances.DataSource = webSiteB.ListModuleInstances(SelectedPageId);
+            var instances = webSiteB.ListModuleInstances(SelectedPageId);
+            PanelNoModuleInstances.Visible = instances.Count == 0;
+            RepeaterModuleInstances.DataSource = instances;
             RepeaterModuleInstances.DataBind();
         }
 

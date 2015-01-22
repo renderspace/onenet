@@ -292,22 +292,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonSave;
         
         /// <summary>
-        /// LiteralModulesOnPage control.
+        /// PanelAddInstance control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal LiteralModulesOnPage;
-        
-        /// <summary>
-        /// PanleAddInstance control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanleAddInstance;
+        protected global::System.Web.UI.WebControls.Panel PanelAddInstance;
         
         /// <summary>
         /// ddlModuleTypes control.
@@ -326,6 +317,15 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdAddInstance;
+        
+        /// <summary>
+        /// PanelNoModuleInstances control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelNoModuleInstances;
         
         /// <summary>
         /// RepeaterModuleInstances control.
