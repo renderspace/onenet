@@ -169,7 +169,6 @@ namespace One.Net.BLL
                 MenuGroup = 0,
                 WebSiteId = webSiteId,
                 BreakPersistance = false,
-                ParLink = newParLink,
                 RedirectToUrl = "",
                 URI = "",
                 SubRouteUrl = ""
@@ -208,6 +207,7 @@ namespace One.Net.BLL
             if (!ValidateParLinkAgainstDB(currentPageId == -1 ? (int?)null : currentPageId, -1, newParLink, webSiteId))
                 return AddSubPageResult.PartialLinkExistsOnThisLevel;
 
+            page.ParLink = newParLink;
             ChangePage(page);
             OneSiteMapProvider.ReloadSiteMap();
             return addingRootPage ? AddSubPageResult.OkRootPage : AddSubPageResult.Ok;
