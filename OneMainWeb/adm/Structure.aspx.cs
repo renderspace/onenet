@@ -82,6 +82,8 @@ namespace OneMainWeb.adm
         {
             SelectedPageId = 0;
             PanelFbDebug.Visible = false;
+            PanelMove.Visible = false;
+            LinkButtonPublishAll.Visible = false;
             TreeViewPages.Nodes.Clear();
             TreeViewPages.DataBind();
             RepeaterModuleInstances.Visible = false;
@@ -133,7 +135,9 @@ namespace OneMainWeb.adm
                 TreeViewPages.Nodes.Clear();
 
             TreeNode selectedNode = null;
-            TreeNode tree = OneHelper.PopulateTreeViewControl(webSiteB.GetSiteStructure(SelectedWebSiteId), null, SelectedPageId, currentExpandLevel, ref selectedNode);
+            var siteStructure = webSiteB.GetSiteStructure(SelectedWebSiteId);
+            LinkButtonPublishAll.Visible = siteStructure.Count > 0;
+            TreeNode tree = OneHelper.PopulateTreeViewControl(siteStructure, null, SelectedPageId, currentExpandLevel, ref selectedNode);
 
             if (tree != null)
             {
@@ -169,6 +173,7 @@ namespace OneMainWeb.adm
         {
             if (SelectedPage != null)
             {
+                PanelMove.Visible = true;
                 ButtonMovePageDown.Visible = true;
                 ButtonMovePageUp.Visible = true;
                 TextBoxUri.Visible = SelectedPageId != RootNodeID;
@@ -186,7 +191,6 @@ namespace OneMainWeb.adm
                 PanelAddSubPage.Visible = PanelAddSubPage.Visible && !SelectedPage.MarkedForDeletion;
                 ButtonPublish.Text = SelectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
                 ImagePageStatus.Visible = true;
-
 
                 ImagePageStatus.Attributes.Add("data-toggle", "tooltip");
                 ImagePageStatus.Attributes.Add("data-placement", "right");

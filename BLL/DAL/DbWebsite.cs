@@ -262,9 +262,51 @@ namespace One.Net.BLL.DAL
 
         public void ChangePage(BOPage page)
         {
-            SqlParameter pageIdParam = new SqlParameter("@Id", page.Id);
-            pageIdParam.Direction = ParameterDirection.InputOutput;
-            pageIdParam.SqlDbType = SqlDbType.Int;
+            if (page == null)
+                return;
+
+            var p = new SqlParameter[3]  {
+                new SqlParameter("@WebSiteId", page.WebSiteId),
+                new SqlParameter("@PublishFlag", page.PublishFlag),
+                new SqlParameter("@Id", page.Id)
+            };
+            var exists = (int) SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text, "SELECT COUNT(id) FROM pages WHERE id = @Id AND publish = @PublishFlag AND web_site_fk_id = @WebSiteId", p) > 0;
+            var sql = "";
+            if (exists)
+            {
+                sql = @"UPDATE [dbo].[pages] SET break_persistence = @BreakPersistance, [level] = @Level, 
+		content_fk_id = @ContentId, template_fk_id = @TemplateId,
+		pages_fk_publish = @PublishFlag, pages_fk_id = @ParentId, changed = @Changed, 
+		menu_group = @MenuGroup, idx = @Order, web_site_fk_id = @WebSiteId, pending_delete = @PendingDelete,
+		redirectToUrl = @redirectToUrl, viewGroups = @viewGroups, editGroups = @editGroups, requireSSL = @requireSSL, sub_route_url = @SubRouteUrl
+		WHERE id = @Id AND publish = @PublishFlag";
+
+            }
+            else
+            {
+                if (!page.PublishFlag)
+                {
+                    p = new SqlParameter[2]  {
+                        new SqlParameter("@sequence","pages"),
+                        new SqlParameter("@sequence_id", 0)
+                    };
+                    p[1].Direction = ParameterDirection.Output;
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[nextval]", p);
+                    var newId = (long) p[1].Value;
+                    page.Id = Convert.ToInt32(newId);
+                    if (page.Order == 0)
+                        page.Order = Convert.ToInt32(newId);
+                }
+                sql = @"INSERT INTO pages 
+		(id,  break_persistence, level, publish, content_fk_id, template_fk_id,
+		pages_fk_publish, pages_fk_id, changed, menu_group, idx, web_site_fk_id, pending_delete,
+		redirectToUrl, viewGroups, editGroups, requireSSL, sub_route_url)
+		VALUES
+		(@Id, @BreakPersistance, @Level, @PublishFlag, @ContentId, @TemplateId,
+		@PublishFlag, @ParentId, @Changed, @MenuGroup, @Order, @WebSiteId, @PendingDelete,
+		@redirectToUrl, @viewGroups, @editGroups, @requireSSL, @SubRouteUrl )";
+            }
+
             SqlParameter pageParentIdParam = new SqlParameter("@ParentId", SqlDbType.Int);
             pageParentIdParam.IsNullable = true;
             if (page.ParentId.HasValue)
@@ -276,8 +318,8 @@ namespace One.Net.BLL.DAL
                 pageParentIdParam.Value = DBNull.Value;
             }
 
-            SqlParameter[] parms = new SqlParameter[] {
-				pageIdParam,
+            var parms = new SqlParameter[] {
+				new SqlParameter("@Id", page.Id),
 				pageParentIdParam,
                 new SqlParameter("@PublishFlag", page.PublishFlag),
                 new SqlParameter("@Changed", page.IsChanged),
@@ -296,8 +338,8 @@ namespace One.Net.BLL.DAL
                 new SqlParameter("@SubRouteUrl", page.SubRouteUrl)
             };
 
-            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "ChangePage", parms);
-            page.Id = (int) parms[0].Value;
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, parms);
+            //page.Id = (int) parms[0].Value;
 
             parms = new SqlParameter[] {
                 new SqlParameter("@Id", page.Id),
