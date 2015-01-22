@@ -187,18 +187,6 @@ namespace OneMainWeb.adm
 
         }
 
-        protected void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            LabelLanguage.Text = "";
-            TextBoxTitle.Text = "";
-            TextBoxDescription.Text = "";
-            TextBoxOgImage.Text = "";
-            LastChangeAndHistory1.Text = "";
-            LastChangeAndHistory1.SelectedContentId = 0;
-            OneSettingsWebsite.ItemId = 0;
-            MultiView1.ActiveViewIndex = 0;
-        }
-
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
 

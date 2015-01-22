@@ -102,12 +102,6 @@ namespace OneMainWeb
             }
         }
 
-        protected void CmdCancel_Click(object sender, EventArgs e)
-        {
-            CurrentItem = null;
-            MultiView1.ActiveViewIndex = 0;
-        }
-
         protected void cmdShowAddRedirect_Click(object sender, EventArgs e)
         {
             CurrentItem = null;

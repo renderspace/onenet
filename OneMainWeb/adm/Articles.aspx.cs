@@ -77,12 +77,6 @@ namespace OneMainWeb
             AddEmptyItem((System.Web.UI.WebControls.DropDownList)sender);
         }
 
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            SelectedArticle = null;
-            Multiview1.ActiveViewIndex = 0;
-        }
-
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveArticle(false);

@@ -237,12 +237,6 @@ namespace OneMainWeb
                 e.InputParameters.Clear();            
         }
 
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            SelectedRssFeed = null;
-            MultiView1.ActiveViewIndex = 0;      
-        }
-
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveRssFeed();

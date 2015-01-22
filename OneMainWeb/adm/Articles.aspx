@@ -127,7 +127,6 @@
                     </div>
                     <div class="col-sm-9">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				        <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" CssClass="btn btn-primary" />
 				        <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
 				        <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
 				        <asp:Label ID="AutoPublishWarning" runat="server" Text="$autopublish_warning"></asp:Label>

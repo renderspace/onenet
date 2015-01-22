@@ -67,15 +67,6 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.GridView GridViewVirtualTables;
         
         /// <summary>
-        /// CmdCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CmdCancel;
-        
-        /// <summary>
         /// CmdSave control.
         /// </summary>
         /// <remarks>
@@ -164,15 +155,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton CmdSaveColumnChanges;
-        
-        /// <summary>
-        /// CmdCancelColumnChanges control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CmdCancelColumnChanges;
         
         /// <summary>
         /// View3 control.

@@ -103,10 +103,5 @@ namespace OneMainWeb.adm
                 }
             }
         }
-
-        protected void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            MultiView1.ActiveViewIndex = 0;
-        }
     }
 }

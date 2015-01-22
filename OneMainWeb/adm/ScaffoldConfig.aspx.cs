@@ -338,11 +338,6 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void CmdCancelColumnChanges_Click(object sender, EventArgs e)
-        {
-            MultiView1.ActiveViewIndex = 0;
-        }
-
         protected void GridViewItems_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -367,11 +362,6 @@ namespace OneMainWeb.adm
                     }
                 }
             }
-        }
-
-        protected void CmdCancel_Click(object sender, EventArgs e)
-        {
-            GridViewVirtualTablesDataBind();
         }
 
         protected void CmdAddAllColumns_Click(object sender, EventArgs e)

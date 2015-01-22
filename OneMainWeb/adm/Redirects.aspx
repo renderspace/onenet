@@ -81,7 +81,6 @@
                 </div>
 			    <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-				        <asp:LinkButton CssClass="btn btn-primary" ID="CmdCancel" runat="server" Text="Cancel" OnClick="CmdCancel_Click" ValidationGroup="CANCEL" />
 				        <asp:LinkButton CssClass="btn btn-success causesValidation" ID="CmdSave" CommandName="SAVE" runat="server" Text="Save" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
 				        <asp:LinkButton CssClass="btn btn-success causesValidation" ID="CmdSaveClose" CommandName="SAVE_CLOSE" runat="server" Text="Save and close" onclick="CmdSave_Click" ValidationGroup="REDIRECTS" />
                     </div>
