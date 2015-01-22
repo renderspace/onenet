@@ -612,7 +612,7 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void cmdSave_Click(object sender, EventArgs e)
+        protected void ButtonSave_Click(object sender, EventArgs e)
         {
             BOPage page = webSiteB.GetPage(SelectedPageId);
 
