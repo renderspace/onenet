@@ -138,8 +138,7 @@
                 </section>
                 <section class="module module-settings">
                 <div class="with_buttons">
-                    <h3><asp:Literal ID="LiteralModulesOnPage" runat="server" EnableViewState="false"></asp:Literal></h3>
-                        <asp:Panel ID="PanleAddInstance" runat="server" CssClass="addStuff">
+                    <asp:Panel ID="PanelAddInstance" runat="server" CssClass="addStuff">
 				        <asp:dropdownlist id="ddlModuleTypes" Runat="server" />
                         <asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="cmdAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
                     </asp:Panel>
@@ -147,6 +146,10 @@
                
 
                 <%-- *************************************** Module instances ********************************************* --%>	
+                <asp:Panel runat="server" ID="PanelNoModuleInstances">
+                    <br />
+                    <div class="alert alert-info" role="alert"><h4>There are not module instances on this page yet.</h4><p>Please use the dropdown above to add them.</p></div>
+                </asp:Panel>
 		        <asp:Repeater ID="RepeaterModuleInstances" runat="server" OnItemDataBound="RepaterModuleInstances_ItemDataBound" OnItemCommand="RepeaterModuleInstances_ItemCommand" >
                     <HeaderTemplate>
                     </HeaderTemplate>
