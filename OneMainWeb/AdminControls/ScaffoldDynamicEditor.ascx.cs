@@ -871,15 +871,5 @@ jQuery.validator.addMethod(
                 Exit(this, new EventArgs());
             }
         }
-
-        protected void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            Clear();
-            if (Exit != null)
-            {
-                Clear();
-                Exit(this, new EventArgs());
-            }
-        }
     }
 }

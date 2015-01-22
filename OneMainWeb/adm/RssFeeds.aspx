@@ -85,7 +85,6 @@
 			                <asp:CheckBoxList ID="chlCategories" runat="server" />
 			            </div>
 			            <div class="form-group">
-				            <asp:Button ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" />
 				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
 				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />
 			            </div>

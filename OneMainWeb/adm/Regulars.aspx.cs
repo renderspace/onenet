@@ -159,12 +159,6 @@ namespace OneMainWeb.adm
             GridViewRegular.DataBind();
         }
 
-        protected void RegularCancelButton_Click(object sender, EventArgs e)
-        {
-            Multiview1.ActiveViewIndex = 0;
-        }
-
-
         protected void RegularInsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveRegular(false);

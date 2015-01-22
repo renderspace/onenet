@@ -58,9 +58,7 @@
             </asp:GridView>
             <div class="form-horizontal">
                 <div class="form-group">
-                        <div class="col-sm-12">
-                        <asp:LinkButton ID="CmdCancel" runat="server" Text="Cancel" OnClick="CmdCancel_Click" CssClass="btn btn-default" />
-
+                    <div class="col-sm-12">
                         <asp:LinkButton ID="CmdSave" runat="server" Text="Save" OnClick="CmdSave_Click" CssClass="btn btn-success" />
                     </div>
                 </div>     
@@ -135,7 +133,6 @@
                 </asp:GridView>
                 <div class="buttonsMiddle">
                     <asp:LinkButton ID="CmdSaveColumnChanges" runat="server" Text="Save" OnClick="CmdSaveColumnChanges_Click" CssClass="btn btn-success" />
-                    <asp:LinkButton ID="CmdCancelColumnChanges" runat="server" Text="Cancel" OnClick="CmdCancelColumnChanges_Click" CssClass="btn btn-info" />
                 </div>   
 
         </asp:View>

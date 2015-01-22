@@ -86,7 +86,6 @@
 						        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
                             </div>
                         <div class="col-sm-9">
-			                <asp:LinkButton ID="CancelButton" runat="server" CausesValidation="false" OnClick="CancelButton_Click" Text="Cancel" CssClass="btn btn-default" />
 			                <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" CssClass="btn btn-success causesValidation" />
 			                <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
                         </div>

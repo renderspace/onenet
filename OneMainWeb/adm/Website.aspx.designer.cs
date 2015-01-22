@@ -319,15 +319,6 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
         
         /// <summary>
-        /// ButtonCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonCancel;
-        
-        /// <summary>
         /// ButtonSave control.
         /// </summary>
         /// <remarks>

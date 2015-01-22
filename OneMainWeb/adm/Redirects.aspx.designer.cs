@@ -121,15 +121,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.TextBox InputToLink;
         
         /// <summary>
-        /// CmdCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CmdCancel;
-        
-        /// <summary>
         /// CmdSave control.
         /// </summary>
         /// <remarks>

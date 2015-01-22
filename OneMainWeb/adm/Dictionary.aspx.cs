@@ -143,12 +143,6 @@ namespace OneMainWeb
             LoadAll(false);
         }
 
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            SelectedDictionaryEntry = null;
-            MultiView1.ActiveViewIndex = 0;
-        }
-
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveDictionaryEntry(false);
