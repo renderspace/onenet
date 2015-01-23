@@ -190,8 +190,14 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return table;
         }
 
-        public static string GetMultilanguageContent(string fqname, DataRow row)
+        public static string GetMultilanguageContent(string fqname, object rawRow)
         {
+            DataRow row = null;
+            if (rawRow is DataRow)
+                row = (DataRow)rawRow;
+            if (rawRow is DataRowView)
+                row = ((DataRowView)rawRow).Row;
+
             if (row[fqname] == null || row[fqname] == DBNull.Value)
                 return "";
 
