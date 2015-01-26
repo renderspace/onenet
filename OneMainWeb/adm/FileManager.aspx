@@ -83,6 +83,7 @@
                 thumbnailHeight: 80,
                 parallelUploads: 20,
                 previewTemplate: previewTemplate,
+                clickable: ".fileinput-button",
                 previewsContainer: "#previews" // Define the container to display the previews
             });
 
@@ -123,7 +124,6 @@
             <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
             <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
             <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
-
 		</div>
 		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-8" ClientIDMode="static">
            <div class="fallback">
@@ -177,7 +177,13 @@
 
 <div class="col-md-9">
     <div class="mainEditor ce-it-2">
-            <div class="col-sm-offset-3 col-sm-9">
+			<div class="col-sm-3">
+				<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+					<span>Upload...</span>
+				</span>
+			</div>
+            <div class="col-sm-9">
                 <div class="col-sm-6 pull-right">
                     <asp:CheckBox ID="CheckBoxConfirm" runat="server" Text="Confirm delete folder and all subfolders"  />    
                 </div>
