@@ -43,7 +43,8 @@ $('.ckeditor4').each(function (index) {
 		height:500,
         disableObjectResizing: true,
         resize_enabled: false,
-        allowedContent: true //,extraPlugins: 'youtube'
+        allowedContent: true, //,extraPlugins: 'youtube'
+        skin: 'bootstrapck'
     });
 });
 
