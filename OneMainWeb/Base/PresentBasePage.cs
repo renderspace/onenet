@@ -55,11 +55,6 @@ namespace OneMainWeb
         public BOPage CurrentPage { get; set; }
         public BOWebSite CurrentWebsite { get; set; }
 
-        protected internal string CustomModulesFolder
-        {
-            get { return customModulesFolder; }
-        }
-
         public static bool ReadPublishFlag()
         { 
             var publishFlag = false;
@@ -286,21 +281,13 @@ ga('create', '" + code + @"', 'auto');";
                                 var p = new Section();
                                 p.CssClass = "mi " + module.Name.ToLower();
                                 p.CssClass += " mi" + module.Id;
-                                
 
                                 Control control = null;
                                 string relPath = "~/CommonModules/" + module.ModuleSource;
-                                string relCustomPath = "~/";
-
-                                if (!string.IsNullOrEmpty(CustomModulesFolder))
-                                    relCustomPath += CustomModulesFolder + "/" + module.ModuleSource;
 
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(CustomModulesFolder) &&
-                                        File.Exists(OContext.Current.MapPath(relCustomPath)))
-                                        control = LoadControl(relCustomPath);
-                                    else if (File.Exists(OContext.Current.MapPath(relPath)))
+                                    if (File.Exists(OContext.Current.MapPath(relPath)))
                                         control = LoadControl(relPath);
                                     else
                                         control = LoadControl("~/Controls/Blank.ascx");
