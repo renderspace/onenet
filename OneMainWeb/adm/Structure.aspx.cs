@@ -306,7 +306,7 @@ namespace OneMainWeb.adm
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");
             Control cmdMoveDown = e.Item.FindControl("cmdMoveDown");
             Label lblPlaceHolder = (Label)(e.Item.FindControl("lblPlaceHolder"));
-            Label LabelModuleDistinctName = (Label)(e.Item.FindControl("LabelModuleDistinctName"));
+            var LabelModuleDistinctName = e.Item.FindControl("LabelModuleDistinctName") as Label;
             var PlaceHolderNotInherited1 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited1"));
             var PlaceHolderNotInherited2 = (PlaceHolder)(e.Item.FindControl("PlaceHolderNotInherited2"));          
             
@@ -359,7 +359,8 @@ namespace OneMainWeb.adm
                     else
                     {
                         LabelModuleDistinctName.Visible = true;
-                        LabelModuleDistinctName.Text = "$new_tc";
+                        LabelModuleDistinctName.Text = "[Empty]";
+                        LabelModuleDistinctName.CssClass = "ModuleDistinctName empty";
                     }
                 }
 
@@ -713,11 +714,8 @@ namespace OneMainWeb.adm
 
             int selectedPlaceHolder = placeHolderData[0].Id.Value;
             var result = webSiteB.AddModulesInstance(SelectedPageId, selectedPlaceHolder, selectedModuleID);
-            if (result)
-            {
-                SelectedPage_DataBind();
-                TreeViewPages_DataBind();
-            }
+            TreeViewPages_DataBind();
+            SelectedPage_DataBind();
         }
 
         protected void ButtonPublish_Click(object sender, EventArgs e)

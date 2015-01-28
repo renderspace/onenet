@@ -284,10 +284,13 @@ ga('create', '" + code + @"', 'auto');";
 
                                 Control control = null;
                                 string relPath = "~/CommonModules/" + module.ModuleSource;
+                                string relCustomPath = "~/site_specific/custom_modules/" + module.ModuleSource;
 
                                 try
                                 {
-                                    if (File.Exists(OContext.Current.MapPath(relPath)))
+                                    if (File.Exists(OContext.Current.MapPath(relCustomPath)))
+                                        control = LoadControl(relCustomPath);
+                                    else if (File.Exists(OContext.Current.MapPath(relPath)))
                                         control = LoadControl(relPath);
                                     else
                                         control = LoadControl("~/Controls/Blank.ascx");
