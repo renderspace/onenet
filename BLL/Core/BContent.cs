@@ -109,6 +109,7 @@ namespace One.Net.BLL
             if (null == meaning && !publishFlag)
             {
                 meaning = new BODictionaryEntry();
+                meaning.MissingTranslation = true;
                 meaning.Title = NO_MEANING_PRE + keyWord + NO_MEANING_POST;
                 meaning.Teaser = NO_MEANING_PRE + keyWord + NO_MEANING_POST;
                 meaning.SubTitle = NO_MEANING_PRE + keyWord + NO_MEANING_POST;
@@ -118,6 +119,7 @@ namespace One.Net.BLL
             else if (null == meaning)
             {
                 meaning = new BODictionaryEntry();
+                meaning.MissingTranslation = true;
                 meaning.Title = "";
                 meaning.Teaser = "";
                 meaning.SubTitle = "";

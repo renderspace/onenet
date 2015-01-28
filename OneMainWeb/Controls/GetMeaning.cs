@@ -78,7 +78,17 @@ namespace OneMainWeb.Controls
             {
                 var meaning = BContent.GetComplexMeaning(Keyword);
                 if (meaning != null)
-                    output.Write(meaning.Html);
+                {
+                    if (meaning.MissingTranslation)
+                    {
+                        output.Write(Keyword);
+                    }
+                    else
+                    {
+                        output.Write(meaning.Html);
+                    }
+                }
+                    
                 return;
             } 
             
