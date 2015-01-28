@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PageTitle.ascx.cs" Inherits="OneMainWeb.CommonModules.PageTitle" EnableViewState="false" %>
+<h1><asp:Literal runat="server" ID="LiteralPageTitle"></asp:Literal></h1>
