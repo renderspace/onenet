@@ -483,7 +483,7 @@ jQuery.validator.addMethod(
         private void ButtonRemoveManyToManyRelation_Click(object sender, EventArgs e)
         {
             MarkCurrentStatus(SubmissionStatus.InternalEvent);
-            var ButtonAddManyToManyRelation = sender as Button;
+            var ButtonAddManyToManyRelation = sender as IButtonControl;
             if (ButtonAddManyToManyRelation != null)
             {
                 var ManyToManyJoinsListBox =
