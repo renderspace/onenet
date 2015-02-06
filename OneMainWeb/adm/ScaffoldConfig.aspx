@@ -26,6 +26,7 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-xs" />
+                            <asp:LinkButton ID="CmdInternationalize" runat="server" Text="Int" CommandArgument='<%# Eval("Id") %>' CommandName="Internationalize" CssClass="btn btn-warning btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="StartingPhysicalTable" HeaderText="Physical table" />
