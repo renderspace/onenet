@@ -203,6 +203,10 @@ namespace OneMainWeb.adm
                     Schema.DeleteVirtualTable(id);
                     GridViewVirtualTablesDataBind();
                     break;
+                case "internationalize":
+                    Schema.InternationalizeTable(id);
+                    GridViewVirtualTablesDataBind();
+                    break;
             }
         }
 
