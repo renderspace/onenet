@@ -8,6 +8,7 @@ using System;
 
 using System.Diagnostics;
 using NLog;
+using One.Net.BLL;
 
 namespace OneMainWeb.Controls
 {
@@ -54,6 +55,22 @@ namespace OneMainWeb.Controls
         public string FirstUlClass { get; set; }
 
         public bool ShowDescription { get; set; }
+
+        public int LeadImageTemplateId { get; set; }
+
+        protected BOImageTemplate LeadImageTemplate 
+        { 
+            get 
+            {
+                if (LeadImageTemplateId < 1)
+                    return null;
+                object o = BWebsite.GetTemplate(LeadImageTemplateId);
+                if (o is BOImageTemplate)
+                    return (BOImageTemplate)o;
+                else
+                    return null;
+            } 
+        }
 
         public MenuGroup()
         {
@@ -182,8 +199,6 @@ namespace OneMainWeb.Controls
                         parentUrl = dataItem.ParentNode.Url;
                     }
 
-                    string title = dataItem.Title;
-                    string description = dataItem.Description;
                     string pageId = dataItem["_pageID"];
                     bool dataItemHasChildren = dataItem.HasChildNodes;
 
@@ -281,9 +296,8 @@ namespace OneMainWeb.Controls
                             itemHeader.ID = "ItemHeader" + currentItemId;
                             Controls.Add(itemHeader);
 
-                            //  Create the data item
-                            Literal item = RenderItem(linkCssClass, title, url, description);
-                            item.ID = "Item" + currentItemId;
+                            var item = RenderItem(linkCssClass, dataItem.Title, url, dataItem.Description, dataItem["_ogImage"], currentItemId);
+                            
 
                             if (_menuGroup == Group)
                                 Controls.Add(item);
@@ -339,17 +353,23 @@ namespace OneMainWeb.Controls
             }
         }
 
-        protected virtual Literal RenderItem(string linkCssClass, string title, string url, string description)
+        protected Literal RenderItem(string linkCssClass, string title, string url, string description, string leadImageUri, int currentItemId)
         {
-            Literal item = new Literal();
-            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\"><span>" + title + "</span>" + (ShowDescription && !string.IsNullOrWhiteSpace(description) ? "<span class=\"d\">" + description + "</span>" : "") + "</a>";
+            var item = new Literal();
+
+            var leadImageTag = "";
+            if (!string.IsNullOrWhiteSpace(leadImageUri) && LeadImageTemplate != null)
+            {
+                leadImageTag = LeadImageTemplate.RenderHtml(description, leadImageUri, "");
+            }
+            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + leadImageTag + "<span>" + title + "</span>" + (ShowDescription && !string.IsNullOrWhiteSpace(description) ? "<span class=\"d\">" + description + "</span>" : "") + "</a>";
+            item.ID = "Item" + currentItemId;
             return item;
         }
 
         private static string CreateIndentTabs(int indentLevel)
         {
-            string s = new string('\t', indentLevel);
-            return s;
+            return new string('\t', indentLevel);
         }
     }
 }

@@ -73,7 +73,7 @@ namespace One.Net.BLL.DAL
                     new SqlParameter("@publishFlag", publishFlag)
                     };
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
-                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.teaser AS Teaser, sub_route_url,
+                @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.subtitle AS SubTitle, sc2.teaser AS Teaser, sub_route_url,
                     t.name AS Template, t.id AS TemplateID, p.content_fk_id AS ContentID, menu_group, idx, changed, pending_delete, 
                     p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL], date_modified, date_created
                      FROM [dbo].pages p
@@ -89,6 +89,7 @@ namespace One.Net.BLL.DAL
                 int _indexID = rdr.GetOrdinal("ID");
                 int _indexUrl = rdr.GetOrdinal("par_link");
                 int _indexTitle = rdr.GetOrdinal("Title");
+                int _indexSubTitle = rdr.GetOrdinal("SubTitle");
                 int _indexTeaser = rdr.GetOrdinal("Teaser");
                 int _indexParent = rdr.GetOrdinal("Parent");
                 int _indexPublish = rdr.GetOrdinal("publish");
@@ -126,6 +127,7 @@ namespace One.Net.BLL.DAL
                     sitePage.LanguageId = languageId;
                     sitePage.ContentId = rdr.GetInt32(_indexContentID);
                     sitePage.Title = rdr[_indexTitle] != DBNull.Value ? rdr.GetString(_indexTitle) : "";
+                    sitePage.SubTitle = rdr[_indexSubTitle] != DBNull.Value ? rdr.GetString(_indexSubTitle) : "";
                     sitePage.Teaser = rdr[_indexTeaser] != DBNull.Value ? rdr.GetString(_indexTeaser) : "";
 
 

@@ -45,6 +45,11 @@ namespace One.Net.BLL.Web
             } 
         }
 
+        protected static bool PublishFlag
+        {
+            get { return bool.Parse(ConfigurationManager.AppSettings["PublishFlag"]); }
+        }
+
         public string CustomClientID { get; set; }
 
         protected string TranslateText(string keyword)
@@ -155,7 +160,7 @@ namespace One.Net.BLL.Web
                 return -1;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("Int"))
+            if (!setting.Type.Equals("Int") && !setting.Type.Equals("ImageTemplate"))
             {
                 throw new ApplicationException("not a Int setting; probably error in database");
             }

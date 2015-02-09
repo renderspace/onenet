@@ -264,8 +264,6 @@ namespace One.Net.BLL
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             if (page == null)
                 return;
-            page.SubTitle = "";
-            page.Html = "";
 
             if (!publishing)
                 page.IsChanged = true;
@@ -1045,23 +1043,36 @@ namespace One.Net.BLL
 
         public static BOTemplate GetTemplate(int id)
         {
-            List<BOTemplate> list = ListTemplates(null);
-            foreach (BOTemplate template in list)
+            BOImageTemplate imageTemplate = OCache.Get("Template_" + id) as BOImageTemplate;
+            if (imageTemplate != null)
+                return imageTemplate;
+
+            BOTemplate template = OCache.Get("Template_" + id) as BOTemplate;
+            if (template == null)
             {
-                if (template.Id == id && template.Type == "ImageTemplate")
+                template = ListTemplates(null).Where(t => t.Id == id).FirstOrDefault();
+                if (template != null && template.Type == "ImageTemplate")
                 {
                     using (var stream = new MemoryStream())
                     {
                         stream.Write(template.Source, 0, template.Source.Length);
                         stream.Seek(0, SeekOrigin.Begin);
                         var formatter = new LoosyFormatter();
-                        return (BOImageTemplate)formatter.Deserialize(stream);
+                        template = (BOImageTemplate)formatter.Deserialize(stream);
                     }
                 }
-                else if (template.Id == id)
-                    return template;
+                if (template != null)
+                {
+                    lock (cacheLockingTemplatesList)
+                    {
+                        var temp = OCache.Get("Template_" + id) as BOTemplate;
+                        if (null == temp)
+                            OCache.Max("Template_" + id, template);
+                    }
+                }
             }
-            return null;
+
+            return template;
         }
 
         /// <summary>

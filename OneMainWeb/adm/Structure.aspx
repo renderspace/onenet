@@ -42,6 +42,12 @@
             <asp:View ID="View1" runat="server">
                 <section class="module page-settings">
 			        <div class="pageproperties form-horizontal validationGroup">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Preview</label>
+                            <div class="col-sm-8">
+                                <asp:HyperLink runat="server" ID="HyperLinkPreview"></asp:HyperLink>
+                            </div>
+                        </div>
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Title</label>
                             <div class="col-sm-8">
@@ -100,7 +106,7 @@
                         <div class="form-group">
                              <label class="col-sm-4 control-label">Image</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="TextBoxSubtitle" MaxLength="255" ValidationGroup="PageSett" type="url" CssClass="form-control" placeholder="Image used by Facebook when sharing. Use at least 1200 x 630 pixels and absolute path. Some modules may override it."></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxSubtitle" MaxLength="255" ValidationGroup="PageSett" type="absrelurl" CssClass="form-control" placeholder="Image used by Facebook when sharing. Use at least 1200 x 630 pixels. Some modules may override it."></asp:TextBox>
                             </div>
                         </div>
 

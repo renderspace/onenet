@@ -149,6 +149,8 @@ namespace One.Net.BLL
 
         public string RenderHtml(string alt, string link, string cssClass, string rel = "")
         {
+            if (string.IsNullOrWhiteSpace(link))
+                return "";
             string result = "<img src=\"" + RenderImageLink(link) + "\" " + (!string.IsNullOrWhiteSpace(rel) ? ("rel=\"" + rel + "\"") : "");
             result += (!string.IsNullOrEmpty(alt.Trim())) ?
                             (" alt=\"" + HttpUtility.HtmlEncode(alt) + "\"" +
