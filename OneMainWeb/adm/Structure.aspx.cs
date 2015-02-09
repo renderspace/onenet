@@ -104,6 +104,7 @@ namespace OneMainWeb.adm
             ImagePageStatus.Visible = false;
             ImagePageStatus.ImageUrl = "";
             LabelUriPart.Text = "";
+            SetPreviewHyperLink("");
             TextBoxUri.Text = "";
             TextBoxMenuGroup.Text = "";
             CheckBoxBreakPersitence.Checked = false;
@@ -211,6 +212,7 @@ namespace OneMainWeb.adm
                 }
 
                 LabelUriPart.Text = SelectedPage.ParentURI;
+                SetPreviewHyperLink(SelectedPage.URI);
                 TextBoxUri.Text = SelectedPage.ParLink;
                 TextBoxMenuGroup.Text = SelectedPage.MenuGroup.ToString();
                 ddlPageTemplate.ClearSelection();
@@ -814,6 +816,13 @@ namespace OneMainWeb.adm
                 Notifier1.Message = "No pages published";
                 
             }
+        }
+
+        private void SetPreviewHyperLink(string uri)
+        {
+            HyperLinkPreview.Text = uri;
+            HyperLinkPreview.Target = "_blank";
+            HyperLinkPreview.NavigateUrl = SelectedWebsite.PreviewUrl.TrimEnd('/') + uri;
         }
     }
 

@@ -28,9 +28,7 @@ namespace OneMainWeb
     public class PresentBasePage : Page
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
-
         protected BWebsite websiteB;
-        private readonly string customModulesFolder;        
 
         private readonly List<MModule> activeModules = new List<MModule>();
         private readonly List<BOIntContImage> imagesOnThisPage = new List<BOIntContImage>();
@@ -74,7 +72,6 @@ namespace OneMainWeb
             var websiteB = new BWebsite();
             CurrentPage = websiteB.GetPage(PageId);
             CurrentWebsite = websiteB.Get(CurrentPage.WebSiteId);
-            customModulesFolder = "site_specific/custom_modules";
             // main language setup.
             if (SiteMap.CurrentNode != null)
             {
@@ -492,7 +489,18 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             if (!string.IsNullOrWhiteSpace(CurrentWebsite.DefaultOgImage))
                 ogImage = CurrentWebsite.DefaultOgImage;
             if (!string.IsNullOrWhiteSpace(CurrentPage.OgImage))
-                ogImage = CurrentPage.OgImage;
+            {
+                if (CurrentPage.OgImage.StartsWith("http"))
+                {
+                    ogImage = CurrentPage.OgImage;
+                }
+                else if (CurrentPage.OgImage.StartsWith("/"))
+                { 
+                    var urlBuilder = new UrlBuilder(Page);
+                    urlBuilder.Path = CurrentPage.OgImage;
+                    ogImage = urlBuilder.ToString();
+                }
+            }
             if (!string.IsNullOrWhiteSpace(provided))
                 ogImage = provided;
             AddMetaProperty("og:image", ogImage);

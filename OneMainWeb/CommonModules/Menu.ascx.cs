@@ -20,6 +20,7 @@ namespace OneMainWeb.CommonModules
             MenuGroup1.FirstUlClass = GetStringSetting("FirstUlClass");
             MenuGroup1.CssClass = GetStringSetting("CssClass");
             MenuGroup1.ShowDescription = GetBooleanSetting("ShowDescription");
+            MenuGroup1.LeadImageTemplateId = GetIntegerSetting("LeadImageTemplate");
         }
     }
 }
