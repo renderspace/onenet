@@ -73,7 +73,6 @@ namespace One.Net.BLL.Scaffold
                         newVirtualColumn.Name = newColumnName;
                         newVirtualColumn.VirtualTableId = virtualTable.Id;
                         newVirtualColumn.DbType = physicalColumn.DbType;
-                        newVirtualColumn.ShowOnList = column.ShowOnList;
                         newVirtualColumn.IsWysiwyg = column.IsWysiwyg;
                         newVirtualColumn.IsMultiLanguageContent = true;
 
