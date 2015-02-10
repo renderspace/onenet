@@ -1,9 +1,29 @@
+using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace One.Net.BLL
 {
-    public class FormatTool
+    public static class FormatTool
     {
+        public static string ToCommaSeparatedValues<T>(this List<T> list)
+        {
+            return ToSeparatedValues(list, ",");
+        }
+
+        private static string ToSeparatedValues<T>(this List<T> list, string separator)
+        {
+            if (list == null) return "";
+            var strBuilder = new StringBuilder(128);
+            for (var i = 0; i < list.Count; i++)
+            {
+                strBuilder.Append(list[i].ToString());
+                if (i + 1 != list.Count)
+                    strBuilder.Append(separator);
+            }
+            return strBuilder.ToString();
+        }
+
         public static int GetInteger(object val)
         {
             int ret = -1;
