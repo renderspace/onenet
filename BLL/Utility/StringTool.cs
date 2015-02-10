@@ -11,6 +11,7 @@ using One.Net.BLL.Utility;
 
 namespace One.Net.BLL
 {
+
     public class StringTool
     {
         private static readonly Random random = new Random();
