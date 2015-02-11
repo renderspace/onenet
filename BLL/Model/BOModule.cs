@@ -1,29 +1,13 @@
+using System;
 namespace One.Net.BLL
 {
+    [Serializable]
     public class BOModule
     {
-        int id;
-
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        string name;
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        string source;
-
-        public string Source
-        {
-            get { return source; }
-            set { source = value; }
-        }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Source { get; set; }
+        public int NoUnpublishedInstances { get; set; }
+        public int NoPublishedInstances { get; set; }   
     }
 }

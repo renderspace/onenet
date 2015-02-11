@@ -675,11 +675,21 @@ namespace One.Net.BLL.DAL
             return templates;
         }
 
-        public List<BOModule> ListModules()
+        public List<BOModule> ListModules(bool includeUsageCount)
         {
+            var sql = @"SELECT id, name, module_source";
+            if (includeUsageCount)
+            {
+                sql += ",(SELECT COUNT(id) FROM module_instance mi WHERE mi.module_fk_id = m.id AND pages_fk_publish = 0) as unpublished_instances";
+                sql += ",(SELECT COUNT(id) FROM module_instance mi WHERE mi.module_fk_id = m.id AND pages_fk_publish = 1) as published_instances";
+            }
+            sql += @"	
+FROM [dbo].[module] m
+ORDER BY name ASC";
+
             List<BOModule> modules = new List<BOModule>();
             using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
-                CommandType.Text, "SELECT id, name, module_source FROM [dbo].[module] ORDER BY name ASC"))
+                CommandType.Text, sql))
             {
                 while (rdr.Read())
                 {
@@ -687,10 +697,23 @@ namespace One.Net.BLL.DAL
                     module.Id = rdr.GetInt32(0);
                     module.Name = rdr.GetString(1);
                     module.Source = rdr.GetString(2);
+                    if (includeUsageCount)
+                    { 
+                        module.NoUnpublishedInstances = rdr.GetInt32(3);
+                        module.NoPublishedInstances = rdr.GetInt32(4);
+                    }
                     modules.Add(module);
                 }
             }
             return modules;
+        }
+
+        public static DataTable ListTopModuleUsage(int id)
+        {
+            var result = SqlHelper.ExecuteDataset(SqlHelper.ConnStringMain, CommandType.Text, @"SELECT TOP(20) pages_fk_id AS id
+                FROM module_instance 
+                WHERE module_fk_id = @id AND pages_fk_publish = 0 AND pending_delete = 0", new SqlParameter("@id", id));
+            return result.Tables[0];
         }
 
         public BOModuleInstance GetModuleInstance(int moduleInstanceID, bool publishFlag)
