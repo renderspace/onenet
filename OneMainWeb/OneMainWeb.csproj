@@ -285,6 +285,13 @@
     <Compile Include="adm\Icons.ashx.cs">
       <DependentUpon>Icons.ashx</DependentUpon>
     </Compile>
+    <Compile Include="adm\Modules.aspx.cs">
+      <DependentUpon>Modules.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Modules.aspx.designer.cs">
+      <DependentUpon>Modules.aspx</DependentUpon>
+    </Compile>
     <Compile Include="adm\Regulars.aspx.cs">
       <DependentUpon>Regulars.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -480,6 +487,7 @@
     <Content Include="adm\js\jquery.details.js" />
     <Content Include="adm\js\jquery.ui.datepicker-en.js" />
     <Content Include="adm\js\One.js" />
+    <Content Include="adm\Modules.aspx" />
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
     <Content Include="adm\ScaffoldConfig.aspx" />

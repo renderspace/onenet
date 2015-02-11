@@ -147,6 +147,8 @@ namespace One.Net.BLL
         public string GetPageUri(int pageId)
         {
             BOPage page = GetPage(pageId, LanguageId);
+            if (page == null)
+                return null;
             return page.URI;
         }
 
@@ -1145,9 +1147,31 @@ namespace One.Net.BLL
         /// Lists all availible modules on this system.
         /// </summary>
         /// <returns></returns>
-        public static List<BOModule> ListModules()
+        public static List<BOModule> ListModules(bool includeUsageCount = false)
         {
-            return webSiteDb.ListModules();
+            return webSiteDb.ListModules(includeUsageCount);
+        }
+
+        public DataTable ListModuleUsage(int id)
+        {
+            var pages = DbWebsite.ListTopModuleUsage(id);
+
+            var result = pages.Clone();
+            result.Columns.Add("url");
+
+            foreach(DataRow p in pages.Rows)
+            {
+                var r = result.NewRow();
+                var uri = GetPageUri((int)p["id"]);
+                if (!string.IsNullOrWhiteSpace(uri))
+                {
+                    r["url"] = uri;
+                    r["id"] = p["id"];
+                    result.Rows.Add(r);
+                }
+                
+            }
+            return result;
         }
 
         #region Old Stuff
