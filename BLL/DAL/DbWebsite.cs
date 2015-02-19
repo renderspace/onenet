@@ -29,7 +29,7 @@ namespace One.Net.BLL.DAL
      FROM [dbo].[pages] p	
      INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id = p.content_fk_id AND cds.language_fk_id = @languageId
      INNER JOIN [dbo].[content] c ON c.id = p.content_fk_id
-     INNER JOIN [dbo].[template] t ON t.id = p.template_fk_id AND template_type = 3
+     INNER JOIN [dbo].[template] t ON t.id = p.template_fk_id AND template_type = '3'
 	   WHERE p.publish = @publishFlag AND p.web_site_fk_id=@websiteID";
                 if (filterChanged)
                 {
