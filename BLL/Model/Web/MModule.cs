@@ -138,7 +138,7 @@ namespace One.Net.BLL.Web
                 return null;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("ImageTemplate"))
+            if (!(setting.Type.Equals("ImageTemplate") || setting.Type.Equals("Int")))
             {
                 throw new ApplicationException("not a Image template setting; probably error in database");
             }
