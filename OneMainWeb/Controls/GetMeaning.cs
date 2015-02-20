@@ -85,7 +85,7 @@ namespace OneMainWeb.Controls
                     }
                     else
                     {
-                        output.Write(meaning.Html);
+                        output.Write(meaning.Html.Trim());
                     }
                 }
                     
@@ -93,7 +93,7 @@ namespace OneMainWeb.Controls
             } 
             
             if (!Complex)
-                output.Write(BContent.GetMeaning(Keyword));
+                output.Write(BContent.GetMeaning(Keyword).Trim());
             else
                 output.Write(BContent.GetComplexMeaningRendered(Keyword));
         }
