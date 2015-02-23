@@ -1,5 +1,6 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Structure.aspx.cs" Inherits="OneMainWeb.adm.Structure" Title="One.NET site structure" EnableEventValidation="false" ValidateRequest="false"  %>
 <%@ Import Namespace="One.Net.BLL"%>
+<%@ Register TagPrefix="one" TagName="TextContentModal" Src="~/AdminControls/TextContentModal.ascx" %>
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
@@ -7,7 +8,7 @@
 <%@ OutputCache Location="None" VaryByParam="None" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+    <one:TextContentModal runat="server" ID="TextContentModal1" EnableHtml="true" Title="Content edit" />
     <uc1:Notifier ID="Notifier1" runat="server" />
     
         <div class="col-md-3">
@@ -166,6 +167,9 @@
                             <h4>
                                 <asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info btn-lg" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
                                     Text='<span class="glyphicon glyphicon-pencil"></span> Edit'	/>
+
+                                <asp:HyperLink 	ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
 
                                 <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>

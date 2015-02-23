@@ -208,7 +208,7 @@
         </table>
 
         <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
-        <one:TextContentModal runat="server" ID="TextContentModal1" />
+        <one:TextContentModal runat="server" ID="TextContentModal1" EnableHtml="false" Title="File description edit" />
     </div>
 </div>     
 </asp:Content>

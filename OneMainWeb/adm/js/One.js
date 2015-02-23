@@ -1,6 +1,14 @@
-function trace(msg) {
-    if (typeof tracing == 'undefined' || !tracing) return;
-    try { trace(msg); } catch (ex) { }
+function trace(msg, style) {
+    if (typeof (tracing) === 'undefined' || (tracing !== true)) {
+        return;
+    }
+    try {
+        if (typeof (style) === 'undefined') {
+            console.log(msg);
+        } else {
+            console.log(msg, style);
+        }
+    } catch (ex) { }
 }
 
 function logError(XMLHttpRequest, textStatus, errorThrown) {
@@ -149,7 +157,7 @@ function files_databind(selectedFolderId) {
 				//trace(item);
                 $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
                     item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name +
-                    '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-id="' + item.Id +
+                    '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
             });
             if (data.length == 0) {
@@ -164,6 +172,35 @@ function files_databind(selectedFolderId) {
     });
 };
 
+function getContent(contentId, languageId, enableHtml, enableCk) {
+    $.ajax({
+        url: "/AdminService/GetContent?id=" + contentId + "&languageId=" + languageId,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "GET",
+        success: function (content) {
+            trace(content);
+            $("#content-title").val(content.Title);
+            $("#content-subtitle").val(content.Subtitle);
+            $("#content-teaser").val(content.Teaser);
+            if (enableHtml === true) {
+                $("#content-html").html(content.Html);
+                CKEDITOR.instances["content-html"].setData(content.Html);
+                $(".ckbox").show();
+            }
+            else {
+                $(".ckbox").hide();
+            }
+            $(".j_control_content_id").val(contentId);
+            $(".modal-body .col-sm-9").show();
+            $(".modal-footer .btn-success").show();
+        },
+        error: logError
+    });
+}
+
+
+
 
 $('#text-content-modal').on('show.bs.modal', function (e) {
     var button = e.relatedTarget;
@@ -174,14 +211,25 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
     $(".modal-footer .btn-success").hide();
     $(".modal-body input").val("");
     $(".modal-body textarea").val("");
-    var fileId = $(button).data('id');
+    var contentId = $(button).data('content-id');
+    trace("contentId:" + contentId);
+    var fileId = $(button).data('file-id');
     $(".j_control_file_id").val(fileId);
     var me = $(this);
-    var languageId = $(this).data('language-id');
+    var languageId = me.data('language-id');
     trace("languageId:" + languageId);
     $(".j_control_language_id").val(languageId);
     $(".j_control_content_id").val("");
-    $(".j_control_language").html($(this).data('language'));
+    $(".j_control_language").html(me.data('language'));
+
+    var enableCk = $(button).data('ck');
+    trace(enableCk);
+
+    var enableHtml = me.data('html') === true;
+    trace("enableHtml:" + enableHtml);
+
+    $('#content-title').focus();
+
     if (fileId > 0) {
         $.ajax({
             url: "/AdminService/GetFileForEditing?id=" + fileId + "&languageId=" + languageId,
@@ -191,40 +239,31 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
             success: function (data) {
                 trace("GetFileForEditing success");
                 if (data.ContentId > 0) {
-                    $.ajax({
-                        url: "/AdminService/GetContent?id=" + data.ContentId + "&languageId=" + languageId,
-                        contentType: 'application/json; charset=utf-8',
-                        dataType: 'json',
-                        type: "GET",
-                        success: function (content) {
-                            $("#content-title").val(content.Title);
-                            $("#content-subtitle").val(content.Subtitle);
-                            $("#content-teaser").val(content.Teaser);
-                            $(".j_control_content_id").val(data.ContentId);
-                            $(".modal-body .col-sm-9").show();
-                            $(".modal-footer .btn-success").show();
-                        },
-                        error: logError
-                    });
+                    getContent(data.ContentId, languageId, false, false);
                 } else {
                     $(".modal-body .col-sm-9").show();
                     $(".modal-footer .btn-success").show();
                 }
                 $(".j_control_file").empty().append(data.Icon);
-
             },
             error: logError
         });
+    } else if (contentId > 0) {
+        $(".j_control_file").empty();
+        getContent(contentId, languageId, enableCkEditor, enableCk);
     }
 });
 
 
 $('#text-content-modal a.btn-success').on('click', function (e) {
-    trace("mijav");
     var content = new Object();
     content['Title'] = $("#content-title").val();
     content['Subtitle'] = $("#content-subtitle").val();
     content['Teaser'] = $("#content-teaser").val();
+    content['Html'] = CKEDITOR.instances['content-html'].getData();
+    trace("saving:");
+    trace(content['Title']);
+    trace(content['Html']);
     content['LanguageId'] = $(".j_control_language_id").val();
     content['ContentId'] = $(".j_control_content_id").val();
     content['FileId'] = $(".j_control_file_id").val();
