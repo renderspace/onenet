@@ -493,3 +493,12 @@ details .select {margin: 10px 0 0 0;}
 .form-control:-ms-input-placeholder { 
     color:    #CCC;
 }
+
+.modal-dialog .cke_contents {
+    height: 320px !important;
+}
+
+.cke_content-html {
+    z-index: 1000;
+
+}

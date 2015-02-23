@@ -26,6 +26,15 @@ namespace OneMainWeb.AdminControls
             }
         }
 
+        public bool EnableCkHtml
+        {
+            get;
+            set;
+        }
+
+        public string Title { get; set; }
+             
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

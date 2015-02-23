@@ -81,6 +81,8 @@ namespace One.Net.BLL.Service
             existingContent.Title = content.Title;
             existingContent.SubTitle = content.Subtitle;
             existingContent.Teaser = content.Teaser;
+            if (content.Html != null)
+                existingContent.Html = content.Html;
 
             if (file == null)
             {
@@ -215,6 +217,9 @@ namespace One.Net.BLL.Service
         public string Teaser { get; set; }
 
         [DataMember, JsonProperty]
+        public string Html { get; set; }
+
+        [DataMember, JsonProperty]
         public string ContentId { get; set; }
 
         [DataMember, JsonProperty]
@@ -233,6 +238,7 @@ namespace One.Net.BLL.Service
             Title = c.Title;
             Subtitle = c.SubTitle;
             Teaser = c.Teaser;
+            Html = c.Html;
             LanguageId = c.LanguageId.ToString();
         }
     }

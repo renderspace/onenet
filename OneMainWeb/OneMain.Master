@@ -19,7 +19,7 @@
     <script>
         
         $(function () {
-            console.log("%cOne.NET DOM ready.", "color:green; background-color:yellow");
+            trace("%cOne.NET DOM ready.", "color:green; background-color:yellow");
             $(".nav-sidebar ul li a").each(function () {
                 var anchor = $(this);
                 var attrHref = anchor.attr('href');

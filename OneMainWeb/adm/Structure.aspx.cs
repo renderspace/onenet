@@ -303,6 +303,7 @@ namespace OneMainWeb.adm
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
             // for textcontentedit
             var ButtonEdit = e.Item.FindControl("ButtonEdit") as LinkButton;
+            var ButtonModalEdit = e.Item.FindControl("ButtonModalEdit") as WebControl;
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
             Control undeleteButton = e.Item.FindControl("cmdUndeleteInstance");
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");
@@ -346,14 +347,23 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete;
-                ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+
+                BOInternalContent textContentModel = null;
+                if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
+                {
+                    textContentModel = textContentB.GetTextContent(moduleInstance.Id);
+                    if (textContentModel.IsComplete)
+                    {
+                        ButtonModalEdit.Attributes.Add("data-content-id", textContentModel.ContentId.Value.ToString());
+                        ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.Name == "TextContent" ? "true" : "false");
+                    }
+                }
                 if (moduleInstance.Name == "TextContent")
                 {
-                    BOInternalContent textContentModel = textContentB.GetTextContent(moduleInstance.Id);
                     if (textContentModel != null && textContentModel.IsComplete)
                     {
                         LabelModuleDistinctName.Visible = true;
-
                         var distinctName = StringTool.StripHtmlTags(textContentModel.Title);
                         string postfix = (distinctName.Length >= 20) ? "..." : "";
                         LabelModuleDistinctName.Text = distinctName.Substring(0, distinctName.Length < 20 ? distinctName.Length : 20) + postfix;
@@ -363,7 +373,7 @@ namespace OneMainWeb.adm
                         LabelModuleDistinctName.Visible = true;
                         LabelModuleDistinctName.Text = "[Empty]";
                         LabelModuleDistinctName.CssClass = "ModuleDistinctName empty";
-                    }
+                    }   
                 }
 
                 var moduleSettings = e.Item.FindControl("moduleSettings") as AdminControls.OneSettings;

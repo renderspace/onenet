@@ -1,11 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TextContentModal.ascx.cs" Inherits="OneMainWeb.AdminControls.TextContentModal" EnableViewState="false" %>
-<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>" data-language="<%: SelectedLanguage %>">
+<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>" data-language="<%: SelectedLanguage %>" data-html="<%: EnableCkEditor.ToString().ToLower() %>">
     
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">File description edit</h4>
+                <h4 class="modal-title" id="myModalLabel"><%: Title %></h4>
             </div>
             <div class="modal-body form-horizontal">
                 <input type="hidden" class="j_control_language_id" />
@@ -42,6 +42,13 @@
                     <label class="col-sm-3 control-label">Teaser</label>
                     <div class="col-sm-9">
                         <textarea  rows="5" class="form-control" id="content-teaser"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group ckbox">
+                    <label class="col-sm-3 control-label">Html</label>
+                    <div class="col-sm-9">
+                        <textarea  class="form-control ckeditor4" id="content-html"></textarea>
                     </div>
                 </div>
                 
