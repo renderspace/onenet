@@ -52,6 +52,9 @@ namespace OneMainWeb.CommonModules
         protected string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
 
+        public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
+
+
         #endregion Settings
 
         protected void Page_Load(object sender, EventArgs e)
@@ -130,6 +133,15 @@ namespace OneMainWeb.CommonModules
                 var Time2 = e.Item.FindControl("Time2") as HtmlGenericControl;
                 var HtmlArticle = e.Item.FindControl("HtmlArticle") as HtmlGenericControl;
 
+                var id = article.Id.Value;
+                var TeaserImage1 = e.Item.FindControl("TeaserImage1") as HtmlGenericControl;
+                if (article.TeaserImageId > 0 && TeaserImage1 != null && ImageTemplate != null)
+                {
+                    TeaserImage1.Visible = true;
+                    var LiteralTeaserImage = e.Item.FindControl("LiteralTeaserImage") as Literal;
+                    LiteralTeaserImage.Text = ImageTemplate.RenderHtml("", article.Images[0].FullUri, "");
+                }
+
                 H1Title.Visible = ShowTitle;
                 H2SubTitle.Visible = ShowSubTitle;
                 Header1.Visible = ShowTitle || ShowSubTitle;
@@ -144,7 +156,7 @@ namespace OneMainWeb.CommonModules
                 Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
                 Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
                 Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
-                var id = article.Id.Value;
+               
                 HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
             }
         }

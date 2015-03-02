@@ -4,12 +4,16 @@
 <asp:Repeater runat="server" ID="RepeaterArticles" OnItemDataBound="RepeaterArticles_ItemDataBound">
     <ItemTemplate>
 		<article id="HtmlArticle" runat="server" noid="True">
+            <div class="teaser-image" id="TeaserImage1" runat="server" noid="True" visible="false">
+                <a href="<%# RenderLink(Eval("Id"))  %>"><asp:Literal runat="server" ID="LiteralTeaserImage"></asp:Literal></a>
+            </div>
 			<header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
 			    <h3 class="entry-title" id="H1Title" runat="server" noid="True"><a href="<%# RenderLink(Eval("Id"))  %>"><%# Eval("Title") %></a></h3>
 			    <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"><%# Eval("SubTitle") %></h4>
                 <time class="published" id="Time2" runat="server" noid="True"><%# Eval("DisplayDate") %></time>
 			</header>
+
 			<div class="entry-summary" runat="server" id="SectionTeaser" noid="True">
 			    <%# Eval("Teaser") %>
 			</div>	

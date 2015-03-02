@@ -61,7 +61,6 @@ namespace One.Net.BLL
 
         /// <summary>
         /// Returns first image id in the content.
-        /// Same method exists in BOEvent; we need a better solution for this
         /// </summary>
         public int TeaserImageId
         {
