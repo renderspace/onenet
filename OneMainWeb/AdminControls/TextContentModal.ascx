@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TextContentModal.ascx.cs" Inherits="OneMainWeb.AdminControls.TextContentModal" EnableViewState="false" %>
-<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>" data-language="<%: SelectedLanguage %>" data-html="<%: EnableCkEditor.ToString().ToLower() %>">
+<div class="modal" id="text-content-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-language-id="<%: SelectedLanguageId %>" data-language="<%: SelectedLanguage %>">
     
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
