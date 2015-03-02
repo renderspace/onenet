@@ -76,7 +76,7 @@ namespace OneMainWeb
             }
             else
             {
-                Notifier1.Warning = "$missing_module_parameter";
+                Notifier1.Warning = "Missing module parameter";
             }
         }
 
