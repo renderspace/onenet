@@ -17,113 +17,94 @@ namespace One.Net.BLL.Scaffold
         {
             get { return ConfigurationManager.ConnectionStrings["Bamboo"].ConnectionString; }
         }
-
-        public static void InternationalizeTable(int tableId)
+        
+        public static void InternationalizeColumn(int columnId)
         {
-            var virtualTable = Schema.GetVirtualTable(tableId);
-            var columns = Schema.ListVirtualColumns(tableId);
-            var tableName = virtualTable.StartingPhysicalTable;
-            var sql = "";
-
-            // If an internationalized column does not already exists and
-            // the virtual column is marked as a multilanguage column, 
-            // alter table and create id_{column name} int NULL column.
-            foreach (var column in columns)
+            var virtualTable = Schema.GetVirtualColumnTable(columnId);
+            if (virtualTable != null)
             {
-                if (column.IsMultiLanguageContent && column.DbType.ToString() != "System.Int32")
+                var virtualColumn = GetVirtualColumn(columnId, virtualTable);
+                if (virtualColumn != null)
                 {
-                    var columnName = column.Name.ToLower();
-                    var newColumnName = "id_" + columnName;
+                    var tableName = virtualTable.StartingPhysicalTable;
+                    if (!virtualColumn.IsMultiLanguageContent && virtualColumn.DbType.ToString() == "System.String")
+                    {
+                        var oldColumnName = virtualColumn.Name.ToLower();
 
-                    sql = @"SELECT COUNT(*) ct FROM sys.columns 
+                        if (oldColumnName.StartsWith("id_"))
+                        {
+                            int index = oldColumnName.IndexOf("id_");
+                            oldColumnName = oldColumnName.Remove(index, "id_".Length);
+                        }
+
+                        var newColumnName = "id_" + oldColumnName;
+
+                        var sql = @"SELECT COUNT(*) ct FROM sys.columns 
                                 WHERE [name] = N'" + newColumnName + @"' AND [object_id] = OBJECT_ID(N'" + tableName + @"')";
 
-                    var columnCount = Int32.Parse((SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text, sql)).ToString());
-                    if (columnCount == 0)
-                    {
-                        sql = @"ALTER TABLE " + tableName + @"
+                        // Check if a physical id_column_name column exists. If not, create it.
+                        var columnCount = Int32.Parse((SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text, sql)).ToString());
+                        if (columnCount == 0)
+                        {
+                            sql = @"ALTER TABLE " + tableName + @"
                                 ADD " + newColumnName + @" INT NULL;";
 
-                        SqlHelper.ExecuteNonQuery(ConnectionString, CommandType.Text, sql);
-                    }
-                }
-            }
+                            SqlHelper.ExecuteNonQuery(ConnectionString, CommandType.Text, sql);
+                        }
 
-            // Once a physical column is created, check that the virtual column
-            // is created too (check for IsPartOfUserView).
-            // If no virtual column exists, create it.
-            foreach (var column in columns)
-            {
-                if (column.IsMultiLanguageContent)
-                {
-                    var columnName = column.Name.ToLower();
-                    if (columnName.StartsWith("id_")) {                        
-                        int index = columnName.IndexOf("id_");
-                        columnName = columnName.Remove(index, "id_".Length);
-                    }
-                    var newColumnName = "id_" + columnName;
-
-                    var existingVirtualColumn = Schema.FindVirtualColumn(newColumnName, virtualTable);
-                    if (existingVirtualColumn == null)
-                    {
-                        var physicalColumn = ((from p in PhysicalSchema.ListPhysicalColumns(virtualTable.Id) where p.Name == newColumnName select p)).First();
+                        // Once a physical column is created, check that the virtual column is created too
 
                         var newVirtualColumn = new VirtualColumn();
-
-                        newVirtualColumn.Name = newColumnName;
-                        newVirtualColumn.VirtualTableId = virtualTable.Id;
-                        newVirtualColumn.DbType = physicalColumn.DbType;
-                        newVirtualColumn.IsWysiwyg = column.IsWysiwyg;
-                        newVirtualColumn.IsMultiLanguageContent = true;
-
-                        Schema.ChangeVirtualColumn(newVirtualColumn);
-                    }
-                }
-            }
-
-            columns = Schema.ListVirtualColumns(tableId);
-
-            // reenter the internationalized content.
-            // only create content if the new column entry is not set yet.
-            // and then store the newly created content id in the new column entry.
-            sql = @"SELECT * FROM " + tableName;
-            var intContentB = new BInternalContent();
-
-            var primaryKeyColumn = "";
-            foreach (var column in columns)
-            {
-                if (column.IsPartOfPrimaryKey)
-                {
-                    primaryKeyColumn = column.Name;
-                }
-            }
-
-            using (var reader = SqlHelper.ExecuteReader(ConnectionString, CommandType.Text, sql))
-            {
-                while (reader.Read())
-                {
-                    var primaryKeyColumnValue = "";
-                    primaryKeyColumnValue = reader[primaryKeyColumn].ToString();
-
-                    foreach (var column in columns)
-                    {
-                        if (column.IsMultiLanguageContent)
+                        var existingVirtualColumn = Schema.FindVirtualColumn(newColumnName, virtualTable);
+                        if (existingVirtualColumn == null)
                         {
-                            var columnName = column.Name.ToLower();
-                            if (columnName.StartsWith("id_"))
+                            var physicalColumn = ((from p in PhysicalSchema.ListPhysicalColumns(virtualTable.Id) where p.Name == newColumnName select p)).First();
+
+                            newVirtualColumn.Name = newColumnName;
+                            newVirtualColumn.VirtualTableId = virtualTable.Id;
+                            newVirtualColumn.DbType = physicalColumn.DbType;
+                            newVirtualColumn.IsWysiwyg = virtualColumn.IsWysiwyg;
+                            newVirtualColumn.IsMultiLanguageContent = true;
+                            newVirtualColumn.ShowOnList = virtualColumn.ShowOnList;
+
+                            Schema.ChangeVirtualColumn(newVirtualColumn);
+                        }
+                        else
+                        {
+                            newVirtualColumn = existingVirtualColumn;
+                        }
+
+                        var columns = Schema.ListVirtualColumns(virtualTable.Id);
+
+                        // Re-enter the internationalized content. Make sure to only create content if the new column entry is not set yet, and then store the newly created content id in the new column entry.
+                        sql = @"SELECT * FROM " + tableName;
+                        
+                        var intContentB = new BInternalContent();
+
+                        var primaryKeyColumn = "";
+                        foreach (var column in columns)
+                        {
+                            if (column.IsPartOfPrimaryKey)
                             {
-                                int index = columnName.IndexOf("id_");
-                                var nonInternationalizedColumnName = columnName.Remove(index, "id_".Length);
+                                primaryKeyColumn = column.Name;
+                            }
+                        }
 
-                                var stringValue = reader[nonInternationalizedColumnName].ToString();
+                        if (string.IsNullOrEmpty(primaryKeyColumn))
+                            throw new Exception("Cannot internationalize column of table that does not have a primary key.");
+                        
+                        using (var reader = SqlHelper.ExecuteReader(ConnectionString, CommandType.Text, sql))
+                        {
+                            while (reader.Read())
+                            {
+                                var primaryKeyColumnValue = reader[primaryKeyColumn].ToString();
 
-                                // throw new Exception(stringValue);
-                                var newContentId = reader[columnName] == DBNull.Value ? 0 : (int)reader[columnName];
-
+                                // check if a content id is already entered in the new column and only proceed if not.
+                                var newContentId = reader[newColumnName] == DBNull.Value ? 0 : (int)reader[newColumnName];
                                 if (newContentId == 0)
                                 {
                                     var c = new BOInternalContent();
-                                    c.Html = stringValue;
+                                    c.Html = reader[oldColumnName] == DBNull.Value ? "" : reader[oldColumnName].ToString();
                                     c.ContentId = null;
                                     c.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
                                     intContentB.Change(c);
@@ -131,15 +112,17 @@ namespace One.Net.BLL.Scaffold
                                     var prms = new SqlParameter[2];
                                     prms[0] = new SqlParameter("@newValue", c.ContentId.Value);
                                     prms[1] = new SqlParameter("@primaryKeyColumnValue", primaryKeyColumnValue);
-                                    var sql2 = @"UPDATE " + tableName + " SET " + columnName + "=@newValue WHERE " + primaryKeyColumn + "=@primaryKeyColumnValue";
+                                    sql = @"UPDATE " + tableName + " SET " + newColumnName + "=@newValue WHERE " + primaryKeyColumn + "=@primaryKeyColumnValue";
 
-                                    SqlHelper.ExecuteNonQuery(ConnectionString, CommandType.Text, sql2, prms);
+                                    SqlHelper.ExecuteNonQuery(ConnectionString, CommandType.Text, sql, prms);
                                 }
                             }
                         }
-                    }
 
-                    
+                        // finally, remove old column from virtual columns
+                        Schema.RemoveVirtualColumn(columnId);
+
+                    }
                 }
             }
         }
@@ -255,6 +238,23 @@ namespace One.Net.BLL.Scaffold
             ListVirtualColumns(virtualTable);
             var foundColumns = ((from vc in virtualTable.VirtualColumns where vc.Id == virtualColumnId select vc));
             return foundColumns.FirstOrDefault();
+        }
+        
+        public static VirtualTable GetVirtualColumnTable(int virtualColumnId)
+        {
+            VirtualTable virtualTable = null;
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
+                    @"  SELECT virtual_table_id
+                        FROM _virtual_col 
+                        WHERE id = @virtualColumnId", new SqlParameter("@virtualColumnId", virtualColumnId)))                                   
+            {
+                if (reader.Read())
+                {
+                    virtualTable = GetVirtualTable((int)reader["virtual_table_id"]);
+                }
+            }
+
+            return virtualTable;
         }
 
         /// TODO: redundant!!!!

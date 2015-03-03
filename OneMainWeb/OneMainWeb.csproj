@@ -267,6 +267,13 @@
     <Compile Include="AdminControls\ScaffoldDynamicEditor.ascx.designer.cs">
       <DependentUpon>ScaffoldDynamicEditor.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AdminControls\ScaffoldInternationalizeTable.ascx.cs">
+      <DependentUpon>ScaffoldInternationalizeTable.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ScaffoldInternationalizeTable.ascx.designer.cs">
+      <DependentUpon>ScaffoldInternationalizeTable.ascx</DependentUpon>
+    </Compile>
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -312,6 +319,13 @@
     </Compile>
     <Compile Include="adm\ScaffoldConfig.aspx.designer.cs">
       <DependentUpon>ScaffoldConfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="adm\ScaffoldInternationalize.aspx.cs">
+      <DependentUpon>ScaffoldInternationalize.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\ScaffoldInternationalize.aspx.designer.cs">
+      <DependentUpon>ScaffoldInternationalize.aspx</DependentUpon>
     </Compile>
     <Compile Include="adm\StructureCopy.aspx.cs">
       <DependentUpon>StructureCopy.aspx</DependentUpon>
@@ -450,6 +464,7 @@
     <Content Include="Account\RegisterExternalLogin.aspx" />
     <Content Include="AdminControls\LastChangeAndHistory.ascx" />
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
+    <Content Include="AdminControls\ScaffoldInternationalizeTable.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\TextContentModal.ascx" />
     <Content Include="adm\codemirror\mode\css\css.js" />
@@ -491,6 +506,7 @@
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
     <Content Include="adm\ScaffoldConfig.aspx" />
+    <Content Include="adm\ScaffoldInternationalize.aspx" />
     <Content Include="adm\StructureCopy.aspx" />
     <Content Include="adm\StructureDelete.aspx" />
     <Content Include="adm\Users.aspx" />
