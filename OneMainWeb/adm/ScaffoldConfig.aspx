@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="One.NET config" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="ScaffoldConfig.aspx.cs" Inherits="OneMainWeb.adm.ScaffoldConfig" %>
-    <%@ Register TagPrefix="bll" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
+<%@ Register TagPrefix="bll" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="cc1" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
-     <cc1:Notifier runat="server" ID="Notifier1" />
+    <cc1:Notifier runat="server" ID="Notifier1" />
 
     <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="MultiView1_ActiveViewChanged">
         <asp:View runat="server" ID="View1">
@@ -26,7 +26,6 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton CommandArgument='<%# Eval("Id") %>' CommandName="Delete" ID="CmdDelete" runat="server" Text="Delete" CssClass="btn btn-danger btn-xs" />
-                            <asp:LinkButton ID="CmdInternationalize" runat="server" Text="Int" CommandArgument='<%# Eval("Id") %>' CommandName="Internationalize" CssClass="btn btn-warning btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="StartingPhysicalTable" HeaderText="Physical table" />
