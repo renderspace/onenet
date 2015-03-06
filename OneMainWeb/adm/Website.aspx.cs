@@ -183,8 +183,76 @@ namespace OneMainWeb.adm
             OneSettingsWebsite.Mode = AdminControls.OneSettings.SettingMode.Website;
             OneSettingsWebsite.LoadSettingsControls(website.Settings);
             OneSettingsWebsite.Databind();
-            
+        }
 
+        protected void GridViewTemplates_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var templateId = int.Parse(GridViewTemplates.SelectedValue.ToString());
+            LabelTemplateId.Text = templateId.ToString();
+            var template = BWebsite.GetTemplate(templateId);
+
+            if (template == null)
+            {
+                MultiView1.ActiveViewIndex = 0;
+                Notifier1.ExceptionName = "Template doesn't exist.";
+                return;
+            }
+
+            LabelTemplateId.Text = template.Id.Value.ToString();
+            TextBoxTemplateName.Text = template.Name;
+            TextBoxTemplateType.Text = template.Type;
+            TextBoxTemplateContent.Text = template.TemplateContent;
+
+            MultiView1.ActiveViewIndex = 3;
+        }
+
+        protected void ButtonSaveTemplate_Click(object sender, EventArgs e)
+        {
+            var templateId = int.Parse(LabelTemplateId.Text);
+
+            var template = BWebsite.GetTemplate(templateId);
+
+            if (template == null)
+            {
+                MultiView1.ActiveViewIndex = 0;
+                Notifier1.ExceptionName = "Template doesn't exist.";
+                return;
+            }
+
+            template.Name = TextBoxTemplateName.Text;
+            template.Type = TextBoxTemplateType.Text;
+            template.TemplateContent = TextBoxTemplateContent.Text;
+
+            websiteB.ChangeTemplate(template);
+
+            MultiView1.ActiveViewIndex = 0;
+            Notifier1.Title = "Saved.";
+        }
+
+        protected void GridViewTemplates_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            GridView grid = sender as GridView;
+            if (grid != null)
+            {
+                var cmdDelete = grid.Rows[e.RowIndex].FindControl("cmdDelete") as LinkButton;
+                if (cmdDelete != null) {
+                    var templateId = Int32.Parse(cmdDelete.CommandArgument.ToString());
+                    var template = BWebsite.GetTemplate(templateId);
+
+                    if (template == null)
+                    {
+                        MultiView1.ActiveViewIndex = 0;
+                        Notifier1.ExceptionName = "Template doesn't exist.";
+                        return;
+                    }
+
+                    websiteB.DeleteTemplate(templateId);
+
+                    MultiView1.ActiveViewIndex = 0;
+                    Notifier1.ExceptionName = "Template successfully deleted.";
+                }
+                
+            }
         }
 
         protected void ButtonSave_Click(object sender, EventArgs e)

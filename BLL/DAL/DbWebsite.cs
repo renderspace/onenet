@@ -582,24 +582,35 @@ namespace One.Net.BLL.DAL
             return answer;
         }
 
+        public void DeleteTemplate(int templateId)
+        {
+            SqlParameter[] paramsToPass = new SqlParameter[1];
+            paramsToPass[0] = new SqlParameter("@Id", templateId);
+
+            var sql = @"DELETE FROM [dbo].[template] WHERE id=@Id";
+
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
+        }
+
         public void ChangeTemplate(BOTemplate template)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[3];
+            SqlParameter[] paramsToPass = new SqlParameter[4];
 
             paramsToPass[0] = (template.Id.HasValue ? new SqlParameter("@Id", template.Id) : new SqlParameter("@Id", DBNull.Value));
             paramsToPass[1] = new SqlParameter("@Name", template.Name);
             paramsToPass[2] = new SqlParameter("@Type", template.Type);
+            paramsToPass[3] = !string.IsNullOrEmpty(template.TemplateContent) ? new SqlParameter("@Content", template.TemplateContent) : new SqlParameter("@Content", System.DBNull.Value);
 
             string sql;
             if (template.Id.HasValue)
             {
-                sql = @"UPDATE [dbo].[template] SET name=@Name, template_type=@Type WHERE id=@Id";
+                sql = @"UPDATE [dbo].[template] SET name=@Name, template_type=@Type, content=@Content WHERE id=@Id";
             }
             else
             {
                 paramsToPass[0].Direction = ParameterDirection.InputOutput;
                 paramsToPass[0].SqlDbType = SqlDbType.Int;
-                sql = @"INSERT INTO [dbo].[template]  (name, template_type) VALUES (@Name, @Type); SET @Id=SCOPE_IDENTITY();";
+                sql = @"INSERT INTO [dbo].[template]  (name, template_type, content) VALUES (@Name, @Type, @Content); SET @Id=SCOPE_IDENTITY();";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
