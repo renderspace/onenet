@@ -41,6 +41,20 @@
 
 
             <asp:PlaceHolder runat="server" ID="PlaceHolderTemplates">
+
+                <script>
+
+                    $(document).ready(function () {
+                        $('.deleteTemplate').click(function (e) {
+                            var answer = confirm('Are you sure?');
+                            if (!answer) {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+
+                </script>
+
                 <div class="adminSection validationGroup">
                     <asp:TextBox runat="server" ID="TextBoxTemplate" MaxLength="255" placeholder="New template name" CssClass="required"></asp:TextBox>
                     <asp:LinkButton ID="LinkButtonAddTemplate" runat="server" OnClick="LinkButtonAddTemplate_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add template" CssClass="btn btn-success causesValidation" />
@@ -50,11 +64,23 @@
 					    CssClass="table table-hover"
 					    AutoGenerateColumns="false"
 					    AllowSorting="false"
-					    DataKeyNames="Id" >
+					    DataKeyNames="Id"
+                        OnSelectedIndexChanged="GridViewTemplates_SelectedIndexChanged"
+                        OnRowDeleting="GridViewTemplates_RowDeleting">
 		            <Columns>
                         <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
                         <asp:BoundField HeaderText="Name" DataField="Name" />
                         <asp:BoundField HeaderText="Type" DataField="Type" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
+					        </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:LinkButton Text='<span class="glyphicon glyphicon-trash"></span> Delete' CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" CssClass="deleteTemplate btn btn-danger btn-xs  " />
+					        </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
 
@@ -221,7 +247,40 @@
                         </div>
 				    </div>
               </div>
-    </asp:View>
+        </asp:View>
+        <asp:View ID="View2" runat="server">
+            <div class="adminSection form-horizontal validationGroup">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">ID</label> 
+                    <div class="col-sm-9">
+                        <asp:Label runat="server" ID="LabelTemplateId"></asp:Label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Name</label> 
+                    <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="template" Text="" ID="TextBoxTemplateName" runat="server" CssClass="form-control required" MaxLength="255" placeholder="Template name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Type</label> 
+                    <div class="col-sm-9">
+                        <asp:TextBox ValidationGroup="template" Text="" ID="TextBoxTemplateType" runat="server" CssClass="form-control required" MaxLength="255" placeholder="Template type" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Content</label>
+                    <div class="col-sm-9">
+                        <asp:TextBox runat="server" ID="TextBoxTemplateContent" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="template" CssClass="form-control" placeholder="Template content"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <asp:LinkButton	id="LinkButtonSaveTemplate" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save template"  ValidationGroup="template" OnClick="ButtonSaveTemplate_Click" />
+                    </div>
+                </div>
+            </div>
+        </asp:View>
     </asp:MultiView>
      
 

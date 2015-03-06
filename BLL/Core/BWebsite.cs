@@ -1121,6 +1121,12 @@ namespace One.Net.BLL
             OCache.Remove("ListTemplates");
         }
 
+        public void DeleteTemplate(int templateId)
+        {
+            webSiteDb.DeleteTemplate(templateId);
+            OCache.Remove("ListTemplates");
+        }
+
         /// <summary>
         /// List all availible placeholders in this system.
         /// </summary>
