@@ -1043,6 +1043,49 @@ namespace One.Net.BLL
             }
         }
 
+        public static BOContentTemplate GetContentTemplate(int moduleInstanceId, bool publishFlag)
+        {
+            BOContentTemplate answer = null;
+
+            var webSiteB = new BWebsite();
+            var instance = webSiteB.GetModuleInstance(moduleInstanceId, publishFlag);
+
+            if (instance != null && instance.Settings != null && instance.Settings.ContainsKey("ContentTemplateId"))
+            {
+                int contentTemplateId = int.Parse(instance.Settings["ContentTemplateId"].Value);
+                if (contentTemplateId > 0)
+                {
+                    answer = new BOContentTemplate();
+
+                    var sql = @"SELECT * FROM [dbo].[content_template] WHERE id=@ContentTemplateId";
+                    
+                    using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplateId)))
+                    {
+                        answer.Id = contentTemplateId;
+                        answer.DateCreated = (DateTime)reader["date_created"];
+                        answer.DateModified = reader["date_modified"] != DBNull.Value ? (DateTime)reader["date_modified"] : (DateTime?)null;
+                        answer.PrincipalCreated = (string)reader["principal_created_by"];
+                        answer.PrincipalModified = reader["principal_modified_by"] != DBNull.Value ? (string)reader["principal_modified_by"] : "";
+                    }
+
+                    sql = @"SELECT * FROM [dbo].[content_template_data] WHERE content_template_fk_id=@ContentTemplateId";
+
+                    using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplateId)))
+                    {
+                        answer.ContentFields = new Dictionary<string, string>();
+
+                        while (reader.Read())
+                        {
+                            answer.ContentFields.Add((string)reader["field_name"], (string)reader["field_content"]);
+                        }                        
+                    }
+                }
+                else
+                    answer = new BOContentTemplate();
+            }
+            return answer;
+        }
+
         public static BOTemplate GetTemplate(int id)
         {
             BOImageTemplate imageTemplate = OCache.Get("Template_" + id) as BOImageTemplate;
@@ -1082,9 +1125,9 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="typeId"></param>
         /// <returns></returns>
-        public static List<BOTemplate> ListTemplates(string typeId)
+        public static List<BOTemplate> ListTemplates(string typeIdsString)
         {
-            List<BOTemplate> list = OCache.Get("ListTemplates") as List<BOTemplate>;
+            List<BOTemplate> list = OCache.Get("ListTemplates:" + typeIdsString) as List<BOTemplate>;
             if (list == null)
             {
                 list = webSiteDb.ListTemplates();
@@ -1092,22 +1135,26 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingTemplatesList)
                     {
-                        List<BOTemplate> tempList = OCache.Get("ListTemplates") as List<BOTemplate>;
+                        List<BOTemplate> tempList = OCache.Get("ListTemplates:" + typeIdsString) as List<BOTemplate>;
                         if (null == tempList)
-                            OCache.Max("ListTemplates", list);
+                            OCache.Max("ListTemplates:" + typeIdsString, list);
                     }
                     if (log.IsDebugEnabled)
                         log.Debug("ListTemplates found " + list.Count + " templates.");
                 }
             }
 
-            if (!string.IsNullOrEmpty(typeId) && null != list)
+            if (!string.IsNullOrEmpty(typeIdsString) && null != list)
             {
+                var typeIds = typeIdsString.Split(';');
                 List<BOTemplate> result = new List<BOTemplate>();
                 foreach (BOTemplate template in list)
                 {
-                    if (string.Equals(typeId, template.Type, StringComparison.InvariantCultureIgnoreCase))
-                        result.Add(template);
+                    foreach (var typeId in typeIds)
+                    {
+                        if (string.Equals(typeId, template.Type, StringComparison.InvariantCultureIgnoreCase))
+                            result.Add(template);
+                    }
                 }
                 return result;
             }
@@ -1118,13 +1165,13 @@ namespace One.Net.BLL
         public void ChangeTemplate(BOTemplate template)
         {
             webSiteDb.ChangeTemplate(template);
-            OCache.Remove("ListTemplates");
+            OCache.RemoveWithPartialKey("ListTemplates");
         }
 
         public void DeleteTemplate(int templateId)
         {
             webSiteDb.DeleteTemplate(templateId);
-            OCache.Remove("ListTemplates");
+            OCache.RemoveWithPartialKey("ListTemplates");
         }
 
         /// <summary>

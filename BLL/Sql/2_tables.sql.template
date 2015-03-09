@@ -696,4 +696,30 @@ CREATE TABLE [dbo].[redirects](
 (
 	[id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY];
+
+CREATE TABLE [dbo].[content_template](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[date_created] [datetime] NULL,
+	[date_modified] [datetime] NULL,
+	[principal_created_by] [varchar](255) NULL,
+	[principal_modified_by] [varchar](255) NULL,
+ CONSTRAINT [PK_content_template] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY];
+
+CREATE TABLE [dbo].[content_template_data](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[content_template_fk_id] [int] NOT NULL,
+	[field_name] [nvarchar](255) NULL,
+	[field_content] [nvarchar](max) NULL,
+ CONSTRAINT [PK_content_template_data] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY];
+
+ALTER TABLE [dbo].[content_template_data]  WITH CHECK ADD  CONSTRAINT [FK_content_template_data_content_template] FOREIGN KEY([content_template_fk_id])
+REFERENCES [dbo].[content_template] ([id]) ON DELETE CASCADE;

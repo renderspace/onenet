@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Collections;
+using System.Collections.Specialized;
+using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
@@ -48,5 +51,21 @@ namespace One.Net.BLL
         public string Extension { get; set; }
 
         public string TemplateSourceDirectory { get; set; }
+    }
+
+    public class BOContentTemplate
+    {
+        public BOContentTemplate()
+        { }
+
+        public int? Id { get; set; }
+
+        public DateTime? DateModified { get; set; }
+        public string PrincipalModified { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        public string PrincipalCreated { get; set; }
+
+        public Dictionary<string, string> ContentFields { get; set; }
     }
 }

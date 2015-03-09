@@ -40,7 +40,7 @@ namespace OneMainWeb.adm
             if (websites.Count() > 0)
             {
                 PlaceHolderTemplates.Visible = true;
-                var templates = BWebsite.ListTemplates("3");
+                var templates = BWebsite.ListTemplates("3;ContentTemplate");
                 GridViewTemplates.DataSource = templates;
                 GridViewTemplates.DataBind();
 
