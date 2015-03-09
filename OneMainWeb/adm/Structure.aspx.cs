@@ -347,7 +347,7 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete;
-                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent" || moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
 
                 BOInternalContent textContentModel = null;
                 if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
@@ -386,6 +386,17 @@ namespace OneMainWeb.adm
                 PlaceHolderNotInherited1.Visible = PlaceHolderNotInherited2.Visible = !moduleInstance.IsInherited;
 
                 moduleSettings.Visible = moduleSettings.Visible && !moduleInstance.IsInherited;
+
+                if (moduleInstance.Name == "TemplateContent" && moduleInstance.Settings.ContainsKey("TemplateId"))
+                {
+                    var contentTemplate = BWebsite.GetContentTemplate(moduleInstance.Id, false);
+                    var templateId = Int32.Parse(moduleInstance.Settings["TemplateId"].ToString());
+                    if (templateId > 0)
+                    {
+                        ButtonModalEdit.Attributes.Add("data-template-id", templateId.ToString());
+                        ButtonModalEdit.Attributes.Add("data-content-template-id", contentTemplate.Id.Value.ToString());
+                    }
+                }
 
                 if (moduleInstance.IsInherited)
                 {

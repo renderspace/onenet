@@ -417,6 +417,13 @@
     <Compile Include="CommonModules\PageTitle.ascx.designer.cs">
       <DependentUpon>PageTitle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\TemplateContent.ascx.cs">
+      <DependentUpon>TemplateContent.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\TemplateContent.ascx.designer.cs">
+      <DependentUpon>TemplateContent.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\VirtualTable.ascx.cs">
       <DependentUpon>VirtualTable.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -522,6 +529,7 @@
     <Content Include="CommonModules\NajdiSearch.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
     <Content Include="CommonModules\PageTitle.ascx" />
+    <Content Include="CommonModules\TemplateContent.ascx" />
     <Content Include="CommonModules\VirtualTable.ascx" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
