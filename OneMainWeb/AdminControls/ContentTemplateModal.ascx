@@ -2,6 +2,7 @@
 <div class="modal fade" id="content-template-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
     
     <div class="modal-dialog modal-lg">
+        
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -40,9 +41,7 @@
                 </div>
 
                 <div class="clearfix"></div>
-                <div class="content-fields">
-
-                </div>
+                <div class="content-fields"></div>
 
                 <div class="clearfix"></div>
 
@@ -52,5 +51,7 @@
                 <a href="#" Class="btn btn-success">Save</a>
             </div>
         </div>
+
     </div>
+
 </div>

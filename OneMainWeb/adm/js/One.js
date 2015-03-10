@@ -229,13 +229,24 @@ function getContentTemplate(instanceId, templateId) {
 
             if (typeof (template) != "undefined" && typeof (template.ContentFields) != "undefined" && template.ContentFields.length > 0) {
 
+                if ($('.content-fields').html().length > 0) {
+                    for (name in CKEDITOR.instances) {
+                        CKEDITOR.instances[name].destroy()
+                    }
+                    $('.content-fields').html('');
+                }
+
                 $.each(template.ContentFields, function (index, field) {
                     // do your stuff here
                     $('#' + get_field_id(field.Key)).val(field.Value);
                     var controlHtml = createFormControl(field.Key, get_field_id(field.Key), field.Value);
                     $('.content-fields').append(controlHtml);
-                    if (field.Value == 'html')
-                        CKEDITOR.replace(get_field_id(field.Key));
+                    if (field.Value == 'html') {
+                        var editor = CKEDITOR.instances[get_field_id(field.Key)];
+                        if (!editor) {
+                            CKEDITOR.replace(get_field_id(field.Key));
+                        }
+                    }                        
                 });
 
             }
@@ -299,6 +310,10 @@ function getContentTemplate(instanceId, templateId) {
 function get_field_id(field_name) {
     return field_name.replace(' ', '_').trim().toLowerCase();
 }
+
+$('#content-template-modal').on('shown.bs.modal', function () {
+    $('#content-template-modal .btn-success').focus()
+})
 
 $('#content-template-modal').on('show.bs.modal', function (e) {
     
