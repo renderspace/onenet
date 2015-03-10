@@ -281,6 +281,13 @@
     <Compile Include="AdminControls\ScaffoldVirtualTableList.ascx.designer.cs">
       <DependentUpon>ScaffoldVirtualTableList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AdminControls\ContentTemplateModal.ascx.cs">
+      <DependentUpon>ContentTemplateModal.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControls\ContentTemplateModal.ascx.designer.cs">
+      <DependentUpon>ContentTemplateModal.ascx</DependentUpon>
+    </Compile>
     <Compile Include="AdminControls\TextContentModal.ascx.cs">
       <DependentUpon>TextContentModal.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -473,6 +480,7 @@
     <Content Include="AdminControls\ScaffoldDynamicEditor.ascx" />
     <Content Include="AdminControls\ScaffoldInternationalizeTable.ascx" />
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
+    <Content Include="AdminControls\ContentTemplateModal.ascx" />
     <Content Include="AdminControls\TextContentModal.ascx" />
     <Content Include="adm\codemirror\mode\css\css.js" />
     <Content Include="adm\codemirror\mode\css\index.html" />

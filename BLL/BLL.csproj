@@ -122,6 +122,7 @@
     <Compile Include="Core\BAudit.cs" />
     <Compile Include="Core\BCategorization.cs" />
     <Compile Include="Core\BContent.cs" />
+    <Compile Include="Core\BContentTemplate.cs" />
     <Compile Include="Core\BFileSystem.cs" />
     <Compile Include="Core\BInternalContent.cs" />
     <Compile Include="Core\BLICategorization.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="DAL\DbWebsite.cs" />
     <Compile Include="Model\BOArticle.cs" />
     <Compile Include="Model\BOCategory.cs" />
+    <Compile Include="Model\BOContentTemplate.cs" />
     <Compile Include="Model\BODictionary.cs" />
     <Compile Include="Model\BOFile.cs" />
     <Compile Include="Model\BOInternalContent.cs" />

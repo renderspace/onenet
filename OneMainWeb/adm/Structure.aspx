@@ -1,6 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Structure.aspx.cs" Inherits="OneMainWeb.adm.Structure" Title="One.NET site structure" EnableEventValidation="false" ValidateRequest="false"  %>
 <%@ Import Namespace="One.Net.BLL"%>
 <%@ Register TagPrefix="one" TagName="TextContentModal" Src="~/AdminControls/TextContentModal.ascx" %>
+<%@ Register TagPrefix="one" TagName="ContentTemplateModal" Src="~/AdminControls/ContentTemplateModal.ascx" %>
 <%@ Register Src="~/AdminControls/Notifier.ascx" TagName="Notifier" TagPrefix="uc1" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="OneSettings" Src="~/AdminControls/OneSettings.ascx" %>
@@ -9,6 +10,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <one:TextContentModal runat="server" ID="TextContentModal1" EnableHtml="true" Title="Content edit" />
+    <one:ContentTemplateModal runat="server" ID="ContentTemplateModal" Title="Content Template edit" />
     <uc1:Notifier ID="Notifier1" runat="server" />
     
         <div class="col-md-3">
@@ -171,6 +173,8 @@
                                 <asp:HyperLink 	ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info btn-xs">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
+                                <asp:HyperLink data-keyboard="true" data-backdrop="static" ID="ButtonContentTemplateModalEdit"  runat="server" data-toggle="modal" data-target="#content-template-modal" CssClass="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
                                 <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
                                     <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 

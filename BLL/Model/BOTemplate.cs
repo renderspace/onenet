@@ -52,20 +52,4 @@ namespace One.Net.BLL
 
         public string TemplateSourceDirectory { get; set; }
     }
-
-    public class BOContentTemplate
-    {
-        public BOContentTemplate()
-        { }
-
-        public int? Id { get; set; }
-
-        public DateTime? DateModified { get; set; }
-        public string PrincipalModified { get; set; }
-
-        public DateTime DateCreated { get; set; }
-        public string PrincipalCreated { get; set; }
-
-        public Dictionary<string, string> ContentFields { get; set; }
-    }
 }

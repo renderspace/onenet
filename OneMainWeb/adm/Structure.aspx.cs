@@ -304,6 +304,7 @@ namespace OneMainWeb.adm
             // for textcontentedit
             var ButtonEdit = e.Item.FindControl("ButtonEdit") as LinkButton;
             var ButtonModalEdit = e.Item.FindControl("ButtonModalEdit") as WebControl;
+            var ButtonContentTemplateModalEdit = e.Item.FindControl("ButtonContentTemplateModalEdit") as WebControl;
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
             Control undeleteButton = e.Item.FindControl("cmdUndeleteInstance");
             Control cmdMoveUp = e.Item.FindControl("cmdMoveUp");
@@ -347,7 +348,8 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete;
-                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent" || moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonContentTemplateModalEdit.Visible = (moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
 
                 BOInternalContent textContentModel = null;
                 if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
@@ -389,12 +391,15 @@ namespace OneMainWeb.adm
 
                 if (moduleInstance.Name == "TemplateContent" && moduleInstance.Settings.ContainsKey("TemplateId"))
                 {
-                    var contentTemplate = BWebsite.GetContentTemplate(moduleInstance.Id, false);
-                    var templateId = Int32.Parse(moduleInstance.Settings["TemplateId"].ToString());
+                    var templateId = Int32.Parse(moduleInstance.Settings["TemplateId"].Value.ToString());
                     if (templateId > 0)
                     {
-                        ButtonModalEdit.Attributes.Add("data-template-id", templateId.ToString());
-                        ButtonModalEdit.Attributes.Add("data-content-template-id", contentTemplate.Id.Value.ToString());
+                        ButtonContentTemplateModalEdit.Attributes.Add("data-template-id", templateId.ToString());
+                        ButtonContentTemplateModalEdit.Attributes.Add("data-content-template-instance-id", moduleInstance.Id.ToString());
+                    }
+                    else
+                    {
+                        ButtonContentTemplateModalEdit.Visible = false;
                     }
                 }
 
