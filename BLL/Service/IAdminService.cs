@@ -40,5 +40,13 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContent?id={id}&languageId={languageId}")]
         [Description("DTOContent GetContent(int id, int languageId)")]
         DTOContent GetContent(int id, int languageId);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContentTemplate?instanceId={instanceId}")]
+        [Description("DTOContentTemplate GetContentTemplate(int instanceId)")]
+        DTOContentTemplate GetContentTemplate(int instanceId);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetTemplate?templateId={templateId}")]
+        [Description("DTOTemplate GetTemplate(int templateId)")]
+        DTOTemplate GetTemplate(int templateId);
     }
 }

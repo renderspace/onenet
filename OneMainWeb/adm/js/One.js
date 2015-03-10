@@ -199,10 +199,130 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
     });
 }
 
+function createFormControl(fieldLabel, fieldId, fieldType) {
+    var controlHtml = '<div class="form-group"><label class="col-sm-3 control-label">' + fieldLabel + '</label><div class="col-sm-9">';
+    controlHtml += '<span class="">';
+    if (fieldType == 'html')
+        controlHtml += '<textarea  class="form-control ckeditor4" id="' + fieldId + '" name="' + fieldId + '"></textarea>';
+    else if (fieldType == 'singleline')
+        controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
+    else
+        controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
+    controlHtml += '</span>';
+    controlHtml += '</div>';
+    controlHtml += '</div>';
+    return controlHtml;
+}
 
+function getContentTemplate(instanceId, templateId) {
 
+    $(".j_control_content_template_instance_id").val(instanceId);
+    $(".j_control_template_id").val(templateId);
+
+    $.ajax({
+        url: "/AdminService/GetTemplate?templateId=" + templateId,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "GET",
+        success: function (template) {
+            trace(template);
+
+            if (typeof (template) != "undefined" && typeof (template.ContentFields) != "undefined" && template.ContentFields.length > 0) {
+
+                $.each(template.ContentFields, function (index, field) {
+                    // do your stuff here
+                    $('#' + get_field_id(field.Key)).val(field.Value);
+                    var controlHtml = createFormControl(field.Key, get_field_id(field.Key), field.Value);
+                    $('.content-fields').append(controlHtml);
+                    if (field.Value == 'html')
+                        CKEDITOR.replace(get_field_id(field.Key));
+                });
+
+            }
+        },
+        error: logError
+    });
+
+    $.ajax({
+        url: "/AdminService/GetContentTemplate?instanceId=" + instanceId,
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "GET",
+        success: function (contentTemplate) {
+            trace(contentTemplate);
+
+            $(".modal-body .col-sm-9").show();
+
+            if (typeof(contentTemplate.DateCreated) != "undefined" && contentTemplate.DateCreated.length > 0) {
+                $(".j_control_date_created").parent().parent().show();
+                $(".j_control_date_created").html(contentTemplate.DateCreated);
+            } else {
+                $(".j_control_date_created").parent().parent().hide();
+            }
+            if (typeof (contentTemplate.DateModified) != "undefined" && contentTemplate.DateModified.length > 0) {
+                $(".j_control_date_modified").parent().parent().show();
+                $(".j_control_date_modified").html(contentTemplate.DateModified);
+            } else {
+                $(".j_control_date_modified").parent().parent().hide();
+            }
+            if (typeof (contentTemplate.PrincipalCreated) != "undefined" && contentTemplate.PrincipalCreated.length > 0) {
+                $(".j_control_principal_created").parent().parent().show();
+                $(".j_control_principal_created").html(contentTemplate.PrincipalCreated);
+            } else {
+                $(".j_control_principal_created").parent().parent().hide();
+            }
+            if (typeof (contentTemplate.PrincipalModified) != "undefined" && contentTemplate.PrincipalModified.length > 0) {
+                $(".j_control_principal_modified").parent().parent().show();
+                $(".j_control_principal_modified").html(contentTemplate.PrincipalModified);
+            } else {
+                $(".j_control_principal_modified").parent().parent().hide();
+            }
+
+            if (typeof (contentTemplate.ContentFields) != "undefined" && contentTemplate.ContentFields.length > 0) {
+                $.each(contentTemplate.ContentFields, function (index, field) {
+                    // check if this control uses ckeditor
+                    var editor = CKEDITOR.instances[get_field_id(field.Key)];
+                    if (editor) {
+                        CKEDITOR.instances[get_field_id(field.Key)].setData(field.Value);
+                    } else {
+                        $('#' + get_field_id(field.Key)).val(field.Value);
+                    }
+                });
+            }
+            
+            $(".modal-footer .btn-success").show();
+        },
+        error: logError
+    });
+}
+
+function get_field_id(field_name) {
+    return field_name.replace(' ', '_').trim().toLowerCase();
+}
+
+$('#content-template-modal').on('show.bs.modal', function (e) {
+    
+    var button = e.relatedTarget;
+    if (button == null) {
+        return false;
+    }
+    $(".modal-body .col-sm-9").hide();
+    $(".modal-footer .btn-success").hide();
+    var instanceId = $(button).data('content-template-instance-id');
+    var templateId = $(button).data('template-id');
+    trace("instanceId:" + instanceId);
+    trace("templateId:" + templateId);
+
+    var me = $(this);
+
+    if (instanceId > 0 && templateId > 0) {
+        getContentTemplate(instanceId, templateId);
+    }
+
+});
 
 $('#text-content-modal').on('show.bs.modal', function (e) {
+
     var button = e.relatedTarget;
     if (button == null) {
         return false;
@@ -250,10 +370,9 @@ $('#text-content-modal').on('show.bs.modal', function (e) {
         });
     } else if (contentId > 0) {
         $(".j_control_file").empty();
-        getContent(contentId, languageId, enableCkEditor, enableCk);
+        getContent(contentId, languageId, enableCk, enableCk);
     }
 });
-
 
 $('#text-content-modal a.btn-success').on('click', function (e) {
     var content = new Object();

@@ -1042,50 +1042,7 @@ namespace One.Net.BLL
                 ChangeWebsite(site);
             }
         }
-
-        public static BOContentTemplate GetContentTemplate(int moduleInstanceId, bool publishFlag)
-        {
-            BOContentTemplate answer = null;
-
-            var webSiteB = new BWebsite();
-            var instance = webSiteB.GetModuleInstance(moduleInstanceId, publishFlag);
-
-            if (instance != null && instance.Settings != null && instance.Settings.ContainsKey("ContentTemplateId"))
-            {
-                int contentTemplateId = int.Parse(instance.Settings["ContentTemplateId"].Value);
-                if (contentTemplateId > 0)
-                {
-                    answer = new BOContentTemplate();
-
-                    var sql = @"SELECT * FROM [dbo].[content_template] WHERE id=@ContentTemplateId";
-                    
-                    using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplateId)))
-                    {
-                        answer.Id = contentTemplateId;
-                        answer.DateCreated = (DateTime)reader["date_created"];
-                        answer.DateModified = reader["date_modified"] != DBNull.Value ? (DateTime)reader["date_modified"] : (DateTime?)null;
-                        answer.PrincipalCreated = (string)reader["principal_created_by"];
-                        answer.PrincipalModified = reader["principal_modified_by"] != DBNull.Value ? (string)reader["principal_modified_by"] : "";
-                    }
-
-                    sql = @"SELECT * FROM [dbo].[content_template_data] WHERE content_template_fk_id=@ContentTemplateId";
-
-                    using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplateId)))
-                    {
-                        answer.ContentFields = new Dictionary<string, string>();
-
-                        while (reader.Read())
-                        {
-                            answer.ContentFields.Add((string)reader["field_name"], (string)reader["field_content"]);
-                        }                        
-                    }
-                }
-                else
-                    answer = new BOContentTemplate();
-            }
-            return answer;
-        }
-
+        
         public static BOTemplate GetTemplate(int id)
         {
             BOImageTemplate imageTemplate = OCache.Get("Template_" + id) as BOImageTemplate;

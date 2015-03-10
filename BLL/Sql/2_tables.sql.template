@@ -700,9 +700,9 @@ CREATE TABLE [dbo].[redirects](
 
 CREATE TABLE [dbo].[content_template](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[date_created] [datetime] NULL,
+	[date_created] [datetime] NOT NULL,
 	[date_modified] [datetime] NULL,
-	[principal_created_by] [varchar](255) NULL,
+	[principal_created_by] [varchar](255) NOT NULL,
 	[principal_modified_by] [varchar](255) NULL,
  CONSTRAINT [PK_content_template] PRIMARY KEY CLUSTERED 
 (

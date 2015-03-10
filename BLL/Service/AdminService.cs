@@ -9,6 +9,7 @@ using One.Net.BLL.DAL;
 using Newtonsoft.Json;
 using System.Threading;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace One.Net.BLL.Service
 {
@@ -41,6 +42,19 @@ namespace One.Net.BLL.Service
                 content.Title = BInternalContent.GetContentTitleInAnyLanguage(content.ContentId.Value);
             var result = new DTOContent(content);
             return result;
+        }
+
+        public DTOContentTemplate GetContentTemplate(int instanceId)
+        {
+            var contentTemplateB = new BContentTemplate();
+            var contentTemplate = contentTemplateB.GetContentTemplate(instanceId);
+            return new DTOContentTemplate(contentTemplate);
+        }
+
+        public DTOTemplate GetTemplate(int templateId)
+        {
+            var template = BWebsite.GetTemplate(templateId);
+            return new DTOTemplate(template);
         }
 
         public bool ChangeContent(DTOContent content)
@@ -202,6 +216,88 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string ContentId { get; set; }
+    }
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOTemplate
+    {
+        [DataMember, JsonProperty]
+        public string TemplateId { get; set; }
+
+        [DataMember, JsonProperty]
+        public Dictionary<string, string> ContentFields { get; set; }
+
+        public string TemplateContent { get;set; }
+
+        public DTOTemplate()
+        { }
+
+        public DTOTemplate(BOTemplate t)
+        {
+            if (t != null)
+            {
+                if (t.Id.HasValue)
+                    TemplateId = t.Id.Value.ToString();
+
+                ContentFields = new Dictionary<string, string>();
+
+                if (!string.IsNullOrEmpty(t.TemplateContent))
+                {
+                    const string pattern = @"\{([^\}]+)\}";
+                    foreach (Match match in Regex.Matches(t.TemplateContent, pattern))
+                    {
+                        var pairString = match.Value.Replace("{", "").Replace("}", "");
+                        var pair = StringTool.SplitString(pairString);
+                        var key = pair[0];
+                        var value = "html";
+                        if (pair.Count > 1)
+                            value = pair[1];
+                        ContentFields.Add(key, value);
+                    }
+                }
+            }
+        }
+    }
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOContentTemplate
+    {
+        [DataMember, JsonProperty]
+        public string ContentTemplateId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string DateCreated { get; set; }
+
+        [DataMember, JsonProperty]
+        public string DateModifed { get; set; }
+
+        [DataMember, JsonProperty]
+        public string PrincipalCreated { get; set; }
+
+        [DataMember, JsonProperty]
+        public string PrincipalModified { get; set; }
+
+        [DataMember, JsonProperty]
+        public Dictionary<string, string> ContentFields { get; set; }
+
+        public DTOContentTemplate()
+        { }
+
+        public DTOContentTemplate(BOContentTemplate c)
+        {
+            if (c != null)
+            {
+                if (c.Id.HasValue)
+                    ContentTemplateId = c.Id.Value.ToString();
+
+                ContentFields = c.ContentFields;
+
+                DateCreated = c.DateCreated.ToString();
+                PrincipalCreated = c.PrincipalCreated;
+                DateModifed = c.DateModified.HasValue ? c.DateModified.Value.ToString() : "";
+                PrincipalModified = !string.IsNullOrEmpty(c.PrincipalModified) ? c.PrincipalModified : "";
+            }
+        }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]

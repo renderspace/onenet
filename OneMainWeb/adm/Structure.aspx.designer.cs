@@ -22,6 +22,15 @@ namespace OneMainWeb.adm {
         protected global::OneMainWeb.AdminControls.TextContentModal TextContentModal1;
         
         /// <summary>
+        /// ContentTemplateModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::OneMainWeb.AdminControls.ContentTemplateModal ContentTemplateModal;
+        
+        /// <summary>
         /// Notifier1 control.
         /// </summary>
         /// <remarks>
