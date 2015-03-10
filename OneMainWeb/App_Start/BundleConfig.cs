@@ -66,6 +66,7 @@ namespace OneMainWeb
 
             BundleFileSetOrdering bundleFileSetOrdering = new BundleFileSetOrdering("js");
             bundleFileSetOrdering.Files.Add("jquery*");
+            bundleFileSetOrdering.Files.Add("bootstrap.js");
             bundles.FileSetOrderList.Add(bundleFileSetOrdering);
             bundles.Add(new ScriptBundle("~/Bundles/_js").IncludeDirectory("~/site_specific/_js", "*.js"));
             // REGULAR SaSS

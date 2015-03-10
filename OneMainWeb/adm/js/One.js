@@ -429,5 +429,13 @@ $('input.imageFileUploadWithPreview').on('change', function (e) {
 });
 
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
+	//$('[data-toggle="confirmation"]').confirmation( { btnOkLabel: 'Yes', btnOkClass: 'btn btn-sm btn-success' });
+	$('.publishAll').confirmation( { 
+		btnOkLabel: 'Yes', 
+		btnOkClass: 'btn btn-sm btn-success', 
+		onConfirm: function() {
+		__doPostBack('ctl00$MainContent$LinkButtonPublishAll','');
+		} 
+	});
 })
