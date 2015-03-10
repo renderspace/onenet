@@ -13,7 +13,7 @@
     
         <div class="col-md-3">
             <section class="module tall">
-                <header><h3 class="tabs_involved"><asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn" Text="Publish all changes" OnClick="ButtonPublishAll_Click" /></h3>
+                <header><h3 class="tabs_involved"><asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn publishAll" Text="Publish all changes" OnClick="ButtonPublishAll_Click" ClientIDMode="Static" /></h3>
                     <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
                         <div class="form-group">
                             <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
