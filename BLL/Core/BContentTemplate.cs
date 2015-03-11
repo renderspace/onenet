@@ -116,9 +116,8 @@ namespace One.Net.BLL
         public BOContentTemplate GetContentTemplate(int moduleInstanceId, bool publishFlag)
         {
             BOContentTemplate answer = new BOContentTemplate();
+
             answer.ContentFields = new Dictionary<string, string>();
-            answer.PrincipalCreated = Thread.CurrentPrincipal.Identity.Name;
-            answer.DateCreated = DateTime.Now;
 
             var webSiteB = new BWebsite();
             var instance = webSiteB.GetModuleInstance(moduleInstanceId, publishFlag);

@@ -28,6 +28,7 @@ namespace One.Net.BLL
         public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
         static readonly DbWebsite webSiteDb = new DbWebsite();
         readonly BInternalContent intContentB = new BInternalContent();
+        readonly BContentTemplate contentTemplateB = new BContentTemplate();
         readonly BContent contentB = new BContent();
         // under heavy load mulitple requests will start the reading process, then the Cache
         // inserts will invalidate cache. Better to check for existence first.
@@ -524,6 +525,8 @@ namespace One.Net.BLL
                                 PublishTextContentModuleInstance(instance, page.LanguageId);
                             else if (instance.Name == "SpecialContent")
                                 PublishTextContentModuleInstance(instance, page.LanguageId);
+                            else if (instance.Name == "TemplateContent")
+                                PublishTemplateContentModuleInstance(instance, page.LanguageId);
                             else
                             {
                                 instance.Changed = false;
@@ -573,6 +576,32 @@ namespace One.Net.BLL
             }
         }
         */
+
+        private void PublishTemplateContentModuleInstance(BOModuleInstance instance, int languageId)
+        {
+            instance.Changed = false;
+            ChangeModuleInstance(instance, languageId, true);
+
+            var contentTemplate = contentTemplateB.GetContentTemplate(instance.Id, false);
+
+            if (contentTemplate == null)
+                return; // nothing to publish;
+
+            BOModuleInstance publishedInstance = webSiteDb.GetModuleInstance(instance.Id, true);
+            if (publishedInstance != null)
+                contentTemplate.Id = int.Parse(publishedInstance.Settings["ContentTemplateId"].Value);
+            else
+                contentTemplate.Id = null;
+
+            contentTemplateB.ChangeContentTemplate(instance.Id, contentTemplate);
+
+            publishedInstance = instance;
+
+            publishedInstance.Settings["ContentTemplateId"] = new BOSetting { Name = "ContentTemplateId", Type = "Int", Value = contentTemplate.Id.Value.ToString(), UserVisibility = BOSetting.USER_VISIBILITY_SPECIAL };
+            publishedInstance.PublishFlag = true;
+            ChangeModuleInstance(publishedInstance, languageId, true);
+        }
+
         private void PublishTextContentModuleInstance(BOModuleInstance instance, int languageId)
         {
             instance.Changed = false;

@@ -48,5 +48,9 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetTemplate?templateId={templateId}")]
         [Description("DTOTemplate GetTemplate(int templateId)")]
         DTOTemplate GetTemplate(int templateId);
+
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ChangeContentTemplate")]
+        [Description("bool ChangeContentTemplate(DTOContentTemplate contentTemplate)")]
+        bool ChangeContentTemplate(DTOContentTemplate contentTemplate);
     }
 }
