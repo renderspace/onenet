@@ -23,8 +23,6 @@ namespace One.Net.BLL
 {
     public class BContentTemplate : BusinessBaseClass
     {
-        readonly BWebsite webSiteB = new BWebsite();
-
         public void ChangeContentTemplate(int moduleInstanceId, BOContentTemplate contentTemplate)
         {
             if (publishFlag)
@@ -34,6 +32,7 @@ namespace One.Net.BLL
 
             this.ChangeContentTemplate(contentTemplate);
             
+            var webSiteB = new BWebsite();
             var instance = webSiteB.GetModuleInstance(moduleInstanceId);
 
             if (instance != null && instance.Settings != null && !instance.Settings.ContainsKey("ContentTemplateId"))
