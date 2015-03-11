@@ -263,25 +263,25 @@ function getContentTemplate(instanceId, templateId) {
 
             $(".modal-body .col-sm-9").show();
 
-            if (typeof(contentTemplate.DateCreated) != "undefined" && contentTemplate.DateCreated.length > 0) {
+            if (typeof (contentTemplate.DateCreated) != "undefined" && contentTemplate.DateCreated != null && contentTemplate.DateCreated.length > 0) {
                 $(".j_control_date_created").parent().parent().show();
                 $(".j_control_date_created").html(contentTemplate.DateCreated);
             } else {
                 $(".j_control_date_created").parent().parent().hide();
             }
-            if (typeof (contentTemplate.DateModified) != "undefined" && contentTemplate.DateModified.length > 0) {
+            if (typeof (contentTemplate.DateModified) != "undefined" && contentTemplate.DateModified != null && contentTemplate.DateModified.length > 0) {
                 $(".j_control_date_modified").parent().parent().show();
                 $(".j_control_date_modified").html(contentTemplate.DateModified);
             } else {
                 $(".j_control_date_modified").parent().parent().hide();
             }
-            if (typeof (contentTemplate.PrincipalCreated) != "undefined" && contentTemplate.PrincipalCreated.length > 0) {
+            if (typeof (contentTemplate.PrincipalCreated) != "undefined" && contentTemplate.PrincipalCreated != null && contentTemplate.PrincipalCreated.length > 0) {
                 $(".j_control_principal_created").parent().parent().show();
                 $(".j_control_principal_created").html(contentTemplate.PrincipalCreated);
             } else {
                 $(".j_control_principal_created").parent().parent().hide();
             }
-            if (typeof (contentTemplate.PrincipalModified) != "undefined" && contentTemplate.PrincipalModified.length > 0) {
+            if (typeof (contentTemplate.PrincipalModified) != "undefined" && contentTemplate.PrincipalModified != null && contentTemplate.PrincipalModified.length > 0) {
                 $(".j_control_principal_modified").parent().parent().show();
                 $(".j_control_principal_modified").html(contentTemplate.PrincipalModified);
             } else {
