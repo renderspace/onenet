@@ -68,6 +68,10 @@ namespace One.Net.BLL.Service
             int.TryParse(postedContentTemplate.InstanceId, out instanceId);
 
             var storedContentTemplate = contentTemplateB.GetContentTemplate(instanceId);
+
+            if (storedContentTemplate == null)
+                storedContentTemplate = new BOContentTemplate();
+
             storedContentTemplate.DateModified = DateTime.Now;
             storedContentTemplate.PrincipalModified = postedContentTemplate.PrincipalModified;
             storedContentTemplate.ContentFields = new Dictionary<string, string>();

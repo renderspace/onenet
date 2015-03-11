@@ -37,7 +37,7 @@ namespace One.Net.BLL
 
             var contentTemplateId = 0;
             if (instance.Settings.ContainsKey("ContentTemplateId"))
-                contentTemplateId = Int32.Parse(instance.Settings["ContentTemplateId"].ToString());
+                contentTemplateId = Int32.Parse(instance.Settings["ContentTemplateId"].Value.ToString());
 
             if (instance != null && instance.Settings != null && contentTemplateId <= 0)
             {
@@ -113,9 +113,7 @@ namespace One.Net.BLL
 
         public BOContentTemplate GetContentTemplate(int moduleInstanceId, bool publishFlag)
         {
-            BOContentTemplate answer = new BOContentTemplate();
-
-            answer.ContentFields = new Dictionary<string, string>();
+            BOContentTemplate answer = null;
 
             var webSiteB = new BWebsite();
             var instance = webSiteB.GetModuleInstance(moduleInstanceId, publishFlag);
@@ -125,6 +123,9 @@ namespace One.Net.BLL
                 int contentTemplateId = int.Parse(instance.Settings["ContentTemplateId"].Value);
                 if (contentTemplateId > 0)
                 {
+                    answer = new BOContentTemplate();
+                    answer.ContentFields = new Dictionary<string, string>();
+
                     var sql = @"SELECT * FROM [dbo].[content_template] WHERE id=@ContentTemplateId";
 
                     using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplateId)))
