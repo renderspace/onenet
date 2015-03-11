@@ -60,7 +60,10 @@ namespace OneMainWeb.CommonModules
                         {
                             if (contentTemplate.ContentFields.ContainsKey(field.Key))
                             {
-                                LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", contentTemplate.ContentFields[field.Key]);
+                                if (string.IsNullOrEmpty(field.Value))
+                                    LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "}", contentTemplate.ContentFields[field.Key]);
+                                else
+                                    LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", contentTemplate.ContentFields[field.Key]);
                             }
                         }
                     }
