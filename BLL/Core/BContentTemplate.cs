@@ -35,7 +35,11 @@ namespace One.Net.BLL
             var webSiteB = new BWebsite();
             var instance = webSiteB.GetModuleInstance(moduleInstanceId);
 
-            if (instance != null && instance.Settings != null && !instance.Settings.ContainsKey("ContentTemplateId"))
+            var contentTemplateId = 0;
+            if (instance.Settings.ContainsKey("ContentTemplateId"))
+                contentTemplateId = Int32.Parse(instance.Settings["ContentTemplateId"].ToString());
+
+            if (instance != null && instance.Settings != null && contentTemplateId <= 0)
             {
                 instance.Settings["ContentTemplateId"] = new BOSetting("ContentTemplateId", "Int", contentTemplate.Id.Value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
                 webSiteB.ChangeModuleInstance(instance);
