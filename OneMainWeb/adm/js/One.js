@@ -75,7 +75,6 @@ function OpenFile(fileUrl) {
     window.top.close();
 }
 
-
 function toggle_visibility(id) {
     var e = document.getElementById(id);
     if (e.style.display == 'block')
@@ -199,7 +198,7 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
     });
 }
 
-function createFormControl(fieldLabel, fieldId, fieldType) {
+function buildFormControl(fieldLabel, fieldId, fieldType) {
     var controlHtml = '<div class="form-group"><label class="col-sm-3 control-label">' + fieldLabel + '</label><div class="col-sm-9">';
     controlHtml += '<span class="">';
     if (fieldType == 'html')
@@ -239,7 +238,7 @@ function getContentTemplate(instanceId, templateId) {
                 $.each(template.ContentFields, function (index, field) {
                     // do your stuff here
                     $('#' + get_field_id(field.Key)).val(field.Value);
-                    var controlHtml = createFormControl(field.Key, get_field_id(field.Key), field.Value);
+                    var controlHtml = buildFormControl(field.Key, get_field_id(field.Key), field.Value);
                     $('.content-fields').append(controlHtml);
                     if (field.Value == 'html') {
                         var editor = CKEDITOR.instances[get_field_id(field.Key)];
@@ -310,10 +309,6 @@ function getContentTemplate(instanceId, templateId) {
 function get_field_id(field_name) {
     return field_name.replace(' ', '_').trim().toLowerCase();
 }
-
-$('#content-template-modal').on('shown.bs.modal', function () {
-    $('#content-template-modal .btn-success').focus()
-})
 
 $('#content-template-modal').on('show.bs.modal', function (e) {
     
@@ -418,6 +413,46 @@ $('#text-content-modal a.btn-success').on('click', function (e) {
     });
 });
 
+
+$('#content-template-modal a.btn-success').on('click', function (e) {
+
+    var contentTemplate = new Object();
+
+    trace("saving:");
+
+    contentTemplate['InstanceId'] = $(".j_control_content_template_instance_id").val();
+    contentTemplate['TemplateId'] = $(".j_control_template_id").val();
+    contentTemplate['PrincipalModified'] = $('.j_control_principal').val();
+
+    $('.content-fields .form-group span input').each(function () {
+        contentTemplate['ContentFields'][$(this).attr('name')] = $('#' + $(this).attr('name')).val();
+    });
+
+    $('.content-fields .form-group span textarea').each(function () {
+        var editor = CKEDITOR.instances[$(this).attr('name')];
+        if (editor) {
+            contentTemplate[$(this).attr('name')] = editor.getData();
+        }
+    });
+
+    trace(contentTemplate);
+
+    $.ajax({
+        url: "/AdminService/ChangeContentTemplate",
+        data: JSON.stringify(contentTemplate),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        type: "POST",
+        success: function (data) {
+            if (data === true) {
+                $('#content-template-modal').modal('hide');
+            }
+            else {
+                trace("data:" + data);
+            }
+        }
+    });
+});
 
 var folderTree = $('#tree');
 if (folderTree.is("div")) {

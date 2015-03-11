@@ -48,7 +48,7 @@ namespace One.Net.BLL.Service
         {
             var contentTemplateB = new BContentTemplate();
             var contentTemplate = contentTemplateB.GetContentTemplate(instanceId);
-            return new DTOContentTemplate(contentTemplate);
+            return new DTOContentTemplate(instanceId, contentTemplate);
         }
 
         public DTOTemplate GetTemplate(int templateId)
@@ -56,6 +56,49 @@ namespace One.Net.BLL.Service
             var template = BWebsite.GetTemplate(templateId);
             return new DTOTemplate(template);
         }
+
+        public bool ChangeContentTemplate(DTOContentTemplate contentTemplate)
+        {
+            if (contentTemplate == null)
+                return false;
+
+            var contentTemplateB = new BContentTemplate();
+
+            var instanceId = 0;
+            int.TryParse(contentTemplate.InstanceId, out instanceId);
+
+            var storedContentTemplate = contentTemplateB.GetContentTemplate(instanceId);
+            storedContentTemplate.DateModified = DateTime.Now;
+            storedContentTemplate.PrincipalModified = contentTemplate.PrincipalModified;
+            storedContentTemplate.ContentFields = new Dictionary<string, string>();
+
+            var webSiteB = new BWebsite();
+            var instance = webSiteB.GetModuleInstance(instanceId, false);
+
+            var templateId = 0;
+            if (instance != null && instance.Settings != null && instance.Settings.ContainsKey("TemplateId"))
+                templateId = int.Parse(instance.Settings["TemplateId"].Value);
+
+            var dtoTemplate = this.GetTemplate(templateId);
+
+            if (dtoTemplate != null && dtoTemplate.ContentFields != null && contentTemplate.ContentFields != null)
+            {
+                foreach (var field in dtoTemplate.ContentFields)
+                {
+                    var fieldId = field.Key.Trim().Replace(" ", "_").ToLower();
+                    if (contentTemplate.ContentFields.ContainsKey(fieldId))
+                    {
+                        storedContentTemplate.ContentFields.Add(field.Key, contentTemplate.ContentFields[fieldId]);
+                    }
+                }
+            }
+
+            contentTemplateB.ChangeContentTemplate(instanceId, storedContentTemplate);
+
+            return true;
+        }
+
+        
 
         public bool ChangeContent(DTOContent content)
         {
@@ -249,7 +292,7 @@ namespace One.Net.BLL.Service
                         var pairString = match.Value.Replace("{", "").Replace("}", "");
                         var pair = StringTool.SplitString(pairString);
                         var key = pair[0];
-                        var value = "html";
+                        var value = "";
                         if (pair.Count > 1)
                             value = pair[1];
                         ContentFields.Add(key, value);
@@ -262,6 +305,9 @@ namespace One.Net.BLL.Service
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
     public class DTOContentTemplate
     {
+        [DataMember, JsonProperty]
+        public string InstanceId { get; set; }
+
         [DataMember, JsonProperty]
         public string ContentTemplateId { get; set; }
 
@@ -283,8 +329,10 @@ namespace One.Net.BLL.Service
         public DTOContentTemplate()
         { }
 
-        public DTOContentTemplate(BOContentTemplate c)
+        public DTOContentTemplate(int instanceId, BOContentTemplate c)
         {
+            InstanceId = instanceId.ToString();
+
             if (c != null)
             {
                 if (c.Id.HasValue)
