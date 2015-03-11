@@ -288,7 +288,7 @@ function getContentTemplate(instanceId, templateId) {
                 $(".j_control_principal_modified").parent().parent().hide();
             }
 
-            if (typeof (contentTemplate.ContentFields) != "undefined" && contentTemplate.ContentFields.length > 0) {
+            if (typeof (contentTemplate.ContentFields) != "undefined" && contentTemplate.ContentFields != null && contentTemplate.ContentFields.length > 0) {
                 $.each(contentTemplate.ContentFields, function (index, field) {
                     // check if this control uses ckeditor
                     var editor = CKEDITOR.instances[get_field_id(field.Key)];
