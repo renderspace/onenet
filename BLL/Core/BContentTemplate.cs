@@ -48,13 +48,11 @@ namespace One.Net.BLL
 
             var idParameter = contentTemplate.Id.HasValue ? new SqlParameter("@Id", contentTemplate.Id) : new SqlParameter("@Id", DBNull.Value);
             
-            paramsToPass.Add(idParameter);
-
             string sql;
             if (contentTemplate.Id.HasValue)
             {
-                paramsToPass.Add(new SqlParameter("@DateModified", DateTime.Now));
-                paramsToPass.Add(new SqlParameter("@PrincipalModified", Thread.CurrentPrincipal.Identity.Name));
+                paramsToPass.Add(new SqlParameter("@DateModified", contentTemplate.DateModified));
+                paramsToPass.Add(new SqlParameter("@PrincipalModified", contentTemplate.PrincipalModified));
 
                 sql = @"UPDATE [dbo].[content_template] 
                         SET date_modified=@DateModified, 
@@ -76,12 +74,14 @@ namespace One.Net.BLL
                         SET @Id=SCOPE_IDENTITY();";
             }
 
+            paramsToPass.Add(idParameter);
+
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass.ToArray());
             
             if (!contentTemplate.Id.HasValue)
                 contentTemplate.Id = (int)idParameter.Value;
 
-            sql = @"DELETE FROM  [dbo].[content_template_data] WHERE id=@ContentTemplateId ";
+            sql = @"DELETE FROM  [dbo].[content_template_data] WHERE content_template_fk_id=@ContentTemplateId ";
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@ContentTemplateId", contentTemplate.Id.Value));
 
