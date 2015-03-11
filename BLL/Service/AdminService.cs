@@ -57,19 +57,19 @@ namespace One.Net.BLL.Service
             return new DTOTemplate(template);
         }
 
-        public bool ChangeContentTemplate(DTOContentTemplate contentTemplate)
+        public bool ChangeContentTemplate(DTOContentTemplate postedContentTemplate)
         {
-            if (contentTemplate == null)
+            if (postedContentTemplate == null)
                 return false;
 
             var contentTemplateB = new BContentTemplate();
 
             var instanceId = 0;
-            int.TryParse(contentTemplate.InstanceId, out instanceId);
+            int.TryParse(postedContentTemplate.InstanceId, out instanceId);
 
             var storedContentTemplate = contentTemplateB.GetContentTemplate(instanceId);
             storedContentTemplate.DateModified = DateTime.Now;
-            storedContentTemplate.PrincipalModified = contentTemplate.PrincipalModified;
+            storedContentTemplate.PrincipalModified = postedContentTemplate.PrincipalModified;
             storedContentTemplate.ContentFields = new Dictionary<string, string>();
 
             var webSiteB = new BWebsite();
@@ -81,14 +81,14 @@ namespace One.Net.BLL.Service
 
             var dtoTemplate = this.GetTemplate(templateId);
 
-            if (dtoTemplate != null && dtoTemplate.ContentFields != null && contentTemplate.ContentFields != null)
+            if (dtoTemplate != null && dtoTemplate.ContentFields != null && postedContentTemplate.ContentFields != null)
             {
                 foreach (var field in dtoTemplate.ContentFields)
                 {
                     var fieldId = field.Key.Trim().Replace(" ", "_").ToLower();
-                    if (contentTemplate.ContentFields.ContainsKey(fieldId))
+                    if (postedContentTemplate.ContentFields.ContainsKey(fieldId))
                     {
-                        storedContentTemplate.ContentFields.Add(field.Key, contentTemplate.ContentFields[fieldId]);
+                        storedContentTemplate.ContentFields.Add(field.Key, postedContentTemplate.ContentFields[fieldId]);
                     }
                 }
             }
@@ -97,9 +97,7 @@ namespace One.Net.BLL.Service
 
             return true;
         }
-
         
-
         public bool ChangeContent(DTOContent content)
         {
             if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))
@@ -219,8 +217,6 @@ namespace One.Net.BLL.Service
             if (count > 0)
                 result.Remove(result.Length - 2, 2);
         }
-
-        
 
         private static string GenerateFileIcon(BOFile file, int width)
         {

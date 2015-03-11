@@ -310,7 +310,7 @@ function get_field_id(field_name) {
     return field_name.replace(' ', '_').trim().toLowerCase();
 }
 
-$('#content-template-modal').on('show.bs.modal', function (e) {
+$('#content-template-modal').on('shown.bs.modal', function (e) {
     
     var button = e.relatedTarget;
     if (button == null) {
@@ -424,16 +424,25 @@ $('#content-template-modal a.btn-success').on('click', function (e) {
     contentTemplate['TemplateId'] = $(".j_control_template_id").val();
     contentTemplate['PrincipalModified'] = $('.j_control_principal').val();
 
+    var contentFields = [];
     $('.content-fields .form-group span input').each(function () {
-        contentTemplate['ContentFields'][$(this).attr('name')] = $('#' + $(this).attr('name')).val();
+        var contentField = new Object();
+        contentField['Key'] = $(this).attr('name');
+        contentField['Value'] = $('#' + $(this).attr('name')).val();
+        contentFields.push(contentField);
     });
 
     $('.content-fields .form-group span textarea').each(function () {
         var editor = CKEDITOR.instances[$(this).attr('name')];
         if (editor) {
-            contentTemplate[$(this).attr('name')] = editor.getData();
+            var contentField = new Object();
+            contentField['Key'] = $(this).attr('name');
+            contentField['Value'] = editor.getData();
+            contentFields.push(contentField);
         }
     });
+
+    contentTemplate['ContentFields'] = contentFields;
 
     trace(contentTemplate);
 
@@ -450,6 +459,11 @@ $('#content-template-modal a.btn-success').on('click', function (e) {
             else {
                 trace("data:" + data);
             }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            trace(xhr.status);
+            trace(xhr.responseText);
+            trace(thrownError);
         }
     });
 });
