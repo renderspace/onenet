@@ -25,11 +25,6 @@ namespace One.Net.BLL
     {
         readonly BWebsite webSiteB = new BWebsite();
 
-        public BContentTemplate()
-        {
-            bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);
-        }
-
         public void ChangeContentTemplate(int moduleInstanceId, BOContentTemplate contentTemplate)
         {
             if (publishFlag)
