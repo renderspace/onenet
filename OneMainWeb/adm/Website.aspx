@@ -5,6 +5,20 @@
 <%@ Register src="~/AdminControls/LastChangeAndHistory.ascx" tagname="LastChangeAndHistory" tagprefix="uc2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <script runat="server">
+
+        protected string RenderTemplateType(string type)
+        {
+            if (type == "3")
+                return "Page template";
+            else if (type == "ContentTemplate")
+                return "Content template";
+            return type;
+        }
+
+    </script>
+
     <one:Notifier runat="server" ID="Notifier1" />
 
     <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="MultiView1_ActiveViewChanged" ActiveViewIndex="0">
@@ -65,12 +79,17 @@
 					    AutoGenerateColumns="false"
 					    AllowSorting="false"
 					    DataKeyNames="Id"
+                        OnRowDataBound="GridViewTemplates_RowDataBound"
                         OnSelectedIndexChanged="GridViewTemplates_SelectedIndexChanged"
                         OnRowDeleting="GridViewTemplates_RowDeleting">
 		            <Columns>
                         <asp:BoundField HeaderText="Id" DataField="Id" ReadOnly="true" />
                         <asp:BoundField HeaderText="Name" DataField="Name" />
-                        <asp:BoundField HeaderText="Type" DataField="Type" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <%# RenderTemplateType((string)Eval("Type")) %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
@@ -265,7 +284,10 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Type</label> 
                     <div class="col-sm-9">
-                        <asp:TextBox ValidationGroup="template" Text="" ID="TextBoxTemplateType" runat="server" CssClass="form-control required" MaxLength="255" placeholder="Template type" />
+                        <asp:DropDownList ValidationGroup="template" runat="server" ID="DropDownListTemplateType" CssClass="form-control required">
+                            <asp:ListItem Value="3">Page template</asp:ListItem>
+                            <asp:ListItem Value="ContentTemplate">Content template</asp:ListItem>
+                        </asp:DropDownList>
                     </div>
                 </div>
                 <div class="form-group">
@@ -276,6 +298,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
+                        <asp:LinkButton	id="LinkButtonCancel" Runat="server"	CssClass="btn-danger btn" Text="Cancel"  ValidationGroup="template" OnClick="LinkButtonCancel_Click" />
                         <asp:LinkButton	id="LinkButtonSaveTemplate" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save template"  ValidationGroup="template" OnClick="ButtonSaveTemplate_Click" />
                     </div>
                 </div>
