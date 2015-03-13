@@ -76,7 +76,7 @@
                             </div>
                            <div class="col-sm-6">
                                 <asp:TextBox runat="server" ID="TextBoxUri" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
-                                <p class="help-block">Important for SEO, please user short text and minus sign to signify space.</p>
+                                <p class="help-block">Important for SEO, please use short text and minus sign to signify space.</p>
                             </div>
                         </div>
 
