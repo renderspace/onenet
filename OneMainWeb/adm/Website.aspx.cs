@@ -200,10 +200,15 @@ namespace OneMainWeb.adm
 
             LabelTemplateId.Text = template.Id.Value.ToString();
             TextBoxTemplateName.Text = template.Name;
-            TextBoxTemplateType.Text = template.Type;
+            DropDownListTemplateType.SelectedValue = template.Type;
             TextBoxTemplateContent.Text = template.TemplateContent;
 
             MultiView1.ActiveViewIndex = 3;
+        }
+
+        protected void LinkButtonCancel_Click(object sender, EventArgs e)
+        {
+            MultiView1.ActiveViewIndex = 0;
         }
 
         protected void ButtonSaveTemplate_Click(object sender, EventArgs e)
@@ -220,13 +225,27 @@ namespace OneMainWeb.adm
             }
 
             template.Name = TextBoxTemplateName.Text;
-            template.Type = TextBoxTemplateType.Text;
+            template.Type = DropDownListTemplateType.SelectedValue;
             template.TemplateContent = TextBoxTemplateContent.Text;
 
             websiteB.ChangeTemplate(template);
 
             MultiView1.ActiveViewIndex = 0;
             Notifier1.Title = "Saved.";
+        }
+
+        protected void GridViewTemplates_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var cmdEdit = e.Row.FindControl("cmdEdit") as LinkButton;
+                var template = e.Row.DataItem as BOTemplate;
+
+                if (cmdEdit != null && template != null)
+                {
+                    cmdEdit.Visible = (template.Type == "3" || template.Type == "ContentTemplate");
+                }
+            }
         }
 
         protected void GridViewTemplates_RowDeleting(object sender, GridViewDeleteEventArgs e)
