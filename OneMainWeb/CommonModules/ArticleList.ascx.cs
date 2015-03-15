@@ -142,20 +142,33 @@ namespace OneMainWeb.CommonModules
                     LiteralTeaserImage.Text = ImageTemplate.RenderHtml("", article.Images[0].FullUri, "");
                 }
 
-                H1Title.Visible = ShowTitle;
-                H2SubTitle.Visible = ShowSubTitle;
-                Header1.Visible = ShowTitle || ShowSubTitle;
-                SectionTeaser.Visible = ShowTeaser;
-                SectionHtml.Visible = ShowHtml;
-                DivReadon.Visible = ShowMore;
-                Time1.Visible = ShowDate;
-                Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
-                Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
-                Time1.InnerHtml = article.DisplayDate.ToString(DateFormatString);
-                Time2.Visible = ShowDateBelowTitle;
-                Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
-                Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
-                Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
+                if (H1Title != null)
+                    H1Title.Visible = ShowTitle;
+
+                if (H2SubTitle != null)
+                    H2SubTitle.Visible = ShowSubTitle;
+                if (Header1 != null)
+                    Header1.Visible = ShowTitle || ShowSubTitle;
+                if (SectionTeaser != null)
+                    SectionTeaser.Visible = ShowTeaser;
+                if (SectionHtml != null)
+                    SectionHtml.Visible = ShowHtml;
+                if (DivReadon != null)
+                    DivReadon.Visible = ShowMore;
+                if (Time1 != null)
+                {
+                    Time1.Visible = ShowDate;
+                    Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                    Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                    Time1.InnerHtml = article.DisplayDate.ToString(DateFormatString);
+                }
+                if (Time2 != null)
+                {
+                    Time2.Visible = ShowDateBelowTitle;
+                    Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                    Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                    Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
+                }
                
                 HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
             }
