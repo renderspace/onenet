@@ -260,11 +260,9 @@ BEGIN
 				a.display_date, a.marked_for_deletion, a.changed, '
 
 	IF (@publishFlag = 0 )
-		SET @sql = @sql + ' ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, '
+		SET @sql = @sql + ' ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished '
 	ELSE
-		SET @sql = @sql + ' 1, '
-
-	SELECT @sql = @sql + ' ( select count(ct.id) FROM [dbo].[comments] ct WHERE ct.content_fk_id=a.content_fk_id AND ct.publish=a.publish) commentCount '
+		SET @sql = @sql + ' 1 '
 
 	SELECT @sql = @sql + ', newid() random ';
 	
@@ -328,7 +326,6 @@ BEGIN
 		marked_for_deletion bit, 
 		changed bit, 
 		countPublished int,		
-		commentCount int,	
 		random nvarchar(255),		
 		ID int IDENTITY PRIMARY KEY,
 	)

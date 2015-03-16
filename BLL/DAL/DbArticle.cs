@@ -89,8 +89,7 @@ namespace One.Net.BLL.DAL
             if (publishFlag)
                 sql += " 1, ";
             else
-                sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, ";
-            sql += @" ( select count(ct.id) FROM [dbo].[comments] ct WHERE ct.content_fk_id=a.content_fk_id AND ct.publish=a.publish) commentCount ";
+                sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
             sql += @"   FROM [dbo].[article] a
                         INNER JOIN [dbo].[content] c ON c.id = a.content_fk_id ";
             sql += showUntranslated ? "LEFT" : "INNER";
@@ -210,7 +209,6 @@ WHERE a2.publish = @publishFlag ";
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
             article.IsNew = reader.GetInt32(16) == 0;
-            article.CommentCount = (int)reader["commentCount"];
         }
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
