@@ -1,5 +1,4 @@
-
-body {font-size: 13px; margin: 0; padding: 0;}
+body {font-size: 13px; margin: 0; padding: 0; background: #f0eff5;}
 ul:focus, .nav-sidebar li a:focus {outline:0px !important; -webkit-appearance:none;}
 h1, .h1, h2, .h2, h3, .h3 {margin-top: 0!important;}
 .radio, .checkbox {padding-left: 0!important;}
@@ -27,12 +26,11 @@ input[type="number"]  {width: 70px;}
 
 .right.buttons {float: right;}
 
-
-
-.navbar-brand {font-size: 10px!important;}
+.navbar {margin-bottom: 0;}
+.navbar-brand {font-size: 10px!important; padding: 8px 15px 0;}
 .navbar-brand img {margin-right: 10px;}
-.nav>li>a {float: left; padding: 19px 15px!important;}
-.nav>li:nth-child(2)>a {padding: 15px 15px!important;}
+.nav>li>a {float: left; padding: 15px 15px 14px!important;}
+.nav>li:nth-child(2)>a {padding: 10px 15px 9px!important;}
 .nav>li:nth-child(4)>a, .nav>li:nth-child(4)>a:hover {background-color: #424040!important;}
 
 .head {width: 100%; background-color: #1f1f1f; padding: 5px; color: #FFF; }
@@ -57,7 +55,7 @@ summary.nolink {text-decoration: none;}
 .lastChanged .infolabel {float: left;}
 .lastChanged .info {float: right;}
 
-.module, .mainEditor, .centerStructure {display: block; border-top: 4px #9e9e98 solid; float: left; margin: 10px 0 10px 0; padding: 20px; background-color: #E3E2DA;}
+.module, .mainEditor, .centerStructure {display: block; border: 1px #dddddd solid; float: left; margin: 10px 0 10px 0; padding: 20px; background-color: #FFF; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 .tall {float: left; width: 100%;}
 .tall input[type='text'] {min-width: 190px; width: 190px;}
 
@@ -98,7 +96,7 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 
 .treeview ul li {position:relative;padding-left:14px;float:left;}
 .formStructure ul li{position:relative;padding-bottom:5px;padding-top:5px;float:left;}
-.treeview ul li a {text-decoration:none;display:block;float:left;min-height:13px;min-width:20px;}
+.treeview ul li a {text-decoration:none;display:block;float:left;min-height:13px;min-width:20px;color: #333;}
 
 .treeview ul li a {width:254px;}
 .treeview ul li li a {width:240px;}
@@ -111,13 +109,13 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .treeview ul li span.pd,
 .treeview ul li span.ch,
 .treeview ul li span.pub {background-position: 1px 4px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
-.treeview ul li span.pd {background-image:url(/Res/brisanje.gif);}
-.treeview ul li span.ch {background-image:url(/Res/objava.gif);}
-.treeview ul li span.pub {background-image:url(/Res/objavljeno.gif);}
-.treeview ul li span.colapse {background-image:url(/Res/colapse.gif);}
-.treeview ul li span.expand {background-image:url(/Res/expand.gif);}
+.treeview ul li span.pd {background-image:url(/Res/brisanje.png);}
+.treeview ul li span.ch {background-image:url(/Res/objava.png);}
+.treeview ul li span.pub {background-image:url(/Res/objavljeno.png);}
+.treeview ul li span.colapse {background-image:url(/Res/colapse.png);}
+.treeview ul li span.expand {background-image:url(/Res/expand.png);}
 .treeview ul li span.colapse,
-.treeview ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
+.treeview ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -3px 3px;cursor:pointer;}
 .treeview ul li.sel > a {background-color:#9E9E98; color: #FFF;}
 .treeview ul li.sel li  a {background:none;}
 
@@ -146,11 +144,11 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .treeHolder ul li span.pd,
 .treeHolder ul li span.ch,
 .treeHolder ul li span.pub {background-position: 1px 4px;background-repeat: no-repeat;display:block;float:left;padding: 4px 0 4px 20px;cursor:pointer;}
-.treeHolder ul li span.pd {background-image:url(/Res/brisanje.gif);}
-.treeHolder ul li span.ch {background-image:url(/Res/objava.gif);}
-.treeHolder ul li span.pub {background-image:url(/Res/objavljeno.gif);}
-.treeHolder ul li span.colapse {background-image:url(/Res/colapse.gif);}
-.treeHolder ul li span.expand {background-image:url(/Res/expand.gif);}
+.treeHolder ul li span.pd {background-image:url(/Res/brisanje.png);}
+.treeHolder ul li span.ch {background-image:url(/Res/objava.png);}
+.treeHolder ul li span.pub {background-image:url(/Res/objavljeno.png);}
+.treeHolder ul li span.colapse {background-image:url(/Res/colapse.png);}
+.treeHolder ul li span.expand {background-image:url(/Res/expand.png);}
 .treeHolder ul li span.colapse,
 .treeHolder ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
 .treeHolder ul li.sel > a {background-color:#9E9E98; color: #FFF;}
@@ -166,13 +164,15 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .DynamicEditor label {text-align: left; width: 150px;}
 .DynamicEditor .save {clear: both;}
 /**/
-.nav-sidebar, .nav-sidebar ul {margin: 0 20px; padding: 0; width: 100%!important;}
-.nav-sidebar li {float: left; width: 100%; list-style: none;}
-.nav-sidebar li a {float: left; width: 100%; padding: 2px 10px;}
-.nav-sidebar li a.selected {font-weight: bold; background: #EEEEEE; color: #333;}
-.nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 3px 20px; border-bottom: 1px #ccc solid;}
-.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 10px 0 3px 0; padding: 2px 0; color: #000; border-bottom: 1px #ccc solid;}
-.nav-sidebar li a.nolink:hover {text-decoration: none; cursor: default;}
+.nav-sidebar, .nav-sidebar ul {margin: 0; padding: 0; width: 100%!important; background: url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li {float: left; width: 100%; list-style: none; background: url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li a {float: left; width: 100%; margin: 0; padding: 10px 20px; color: #FFF; background: #3a4e61 url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li a:hover {background: #8cc051; color: #FFF; text-decoration: none;}
+.nav-sidebar li a.selected {font-weight: bold; background: #8cc051; color: #FFF;}
+.nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: url('/Res/down.png') no-repeat right 20px center;}
+.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: url('/Res/down.png') no-repeat right 20px center;}
+.nav-sidebar li a.nolink:hover {text-decoration: none; background: #8cc051 url('/Res/down.png') no-repeat right 20px center; color: #FFF;}
+
 
 /**/
 .pager span {display: inline-block; margin: 4px;}
@@ -444,9 +444,8 @@ div.calendar
 .ck .cke_dialog_ui_vbox
 .ck .cke_dialog_ui_text {float:none;}
 
-@media (max-width: 1650px) {
-.tall input[type="text"], select {width: 100%; min-width: 100%; margin-bottom: 6px;}
-}
+.tall input[type="text"], select {width: 100%; min-width: 100%; margin-top: 3px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; box-shadow: none; border: 1px solid #ccc; -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);}
+.main select {padding: 7px; width: 80%; min-width: 80%;}
 
 @media (max-width: 1423px) {
 .input.uri span {width: 121px; word-wrap: break-word;}
@@ -466,11 +465,12 @@ div.calendar
 
 .adminSection {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}
 
-.moduleInstance {border-bottom: 1px #ccc solid; background: #EEEEEE; padding: 15px; margin-top: 15px; width: 100%; float: left;}
+.moduleInstance {border: 1px #dddddd solid; background: #f0f0f0; padding: 15px; margin-top: 15px; width: 100%; float: left; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 .moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
 
-details {background: #CCC; padding: 1px 10px 10px 10px; margin: 10px 0; }
+details {background: #e6e6e6; border: 1px #dddddd solid; padding: 1px 10px 10px 10px; margin: 10px 0; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 details input[type='submit'] {float: right;}
+details summary {text-decoration: none;}
 details .select {margin: 10px 0 0 0;}
 
 .nav-sidebar li.sel a { color: white;  }
@@ -500,5 +500,8 @@ details .select {margin: 10px 0 0 0;}
 
 .cke_content-html {
     z-index: 1000;
-
 }
+
+.btn-success {background: #8cc051; border-color: #8cc051; border-bottom: 4px #76a83e solid;}
+.btn-danger {background: #e95e4f; border-color: #e95e4f; border-bottom: 4px #d34739 solid;}
+.btn-info {background: #5cace7; border-color: #5cace7; border-bottom: 4px #4592cb solid;}
