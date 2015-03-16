@@ -21,7 +21,7 @@ input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!im
 /* input[type="submit"] {color: #428bca;  font-weight: bold!important; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin: 0 0 0 7px; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}  */
 input[type="number"]  {width: 70px;}
 
-.alert h2 {font-size: 16px; font-weight: bold;}
+.alert h2 {font-size: 16px; font-weight: bold; margin: 0; padding: 0;}
 .alert p {font-size: 13px;}
 
 .right.buttons {float: right;}
@@ -166,13 +166,14 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 /**/
 .nav-sidebar, .nav-sidebar ul {margin: 0; padding: 0; width: 100%!important; background: url('/Res/ltop.gif') repeat-x left top;}
 .nav-sidebar li {float: left; width: 100%; list-style: none; background: url('/Res/ltop.gif') repeat-x left top;}
-.nav-sidebar li a {float: left; width: 100%; margin: 0; padding: 10px 20px; color: #FFF; background: #3a4e61 url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li a {float: left; width: 100%; margin: 0; padding: 5px 20px; color: #FFF; background: #3a4e61 url('/Res/ltop.gif') repeat-x left top;}
 .nav-sidebar li a:hover {background: #8cc051; color: #FFF; text-decoration: none;}
 .nav-sidebar li a.selected {font-weight: bold; background: #8cc051; color: #FFF;}
-.nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: url('/Res/down.png') no-repeat right 20px center;}
-.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: url('/Res/down.png') no-repeat right 20px center;}
-.nav-sidebar li a.nolink:hover {text-decoration: none; background: #8cc051 url('/Res/down.png') no-repeat right 20px center; color: #FFF;}
+.nav-sidebar span {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: #2e3d4c url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li a.nolink {float: left; width: 100%; font-weight: bold; margin: 0; padding: 10px 20px; color: #FFF; background: #2e3d4c url('/Res/ltop.gif') repeat-x left top;}
+.nav-sidebar li a.nolink:hover {text-decoration: none; background: #8cc051; color: #FFF;}
 
+.modal-dialog {z-index: 10000000;}
 
 /**/
 .pager span {display: inline-block; margin: 4px;}
@@ -463,7 +464,7 @@ div.calendar
 
 .full {width: 100%; float: left;}
 
-.adminSection {display: block;width: 100%;border-top: 4px #9e9e98 solid;float: left;margin: 10px 0;padding: 20px;background-color: #E3E2DA;}
+.adminSection {display: block; border: 1px #dddddd solid; width: 100%;padding: 20px; background-color: #FFF; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;float: left;margin: 10px 0;}
 
 .moduleInstance {border: 1px #dddddd solid; background: #f0f0f0; padding: 15px; margin-top: 15px; width: 100%; float: left; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 .moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
@@ -504,4 +505,4 @@ details .select {margin: 10px 0 0 0;}
 
 .btn-success {background: #8cc051; border-color: #8cc051; border-bottom: 4px #76a83e solid;}
 .btn-danger {background: #e95e4f; border-color: #e95e4f; border-bottom: 4px #d34739 solid;}
-.btn-info {background: #5cace7; border-color: #5cace7; border-bottom: 4px #4592cb solid;}
+.btn-info, .btn-primary {background: #5cace7; border-color: #5cace7; border-bottom: 4px #4592cb solid;}
