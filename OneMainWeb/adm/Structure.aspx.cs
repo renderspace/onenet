@@ -197,18 +197,18 @@ namespace OneMainWeb.adm
                 ImagePageStatus.Attributes.Add("data-placement", "right");
                 if (SelectedPage.MarkedForDeletion)
                 {
-                    ImagePageStatus.ImageUrl = "/Res/brisanje.gif";
+                    ImagePageStatus.ImageUrl = "/Res/brisanje.png";
                     ImagePageStatus.Attributes.Add("title", "Marked for deletion");
                 }
                 else if (SelectedPage.IsChanged)
                 {
-                    ImagePageStatus.ImageUrl = "/Res/objava.gif";
+                    ImagePageStatus.ImageUrl = "/Res/objava.png";
                     ImagePageStatus.Attributes.Add("title", "Changes waiting for publish");
                 }
                 else
                 {
                     ImagePageStatus.Attributes.Add("title", "Published");
-                    ImagePageStatus.ImageUrl = "/Res/objavljeno.gif";
+                    ImagePageStatus.ImageUrl = "/Res/objavljeno.png";
                 }
 
                 LabelUriPart.Text = SelectedPage.ParentURI;

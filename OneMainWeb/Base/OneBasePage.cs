@@ -169,17 +169,17 @@ namespace OneMainWeb
             {
                 if (bool.Parse(objMarkedForDeletion.ToString()))
                 {
-                    strReturn = "/Res/brisanje.gif";
+                    strReturn = "/Res/brisanje.png";
                     title = "Marked for deletion";
                 }
                 else if (bool.Parse(objIsChanged.ToString()))
                 {
-                    strReturn = "/Res/objava.gif";
+                    strReturn = "/Res/objava.png";
                     title = "Changes waiting for publish";
                 }
                 else
                 {
-                    strReturn = "/Res/objavljeno.gif";
+                    strReturn = "/Res/objavljeno.png";
                     title = "Published";
                 }
             }
