@@ -511,6 +511,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\images\drag.png" />
+    <Content Include="adm\js\bootstrap-confirmation.js" />
     <Content Include="adm\js\bootstrap-treeview.js" />
     <Content Include="adm\js\bootstrap.js" />
     <Content Include="adm\codemirror\codemirror.js" />
