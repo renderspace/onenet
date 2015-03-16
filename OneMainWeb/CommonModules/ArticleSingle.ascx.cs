@@ -33,28 +33,59 @@ namespace OneMainWeb.CommonModules
 
             if (article != null)
             {
-
                 MultiView1.ActiveViewIndex = 1;
 
-                Time1.Visible = ShowDate;
-                Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
-                Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
-                Time1.InnerHtml = article.DisplayDate.ToString(DateFormatString);
-                Time2.Visible = ShowDateBelowTitle;
-                Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
-                Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
-                Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
-                var id = article.Id.Value;
-                HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
+                if (Time1 != null)
+                {
+                    Time1.Visible = ShowDate;
+                    Time1.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                    Time1.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                    Time1.InnerHtml = article.DisplayDate.ToString(DateFormatString);
+                }
+                if (Time2 != null)
+                {
+                    Time2.Visible = ShowDateBelowTitle;
+                    Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
+                    Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
+                    Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
+                    Time2.Visible = false;
+                }
 
-                Title = H1Title.InnerHtml = article.Title;
-                H2SubTitle.Visible = ShowSubTitle;
-                H2SubTitle.InnerHtml = article.SubTitle;
-                Time2.Visible = false;
-                SectionTeaser.Visible = ShowTeaser;
-                Description = SectionTeaser.InnerHtml = article.Teaser;
-                SectionHtml.InnerHtml = article.Html;
-                DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
+                var id = article.Id.Value;
+                if (HtmlArticle != null)
+                {
+                    HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
+                }
+                
+                Title = article.Title;
+
+                if (H1Title != null)
+                {
+                    H1Title.InnerHtml = article.Title;
+                }
+                if (H2SubTitle != null)
+                {
+                    H2SubTitle.Visible = ShowSubTitle;
+                    H2SubTitle.InnerHtml = article.SubTitle;
+                }
+
+                if (SectionTeaser != null)
+                {
+                    SectionTeaser.Visible = ShowTeaser;
+                    SectionTeaser.InnerHtml = article.Teaser;
+                }
+
+                Description = article.Teaser;
+
+                if (SectionHtml != null)
+                {
+                    SectionHtml.InnerHtml = article.Html;
+                }
+
+                if (DivReadon != null)
+                {
+                    DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
+                }
             }
             else
             {
