@@ -24,12 +24,6 @@ namespace One.Net.BLL
             set { id = value; }
         }
 
-        public int CommentCount
-        {
-            get;
-            set;
-        }
-
         public List<BORegular> Regulars
         {
             get { return regulars; }
