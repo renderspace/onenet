@@ -119,17 +119,20 @@
         
 <one:Notifier runat="server" ID="Notifier1" />
     <div class="adminSection">
-		
+		<div class="row">
 		<div class="col-md-4 validationGroup">
             <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
             <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
             <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
 		</div>
-		<asp:Panel ID="PanelUpload" runat="server" CssClass="col-md-8" ClientIDMode="static">
+		<div class="col-md-8">
+		<asp:Panel ID="PanelUpload" runat="server" ClientIDMode="static">
            <div class="fallback">
                 <input name="file" type="file" multiple />
             </div>
 		</asp:Panel>
+		</div>
+		</div>
     </div>
 
     <div class="table table-striped files" id="previews">
@@ -161,21 +164,28 @@
  
 
 
-<div class="col-md-3">
-    <section class="module tall">
+<div class="col-md-3 s1a">
+    <section class="module tall msideb">
+		<h2>Files structure</h2>
+		<div class="msideb-inn">
         <header>
             <asp:Panel runat="server" ID="PanelAddFolder" CssClass="addStuff">
-                <asp:TextBox runat="server" ID="TextBoxFolder" placeholder="Add folder"></asp:TextBox>
-                <asp:LinkButton ID="ButtonAddFolder" runat="server"  ValidationGroup="AddFolder" OnClick="TreeNodeAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Add"  CssClass="btn btn-success" />
-            </asp:Panel>
+				<div class="form-inline fi-top">
+                <div class="form-group">
+					<asp:TextBox runat="server" ID="TextBoxFolder" placeholder="Add folder"></asp:TextBox>
+				</div>
+					<asp:LinkButton ID="ButtonAddFolder" runat="server"  ValidationGroup="AddFolder" OnClick="TreeNodeAdd_Click" text="<span class='glyphicon glyphicon-plus'></span> Add"  CssClass="btn btn-success" />
+				</div>
+		   </asp:Panel>
         </header>
         <div id="tree"></div>
         <asp:HiddenField runat="server" ID="HiddenSelectedFolderId" ClientIDMode="Static" />
         <asp:HiddenField runat="server" ID="HiddenFieldLanguageId" ClientIDMode="Static" />
+		</div>
     </section>
 </div>
 
-<div class="col-md-9">
+<div class="col-md-9 s2a">
     <div class="mainEditor ce-it-2">
 			<div class="col-sm-3">
 				<span class="btn btn-success fileinput-button">
