@@ -187,13 +187,13 @@
 		            <ItemTemplate>
                         <div class="moduleInstance">
                             <h4 class="row">
-                                <asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info btn-lg" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
+                                <asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info btn-xs" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
                                     Text='<span class="glyphicon glyphicon-pencil"></span> Edit'	/>
 
-                                <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info btn-xs">
+                                <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
-                                <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonContentTemplateModalEdit"  runat="server" data-toggle="modal" data-target="#content-template-modal" CssClass="btn btn-info btn-xs">
+                                <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonContentTemplateModalEdit"  runat="server" data-toggle="modal" data-target="#content-template-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
                                 <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
