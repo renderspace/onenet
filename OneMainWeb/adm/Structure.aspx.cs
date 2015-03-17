@@ -301,8 +301,6 @@ namespace OneMainWeb.adm
             
             // for position and inheritance settings
             Control updateButton = e.Item.FindControl("cmdUpdateDetails");
-            // for textcontentedit
-            var ButtonEdit = e.Item.FindControl("ButtonEdit") as LinkButton;
             var ButtonModalEdit = e.Item.FindControl("ButtonModalEdit") as WebControl;
             var ButtonContentTemplateModalEdit = e.Item.FindControl("ButtonContentTemplateModalEdit") as WebControl;
             Control deleteButton = e.Item.FindControl("cmdDeleteInstance");
@@ -348,7 +346,7 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.PendingDelete;
                 undeleteButton.Visible = moduleInstance.PendingDelete;
-                ButtonModalEdit.Visible = ButtonEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonModalEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
                 ButtonContentTemplateModalEdit.Visible = (moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
 
                 BOInternalContent textContentModel = null;
@@ -508,19 +506,6 @@ namespace OneMainWeb.adm
                                     webSiteB.SwapModuleInstances(moduleInstance, adjacentInstance);
                                     TreeViewPages_DataBind();
                                 }
-                            }
-                            break;
-                        }
-                    case "COMMAND_EDIT_INSTANCE":
-                        {
-                            if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
-                            {
-                                string redirectTo = Request.ApplicationPath + "adm/ContentEdit.aspx?instanceId=" + moduleInstanceID;
-                                Response.Redirect(redirectTo);
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException("this button shouldn't be visible");
                             }
                             break;
                         }

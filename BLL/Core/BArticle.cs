@@ -53,7 +53,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public BOArticle GetArticle(int id, bool showUntranslated)
         {
-            return GetArticle(id, publishFlag, showUntranslated);
+            return GetArticle(id, PublishFlag, showUntranslated);
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace One.Net.BLL
         {
             PagedList<BOArticle> articles = null;
             if (string.IsNullOrEmpty(titleSearch))
-                articles = articleDB.ListArticles(publishFlag, from, to, regularIds, state, LanguageId, false);
+                articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, false);
             else
             {
                 var tempRegularList = StringTool.SplitStringToIntegers(regularIds);
-                articles = articleDB.ListFilteredArticles(publishFlag, from, to, state, LanguageId, false, titleSearch, tempRegularList);
+                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, false, titleSearch, tempRegularList);
             }
 
             foreach (BOArticle article in articles)
@@ -180,7 +180,7 @@ namespace One.Net.BLL
             PagedList<BOArticle> articles = null;
             string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + regularIds + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
-            bool useCache = !showUntranslated && publishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
+            bool useCache = !showUntranslated && PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
             
             if (useCache)
                 articles = OCache.Get(LIST_CACHE_ID) as PagedList<BOArticle>;
@@ -188,11 +188,11 @@ namespace One.Net.BLL
             if (articles == null)
             {
                 if (string.IsNullOrEmpty(titleSearch))
-                    articles = articleDB.ListArticles(publishFlag, from, to, regularIds, state, LanguageId, showUntranslated);
+                    articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, showUntranslated);
                 else
                 {
                     var tempRegularList = StringTool.SplitStringToIntegers(regularIds);
-                    articles = articleDB.ListFilteredArticles(publishFlag, from, to, state, LanguageId, showUntranslated, titleSearch, tempRegularList);
+                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, showUntranslated, titleSearch, tempRegularList);
                 }
 
                 foreach (BOArticle article in articles)
@@ -219,16 +219,16 @@ namespace One.Net.BLL
         public List<BOArticleMonth> ListArticleMonths(string regularIds, bool showArticleCount)
         {
             List<BOArticleMonth> dates = null;
-            string LIST_CACHE_ID = "LAD_" + LanguageId + regularIds + publishFlag + showArticleCount;
+            string LIST_CACHE_ID = "LAD_" + LanguageId + regularIds + PublishFlag + showArticleCount;
 
-            if (publishFlag)
+            if (PublishFlag)
                 dates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonth>;
 
             if (dates == null)
             {
-                dates = articleDB.ListArticleMonths(publishFlag, StringTool.SplitStringToIntegers(regularIds), showArticleCount, LanguageId);
-                
-                if (publishFlag)
+                dates = articleDB.ListArticleMonths(PublishFlag, StringTool.SplitStringToIntegers(regularIds), showArticleCount, LanguageId);
+
+                if (PublishFlag)
                 {
                     lock (cacheLockingArticleDateListGet)
                     {
@@ -311,7 +311,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         private BORegular GetUnCachedRegular(int id)
         {
-            BORegular regular = articleDB.GetRegular(id, !publishFlag);
+            BORegular regular = articleDB.GetRegular(id, !PublishFlag);
 
             if (regular != null && regular.MissingTranslation && regular.ContentId.HasValue)
                 regular.Title = BInternalContent.GetContentTitleInAnyLanguage(regular.ContentId.Value);

@@ -15,7 +15,7 @@ namespace One.Net.BLL
 
         protected virtual int LanguageId { get { return Thread.CurrentThread.CurrentCulture.LCID; } }
 
-        protected bool publishFlag = false;
+        private bool publishFlag = false;
 
         public bool PublishFlag
         {

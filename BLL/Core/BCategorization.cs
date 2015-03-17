@@ -145,7 +145,7 @@ namespace One.Net.BLL
         {
             List<BOCategory> list = null;
             string LIST_CACHE_ID = CACHE_LANG_PREFIX + "_LC_" + categoryType;
-            bool useCache = !showUntranslated && publishFlag;
+            bool useCache = !showUntranslated && PublishFlag;
             
             if (useCache)
                 list = OCache.Get(LIST_CACHE_ID) as List<BOCategory>;
