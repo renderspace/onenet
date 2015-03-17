@@ -13,14 +13,18 @@
     <one:ContentTemplateModal runat="server" ID="ContentTemplateModal" Title="Content Template edit" />
     <uc1:Notifier ID="Notifier1" runat="server" />
     
-        <div class="col-md-4">
-            <section class="module tall">
+        <div class="col-md-3 s1a">
+            <section class="module tall msideb">
+				<h2>Page structure</h2>
+				<div class="msideb-inn">
                 <header><h3 class="tabs_involved"><asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn publishAll" Text="Publish all changes" OnClick="ButtonPublishAll_Click" ClientIDMode="Static" /></h3>
                     <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
+						<div class="form-inline fi-top">
                         <div class="form-group">
                             <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
-                            <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
-                        </div>
+						</div>
+						<asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
+						</div>
                     </asp:Panel>
                     <asp:Panel runat="server" ID="PanelMove">
                         <span class="pull-left movePage">Move current page:</span>
@@ -37,18 +41,31 @@
                 <div class="treeview">
 	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
                 </div>
+				</div>
             </section>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9 s2a">
             <div class="page-and-module-settings">
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
-                <section class="module page-settings">
+                <section class="module page-settings msideb">
+					<h2>
+						<span class="pull-left">Basic information</span>
+						
+						<span class="pull-right lc">
+							<asp:Image runat="server" ID="ImagePageStatus" Visible="false" />
+							<uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
+						</span>
+						
+						<span class="clearfix"></span>
+						
+					</h2>
+					<div class="msideb-inn">
 			        <div class="pageproperties form-horizontal validationGroup">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Preview</label>
                             <div class="col-sm-8">
-                                <asp:HyperLink runat="server" ID="HyperLinkPreview"></asp:HyperLink>
+                                <span class="stext"><asp:HyperLink runat="server" ID="HyperLinkPreview"></asp:HyperLink></span>
                             </div>
                         </div>
                          <div class="form-group">
@@ -72,7 +89,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">URL</label>
                            <div class="col-sm-2">
-                                <asp:Label runat="server" ID="LabelUriPart"></asp:Label>
+                                <span class="stext"><asp:Label runat="server" ID="LabelUriPart"></asp:Label></span>
                             </div>
                            <div class="col-sm-6">
                                 <asp:TextBox runat="server" ID="TextBoxUri" ValidationGroup="PageSett" CssClass="form-control"></asp:TextBox>
@@ -83,7 +100,7 @@
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Menu group</label>
                             <div class="col-sm-2">
-                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="3" ValidationGroup="PageSett" type="number" CssClass="form-control required digits"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control required digits"></asp:TextBox>
                             </div>
                              <div class="col-sm-6">
                                 <p class="help-block">Signifies in which navigation menu will this page be displayed.<br /> Menu numbers are defined in template.</p>
@@ -129,23 +146,26 @@
                         <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="OneSettingsPageSettings" runat="server" Mode="Page" Text="Page settings" DisplayCommands="false"  />	                        
                     
 				        <div class="form-group">
-                            <div class="col-sm-4">
-						        <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
-                                <asp:Image runat="server" ID="ImagePageStatus" Visible="false" CssClass="right" />
-                            </div>
 
-                            <div class="col-sm-8">
-                                
+                            <div class="col-sm-12">
+                                <span class="pull-right">
 					            <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
 			                    <asp:LinkButton ID="ButtonUnPublish" CssClass="right btn btn-info" runat="server" OnClick="ButtonUnPublish_Click" Text="Unpublish" />
                                 <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save draft" onclick="ButtonSave_Click" ValidationGroup="PageSett" />
+								</span>
                             </div>
 				        </div>
                     </div>
+					</div>
                 </section>
-                <section class="module module-settings">
+                <section class="module module-settings msideb">
+				
+				<h2>Page contents</h2>
+				
+				<div class="msideb-inn">
+				
                 <div class="with_buttons">
                     <asp:Panel ID="PanelAddInstance" runat="server" CssClass="addStuff">
 				        <asp:dropdownlist id="ddlModuleTypes" Runat="server" />
@@ -166,7 +186,7 @@
                     </FooterTemplate>
 		            <ItemTemplate>
                         <div class="moduleInstance">
-                            <h4>
+                            <h4 class="row">
                                 <asp:LinkButton	ID="ButtonEdit" Runat="server"	CssClass="btn btn-info btn-lg" CommandName="COMMAND_EDIT_INSTANCE"	CommandArgument='<%# Eval("Id") %>' 
                                     Text='<span class="glyphicon glyphicon-pencil"></span> Edit'	/>
 
@@ -190,45 +210,47 @@
                                     </asp:PlaceHolder>
 								</span>
                             </h4>
-
-                            <div class="col-sm-4">
-                                <details runat="server" id="HtmlDetails"  class="form-horizontal">
-                                    <summary>
-                                        <asp:Literal ID="LiteralInstanceSummary" Runat="server" />
-                                    </summary>
-                                        <asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
-                                            <div class="form-group">
-							                    <label class="col-sm-3 control-label">Placeholder</label>
-                                                <div class="col-sm-9">
-							                        <asp:DropDownList runat="server" ID="ddlPlaceHolder" CssClass="form-control" />
-                                                </div>
-							                </div>
-							                <div class="form-group">
-								                <label class="col-sm-3 control-label">Inherited from depth</label>
-                                                <div class="col-sm-9">
-								                    <asp:DropDownList runat="server" ID="ddlPersistentFromDGrid" CssClass="form-control" />
-                                                </div>
-							                </div>
-                                            <div class="form-group">
-                                               <label class="col-sm-3 control-label">Inherited to</label>
-                                                <div class="col-sm-9">
-                                                    <asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	CssClass="form-control" />
-                                                </div>
-							                </div>
-                                            <div class="form-group">
-                                                 <div class="col-sm-offset-3 col-sm-9">
-                                                    <asp:LinkButton ID="cmdUpdateDetails" Runat="server" CssClass="btn btn-success" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='Save' ValidationGroup="MI"  />
-                                                 </div>
-                                            </div>
-                                        </asp:PlaceHolder>
-                                </details>
-                            </div>
-                            <div class="col-sm-8">
-                                <one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
-                            </div>
+							<div class="row">
+								<div class="col-sm-4">
+									<details runat="server" id="HtmlDetails"  class="form-horizontal">
+										<summary>
+											<asp:Literal ID="LiteralInstanceSummary" Runat="server" />
+										</summary>
+											<asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
+												<div class="form-group">
+													<div class="col-sm-12">
+														<label class="control-label text-left">Placeholder</label>
+														<asp:DropDownList runat="server" ID="ddlPlaceHolder" CssClass="form-control" />
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-5 control-label">Inherited from depth</label>
+													<div class="col-sm-7">
+														<asp:DropDownList runat="server" ID="ddlPersistentFromDGrid" CssClass="form-control" />
+													</div>
+												</div>
+												<div class="form-group">
+												   <label class="col-sm-5 control-label">Inherited to</label>
+													<div class="col-sm-7">
+														<asp:DropDownList runat="server" ID="ddlPersistentToDGrid"	CssClass="form-control" />
+													</div>
+												</div>
+												<div class="form-group">
+													 <div class="col-sm-12 text-right">
+														<asp:LinkButton ID="cmdUpdateDetails" Runat="server" CssClass="btn btn-success" CommandName="COMMAND_SAVE_INSTANCE"	CommandArgument='<%# Eval("Id") %>' Text='Save' ValidationGroup="MI"  />
+													 </div>
+												</div>
+											</asp:PlaceHolder>
+									</details>
+								</div>
+								<div class="col-sm-8">
+									<one:onesettings OnSettingsSaved="moduleSettings_SettingsSaved" ID="moduleSettings" runat="server" Text="Module settings" DisplayCommands="true"/>
+								</div>
+							</div>
                         </div>
 		            </ItemTemplate>
 		        </asp:Repeater>
+				</div>
             </section>
             </asp:View>
              <asp:View ID="View2" runat="server">

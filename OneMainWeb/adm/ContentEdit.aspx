@@ -10,17 +10,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
     <asp:Literal runat="server" ID="LiteralScript"></asp:Literal>
-    <div class="row">
-        <div class="col-md-3">
-            <section class="module tall">
-                <header><h3 class="tabs_involved">Tree structure</h3></header>
+    <div>
+        <div class="col-md-3 s1a">
+            <section class="module tall msideb">
+                <h2>Page structure</h2>
+				<div class="msideb-inn">
                 <div id="treeHolder" runat="server" class="treeview">
                     <asp:TreeView EnableViewState="false" OnUnload="TreeView1_Unload" ID="TreeView1" runat="server" BackColor="#F3F2EF" SelectedNodeStyle-BackColor="Gray" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" OnAdaptedSelectedNodeChanged="TreeView1_SelectedNodeChanged" Width="270" ExpandDepth="3">
                     </asp:TreeView>
                 </div>
+				</div>
             </section>
         </div>
-         <div class="col-md-9">
+         <div class="col-md-9 s2a">
               <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
                 <section class="module full">
@@ -30,7 +32,9 @@
                         <asp:LinkButton CssClass="btn btn-success" ID="ButtonChangeModuleInstance" runat="server" OnClick="ButtonChangeModuleInstance_Click" ValidationGroup="MI" Text="Change module instance" />
                      </div>
                 </section>
-                    <div class="adminSection form-horizontal">
+                    <div class="adminSection form-horizontal msideb">
+						<h2>Edit</h2>
+						<div class="msideb-inn">
                         <asp:Panel runat="server" ID="PanelEditor">
                             <one:TextContentControl ID="TextContentEditor" runat="server" />
                         
@@ -45,6 +49,7 @@
 					        
 				            </div>
                         </asp:Panel>
+						</div>
                     </div>
                  </asp:View>
                   <asp:View ID="View2" runat="server">
