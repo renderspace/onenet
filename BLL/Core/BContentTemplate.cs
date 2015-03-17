@@ -25,7 +25,7 @@ namespace One.Net.BLL
     {
         public void ChangeContentTemplate(int moduleInstanceId, BOContentTemplate contentTemplate)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -108,7 +108,7 @@ namespace One.Net.BLL
 
         public BOContentTemplate GetContentTemplate(int moduleInstanceId)
         {
-            return this.GetContentTemplate(moduleInstanceId, publishFlag);
+            return this.GetContentTemplate(moduleInstanceId, PublishFlag);
         }
 
         public BOContentTemplate GetContentTemplate(int moduleInstanceId, bool publishFlag)

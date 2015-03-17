@@ -770,9 +770,11 @@
     </Compile>
     <Content Include="AdminControls\Notifier.ascx" />
     <Content Include="Global.asax" />
+    <Content Include="Res\brisanje.png" />
     <Content Include="Res\browsers\ch.png" />
     <Content Include="Res\browsers\ff.png" />
     <Content Include="Res\browsers\ie.png" />
+    <Content Include="Res\colapse.png" />
     <Content Include="Res\dark-bg-horiz.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -782,9 +784,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Res\extend-up.gif">
     </EmbeddedResource>
+    <Content Include="Res\down.png" />
+    <Content Include="Res\expand.png" />
+    <Content Include="Res\lleft.gif" />
+    <Content Include="Res\ltop.gif" />
     <Content Include="Res\objava.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Res\objava.png" />
     <Content Include="Res\objavljeno.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -805,6 +812,7 @@
     </Content>
     <Content Include="adm\Icons.ashx" />
     <Content Include="adm\images\web.config" />
+    <Content Include="Res\objavljeno.png" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
     <Content Include="Scripts\dropzone\css\basic.css" />

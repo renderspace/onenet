@@ -130,6 +130,24 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.View View1;
         
         /// <summary>
+        /// ImagePageStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
+        
+        /// <summary>
+        /// LastChangeAndHistory1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
+        
+        /// <summary>
         /// HyperLinkPreview control.
         /// </summary>
         /// <remarks>
@@ -254,24 +272,6 @@ namespace OneMainWeb.adm {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.OneSettings OneSettingsPageSettings;
-        
-        /// <summary>
-        /// LastChangeAndHistory1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
-        
-        /// <summary>
-        /// ImagePageStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image ImagePageStatus;
         
         /// <summary>
         /// ButtonDelete control.

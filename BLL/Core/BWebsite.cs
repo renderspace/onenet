@@ -30,6 +30,7 @@ namespace One.Net.BLL
         readonly BInternalContent intContentB = new BInternalContent();
         readonly BContentTemplate contentTemplateB = new BContentTemplate();
         readonly BContent contentB = new BContent();
+
         // under heavy load mulitple requests will start the reading process, then the Cache
         // inserts will invalidate cache. Better to check for existence first.
         private static readonly object cacheLockingWebSiteList = new Object();
@@ -59,13 +60,13 @@ namespace One.Net.BLL
 
         private BOPage GetPage(int pageId, int languageId)
         {
-            string cacheKey = PAGE_CACHE_ID(pageId, languageId, publishFlag);
+            string cacheKey = PAGE_CACHE_ID(pageId, languageId, PublishFlag);
             BOPage page = OCache.Get(cacheKey) as BOPage;
 
             if (page == null)
             {
                 log.Info("Page MISS [" + cacheKey + "]");
-                page = webSiteDb.GetPage(pageId, publishFlag, languageId);
+                page = webSiteDb.GetPage(pageId, PublishFlag, languageId);
                 if (page != null)
                 {
                     foreach (BOPlaceHolder placeHolder in page.PlaceHolders.Values)
@@ -142,7 +143,7 @@ namespace One.Net.BLL
 
         public List<int> ListChildrenIds(int pageId)
         {
-            return webSiteDb.ListChildrenIds(pageId, publishFlag);
+            return webSiteDb.ListChildrenIds(pageId, PublishFlag);
         }
 
         public string GetPageUri(int pageId)
@@ -263,7 +264,7 @@ namespace One.Net.BLL
 
         private void ChangePage(BOPage page, bool publishing)
         {
-            if (publishFlag)
+            if (PublishFlag)
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             if (page == null)
                 return;
@@ -307,7 +308,7 @@ namespace One.Net.BLL
 
         public void UndeletePage(int pageId)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -327,7 +328,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public void DeleteTree(int pageId, ref int markedCount, ref int deletedCount)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -388,7 +389,7 @@ namespace One.Net.BLL
 
         private bool DeletePage(int pageId)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -452,7 +453,7 @@ namespace One.Net.BLL
 
         public bool PublishPage(int pageId)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -629,7 +630,7 @@ namespace One.Net.BLL
 
         public List<BOPage> GetSiteStructure(int webSiteId)
         {
-            return webSiteDb.GetSiteStructure(webSiteId, LanguageId, publishFlag);
+            return webSiteDb.GetSiteStructure(webSiteId, LanguageId, PublishFlag);
         }
 
         public int PublishAllPages(int webSiteId)
@@ -775,6 +776,33 @@ namespace One.Net.BLL
                     instances.Add(instance);
                 }
             }
+
+            foreach (var mi in instances)
+            {
+                if (mi != null && (mi.Name == "TextContent" || mi.Name == "SpecialContent") && !mi.IsInherited)
+                {
+                    if (mi.Settings != null && mi.Settings.ContainsKey("ContentId"))
+                    {
+                        int contentId = int.Parse(mi.Settings["ContentId"].Value);
+                        if (contentId > 0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            var content = new BOInternalContent();
+                            content.Title = "";
+                            content.SubTitle = "";
+                            content.Teaser = "";
+                            content.Html = "";
+                            content.LanguageId = LanguageId;
+                            intContentB.Change(content);
+                            mi.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
+                            ChangeModuleInstance(mi);
+                        }
+                    }
+                }
+            }
             return instances;
         }
 
@@ -790,7 +818,7 @@ namespace One.Net.BLL
 
         private void DeleteModuleInstanceHelper(int moduleInstanceId, bool unDelete)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -807,12 +835,12 @@ namespace One.Net.BLL
 
         public BOModuleInstance GetModuleInstance(int moduleInstanceId)
         {
-            return this.GetModuleInstance(moduleInstanceId, publishFlag);
+            return this.GetModuleInstance(moduleInstanceId, PublishFlag);
         }
 
         public void ChangeModuleInstanceSettings(Dictionary<string, BOSetting> entries, int moduleInstanceId)
         {
-            BOModuleInstance mi = webSiteDb.GetModuleInstance(moduleInstanceId, publishFlag);
+            BOModuleInstance mi = webSiteDb.GetModuleInstance(moduleInstanceId, PublishFlag);
             mi.Settings = entries;
             ChangeModuleInstance(mi);
         }
@@ -1358,11 +1386,11 @@ namespace One.Net.BLL
             if (website == null)
                 return "";
 
-            var rootUrl = publishFlag ? website.ProductionUrl : website.PreviewUrl;
+            var rootUrl = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
             BOPage _root = null;
 
-            List<BOPage> pages = webSiteDb.ListPages(webSiteId, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
+            List<BOPage> pages = webSiteDb.ListPages(webSiteId, Thread.CurrentThread.CurrentCulture.LCID, PublishFlag);
 
             var siteMap = new Dictionary<int, BOPage>();
 

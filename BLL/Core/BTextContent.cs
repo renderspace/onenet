@@ -16,11 +16,6 @@ namespace One.Net.BLL
 
         private static readonly object cacheLockingTextContentModuleInstance = new Object();
 
-        public BTextContent()
-        {
-            bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);
-        }
-
         public BOInternalContent GetTextContent(int moduleInstanceId, bool privatePublishFlag)
         {
             BOInternalContent answer = null;
@@ -40,7 +35,7 @@ namespace One.Net.BLL
 
         public void Vote(int votedScore, int moduleInstanceID)
         {
-            contentB.Vote(votedScore, GetTextContent(moduleInstanceID, publishFlag).ContentId.Value);
+            contentB.Vote(votedScore, GetTextContent(moduleInstanceID, PublishFlag).ContentId.Value);
         }
 
         private static string INTERNAL_CONTENT_CACHE_ID(int moduleInstanceID)
@@ -51,14 +46,14 @@ namespace One.Net.BLL
 	    public BOInternalContent GetTextContent(int moduleInstanceID)
         {
 	        BOInternalContent moduleInstance = null;
-	        var useCache = publishFlag;
+            var useCache = PublishFlag;
             string cacheKey = CACHE_LANG_PREFIX + INTERNAL_CONTENT_CACHE_ID(moduleInstanceID);
             if (useCache)
                 moduleInstance = OCache.Get(cacheKey) as BOInternalContent;
 
             if (moduleInstance == null)
             {
-                moduleInstance = GetTextContent(moduleInstanceID, publishFlag);
+                moduleInstance = GetTextContent(moduleInstanceID, PublishFlag);
 
                 if (moduleInstance != null && !moduleInstance.MissingTranslation && useCache)
                 {
@@ -73,9 +68,9 @@ namespace One.Net.BLL
             return moduleInstance;
         }
 
-        public void ChangeTextContent(int moduleInstanceID, string title, string subtitle, string teaser, string htmlContent)
+        public int ChangeTextContent(int moduleInstanceID, string title, string subtitle, string teaser, string htmlContent)
         {
-            if (publishFlag)
+            if (PublishFlag)
             {
                 throw new ApplicationException("invalid configuration: admin application should be using publish=false");
             }
@@ -109,6 +104,12 @@ namespace One.Net.BLL
             }
 
             webSiteB.ChangeModuleInstance(instance);
+            int result = 0;
+            if (instance != null && instance.Settings != null)
+            {
+                int.TryParse(instance.Settings["ContentId"].Value, out result);
+            }
+            return result;
         }
     }
 }
