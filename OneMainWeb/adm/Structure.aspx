@@ -83,7 +83,7 @@
                          <div class="form-group">
                             <label class="col-sm-4 control-label">Menu group</label>
                             <div class="col-sm-2">
-                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="2" ValidationGroup="PageSett" type="number" CssClass="form-control required digits"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxMenuGroup" MaxLength="3" ValidationGroup="PageSett" type="number" CssClass="form-control required digits"></asp:TextBox>
                             </div>
                              <div class="col-sm-6">
                                 <p class="help-block">Signifies in which navigation menu will this page be displayed.<br /> Menu numbers are defined in template.</p>
