@@ -87,7 +87,7 @@ namespace One.Net.BLL.DAL
 
             string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed,  ";
             if (publishFlag)
-                sql += " 1, ";
+                sql += " 1 ";
             else
                 sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
             sql += @"   FROM [dbo].[article] a
