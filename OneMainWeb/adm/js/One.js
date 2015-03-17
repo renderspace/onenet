@@ -300,6 +300,8 @@ $('.ckeditor4').each(function (index) {
     });
 });
 
+CKEDITOR.dtd.$removeEmpty['i'] = false;
+
 $(document).ready(function () {
 
     $("#form1").validate({
