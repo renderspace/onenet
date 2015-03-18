@@ -166,7 +166,7 @@
 <div class="tabl">
 <div class="tabltr">
 <div class="s1a">
-    <section class="module tall msideb">
+    <section class="module tall msideb file-stucture-menu">
 		<h2>Files structure</h2>
 		<div class="msideb-inn">
         <header>
