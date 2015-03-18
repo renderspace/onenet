@@ -21,6 +21,8 @@ input[type="radio"], input[type="checkbox"] {float: left; margin: 4px 5px 0 0!im
 /* input[type="submit"] {color: #428bca;  font-weight: bold!important; background-color: #fff; border: 1px #ccc solid; display: inline-block; padding: 3px 12px; margin: 0 0 0 7px; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;}  */
 input[type="number"]  {width: 70px;}
 
+.s1a .tabs_involved  {border-bottom: 1px #ccc solid; margin-bottom: 10px; padding-bottom: 10px;}
+
 .s1a {padding: 0;}
 .s2a {padding-right: 0;}
 
