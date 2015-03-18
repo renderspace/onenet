@@ -110,6 +110,13 @@ function files_databind(selectedFolderId) {
 };
 
 function getContent(contentId, languageId, enableHtml, enableCk) {
+    var ckEditor = CKEDITOR.instances["content-html"];
+    if (ckEditor !== undefined) {
+        ckEditor.destroy();
+        trace("ckEditor.destroy");
+    }
+    $(".ckbox").empty();
+
     $.ajax({
         url: "/AdminService/GetContent?id=" + contentId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
@@ -120,13 +127,19 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
             $("#content-title").val(content.Title);
             $("#content-subtitle").val(content.Subtitle);
             $("#content-teaser").val(content.Teaser);
-            if (enableHtml === true) {
-                $("#content-html").html(content.Html);
-                CKEDITOR.instances["content-html"].setData(content.Html);
-                $(".ckbox").show();
+            $(".ckbox").html('<label class="col-sm-3 control-label">Html</label><div class="col-sm-9"><textarea  class="form-control" id="content-html"></textarea></div>');
+            var $contenthtml = $("#content-html");
+            $contenthtml.val(content.Html);
+            $(".ckbox").show();
+            if (enableCk === true) {
+                replaceCKEditor(document.getElementById('content-html'));
             }
             else {
-                $(".ckbox").hide();
+                var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('content-html'), {
+                        lineNumbers: true,
+                        mode: "htmlembedded"
+                });
+                $('#content-html').data('CodeMirrorInstance', myCodeMirror);
             }
             $(".j_control_content_id").val(contentId);
             $(".modal-body .col-sm-9").show();
@@ -183,7 +196,7 @@ function getContentTemplate(instanceId, templateId) {
                     if (field.Value == 'html') {
                         var editor = CKEDITOR.instances[get_field_id(field.Key)];
                         if (!editor) {
-                            CKEDITOR.replace(get_field_id(field.Key));
+                            replaceCKEditor(document.getElementById(get_field_id(field.Key)));
                         }
                     }                        
                 });
@@ -263,14 +276,17 @@ $.validator.addMethod("absrelurl", function (value, element) {
 
 $('.ckeditor4').each(function (index) {
     trace("CKEDITOR " + index + ": " + this.id);
-    CKEDITOR.replace(this.id, {
+    replaceCKEditor(this.id);
+});
+
+function replaceCKEditor(id) {
+    CKEDITOR.replace(id, {
         customConfig: '',
         entities_greek: false,
         forcePasteAsPlainText: true,
         entities: false,
         entities_latin: false,
         toolbar: [
-
     ['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
     ['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat', 'Source'],
         ],
@@ -288,7 +304,6 @@ $('.ckeditor4').each(function (index) {
         filebrowserFlashWindowHeight: '600',
 
         disableObjectResizing: true,
-        //customConfig : '/_js/custom_ckeditor.js',
         stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
         // contentsCss : '/Utils/default_editor.css',
@@ -298,9 +313,11 @@ $('.ckeditor4').each(function (index) {
         allowedContent: true, //,extraPlugins: 'youtube'
         skin: 'bootstrapck'
     });
-});
+}
 
 CKEDITOR.dtd.$removeEmpty['i'] = false;
+
+
 
 $(document).ready(function () {
 
@@ -399,8 +416,18 @@ $(document).ready(function () {
         content['Title'] = $("#content-title").val();
         content['Subtitle'] = $("#content-subtitle").val();
         content['Teaser'] = $("#content-teaser").val();
-        content['Html'] = CKEDITOR.instances['content-html'].getData();
-        trace("saving:");
+        trace("Saving content from modal window.");
+
+        var ckEditor = CKEDITOR.instances["content-html"];
+        var myCodeMirror = $('#content-html').data('CodeMirrorInstance');
+        if (ckEditor !== undefined) {
+            content['Html'] = ckEditor.getData();
+        }
+        else if (myCodeMirror !== undefined) {
+            content['Html'] = myCodeMirror.getValue();
+        }
+
+        
         trace(content['Title']);
         trace(content['Html']);
         content['LanguageId'] = $(".j_control_language_id").val();
@@ -483,7 +510,6 @@ $(document).ready(function () {
     });
 
     $('#content-template-modal').on('shown.bs.modal', function (e) {
-
         var button = e.relatedTarget;
         if (button == null) {
             return false;
@@ -504,7 +530,6 @@ $(document).ready(function () {
     });
 
     $('#text-content-modal').on('show.bs.modal', function (e) {
-
         var button = e.relatedTarget;
         if (button == null) {
             return false;
@@ -552,7 +577,7 @@ $(document).ready(function () {
             });
         } else if (contentId > 0) {
             $(".j_control_file").empty();
-            getContent(contentId, languageId, enableCk, enableCk);
+            getContent(contentId, languageId, true, enableCk);
         }
     });
     
@@ -590,8 +615,7 @@ function Validate(evt) {
             $(item).closest('.form-group').addClass('has-error');
         } else {
             $(item).closest('.form-group').removeClass('has-error');
-        }
-            
+        } 
     });
     if (!isValid)
         evt.preventDefault();

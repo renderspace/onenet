@@ -46,10 +46,6 @@
                 </div>
 
                 <div class="form-group ckbox">
-                    <label class="col-sm-3 control-label">Html</label>
-                    <div class="col-sm-9">
-                        <textarea  class="form-control ckeditor4" id="content-html"></textarea>
-                    </div>
                 </div>
                 
                 <div class="clearfix"></div>
