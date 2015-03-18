@@ -13,7 +13,9 @@
     <one:ContentTemplateModal runat="server" ID="ContentTemplateModal" Title="Content Template edit" />
     <uc1:Notifier ID="Notifier1" runat="server" />
     
-        <div class="col-md-3 s1a">
+	<div class="tabl">
+	<div class="tabltr">
+        <div class="s1a">
             <section class="module tall msideb">
 				<h2>Page structure</h2>
 				<div class="msideb-inn">
@@ -44,7 +46,7 @@
 				</div>
             </section>
         </div>
-        <div class="col-md-9 s2a">
+        <div class="s2a">
             <div class="page-and-module-settings">
         <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
@@ -267,5 +269,7 @@
              </asp:View>
         </asp:MultiView>
     </div>
-        </div>
+    </div>
+	</div>
+	</div>
 </asp:Content>
