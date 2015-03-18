@@ -7,11 +7,21 @@
     <one:Notifier runat="server" ID="Notifier1" />
     <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged">
         <asp:View ID="View1" runat="server">
+
+
             <div class="adminSection">
-                <div class="col-md-2">
+			    <div class="col-md-2">
                     <asp:LinkButton ID="cmdShowAddRedirect" runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" OnClick="cmdShowAddRedirect_Click" />
-                </div>
-            </div>  
+			    </div>
+			    <div class="col-md-6 validationGroup">
+                    <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Edit by id" CssClass="required int"></asp:TextBox>
+                    <asp:LinkButton ID="ButtonEditById" runat="server" Text="Search" OnClick="ButtonEditById_Click" CssClass="btn btn-info causesValidation"  />
+			    </div>
+			    <div class="col-md-4">
+                        <asp:LinkButton ID="LinkButtonExport" runat="server" Text="Export" CssClass="btn btn-default" OnClick="LinkButtonExport_Click" />
+			        </div>
+            </div>
+
             <asp:GridView ID="GridViewRedirects" runat="server"
                 AllowSorting="True" 
                 AutoGenerateColumns="False"

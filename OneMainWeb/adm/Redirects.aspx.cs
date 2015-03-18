@@ -171,5 +171,89 @@ namespace OneMainWeb
             }
             return result;
         }
+
+        protected void ButtonEditById_Click(object sender, EventArgs e)
+        {
+            var id = 0;
+            int.TryParse(TextBoxSearch.Text, out id);
+            CurrentItem = BRedirects.Get(id);
+
+            if (CurrentItem != null)
+            {
+                MultiView1.ActiveViewIndex = 1;
+            }
+            else
+            {
+                Notifier1.Warning = "ID not found.";
+            }
+        }
+
+        
+
+        protected void LinkButtonExport_Click(object sender, EventArgs e)
+        {
+            var redirects = BRedirects.List(new ListingState(100000, 0, SortDir.Ascending, "id"));
+
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.AddHeader("Content-Disposition", "attachment; filename=\"" + "Redirects.xls\";");
+            Response.ContentEncoding = System.Text.Encoding.GetEncoding(1250);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Charset = "";
+
+            // Prepare to export the data
+            System.IO.StringWriter strw = new System.IO.StringWriter();
+
+            // START head
+            strw.GetStringBuilder().Append(
+                @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
+                      <head>
+                            <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
+                            <meta name=ProgId content=Excel.Sheet>
+                            <meta name=Generator content=""Microsoft Excel 11"">
+                            <style>
+                                <!-- 
+
+                                .general {color:black; font-size:13.0pt; font-weight:400;}
+                                .generalsmall {color:black; font-size:9.0pt; font-weight:bold;}
+                                .question { background:#CCCCFF; color:black; font-size:13.0pt; font-weight:400; }
+                                .openAnswer { 	background:lime; color:black; font-size:13.0pt; font-weight:400; }
+                                .singleAnswer { background:#FF9900; color:black; font-size:13.0pt; font-weight:400; }
+                                .multipleChoiceAnswer { background:#FF6600; color:black; font-size:13.0pt; font-weight:400; }
+
+                                -->
+                            </style>
+                      </head>
+                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
+            // END head
+
+            // START DETAIL
+
+            strw.GetStringBuilder().Append(
+                @"<table border=""1px""><tr>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "From" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "To" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "Created" + "</th>");
+            strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + "Id" + "</th>");
+            strw.GetStringBuilder().Append("</tr>");
+
+            foreach (var r in redirects)
+            {
+                strw.GetStringBuilder().Append(@"<tr><td class=""general"" align=""center"">" + r.FromLink + @"</td>");
+                strw.GetStringBuilder().Append(@"<td class=""general"" align=""center"">" + r.ToLink + @"</td>");
+                strw.GetStringBuilder().Append(@"<td class=""general"" align=""center"">" + r.Created.ToShortDateString() + @"</td>");
+                strw.GetStringBuilder().Append(@"<td class=""general"" align=""center"">" + r.Id + @"</td></tr>");
+            }
+            strw.GetStringBuilder().Append("</table><br />");
+            // END DETAIL
+
+            // START tail
+            strw.GetStringBuilder().Append("</div></body></html>");
+            // END tail
+
+            Response.Write(strw.ToString());
+            Response.End();
+        }
     }
 }
