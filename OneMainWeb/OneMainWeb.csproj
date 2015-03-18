@@ -765,13 +765,6 @@
     <Compile Include="Utils\TestException.aspx.designer.cs">
       <DependentUpon>TestException.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Utils\Update.aspx.cs">
-      <DependentUpon>Update.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Utils\Update.aspx.designer.cs">
-      <DependentUpon>Update.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Utils\VirtualTable.ashx.cs">
       <DependentUpon>VirtualTable.ashx</DependentUpon>
     </Compile>
@@ -857,7 +850,6 @@
     <Content Include="site_specific\_js\default.html" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\TestException.aspx" />
-    <Content Include="Utils\Update.aspx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
