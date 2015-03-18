@@ -296,9 +296,19 @@ function replaceCKEditor(id) {
         entities: false,
         entities_latin: false,
         toolbar: [
-    ['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
+    { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
+	{ name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
+	{ name: 'clipboard', groups: ['clipboard'], items: ['Cut', 'Copy', 'Paste'] },
+	'/',
+	{ name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+	{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote',  '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+	{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+	{ name: 'insert', items: ['Image',  'Table', 'HorizontalRule', 'SpecialChar'] }
+        ]
+            /*[
+    ['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 'Indent', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
     ['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat', 'Source'],
-        ],
+        ]*/,
 
         filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
         filebrowserWindowWidth: '830',
