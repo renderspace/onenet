@@ -8,51 +8,44 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <one:Notifier runat="server" ID="Notifier1" />
 
-    <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="tabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
-        <asp:View ID="View1" runat="server">
-                <asp:PlaceHolder ID="plhNewsletterList" runat="server">
 		        <div class="adminSection">
                     <div class="select">
-                        <asp:Label AssociatedControlID="ddlNewsletters" runat="server" ID="lblNewsletters" Text="$newsletter" />        
+                        <asp:Label AssociatedControlID="ddlNewsletters" runat="server" ID="lblNewsletters" Text="Newsletter" />        
                         <asp:DropDownList ID="ddlNewsletters" runat="server" />
                     </div>
                     <div class="select">
                         <asp:Label AssociatedControlID="ddlSubscriptionFilter" runat="server" ID="lblSubscriptionFilter"
-                            Text="$subscription_filter" />        
+                            Text="Subscription filter" />        
                         <asp:DropDownList ID="ddlSubscriptionFilter" runat="server" />
                     </div>
                     
-  	                <asp:Button ID="cmdDisplaySubscriptions" runat="server" Text="Display subscriptions" OnClick="cmdDisplaySubscriptions_Click" />
-  	                <asp:Button ID="CmdExportSubscriptions" runat="server" Text="Export subscriptions" OnClick="CmdExportSubscriptions_Click" />  	                
-  	                <asp:Button ID="cmdDisplayCSLSubscriptions" runat="server" Text="Display CSL subscriptions" OnClick="cmdDisplayCSLSubscriptions_Click" />
+  	                <asp:LinkButton ID="cmdDisplaySubscriptions" runat="server" Text="Display subscriptions" OnClick="cmdDisplaySubscriptions_Click" CssClass="btn btn-success" />
+  	                <asp:LinkButton ID="CmdExportSubscriptions" runat="server" Text="Export subscriptions" OnClick="CmdExportSubscriptions_Click"  CssClass="btn btn-default" />          
+  	                <asp:LinkButton ID="cmdDisplayCSLSubscriptions" runat="server" Text="Display CSL subscriptions" OnClick="cmdDisplayCSLSubscriptions_Click"  CssClass="btn btn-default" />
                 </div>        
-            </asp:PlaceHolder>
-            <asp:PlaceHolder runat="server" ID="plhCSLSubs">
-                <asp:TextBox Required="false" Rows="15" Text="$csv" TextMode="multiLine" ID="txtCSV" ValidationGroup="MG" runat="server" />
-            </asp:PlaceHolder>
-            <asp:PlaceHolder ID="plhSubscriptions" runat="server">
-                <asp:GridView ID="subscriptionGridView" runat="server"  CssClass="table table-hover"
+
+                <asp:GridView ID="GridViewSubscriptions" runat="server" CssClass="table table-hover"
                     AllowSorting="True"
                     AutoGenerateColumns="False"
                     DataKeyNames="SubscriptionId"
-                    OnRowCommand="subscriptionGridView_RowCommand">
+                    OnRowCommand="GridViewSubscriptions_RowCommand">
                     <Columns>
-                        <asp:TemplateField HeaderText="$subscription_id" SortExpression="ns.id">
+                        <asp:TemplateField HeaderText="Id" SortExpression="ns.id">
                             <ItemTemplate>
                                     <%# Eval("SubscriptionId")%>
                             </ItemTemplate>
                         </asp:TemplateField>                            
-                        <asp:TemplateField HeaderText="$email" SortExpression="email">
+                        <asp:TemplateField HeaderText="Email" SortExpression="email">
                             <ItemTemplate>
                                     <%# Eval("Email")%>
                             </ItemTemplate>
                         </asp:TemplateField>                            
-                        <asp:TemplateField HeaderText="$subscribed" SortExpression="date_subscribed">
+                        <asp:TemplateField HeaderText="Subscribed" SortExpression="date_subscribed">
                             <ItemTemplate>
                                     <%# ((bool)Eval("Subscribed")) ? ((DateTime?)Eval("DateSubscribed")).Value.ToString() : ""%>
                             </ItemTemplate>
                         </asp:TemplateField>                            
-                        <asp:TemplateField HeaderText="$confirmed" SortExpression="date_confirmed">
+                        <asp:TemplateField HeaderText="Confirmed" SortExpression="date_confirmed">
                             <ItemTemplate>
                                     <%# ((bool)Eval("Confirmed")) ? ((DateTime?)Eval("DateConfirmed")).Value.ToString() : "" %>
                             </ItemTemplate>
@@ -62,48 +55,24 @@
                             <ItemTemplate>
                                     <asp:Literal ID="litHash" runat="server" Text='<%# ((string)Eval("Hash")) %>' Visible="false" />
                                     <asp:Literal ID="litSubId" runat="server" Text='<%# (Eval("SubscriptionId")).ToString() %>' Visible="false" />
-                                    <asp:LinkButton CommandName="UnSubscribe" Visible='<%# ((bool)Eval("Subscribed")) ? true : false %>' ID="cmdUnsubscribe" runat="server" Text="$unsubscribe" CommandArgument='<%# Container.DataItemIndex %>' />
+                                    <asp:LinkButton CommandName="UnSubscribe" Visible='<%# ((bool)Eval("Subscribed")) ? true : false %>' ID="cmdUnsubscribe" runat="server" Text="Unsubscribe" CommandArgument='<%# Container.DataItemIndex %>' />
                             </ItemTemplate>
-                        </asp:TemplateField>  
-                                                                                                                  
+                        </asp:TemplateField>                                                                                      
                     </Columns>
                 </asp:GridView>  
-                <div class="text-center">
-                    <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	
-                </div>                             
-            </asp:PlaceHolder>
-        </asp:View>
-        <asp:View ID="View2" runat="server">
-            <div class="adminSection">
-                <div class="select">
-                    <asp:Label AssociatedControlID="ddlNewsletterFilter" runat="server" ID="Label1"
-                        Text="$newsletter" />        
-                    <asp:DropDownList ID="ddlNewsletterFilter" runat="server" />
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                        <label>$start_from_days_ago</label>
-                    </div>
-                    <div class="col-sm-9">
-                        <asp:TextBox ID="txtBackFromDays" runat="server" Text="" ValidationGroup="DS" type="number" />
-                    </div>
 
-                </div>
-                <asp:Button ValidationGroup="DS" ID="cmdDeleteUnconfirmedSubscriptions" runat="server" Text="$delete_unconfirmed_subscriptions" OnClick="cmdDeleteUnconfirmedSubscriptions_Click" /><br />
-                <asp:CheckBox ID="chkDeleteAll" runat="server" Text="$delete_all_subscriptions_precaution" />
-                <asp:Button ID="cmdDeleteSubscriptions" runat="server" Text="$delete_all_subscriptions" OnClick="cmdDeleteSubscriptions_Click" />
-            </div>  
-        </asp:View>
-        <asp:View ID="View3" runat="server">
+                <two:PostbackPager id="TwoPostbackPager1" OnCommand="TwoPostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" CssClass="text-center" />	
+                <asp:Panel runat="server" ID="PanelNoResults"  CssClass="col-md-12">
+                     <div class="alert alert-info" role="alert">
+                        No subscriptions to show.
+                         </div>
+                </asp:Panel> 
+    
+            <asp:PlaceHolder runat="server" ID="plhCSLSubs">
                 <div class="adminSection">
-                    <div class="select">
-                        <asp:Label AssociatedControlID="DropDownListNewsletters" runat="server" ID="LabelNewsletters" Text="$newsletters"></asp:Label>
-                        <asp:DropDownList ID="DropDownListNewsletters" runat="server" />
+                    <div class="row">
+                        <asp:TextBox Rows="15" TextMode="multiLine" ID="txtCSV" runat="server" CssClass="col-sm-12" />
                     </div>
-                    <asp:TextBox ValidationGroup="EI" runat="server" ID="InputEmails" TextMode="multiLine" Rows="20" Text="$emails" />
-                    <asp:Button OnClick="CmdImport_Click" ValidationGroup="EI" runat="server" ID="CmdImport" Text="$import" />
-	            </div>
-        </asp:View>
-        <asp:View ID="View4" runat="server"></asp:View>
-    </asp:MultiView>
+                </div>
+            </asp:PlaceHolder>                    
 </asp:Content>

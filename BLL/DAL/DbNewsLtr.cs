@@ -79,25 +79,22 @@ namespace One.Net.BLL.DAL
             paramsToPass[5] = new SqlParameter("@subscriptionType", subscriptionType);
             
             CommandType commandType = CommandType.StoredProcedure;
-            string sql = "[dbo].[ListPagedNewsletterSubscriptions]";
+            string sql = "";
 
-            if (!state.UsesPaging)
-            {
-                commandType = CommandType.Text;
-                sql = @"SELECT ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email 
-                        FROM newsletter_subscription ns 
-                        INNER JOIN email e on e.id=ns.email_fk_id 
-                        WHERE ns.newsletter_fk_id=@newsletterID";
+            commandType = CommandType.Text;
+            sql = @"SELECT ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email 
+                    FROM newsletter_subscription ns 
+                    INNER JOIN email e on e.id=ns.email_fk_id 
+                    WHERE ns.newsletter_fk_id=@newsletterID";
 
-                if (subscriptionType == BONewsLtrSub.STARTED_SUBSCRIPTION)
-                    sql += " AND date_subscribed IS NOT null AND date_confirmed IS null AND date_unsubscribed IS null";
-                else if (subscriptionType == BONewsLtrSub.CONFIRMED)
-                    sql += " AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS null";
-                else if (subscriptionType == BONewsLtrSub.UNSUBSCRIBED)
-                    sql += " AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS NOT null";
+            if (subscriptionType == BONewsLtrSub.STARTED_SUBSCRIPTION)
+                sql += " AND date_subscribed IS NOT null AND date_confirmed IS null AND date_unsubscribed IS null";
+            else if (subscriptionType == BONewsLtrSub.CONFIRMED)
+                sql += " AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS null";
+            else if (subscriptionType == BONewsLtrSub.UNSUBSCRIBED)
+                sql += " AND date_subscribed IS NOT null AND date_confirmed IS NOT null AND date_unsubscribed IS NOT null";
 
-                sql += " ORDER BY email ASC";
-            }
+            sql += " ORDER BY email ASC";
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, commandType, sql, paramsToPass))
             {
