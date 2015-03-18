@@ -128,6 +128,7 @@ namespace OneMainWeb.adm
                 IdentityManager.CreateRoleIfNotExists("Redirects");
                 IdentityManager.CreateRoleIfNotExists("Website");
                 IdentityManager.CreateRoleIfNotExists("PublishAllButton");
+                IdentityManager.CreateRoleIfNotExists("AllowDeletePage");
 
                 var websiteB = new BWebsite();
                 var list = websiteB.List();
