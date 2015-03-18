@@ -6,11 +6,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OneMainWeb.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using NLog;
+using One.Net.BLL;
 
 namespace OneMainWeb.adm
 {
-    public partial class Users : System.Web.UI.Page
+    public partial class Users : OneBasePage
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         protected string SelectedUser
         {
             get 
@@ -101,6 +105,41 @@ namespace OneMainWeb.adm
                 {
                     CheckBox1.Checked = false;
                 }
+            }
+        }
+
+        protected void ButtonUpdateRoles_Click(object sender, EventArgs e)
+        {
+            var publishFlag = PresentBasePage.ReadPublishFlag();
+            if (!publishFlag)
+            {
+                IdentityManager.CreateRoleIfNotExists("admin");
+                IdentityManager.CreateRoleIfNotExists("ContentEdit");
+                IdentityManager.CreateRoleIfNotExists("all");
+                IdentityManager.CreateRoleIfNotExists("Structure");
+                IdentityManager.CreateRoleIfNotExists("Publish");
+                IdentityManager.CreateRoleIfNotExists("Scaffold");
+                IdentityManager.CreateRoleIfNotExists("Forms");
+                IdentityManager.CreateRoleIfNotExists("Articles");
+                IdentityManager.CreateRoleIfNotExists("Regulars");
+                IdentityManager.CreateRoleIfNotExists("Subscriptions");
+                IdentityManager.CreateRoleIfNotExists("Dictionary");
+                IdentityManager.CreateRoleIfNotExists("FileManager");
+                IdentityManager.CreateRoleIfNotExists("Redirects");
+                IdentityManager.CreateRoleIfNotExists("Website");
+                IdentityManager.CreateRoleIfNotExists("PublishAllButton");
+
+                var websiteB = new BWebsite();
+                var list = websiteB.List();
+                foreach (var w in list)
+                {
+                    var previewUrl = w.PreviewUrl;
+                    if (!string.IsNullOrWhiteSpace(previewUrl))
+                    {
+                        IdentityManager.CreateRoleIfNotExists(previewUrl);
+                    }
+                }
+                log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
             }
         }
     }

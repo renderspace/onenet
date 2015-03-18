@@ -9,6 +9,7 @@
         <asp:View runat="server">
             <div class="adminSection">
 			    <h4>To add new user, the user must register on main login page. Then it will appear on the list below, where you can add roles.</h4>
+                 <asp:Button ID="Button1" runat="server" Text="Update roles" OnClick="ButtonUpdateRoles_Click" />
             </div>
             <asp:GridView	ID="GridViewUsers"
 					runat="server"

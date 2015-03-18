@@ -124,6 +124,10 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
         type: "GET",
         success: function (content) {
             trace(content);
+            $("#form-title").show();
+            $("#form-subtitle").show();
+            $("#form-teaser").show();
+
             $("#content-title").val(content.Title);
             $("#content-subtitle").val(content.Subtitle);
             $("#content-teaser").val(content.Teaser);
@@ -140,6 +144,11 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
                         mode: "htmlembedded"
                 });
                 $('#content-html').data('CodeMirrorInstance', myCodeMirror);
+                if (enableHtml === true) {
+                    $("#form-title").hide();
+                    $("#form-subtitle").hide();
+                    $("#form-teaser").hide();
+                }
             }
             $(".j_control_content_id").val(contentId);
             $(".modal-body .col-sm-9").show();
