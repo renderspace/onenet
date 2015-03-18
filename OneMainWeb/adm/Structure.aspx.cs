@@ -23,15 +23,19 @@ namespace OneMainWeb.adm
         protected static BTextContent specialContentB = new BTextContent();
         BOPage SelectedPage { get; set; }
 
+
+        protected bool allowDeletePage = false;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             SelectedWebsite_ValidateDataBind();
-
             TreeViewPages_DataBind();
-
             if (!IsPostBack)
             {
-                PanelPublishAll.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("PublishAllButton"); ;
+                PanelPublishAll.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("PublishAllButton");
+                allowDeletePage = Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeletePage");
+
                 Modules_DataBind();
                 Templates_DataBind();
                 SelectedPage_DataBind();   
@@ -188,7 +192,7 @@ namespace OneMainWeb.adm
                 TextBoxDescription.Text = SelectedPage.Teaser;
                 ButtonPublish.Visible = SelectedPage.IsChanged;
                 ButtonUnPublish.Visible = !SelectedPage.IsNew;
-                ButtonDelete.Visible = !SelectedPage.MarkedForDeletion;
+                ButtonDelete.Visible = !SelectedPage.MarkedForDeletion && allowDeletePage;
                 ButtonUndoDelete.Visible = SelectedPage.MarkedForDeletion;
                 PanelAddSubPage.Visible = PanelAddSubPage.Visible && !SelectedPage.MarkedForDeletion;
                 ButtonPublish.Text = SelectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
