@@ -163,8 +163,9 @@
     </div>
  
 
-
-<div class="col-md-3 s1a">
+<div class="tabl">
+<div class="tabltr">
+<div class="s1a">
     <section class="module tall msideb">
 		<h2>Files structure</h2>
 		<div class="msideb-inn">
@@ -185,7 +186,7 @@
     </section>
 </div>
 
-<div class="col-md-9 s2a">
+<div class="s2a">
     <div class="mainEditor ce-it-2">
 			<div class="col-sm-3">
 				<span class="btn btn-success fileinput-button">
@@ -220,5 +221,7 @@
         <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
         <one:TextContentModal runat="server" ID="TextContentModal1" EnableHtml="false" Title="File description edit" />
     </div>
-</div>     
+</div>   
+</div>
+</div>  
 </asp:Content>

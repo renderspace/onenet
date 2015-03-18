@@ -10,8 +10,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <uc1:Notifier ID="Notifier1" runat="server" />
     <asp:Literal runat="server" ID="LiteralScript"></asp:Literal>
-    <div>
-        <div class="col-md-3 s1a">
+    <div class="tabl">
+	<div class="tabltr">
+        <div class="s1a">
             <section class="module tall msideb">
                 <h2>Page structure</h2>
 				<div class="msideb-inn">
@@ -22,7 +23,7 @@
 				</div>
             </section>
         </div>
-         <div class="col-md-9 s2a">
+         <div class="s2a">
               <asp:MultiView ID="MultiView1" runat="server">
             <asp:View ID="View1" runat="server">
                 <section class="module full">
@@ -59,6 +60,6 @@
                       </asp:View>
                 </asp:MultiView>
              </div>
-           
+       </div>    
        </div> 
 </asp:Content>
