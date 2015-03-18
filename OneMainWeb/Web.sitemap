@@ -2,7 +2,6 @@
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0">
 	<siteMapNode url="" title="" description="" roles="*">
 		<siteMapNode url="" title="Website" description="" roles="*">
-			<siteMapNode url="~/adm/ContentEdit.aspx" title="Content" description="" roles="all, admin, ContentEdit"/>
 			<siteMapNode url="~/adm/Structure.aspx" title="Tree structure" description="" roles="all, admin, Structure" />
       <siteMapNode url="adm/dictionary.aspx" title="Dictionary" description="" roles="all, admin, Dictionary" />
       <siteMapNode url="adm/FileManager.aspx" title="File manager" description="" roles="all, admin, FileManager" />
