@@ -590,3 +590,5 @@ details .form-group select {width: 100%;}
 .bg-primary.distinct-name span {font-size: 11px; font-weight: normal;}
 
 .list-group-item {padding: 4px 5px;}
+.edit-users .radio label, .edit-users .checkbox label {padding-left: 23px;}
+.edit-users .control-label {padding-top: 0!important;}

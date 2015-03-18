@@ -31,7 +31,7 @@
 
         </asp:View>
         <asp:View runat="server">
-             <div class="adminSection form-horizontal">
+             <div class="adminSection form-horizontal edit-users">
                 
                  <div class="form-group">
                         <label class="col-sm-3 control-label">Username</label> 
