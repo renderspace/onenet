@@ -19,30 +19,33 @@
             <section class="module tall msideb">
 				<h2>Page structure</h2>
 				<div class="msideb-inn">
-                <header><h3 class="tabs_involved"><asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn publishAll" Text="Publish all changes" OnClick="ButtonPublishAll_Click" ClientIDMode="Static" /></h3>
-                    <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
-						<div class="form-inline fi-top">
-                        <div class="form-group">
-                            <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
-						</div>
-						<asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
-						</div>
-                    </asp:Panel>
-                    <asp:Panel runat="server" ID="PanelMove">
-                        <span class="pull-left movePage">Move current page:</span>
-                        <div class="upDown">
-                            <span class="pull-left">
-						        <asp:Button id="ButtonMovePageUp" CommandName="Up" runat="server" Text=" &#9650; " OnClick="CmdMovePage_Click" />
-                            </span>
-                            <span class="pull-right">
-                                <asp:Button id="ButtonMovePageDown" CommandName="Down" runat="server" Text=" &#9660; " OnClick="CmdMovePage_Click" />
-                            </span>
-                        </div>
-                    </asp:Panel>
-                </header>
-                <div class="treeview">
-	                <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
-                </div>
+                    <header>
+                        <asp:Panel CssClass="tabs_involved" ID="PanelPublishAll" runat="server">
+                            <asp:LinkButton	id="LinkButtonPublishAll" Runat="server"	CssClass="btn-success btn publishAll" Text="Publish all changes" OnClick="ButtonPublishAll_Click" ClientIDMode="Static" />
+                        </asp:Panel>
+                        <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
+						    <div class="form-inline fi-top">
+                            <div class="form-group">
+                                <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
+						    </div>
+						    <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
+						    </div>
+                        </asp:Panel>
+                        <asp:Panel runat="server" ID="PanelMove">
+                            <span class="pull-left movePage">Move current page:</span>
+                            <div class="upDown">
+                                <span class="pull-left">
+						            <asp:Button id="ButtonMovePageUp" CommandName="Up" runat="server" Text=" &#9650; " OnClick="CmdMovePage_Click" />
+                                </span>
+                                <span class="pull-right">
+                                    <asp:Button id="ButtonMovePageDown" CommandName="Down" runat="server" Text=" &#9660; " OnClick="CmdMovePage_Click" />
+                                </span>
+                            </div>
+                        </asp:Panel>
+                    </header>
+                    <div class="treeview">
+	                    <asp:TreeView OnUnload="TreeViewPages_Unload" EnableViewState="false" ID="TreeViewPages" runat="server" OnAdaptedSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" OnSelectedNodeChanged="TreeViewPages_SelectedNodeChanged" PopulateNodesFromClient="false" />
+                    </div>
 				</div>
             </section>
         </div>
@@ -189,15 +192,25 @@
 		            <ItemTemplate>
                         <div class="moduleInstance">
                             <h4 class="row">
+                                
+                                
                                 <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
                                 <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonContentTemplateModalEdit"  runat="server" data-toggle="modal" data-target="#content-template-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
-                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"), Eval("Id"))%>
-                                    <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false" CssClass="ModuleDistinctName"></asp:label> 
+
+
+                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"))%>
+                                   
                                 </span>
+                                 
+                                <span class="bg-primary distinct-name">
+                                     [<%# Eval("Id") %>]
+                                     <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false"></asp:label> 
+                                </span>
+
 								<span class="m-btns">
                                     <asp:LinkButton	ID="cmdDeleteInstance" Runat="server" CommandName="COMMAND_DELETE" CommandArgument='<%# Eval("Id") %>' Text="<span class='glyphicon glyphicon-trash'></span> Delete instance" CssClass="btn btn-danger pull-left"  />
 

@@ -31,6 +31,7 @@ namespace OneMainWeb.adm
 
             if (!IsPostBack)
             {
+                PanelPublishAll.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("PublishAllButton"); ;
                 Modules_DataBind();
                 Templates_DataBind();
                 SelectedPage_DataBind();   
@@ -165,9 +166,9 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected string RenderModuleName(object _Changed, object _PendingDelete, object name, object id)
+        protected string RenderModuleName(object _Changed, object _PendingDelete, object name)
         {
-            return name.ToString() + " " + RenderStatusIcons(_PendingDelete, _Changed) + " [" + id.ToString() + "]";
+            return name.ToString() + " " + RenderStatusIcons(_PendingDelete, _Changed);
         }
 
         protected void SelectedPage_DataBind()
@@ -359,20 +360,27 @@ namespace OneMainWeb.adm
                         ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.Name == "TextContent" ? "true" : "false");
                     }
                 }
-                if (moduleInstance.Name == "TextContent")
+                if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
                 {
                     if (textContentModel != null && textContentModel.IsComplete)
                     {
                         LabelModuleDistinctName.Visible = true;
-                        var distinctName = StringTool.StripHtmlTags(textContentModel.Title);
-                        string postfix = (distinctName.Length >= 20) ? "..." : "";
-                        LabelModuleDistinctName.Text = distinctName.Substring(0, distinctName.Length < 20 ? distinctName.Length : 20) + postfix;
+                        var distinctName = "";
+                        if (moduleInstance.Name == "SpecialContent")
+                        {
+                            distinctName = StringTool.StripHtmlTags(textContentModel.Html);
+                        }
+                        else
+                        {
+                            distinctName = StringTool.StripHtmlTags(textContentModel.Title);
+                        }
+                        string postfix = (distinctName.Length >= 35) ? "..." : "";
+                        LabelModuleDistinctName.Text = distinctName.Substring(0, distinctName.Length < 35 ? distinctName.Length : 35) + postfix;
                     }
                     else
                     {
                         LabelModuleDistinctName.Visible = true;
                         LabelModuleDistinctName.Text = "[Empty]";
-                        LabelModuleDistinctName.CssClass = "ModuleDistinctName empty";
                     }   
                 }
 

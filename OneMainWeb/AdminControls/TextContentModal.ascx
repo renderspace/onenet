@@ -24,21 +24,21 @@
 
                 <div class="clearfix"></div>
 
-                <div class="form-group">
+                <div class="form-group" id="form-title">
                     <label class="col-sm-3 control-label">Title</label>
                     <div class="col-sm-9">
                         <input type="text" maxlength="255" class="form-control" id="content-title" />
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="form-subtitle">
                     <label class="col-sm-3 control-label">Subtitle</label>
                     <div class="col-sm-9">
                         <input type="text" maxlength="255" class="form-control" id="content-subtitle" />
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="form-teaser">
                     <label class="col-sm-3 control-label">Teaser</label>
                     <div class="col-sm-9">
                         <textarea  rows="5" class="form-control" id="content-teaser"></textarea>
