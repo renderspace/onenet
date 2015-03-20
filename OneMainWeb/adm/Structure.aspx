@@ -131,7 +131,7 @@
                         <div class="form-group">
                              <label class="col-sm-4 control-label">Image</label>
                             <div class="col-sm-8">
-                                <asp:TextBox runat="server" ID="TextBoxSubtitle" MaxLength="255" ValidationGroup="PageSett" type="absrelurl" CssClass="form-control" placeholder="Image used by Facebook when sharing. Use at least 1200 x 630 pixels. Some modules may override it."></asp:TextBox>
+                                <asp:TextBox runat="server" ID="TextBoxSubtitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control absrelurl" placeholder="Image used by Facebook when sharing. Use at least 1200 x 630 pixels. Some modules may override it."></asp:TextBox>
                             </div>
                         </div>
 

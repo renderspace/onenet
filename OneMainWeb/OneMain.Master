@@ -51,7 +51,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			  </button>
-			  <a class="navbar-brand" href="#"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><asp:Literal ID="LiteralAppVersion" runat="server" EnableViewState="false"></asp:Literal></a>
+			  <a class="navbar-brand" href="/adm"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><asp:Literal ID="LiteralAppVersion" runat="server" EnableViewState="false"></asp:Literal></a>
 			</div>
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-right">
