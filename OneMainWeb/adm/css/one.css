@@ -592,3 +592,5 @@ details .form-group select {width: 100%;}
 .list-group-item {padding: 4px 5px;}
 .edit-users .radio label, .edit-users .checkbox label {padding-left: 23px;}
 .edit-users .control-label {padding-top: 0!important;}
+
+.hun { width: 100%; }

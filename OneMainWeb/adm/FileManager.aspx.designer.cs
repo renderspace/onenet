@@ -112,6 +112,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.CheckBox CheckBoxConfirm;
         
         /// <summary>
+        /// CheckBoxShowPath control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxShowPath;
+        
+        /// <summary>
         /// LabelFolderId control.
         /// </summary>
         /// <remarks>
