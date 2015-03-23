@@ -349,8 +349,8 @@ namespace OneMainWeb.adm
                     }
                 }
 
-                deleteButton.Visible = !moduleInstance.PendingDelete;
-                undeleteButton.Visible = moduleInstance.PendingDelete;
+                deleteButton.Visible = !moduleInstance.PendingDelete && !moduleInstance.IsInherited;
+                undeleteButton.Visible = moduleInstance.PendingDelete && !moduleInstance.IsInherited;
                 ButtonModalEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
                 ButtonContentTemplateModalEdit.Visible = (moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
 

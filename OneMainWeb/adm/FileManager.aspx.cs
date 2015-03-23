@@ -59,11 +59,15 @@ namespace OneMainWeb
                 return;
             }
 
+
+            
+
             RetrieveSubmittedFiles();
 
             if (!IsPostBack)
             {
                 HiddenFieldLanguageId.Value = Thread.CurrentThread.CurrentCulture.LCID.ToString();
+                CmdRecursiveDelete.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeleteFolder");
 
                 if (SelectedFolderId < 1)
                 {

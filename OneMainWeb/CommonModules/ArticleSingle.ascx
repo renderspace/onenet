@@ -16,7 +16,7 @@
 		        <%# Eval("Html") %>
 	        </div>
 	        <div class="read-on" id="DivReadon" runat="server" noid="True">
-		        <a href="<%= ArticleListUri %>" class="more"><%= Translate("article_more") %></a>
+		        <a href="<%= ArticleListUri %>" class="more"><%= Translate("article_list") %></a>
 	        </div>
         </article>
     </asp:View>
