@@ -81,7 +81,21 @@ function getTree(callback) {
     });
 };
 
+$(document).ready(function() {
+    $('#CheckBoxShowPath').change(function () {
+        var selectedFolderId = $('#HiddenSelectedFolderId').val();
+        if (selectedFolderId > 0) {
+            files_databind(selectedFolderId);
+        }
+    });
+});
+
 function files_databind(selectedFolderId) {
+
+    var showPath = $("#CheckBoxShowPath").is(':checked');
+
+    trace("showPath:" + showPath);
+
     $.ajax({
         url: "/AdminService/ListFiles?folderId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
@@ -91,11 +105,19 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-				//trace(item);
-                $('#files-table tbody').append('<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
-                    item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>' + item.Name +
-                    '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
-                    '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>');
+                //trace(item);
+                var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
+                    item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>';
+                if (showPath) {
+                    r += '<input type="text" name="textbox" value="' + item.Uri + '" onclick="this.select()" class="hun" />';
+                }
+                else {
+                    r += item.Name;
+                }
+
+                r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
+                    '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
+                $('#files-table tbody').append(r);
             });
             if (data.length == 0) {
                 $('#files-table thead').hide();

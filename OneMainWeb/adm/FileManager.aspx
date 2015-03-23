@@ -196,7 +196,24 @@
 			</div>
             <div class="col-sm-9">
                 <div class="col-sm-6 pull-right">
-                    <asp:CheckBox ID="CheckBoxConfirm" runat="server" Text="Confirm delete folder and all subfolders"  />    
+
+                    <div class="checkbox">
+                        <label>
+                          <asp:CheckBox ID="CheckBoxConfirm" runat="server" />     Confirm delete folder and all subfolders
+                        </label>
+                      </div>
+                        <div class="checkbox">
+                        <label>
+                          <asp:CheckBox ID="CheckBoxShowPath" runat="server" ClientIDMode="Static"  />     Show path for copying
+                        </label>
+                      </div>
+
+
+                    
+
+
+                    
+
                 </div>
                 <div class="col-sm-6 pull-right">
                         <asp:Label runat="server" ID="LabelFolderId" ClientIDMode="Static"></asp:Label>
