@@ -594,3 +594,5 @@ details .form-group select {width: 100%;}
 .edit-users .control-label {padding-top: 0!important;}
 
 .hun { width: 100%; }
+
+.input-group { width: 250px; } 

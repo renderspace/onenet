@@ -27,7 +27,8 @@ namespace OneMainWeb
                 "~/Scripts/dropzone/css/dropzone.css").Include(
                 "~/adm/codemirror/codemirror.css").Include(
                 "~/adm/css/one.css").Include(
-                "~/adm/css/dashboard.css"));
+                "~/adm/css/dashboard.css").Include(
+                "~/Content/bootstrap-datetimepicker.css"));
 
             bundles.Add(new StyleBundle("~/Bundles/JqueryUI").Include(
                 "~/Content/themes/base/core.css").Include(
@@ -41,13 +42,14 @@ namespace OneMainWeb
                 "~/adm/codemirror/mode/htmlmixed/htmlmixed.js").Include(
                 "~/adm/codemirror/mode/javascript/javascript.js").Include(
                 "~/adm/codemirror/mode/xml/xml.js").Include(
-                "~/adm/codemirror/mode/css/css.js")
-                ); //.Include("~/adm/codemirror/mode/htmlembedded/htmlembedded.js")
+                "~/adm/codemirror/mode/css/css.js")); //.Include("~/adm/codemirror/mode/htmlembedded/htmlembedded.js")
             bundles.Add(new ScriptBundle("~/Bundles/Scripts").Include(
                     "~/Scripts/jquery-{version}.js").Include(
                     "~/Scripts/jquery.validate.js").Include(
                     "~/Scripts/jquery-ui-{version}.js").Include(
-                    "~/Scripts/dropzone/dropzone.js"));
+                    "~/Scripts/dropzone/dropzone.js").Include(
+                    "~/Scripts/moment.js").Include(
+                    "~/Scripts/bootstrap-datetimepicker.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
             // END ADMIN
 

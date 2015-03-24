@@ -179,6 +179,23 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             {
                                 row[field.FQName] = GetMultilanguageContent(field.FQName, row);
                             }
+                            if (field.DbType == DataType.DateTime)
+                            {
+                                var d = (DateTime)f;
+                                var formattedDate = "";
+                                formattedDate = d.ToShortDateString();
+                                if (d.ToShortTimeString() != "00:00")
+                                    formattedDate += " " + d.ToShortTimeString();
+                                row[field.FQName] = formattedDate;
+                            }
+                            if (field.DbType == DataType.Date)
+                            {
+                                row[field.FQName] = ((DateTime) f).ToShortDateString();
+                            }
+                            if (field.DbType == DataType.Time)
+                            {
+                                row[field.FQName] = ((TimeSpan)f).ToString(@"hh\:mm");
+                            }
                         }
                     }
                     table.ExtendedProperties["AllRecords"] = int.Parse(reader[i].ToString());
@@ -386,28 +403,35 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             }
                             else
                             {
-                                switch (item.Columns[field.FQName].DbType.ToString())
+                                switch (item.Columns[field.FQName].DbType)
                                 {
-                                    case "System.Int32":
+                                    case DataType.Int:
                                         item.Columns[field.FQName].ValueInteger = (int)f;
                                         break;
-                                    case "System.DateTime":
+                                    case DataType.DateTime:
                                         item.Columns[field.FQName].ValueDateTime = (DateTime)f;
                                         break;
-                                    case "System.Decimal":
+                                    case DataType.Time:
+                                        item.Columns[field.FQName].ValueTime = (TimeSpan)f;
+                                        break;
+                                    case DataType.Date:
+                                        item.Columns[field.FQName].ValueDateTime = (DateTime)f;
+                                        break;
+
+                                    case DataType.Decimal:
                                         item.Columns[field.FQName].ValueDecimal = (decimal)f;
                                         break;
-                                    case "System.String":
+                                    case DataType.String:
                                         item.Columns[field.FQName].ValueString = (string)f;
                                         break;
-                                    case "System.Boolean":
+                                    case DataType.Boolean:
                                         item.Columns[field.FQName].ValueBoolean = (bool)f;
                                         break;
-                                    case "System.Double":
+                                    case DataType.Double:
                                         item.Columns[field.FQName].ValueDouble = (double)f;
                                         break;
                                     default:
-                                        item.Columns[field.FQName].ValueString = f.ToString();
+                                        throw new Exception("Unsupported datatype on read: " + item.Columns[field.FQName].DbType);
                                         break;
                                 }
                             }

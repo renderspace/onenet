@@ -7,7 +7,9 @@ using System.Data.SqlTypes;
 
 namespace One.Net.BLL.Scaffold.Model
 {
-    public enum FieldType { SingleText, Display, OneToMany, ManyToMany, Checkbox, Calendar, Integer, MultiLanguageText, Decimal };
+    public enum FieldType { SingleText, Display, OneToMany, ManyToMany, Checkbox, Calendar, Integer, MultiLanguageText, Decimal, CalendarWithTime, Time };
+
+    public enum DataType { Int, DateTime, Date, Time, Decimal, String, Boolean, Double, Binary };
 
     [Serializable]
     public class VirtualColumn
@@ -37,8 +39,8 @@ namespace One.Net.BLL.Scaffold.Model
             set { friendlyName = value; }
         }
 
-        
-        public Type DbType { get; set; }
+
+        public DataType DbType { get; set; }
         public int Precision { get; set; }
         public string DefaultValue { get; set; }
         public bool IsNullable { get; set; }
@@ -77,19 +79,23 @@ namespace One.Net.BLL.Scaffold.Model
                     return FieldType.ManyToMany;
                 }
 
-                switch (DbType.Name)
+                switch (DbType)
                 {
-                    case "Int32":
+                    case DataType.Int: 
                         return FieldType.Integer;
-                    case "DateTime":
+                    case DataType.DateTime:
+                        return FieldType.CalendarWithTime;
+                    case DataType.Date:
                         return FieldType.Calendar;
-                    case "Decimal":
+                    case DataType.Time:
+                        return FieldType.Time;
+                    case DataType.Decimal:
                         return FieldType.Decimal;
-                    case "Double":
+                    case DataType.Double:
                         return FieldType.Decimal;
-                    case "String":
+                    case DataType.String:
                         return backendType;
-                    case "Boolean":
+                    case DataType.Boolean:
                         return FieldType.Checkbox;
                     default:
                         return backendType;
@@ -105,6 +111,7 @@ namespace One.Net.BLL.Scaffold.Model
         public int ValueInteger { get; set; }
         public List<int> ValueIntegerList { get; set; }
         public SqlDateTime ValueDateTime { get; set; }
+        public TimeSpan ValueTime { get; set; }
         public decimal ValueDecimal { get; set; }
         public double ValueDouble { get; set; }
         public bool ValueBoolean { get; set; }
@@ -130,19 +137,22 @@ namespace One.Net.BLL.Scaffold.Model
                     return result.Substring(0, result.Length - 1);
                 }
 
-                switch (DbType.ToString())
+                switch (DbType)
                 {
-                    case "System.Int32":
+                    case DataType.Int:
                         return ValueInteger.ToString();
-                    case "System.DateTime":
+                    case DataType.DateTime:
+                    case DataType.Date:
                         return ValueDateTime.ToString();
-                    case "System.String":
+                    case DataType.Time:
+                        return ValueTime.ToString();
+                    case DataType.String:
                         return ValueString;
-                    case "System.Decimal":
+                    case DataType.Decimal:
                         return ValueDecimal.ToString();
-                    case "System.Double":
+                    case DataType.Double:
                         return ValueDouble.ToString();
-                    case "System.Boolean":
+                    case DataType.Boolean:
                         return ValueBoolean.ToString();
                     default:
                         return ValueString;
@@ -166,19 +176,22 @@ namespace One.Net.BLL.Scaffold.Model
                 {
                     return NewValueContent;
                 }
-                switch (DbType.Name)
+                switch (DbType)
                 {
-                    case "Int32":
+                    case DataType.Int:
                         return NewValueInteger;
-                    case "DateTime":
+                    case DataType.Date:
+                    case DataType.DateTime:
                         return NewValueDateTime;
-                    case "String":
+                    case DataType.Time:
+                        return NewValueTime;
+                    case DataType.String:
                         return NewValueString;
-                    case "Decimal":
+                    case DataType.Decimal:
                         return NewValueDecimal;
-                    case "Boolean":
+                    case DataType.Boolean:
                         return NewValueBoolean;
-                    case "Double":
+                    case DataType.Double:
                         return NewValueDouble;
                     default:
                         return NewValueString;
@@ -190,6 +203,7 @@ namespace One.Net.BLL.Scaffold.Model
         public int NewValueInteger { get; set; }
         public List<int> NewValueIntegerList { get; set; }
         public DateTime NewValueDateTime { get; set; }
+        public TimeSpan NewValueTime { get; set; }
         public decimal NewValueDecimal { get; set; }
         public double NewValueDouble { get; set; }
         public bool NewValueBoolean { get; set; }

@@ -158,8 +158,14 @@ namespace One.Net.BLL.Scaffold
                     virtualColumn.DefaultValue = reader["COLUMN_DEF"] == DBNull.Value ? null : (string)reader["COLUMN_DEF"];
                     virtualColumn.IsPartOfPrimaryKey = virtualTable.PrimaryKeys.Contains(virtualColumn.Name);
                     virtualColumn.IsNullable = ((short)reader["NULLABLE"]) > 0;
-                    virtualColumn.IsIdentity = ((string)reader["TYPE_NAME"]).Contains("identity");
-                    virtualColumn.DbType = SqlHelper.GetDbType(reader.GetInt16(4));
+                    var typeName = (string)reader["TYPE_NAME"];
+                    virtualColumn.IsIdentity = typeName.Contains("identity");
+                    if (virtualColumn.IsIdentity)
+                    {
+                        typeName = typeName.Replace("identity", "").Trim();
+                    }
+                    //var dbTypeId = reader.GetInt16(4);
+                    virtualColumn.DbType = GetDbType(typeName);
                     result.Add(virtualColumn);
                 }
             }
@@ -177,6 +183,53 @@ namespace One.Net.BLL.Scaffold
                 }
             }
             return result;
+        }
+
+
+        public static DataType GetDbType(string typeName)
+        {
+            switch (typeName)
+            {
+                case "int":
+                case "bigint":
+                case "smallint":
+                case "tinyint":
+                    return DataType.Int;
+                case "money":
+                case "smallmoney":
+                case "decimal":
+                    return DataType.Decimal;
+                case "numeric":
+                case "float":
+                case "real":
+                    return DataType.Double;
+
+                case "date":
+                    return DataType.Date;
+                case "time":
+                    return DataType.Time;
+                case "datetime":
+                case "datetime2":
+                case "smalldatetime":
+                    return DataType.DateTime;
+
+                case "bit":
+                    return DataType.Boolean;
+                case "binary":
+                case "varbinary":
+                    return DataType.Binary;
+
+                case "char":
+                case "varchar":
+                case "nchar":
+                case "ntext":
+                case "nvarchar":
+                case "sysname":
+                case "uniqueidentifier":
+                    return DataType.String;
+                default:
+                    throw new Exception("Unknown SQL data type: " + typeName);
+            }
         }
 
         public static List<VirtualColumn> ListPhysicalColumns(int virtualTableId)
