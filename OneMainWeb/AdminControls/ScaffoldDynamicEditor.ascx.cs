@@ -52,6 +52,9 @@ namespace OneMainWeb.AdminControls
         private const string NULL = "NULL";
 
         public string DATE_FORMAT = "M/d/yyyy";
+        public string TIME_FORMAT = @"h\:mm";
+
+        public string DATE_TIME_FORMAT = @"M/d/yyyy h\:mm";
 
         public event EventHandler<EventArgs> Exit;
         public event EventHandler<DynamicEditorEventArgs> Saved;
@@ -298,30 +301,41 @@ namespace OneMainWeb.AdminControls
                         PanelField.Controls.RemoveAt(0);
                         PanelField.Controls.Add(Panel11);
                         break;
-                    case FieldType.Calendar:
-
-                        var DatePicker1 = new TextBox { ID = "FI" + column.Ordinal };
-
-
+                    case FieldType.CalendarWithTime:
+                        PanelRight.Controls.Add(new Literal { Text = "<div class='input-group date' id='cal-" + column.Ordinal + "'>" });
+                        var DatePicker2 = new TextBox { ID = "FI" + column.Ordinal, CssClass = "form-control" };
                         if (column.ValueDateTime != System.Data.SqlTypes.SqlDateTime.MinValue)
-                            DatePicker1.Text = ((DateTime)column.ValueDateTime).ToString(DATE_FORMAT, CultureInfo.InvariantCulture );
-                                //string.Format("{0:" + DATE_FORMAT + "}", ;
-
-                        PanelRight.Controls.Add(DatePicker1);
+                        {
+                            DatePicker2.Text = ((DateTime)column.ValueDateTime).ToString(DATE_TIME_FORMAT, CultureInfo.InvariantCulture);
+                        }
+                        PanelRight.Controls.Add(DatePicker2);
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-hourglass\"></span></div>" });
                         PanelField.Controls.Add(PanelRight);
-
-
-
-                        //datepickerJQueryCall += @"$.datepicker.setDefaults($.datepicker.regional['" + currentCulture.TwoLetterISOLanguageName + "']);" + "\n";
-                        //datepickerJQueryCall += @"$.datepicker.setDefaults({ dateFormat: 'd.mm.yy' });" + "\n";
-
-
-                        datepickerJQueryCall += @"$(""#" + DatePicker1.ClientID + @""").datepicker();" + "\n";
-                        //{ dateFormat: 'dd/mm/yy' }
-                        //datepickerJQueryCall += @"$(""#" + DatePicker1.ClientID + @""").datepicker('option', { dateFormat: 'd.mm.yy' });";
-                        //datepickerJQueryCall += @"$(""#" + DatePicker1.ClientID + @""").datepicker('option', $.extend({showMonthAfterYear: false}));" + "\n";
-
-                        //validationJQueryRules += CreateValidateRule(!column.IsNullable, "date:true", DatePicker1.UniqueID);
+                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'MM/DD/YYYY HH:m'});" + "\n";
+                        break;
+                    case FieldType.Time:
+                        PanelRight.Controls.Add(new Literal { Text = "<div class='input-group date' id='cal-" + column.Ordinal + "'>" });
+                        var DatePicker3 = new TextBox { ID = "FI" + column.Ordinal, CssClass = "form-control" };
+                        if (!column.ValueIsNull)
+                        {
+                            DatePicker3.Text = column.ValueTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture);
+                        }
+                        PanelRight.Controls.Add(DatePicker3);
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time\"></span></div>" });
+                        PanelField.Controls.Add(PanelRight);
+                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'HH:m'});" + "\n";
+                        break;
+                    case FieldType.Calendar:
+                        PanelRight.Controls.Add(new Literal { Text = "<div class='input-group date' id='cal-" + column.Ordinal + "'>" });
+                        var DatePicker1 = new TextBox { ID = "FI" + column.Ordinal, CssClass = "form-control" };
+                        if (column.ValueDateTime != System.Data.SqlTypes.SqlDateTime.MinValue)
+                        {
+                            DatePicker1.Text = ((DateTime)column.ValueDateTime).ToString(DATE_FORMAT, CultureInfo.InvariantCulture);
+                        }
+                        PanelRight.Controls.Add(DatePicker1);
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></div>" });
+                        PanelField.Controls.Add(PanelRight);
+                        datepickerJQueryCall += @"$(""#" + DatePicker1.ClientID + @""").datetimepicker({format: 'MM/DD/YYYY'});" + "\n";
                         break;
                     case FieldType.Display:
                         LabelInfo.Text = column.Value;
@@ -333,8 +347,7 @@ namespace OneMainWeb.AdminControls
                         PanelField.Controls.Add(PanelRight);
                         break;
                     default:
-                        LabelInfo.Text = "unsupported type:" + column.DbType.Name + ";requested display type:" +
-                                         column.BackendType;
+                        LabelInfo.Text = "unsupported type:" + column.DbType + ";requested display type:" + column.BackendType;
                         PanelRight.Controls.Add(LabelInfo);
                         PanelField.Controls.Add(PanelRight);
                         break;
@@ -664,7 +677,7 @@ jQuery.validator.addMethod(
         private List<string> RetreiveSubmittedFields()
         {
             var errors = new List<string>();
-
+            var defaultCulture = new CultureInfo(1033);
             var debug = "<div class=\"debug hidden\"><h4>RetreiveSubmittedFields</h4>";
 
             foreach (var field in Item.Columns.Values)
@@ -720,20 +733,70 @@ jQuery.validator.addMethod(
                                 field.NewValueBoolean = CheckBox2.Checked;
                             }
                             break;
+                        case FieldType.Time:
+                            var DatePickerTime = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
+                            if (DatePickerTime != null)
+                            {
+                                TimeSpan parsedTime = new TimeSpan(0);
+                                var hasTime = TimeSpan.TryParseExact(DatePickerTime.Text, TIME_FORMAT, defaultCulture, TimeSpanStyles.None, out parsedTime);
+                                if (hasTime)
+                                {
+                                    field.NewValueTime = parsedTime;
+                                }
+                                else if (field.IsNullable)
+                                {
+                                    field.NewValueIsNull = true;
+                                }
+                                else
+                                {
+                                    errors.Add("Non-nullable date field " + field.FriendlyName + " is missing a value or value is not in correct format.");
+                                }
+                            }
+                            break;
+                        case FieldType.CalendarWithTime:
                         case FieldType.Calendar:
                             var DatePickerCalendar = PanelField.FindControl("FI" + field.Ordinal) as TextBox;
                             if (DatePickerCalendar != null)
                             {
-                                var defaultCulture = new CultureInfo(1033);
                                 DateTime parsedDate = (DateTime) SqlDateTime.MinValue;
-                                var hasDate = DateTime.TryParseExact(DatePickerCalendar.Text, DATE_FORMAT, defaultCulture, DateTimeStyles.None, out parsedDate);
+                                TimeSpan parsedTime = new TimeSpan(0);
+                                var dateStringToParse = "";
+                                var hasTime = false;
+                                if (DatePickerCalendar.Text.Trim().Contains(" "))
+                                {
+                                    var split = DatePickerCalendar.Text.Trim().Split(' ');
+                                    if (split.Count() > 0)
+                                    {
+                                        dateStringToParse = split[0];
+                                    }
+                                    if (split.Count() > 1)
+                                    {
+                                        hasTime = TimeSpan.TryParseExact(split[1], TIME_FORMAT, defaultCulture, TimeSpanStyles.None, out parsedTime);
+                                    } 
+                                }
+                                else
+                                {
+                                    dateStringToParse = DatePickerCalendar.Text;
+                                }
+
+                                var hasDate = DateTime.TryParseExact(dateStringToParse, DATE_FORMAT, defaultCulture, DateTimeStyles.None, out parsedDate);
 
                                 if (hasDate)
+                                {
                                     field.NewValueDateTime = parsedDate;
+                                    if (hasTime)
+                                    {
+                                        field.NewValueDateTime += parsedTime;
+                                    }
+                                }
                                 else if (field.IsNullable)
+                                {
                                     field.NewValueIsNull = true;
+                                }
                                 else
+                                {
                                     errors.Add("Non-nullable date field " + field.FriendlyName + " is missing a value or value is not in correct format.");
+                                }
                             }
                             break;
                         case FieldType.OneToMany:
