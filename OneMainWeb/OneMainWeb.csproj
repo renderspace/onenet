@@ -501,23 +501,51 @@
     <Content Include="adm\codemirror\mode\xml\index.html" />
     <Content Include="adm\codemirror\mode\xml\test.js" />
     <Content Include="adm\codemirror\mode\xml\xml.js" />
-    <Content Include="adm\css\adminWikiMenu.css" />
-    <Content Include="adm\css\bootstrap.css" />
-    <Content Include="adm\codemirror\codemirror.css" />
-    <Content Include="adm\css\dashboard.css" />
-    <Content Include="adm\css\default_editor.css" />
-    <Content Include="adm\css\one.css" />
+    <Content Include="adm\css\adminWikiMenu.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\css\bootstrap.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\codemirror\codemirror.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\css\dashboard.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\css\default_editor.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\css\one.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="adm\images\drag.png" />
-    <Content Include="adm\js\bootstrap-confirmation.js" />
-    <Content Include="adm\js\bootstrap-treeview.js" />
-    <Content Include="adm\js\bootstrap.js" />
-    <Content Include="adm\codemirror\codemirror.js" />
-    <Content Include="adm\js\jquery.details.js" />
-    <Content Include="adm\js\jquery.ui.datepicker-en.js" />
-    <Content Include="adm\js\One.js" />
+    <Content Include="adm\images\drag.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\bootstrap-confirmation.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\bootstrap-treeview.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\bootstrap.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\codemirror\codemirror.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\jquery.details.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\jquery.ui.datepicker-en.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\js\One.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="adm\Modules.aspx" />
     <Content Include="adm\Regulars.aspx" />
     <Content Include="adm\Scaffold.aspx" />
@@ -817,9 +845,12 @@
     </Content>
     <Content Include="adm\css\web.config">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\Icons.ashx" />
-    <Content Include="adm\images\web.config" />
+    <Content Include="adm\images\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Res\objavljeno.png" />
     <Content Include="Res\one-net-logo-vs.png" />
     <Content Include="Res\one-net.png" />
@@ -837,10 +868,19 @@
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\dropzone\images\spritemap%402x.png" />
     <Content Include="Scripts\dropzone\images\spritemap.png" />
-    <Content Include="adm\js\web.config" />
-    <Content Include="adm\fonts\web.config" />
-    <Content Include="adm\codemirror\web.config" />
+    <Content Include="adm\js\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\fonts\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="adm\codemirror\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="51Degrees.config" />
+    <Content Include="adm\fonts\glyphicons-halflings-regular.woff2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
