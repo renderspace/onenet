@@ -55,19 +55,19 @@ namespace OneMainWeb
                 }
             }
         }
-
         private void Redirects_DataBind()
-        {
-            Redirects_DataBind("", "");
-        }
-
-        private void Redirects_DataBind(string searchBy, string regularsFilter)
         {
             ListingState state = new ListingState();
             state.RecordsPerPage = GridViewPageSize;
             state.SortDirection = GridViewSortDirection;
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
+
+            if (CheckBoxShowAll.Checked)
+            { 
+                state.RecordsPerPage = 10000;
+                state.FirstRecordIndex = 0;
+            }
 
             var redirects = BRedirects.List(state);
 
@@ -78,7 +78,7 @@ namespace OneMainWeb
             GridViewRedirects.DataBind();
 
             PanelGridButtons.Visible = (redirects.Count != 0);
-            TwoPostbackPager1.Visible = (redirects.Count != 0);
+            TwoPostbackPager1.Visible = (redirects.Count != 0) && !CheckBoxShowAll.Checked;
             GridViewRedirects.Visible = (redirects.Count != 0);
             PanelNoResults.Visible = (redirects.Count == 0);
         }
@@ -254,6 +254,11 @@ namespace OneMainWeb
 
             Response.Write(strw.ToString());
             Response.End();
+        }
+
+        protected void CheckBoxShowAll_CheckedChanged(object sender, EventArgs e)
+        {
+            Redirects_DataBind();
         }
     }
 }
