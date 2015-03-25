@@ -599,3 +599,5 @@ details .form-group select {width: 100%;}
 
 .glyphicon-sunglasses { color: #8cc051; }
 .glyphicon-asterisk { color: #8cc051; }
+
+.jumbo-less-padding { padding: 20px !important;}
