@@ -835,6 +835,7 @@ jQuery.validator.addMethod(
                             var ManyToManyJoinsListBox = PanelFieldsHolder.FindControl("MML" + field.Ordinal) as ListBox;
                             if (ManyToManyJoinsListBox != null)
                             {
+                                field.BackendType = FieldType.ManyToMany;
                                 field.NewValueIntegerList = new List<int>();
                                 foreach (ListItem c in ManyToManyJoinsListBox.Items)
                                 {
@@ -864,7 +865,7 @@ jQuery.validator.addMethod(
                     if (field.BackendType == FieldType.ManyToMany)
                     {
                         debug += "<span class=\"info\">";
-                        var pks = field.NewValue as List<int>;
+                        var pks = field.NewValueIntegerList;
                         foreach (var s in pks)
                         {
                             debug += s + ", ";

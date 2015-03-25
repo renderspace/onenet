@@ -72,12 +72,13 @@ namespace One.Net.BLL.Scaffold.Model
                 if (backendType == FieldType.Display || backendType == FieldType.OneToMany || backendType == FieldType.ManyToMany || backendType == FieldType.MultiLanguageText)
                     return backendType;
 
+                /*
                 if (DbType == null)
                 {
                     // this happens when field doesn't exist in given table at all
                     // e.g. when field is displaying n:m relation
                     return FieldType.ManyToMany;
-                }
+                }*/
 
                 switch (DbType)
                 {
