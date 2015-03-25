@@ -112,14 +112,14 @@ namespace OneMainWeb
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
-                Regulars_DataBind(lbRegulars);
+                Regulars_DataBind(ListBoxRegulars);
 
                 if (SelectedArticle != null)
                 {
-                    lbRegularsAssignedToArticle.DataSource = SelectedArticle.Regulars;
-                    lbRegularsAssignedToArticle.DataTextField = "Title";
-                    lbRegularsAssignedToArticle.DataValueField = "Id";
-                    lbRegularsAssignedToArticle.DataBind();
+                    ListBoxAssignedToArticle.DataSource = SelectedArticle.Regulars;
+                    ListBoxAssignedToArticle.DataTextField = "Title";
+                    ListBoxAssignedToArticle.DataValueField = "Id";
+                    ListBoxAssignedToArticle.DataBind();
                 }
 
                 AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
@@ -172,7 +172,7 @@ namespace OneMainWeb
                 var d = SqlDateTime.MinValue.Value;
                 DateTime.TryParse(TextBoxDate.Text, Thread.CurrentThread.CurrentUICulture, DateTimeStyles.None, out d);
 
-                if (lbRegularsAssignedToArticle.Items.Count == 0)
+                if (ListBoxAssignedToArticle.Items.Count == 0)
                 {
                     Notifier1.Warning = "You need to select at least one category/regular. Use the 'right' botton below.";
                     return;
@@ -239,7 +239,7 @@ namespace OneMainWeb
                         SelectedArticle.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
                         
                         SelectedArticle.Regulars.Clear();
-                        foreach (ListItem item in lbRegularsAssignedToArticle.Items)
+                        foreach (ListItem item in ListBoxAssignedToArticle.Items)
                         {
                             BORegular regular = new BORegular();
                             regular.Id = Int32.Parse(item.Value);
@@ -275,20 +275,20 @@ namespace OneMainWeb
 
         protected void cmdAssignRegularToArticle_Click(object sender, EventArgs e)
         {
-            if (lbRegulars.SelectedItem != null)
+            if (ListBoxRegulars.SelectedItem != null)
             {
-                int regularId = Int32.Parse(lbRegulars.SelectedValue);
-                ListItem item = new ListItem(lbRegulars.SelectedItem.Text, regularId.ToString());
-                if (!lbRegularsAssignedToArticle.Items.Contains(item) && regularId > 0)
-                    lbRegularsAssignedToArticle.Items.Add(item);
+                int regularId = Int32.Parse(ListBoxRegulars.SelectedValue);
+                ListItem item = new ListItem(ListBoxRegulars.SelectedItem.Text, regularId.ToString());
+                if (!ListBoxAssignedToArticle.Items.Contains(item) && regularId > 0)
+                    ListBoxAssignedToArticle.Items.Add(item);
             }
         }
 
         protected void cmdRemoveRegularFromArticle_Click(object sender, EventArgs e)
         {
-            int regularId = Int32.Parse(lbRegularsAssignedToArticle.SelectedItem.Value);
-            ListItem item = new ListItem(lbRegularsAssignedToArticle.SelectedItem.Text, regularId.ToString());
-            lbRegularsAssignedToArticle.Items.Remove(item);
+            int regularId = Int32.Parse(ListBoxAssignedToArticle.SelectedItem.Value);
+            ListItem item = new ListItem(ListBoxAssignedToArticle.SelectedItem.Text, regularId.ToString());
+            ListBoxAssignedToArticle.Items.Remove(item);
         }
 
         protected override void OnPreRender(EventArgs e)

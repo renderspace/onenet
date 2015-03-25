@@ -157,13 +157,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
-        /// lbRegulars control.
+        /// ListBoxRegulars control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbRegulars;
+        protected global::System.Web.UI.WebControls.ListBox ListBoxRegulars;
         
         /// <summary>
         /// cmdAssignRegularToArticle control.
@@ -184,13 +184,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.LinkButton cmdRemoveRegularFromArticle;
         
         /// <summary>
-        /// lbRegularsAssignedToArticle control.
+        /// ListBoxAssignedToArticle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbRegularsAssignedToArticle;
+        protected global::System.Web.UI.WebControls.ListBox ListBoxAssignedToArticle;
         
         /// <summary>
         /// LabelDate control.

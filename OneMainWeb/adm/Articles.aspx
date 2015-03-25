@@ -96,10 +96,10 @@
 
             <div class="adminSection form-horizontal validationGroup">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Article category</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-9 col-sm-offset-3 jumbotron jumbo-less-padding">
                         <div class="col-sm-4">
-                            <asp:ListBox ID="lbRegulars" runat="server" Rows="5" CssClass="form-control" />
+                            <asp:Label runat="server" AssociatedControlID="ListBoxRegulars">Choose from possible categories:</asp:Label>
+                            <asp:ListBox ID="ListBoxRegulars" runat="server" Rows="5" CssClass="form-control" />
                         </div>
                         <div class="col-sm-2">
                             <asp:LinkButton ValidationGroup="ATR" ID="cmdAssignRegularToArticle" runat="server"  OnClick="cmdAssignRegularToArticle_Click" CssClass="btn btn-info"> 
@@ -109,7 +109,8 @@
                                 <span class="glyphicon glyphicon-arrow-left"></span></asp:LinkButton>
                         </div>
                         <div class="col-sm-6">
-								<asp:ListBox ID="lbRegularsAssignedToArticle" runat="server" Rows="5" CssClass="form-control" />
+                             <asp:Label runat="server" AssociatedControlID="ListBoxAssignedToArticle">Categories assigned to current article:</asp:Label>
+								<asp:ListBox ID="ListBoxAssignedToArticle" runat="server" Rows="5" CssClass="form-control" />
                         </div>
                     </div>
                 </div>

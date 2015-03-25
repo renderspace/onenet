@@ -240,6 +240,9 @@ namespace OneMainWeb.AdminControls
                         var PanelSubRight = new Panel { CssClass = "col-sm-5" };
 
 
+                        var l1 = new Label { Text = "Choose category" };
+                        PanelSubLeft.Controls.Add(l1);
+
                         var v2 = Data.GetForeignKeyOptions(column.PartOfRelationId, SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT);
                         if (v2.Values.Count >= SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT)
                         {
@@ -269,11 +272,15 @@ namespace OneMainWeb.AdminControls
                         PanelRight.Controls.Add(PanelSubCenter);
 
                         var ManyToManyJoinsListBox = new ListBox { CssClass = "form-control", ID = "MML" + column.Ordinal };
+                        var l2 = new Label { Text = "Selected categories" };
+                        PanelSubRight.Controls.Add(l2);
                         PanelSubRight.Controls.Add(ManyToManyJoinsListBox);
 
                         PanelRight.Controls.Add(PanelSubLeft);
                         PanelRight.Controls.Add(PanelSubCenter);
                         PanelRight.Controls.Add(PanelSubRight);
+
+                        PanelRight.CssClass += " jumbotron jumbo-less-padding";
 
                         PanelField.Controls.Add(PanelRight);
 
