@@ -601,3 +601,7 @@ details .form-group select {width: 100%;}
 .glyphicon-asterisk { color: #8cc051; }
 
 .jumbo-less-padding { padding: 20px !important;}
+
+.modal-lg {
+  width: 90% !important;
+}

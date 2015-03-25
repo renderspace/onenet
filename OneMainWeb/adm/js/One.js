@@ -153,7 +153,7 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
             $("#content-title").val(content.Title);
             $("#content-subtitle").val(content.Subtitle);
             $("#content-teaser").val(content.Teaser);
-            $(".ckbox").html('<label class="col-sm-3 control-label">Html</label><div class="col-sm-9"><textarea  class="form-control" id="content-html"></textarea></div>');
+            $(".ckbox").html('<div class="col-sm-12"><textarea  class="form-control" id="content-html"></textarea></div>');
             var $contenthtml = $("#content-html");
             $contenthtml.val(content.Html);
             $(".ckbox").show();
