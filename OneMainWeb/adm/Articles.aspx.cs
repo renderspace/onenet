@@ -63,6 +63,7 @@ namespace OneMainWeb
             SelectedArticle.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             SelectedArticle.IsNew = true;
             SelectedArticle.PublishFlag = false;
+            SelectedArticle.DisplayDate = DateTime.Today;
         }
 
         protected void cmdAddArticle_Click(object sender, EventArgs e)
