@@ -76,6 +76,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonExport;
         
         /// <summary>
+        /// CheckBoxShowAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CheckBoxShowAll;
+        
+        /// <summary>
         /// GridViewRedirects control.
         /// </summary>
         /// <remarks>

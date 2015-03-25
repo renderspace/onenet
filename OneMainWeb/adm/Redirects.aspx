@@ -13,13 +13,18 @@
 			    <div class="col-md-2">
                     <asp:LinkButton ID="cmdShowAddRedirect" runat="server" Text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" OnClick="cmdShowAddRedirect_Click" />
 			    </div>
-			    <div class="col-md-6 validationGroup">
+			    <div class="col-md-4 validationGroup">
                     <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Edit by id" CssClass="required int"></asp:TextBox>
                     <asp:LinkButton ID="ButtonEditById" runat="server" Text="Search" OnClick="ButtonEditById_Click" CssClass="btn btn-info causesValidation"  />
 			    </div>
 			    <div class="col-md-4">
                         <asp:LinkButton ID="LinkButtonExport" runat="server" Text="Export" CssClass="btn btn-default" OnClick="LinkButtonExport_Click" />
 			        </div>
+                <div class="col-md-2">
+                    <label>
+                            <asp:CheckBox runat="server" ID="CheckBoxShowAll" AutoPostBack="true" OnCheckedChanged="CheckBoxShowAll_CheckedChanged" /> Show all
+                    </label>
+                </div>
             </div>
 
             <asp:GridView ID="GridViewRedirects" runat="server"
