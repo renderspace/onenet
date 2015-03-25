@@ -309,7 +309,7 @@ namespace OneMainWeb.AdminControls
                             DatePicker2.Text = ((DateTime)column.ValueDateTime).ToString(DATE_TIME_FORMAT, CultureInfo.InvariantCulture);
                         }
                         PanelRight.Controls.Add(DatePicker2);
-                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-hourglass\"></span></div>" });
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-hourglass\"></span></span></div>" });
                         PanelField.Controls.Add(PanelRight);
                         datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'MM/DD/YYYY H:mm'});" + "\n";
                         break;
@@ -321,7 +321,7 @@ namespace OneMainWeb.AdminControls
                             DatePicker3.Text = column.ValueTime.ToString(TIME_FORMAT, CultureInfo.InvariantCulture);
                         }
                         PanelRight.Controls.Add(DatePicker3);
-                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time\"></span></div>" });
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time\"></span></span></div>" });
                         PanelField.Controls.Add(PanelRight);
                         datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'H:mm'});" + "\n";
                         break;
@@ -333,7 +333,7 @@ namespace OneMainWeb.AdminControls
                             DatePicker1.Text = ((DateTime)column.ValueDateTime).ToString(DATE_FORMAT, CultureInfo.InvariantCulture);
                         }
                         PanelRight.Controls.Add(DatePicker1);
-                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></div>" });
+                        PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span></div>" });
                         PanelField.Controls.Add(PanelRight);
                         datepickerJQueryCall += @"$(""#" + DatePicker1.ClientID + @""").datetimepicker({format: 'MM/DD/YYYY'});" + "\n";
                         break;
