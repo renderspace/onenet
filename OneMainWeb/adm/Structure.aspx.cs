@@ -426,7 +426,14 @@ namespace OneMainWeb.adm
                 {
                     LiteralInstanceSummary.Text = "<span>Inherited from depth: </span><strong>" + moduleInstance.PersistFrom.ToString() + "</strong> to depth: <strong>" +
                         moduleInstance.PersistTo.ToString() + "</strong>; <span>Template position: </span>" + currentPlaceHolder.Name;
+                   // <span class="ch" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Changes waiting for publish">
                 }
+
+                if (moduleInstance.Settings.ContainsKey("ExtraCssClass") && !string.IsNullOrWhiteSpace(moduleInstance.Settings["ExtraCssClass"].Value))
+                    LiteralInstanceSummary.Text += "<span  data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\" data-original-title=\"Extra CSS class\" class=\"glyphicon glyphicon-asterisk pull-right\" aria-hidden=\"true\"></span>";
+
+                if (moduleInstance.Settings.ContainsKey("UniqueTranslation") && moduleInstance.Settings["UniqueTranslation"].Value.Equals("true", StringComparison.InvariantCultureIgnoreCase))
+                    LiteralInstanceSummary.Text += "<span  data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"\" data-original-title=\"Unique translation\" class=\"glyphicon glyphicon-sunglasses pull-right\" aria-hidden=\"true\"></span>";
 
                 if (ddlPlaceHolder != null)
                 {

@@ -202,9 +202,7 @@
 
 
 
-                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"))%>
-                                   
-                                </span>
+                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"))%></span>
                                  
                                 <span class="bg-primary distinct-name">
                                      [<%# Eval("Id") %>]
@@ -227,6 +225,8 @@
 									<details runat="server" id="HtmlDetails"  class="form-horizontal">
 										<summary>
 											<asp:Literal ID="LiteralInstanceSummary" Runat="server" />
+
+                                            
 										</summary>
 											<asp:PlaceHolder ID="PlaceHolderNotInherited1" runat="server">
 												<div class="form-group">
