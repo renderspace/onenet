@@ -52,9 +52,9 @@ namespace OneMainWeb.AdminControls
         private const string NULL = "NULL";
 
         public string DATE_FORMAT = "M/d/yyyy";
-        public string TIME_FORMAT = @"h\:mm";
+        public string TIME_FORMAT = @"H\:mm";
 
-        public string DATE_TIME_FORMAT = @"M/d/yyyy h\:mm";
+        public string DATE_TIME_FORMAT = @"M/d/yyyy H\:mm";
 
         public event EventHandler<EventArgs> Exit;
         public event EventHandler<DynamicEditorEventArgs> Saved;
@@ -311,7 +311,7 @@ namespace OneMainWeb.AdminControls
                         PanelRight.Controls.Add(DatePicker2);
                         PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-hourglass\"></span></div>" });
                         PanelField.Controls.Add(PanelRight);
-                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'MM/DD/YYYY HH:m'});" + "\n";
+                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'MM/DD/YYYY H:mm'});" + "\n";
                         break;
                     case FieldType.Time:
                         PanelRight.Controls.Add(new Literal { Text = "<div class='input-group date' id='cal-" + column.Ordinal + "'>" });
@@ -323,7 +323,7 @@ namespace OneMainWeb.AdminControls
                         PanelRight.Controls.Add(DatePicker3);
                         PanelRight.Controls.Add(new Literal { Text = "<span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-time\"></span></div>" });
                         PanelField.Controls.Add(PanelRight);
-                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'HH:m'});" + "\n";
+                        datepickerJQueryCall += @"$(""#cal-" + column.Ordinal + @""").datetimepicker({format: 'H:mm'});" + "\n";
                         break;
                     case FieldType.Calendar:
                         PanelRight.Controls.Add(new Literal { Text = "<div class='input-group date' id='cal-" + column.Ordinal + "'>" });
@@ -575,21 +575,19 @@ jQuery.validator.addMethod(
                 MaxLength = column.Precision,
             };
 
-            if (column.Precision < 60)
+            if (column.Precision < 257)
             {
-                int width = (int)Math.Round(((double)column.Precision / 55) * 430);
-                Input6.Width = width;
+                //int width = (int)Math.Round(((double)column.Precision / 55) * 430);
+                Input6.Style.Add("width", "100%");
             }
-            else if (column.Precision >= 60)
+            else
             {
                 Input6.TextMode = TextBoxMode.MultiLine;
 
                 if (column.Precision > 4000)
                     Input6.Rows = 6;
-                else if (column.Precision > 255)
+                else 
                     Input6.Rows = 4;
-                else
-                    Input6.Rows = 1;
             }
             Input6.CssClass = "form-control";
             if (column.IsWysiwyg)
