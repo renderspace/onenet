@@ -210,6 +210,15 @@ namespace OneMainWeb.AdminControls
                 // as it is done for ManyToMany BackendType
                 switch (column.BackendType)
                 {
+                    case FieldType.ToMany:
+                        // TODO check if this is a new item and display warning in that case
+
+                        var literalForToMany = new Literal { Text = PrimaryKeys[0].ToString() + " " + column.PartOfRelationId + 
+                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + "\" data-pk=\"" + PrimaryKeys[0].ToString() + "\"></div>" };
+                        PanelRight.Controls.Add(literalForToMany);
+                        PanelRight.CssClass += " jumbotron jumbo-less-padding";
+                        PanelField.Controls.Add(PanelRight);
+                        break;
                     case FieldType.Integer:
                         PrepareIntegerInput(column, PanelRight, ref validationJQueryRules);
                         PanelField.Controls.Add(PanelRight);

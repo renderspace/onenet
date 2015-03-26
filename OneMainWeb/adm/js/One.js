@@ -644,6 +644,35 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('.toMany').each(function () {
+        var $me = $(this);
+        var relationId = $me.data('relation-id');
+        var pk = $me.data('pk');
+        trace(relationId);
+        trace(pk);
+        if (relationId > 0) {
+            $.ajax({
+                url: "/ScaffoldService/ListItemsForRelation",
+                data: { relationId: relationId, primaryKey: pk },
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    var tbl_body = "<table  class=\"table\">";
+                    $.each(data, function () {
+                        var tbl_row = "";
+                        $.each(this, function (k, v) {
+                            tbl_row += "<td>" + v + "</td>";
+                        })
+                        tbl_body += "<tr>" + tbl_row + "</tr>";
+                    })
+                    $me.html(tbl_body + "</table>");
+                },
+                error: logError
+            });
+        }
+    });
 });
 
 function Validate(evt) {

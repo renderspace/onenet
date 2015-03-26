@@ -7,7 +7,7 @@ using System.Data.SqlTypes;
 
 namespace One.Net.BLL.Scaffold.Model
 {
-    public enum FieldType { SingleText, Display, OneToMany, ManyToMany, Checkbox, Calendar, Integer, MultiLanguageText, Decimal, CalendarWithTime, Time };
+    public enum FieldType { SingleText, Display, OneToMany, ManyToMany, Checkbox, Calendar, Integer, MultiLanguageText, Decimal, CalendarWithTime, Time, ToMany };
 
     public enum DataType { Int, DateTime, Date, Time, Decimal, String, Boolean, Double, Binary };
 
@@ -69,7 +69,7 @@ namespace One.Net.BLL.Scaffold.Model
         {
             get
             {
-                if (backendType == FieldType.Display || backendType == FieldType.OneToMany || backendType == FieldType.ManyToMany || backendType == FieldType.MultiLanguageText)
+                if (backendType == FieldType.Display || backendType == FieldType.OneToMany || backendType == FieldType.ManyToMany || backendType == FieldType.MultiLanguageText || backendType == FieldType.ToMany)
                     return backendType;
 
                 /*

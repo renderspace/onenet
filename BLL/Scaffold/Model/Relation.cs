@@ -21,6 +21,8 @@ namespace One.Net.BLL.Scaffold.Model
 
         public bool IsMultiLanguageContent { get; set; }
 
+        public bool IsReverse { get; set; }
+
         public bool IsManyToMany
         {
             get

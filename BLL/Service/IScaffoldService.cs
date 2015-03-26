@@ -11,14 +11,14 @@ using System.Collections;
 namespace One.Net.BLL.Service
 {
     [ServiceContract]
-    public interface IFormService
+    public interface IScaffoldService
     {
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Ping")]
         [Description(" public Ping()")]
         string Ping();
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Get?contentId={contentId}")]
-        [Description("Get(int contentId)")]
-        DTOForm Get(int id);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListItemsForRelation?relationId={relationId}&primaryKey={primaryKey}")]
+        [Description("ListItemsForRelation(int relationId, int primaryKey)")]
+        List<SerializableJsonDictionary<string, string>> ListItemsForRelation(int relationId, int primaryKey);
     }
 }
