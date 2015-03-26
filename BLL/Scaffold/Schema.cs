@@ -173,7 +173,7 @@ namespace One.Net.BLL.Scaffold
             {
                 virtualTable.VirtualColumns = PhysicalSchema.ListPhysicalColumns(virtualTable);
                 ListVirtualColumns(virtualTable);
-                virtualTable.Relations = ListRelations(virtualTable.Id);
+                virtualTable.Relations = ListRegularRelations(virtualTable.Id);
             }
             return virtualTable;
         }
@@ -405,7 +405,7 @@ namespace One.Net.BLL.Scaffold
         {
             Relation result = null;
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt3.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content
+                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt3.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content, is_reverse
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id
                 INNER JOIN _virtual_table vt2 ON  vt2.id = vr.pk_virtual_table_id
@@ -424,12 +424,12 @@ namespace One.Net.BLL.Scaffold
         {
             var result = new List<Relation>();
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt2.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content
+                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, vt2.starting_table AS xref_pk_virtual_table, vr.pk_xref_virtual_table_id, vr.is_multilanguage_content, is_reverse
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id
                 INNER JOIN _virtual_table vt2 ON  vt2.id = vr.pk_virtual_table_id
-                INNER JOIN _virtual_table vt3 ON  vt3.id = vr.pk_xref_virtual_table_id
-                WHERE vr.pk_xref_virtual_table_id = @PrimaryTableId", new SqlParameter("@PrimaryTableId", xrefPrimaryKeyVirtualTableId)))
+                LEFT JOIN _virtual_table vt3 ON  vt3.id = vr.pk_xref_virtual_table_id
+                WHERE (vr.pk_xref_virtual_table_id = @PrimaryTableId AND is_reverse = 0) OR (vr.pk_virtual_table_id = @PrimaryTableId AND is_reverse = 1) ", new SqlParameter("@PrimaryTableId", xrefPrimaryKeyVirtualTableId)))
             {
                 while (reader.Read())
                 {
@@ -440,15 +440,15 @@ namespace One.Net.BLL.Scaffold
             return result;
         }
 
-        public static List<Relation> ListRelations(int primaryVirtualTableId)
+        public static List<Relation> ListRegularRelations(int primaryVirtualTableId)
         {
             var result = new List<Relation>();
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, NULL AS xref_pk_virtual_table, NULL AS pk_xref_virtual_table_id, vr.is_multilanguage_content
+                @"SELECT vr.id, vr.fk_virtual_table_id, vt1.starting_table AS fk_virtual_table, vr.pk_virtual_table_id, vt2.starting_table AS pk_virtual_table, pk_display_col, NULL AS xref_pk_virtual_table, NULL AS pk_xref_virtual_table_id, vr.is_multilanguage_content, is_reverse
                 FROM _virtual_relation vr
                 INNER JOIN _virtual_table vt1 ON  vt1.id = vr.fk_virtual_table_id
                 INNER JOIN _virtual_table vt2 ON  vt2.id = vr.pk_virtual_table_id
-                WHERE vr.fk_virtual_table_id = @PrimaryTableId  AND vr.[pk_xref_virtual_table_id] IS NULL", new SqlParameter("@PrimaryTableId", primaryVirtualTableId)))
+                WHERE vr.fk_virtual_table_id = @PrimaryTableId  AND vr.[pk_xref_virtual_table_id] IS NULL AND is_reverse = 0", new SqlParameter("@PrimaryTableId", primaryVirtualTableId)))
             {
                 while (reader.Read())
                 {
@@ -471,7 +471,8 @@ namespace One.Net.BLL.Scaffold
                 PrimaryKeyDisplayColumn = (string)reader["pk_display_col"],
                 XrefPrimaryKeyTableName = reader["xref_pk_virtual_table"] == DBNull.Value ? null : (string)reader["xref_pk_virtual_table"],
                 XrefPrimaryKeyTableId = reader["pk_xref_virtual_table_id"] == DBNull.Value ? 0 : ((int)reader["pk_xref_virtual_table_id"]),
-                IsMultiLanguageContent = (bool)reader["is_multilanguage_content"]
+                IsMultiLanguageContent = (bool)reader["is_multilanguage_content"],
+                IsReverse = (bool)reader["is_reverse"]
             };
             var primaryKeysOnForeignKeySourcTable = ListPrimaryKeys(relation.PrimaryKeySourceTableName);
 

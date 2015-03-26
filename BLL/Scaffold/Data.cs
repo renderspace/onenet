@@ -20,7 +20,7 @@ namespace One.Net.BLL.Scaffold
 
         static readonly BInternalContent intContentB = new BInternalContent();
 
-        public static DataTable ListItems(int virtualTableId, ListingState state)
+        public static DataTable ListItems(int virtualTableId, ListingState state, ForeignKeyFilter filter = null)
         {
             var virtualTable = Schema.GetVirtualTable(virtualTableId);
             var table = (virtualTable == null) ? new DataTable() : new DataTable(virtualTable.StartingPhysicalTable);
@@ -86,7 +86,7 @@ namespace One.Net.BLL.Scaffold
             if (primaryKey.Length == 0)
                 throw new Exception("Tables without primary keys are not supported. Table:" + virtualTable.StartingPhysicalTable);
 
-            var relations = Schema.ListRelations(virtualTableId);
+            var relations = Schema.ListRegularRelations(virtualTableId);
 
             foreach (var relation in relations)
             {
@@ -149,6 +149,10 @@ namespace One.Net.BLL.Scaffold
     FROM " + virtualTable.StartingPhysicalTable;
             sql += innerJoinSql;
             sql += "\n    WHERE 1=1 " + virtualTable.Condition;
+            if (filter != null)
+            {
+                sql += "\n AND " + filter.ForeignKeyColumn + "=@PrimaryKeyValue";
+            }
             sql += @"
 ) 
 SELECT *, (SELECT MAX(RowNumber) FROM ItemsCTE) AllRecords 
@@ -158,9 +162,14 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var debugSql = sql + "\n--------------\n";
 
             table.ExtendedProperties["DataKeyNames"] = dataKeyNames.ToArray();
-            var prm = new SqlParameter[2];
+            var prm = new SqlParameter[3];
             prm[0] = new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex);
             prm[1] = new SqlParameter("@toRecordIndex", state.DbToRecordIndex);
+
+            if (filter != null)
+            {
+                prm[2] = new SqlParameter("@PrimaryKeyValue", filter.PrimaryKeyValue);
+            } 
 
             //try
             //{
@@ -342,7 +351,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 }
             }
 
-            var relations = Schema.ListRelations(virtualTableId);
+            var relations = Schema.ListRegularRelations(virtualTableId);
             foreach (var relation in relations)
             {
                 var foreignKeys = from e in virtualColumns
@@ -371,7 +380,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 var manyToManyColumn = new VirtualColumn();
                 manyToManyColumn.PartOfRelationId = relation.Id;
-                manyToManyColumn.BackendType = FieldType.ManyToMany;
+                manyToManyColumn.BackendType = relation.IsReverse ? FieldType.ToMany : FieldType.ManyToMany;
                 manyToManyColumn.Ordinal = i++;
                 manyToManyColumn.IsPartOfUserView = true;
                 manyToManyColumn.Name = relation.PrimaryKeyName;
@@ -571,6 +580,20 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return result > 0;
         }
 
+        public static DataTable ListItemsForRelation(int relationId, int primaryKey)
+        {
+            var result = new DataTable();
+            var relation = Schema.GetRelation(relationId);
+
+            if (!relation.IsReverse)
+                return null;
+            var virtualTableId = relation.ForeignKeyTableId;
+            var tempState = new ListingState { FirstRecordIndex = 0, RecordsPerPage = 20 };
+
+            var fkTable = Schema.GetVirtualTable(relation.ForeignKeyTableId);
+
+            return ListItems(virtualTableId, tempState, new ForeignKeyFilter { ForeignKeyColumn = "id_entity", PrimaryKeyValue = primaryKey });
+        }
 
         public static Dictionary<int, string> GetForeignKeyOptions(int relationId, string search, int limit)
         {
@@ -608,7 +631,18 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var relation = Schema.GetRelation(relationId);
 
             var sql = limit > 0 ? "SELECT TOP(" + limit + ") " : "SELECT ";
-            sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
+
+            if (relation.IsReverse)
+            {
+#warning this part may not be needed
+                sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.ForeignKeyTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
+            }
+            else
+            {
+                sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
+            }
+
+            
 
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql))
             {
