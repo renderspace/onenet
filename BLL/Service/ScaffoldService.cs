@@ -33,14 +33,14 @@ namespace One.Net.BLL.Service
             var i = 0;
             foreach (DataColumn col in items.Columns)
             {
-                tempTable.Columns.Add(new DataColumn {  ColumnName = "C" + i++ });
+                tempTable.Columns.Add(new DataColumn { ColumnName = col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++) });
             }
 
             DataRow row = tempTable.NewRow();
             i = 0;
             foreach (DataColumn col in items.Columns)
             {
-                row["C" + i++] = col.ColumnName;
+                row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = col.ColumnName;
             }
             tempTable.Rows.Add(row);
 
@@ -50,7 +50,7 @@ namespace One.Net.BLL.Service
                 i = 0;
                 foreach (DataColumn col in items.Columns)
                 {
-                    row["C" + i++] = item[col.ColumnName];
+                    row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = item[col.ColumnName];
                 }
                 tempTable.Rows.Add(row);
             }

@@ -67,6 +67,7 @@ namespace One.Net.BLL.Scaffold
                 {
                     field.Ordinal = i++;
                     // always select PK
+                    column.ExtendedProperties.Add("PK", true);
                     column.ReadOnly = true;
                     mainSql += field.FQName + ", ";
                     cteFieldsList += field.Name + ", ";
