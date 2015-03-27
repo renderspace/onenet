@@ -20,5 +20,21 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListItemsForRelation?relationId={relationId}&primaryKey={primaryKey}")]
         [Description("ListItemsForRelation(int relationId, int primaryKey)")]
         List<SerializableJsonDictionary<string, string>> ListItemsForRelation(int relationId, int primaryKey);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, 
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetItem?virtualTableId={virtualTableId}&primaryKey={primaryKey}")]
+        [Description(" public DTOItem GetItem(int virtualTableId, int primaryKey)")]
+        DTOItem GetItem(int virtualTableId, int primaryKey);
+
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "ChangeItem?vtId={virtualTableId}&pk={primaryKey}")]
+        [Description("bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey)")]
+        bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetForeignKeyOptions?virtualTableId={virtualTableId}&columnId={columnId}&limit={limit}")]
+        [Description("public List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit)")]
+        List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit);
     }
 }

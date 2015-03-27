@@ -27,6 +27,32 @@ namespace One.Net.BLL.Scaffold.Model
         
         public string Name { get; set; }
 
+        public string Hint
+        {
+            get
+            {
+                if (FriendlyName.Length > 2)
+                {
+                    return FriendlyName.Substring(0, 3) + " " + BackendType.ToString();
+                }
+                else
+                {
+                    return "Hint" + " " + BackendType.ToString();
+                }
+            }
+        }
+
+        public string InputClientId
+        {
+            get
+            {
+                //if (BackendType == FieldType.ManyToMany ||BackendType == FieldType.ManyToManySuggest)
+                //    return "sel_" + VirtualTableId + "_" + Id;
+
+                return "inp_" + VirtualTableId + "_" + Id;
+            }
+        }
+
 
 
         private string friendlyName = "";
@@ -110,6 +136,7 @@ namespace One.Net.BLL.Scaffold.Model
 
         public string ValueString { get; set; }
         public int ValueInteger { get; set; }
+        public long ValueLong { get; set; }
         public List<int> ValueIntegerList { get; set; }
         public SqlDateTime ValueDateTime { get; set; }
         public TimeSpan ValueTime { get; set; }
@@ -202,6 +229,7 @@ namespace One.Net.BLL.Scaffold.Model
 
         public string NewValueString { get; set; }
         public int NewValueInteger { get; set; }
+        public long NewValueLong { get; set; }
         public List<int> NewValueIntegerList { get; set; }
         public DateTime NewValueDateTime { get; set; }
         public TimeSpan NewValueTime { get; set; }
