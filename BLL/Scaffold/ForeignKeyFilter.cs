@@ -8,7 +8,7 @@ namespace One.Net.BLL.Scaffold
 {
     public class ForeignKeyFilter
     {
-        public string ForeignKeyColumn { get; set; }
+        public string PrimaryKeySourceTableName { get; set; }
         public int PrimaryKeyValue { get; set; }
     }
 }
