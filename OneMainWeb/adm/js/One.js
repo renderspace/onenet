@@ -550,6 +550,29 @@ $(document).ready(function () {
         }
     });
 
+    $('#to-many-modal').on('shown.bs.modal', function (e) {
+        var button = e.relatedTarget;
+        if (button == null) {
+            return false;
+        }
+       
+        var pk = $(button).data('pk');
+        var relationId = $(button).data('relation-id');
+        var forceFkValue = $(button).data('force-fk-value');
+        var forceFkColumn = $(button).data('force-fk-column');
+        trace("pk:" + pk);
+        trace("relationId:" + relationId);
+        trace("forceFkValue:" + forceFkValue);
+        trace("forceFkColumn:" + forceFkColumn);
+
+        var me = $(this);
+
+    });
+
+    
+
+
+
     $('#content-template-modal').on('shown.bs.modal', function (e) {
         var button = e.relatedTarget;
         if (button == null) {
@@ -660,12 +683,20 @@ $(document).ready(function () {
                 type: "GET",
                 success: function (data) {
                     var tbl_body = "<table  class=\"table\">";
-                    $.each(data, function () {
+                    $.each(data, function (index) {
                         var tbl_row = "";
                         $.each(this, function (k, v) {
                             tbl_row += "<td>" + v + "</td>";
                         })
-                        tbl_body += "<tr>" + tbl_row + "</tr>";
+                        tbl_body += "<tr>" + tbl_row + '<td>';
+                        if (index > 0) {
+                            tbl_body += '<a data-ck="true" data-relation-id="' + relationId + '" data-pk="' + this.PK + '" data-force-fk-value="' + pk + '" data-force-fk-column="' + "" + 
+                            '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
+                            '<span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
+                        }
+                        else {
+                            tbl_body += '</td></tr>';
+                        }
                     })
                     $me.html(tbl_body + "</table>");
                 },

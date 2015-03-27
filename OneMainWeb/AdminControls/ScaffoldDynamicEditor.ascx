@@ -11,3 +11,40 @@
             </div>
     </div>
 </div>
+
+
+<div class="modal" id="to-many-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-backdrop in"></div>    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <input type="hidden" class="j_control_language_id" />
+                <input type="hidden" class="j_control_content_id" />
+                <input type="hidden" class="j_control_file_id" />
+                
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Mijav</label> 
+                    <div class="col-sm-3">
+                        <span class="j_control_language"></span>
+                    </div>
+                    <div class="col-sm-3 j_control_file">
+                   
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <a href="#" Class="btn btn-success">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
