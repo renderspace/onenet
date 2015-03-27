@@ -213,8 +213,15 @@ namespace OneMainWeb.AdminControls
                     case FieldType.ToMany:
                         // TODO check if this is a new item and display warning in that case
 
-                        var literalForToMany = new Literal { Text = PrimaryKeys[0].ToString() + " " + column.PartOfRelationId + 
-                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + "\" data-pk=\"" + PrimaryKeys[0].ToString() + "\"></div>" };
+                        var toMany = IsInsert ? "<div class=\"alert alert-warning\" role=\"alert\">You need to save the item before you can edit this field.</div>" : 
+                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + "\" data-pk=\"" + PrimaryKeys[0].ToString() + "\"></div>";
+
+                        var literalForToMany = new Literal
+                        {
+                            Text = PrimaryKeys[0].ToString() + " " + column.PartOfRelationId + toMany
+                             };
+
+                        
                         PanelRight.Controls.Add(literalForToMany);
                         PanelRight.CssClass += " jumbotron jumbo-less-padding";
                         PanelField.Controls.Add(PanelRight);

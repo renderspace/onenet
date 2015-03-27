@@ -151,7 +151,15 @@ namespace One.Net.BLL.Scaffold
             sql += "\n    WHERE 1=1 " + virtualTable.Condition;
             if (filter != null)
             {
-                sql += "\n AND " + filter.ForeignKeyColumn + "=@PrimaryKeyValue";
+                var foreignKeyColumnName = PhysicalSchema.GetForeignKeyColumnName(filter.PrimaryKeySourceTableName, virtualTable.StartingPhysicalTable);
+                if (!string.IsNullOrWhiteSpace(foreignKeyColumnName))
+                {
+                    sql += "\n AND " + foreignKeyColumnName + "=@PrimaryKeyValue";
+                }
+                else
+                {
+                    throw new Exception("foreignKeyColumnName not found. Probably FK is missing in database. PK table: " + filter.PrimaryKeySourceTableName + " FK table: " + virtualTable.StartingPhysicalTable);
+                }
             }
             sql += @"
 ) 
@@ -162,7 +170,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var debugSql = sql + "\n--------------\n";
 
             table.ExtendedProperties["DataKeyNames"] = dataKeyNames.ToArray();
-            var prm = new SqlParameter[3];
+            var prm = new SqlParameter[filter != null ? 3 : 2];
             prm[0] = new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex);
             prm[1] = new SqlParameter("@toRecordIndex", state.DbToRecordIndex);
 
@@ -592,7 +600,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             var fkTable = Schema.GetVirtualTable(relation.ForeignKeyTableId);
 
-            return ListItems(virtualTableId, tempState, new ForeignKeyFilter { ForeignKeyColumn = "id_entity", PrimaryKeyValue = primaryKey });
+            return ListItems(virtualTableId, tempState, new ForeignKeyFilter { PrimaryKeySourceTableName = relation.PrimaryKeySourceTableName, PrimaryKeyValue = primaryKey });
         }
 
         public static Dictionary<int, string> GetForeignKeyOptions(int relationId, string search, int limit)
@@ -629,20 +637,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
         {
             var result = new Dictionary<int, string>();
             var relation = Schema.GetRelation(relationId);
+            if (relation.IsReverse)
+                return null;
 
             var sql = limit > 0 ? "SELECT TOP(" + limit + ") " : "SELECT ";
-
-            if (relation.IsReverse)
-            {
-#warning this part may not be needed
-                sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.ForeignKeyTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
-            }
-            else
-            {
-                sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
-            }
-
-            
+            sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;
 
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql))
             {

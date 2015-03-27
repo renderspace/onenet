@@ -259,5 +259,20 @@ namespace One.Net.BLL.Scaffold
             }
             return result;
         }
+
+        internal static string GetForeignKeyColumnName(string primaryKeySourceTableName, string foreignKeyTableName)
+        {
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.StoredProcedure, "[dbo].[sp_fkeys]",
+               new SqlParameter("@pktable_name", SqlHelper.GetTableQualifier(primaryKeySourceTableName))))
+            {
+                while (reader.Read())
+                {
+
+                    if ((string)reader["FKTABLE_NAME"] == SqlHelper.GetTableQualifier(foreignKeyTableName))
+                        return (string)reader["FKCOLUMN_NAME"];
+                }
+            }
+            return null;
+        }
     }
 }
