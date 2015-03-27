@@ -556,16 +556,113 @@ $(document).ready(function () {
             return false;
         }
        
-        var pk = $(button).data('pk');
+        var primaryKey = $(button).data('pk');
         var relationId = $(button).data('relation-id');
         var forceFkValue = $(button).data('force-fk-value');
         var forceFkColumn = $(button).data('force-fk-column');
-        trace("pk:" + pk);
+        trace("pk:" + primaryKey);
         trace("relationId:" + relationId);
         trace("forceFkValue:" + forceFkValue);
         trace("forceFkColumn:" + forceFkColumn);
 
+        var virtualTableId = 14;
+
         var me = $(this);
+
+        trace("ItemEditor bind to: " + virtualTableId);
+
+        $.ajax({
+            url: "/ScaffoldService/GetItem",
+            data: { virtualTableId: virtualTableId, primaryKey: primaryKey },
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                var idx = 0;
+                if (data == null) {
+                    // "<code>Item doesn't exists or you don't have the rights.</code>");
+                    return false;
+                }
+
+                $.each(data.Columns, function (k, v) {
+                    $(".form-horizontal", me).append('<div class="form-group"><label class="col-sm-3 control-label">' + v.FriendlyName + '</label><div class="col-sm-9" id="' + v.InputId.substring(1) + '"></div></div>');
+
+                    if (v.BackendType == "OneToMany") {
+                        populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
+                            trace("OneToMany selected value:" + ui.item.id);
+                            $(v.InputId).val(ui.item.id);
+                            return true;
+                        });
+                    } else if (v.BackendType == "ManyToMany") {
+                        populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
+                            trace(ui.item);
+                            $(v.InputId).append($('<option>', {
+                                value: ui.item.id,
+                                text: ui.item.label
+                            }));
+                            return true;
+                        });
+                    } else if (v.BackendType == "Calendar") {
+                        $(v.InputId).datetimepicker();
+                    } else if (v.BackendType == "DateOnly") {
+                        $(v.InputId).datepicker();
+                    } else if (v.BackendType == "TimeOnly") {
+                        $(v.InputId).timepicker();
+                    } else {
+                        trace("m" + v.InputId + " " + v.Value);
+                        $(v.InputId).append('<input type="text" class="form-control" />');
+                        $(v.InputId + " input").val(v.Value);
+                    }
+                });
+                $(".form-header h2").html(data.FriendlyName);
+                $(".form-header p").html(data.Description);
+                $("#submit_vt_" + virtualTableId).on('click', function (e) {
+                    trace("Saving virtual table ID: " + virtualTableId);
+
+                    var json = {
+                        Columns: {}/*,
+                        __type: "DTOItem" */
+                    };
+                    $.each(data.Columns, function (k, v) {
+                        if ($(v.InputId) != null) {
+                            json.Columns[v.FQName] = {};
+                            json.Columns[v.FQName]['FQName'] = v.FQName;
+                            json.Columns[v.FQName]['InputId'] = v.InputId;
+                            if (v.BackendType == "ManyToMany") {
+                                trace(v.InputId + " > option");
+                                json.Columns[v.FQName]['Value'] = "";
+                                var items = $(v.InputId + " > option").map(function () {
+                                    json.Columns[v.FQName]['Value'] += $(this).val() + ",";
+                                });
+                            } else {
+                                json.Columns[v.FQName]['Value'] = $(v.InputId).val();
+                            }
+                        }
+                        else {
+                            trace('Missing ' + v.FQName + ' ' + v.InputId);
+                        }
+                    });
+                    $.ajax({
+                        url: "/ScaffoldService/ChangeItem",
+                        data: JSON.stringify({ item: json, virtualTableId: virtualTableId, primaryKey: primaryKey }),
+                        dataType: "json",
+                        type: "POST",
+                        cache: false,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            trace("ChangeItem success");
+                            trace(data);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            trace("ChangeItem Error submitting. Here is original JSON:");
+                            trace(json);
+                            trace(jqXHR);
+                        }
+                    });
+                    return false;
+                });
+            }
+        });
 
     });
 
@@ -740,3 +837,48 @@ $(function () {
 		} 
 	});
 })
+
+SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 30;
+
+function populateForeignKeyOptions (virtualTableId, v, whenSelected) {
+    $.ajax({
+        url: "/ScaffoldService/GetForeignKeyOptions",
+        data: { virtualTableId: virtualTableId, columnId: v.Id, limit: SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT },
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            var optionsHtml = "";
+            var noOfItems = 0;
+            if (data.length == SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT) {
+                $(v.InputId + 's').hide();
+                $(v.InputId + 'a').removeClass('hide');
+                $(v.InputId + 'a').autocomplete({
+                    source: '/_ashx/BambooOneToManyData.ashx?virtualTableId=' + virtualTableId + '&columnId=' + v.Id,
+                    select: function (event, ui) {
+                        trace("autocomplete: " + ui.item.id);
+                        return whenSelected(event, ui);
+                    }
+                });
+            } else {
+                $.each(data, function (k, v) {
+                    optionsHtml += '<option value="' + k + '">' + v.Value + '</option>';
+                    noOfItems++;
+                });
+                $(v.InputId + 's').append(optionsHtml);
+                $(v.InputId + 's').change(function (event) {
+                    trace("select changed to: " + $(this).val() + "/" + $(this).children("option").filter(":selected").text());
+                    var ui = {
+                        item: {
+                            id: $(this).val(),
+                            label: $(this).children("option").filter(":selected").text()
+                        }
+                    };
+                    trace("select changed to: " + ui.item.id + "/" + ui.item.label);
+                    return whenSelected(event, ui);
+                });
+            }
+        },
+        error: function () { alert("OneToMany"); }
+    });
+}
