@@ -391,10 +391,15 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 manyToManyColumn.PartOfRelationId = relation.Id;
                 manyToManyColumn.BackendType = relation.IsReverse ? FieldType.ToMany : FieldType.ManyToMany;
                 manyToManyColumn.Ordinal = i++;
-                manyToManyColumn.IsPartOfUserView = true;
+                manyToManyColumn.IsPartOfUserView = false;
                 manyToManyColumn.Name = relation.PrimaryKeyName;
                 manyToManyColumn.VirtualTableName = relation.ForeignKeyTableName;
                 manyToManyColumn.VirtualTableId = relation.ForeignKeyTableId;
+                if (relation.IsReverse)
+                {
+                    manyToManyColumn.ForeignKeyColumnName = PhysicalSchema.GetForeignKeyColumnName(virtualTable.StartingPhysicalTable, relation.ForeignKeyTableName);
+                    manyToManyColumn.ForeignTableName = relation.ForeignKeyTableName;
+                }
                 item.Columns.Add(manyToManyColumn.FQName, manyToManyColumn);
             }
 

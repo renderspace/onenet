@@ -36,11 +36,11 @@ namespace One.Net.BLL.Service
                 var virtualTable = Schema.GetVirtualTable(virtualTableId);
                 result = new DTOItem { FriendlyName = virtualTable.FriendlyName };
                 result.Columns = new List<DTOVirtualColumn>();
-                /*
-                foreach (var c in virtualTable.EditableFields)
+
+                foreach (var c in virtualTable.VirtualColumns)
                 {
-                    //result.Columns.Add(c.Id, new DTOVirtualColumn(c));
-                }*/
+                    result.Columns.Add(new DTOVirtualColumn(c));
+                }
             }
             else
             {

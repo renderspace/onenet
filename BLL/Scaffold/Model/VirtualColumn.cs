@@ -18,12 +18,14 @@ namespace One.Net.BLL.Scaffold.Model
         public int VirtualTableId { get; set; }
         public string VirtualTableName { get; set; }
         public string PrimaryKeyTableName { get; set; }
+
+        public string ForeignKeyColumnName { get; set; }
+        public string ForeignTableName { get; set; }
+
         public int PartOfRelationId { get; set; }
 
         public bool ShowOnList { get; set; }
         public bool IsWysiwyg { get; set; }
-
-        
         
         public string Name { get; set; }
 
