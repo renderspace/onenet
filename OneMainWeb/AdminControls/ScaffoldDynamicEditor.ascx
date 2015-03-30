@@ -27,7 +27,7 @@
                 <input type="hidden" class="j_control_file_id" />
                 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Mijav</label> 
+                    <label class="col-sm-3 control-label">Modal window for item edit</label> 
                     <div class="col-sm-3">
                         <span class="j_control_language"></span>
                     </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <a href="#" Class="btn btn-success">Save</a>
+                <a href="#" Class="btn btn-success">Save & Close</a>
             </div>
         </div>
     </div>
