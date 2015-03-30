@@ -794,7 +794,7 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
 
     var me = $(this);
 
-    trace("ItemEditor bind toooooooooooooooooo: " + virtualTableId);
+    trace("ItemEditor bind to: " + virtualTableId);
 
     $.ajax({
         url: "/ScaffoldService/GetItem",
@@ -864,7 +864,7 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
     trace("relationId: " + relationId);
 
     
-    var json = {
+    var json ={ 
         Columns: {}/*, __type: "DTOItem" */
     };
     /*
