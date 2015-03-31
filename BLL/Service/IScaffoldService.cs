@@ -27,14 +27,26 @@ namespace One.Net.BLL.Service
         [Description(" public DTOItem GetItem(int virtualTableId, int primaryKey)")]
         DTOItem GetItem(int virtualTableId, int primaryKey);
 
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json,
+        [WebInvoke(Method = "POST", 
+            RequestFormat = WebMessageFormat.Json, 
+            ResponseFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.Bare,
-            UriTemplate = "ChangeItem?vtId={virtualTableId}&pk={primaryKey}")]
+            UriTemplate = "ChangeItem?virtualTableId={virtualTableId}&primaryKey={primaryKey}")]
         [Description("bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey)")]
-        bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey);
+        bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey); //
 
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetForeignKeyOptions?virtualTableId={virtualTableId}&columnId={columnId}&limit={limit}")]
         [Description("public List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit)")]
         List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit);
+
+
+        /*
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
+            UriTemplate = "Demo")]
+        [Description("bool Demo(string item, int virtualTableId, int primaryKey)")]
+        bool Demo(string item, int virtualTableId, int primaryKey); */
     }
 }

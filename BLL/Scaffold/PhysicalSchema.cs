@@ -269,7 +269,7 @@ namespace One.Net.BLL.Scaffold
                 {
 
                     if ((string)reader["FKTABLE_NAME"] == SqlHelper.GetTableQualifier(foreignKeyTableName))
-                        return (string)reader["FKCOLUMN_NAME"];
+                        return "[" + (string)reader["FKTABLE_OWNER"] + "].[" + (string)reader["FKTABLE_NAME"] + "].[" + (string)reader["FKCOLUMN_NAME"];
                 }
             }
             return null;

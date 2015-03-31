@@ -87,8 +87,10 @@ namespace One.Net.BLL.Service
             return ConvertDataTableToDictionary(tempTable);
         }
 
-        public bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey)
+        public bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey) //DTOItem
         {
+            //var item = JsonConvert.DeserializeObject <DTOItem>(itemm);
+
             var dataKeys = new OrderedDictionary();
             dataKeys.Add("id", primaryKey);
 
@@ -99,44 +101,41 @@ namespace One.Net.BLL.Service
             foreach (var c in item.Columns)
             {
                 var field = itemToSave.Columns[c.FQName];
-                if ("#" + field.InputClientId == c.InputId)
+                switch (field.BackendType)
                 {
-                    switch (field.BackendType)
-                    {
-                        case FieldType.Integer:
-                            field.ValueInteger = int.Parse(c.Value);
-                            field.ValueLong = long.Parse(c.Value);
-                            break;
-                        case FieldType.Decimal:
-                            field.ValueDecimal = decimal.Parse(c.Value);
-                            field.ValueDouble = double.Parse(c.Value);
-                            break;
-                        case FieldType.SingleText:
-                            field.ValueString = c.Value;
-                            break;
-                        case FieldType.Calendar:
-                            if (!string.IsNullOrEmpty(c.Value))
-                                field.ValueDateTime = DateTime.Parse(c.Value, CultureInfo.CurrentCulture);
-                            else
-                                field.ValueDateTime = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
-                            break;
-                        case FieldType.Checkbox:
-                            var val = false;
-                            if (bool.TryParse(c.Value, out val))
-                            {
-                                field.ValueBoolean = val;
-                            }
-                            break;
-                        case FieldType.OneToMany:
-                            field.ValueInteger = int.Parse(c.Value);
-                            break;
-                        case FieldType.ManyToMany:
-                            var rawValue = c.Value.TrimEnd(',', ' ');
-                            var values = rawValue.Split(',');
-                            break;
-                        default:
-                            break;
-                    }
+                    case FieldType.Integer:
+                        field.NewValueInteger = int.Parse(c.Value);
+                        field.NewValueLong = long.Parse(c.Value);
+                        break;
+                    case FieldType.Decimal:
+                        field.NewValueDecimal = decimal.Parse(c.Value);
+                        field.NewValueDouble = double.Parse(c.Value);
+                        break;
+                    case FieldType.SingleText:
+                        field.NewValueString = c.Value;
+                        break;
+                    case FieldType.Calendar:
+                        if (!string.IsNullOrEmpty(c.Value))
+                            field.NewValueDateTime = DateTime.Parse(c.Value, CultureInfo.CurrentCulture);
+                        else
+                            field.NewValueDateTime = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+                        break;
+                    case FieldType.Checkbox:
+                        var val = false;
+                        if (bool.TryParse(c.Value, out val))
+                        {
+                            field.NewValueBoolean = val;
+                        }
+                        break;
+                    case FieldType.OneToMany:
+                        field.NewValueInteger = int.Parse(c.Value);
+                        break;
+                    case FieldType.ManyToMany:
+                        var rawValue = c.Value.TrimEnd(',', ' ');
+                        var values = rawValue.Split(',');
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -210,13 +209,13 @@ public class DTOVirtualTable
     }
 
 
-    [DataMember(Order = 1), JsonProperty]
+    [DataMember(Order = 1, IsRequired = false), JsonProperty]
     public int Id { get; set; }
 
-    [DataMember(Order = 2), JsonProperty]
+    [DataMember(Order = 2, IsRequired = false), JsonProperty]
     public string Description { get; set; }
 
-    [DataMember(Order = 2), JsonProperty]
+    [DataMember(Order = 3, IsRequired = false), JsonProperty]
     public string FriendlyName { get; set; }
 
     public List<DTOVirtualColumn> VirtualColumns { get; set; }
@@ -241,27 +240,29 @@ public class DTOVirtualColumn
         InputId = "#" + virtualColumn.InputClientId;
     }
 
-    [DataMember(Order = 1), JsonProperty]
+    [DataMember(Order = 1, IsRequired=false), JsonProperty]
     public int Id { get; set; }
 
-    [DataMember(Order = 2), JsonProperty]
+    [DataMember(Order = 2, IsRequired = false), JsonProperty]
     public string FriendlyName { get; set; }
-    public string FQName { get; set; }
 
-    [DataMember(Order = 3), JsonProperty]
+    [DataMember(Order = 3, IsRequired = false), JsonProperty]
     public string Value { get; set; }
 
-    [DataMember(Order = 4), JsonProperty]
+    [DataMember(Order = 4, IsRequired = false), JsonProperty]
     public string InputId { get; set; }
 
-    [DataMember(Order = 5), JsonProperty]
+    [DataMember(Order = 5, IsRequired = false), JsonProperty]
     public string BackendType { get; set; }
 
-    [DataMember(Order = 6), JsonProperty]
+    [DataMember(Order = 6, IsRequired = false), JsonProperty]
     public string Hint { get; set; }
 
-    [DataMember(Order = 7), JsonProperty]
+    [DataMember(Order = 7, IsRequired = false), JsonProperty]
     public bool IsRequired { get; set; }
+
+    [DataMember(Order = 8, IsRequired = false), JsonProperty]
+    public string FQName { get; set; }
 }
 
 [Serializable]
@@ -278,7 +279,7 @@ public class DTOItem
 
     // public List<string> PrimaryKeys { get; set; }
 
-    [DataMember(Order = 2), JsonProperty]
+    [DataMember(Order = 2, IsRequired=true), JsonProperty]
     public List<DTOVirtualColumn> Columns { get; set; }
 
     public DTOItem(EditableItem item)

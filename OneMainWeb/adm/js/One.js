@@ -14,7 +14,12 @@ function trace(msg, style) {
 function logError(XMLHttpRequest, textStatus, errorThrown) {
     var errorToLog = "textStatus: " + textStatus + " errorThrown: " + errorThrown;
     trace(errorToLog);
-    //    _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
+    trace(XMLHttpRequest);
+    bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
+    if (typeof (_gaq) !== 'undefined') {
+        _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
+    }
+        
 }
 
 function GetUrlParam( paramName )
@@ -737,8 +742,13 @@ $('.toMany').each(function () {
     var $me = $(this);
     var relationId = $me.data('relation-id');
     var pk = $me.data('pk');
+    var virtualTableId = $me.data('virtual-table-id');
+    var foreignKeyColumnName = $me.data('foreignKeyColumnName');
     trace(relationId);
     trace(pk);
+    trace(virtualTableId);
+    trace("foreignKeyColumnName;" + foreignKeyColumnName);
+    trace($me.data());
     if (relationId > 0) {
         $.ajax({
             url: "/ScaffoldService/ListItemsForRelation",
@@ -755,7 +765,11 @@ $('.toMany').each(function () {
                     })
                     tbl_body += "<tr>" + tbl_row + '<td>';
                     if (index > 0) {
-                        tbl_body += '<a data-ck="true" data-relation-id="' + relationId + '" data-pk="' + this.PK + '" data-force-fk-value="' + pk + '" data-force-fk-column="' + "" +
+                        tbl_body += '<a data-ck="true" data-relation-id="' + relationId +
+                            '" data-pk="' + this.PK +
+                            '" data-force-fk-value="' + pk +
+                            '" data-force-fk-column="' + foreignKeyColumnName +
+                            '" data-virtual-table-id="' + virtualTableId +
                         '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
                         '<span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                     }
@@ -785,16 +799,17 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
     var relationId = $(button).data('relation-id');
     var forceFkValue = $(button).data('force-fk-value');
     var forceFkColumn = $(button).data('force-fk-column');
+    var virtualTableId = $(button).data('virtual-table-id');
+
     trace("pk:" + primaryKey);
     trace("relationId:" + relationId);
     trace("forceFkValue:" + forceFkValue);
     trace("forceFkColumn:" + forceFkColumn);
-
-    var virtualTableId = 14;
+    trace("virtualTableId:" + virtualTableId);
 
     var me = $(this);
 
-    trace("ItemEditor bind to: " + virtualTableId);
+    trace("ItemEditor bind to virtualTableId: " + virtualTableId);
 
     $.ajax({
         url: "/ScaffoldService/GetItem",
@@ -810,13 +825,21 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
             }
             $(".form-horizontal", me).html('');
             $('#to-many-modal a.btn-success').data('relation-id', relationId);
-            trace("relationId kind of ADDED");
-            trace("virtual table id is HARDCODED; FIX THAT!");
+            $('#to-many-modal a.btn-success').data('virtual-table-id', virtualTableId);
+            $('#to-many-modal a.btn-success').data('pk', primaryKey);
+            $('#to-many-modal a.btn-success').data('force-fk-value', forceFkValue);
+            $('#to-many-modal a.btn-success').data('force-fk-column', forceFkColumn);
 
             $.each(data.Columns, function (k, v) {
-                $(".form-horizontal", me).append('<div class="form-group"><label class="col-sm-3 control-label">' + v.FriendlyName + '</label><div class="col-sm-9" id="' + v.InputId.substring(1) + '"></div></div>');
-
+                $(".form-horizontal", me).append('<div class="form-group"><label class="col-sm-3 control-label">' + v.FriendlyName +
+                    '</label><div class="col-sm-9" id="' + v.InputId.substring(1) +
+                    '" data-backend-type="' + v.BackendType +
+                    '" data-fq-name="' + v.FQName +
+                    '"></div></div>');
+                
                 if (v.BackendType == "OneToMany") {
+                    trace("mihjv " + v.FriendlyName);
+                    trace("mihjv " + v.FQName);
                     populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
                         trace("OneToMany selected value:" + ui.item.id);
                         $(v.InputId).val(ui.item.id);
@@ -859,37 +882,70 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
 
 
 $('#to-many-modal a.btn-success').on('click', function (e) {
-
     var relationId = $(this).data('relation-id');
-    trace("relationId: " + relationId);
-
-    
-    var json ={ 
-        Columns: {}/*, __type: "DTOItem" */
+    var virtualTableId = $(this).data('virtual-table-id');
+    var pk = $(this).data('pk');
+    var forceFkValue = $(this).data('force-fk-value');
+    var forceFkColumn = $(this).data('force-fk-column');
+    trace("Save item called with: ");
+    trace($(this).data());
+    var json = {
+        Columns: []/*, __type: "DTOItem" */
     };
-    /*
-    $.each(data.Columns, function (k, v) {
-        if ($(v.InputId) != null) {
-            json.Columns[v.FQName] = {};
-            json.Columns[v.FQName]['FQName'] = v.FQName;
-            json.Columns[v.FQName]['InputId'] = v.InputId;
-            if (v.BackendType == "ManyToMany") {
-                trace(v.InputId + " > option");
-                json.Columns[v.FQName]['Value'] = "";
-                var items = $(v.InputId + " > option").map(function () {
-                    json.Columns[v.FQName]['Value'] += $(this).val() + ",";
+    if (relationId > 0 && virtualTableId > 0 && forceFkColumn !== undefined && forceFkColumn.length > 0) {
+        var columnFk = {};
+        columnFk['FQName'] = forceFkColumn;
+        columnFk['Value'] = forceFkValue;
+        json.Columns.push(columnFk);
+    }
+    else {
+        trace("#to-many-modal was called with incorrect parameteres");
+    }
+    $("#to-many-modal .form-horizontal div div").each(function (i, v) {
+        $v = $(v);
+
+        var $input = $("input", $v);
+        if ($input !== null || $input !== undefined) {
+            var backendType = $v.data("backend-type");
+            var fqName = $v.data("fq-name");
+
+            var cn = i;
+
+            var column = {};
+
+            column['FQName'] = fqName;
+
+            column['InputId'] = $v.attr('id');
+            if (backendType == "ManyToMany") {
+                trace($v.attr('id') + " > option");
+                column['Value'] = "";
+                var items = $($v.attr('id') + " > option").map(function () {
+                    column['Value'] += $(this).val() + ",";
                 });
-            } else {
-                json.Columns[v.FQName]['Value'] = $(v.InputId).val();
+            } else if (backendType == "Checkbox") {
+                column['Value'] = $input.prop('checked');
+                trace("Checkbox");
             }
-        }
-        else {
-            trace('Missing ' + v.FQName + ' ' + v.InputId);
+            else {
+                column['Value'] = $input.val();
+            }
+
+            json.Columns.push(column);
+            
         }
     });
+
+    /*
+    working demo:
+    url: "/ScaffoldService/Demo?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
+        data: JSON.stringify({ virtualTableId: virtualTableId, primaryKey: pk, item: JSON.stringify(json) }),
+    */
+    //data: JSON.stringify({ item: json, virtualTableId: virtualTableId, primaryKey: pk }),
+    /*url: "/ScaffoldService/ChangeItem?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
+        data: JSON.stringify( json ),*/
     $.ajax({
-        url: "/ScaffoldService/ChangeItem",
-        data: JSON.stringify({ item: json, virtualTableId: virtualTableId, primaryKey: primaryKey }),
+        url: "/ScaffoldService/ChangeItem?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
+        data: JSON.stringify(json),
         dataType: "json",
         type: "POST",
         cache: false,
@@ -898,11 +954,6 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
             trace("ChangeItem success");
             trace(data);
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            trace("ChangeItem Error submitting. Here is original JSON:");
-            trace(json);
-            trace(jqXHR);
-        }
-    }); */
-    return false;
+        error: logError 
+    });
 });

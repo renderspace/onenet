@@ -214,8 +214,13 @@ namespace OneMainWeb.AdminControls
                         // TODO check if this is a new item and display warning in that case
 
                         var toMany = IsInsert ? "<div class=\"alert alert-warning\" role=\"alert\">You need to save the item before you can edit this field.</div>" :
-                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + "\" data-pk=\"" + PrimaryKeys[0].ToString() + 
-                            "\" data-foreign-key-column-name=\"" + column.ForeignKeyColumnName + "\" data-foreign-key-table-name=\"" + column.ForeignTableName + "\"></div>";
+                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + 
+                            "\" data-pk=\"" + PrimaryKeys[0].ToString() + 
+                            "\" data-foreign-key-column-name=\"" + column.ForeignKeyColumnName + 
+                            "\" data-foreign-key-table-name=\"" + column.ForeignTableName + 
+                            "\" data-virtual-table-id=\"" + column.VirtualTableId + "\"></div>";
+
+                        
                         
                         var literalForToMany = new Literal
                         {
