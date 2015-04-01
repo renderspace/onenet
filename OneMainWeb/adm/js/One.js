@@ -837,15 +837,26 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     '" data-fq-name="' + v.FQName +
                     '"></div></div>');
                 
-                if (v.BackendType == "OneToMany") {
-                    trace("mihjv " + v.FriendlyName);
-                    trace("mihjv " + v.FQName);
-                    populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
-                        trace("OneToMany selected value:" + ui.item.id);
-                        $(v.InputId).val(ui.item.id);
-                        return true;
-                    });
+                if (v.BackendType == "Display") {
+                    $(v.InputId).append('<input type="text" class="form-control" readonly="true" />');
+                    $(v.InputId + " input").val(v.Value);
+                }
+                else if (v.BackendType == "OneToMany") {
+                    if (v.FQName == forceFkColumn) {
+                        trace("Got forced forceFkColumn");
+                        $(v.InputId).append('<input type="number" class="form-control digits" readonly="true" />');
+                        $(v.InputId + " input").val(v.Value);
+                    } else {
+                        trace("OneToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
+                        /* populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
+                            trace("OneToMany selected value:" + ui.item.id);
+                            $(v.InputId).val(ui.item.id);
+                            return true;
+                        });*/
+                    }
                 } else if (v.BackendType == "ManyToMany") {
+                    trace("ManyToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
+                    /*
                     populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
                         trace(ui.item);
                         $(v.InputId).append($('<option>', {
@@ -853,7 +864,7 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                             text: ui.item.label
                         }));
                         return true;
-                    });
+                    });*/
                 } else if (v.BackendType == "Calendar") {
                     $(v.InputId).datetimepicker();
                 } else if (v.BackendType == "DateOnly") {
@@ -934,15 +945,6 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
             
         }
     });
-
-    /*
-    working demo:
-    url: "/ScaffoldService/Demo?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
-        data: JSON.stringify({ virtualTableId: virtualTableId, primaryKey: pk, item: JSON.stringify(json) }),
-    */
-    //data: JSON.stringify({ item: json, virtualTableId: virtualTableId, primaryKey: pk }),
-    /*url: "/ScaffoldService/ChangeItem?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
-        data: JSON.stringify( json ),*/
     $.ajax({
         url: "/ScaffoldService/ChangeItem?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
         data: JSON.stringify(json),
