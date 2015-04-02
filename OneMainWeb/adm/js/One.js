@@ -310,10 +310,7 @@ $.validator.addMethod("absrelurl", function (value, element) {
     return this.optional(element) || /(http:\/)?(\/[\w\.\-]+)+\/?/.test(value);
 }, "Please enter valid URL");
 
-$('.ckeditor4').each(function (index) {
-    trace("CKEDITOR " + index + ": " + this.id);
-    replaceCKEditor(this.id);
-});
+
 
 function replaceCKEditor(id) {
     CKEDITOR.replace(id, {
@@ -366,6 +363,12 @@ CKEDITOR.dtd.$removeEmpty['i'] = false;
 
 
 $(document).ready(function () {
+
+    $('.ckeditor4').each(function (index) {
+        trace("CKEDITOR " + index + ": " + this.id);
+        replaceCKEditor(this.id);
+        trace(this.id);
+    });
 
     $("#form1").validate({
         onsubmit: false,
@@ -738,55 +741,74 @@ function populateForeignKeyOptions (virtualTableId, v, whenSelected) {
     });
 }
 
-$('.toMany').each(function () {
-    var $me = $(this);
-    var relationId = $me.data('relation-id');
-    var pk = $me.data('pk');
-    var virtualTableId = $me.data('virtual-table-id');
-    var foreignKeyColumnName = $me.data('foreignKeyColumnName');
-    trace(relationId);
-    trace(pk);
-    trace(virtualTableId);
-    trace("foreignKeyColumnName;" + foreignKeyColumnName);
-    trace($me.data());
-    if (relationId > 0) {
-        $.ajax({
-            url: "/ScaffoldService/ListItemsForRelation",
-            data: { relationId: relationId, primaryKey: pk },
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            type: "GET",
-            success: function (data) {
-                var tbl_body = "<table  class=\"table\">";
-                $.each(data, function (index) {
-                    var tbl_row = "";
-                    $.each(this, function (k, v) {
-                        tbl_row += "<td>" + v + "</td>";
+function loadAllToManyRelationships() {
+    $('.toMany').each(function () {
+        var $me = $(this);
+        var relationId = $me.data('relation-id');
+        var pk = $me.data('pk');
+        var virtualTableId = $me.data('virtual-table-id');
+        var foreignKeyColumnName = $me.data('foreignKeyColumnName');
+        var friendlyName = $me.data('friendly-name');
+        trace(relationId);
+        trace(pk);
+        trace(virtualTableId);
+        trace("foreignKeyColumnName;" + foreignKeyColumnName);
+        trace($me.data());
+        if (relationId > 0) {
+            $.ajax({
+                url: "/ScaffoldService/ListItemsForRelation",
+                data: { relationId: relationId, primaryKey: pk },
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    var tbl_body = "<table  class=\"table\">";
+                    $.each(data, function (index) {
+                        var tbl_row = "";
+                        $.each(this, function (k, v) {
+                            tbl_row += "<td>" + v + "</td>";
+                        })
+                        tbl_body += "<tr>" + tbl_row + '<td>';
+                        if (index > 0) {
+                            tbl_body += '<a data-ck="true" data-relation-id="' + relationId +
+                                '" data-pk="' + this.PK +
+                                '" data-force-fk-value="' + pk +
+                                '" data-force-fk-column="' + foreignKeyColumnName +
+                                '" data-virtual-table-id="' + virtualTableId +
+                                '" data-friendly-name="' + friendlyName +
+                            '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
+                            '<span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
+                        }
+                        else {
+                            tbl_body += '</td></tr>';
+                        }
                     })
-                    tbl_body += "<tr>" + tbl_row + '<td>';
-                    if (index > 0) {
-                        tbl_body += '<a data-ck="true" data-relation-id="' + relationId +
-                            '" data-pk="' + this.PK +
-                            '" data-force-fk-value="' + pk +
-                            '" data-force-fk-column="' + foreignKeyColumnName +
-                            '" data-virtual-table-id="' + virtualTableId +
-                        '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
-                        '<span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
-                    }
-                    else {
-                        tbl_body += '</td></tr>';
-                    }
-                })
-                $me.html(tbl_body + "</table>");
-                $me.append('<a data-ck="true" data-relation-id="' + relationId + '" data-force-fk-value="' + pk + '" data-force-fk-column="' + "" +
-                        '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
-                        '<span class="glyphicon glyphicon-plus"></span> Add</a>');
-            },
-            error: logError
-        });
-    }
+                    $me.html(tbl_body + "</table>");
+                    $me.append('<a data-ck="true" data-force-fk-value="' + pk +
+                                '" data-force-fk-column="' + foreignKeyColumnName +
+                                '" data-virtual-table-id="' + virtualTableId +
+                                '" data-friendly-name="' + friendlyName +
+                            '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
+                            '<span class="glyphicon glyphicon-plus"></span> Add</a>');
+                },
+                error: logError
+            });
+        }
+    });
+}
+
+$(function () {
+    loadAllToManyRelationships();
 });
 
+
+function endToManyModal(message) {
+    trace(message);
+    $('#to-many-modal').modal('hide');
+    $('#to-many-modal .form-horizontal').html('');
+    $('#to-many-modal a').removeData();
+    loadAllToManyRelationships();
+}
 
 
 $('#to-many-modal').on('shown.bs.modal', function (e) {
@@ -800,6 +822,7 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
     var forceFkValue = $(button).data('force-fk-value');
     var forceFkColumn = $(button).data('force-fk-column');
     var virtualTableId = $(button).data('virtual-table-id');
+    var friendlyName = $(button).data('friendly-name');
 
     trace("pk:" + primaryKey);
     trace("relationId:" + relationId);
@@ -820,15 +843,18 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
         success: function (data) {
             var idx = 0;
             if (data == null) {
-                // "<code>Item doesn't exists or you don't have the rights.</code>");
+                logError(null, null, "Item doesn't exists or you don't have the rights.");
                 return false;
             }
-            $(".form-horizontal", me).html('');
+            $(".form-horizontal", me).html('<div class="form-group"><h3 class="col-sm-3 control-label">' + friendlyName + '</h3></div>'); 
             $('#to-many-modal a.btn-success').data('relation-id', relationId);
             $('#to-many-modal a.btn-success').data('virtual-table-id', virtualTableId);
             $('#to-many-modal a.btn-success').data('pk', primaryKey);
             $('#to-many-modal a.btn-success').data('force-fk-value', forceFkValue);
             $('#to-many-modal a.btn-success').data('force-fk-column', forceFkColumn);
+
+            $('#to-many-modal a.btn-danger').data('virtual-table-id', virtualTableId);
+            $('#to-many-modal a.btn-danger').data('pk', primaryKey);
 
             $.each(data.Columns, function (k, v) {
                 $(".form-horizontal", me).append('<div class="form-group"><label class="col-sm-3 control-label">' + v.FriendlyName +
@@ -836,7 +862,7 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     '" data-backend-type="' + v.BackendType +
                     '" data-fq-name="' + v.FQName +
                     '"></div></div>');
-                
+                trace(v.BackendType);
                 if (v.BackendType == "Display") {
                     $(v.InputId).append('<input type="text" class="form-control" readonly="true" />');
                     $(v.InputId + " input").val(v.Value);
@@ -845,7 +871,7 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     if (v.FQName == forceFkColumn) {
                         trace("Got forced forceFkColumn");
                         $(v.InputId).append('<input type="number" class="form-control digits" readonly="true" />');
-                        $(v.InputId + " input").val(v.Value);
+                        $(v.InputId + " input").val(forceFkValue);
                     } else {
                         trace("OneToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
                         /* populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
@@ -891,6 +917,32 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
     });
 });
 
+$('#to-many-modal a.btn-danger').on('click', function (e) {
+    var virtualTableId = $(this).data('virtual-table-id');
+    var pk = $(this).data('pk');
+    if (pk > 0 && virtualTableId > 0) {
+        $.ajax({
+            url: "/ScaffoldService/DeleteItem?virtualTableId=" + virtualTableId + "&primaryKey=" + pk,
+            dataType: "json",
+            type: "GET",
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data == true) {
+                    endToManyModal("Successfully deleted");
+                } else {
+                    logError(null, null, "Could not delete the item.");
+                    trace(data);
+                }
+            },
+            error: logError
+        });
+    }
+    else {
+        logError(null, null, "Missing vtId and pk.");
+    }
+});
+
 
 $('#to-many-modal a.btn-success').on('click', function (e) {
     var relationId = $(this).data('relation-id');
@@ -903,6 +955,10 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
     var json = {
         Columns: []/*, __type: "DTOItem" */
     };
+    trace(pk);
+    if (pk == undefined)
+        pk = 0;
+
     if (relationId > 0 && virtualTableId > 0 && forceFkColumn !== undefined && forceFkColumn.length > 0) {
         var columnFk = {};
         columnFk['FQName'] = forceFkColumn;
@@ -940,9 +996,7 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
             else {
                 column['Value'] = $input.val();
             }
-
             json.Columns.push(column);
-            
         }
     });
     $.ajax({
@@ -953,8 +1007,12 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
         cache: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            trace("ChangeItem success");
-            trace(data);
+            if (data == true) {
+                endToManyModal("Item saved.");
+            } else {
+                logError(null, null, "Could not save the item.");
+                trace(data);
+            }
         },
         error: logError 
     });

@@ -146,11 +146,11 @@ namespace OneMainWeb.adm
             {
                 var row = table.NewRow();
                 row["Description"] = relation.Description;
-                row["FriendlyName"] = relation.Description;
+                row["FriendlyName"] = relation.FriendlyName;
                 row["DbType"] = "";
                 row["Id"] = relation.Id;
                 row["ColumnType"] = "virtual_relation";
-                row["ShowOnList"] = false;
+                row["ShowOnList"] = relation.ShowOnList;
                 row["IsWysiwyg"] = false;
                 row["IsMultiLanguageContent"] = false;
                 table.Rows.Add(row);
@@ -322,18 +322,35 @@ namespace OneMainWeb.adm
                 {
                     var idRaw = CmdDelete.CommandArgument.ToString(); // the command argument is given in {id, type} form in this case
                     var indexOfComma = idRaw.IndexOf(',');
+                    var type = idRaw.Substring(indexOfComma+1);
                     idRaw = idRaw.Replace(idRaw.Substring(indexOfComma), "");
                     int id = Int32.Parse(idRaw);
-                    VirtualColumn virtualColumn = Schema.GetVirtualColumn(id, table);
 
-                    if (virtualColumn != null)
+                    if (type == "virtual_column")
                     {
-                        virtualColumn.FriendlyName = TextBoxFriendlyName.Text;
-                        virtualColumn.ShowOnList = CheckBoxShowOnList.Checked;
-                        virtualColumn.IsWysiwyg = CheckBoxWysiwyg.Checked;
-                        virtualColumn.IsMultiLanguageContent = CheckBoxIsMultiLanguageContent.Checked;
-                        Schema.ChangeVirtualColumn(virtualColumn);
+                        var virtualColumn = Schema.GetVirtualColumn(id, table);
+
+                        if (virtualColumn != null)
+                        {
+                            virtualColumn.FriendlyName = TextBoxFriendlyName.Text;
+                            virtualColumn.ShowOnList = CheckBoxShowOnList.Checked;
+                            virtualColumn.IsWysiwyg = CheckBoxWysiwyg.Checked;
+                            virtualColumn.IsMultiLanguageContent = CheckBoxIsMultiLanguageContent.Checked;
+                            Schema.ChangeVirtualColumn(virtualColumn);
+                        }
                     }
+                    else if (type == "virtual_relation")
+                    {
+                        var relalation = Schema.GetRelation(id);
+                        if (relalation != null)
+                        {
+                            relalation.FriendlyName = TextBoxFriendlyName.Text;
+                            relalation.ShowOnList = CheckBoxShowOnList.Checked;
+                            Schema.ChangeRelation(relalation);
+                        }
+                    }
+
+                    
                 }
             }
         }

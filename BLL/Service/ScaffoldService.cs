@@ -26,29 +26,26 @@ namespace One.Net.BLL.Service
             return "ScaffoldService";
         }
 
+        public bool DeleteItem(int virtualTableId, int primaryKey)
+        {
+            var dataKeys = new OrderedDictionary();
+            dataKeys.Add("id", primaryKey);
+            var item = Data.GetItem(virtualTableId, dataKeys);
+            if (item == null)
+                return false;
+            return Data.DeleteItem(virtualTableId, dataKeys);
+        }
+             
+
         public DTOItem GetItem(int virtualTableId, int primaryKey)
         {
             var dataKeys = new OrderedDictionary();
             dataKeys.Add("id", primaryKey);
             DTOItem result = null;
-            if (primaryKey == 0)
-            {
-                var virtualTable = Schema.GetVirtualTable(virtualTableId);
-                result = new DTOItem { FriendlyName = virtualTable.FriendlyName };
-                result.Columns = new List<DTOVirtualColumn>();
-
-                foreach (var c in virtualTable.VirtualColumns)
-                {
-                    result.Columns.Add(new DTOVirtualColumn(c));
-                }
-            }
-            else
-            {
-                var item = Data.GetItem(virtualTableId, dataKeys);
-                if (item == null)
-                    return null;
-                result = new DTOItem(item);
-            }
+            var item = Data.GetItem(virtualTableId, dataKeys);
+            if (item == null)
+                return null;
+            result = new DTOItem(item);
             return result;
         }
 
@@ -62,14 +59,16 @@ namespace One.Net.BLL.Service
             var i = 0;
             foreach (DataColumn col in items.Columns)
             {
-                tempTable.Columns.Add(new DataColumn { ColumnName = col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++) });
+                if (col.ExtendedProperties["PK"] != null || (bool) col.ExtendedProperties["ShowOnList"] )
+                    tempTable.Columns.Add(new DataColumn { ColumnName = col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++) });
             }
 
             DataRow row = tempTable.NewRow();
             i = 0;
             foreach (DataColumn col in items.Columns)
             {
-                row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = col.ColumnName;
+                if (col.ExtendedProperties["PK"] != null || (bool)col.ExtendedProperties["ShowOnList"])
+                    row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = col.Caption;
             }
             tempTable.Rows.Add(row);
 
@@ -79,7 +78,8 @@ namespace One.Net.BLL.Service
                 i = 0;
                 foreach (DataColumn col in items.Columns)
                 {
-                    row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = item[col.ColumnName];
+                    if (col.ExtendedProperties["PK"] != null || (bool)col.ExtendedProperties["ShowOnList"])
+                        row[col.ExtendedProperties["PK"] != null ? "PK" : ("C" + i++)] = item[col.ColumnName];
                 }
                 tempTable.Rows.Add(row);
             }
@@ -89,10 +89,12 @@ namespace One.Net.BLL.Service
 
         public bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey) //DTOItem
         {
-            //var item = JsonConvert.DeserializeObject <DTOItem>(itemm);
-
             var dataKeys = new OrderedDictionary();
             dataKeys.Add("id", primaryKey);
+            if (primaryKey < 1)
+            {
+                dataKeys = null;
+            }
 
             var itemToSave = Data.GetItem(virtualTableId, dataKeys);
             if (itemToSave == null || item == null)

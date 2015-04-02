@@ -35,6 +35,11 @@ namespace One.Net.BLL.Service
         [Description("bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey)")]
         bool ChangeItem(DTOItem item, int virtualTableId, int primaryKey); //
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare,
+           UriTemplate = "DeleteItem?virtualTableId={virtualTableId}&primaryKey={primaryKey}")]
+        [Description(" public DTOItem GetItem(int virtualTableId, int primaryKey)")]
+        bool DeleteItem(int virtualTableId, int primaryKey);
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetForeignKeyOptions?virtualTableId={virtualTableId}&columnId={columnId}&limit={limit}")]
         [Description("public List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit)")]
         List<KeyValuePair<string, string>> GetForeignKeyOptions(int virtualTableId, int columnId, int limit);
