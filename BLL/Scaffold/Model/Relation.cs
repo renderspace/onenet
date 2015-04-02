@@ -8,6 +8,17 @@ namespace One.Net.BLL.Scaffold.Model
     public class Relation
     {
         public int Id { get; set; }
+        public bool ShowOnList { get; set; }
+
+        private string friendlyName = "";
+        public string FriendlyName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(friendlyName) ? Description : friendlyName;
+            }
+            set { friendlyName = value; }
+        }
 
         public int ForeignKeyTableId { get; set; }
         public string ForeignKeyTableName { get; set; }

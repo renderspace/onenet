@@ -55,6 +55,8 @@ CREATE TABLE [dbo].[_virtual_relation](
 	[pk_xref_virtual_table_id] [int] NULL,
 	[is_multilanguage_content] bit NOT NULL DEFAULT ((0)),
 	[is_reverse] bit NOT NULL CONSTRAINT DF__virtual_relation_is_reverse DEFAULT 0,
+	[friendly_name] nvarchar(100) NOT NULL CONSTRAINT DF__virtual_relation_friendly_name DEFAULT '',
+	[show_on_list] bit NOT NULL CONSTRAINT DF__virtual_relation_show_on_list DEFAULT 0,
  CONSTRAINT [PK_virtual_relation] PRIMARY KEY CLUSTERED  ( 	[id] ASC )
  WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]

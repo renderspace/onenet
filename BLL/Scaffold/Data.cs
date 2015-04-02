@@ -87,7 +87,7 @@ namespace One.Net.BLL.Scaffold
             if (primaryKey.Length == 0)
                 throw new Exception("Tables without primary keys are not supported. Table:" + virtualTable.StartingPhysicalTable);
 
-            var relations = Schema.ListRegularRelations(virtualTableId);
+            var relations = Schema.ListRelations(virtualTableId);
 
             foreach (var relation in relations)
             {
@@ -119,11 +119,12 @@ namespace One.Net.BLL.Scaffold
                 var column = new DataColumn
                 {
                     ColumnName = foreignKeyDisplayColumn.FQName,
-                    Caption = "FK Disp:" + relation.PrimaryKeyDisplayColumn,
+                    // Caption = "FK Disp:" + relation.PrimaryKeyDisplayColumn,
+                    Caption = relation.FriendlyName,
                     ReadOnly = true
                 };
                 // TODO: this was a hack
-                column.ExtendedProperties.Add("ShowOnList", true);
+                column.ExtendedProperties.Add("ShowOnList", relation.ShowOnList);
                 column.ExtendedProperties.Add("Relation", true);
                 table.Columns.Add(column);
             }
@@ -360,7 +361,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 }
             }
 
-            var relations = Schema.ListRegularRelations(virtualTableId);
+            var relations = Schema.ListRelations(virtualTableId);
             foreach (var relation in relations)
             {
                 var foreignKeys = from e in virtualColumns
@@ -378,6 +379,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 editableColumn.PartOfRelationId = relation.Id;
                 editableColumn.BackendType = FieldType.OneToMany;
                 editableColumn.Ordinal = i++;
+                editableColumn.FriendlyName = relation.FriendlyName;
                 if (!editableColumn.IsPartOfUserView)
                 {
                     editableColumn.IsPartOfUserView = true;
@@ -395,6 +397,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 manyToManyColumn.Name = relation.PrimaryKeyName;
                 manyToManyColumn.VirtualTableName = relation.ForeignKeyTableName;
                 manyToManyColumn.VirtualTableId = relation.ForeignKeyTableId;
+
+                var keyTable = Schema.GetVirtualTable(relation.ForeignKeyTableId);
+
+                //manyToManyColumn.FriendlyName = relation.FriendlyName;
+                manyToManyColumn.FriendlyName = keyTable.FriendlyName;
                 if (relation.IsReverse)
                 {
                     manyToManyColumn.ForeignKeyColumnName = PhysicalSchema.GetForeignKeyColumnName(virtualTable.StartingPhysicalTable, relation.ForeignKeyTableName);
@@ -643,8 +650,6 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
         {
             var result = new Dictionary<int, string>();
             var relation = Schema.GetRelation(relationId);
-            if (relation.IsReverse)
-                return null;
 
             var sql = limit > 0 ? "SELECT TOP(" + limit + ") " : "SELECT ";
             sql += relation.PrimaryKeyName + ", " + relation.PrimaryKeyDisplayColumn + " as DisplayColumn FROM " + relation.PrimaryKeySourceTableName + " ORDER BY " + relation.PrimaryKeyDisplayColumn;

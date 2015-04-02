@@ -211,10 +211,9 @@ namespace OneMainWeb.AdminControls
                 switch (column.BackendType)
                 {
                     case FieldType.ToMany:
-                        // TODO check if this is a new item and display warning in that case
-
                         var toMany = IsInsert ? "<div class=\"alert alert-warning\" role=\"alert\">You need to save the item before you can edit this field.</div>" :
-                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId + 
+                            "<div class=\"toMany\" data-relation-id=\"" + column.PartOfRelationId +
+                            "\" data-friendly-name=\"" + HttpUtility.HtmlEncode(column.FriendlyName) + 
                             "\" data-pk=\"" + PrimaryKeys[0].ToString() + 
                             "\" data-foreign-key-column-name=\"" + column.ForeignKeyColumnName + 
                             "\" data-foreign-key-table-name=\"" + column.ForeignTableName + 
@@ -222,10 +221,7 @@ namespace OneMainWeb.AdminControls
 
                         
                         
-                        var literalForToMany = new Literal
-                        {
-                            Text = PrimaryKeys[0].ToString() + " " + column.PartOfRelationId + toMany
-                             };
+                        var literalForToMany = new Literal { Text =  toMany };
 
                         
                         PanelRight.Controls.Add(literalForToMany);
@@ -589,7 +585,7 @@ jQuery.validator.addMethod(
             };
 
             if (column.IsWysiwyg)
-                Input6.CssClass += " ckeditor";
+                Input6.CssClass += " ckeditor4";
 
             panelField.Controls.Add(Input6);
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
@@ -620,7 +616,7 @@ jQuery.validator.addMethod(
             }
             Input6.CssClass = "form-control";
             if (column.IsWysiwyg)
-                Input6.CssClass += " ckeditor";
+                Input6.CssClass += " ckeditor4";
             panelField.Controls.Add(Input6);
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }

@@ -38,6 +38,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
+                <a href="#" Class="btn btn-danger pull-left">Delete</a>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 <a href="#" Class="btn btn-success">Save & Close</a>
             </div>
