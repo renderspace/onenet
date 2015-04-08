@@ -51,12 +51,37 @@ namespace OneMainWeb.CommonModules
         private int? FindNextNodeId(SiteMapNode node, bool checkChildren)
         {
             if (checkChildren && node.HasChildNodes)
-                return FormatTool.GetInteger(node.ChildNodes[0]["_pageID"]);
+            {
+                //_redirectToUrl
+                var firstChildNode = node.ChildNodes[0];
+
+                // if the next node is a redirect, don't return it, seek further, otherwise you get a loop
+                if (string.IsNullOrEmpty(firstChildNode["_redirectToUrl"]))
+                    return FormatTool.GetInteger(firstChildNode["_pageID"]);
+                else
+                    return FindNextNodeId(firstChildNode, true);
+            }
             if (node.NextSibling != null)
-                return FormatTool.GetInteger(node.NextSibling["_pageID"]);
+            {
+                var nextSiblingNode = node.NextSibling;
+
+                // if the next node is a redirect, don't return it, seek further, otherwise you get a loop
+                if (string.IsNullOrEmpty(nextSiblingNode["_redirectToUrl"]))
+                    return FormatTool.GetInteger(nextSiblingNode["_pageID"]);
+                else
+                    return FindNextNodeId(nextSiblingNode, true);
+            }
             if (node.ParentNode != null && node.ParentNode.NextSibling != null)
-                return FormatTool.GetInteger(node.ParentNode.NextSibling["_pageID"]);
-            return node.ParentNode != null ? FindNextNodeId(node.ParentNode, false) : null;
+            {
+                var nextParentSibling = node.ParentNode.NextSibling;
+
+                // if the next node is a redirect, don't return it, seek further, otherwise you get a loop
+                if (string.IsNullOrEmpty(nextParentSibling["_redirectToUrl"]))
+                    return FormatTool.GetInteger(nextParentSibling["_pageID"]);
+                else
+                    return FindNextNodeId(nextParentSibling, true);
+            }
+            return node.ParentNode != null ? FindNextNodeId(node.ParentNode, false) : (int?) null;
         }
 
         private int? FindPrevNodeId(SiteMapNode node)
@@ -65,18 +90,42 @@ namespace OneMainWeb.CommonModules
                 return null;
             if (node.PreviousSibling != null)
             {
-                return node.PreviousSibling.HasChildNodes
-                           ? FindLastNodeId(node.PreviousSibling)
-                           : FormatTool.GetInteger(node.PreviousSibling["_pageID"]);
+                var previousSiblingNode = node.PreviousSibling;
+
+                if (previousSiblingNode.HasChildNodes)
+                    return FindLastNodeId(previousSiblingNode);
+                else
+                {
+                    // if the prev node is a redirect, don't return it, seek further, otherwise you get a loop
+                    if (string.IsNullOrEmpty(previousSiblingNode["_redirectToUrl"]))
+                        return FormatTool.GetInteger(previousSiblingNode["_pageID"]);
+                    else
+                        return FindPrevNodeId(previousSiblingNode);
+                }
             }
-            return node.ParentNode != null ? FormatTool.GetInteger(node.ParentNode["_pageID"]) : (int?) null;
+
+            var parentNode = node.ParentNode;
+
+            if (parentNode != null)
+            {
+                if (string.IsNullOrEmpty(parentNode["_redirectToUrl"]))
+                    return FormatTool.GetInteger(parentNode["_pageID"]);
+                else
+                    return FindPrevNodeId(parentNode);
+            }
+
+            return (int?)null;
         }
 
         private int? FindLastNodeId(SiteMapNode node)
         {
-            return node.HasChildNodes
-                       ? FindLastNodeId(node.ChildNodes[node.ChildNodes.Count - 1])
-                       : FormatTool.GetInteger(node["_pageID"]);
+            if (node.HasChildNodes)
+                return FindLastNodeId(node.ChildNodes[node.ChildNodes.Count - 1]);
+
+            if (string.IsNullOrEmpty(node["_redirectToUrl"]))
+                return FormatTool.GetInteger(node["_pageID"]);
+            else
+                return FindPrevNodeId(node);
         }
     }
 }
