@@ -13,7 +13,6 @@ namespace OneMainWeb.adm
 {
     public partial class Users : OneBasePage
     {
-        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         protected string SelectedUser
         {

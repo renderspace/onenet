@@ -259,8 +259,8 @@ namespace One.Net.BLL.Scaffold.Model
         {
             get
             {
-                if (DbType == null)
-                    return "[" + Name + "]";
+                //if (DbType == null)
+                //    return "[" + Name + "]";
                 return "[" + Name + "]" + " (" + DbType.ToString().Replace("System.", "") + (IsNullable ? " NULL" : "") + (IsPartOfPrimaryKey ? " PK" : "") + ")";
             }
         }
