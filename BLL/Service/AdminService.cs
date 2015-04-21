@@ -122,7 +122,6 @@ namespace One.Net.BLL.Service
             BOFile file = null;
             if (fileId > 0)
             {
-                
                 file = fileB.Get(fileId);
                 if (file.Content != null && file.ContentId != contentId)
                 {
@@ -146,6 +145,13 @@ namespace One.Net.BLL.Service
             if (file == null)
             {
                 contentB.Change(existingContent);
+                var instanceIds = DbContent.GetTextContentInstanceId(existingContent.ContentId.Value);
+                foreach (var moduleInstanceId in instanceIds)
+                {
+                    var instance = DbWebsite.GetModuleInstance(moduleInstanceId, false);
+                    BWebsite webSiteB = new BWebsite();
+                    webSiteB.ChangeModuleInstance(instance);
+                }
                 return true;
             }
             else
@@ -401,7 +407,5 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string DisplayLastChanged { get; set; }
-
-        
     }
 }

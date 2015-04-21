@@ -365,11 +365,6 @@ namespace One.Net.BLL
             return categorizationB.Get(folderId, BOFile.FOLDER_CATEGORIZATION_TYPE, false);
         }
 
-        public void Vote(int votedScore, int contentId)
-        {
-            contentB.Vote(votedScore, contentId);
-        }
-
         public List<FileSystemInfo> ListPhysicalFolder(string path, string rootPath)
         {
             bool isRootPath = String.Compare(path, rootPath) == 0;

@@ -75,7 +75,6 @@ namespace One.Net.BLL
                 return null;
 
             BOInternalContent content = contentDb.GetContent(contentID, languageID);
-
             if (content == null)
             {
                 content = new BOInternalContent();
@@ -127,12 +126,6 @@ namespace One.Net.BLL
         {
             content.MissingTranslation = false;
             contentDb.ChangeContent(content, connString);
-        }
-
-        public void Vote(int votedScore, int contentId)
-        {
-            contentDb.SaveVote(votedScore, contentId);
-            ClearLanguageVariations(CACHE_ID + contentId);
         }
 
         public void Delete(int contentId)
