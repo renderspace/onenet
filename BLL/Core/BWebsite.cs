@@ -588,7 +588,7 @@ namespace One.Net.BLL
             if (contentTemplate == null)
                 return; // nothing to publish;
 
-            BOModuleInstance publishedInstance = webSiteDb.GetModuleInstance(instance.Id, true);
+            BOModuleInstance publishedInstance = DbWebsite.GetModuleInstance(instance.Id, true);
             if (publishedInstance != null)
                 contentTemplate.Id = int.Parse(publishedInstance.Settings["ContentTemplateId"].Value);
             else
@@ -614,7 +614,7 @@ namespace One.Net.BLL
             if (content == null)
                 return; // nothing to get published.
 
-            BOModuleInstance publishedInstance = webSiteDb.GetModuleInstance(instance.Id, true);
+            BOModuleInstance publishedInstance = DbWebsite.GetModuleInstance(instance.Id, true);
             if (publishedInstance != null)
                 content.ContentId = int.Parse(publishedInstance.Settings["ContentId"].Value);
             else
@@ -702,7 +702,7 @@ namespace One.Net.BLL
         {
             if (publishing)
             {
-                webSiteDb.ChangeModuleInstance(instance);
+                DbWebsite.ChangeModuleInstance(instance);
             }
             else
             {
@@ -715,7 +715,7 @@ namespace One.Net.BLL
                     if (existingInstance.PlaceHolderId == instance.PlaceHolderId)
                     {
                         // PlaceHolderId hasn't changed, so just changed the instance.
-                        webSiteDb.ChangeModuleInstance(instance);
+                        DbWebsite.ChangeModuleInstance(instance);
                     }
                     else
                     {
@@ -732,7 +732,7 @@ namespace One.Net.BLL
                         else
                             instance.Order = 0;
 
-                        webSiteDb.ChangeModuleInstance(instance);
+                        DbWebsite.ChangeModuleInstance(instance);
                     }
                 }
                 else
@@ -752,7 +752,7 @@ namespace One.Net.BLL
                     else
                         instance.Order = 0;
 
-                    webSiteDb.ChangeModuleInstance(instance);
+                    DbWebsite.ChangeModuleInstance(instance);
                 }
 
                 // Mark page as changed
@@ -830,7 +830,7 @@ namespace One.Net.BLL
 
         public BOModuleInstance GetModuleInstance(int moduleInstanceId, bool publishFlag)
         {
-            return webSiteDb.GetModuleInstance(moduleInstanceId, publishFlag);
+            return DbWebsite.GetModuleInstance(moduleInstanceId, publishFlag);
         }
 
         public BOModuleInstance GetModuleInstance(int moduleInstanceId)
@@ -840,7 +840,7 @@ namespace One.Net.BLL
 
         public void ChangeModuleInstanceSettings(Dictionary<string, BOSetting> entries, int moduleInstanceId)
         {
-            BOModuleInstance mi = webSiteDb.GetModuleInstance(moduleInstanceId, PublishFlag);
+            BOModuleInstance mi = DbWebsite.GetModuleInstance(moduleInstanceId, PublishFlag);
             mi.Settings = entries;
             ChangeModuleInstance(mi);
         }

@@ -42,6 +42,24 @@ namespace One.Net.BLL.DAL
             return content;
         }
 
+        public static IEnumerable<int> GetTextContentInstanceId(int contentId)
+        { 
+            var result = new List<int>();
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+                @"SELECT module_instance_fk_id from module_settings ms 
+INNER JOIN settings_list sl ON sl.id = ms.settings_list_fk_id
+WHERE ms.value = @contentID AND sl.name = 'ContentId' AND 
+	sl.subsystem IN ('TextContent', 'SpecialContent') AND user_visibility = 'SPECIAL' AND
+	module_instance_fk_pages_fk_publish = 0", new SqlParameter("@contentID", contentId.ToString())))
+            {
+                while (reader.Read())
+                {
+                    result.Add((int)reader["module_instance_fk_id"]);
+                }
+            }
+            return result;
+        }
+
         public string GetContentTitleInAnyLanguage(int contentId)
         {
             object result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text,
@@ -52,20 +70,6 @@ namespace One.Net.BLL.DAL
                 return (string) result;
             else
                 return null;
-        }
-
-        public void SaveVote(int votedScore, int contentId)
-        {
-            if (!(contentId > 0) || votedScore > 5 || votedScore < 1)
-                throw new ApplicationException("Trying to VOTE on uncomplete BOInternalContent OR score out of range");
-            else
-            {
-                SqlParameter[] paramsToPass = new SqlParameter[2];
-                paramsToPass[0] = new SqlParameter("@votedScore", votedScore);
-                paramsToPass[1] = new SqlParameter("@contentId", contentId);
-                SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure,
-                                          @"[dbo].[Vote]", paramsToPass);
-            }
         }
 
         public void ChangeContent(BOInternalContent content, string connString = "")

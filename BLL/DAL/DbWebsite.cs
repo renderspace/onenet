@@ -727,7 +727,7 @@ ORDER BY name ASC";
             return result.Tables[0];
         }
 
-        public BOModuleInstance GetModuleInstance(int moduleInstanceID, bool publishFlag)
+        public static BOModuleInstance GetModuleInstance(int moduleInstanceID, bool publishFlag)
         {
             BOModuleInstance instance = null;
 
@@ -832,7 +832,7 @@ ORDER BY name ASC";
             return instance;
         }
 
-        public void ChangeModuleInstance(BOModuleInstance moduleInstance)
+        public static void ChangeModuleInstance(BOModuleInstance moduleInstance)
         {
             SqlParameter moduleInstanceIdParam = new SqlParameter("@Id", moduleInstance.Id);
             moduleInstanceIdParam.Direction = ParameterDirection.InputOutput;

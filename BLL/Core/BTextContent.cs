@@ -33,11 +33,6 @@ namespace One.Net.BLL
             return answer;
         }
 
-        public void Vote(int votedScore, int moduleInstanceID)
-        {
-            contentB.Vote(votedScore, GetTextContent(moduleInstanceID, PublishFlag).ContentId.Value);
-        }
-
         private static string INTERNAL_CONTENT_CACHE_ID(int moduleInstanceID)
         {
             return "_IntCont_" + moduleInstanceID;
