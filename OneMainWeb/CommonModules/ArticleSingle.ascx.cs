@@ -48,7 +48,6 @@ namespace OneMainWeb.CommonModules
                     Time2.Attributes.Add("datetime", article.DisplayDate.ToString("yyyy-MM-dd"));
                     Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
                     Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
-                    Time2.Visible = false;
                 }
 
                 var id = article.Id.Value;

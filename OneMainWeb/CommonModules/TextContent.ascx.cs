@@ -85,7 +85,7 @@ namespace OneMainWeb.CommonModules
                     output.WriteEndTag("h2");
                 }
 
-                if (textContent.Teaser.Length > 0 && GetBooleanSetting("ShowTeaserText"))
+                if (textContent.Teaser.Length > 0)
                 {
                     output.WriteBeginTag("div");
                     output.WriteAttribute("class", "contentTeaser", true);

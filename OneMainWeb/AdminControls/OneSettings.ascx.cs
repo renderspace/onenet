@@ -168,6 +168,7 @@ namespace OneMainWeb.AdminControls
                             if (setting.Type == "ImageTemplate")
                             {
                                 var templates = BWebsite.ListTemplates("ImageTemplate");
+                                templates.Add(new BOTemplate { Name = "No image", Id = -1 });
                                 DropDownList1.DataSource = templates;
                                 DropDownList1.DataTextField = "Name";
                                 DropDownList1.DataValueField = "Id";
