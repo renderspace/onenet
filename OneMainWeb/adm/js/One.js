@@ -460,12 +460,12 @@ $(document).ready(function () {
     });
 
     $('#text-content-modal a.btn-success').on('click', function (e) {
+        var $saveButton = $(this);
         var content = new Object();
         content['Title'] = $("#content-title").val();
         content['Subtitle'] = $("#content-subtitle").val();
         content['Teaser'] = $("#content-teaser").val();
-        trace("Saving content from modal window.");
-
+        trace("Saving content from modal window. Title: " + content['Title']);
         var ckEditor = CKEDITOR.instances["content-html"];
         var myCodeMirror = $('#content-html').data('CodeMirrorInstance');
         if (ckEditor !== undefined) {
@@ -474,10 +474,6 @@ $(document).ready(function () {
         else if (myCodeMirror !== undefined) {
             content['Html'] = myCodeMirror.getValue();
         }
-
-        
-        trace(content['Title']);
-        trace(content['Html']);
         content['LanguageId'] = $(".j_control_language_id").val();
         content['ContentId'] = $(".j_control_content_id").val();
         content['FileId'] = $(".j_control_file_id").val();
@@ -489,7 +485,9 @@ $(document).ready(function () {
             type: "POST",
             success: function (data) {
                 if (data === true) {
-                    $('#text-content-modal').modal('hide');
+                    if ($saveButton.hasClass("modal-save-close")) {
+                        $('#text-content-modal').modal('hide');
+                    }
                 }
                 else {
                     trace("data:" + data);
