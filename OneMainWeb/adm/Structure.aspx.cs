@@ -187,6 +187,7 @@ namespace OneMainWeb.adm
                 LastChangeAndHistory1.SelectedContentId = SelectedPage.ContentId.Value;
                 LastChangeAndHistory1.SelectedLanguageId = SelectedPage.LanguageId;
 
+                LabelCurrentPageId.Text = "[" + SelectedPage.Id.ToString() + "]";
                 TextBoxTitle.Text = SelectedPage.Title;
                 TextBoxSubtitle.Text = SelectedPage.SubTitle;
                 TextBoxDescription.Text = SelectedPage.Teaser;

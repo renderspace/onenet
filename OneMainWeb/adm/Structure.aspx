@@ -71,6 +71,7 @@
                             <label class="col-sm-4 control-label">Preview</label>
                             <div class="col-sm-8">
                                 <span class="stext"><asp:HyperLink runat="server" ID="HyperLinkPreview"></asp:HyperLink></span>
+                                <asp:Label runat="server" CssClass="current-page-id" ID="LabelCurrentPageId"></asp:Label>
                             </div>
                         </div>
                          <div class="form-group">
