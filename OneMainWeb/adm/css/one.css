@@ -605,3 +605,6 @@ details .form-group select {width: 100%;}
 .modal-lg {
   width: 90% !important;
 }
+
+.checkbox label {position: relative; padding-left: 32px!important;}
+.checkbox label input {position: absolute!important; z-index: 1000000; left: 8px; top: -2px;}
