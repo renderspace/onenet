@@ -35,6 +35,11 @@ namespace OneMainWeb.Models
             return users;
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            // modelBuilder.Configurations.Add( <EFConfiguration>(new EFConfiguration()); 
+        }
     }
 
     public static class IdentityManager
