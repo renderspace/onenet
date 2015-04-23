@@ -309,7 +309,18 @@ $.validator.addMethod("absrelurl", function (value, element) {
     return this.optional(element) || /(http:\/)?(\/[\w\.\-]+)+\/?/.test(value);
 }, "Please enter valid URL");
 
-
+$.fn.modal.Constructor.prototype.enforceFocus = function () {
+    var $modalElement = this.$element;
+    $(document).on('focusin.modal', function (e) {
+        var $parent = $(e.target.parentNode);
+        if ($modalElement[0] !== e.target && !$modalElement.has(e.target).length
+            // add whatever conditions you need here:
+            &&
+            !$parent.hasClass('cke_dialog_ui_input_select') && !$parent.hasClass('cke_dialog_ui_input_text')) {
+            $modalElement.focus()
+        }
+    })
+};
 
 function replaceCKEditor(id) {
     CKEDITOR.replace(id, {
