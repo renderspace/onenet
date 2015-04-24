@@ -200,12 +200,19 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             }
                             if (field.DbType == DataType.DateTime)
                             {
-                                var d = (DateTime)f;
-                                var formattedDate = "";
-                                formattedDate = d.ToShortDateString();
-                                if (d.ToShortTimeString() != "00:00")
-                                    formattedDate += " " + d.ToShortTimeString();
-                                row[field.FQName] = formattedDate;
+                                if (f == DBNull.Value && field.IsNullable)
+                                {
+                                    row[field.FQName] = "";
+                                }
+                                else
+                                {
+                                    var d = (DateTime)f;
+                                    var formattedDate = "";
+                                    formattedDate = d.ToShortDateString();
+                                    if (d.ToShortTimeString() != "00:00")
+                                        formattedDate += " " + d.ToShortTimeString();
+                                    row[field.FQName] = formattedDate;
+                                }
                             }
                             if (field.DbType == DataType.Date)
                             {
