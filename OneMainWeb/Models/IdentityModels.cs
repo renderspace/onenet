@@ -108,7 +108,6 @@ namespace OneMainWeb.Models
         }
     }
 
-    #region Helpers
     public class UserManager : UserManager<OneNetUser> 
     {
         public UserManager() : base(new UserStore<OneNetUser>(new ApplicationDbContext())) 
@@ -160,5 +159,4 @@ namespace OneMainWeb
             }
         }
     }
-    #endregion
 }
