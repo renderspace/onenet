@@ -3,6 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using One.Net.BLL;
 using Owin;
+using System;
 using System.Configuration;
 using System.Reflection;
 using System.Web.Hosting;
@@ -20,6 +21,7 @@ namespace OneMainWeb
             // This is required if your application allows users to login
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                ExpireTimeSpan = TimeSpan.FromHours(1),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login.aspx")
             });
