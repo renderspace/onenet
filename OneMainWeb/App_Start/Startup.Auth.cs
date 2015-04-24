@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using NLog;
 using One.Net.BLL;
 using Owin;
 using System;
@@ -13,6 +14,18 @@ namespace OneMainWeb
 
     public partial class Startup {
 
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
+        private void OnResponseSignedIn(CookieResponseSignedInContext ctx)
+        {
+            log.Info("OnResponseSignedIn: " + ctx.Identity.IsAuthenticated);
+        }
+
+        private void OnResponseSignIn(CookieResponseSignInContext ctx)
+        {
+            log.Info("OnResponseSignIn: " + ctx.Identity.IsAuthenticated);
+        }
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301883
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -21,20 +34,24 @@ namespace OneMainWeb
             // This is required if your application allows users to login
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                ExpireTimeSpan = TimeSpan.FromHours(1),
+                ExpireTimeSpan = TimeSpan.FromMinutes(70),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login.aspx")
+                LoginPath = new PathString("/Account/Login.aspx"),
+                Provider = new CookieAuthenticationProvider { 
+                    OnResponseSignedIn = OnResponseSignedIn,
+                    OnResponseSignIn = OnResponseSignIn
+                }
+                /*
+                 * Provider = new CookieAuthenticationProvider
+        {
+            OnValidateIdentity = SecurityStampValidator
+                .OnValidateIdentity<UserManager, ApplicationUser, int>(
+                    validateInterval: TimeSpan.FromMinutes(30),
+                    regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager)
+        }
+                 * */
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
 
 
             var FacebookAppId = ConfigurationManager.AppSettings["FacebookAppId"];
