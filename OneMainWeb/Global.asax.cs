@@ -68,9 +68,8 @@ namespace OneMainWeb
 
             // Code that runs on application startup
             // RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
