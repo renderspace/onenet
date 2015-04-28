@@ -118,6 +118,19 @@ namespace One.Net.BLL.Web
             return StringTool.SplitStringToIntegers(setting.Value);
         }
 
+        public string[] GetStringListSetting(string settingName)
+        {
+            if (Settings == null || !Settings.ContainsKey(settingName))
+                return new string[0];
+
+            BOSetting setting = Settings[settingName];
+            if (!(setting.Type.Equals("CSString")))
+            {
+                throw new ApplicationException("not a comma separated strings setting; probably error in database");
+            }
+            return (string.IsNullOrEmpty(setting.Value) ? null : setting.Value.Split(';')); 
+        }
+
 
         public string GetStringSetting(string settingName, string defaultValue = "")
         {

@@ -16,19 +16,25 @@ namespace OneMainWeb
 
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
-        private void OnResponseSignedIn(CookieResponseSignedInContext ctx)
-        {
-            log.Info("OnResponseSignedIn: " + ctx.Identity.IsAuthenticated);
-        }
 
         private void OnResponseSignIn(CookieResponseSignInContext ctx)
         {
             log.Info("OnResponseSignIn: " + ctx.Identity.IsAuthenticated);
         }
 
+        private void OnApplyRedirect(CookieApplyRedirectContext ctx)
+        {
+            log.Info("OnApplyRedirect");
+        }
+
+        
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301883
         public void ConfigureAuth(IAppBuilder app)
         {
+            app.UseKentorOwinCookieSaver();
+
+
             // Enable the application to use a cookie to store information for the signed in user
             // and also store information about a user logging in with a third party login provider.
             // This is required if your application allows users to login
@@ -36,11 +42,8 @@ namespace OneMainWeb
             {
                 ExpireTimeSpan = TimeSpan.FromMinutes(70),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login.aspx"),
-                Provider = new CookieAuthenticationProvider { 
-                    OnResponseSignedIn = OnResponseSignedIn,
-                    OnResponseSignIn = OnResponseSignIn
-                }
+                LoginPath = new PathString("/Account/Login.aspx")
+                // CookieSecure = CookieSecureOption.Always
                 /*
                  * Provider = new CookieAuthenticationProvider
         {
