@@ -131,7 +131,6 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             LiteralAppVersion.Text = AppVersion;
-            LiteralHead.Text += Styles.Render("~/Bundles/AdmCSS").ToHtmlString();
             LiteralHead.Text += @"
     <script>
         tracing = " + TracingFlag + @"; 
