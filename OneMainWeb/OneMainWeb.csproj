@@ -523,20 +523,7 @@
     <Content Include="adm\images\drag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="adm\js\bootbox.js" />
-    <Content Include="adm\js\bootstrap-confirmation.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="adm\js\bootstrap-treeview.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="adm\js\bootstrap.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="adm\codemirror\codemirror.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="adm\js\jquery.details.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\js\One.js">
@@ -583,6 +570,25 @@
     <Content Include="Controls\Blank.ascx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="JavaScript\AdminWikiMenu.js" />
+    <Content Include="JavaScript\bootbox.js" />
+    <Content Include="JavaScript\bootstrap-confirmation.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JavaScript\bootstrap-datetimepicker.min.js" />
+    <Content Include="JavaScript\bootstrap-treeview.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JavaScript\bootstrap.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JavaScript\dropzone\dropzone.min.js" />
+    <Content Include="JavaScript\jquery-2.1.3.min.js" />
+    <Content Include="JavaScript\jquery.details.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JavaScript\jquery.validate.min.js" />
+    <Content Include="JavaScript\less-1.5.1.min.js" />
+    <Content Include="JavaScript\moment.min.js" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -911,6 +917,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="JavaScript\jquery-2.1.3.min.map" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />

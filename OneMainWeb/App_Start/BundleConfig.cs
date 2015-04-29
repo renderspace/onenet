@@ -21,9 +21,7 @@ namespace OneMainWeb
             var styleTransformer = new StyleTransformer();
             var nullOrderer = new NullOrderer();
 
-            // ADMIN
-            
-            bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
+            // ADMIN            
             bundles.Add(new StyleBundle("~/Bundles/AdmCSS").Include(
                 "~/Scripts/dropzone/css/dropzone.css").Include(
                 "~/adm/codemirror/codemirror.css").Include(
@@ -31,26 +29,6 @@ namespace OneMainWeb
                 "~/adm/css/dashboard.css").Include(
                 "~/Content/bootstrap-datetimepicker.css"));
 
-            bundles.Add(new StyleBundle("~/Bundles/JqueryUI").Include(
-                "~/Content/themes/base/core.css").Include(
-                "~/Content/themes/base/datepicker.css").Include(
-                "~/Content/themes/base/theme.css"));
-
-            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.min.js"));
-            bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js").Include(
-                "~/adm/codemirror/codemirror.js").Include(
-                "~/adm/codemirror/mode/htmlembedded/htmlembedded.js").Include(
-                "~/adm/codemirror/mode/htmlmixed/htmlmixed.js").Include(
-                "~/adm/codemirror/mode/javascript/javascript.js").Include(
-                "~/adm/codemirror/mode/xml/xml.js").Include(
-                "~/adm/codemirror/mode/css/css.js")); //.Include("~/adm/codemirror/mode/htmlembedded/htmlembedded.js")
-            bundles.Add(new ScriptBundle("~/Bundles/Scripts").Include(
-                    "~/Scripts/jquery-2.1.3.min.js").Include(
-                    "~/Scripts/jquery.validate.min.js").Include(
-                    // "~/Scripts/jquery-ui-{version}.min.js").Include(
-                    "~/Scripts/dropzone/dropzone.min.js").Include(
-                    "~/Scripts/moment.min.js").Include(
-                    "~/Scripts/bootstrap-datetimepicker.min.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
            
             // END ADMIN

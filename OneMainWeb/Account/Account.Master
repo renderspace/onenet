@@ -6,9 +6,10 @@
 <head runat="server">
     <title></title>
     <link href="/adm/css/one.css" type="text/css" rel="stylesheet" media="all" />
-    <%: System.Web.Optimization.Styles.Render("~/Bundles/BoostrapCSS") %>
+    <link href="/adm/css/bootstrap.css" rel="stylesheet"/>
+
     <!-- Custom styles for this template -->
-    <link href="/adm/css/dashboard.css" rel="stylesheet">
+    <link href="/adm/css/dashboard.css" rel="stylesheet" />
     
     <%: System.Web.Optimization.Scripts.Render("~/Bundles/Scripts") %>
 
@@ -27,7 +28,12 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </div>
     </form>
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/BootstrapJS") %>  
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/AdmJS") %>  
+
+    <script src="/ckeditor4/ckeditor.js"></script>
+    <script type="text/javascript" src="/adm/js/one.js"></script>
+
+    
+
+    
 </body>
 </html>
