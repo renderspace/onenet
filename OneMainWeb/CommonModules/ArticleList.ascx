@@ -15,10 +15,10 @@
 			</header>
 
 			<div class="entry-summary" runat="server" id="SectionTeaser" noid="True">
-			    <%# Eval("Teaser") %>
+			    <%# Eval("ProcessedTeaser") %>
 			</div>	
 			<div class="entry-content" runat="server" id="SectionHtml" noid="True">
-				<%# Eval("Html") %>
+				<%# Eval("ProcessedHtml") %>
 			</div>
 			<div class="read-on" id="DivReadon" runat="server" noid="True">
 				<a href="<%# RenderLink(Eval("Id"))  %>" class="more"><%= Translate("article_more") %></a>
