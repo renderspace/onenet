@@ -22,6 +22,7 @@ namespace OneMainWeb
             var nullOrderer = new NullOrderer();
 
             // ADMIN
+            
             bundles.Add(new StyleBundle("~/Bundles/BoostrapCSS").Include("~/adm/css/bootstrap.css"));
             bundles.Add(new StyleBundle("~/Bundles/AdmCSS").Include(
                 "~/Scripts/dropzone/css/dropzone.css").Include(
@@ -35,7 +36,7 @@ namespace OneMainWeb
                 "~/Content/themes/base/datepicker.css").Include(
                 "~/Content/themes/base/theme.css"));
 
-            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.js"));
+            bundles.Add(new ScriptBundle("~/Bundles/BootstrapJS").Include("~/adm/js/bootstrap.min.js"));
             bundles.Add(new ScriptBundle("~/Bundles/AdmJS").IncludeDirectory("~/adm/js", "*.js").Include(
                 "~/adm/codemirror/codemirror.js").Include(
                 "~/adm/codemirror/mode/htmlembedded/htmlembedded.js").Include(
@@ -44,18 +45,19 @@ namespace OneMainWeb
                 "~/adm/codemirror/mode/xml/xml.js").Include(
                 "~/adm/codemirror/mode/css/css.js")); //.Include("~/adm/codemirror/mode/htmlembedded/htmlembedded.js")
             bundles.Add(new ScriptBundle("~/Bundles/Scripts").Include(
-                    "~/Scripts/jquery-{version}.js").Include(
-                    "~/Scripts/jquery.validate.js").Include(
-                    "~/Scripts/jquery-ui-{version}.js").Include(
-                    "~/Scripts/dropzone/dropzone.js").Include(
-                    "~/Scripts/moment.js").Include(
-                    "~/Scripts/bootstrap-datetimepicker.js"));
+                    "~/Scripts/jquery-2.1.3.min.js").Include(
+                    "~/Scripts/jquery.validate.min.js").Include(
+                    // "~/Scripts/jquery-ui-{version}.min.js").Include(
+                    "~/Scripts/dropzone/dropzone.min.js").Include(
+                    "~/Scripts/moment.min.js").Include(
+                    "~/Scripts/bootstrap-datetimepicker.min.js"));
             bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
+           
             // END ADMIN
 
             // JQUERY
-            var jQueryBundle = new Bundle("~/Bundles/Jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js");
-            jQueryBundle.Include("~/Scripts/jquery-{version}.js");
+            var jQueryBundle = new Bundle("~/Bundles/Jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3.min.js");
+            jQueryBundle.Include("~/Scripts/jquery-2.1.3.min.js");
             jQueryBundle.Builder = nullBuilder;
             jQueryBundle.Transforms.Add(scriptTransformer);
             jQueryBundle.Orderer = nullOrderer;

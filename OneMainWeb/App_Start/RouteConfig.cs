@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
-using Microsoft.AspNet.FriendlyUrls;
 using System.ServiceModel.Activation;
 using OneMainWeb.Base;
 using One.Net.BLL.Service;
@@ -12,25 +11,11 @@ namespace OneMainWeb
 {
     public static class RouteConfig
     {
-        /*
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            var settings = new FriendlyUrlSettings();
-            settings.AutoRedirectMode = RedirectMode.Permanent;
-            routes.EnableFriendlyUrls(settings);
-        } */
-
-//        private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
         private static readonly ServiceRoute AdminService = new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService));
         private static readonly ServiceRoute ScaffoldService = new ServiceRoute("ScaffoldService", new WebServiceHostFactory(), typeof(ScaffoldService));
 
         public static void ReloadRoutes(RouteCollection routes)
         {
-            var settings = new FriendlyUrlSettings();
-            settings.AutoRedirectMode = RedirectMode.Permanent;
-            routes.EnableFriendlyUrls(settings);
-
-
             var node = SiteMap.Provider.RootNode;
             
             using (routes.GetWriteLock())

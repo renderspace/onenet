@@ -9,12 +9,13 @@ using System.IO;
 using System.Text.RegularExpressions;
 using MsSqlDBUtility;
 using System.Data;
+using NLog;
 
 namespace One.Net.BLL.Scaffold
 {
     public class PhysicalSchema
     {
-        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(PhysicalSchema));
+        protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public static bool CheckDatabaseConfiguration()
         {
