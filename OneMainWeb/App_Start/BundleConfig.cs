@@ -21,18 +21,6 @@ namespace OneMainWeb
             var styleTransformer = new StyleTransformer();
             var nullOrderer = new NullOrderer();
 
-            // ADMIN            
-            bundles.Add(new StyleBundle("~/Bundles/AdmCSS").Include(
-                "~/Scripts/dropzone/css/dropzone.css").Include(
-                "~/adm/codemirror/codemirror.css").Include(
-                "~/adm/css/one.css").Include(
-                "~/adm/css/dashboard.css").Include(
-                "~/Content/bootstrap-datetimepicker.css"));
-
-            bundles.Add(new StyleBundle("~/Bundles/adm/css").IncludeDirectory("~/adm/css", "*.css"));
-           
-            // END ADMIN
-
             // JQUERY
             var jQueryBundle = new Bundle("~/Bundles/Jquery", "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3.min.js");
             jQueryBundle.Include("~/Scripts/jquery-2.1.3.min.js");
