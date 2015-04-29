@@ -85,15 +85,6 @@ function getTree(callback) {
     });
 };
 
-$(document).ready(function () {
-    $('#CheckBoxShowPath').change(function () {
-        var selectedFolderId = $('#HiddenSelectedFolderId').val();
-        if (selectedFolderId > 0) {
-            files_databind(selectedFolderId);
-        }
-    });
-});
-
 function files_databind(selectedFolderId) {
 
     var showPath = $("#CheckBoxShowPath").is(':checked');
@@ -373,6 +364,25 @@ if (typeof (CKEDITOR) !== 'undefined') {
 }
 
 $(document).ready(function () {
+
+    loadAllToManyRelationships();
+
+    $('#CheckBoxShowPath').change(function () {
+        var selectedFolderId = $('#HiddenSelectedFolderId').val();
+        if (selectedFolderId > 0) {
+            files_databind(selectedFolderId);
+        }
+    });
+
+    $('[data-toggle="tooltip"]').tooltip();
+    //$('[data-toggle="confirmation"]').confirmation( { btnOkLabel: 'Yes', btnOkClass: 'btn btn-sm btn-success' });
+    $('.publishAll').confirmation({
+        btnOkLabel: 'Yes',
+        btnOkClass: 'btn btn-sm btn-success',
+        onConfirm: function () {
+            __doPostBack('ctl00$MainContent$LinkButtonPublishAll', '');
+        }
+    });
 
     $('.ckeditor4').each(function (index) {
         trace("CKEDITOR " + index + ": " + this.id);
@@ -659,6 +669,22 @@ $(document).ready(function () {
             });
         }
     });
+
+    
+    $(".nav-sidebar ul li a").each(function () {
+        var anchor = $(this);
+        var attrHref = anchor.attr('href');
+        var url = (typeof attrHref !== typeof undefined && attrHref.length > 0) ? attrHref.trim() : "";
+        if (url == "" || url == "#") {
+            //unbind the __dopostback
+            anchor.unbind('click');
+            anchor.bind('click', function (e) {
+                e.preventDefault();
+            });
+            anchor.addClass('nolink');
+        }
+    });
+    trace("%cOne.NET DOM ready.", "color:green; background-color:yellow");
 });
 
 function Validate(evt) {
@@ -683,18 +709,6 @@ if (typeof window.FileReader === 'undefined') {
     $('.imageFileUploadStatus').html('File API MISSING!!');
     trace('FileReader === undefined');
 }
-
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-    //$('[data-toggle="confirmation"]').confirmation( { btnOkLabel: 'Yes', btnOkClass: 'btn btn-sm btn-success' });
-    $('.publishAll').confirmation({
-        btnOkLabel: 'Yes',
-        btnOkClass: 'btn btn-sm btn-success',
-        onConfirm: function () {
-            __doPostBack('ctl00$MainContent$LinkButtonPublishAll', '');
-        }
-    });
-})
 
 
 
@@ -804,10 +818,6 @@ function loadAllToManyRelationships() {
         }
     });
 }
-
-$(function () {
-    loadAllToManyRelationships();
-});
 
 
 function endToManyModal(message) {
