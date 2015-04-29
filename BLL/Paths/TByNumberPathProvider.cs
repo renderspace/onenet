@@ -20,7 +20,7 @@ namespace One.Net.BLL
 
         private const string prefix = "~/_files";
         // string below is also used (copied) to BOInternalContent. If you change it here, make sure, you change it there, too.
-        public const string fileMatcher = prefix + @"/([0-9]{1,6})/([a-zA-Z0-9čćðšž_\-\s\!]{1,255}\.[a-zA-Z0-9_]{2,5})";
+        public const string fileMatcher = prefix + @"/([0-9]{1,6})/([a-zA-Z0-9čćðšž\,_\-\s\!]{1,255}\.[a-zA-Z0-9_]{2,5})";
         private const string pathMatcher = prefix + @"/([0-9]{1,6})/";
 
         public TByNumberPathProvider()
