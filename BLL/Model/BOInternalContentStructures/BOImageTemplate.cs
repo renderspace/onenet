@@ -102,6 +102,7 @@ namespace One.Net.BLL
 
         public string RenderImageLink(string link)
         {
+            link = link.Trim();
             string linkWithoutQuery = link;
 
             int querySeparatorOccurance = link.IndexOf("?");

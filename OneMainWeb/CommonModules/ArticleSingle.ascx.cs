@@ -71,14 +71,14 @@ namespace OneMainWeb.CommonModules
                 if (SectionTeaser != null)
                 {
                     SectionTeaser.Visible = ShowTeaser;
-                    SectionTeaser.InnerHtml = article.Teaser;
+                    SectionTeaser.InnerHtml = article.ProcessedTeaser;
                 }
 
                 Description = article.Teaser;
 
                 if (SectionHtml != null)
                 {
-                    SectionHtml.InnerHtml = article.Html;
+                    SectionHtml.InnerHtml = article.ProcessedHtml;
                 }
 
                 if (DivReadon != null)
