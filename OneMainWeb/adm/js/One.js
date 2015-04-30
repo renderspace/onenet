@@ -323,7 +323,7 @@ function replaceCKEditor(id) {
         toolbar: [
     { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
 	{ name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
-	{ name: 'clipboard', groups: ['clipboard'], items: ['Cut', 'Copy', 'Paste'] },
+	{ name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo'] },
 	'/',
 	{ name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
 	{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
