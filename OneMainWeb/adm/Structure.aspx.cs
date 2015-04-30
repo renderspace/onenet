@@ -249,13 +249,13 @@ namespace OneMainWeb.adm
                         }
                     }
                 }
-                
+
                 //                    OneSettingsPageSettings.Settings = SelectedPage.Settings;
                 OneSettingsPageSettings.ItemId = SelectedPage.Id;
                 OneSettingsPageSettings.Mode = AdminControls.OneSettings.SettingMode.Page;
                 OneSettingsPageSettings.LoadSettingsControls(SelectedPage.Settings);
                 OneSettingsPageSettings.Databind();
-                
+
                 if (SelectedPageId == RootNodeID)
                 {
                     ButtonMovePageDown.Visible = false;
@@ -272,6 +272,11 @@ namespace OneMainWeb.adm
                     var url = SelectedWebsite.ProductionUrl.TrimEnd('/') + SelectedPage.URI;
                     HyperLinkFBDebug.NavigateUrl = "https://developers.facebook.com/tools/debug/og/object?q=" + url;
                 }
+            }
+            else
+            {
+                MultiView1.ActiveViewIndex = 1;
+                LabelMessage.Text = "No page selected. Please refresh the page.";
             }
         }
 
