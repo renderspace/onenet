@@ -314,6 +314,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {
 };
 
 function replaceCKEditor(id) {
+
     CKEDITOR.replace(id, {
         customConfig: '',
         entities_greek: false,
@@ -347,8 +348,10 @@ function replaceCKEditor(id) {
         filebrowserFlashWindowWidth: '830',
         filebrowserFlashWindowHeight: '600',
 
+        stylesSet: 'ck_styles:/site_specific/ckstyles.js',
+
         disableObjectResizing: true,
-        stylesCombo_stylesSet: 'one_default_styles',
+        // stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
         // contentsCss : '/Utils/default_editor.css',
         height: 500,
