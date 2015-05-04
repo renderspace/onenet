@@ -608,3 +608,10 @@ details .form-group select {width: 100%;}
 
 .checkbox label {position: relative; padding-left: 32px!important;}
 .checkbox label input {position: absolute!important; z-index: 1000; left: 8px; top: -2px;}
+
+@media (max-width: 680px){
+	.sidebar {position: relative!important; top: 10px!important; background-color: transparent!important; padding: 0 20px!important; width: 100%!important;}
+	.main-right-bar {padding: 20px!important;}
+	.s1a {padding: 0!important;}
+	.treeview ul {width: 238px;}
+}
