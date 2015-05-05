@@ -23,18 +23,13 @@ namespace OneMainWeb.adm
         protected static BTextContent specialContentB = new BTextContent();
         BOPage SelectedPage { get; set; }
 
-
-        protected bool allowDeletePage = false;
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
             SelectedWebsite_ValidateDataBind();
             TreeViewPages_DataBind();
             if (!IsPostBack)
             {
-                PanelPublishAll.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("PublishAllButton");
-                allowDeletePage = Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeletePage");
+                PanelPublishAll.Visible = PublishAllRights;
 
                 Modules_DataBind();
                 Templates_DataBind();
@@ -142,7 +137,7 @@ namespace OneMainWeb.adm
 
             TreeNode selectedNode = null;
             var siteStructure = webSiteB.GetSiteStructure(SelectedWebSiteId);
-            LinkButtonPublishAll.Visible = siteStructure.Count > 0;
+            LinkButtonPublishAll.Visible = siteStructure.Count > 0 && PublishAllRights;
             TreeNode tree = OneHelper.PopulateTreeViewControl(siteStructure, null, SelectedPageId, currentExpandLevel, ref selectedNode);
 
             if (tree != null)
@@ -191,9 +186,9 @@ namespace OneMainWeb.adm
                 TextBoxTitle.Text = SelectedPage.Title;
                 TextBoxSubtitle.Text = SelectedPage.SubTitle;
                 TextBoxDescription.Text = SelectedPage.Teaser;
-                ButtonPublish.Visible = SelectedPage.IsChanged;
-                ButtonUnPublish.Visible = !SelectedPage.IsNew;
-                ButtonDelete.Visible = !SelectedPage.MarkedForDeletion && allowDeletePage;
+                ButtonPublish.Visible = SelectedPage.IsChanged && PublishRights;
+                ButtonUnPublish.Visible = !SelectedPage.IsNew && PublishRights;
+                ButtonDelete.Visible = !SelectedPage.MarkedForDeletion && DeletePageRights;
                 ButtonUndoDelete.Visible = SelectedPage.MarkedForDeletion;
                 PanelAddSubPage.Visible = PanelAddSubPage.Visible && !SelectedPage.MarkedForDeletion;
                 ButtonPublish.Text = SelectedPage.MarkedForDeletion ? "Completely delete page" : "Publish page";
@@ -758,6 +753,13 @@ namespace OneMainWeb.adm
 
         protected void ButtonPublish_Click(object sender, EventArgs e)
         {
+            if (!PublishRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
             BOPage publishingPage = webSiteB.GetPage(SelectedPageId);
 
             if (publishingPage != null)
@@ -807,6 +809,13 @@ namespace OneMainWeb.adm
 
         protected void ButtonUnPublish_Click(object sender, EventArgs e)
         {
+            if (!PublishRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
             BOPage publishingPage = webSiteB.GetPage(SelectedPageId);
 
             if (!publishingPage.IsNew)
@@ -839,6 +848,13 @@ namespace OneMainWeb.adm
 
         protected void ButtonPublishAll_Click(object sender, EventArgs e)
         {
+            if (!PublishAllRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
             var publishedCount = webSiteB.PublishAllPages(SelectedWebSiteId);
             Notifier1.Title = "Publishing pages.";
             if (publishedCount > 0)

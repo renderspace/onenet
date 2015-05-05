@@ -353,7 +353,7 @@ function replaceCKEditor(id) {
         disableObjectResizing: true,
         // stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
-        // contentsCss : '/Utils/default_editor.css',
+        contentsCss: '/site_specific/ck.css',
         height: 500,
         disableObjectResizing: true,
         resize_enabled: false,

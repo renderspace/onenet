@@ -43,12 +43,12 @@ namespace OneMainWeb
             }
 
             Notifier1.Visible = true;
-            AutoPublishWarning.Visible = AutoPublish;
             if (!IsPostBack)
             {
                 Multiview1.ActiveViewIndex = 0;
                 DropDownListRegularFilter.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
                 DropDownListRegularFilter.DataBind();
+                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
             }
             
         }
@@ -122,7 +122,6 @@ namespace OneMainWeb
                     ListBoxAssignedToArticle.DataBind();
                 }
 
-                AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
                 TextContentEditor.UseCkEditor = true;
                 LastChangeAndHistory1.SelectedContentId = 0;
                 LastChangeAndHistory1.Text = "";
@@ -247,9 +246,6 @@ namespace OneMainWeb
                             SelectedArticle.Regulars.Add(regular);
                         }
                         articleB.ChangeArticle(SelectedArticle);
-
-                        if (AutoPublish)
-                            articleB.Publish(SelectedArticle.Id.Value);
                         Notifier1.Message = "Article saved";
 
                         if (close)
@@ -289,13 +285,6 @@ namespace OneMainWeb
             int regularId = Int32.Parse(ListBoxAssignedToArticle.SelectedItem.Value);
             ListItem item = new ListItem(ListBoxAssignedToArticle.SelectedItem.Text, regularId.ToString());
             ListBoxAssignedToArticle.Items.Remove(item);
-        }
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            if (AutoPublishWarning != null)
-                AutoPublishWarning.Visible = this.AutoPublish && (bool)Context.Items["publish"];
-            base.OnPreRender(e);
         }
 
         protected IEnumerable<int> GetCheckedIds()
@@ -338,6 +327,13 @@ namespace OneMainWeb
 
         protected void ButtonPublish_Click(object sender, EventArgs e)
         {
+            if (!PublishRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
             int publishCount = 0;
             var list = GetCheckedIds();
             foreach (var i in list)
@@ -356,6 +352,13 @@ namespace OneMainWeb
 
         protected void ButtonRevert_Click(object sender, EventArgs e)
         {
+            if (!PublishRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
             int revertCount = 0;
             var list = GetCheckedIds();
             foreach (var i in list)
