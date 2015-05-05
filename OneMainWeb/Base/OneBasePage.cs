@@ -33,6 +33,30 @@ namespace OneMainWeb
         protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
 
+        public bool PublishRights
+        {
+            get
+            {
+                return Authorization.IsInRole("admin") || Authorization.IsInRole("Publish");
+            }
+        }
+
+        public bool PublishAllRights
+        {
+            get
+            {
+                return Authorization.IsInRole("admin") || Authorization.IsInRole("PublishAllButton");
+            }
+        }
+
+        public bool DeletePageRights
+        {
+            get
+            {
+                return Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeletePage");
+            }
+        }
+
         public int GridViewPageSize
         {
             get { return 15; }
@@ -124,11 +148,6 @@ namespace OneMainWeb
         }
 
         protected bool ShowUntranslated
-        {
-            get { return false; }
-        }
-
-        protected bool AutoPublish
         {
             get { return false; }
         }
