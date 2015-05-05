@@ -872,9 +872,12 @@ namespace OneMainWeb.adm
 
         private void SetPreviewHyperLink(string uri)
         {
-            HyperLinkPreview.Text = uri;
-            HyperLinkPreview.Target = "_blank";
-            HyperLinkPreview.NavigateUrl = SelectedWebsite.PreviewUrl.TrimEnd('/') + uri;
+            if (SelectedWebsite != null)
+            {
+                HyperLinkPreview.Text = uri;
+                HyperLinkPreview.Target = "_blank";
+                HyperLinkPreview.NavigateUrl = SelectedWebsite.PreviewUrl.TrimEnd('/') + uri;
+            }
         }
     }
 
