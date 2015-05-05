@@ -10,15 +10,20 @@ using Newtonsoft.Json;
 using System.Threading;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using NLog;
+using System.ServiceModel;
 
 namespace One.Net.BLL.Service
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     public class AdminService : IAdminService
     {
+
+        protected static Logger log = LogManager.GetCurrentClassLogger();
+
         public string Ping()
         {
-            return "AdminService";
+            return "AdminService:" + Thread.CurrentPrincipal.Identity.IsAuthenticated.ToString();
         }
 
         public IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId)
@@ -105,7 +110,10 @@ namespace One.Net.BLL.Service
         public bool ChangeContent(DTOContent content)
         {
             if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))
+            {
+                log.Error("ChangeContent null content");
                 return false;
+            }
 
             var contentId = 0;
             int.TryParse(content.ContentId, out contentId);
@@ -115,7 +123,16 @@ namespace One.Net.BLL.Service
             int.TryParse(content.FileId, out fileId);
 
             if (content.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))
+            {
+                log.Error("ChangeContent NO_TRANSLATION_TAG");
                 return false;
+            }
+
+            if (!Thread.CurrentPrincipal.Identity.IsAuthenticated)
+            {
+                log.Error("ChangeContent NOT authenticated.");
+                return false;
+            }
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
             var fileB = new BFileSystem();
@@ -144,7 +161,11 @@ namespace One.Net.BLL.Service
 
             if (file == null)
             {
-                contentB.Change(existingContent);
+                var result = contentB.Change(existingContent);
+                if (!result)
+                {
+                    log.Error(" contentB.Change returned false");
+                }
                 var instanceIds = DbContent.GetTextContentInstanceId(existingContent.ContentId.Value);
                 foreach (var moduleInstanceId in instanceIds)
                 {
@@ -152,7 +173,7 @@ namespace One.Net.BLL.Service
                     BWebsite webSiteB = new BWebsite();
                     webSiteB.ChangeModuleInstance(instance);
                 }
-                return true;
+                return result;
             }
             else
             {
