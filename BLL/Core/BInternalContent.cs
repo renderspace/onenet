@@ -114,12 +114,13 @@ namespace One.Net.BLL
             }
         }
 
-        public void Change(BOInternalContent content)
+        public bool Change(BOInternalContent content)
         {
             content.MissingTranslation = false;
-            contentDb.ChangeContent(content);
+            var result = contentDb.ChangeContent(content);
             contentDb.AuditContent(content);
             ClearLanguageVariations(CACHE_ID + content.ContentId.Value);
+            return result;
         }
 
         internal void Change(BOInternalContent content, string connString)

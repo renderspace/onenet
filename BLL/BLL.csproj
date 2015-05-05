@@ -96,6 +96,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -202,6 +203,7 @@
     <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\IAdminService.cs" />
     <Compile Include="Service\IScaffoldService.cs" />
+    <Compile Include="Service\MembershipAuthorizationPolicy.cs" />
     <Compile Include="Service\ScaffoldService.cs" />
     <Compile Include="Service\SerializableJsonDictionary.cs" />
     <Compile Include="Utility\FileRightsReader.cs" />

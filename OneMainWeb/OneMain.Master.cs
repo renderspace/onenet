@@ -78,7 +78,7 @@ namespace OneMainWeb
             Guid requestCookieGuidValue;
             if (requestCookie != null && Guid.TryParse(requestCookie.Value, out requestCookieGuidValue))
             {
-                log.Info("Master Page_Init, Use the Anti-XSRF token from the cookie");
+                log.Debug("Master Page_Init, Use the Anti-XSRF token from the cookie");
                 _antiXsrfTokenValue = requestCookie.Value;
                 Page.ViewStateUserKey = _antiXsrfTokenValue;
             }

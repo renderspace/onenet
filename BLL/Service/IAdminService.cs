@@ -10,7 +10,7 @@ using System.Collections;
 
 namespace One.Net.BLL.Service
 {
-    [ServiceContract]
+    [ServiceContract(SessionMode = SessionMode.Allowed)]
     public interface IAdminService
     {
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "Ping")]

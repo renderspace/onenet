@@ -18,7 +18,7 @@ using System.Collections.Specialized;
 
 namespace One.Net.BLL.Service
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     public class ScaffoldService : IScaffoldService
     {
         public string Ping()

@@ -32,7 +32,7 @@ namespace One.Net.BLL.Paths
             }
             catch (DirectoryNotFoundException ioex)
             {
-                log.Error("Directory not found", ioex);
+                log.Error("Directory not found: " + virtualPath, ioex);
                 log.Debug("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");
                 context.Response.StatusCode = 404;
@@ -40,7 +40,7 @@ namespace One.Net.BLL.Paths
             }
             catch (FileNotFoundException ioex)
             {
-                log.Error("File not found", ioex);
+                log.Error("File not found: " + virtualPath, ioex);
                 log.Debug("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");
                 context.Response.StatusCode = 404;
@@ -48,7 +48,7 @@ namespace One.Net.BLL.Paths
             }
             catch (Exception ex)
             {
-                log.Fatal("Uknown error", ex);
+                log.Fatal("Uknown error: " + virtualPath, ex);
                 log.Fatal("Url: " + context.Request.Url.ToString());
                 log.Fatal("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");

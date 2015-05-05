@@ -11,7 +11,8 @@
     <!-- Custom styles for this template -->
     <link href="/adm/css/dashboard.css" rel="stylesheet" />
     
-    <%: System.Web.Optimization.Scripts.Render("~/Bundles/Scripts") %>
+   <script type="text/javascript" src="/JavaScript/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script>
 
 	<style type="text/css">
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
@@ -30,6 +31,9 @@
     </form>
 
     <script src="/ckeditor4/ckeditor.js"></script>
+    <script type="text/javascript" src="/JavaScript/bootstrap.js"></script>
+    <script type="text/javascript" src="/JavaScript/jquery.details.js"></script>
+    <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
     <script type="text/javascript" src="/adm/js/one.js"></script>
 
     
