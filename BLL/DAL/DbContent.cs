@@ -72,8 +72,9 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
                 return null;
         }
 
-        public void ChangeContent(BOInternalContent content, string connString = "")
+        public bool ChangeContent(BOInternalContent content, string connString = "")
         {
+            var result = 0;
             if (!content.IsComplete)
                 throw new ApplicationException("Trying to save uncomplete BOInternalContent.");
             else
@@ -89,7 +90,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
                 paramsToPass[7] = SqlHelper.GetNullable("score", 0);
                 paramsToPass[8] = new SqlParameter("@votes", 0);
 
-                object result = SqlHelper.ExecuteScalar(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
+                result = (int) SqlHelper.ExecuteScalar(string.IsNullOrWhiteSpace(connString) ? SqlHelper.ConnStringMain : connString, CommandType.StoredProcedure, "[ChangeContent]", paramsToPass);
 
                 if (content.ContentId == null) // Inserted
                 {
@@ -103,6 +104,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
                     content.DateModified = DateTime.Now;
                 }
             }
+            return result > 0;
         }
 
         public void AuditContent(BOInternalContent content)

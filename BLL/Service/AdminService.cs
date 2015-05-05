@@ -23,7 +23,7 @@ namespace One.Net.BLL.Service
 
         public string Ping()
         {
-            return "AdminService:" + Thread.CurrentPrincipal.Identity.IsAuthenticated.ToString();
+            return "AdminService:" + Thread.CurrentPrincipal.Identity.Name;
         }
 
         public IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId)

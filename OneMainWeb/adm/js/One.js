@@ -513,7 +513,7 @@ $(document).ready(function () {
                     }
                 }
                 else {
-                    trace("data:" + data);
+                    logError(null, null, "error while saving - content not saved");
                 }
             }
         });

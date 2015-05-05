@@ -241,7 +241,7 @@ namespace One.Net.BLL
             var list = OCache.Get(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId)) as List<BOFile>;
             if (list == null)
             {
-                list = fileDb.ListFolder(folderId, LanguageId, "f.id", SortDir.Ascending);
+                list = fileDb.ListFolder(folderId, LanguageId, "f.id", SortDir.Descending);
                 OCache.Max(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId), list);
             }
             // return clone, because the will sort it later.
