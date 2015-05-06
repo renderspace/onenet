@@ -70,7 +70,7 @@
     </Reference>
     <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>ckfinder\_source\bin\Release\CKFinder.dll</HintPath>
+      <HintPath>ckfinder\_source\bin\Debug\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="EcmaScript.NET, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

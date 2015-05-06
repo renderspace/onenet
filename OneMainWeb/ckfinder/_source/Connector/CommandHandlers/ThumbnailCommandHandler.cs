@@ -13,8 +13,8 @@
 using System;
 using System.Web;
 using System.Drawing;
-using TwoControlsLibrary;
 using One.Net.BLL;
+using One.Net.BLL.Utility;
 
 namespace CKFinder.Connector.CommandHandlers
 {

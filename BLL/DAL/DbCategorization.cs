@@ -180,6 +180,7 @@ namespace One.Net.BLL.DAL
                        : "INNER ";
             sql += " JOIN [dbo].[content_data_store] cds ON c.id= cds.content_fk_id AND language_fk_id =  @languageId";
             sql +=  " WHERE ucategorie_type = @categoryType";
+            // sql += " ORDER BY uc.id DESC";
 
             using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
