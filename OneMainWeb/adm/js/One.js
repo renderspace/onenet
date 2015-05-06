@@ -482,6 +482,10 @@ $(document).ready(function () {
         }
     });
 
+    $('#text-content-modal button.btn-primary').on('click', function (e) {
+        window.location.reload();
+    });
+
     $('#text-content-modal a.btn-success').on('click', function (e) {
         var $saveButton = $(this);
         var content = new Object();
@@ -509,6 +513,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data === true) {
                     if ($saveButton.hasClass("modal-save-close")) {
+                        window.location.reload();
                         $('#text-content-modal').modal('hide');
                     }
                 }
@@ -673,7 +678,7 @@ $(document).ready(function () {
         }
     });
 
-    
+
     $(".nav-sidebar ul li a").each(function () {
         var anchor = $(this);
         var attrHref = anchor.attr('href');

@@ -711,13 +711,7 @@ namespace One.Net.BLL
                 BOModuleInstance existingInstance = this.GetModuleInstance(instance.Id);
                 if (existingInstance != null)
                 {
-                    // instance exists
-                    if (existingInstance.PlaceHolderId == instance.PlaceHolderId)
-                    {
-                        // PlaceHolderId hasn't changed, so just changed the instance.
-                        DbWebsite.ChangeModuleInstance(instance);
-                    }
-                    else
+                    if (existingInstance.PlaceHolderId != instance.PlaceHolderId)
                     {
                         // Instance PlaceHolderId changed, so add instance at end of PlaceHolder instances list.
                         if (containingPage.PlaceHolders.ContainsKey(instance.PlaceHolderId))
@@ -731,8 +725,6 @@ namespace One.Net.BLL
                         }
                         else
                             instance.Order = 0;
-
-                        DbWebsite.ChangeModuleInstance(instance);
                     }
                 }
                 else
@@ -746,14 +738,11 @@ namespace One.Net.BLL
                             instance.Order = containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances[cnt - 1].Order + 1;
                         else
                             instance.Order = 0;
-
-                        // instance.Order = containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances[containingPage.PlaceHolders[instance.PlaceHolderId].ModuleInstances.Count - 1].Order + 1;
                     }
                     else
                         instance.Order = 0;
-
-                    DbWebsite.ChangeModuleInstance(instance);
                 }
+                DbWebsite.ChangeModuleInstance(instance);
 
                 // Mark page as changed
                 containingPage.IsChanged = true;
