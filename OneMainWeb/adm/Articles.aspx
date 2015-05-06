@@ -90,7 +90,7 @@
 
             <script type="text/javascript" charset="utf-8">
                 $(document).ready(function () {
-                    $("#datetimepicker-article").datetimepicker({ format: 'MM/DD/YYYY' });
+                    $("#datetimepicker-article").datetimepicker();
                 });
             </script>
 
@@ -117,9 +117,9 @@
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="Display date" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
-                        <div class='input-group date' id='datetimepicker-article'>
+                        <div class='input-group datetime' id='datetimepicker-article'>
                                 <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate" CssClass="form-control" />
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
                         </div>
                     </div>
                 </div>
