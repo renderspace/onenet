@@ -517,7 +517,7 @@ REFERENCES [dbo].[content] ([id])
 ALTER TABLE [dbo].[pages] CHECK CONSTRAINT [FK_pages_content]
 ALTER TABLE [dbo].[pages]  WITH NOCHECK ADD  CONSTRAINT [FK_pages_pages] FOREIGN KEY([pages_fk_id], [pages_fk_publish])
 REFERENCES [dbo].[pages] ([id], [publish])
-NOT FOR REPLICATION 
+
 ALTER TABLE [dbo].[pages] CHECK CONSTRAINT [FK_pages_pages]
 ALTER TABLE [dbo].[pages]  WITH CHECK ADD  CONSTRAINT [FK_pages_template] FOREIGN KEY([template_fk_id])
 REFERENCES [dbo].[template] ([id])
@@ -561,7 +561,7 @@ REFERENCES [dbo].[language] ([id])
 ALTER TABLE [dbo].[int_link] CHECK CONSTRAINT [FK_int_link_language]
 ALTER TABLE [dbo].[int_link]  WITH NOCHECK ADD  CONSTRAINT [FK_int_link_pages] FOREIGN KEY([pages_fk_id], [pages_fk_publish])
 REFERENCES [dbo].[pages] ([id], [publish]) ON DELETE CASCADE 
-NOT FOR REPLICATION 
+
 ALTER TABLE [dbo].[int_link] NOCHECK CONSTRAINT [FK_int_link_pages]
 GO
 
