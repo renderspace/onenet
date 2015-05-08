@@ -52,7 +52,7 @@ namespace OneMainWeb.AdminControls
         private const string NULL = "NULL";
 
         public string DATE_FORMAT = "M/d/yyyy";
-        public string TIME_FORMAT = @"H\:mm";
+        public string TIME_FORMAT = @"h\:mm";
 
         public string DATE_TIME_FORMAT = @"M/d/yyyy H\:mm";
 
@@ -794,7 +794,7 @@ jQuery.validator.addMethod(
                                     }
                                     if (split.Count() > 1)
                                     {
-                                        hasTime = TimeSpan.TryParseExact(split[1], TIME_FORMAT, defaultCulture, TimeSpanStyles.None, out parsedTime);
+                                        hasTime = TimeSpan.TryParseExact(split[1], TIME_FORMAT, CultureInfo.InvariantCulture, TimeSpanStyles.None, out parsedTime);
                                     } 
                                 }
                                 else
