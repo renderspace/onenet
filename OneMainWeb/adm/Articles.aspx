@@ -90,7 +90,7 @@
 
             <script type="text/javascript" charset="utf-8">
                 $(document).ready(function () {
-                    $("#datetimepicker-article").datetimepicker();
+                    $("#datetimepicker-article").datetimepicker({ format: 'MM/DD/YYYY H:mm' });
                 });
             </script>
 
