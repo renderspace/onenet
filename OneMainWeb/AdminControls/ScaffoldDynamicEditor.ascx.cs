@@ -445,6 +445,7 @@ jQuery.validator.addMethod(
             JQueryCode += "</script>";
 
             LiteralJQuery.Text = JQueryCode;
+            ButtonSaveAsNew.Visible = !IsInsert;
         }
 
         private void MarkCurrentStatus(SubmissionStatus status)
@@ -946,6 +947,12 @@ jQuery.validator.addMethod(
 
         protected void ButtonSave_Click(object sender, EventArgs e)
         {
+            Save();
+        }
+
+        protected void ButtonSaveAsNew_Click(object sender, EventArgs e)
+        {
+            PrimaryKeys = null;
             Save();
         }
 

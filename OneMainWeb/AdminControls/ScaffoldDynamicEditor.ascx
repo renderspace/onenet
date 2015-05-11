@@ -6,6 +6,7 @@
     <asp:PlaceHolder ID="PanelFieldsHolder" runat="server"></asp:PlaceHolder>
     <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">
+                <asp:LinkButton ID="ButtonSaveAsNew" runat="server" Text="Save as new" onclick="ButtonSaveAsNew_Click" CssClass="btn btn-default causesValidation" />
                 <asp:LinkButton ID="ButtonSave" runat="server" Text="Save" onclick="ButtonSave_Click" CssClass="btn btn-success causesValidation" />
                 <asp:LinkButton ID="ButtonSaveAndClose" runat="server" onclick="ButtonSaveAndClose_Click" CssClass="btn btn-success causesValidation" />
             </div>
