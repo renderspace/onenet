@@ -29,9 +29,7 @@ namespace OneMainWeb
         {
             get { return ViewState["SelectedArticle"] as BOArticle; }
             set { ViewState["SelectedArticle"] = value; }
-        }
-
-        
+        }        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -377,11 +375,12 @@ namespace OneMainWeb
 
         private void Articles_DataBind()
         {
-            Articles_DataBind("", "");
+            Articles_DataBind("");
         }
 
-        private void Articles_DataBind(string searchBy, string regularsFilter)
+        private void Articles_DataBind(string searchBy)
         {
+            var regularsFilter = DropDownListRegularFilter.SelectedValue;
             ListingState state = new ListingState();
             state.RecordsPerPage = GridViewPageSize;
             state.SortDirection = GridViewSortDirection;
@@ -400,7 +399,7 @@ namespace OneMainWeb
 
         protected void cmdFilterArticles_Click(object sender, EventArgs e)
         {
-            Articles_DataBind("", DropDownListRegularFilter.SelectedValue);
+            Articles_DataBind();
         }
 
         protected void cmdShowById_Click(object sender, EventArgs e)
@@ -423,7 +422,7 @@ namespace OneMainWeb
             }
             else
             {
-                Articles_DataBind(TextBoxShowById.Text, "");
+                Articles_DataBind(TextBoxShowById.Text);
             }
         }
 
