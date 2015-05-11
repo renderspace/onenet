@@ -455,7 +455,7 @@ div.calendar
 .ck .cke_dialog_ui_text {float:none;}
 
 .tall input[type="text"], select {width: 100%; min-width: 100%; margin-top: 3px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; box-shadow: none; border: 1px solid #ccc;}
-.main select {padding: 7px; width: 80%; min-width: 80%;}
+.main select {padding: 7px; width: 100%; min-width: 100%;}
 
 @media (max-width: 1423px) {
 .input.uri span {width: 121px; word-wrap: break-word;}
