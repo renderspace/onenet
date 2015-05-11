@@ -277,11 +277,12 @@ namespace OneMainWeb.adm
 
         private void Modules_DataBind()
         {
-            ddlModuleTypes.Items.Clear();
+            DropDownListModules.Items.Clear();
             List<BOModule> modules = BWebsite.ListModules();
+            DropDownListModules.Items.Add(new ListItem("Please select a module to add..", "0"));
             foreach (BOModule module in modules)
             {
-                ddlModuleTypes.Items.Add(new ListItem(module.Name, module.Id.ToString()));
+                DropDownListModules.Items.Add(new ListItem(module.Name, module.Id.ToString()));
             }
         }
 
@@ -739,15 +740,23 @@ namespace OneMainWeb.adm
             }
         }
 
-        protected void cmdAddInstance_Click(object sender, EventArgs e)
+        protected void ButtonAddInstance_Click(object sender, EventArgs e)
         {
-            int selectedModuleID = FormatTool.GetInteger(ddlModuleTypes.SelectedItem.Value);
-            var placeHolderData = BWebsite.ListPlaceHolders();
-            if (placeHolderData.Count < 1)
-                return;
+            int selectedModuleID = FormatTool.GetInteger(DropDownListModules.SelectedItem.Value);
 
-            int selectedPlaceHolder = placeHolderData[0].Id.Value;
-            var result = webSiteB.AddModulesInstance(SelectedPageId, selectedPlaceHolder, selectedModuleID);
+            if (selectedModuleID < 1)
+            {
+                Notifier1.Warning = "Please select a module to add.";
+            }
+            else
+            {
+                var placeHolderData = BWebsite.ListPlaceHolders();
+                if (placeHolderData.Count < 1)
+                    return;
+
+                int selectedPlaceHolder = placeHolderData[0].Id.Value;
+                var result = webSiteB.AddModulesInstance(SelectedPageId, selectedPlaceHolder, selectedModuleID);
+            }
             TreeViewPages_DataBind();
             SelectedPage_DataBind();
         }

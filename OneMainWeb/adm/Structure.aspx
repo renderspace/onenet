@@ -174,8 +174,8 @@
 				
                 <div class="with_buttons">
                     <asp:Panel ID="PanelAddInstance" runat="server" CssClass="addStuff">
-				        <asp:dropdownlist id="ddlModuleTypes" Runat="server" />
-                        <asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="cmdAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
+				        <asp:dropdownlist id="DropDownListModules" Runat="server" />
+                        <asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="ButtonAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
                     </asp:Panel>
                 </div>
                

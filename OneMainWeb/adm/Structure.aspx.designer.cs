@@ -346,13 +346,13 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Panel PanelAddInstance;
         
         /// <summary>
-        /// ddlModuleTypes control.
+        /// DropDownListModules control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlModuleTypes;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListModules;
         
         /// <summary>
         /// cmdAddInstance control.
