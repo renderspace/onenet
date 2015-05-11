@@ -70,8 +70,8 @@ namespace OneMainWeb.adm
                 {
                     var state = new ListingState
                     {
-                        RecordsPerPage = PostbackPager1.RecordsPerPage,
-                        FirstRecordIndex = PostbackPager1.FirstRecordIndex,
+                        RecordsPerPage = virtualTable.HasPager ? PostbackPager1.RecordsPerPage : 10000,
+                        FirstRecordIndex = virtualTable.HasPager ? PostbackPager1.FirstRecordIndex : 0,
                         SortDirection = GridViewSortDirection,
                         SortField = GridViewSortExpression
                     };
@@ -130,13 +130,16 @@ namespace OneMainWeb.adm
                     GridViewItems.Columns.Add(commandField);
                     GridViewItems.DataBind();
 
-                    GridViewItems.DataBind();
                     var allRecords = (int)items.ExtendedProperties["AllRecords"];
-                    PostbackPager1.TotalRecords = allRecords;
-                    PostbackPager1.DetermineData();
                     ButtonExportToExcel.Visible = allRecords > 0;
                     ButtonDeleteSelected.Visible = allRecords > 0;
-                    PostbackPager1.Visible = allRecords > PostbackPager1.RecordsPerPage;
+                    if (virtualTable.HasPager)
+                    {
+                        PostbackPager1.TotalRecords = allRecords;
+                        PostbackPager1.DetermineData();
+                        PostbackPager1.Visible = true;
+                    }
+                    PostbackPager1.Visible = virtualTable.HasPager && (allRecords > PostbackPager1.RecordsPerPage);
                     //if (items.ExtendedProperties.Contains("sql"))
                     //    Label1.Text = items.ExtendedProperties["sql"].ToString().Replace("\n", "<br />");
 

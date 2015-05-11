@@ -34,6 +34,11 @@
                             <asp:CheckBox ID="CheckBoxShowOnMenu" runat="server" Checked='<%# Eval("ShowOnMenu") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Enable pager">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CheckEnablePager" runat="server" Checked='<%# Eval("HasPager") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="Friendly name">
                         <ItemTemplate>
                             <asp:TextBox ID="TextBoxFriendlyName" runat="server" Text='<%# Eval("FriendlyName") %>' />

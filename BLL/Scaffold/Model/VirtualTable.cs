@@ -27,6 +27,8 @@ namespace One.Net.BLL.Scaffold.Model
 
         public bool ShowOnMenu { get; set; }
 
+        public bool HasPager { get; set; }
+
         public string Description
         {
             get
