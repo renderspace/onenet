@@ -762,7 +762,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     {
                         var c = column.NewValueContent[l];
                         c.ContentId = column.ValueInteger > 0 ? (int?)column.ValueInteger : null;
-                        c = (c != null && !string.IsNullOrEmpty(c.Html) ? c : null);
+                        c = (c != null ? c : null); //  && !string.IsNullOrEmpty(c.Html)
                         if (c != null) // && !string.IsNullOrEmpty(c.Html)) why are you not letting people blank out a content?
                         {
                             var p = new[]
