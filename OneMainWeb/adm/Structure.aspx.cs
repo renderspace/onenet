@@ -298,6 +298,7 @@ namespace OneMainWeb.adm
         {
             var instances = webSiteB.ListModuleInstances(SelectedPage.Id);
             PanelNoModuleInstances.Visible = instances.Count == 0;
+            RepeaterModuleInstances.Visible = instances.Count != 0;
             RepeaterModuleInstances.DataSource = instances;
             RepeaterModuleInstances.DataBind();
         }
