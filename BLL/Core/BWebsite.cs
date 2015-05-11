@@ -89,27 +89,12 @@ namespace One.Net.BLL
             return page;
         }
 
-        private BOPage GetUnCachedPage(int pageId, bool publish)
+        private BOPage GetUnCachedPage(int pageId, bool publish, int languageId = 0)
         {
-            BOPage page = webSiteDb.GetPage(pageId, publish, LanguageId);
 
-            if (page != null)
-            {
-                foreach (BOPlaceHolder placeHolder in page.PlaceHolders.Values)
-                {
-                    for (int i = 0; i < placeHolder.ModuleInstances.Count; i++)
-                    {
-                        bool isInherited = placeHolder.ModuleInstances[i].IsInherited;
-                        placeHolder.ModuleInstances[i] = GetModuleInstance(placeHolder.ModuleInstances[i].Id);
-                        placeHolder.ModuleInstances[i].IsInherited = isInherited;
-                    }
-                }
-            }
-            return page;
-        }
+            if (languageId == 0)
+                languageId = LanguageId;
 
-        private BOPage GetUnCachedPage(int pageId, int languageId, bool publish)
-        {
             BOPage page = webSiteDb.GetPage(pageId, publish, languageId);
 
             if (page != null)
@@ -753,8 +738,9 @@ namespace One.Net.BLL
 
         public List<BOModuleInstance> ListModuleInstances(int pageId)
         {
-            List<BOModuleInstance> instances = new List<BOModuleInstance>();
-            BOPage page = GetPage(pageId);
+            var instances = new List<BOModuleInstance>();
+
+            BOPage page = GetUnCachedPage(pageId, false);
             if (page == null)
                 return instances;
 
@@ -1273,7 +1259,7 @@ namespace One.Net.BLL
 
         private void CopyPageToWebsite(int toWebsiteId, int toLanguageId, int pageId, int fromLanguageId, string fromPageUri, int? newParentPageId, int newLevel)
         {
-            var currentPage = GetUnCachedPage(pageId, fromLanguageId, false);
+            var currentPage = GetUnCachedPage(pageId, false, fromLanguageId);
 
             if (currentPage != null)
             {

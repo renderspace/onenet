@@ -114,7 +114,7 @@ namespace OneMainWeb.adm
                 }
                 LoadCopyControls();
 
-                notifier.Message = "$copy_completed";
+                notifier.Message = "Copy completed";
             }
         }
     }
