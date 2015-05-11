@@ -174,7 +174,8 @@ namespace OneMainWeb.adm
                 var t = new VirtualTable
                 {
                     StartingPhysicalTable = DropDownListPhysical.SelectedValue,
-                    OrderColumn = ""
+                    OrderColumn = "",
+                    HasPager = true
                 };
                 Schema.ChangeVirtualTable(t);
                 GridViewVirtualTablesDataBind();
@@ -281,6 +282,7 @@ namespace OneMainWeb.adm
             {
                 var CmdDelete = row.FindControl("CmdDelete") as LinkButton;
                 var CheckBoxShowOnMenu = row.FindControl("CheckBoxShowOnMenu") as CheckBox;
+                var CheckEnablePager = row.FindControl("CheckEnablePager") as CheckBox;
                 var TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
                 var TextBoxWhereCondition = row.FindControl("TextBoxWhereCondition") as TextBox;
                 var DropDownListOrder = row.FindControl("DropDownListOrder") as DropDownList;
@@ -296,6 +298,7 @@ namespace OneMainWeb.adm
                         table.FriendlyName = TextBoxFriendlyName.Text;
                         table.Condition = TextBoxWhereCondition.Text;
                         table.ShowOnMenu = CheckBoxShowOnMenu.Checked;
+                        table.HasPager = CheckEnablePager.Checked;
                         Schema.ChangeVirtualTable(table);
                     }
                     else
@@ -349,8 +352,6 @@ namespace OneMainWeb.adm
                             Schema.ChangeRelation(relalation);
                         }
                     }
-
-                    
                 }
             }
         }
@@ -364,19 +365,7 @@ namespace OneMainWeb.adm
 
                 if (DropDownListDbType != null && row != null)
                 {
-                    if (row["ColumnType"].ToString() == "virtual_column")
-                    {
-                        //DropDownListDbType.Items.Clear();
-                        //DropDownListDbType.Items.Add(new ListItem("", ""));
-                        //DropDownListDbType.Items.Add(new ListItem("", ""));
-                        //DropDownListDbType.Items.Add(new ListItem("", ""));
-                        //DropDownListDbType.Items.Add(new ListItem("", ""));
-                        DropDownListDbType.Visible = false;
-                    }
-                    else
-                    {
-                        DropDownListDbType.Visible = false;
-                    }
+                    DropDownListDbType.Visible = row["ColumnType"].ToString() == "virtual_column";
                 }
             }
         }
