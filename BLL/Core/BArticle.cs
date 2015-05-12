@@ -137,15 +137,14 @@ namespace One.Net.BLL
             return articleDB.ListUnpublishedArticles(state, LanguageId);
         }
 
-        public PagedList<BOArticle> ListArticles(string regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
         {
             PagedList<BOArticle> articles = null;
             if (string.IsNullOrEmpty(titleSearch))
                 articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, false);
             else
             {
-                var tempRegularList = StringTool.SplitStringToIntegers(regularIds);
-                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, false, titleSearch, tempRegularList);
+                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, false, titleSearch, regularIds);
             }
 
             foreach (BOArticle article in articles)
@@ -160,8 +159,9 @@ namespace One.Net.BLL
         /// Uses delegate SingleArticleGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public PagedList<BOArticle> ListArticles(string regularIds, bool showUntranslated, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
+        public PagedList<BOArticle> ListArticles(string categories, bool showUntranslated, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
         {
+            var regularIds = StringTool.SplitStringToIntegers(categories);
             DateTime? from = null;
             DateTime? to = null;
 
@@ -191,8 +191,7 @@ namespace One.Net.BLL
                     articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, showUntranslated);
                 else
                 {
-                    var tempRegularList = StringTool.SplitStringToIntegers(regularIds);
-                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, showUntranslated, titleSearch, tempRegularList);
+                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, showUntranslated, titleSearch, regularIds);
                 }
 
                 foreach (BOArticle article in articles)

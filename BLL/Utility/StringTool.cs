@@ -126,7 +126,7 @@ namespace One.Net.BLL
 
             if (list != null)
             {
-                string[] splittedInts = list.Split(new char[] {',', ';'});
+                string[] splittedInts = list.Split(new char[] {',', ';', ' '});
 
                 foreach (string str in splittedInts)
                 {
