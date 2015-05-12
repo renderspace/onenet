@@ -386,7 +386,8 @@ namespace OneMainWeb
             state.SortDirection = GridViewSortDirection;
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
-            PagedList<BOArticle> articles = articleB.ListArticles(regularsFilter, null, null, state, searchBy);
+            var regularIds = StringTool.SplitStringToIntegers(regularsFilter);
+            PagedList<BOArticle> articles = articleB.ListArticles(regularIds, null, null, state, searchBy);
             TwoPostbackPager1.TotalRecords = articles.AllRecords;
             TwoPostbackPager1.DetermineData();
             GridViewArticles.DataSource = articles;

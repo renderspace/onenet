@@ -162,38 +162,84 @@ WHERE a2.publish = @publishFlag ";
             return results;
         }
 
-        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, string regularIds, ListingState state, int languageId, bool showUntranslated, bool? changed)
+        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool showUntranslated, bool? changed)
         {
-            PagedList<BOArticle> list = new PagedList<BOArticle>();
+            if (regularIds == null)
+                regularIds = new List<int>();
 
-            SqlParameter[] paramsToPass = new SqlParameter[12];
-            paramsToPass[0] = new SqlParameter("@publishFlag", publishFlag);
-            paramsToPass[1] = new SqlParameter("@languageId", languageId);
-            // TODO: remove this from SP, since ListingState calculates from and to, the offset is redundant
-            paramsToPass[2] = new SqlParameter("@offSet", 0);
-            paramsToPass[3] = new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex);
-            paramsToPass[4] = new SqlParameter("@toRecordIndex", state.DbToRecordIndex);
-            paramsToPass[5] = state.SortField.Length < 2 ? new SqlParameter("@sortByColumn", DBNull.Value) : new SqlParameter("@sortByColumn", state.SortField);
-            paramsToPass[6] = new SqlParameter("@sortOrder", state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
-            paramsToPass[7] = new SqlParameter("@regularIds", regularIds);
-            paramsToPass[8] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
-            paramsToPass[9] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
-            paramsToPass[10] = new SqlParameter("@showUntranslated", showUntranslated);
-            paramsToPass[11] = SqlHelper.GetNullable("@changed", changed);
+            var sortField = state.SortField.Length > 1 ? state.SortField : "id";
 
-            string sql = @"[dbo].[ListPagedArticles]";
+            var list = new PagedList<BOArticle>();
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, sql, paramsToPass))
+            SqlParameter[] paramsToPass = new SqlParameter[5];
+            paramsToPass[0] = new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex);
+            paramsToPass[1] = new SqlParameter("@toRecordIndex", state.DbToRecordIndex);
+            paramsToPass[2] = new SqlParameter("@languageId", languageId);
+            paramsToPass[3] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
+            paramsToPass[4] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
+
+            string sql = @"	SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+				c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
+				a.display_date, a.marked_for_deletion, a.changed, ";
+
+            if (publishFlag)
+            {
+                sql += " 1 ";
+            }
+            else
+            {
+                sql += " ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
+            }
+            sql += @", newid() random, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
+            @") AS rownum 
+                INTO #pagedlist 
+                FROM [dbo].[article] a
+		INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
+		INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
+
+            sql += showUntranslated ? "	LEFT " : " INNER ";
+            sql += " JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
+            sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
+
+            if (regularIds.Count > 0)
+            {
+                sql += " AND ra.regular_fk_id IN (" + regularIds.ToCommaSeparatedValues<int>() + ")";
+            }
+            if (from.HasValue && from.Value != DateTime.MinValue)
+            {
+                sql += " AND a.display_date >= @dateFrom ";
+            }
+            if (to.HasValue && to.Value != DateTime.MinValue)
+            {
+                sql += " AND a.display_date <= @dateTo ";
+            }
+            if (changed.HasValue)
+            {
+                sql += " AND a.changed = " + (changed.Value ? "1" : "0");
+            }
+            if (state.SortField.Length > 1)
+            {
+                sql += " ORDER BY " + state.SortField + " ";
+                sql += state.SortDirection == SortDir.Ascending ? "ASC" : "DESC";
+            }
+
+            sql += @";SELECT *
+						FROM #pagedlist
+						WHERE rownum BETWEEN @fromRecordIndex AND @toRecordIndex
+						ORDER BY rownum;
+						SELECT COUNT(id) FROM #pagedlist";
+
+
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
                     BOArticle article = new BOArticle();
                     PopulateArticle(reader, article, languageId);
                     list.Add(article);
-
-                    if (list.AllRecords < 1)
-                        list.AllRecords = reader.GetInt32(19);
                 }
+                if (reader.NextResult() && reader.Read())
+                    list.AllRecords = reader.GetInt32(0);
             }
 
             return list;
@@ -213,7 +259,7 @@ WHERE a2.publish = @publishFlag ";
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
         {
-            return ListPagedArticles(false, null, null, "", state, languageId, false, true);
+            return ListPagedArticles(false, null, null, null, state, languageId, false, true);
         }
 
         public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, bool showUntranslated, string titleSearch, List<int> regulars)
@@ -317,7 +363,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return list;            
         }
 
-        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, string regularIds, ListingState state, int languageId, bool showUntranslated)
+        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool showUntranslated)
         {
             return ListPagedArticles(publishFlag, from, to, regularIds, state, languageId, showUntranslated, null);
         }
