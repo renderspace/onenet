@@ -130,6 +130,9 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            LiteralAppVersion1.Text =  AppVersion;
+            LiteralAppVersion2.Text = "<script type='text/javascript' src='/adm/js/one.js?v=" + AppVersion + "'></script>";
+
             LiteralHead.Text += @"
     <script>
         tracing = " + TracingFlag + @"; 

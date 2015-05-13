@@ -28,7 +28,7 @@
 
     <link href="/adm/css/dropzone.min.css" rel="stylesheet"/>
     <link href="/adm/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
-    <link href="/adm/css/one.css?v=<%: AppVersion %>" rel="stylesheet"/>
+    <link href="/adm/css/one.css" rel="stylesheet"/>
     <link href="/adm/css/dashboard.css" rel="stylesheet"/>
     <link href="/adm/codemirror/codemirror.css" rel="stylesheet"/>
 
@@ -47,7 +47,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			  </button>
-			  <a class="navbar-brand" href="/adm"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><%: AppVersion %></a>
+
+                
+
+			  <a class="navbar-brand" href="/adm"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><asp:Literal runat="server" ID="LiteralAppVersion1"></asp:Literal></a>
 			</div>
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-right">
@@ -87,6 +90,19 @@
 	 </div>
     </div>
     <script src="/ckeditor4/ckeditor.js"></script>
+    <%-- this code is replicated in account master page !  --%>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-62942900-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 
 
     <script type="text/javascript" src="/adm/codemirror/codemirror.js"></script>
@@ -106,8 +122,8 @@
     <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
     <script type="text/javascript" src="/JavaScript/bootstrap-treeview.js"></script>
     <script type="text/javascript" src="/JavaScript/bootstrap-datetimepicker.min.js"></script>
-
-    <script type="text/javascript" src="/adm/js/one.js?v=<%: AppVersion %>"></script>
+        
+    <asp:Literal runat="server" ID="LiteralAppVersion2"></asp:Literal>
 
     </form>
 </body>

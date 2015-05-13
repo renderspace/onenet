@@ -16,8 +16,8 @@ function logError(XMLHttpRequest, textStatus, errorThrown) {
     trace(errorToLog);
     trace(XMLHttpRequest);
     bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
-    if (typeof (_gaq) !== 'undefined') {
-        _gaq.push(['_trackEvent', 'JS logError', errorToLog]);
+    if (typeof (ga) !== 'undefined') {
+        ga('send', 'event', 'JS logError', 'error', errorToLog);
     }
 
 }
@@ -133,47 +133,65 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
         trace("ckEditor.destroy");
     }
     $(".ckbox").empty();
+    trace("enableHtml: " + enableHtml + " enableCk:" + enableCk + " contentId:" + contentId);
 
-    $.ajax({
-        url: "/AdminService/GetContent?id=" + contentId + "&languageId=" + languageId,
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: "GET",
-        success: function (content) {
-            trace(content);
-            $("#form-title").show();
-            $("#form-subtitle").show();
-            $("#form-teaser").show();
-
-            $("#content-title").val(content.Title);
-            $("#content-subtitle").val(content.Subtitle);
-            $("#content-teaser").val(content.Teaser);
-            $(".ckbox").html('<div class="col-sm-12"><textarea  class="form-control" id="content-html"></textarea></div>');
-            var $contenthtml = $("#content-html");
-            $contenthtml.val(content.Html);
-            $(".ckbox").show();
-            if (enableCk === true) {
-                replaceCKEditor(document.getElementById('content-html'));
-            }
-            else {
-                var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('content-html'), {
-                    lineNumbers: true,
-                    mode: "htmlembedded"
-                });
-                $('#content-html').data('CodeMirrorInstance', myCodeMirror);
-                if (enableHtml === true) {
-                    $("#form-title").hide();
-                    $("#form-subtitle").hide();
-                    $("#form-teaser").hide();
-                }
-            }
-            $(".j_control_content_id").val(contentId);
-            $(".modal-body .col-sm-9").show();
-            $(".modal-footer .btn-success").show();
-        },
-        error: logError
-    });
+    if (contentId > 0) {
+        $.ajax({
+            url: "/AdminService/GetContent?id=" + contentId + "&languageId=" + languageId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            success: function (content) {
+                trace(content);
+                $("#content-title").val(content.Title);
+                $("#content-subtitle").val(content.Subtitle);
+                $("#content-teaser").val(content.Teaser);
+                $(".j_control_content_id").val(contentId);
+                setUpHtmlEditing(enableHtml, enableCk, content.Html);
+                
+            },
+            error: logError
+        });
+    } else {
+        trace("data.ContentId == 0");
+        setUpHtmlEditing(enableHtml, enableCk, "");
+    }
 }
+
+function setUpHtmlEditing(enableHtml, enableCk, html) {
+    trace("setUpHtmlEditing");
+    $("#form-title").show();
+    $("#form-subtitle").show();
+    $("#form-teaser").show();
+    $(".ckbox").html('<div class="col-sm-12"><textarea  class="form-control" id="content-html"></textarea></div>');
+    var $contenthtml = $("#content-html");
+    $contenthtml.val(html);
+    if (enableCk === true) {
+        trace("enableCk... ignoring enableHtml");
+        $(".ckbox").show();
+        replaceCKEditor(document.getElementById('content-html'));
+    } else {
+        if (enableHtml === true) {
+            var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('content-html'), {
+                lineNumbers: true,
+                mode: "htmlembedded"
+            });
+            trace("html not enabled...");
+            $("#form-title").hide();
+            $("#form-subtitle").hide();
+            $("#form-teaser").hide();
+            $(".ckbox").show();
+
+            $('#content-html').data('CodeMirrorInstance', myCodeMirror);
+        } else {
+            trace("enableCk false ... enableHtml false");
+            $(".ckbox").hide();
+        }
+    }
+    $(".modal-body .col-sm-9").show();
+    $(".modal-footer .btn-success").show();
+}
+
 
 function buildFormControl(fieldLabel, fieldId, fieldType) {
     var controlHtml = '<div class="form-group"><label class="col-sm-3 control-label">' + fieldLabel + '</label><div class="col-sm-9">';
@@ -483,7 +501,11 @@ $(document).ready(function () {
     });
 
     $('#text-content-modal button.btn-primary').on('click', function (e) {
-        window.location.reload();
+        if ($(".j_control_file_id").val().length > 0) {
+            $('#text-content-modal').modal('hide');
+        } else {
+            window.location.href = "/adm/structure.aspx";
+        }
     });
 
     $('#text-content-modal a.btn-success').on('click', function (e) {
@@ -495,10 +517,13 @@ $(document).ready(function () {
         trace("Saving content from modal window. Title: " + content['Title']);
         var ckEditor = CKEDITOR.instances["content-html"];
         var myCodeMirror = $('#content-html').data('CodeMirrorInstance');
+
         if (ckEditor !== undefined) {
+            trace("ckEditor !== undefined");
             content['Html'] = ckEditor.getData();
         }
         else if (myCodeMirror !== undefined) {
+            trace("myCodeMirror !== undefined");
             content['Html'] = myCodeMirror.getValue();
         }
         content['LanguageId'] = $(".j_control_language_id").val();
@@ -642,12 +667,7 @@ $(document).ready(function () {
                 type: "GET",
                 success: function (data) {
                     trace("GetFileForEditing success");
-                    if (data.ContentId > 0) {
-                        getContent(data.ContentId, languageId, false, false);
-                    } else {
-                        $(".modal-body .col-sm-9").show();
-                        $(".modal-footer .btn-success").show();
-                    }
+                    getContent(data.ContentId, languageId, false, false);
                     $(".j_control_file").empty().append(data.Icon);
                 },
                 error: logError
