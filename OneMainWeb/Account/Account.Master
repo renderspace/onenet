@@ -34,7 +34,7 @@
     <script type="text/javascript" src="/JavaScript/bootstrap.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.details.js"></script>
     <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
-    <script type="text/javascript" src="/adm/js/one.js"></script>
+    <script type="text/javascript" src="/adm/js/one.js?v=<%: AppVersion %>"></script>
 
     
 
