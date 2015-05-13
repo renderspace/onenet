@@ -513,8 +513,11 @@ $(document).ready(function () {
             success: function (data) {
                 if (data === true) {
                     if ($saveButton.hasClass("modal-save-close")) {
-                        window.location.reload();
-                        $('#text-content-modal').modal('hide');
+                        if (content['FileId'].length > 0) {
+                            $('#text-content-modal').modal('hide');
+                        } else {
+                            window.location.href = "/adm/structure.aspx";
+                        }
                     }
                 }
                 else {
