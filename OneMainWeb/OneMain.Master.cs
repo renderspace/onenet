@@ -130,7 +130,6 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            LiteralAppVersion.Text = AppVersion;
             LiteralHead.Text += @"
     <script>
         tracing = " + TracingFlag + @"; 
