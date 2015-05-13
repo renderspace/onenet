@@ -26,7 +26,7 @@ namespace One.Net.BLL
             {
                 int contentId = int.Parse(instance.Settings["ContentId"].Value);
                 if (contentId > 0)
-                    answer = contentB.Get(contentId);
+                    answer = contentB.GetUnCached(contentId);
                 else
                     answer = new BOInternalContent();
             }

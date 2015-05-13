@@ -148,7 +148,7 @@ namespace One.Net.BLL.Service
 
             var contentB = new BInternalContent();
 
-            var existingContent = (file != null && file.Content != null) ? file.Content : contentB.Get(contentId, languageId);
+            var existingContent = (file != null && file.Content != null) ? file.Content : contentB.GetUnCached(contentId, languageId);
             if (existingContent == null)
                 existingContent = new BOInternalContent();
             

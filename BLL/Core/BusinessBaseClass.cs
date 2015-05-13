@@ -53,7 +53,7 @@ namespace One.Net.BLL
 
         protected string CACHE_LANG_PREFIX
         {
-            get { return LNG_PREFIX + LanguageId; }
+            get { return PublishFlag + "_" + LNG_PREFIX + LanguageId; }
         }
 
         #endregion Caching
