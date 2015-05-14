@@ -594,7 +594,7 @@ namespace One.Net.BLL
             ChangeModuleInstance(instance, languageId, true);
 
             int previewContentId = int.Parse(instance.Settings["ContentId"].Value);
-            BOInternalContent content = intContentB.Get(previewContentId, languageId);
+            var content = intContentB.GetUnCached(previewContentId, languageId);
 
             if (content == null)
                 return; // nothing to get published.
