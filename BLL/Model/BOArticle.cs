@@ -122,4 +122,11 @@ namespace One.Net.BLL
         public DateTime Date { get; set; }
         public int ArticleCount { get; set; }
     }
+
+    [Serializable]
+    public class BOArticleMonthDay
+    {
+        public DateTime Date { get; set; }
+        public int ArticleCount { get; set; }
+    }
 }

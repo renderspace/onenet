@@ -215,6 +215,32 @@ namespace One.Net.BLL
             return articles;
         }
 
+        public List<BOArticleMonthDay> ListArticleMonthDays(string regularIds, bool showArticleCount, int year, int month)
+        {
+            List<BOArticleMonthDay> dates = null;
+            string LIST_CACHE_ID = "LAMD_" + LanguageId + regularIds + PublishFlag + showArticleCount + year + month;
+
+            if (PublishFlag)
+                dates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonthDay>;
+
+            if (dates == null)
+            {
+                dates = articleDB.ListArticleMonthDays(PublishFlag, StringTool.SplitStringToIntegers(regularIds), showArticleCount, year, month, LanguageId);
+
+                if (PublishFlag)
+                {
+                    lock (cacheLockingArticleDateListGet)
+                    {
+                        List<BOArticleMonthDay> tempDates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonthDay>;
+                        if (tempDates == null)
+                            OCache.Max(LIST_CACHE_ID, dates);
+                    }
+                }
+            }
+
+            return dates;
+        }
+
         public List<BOArticleMonth> ListArticleMonths(string regularIds, bool showArticleCount)
         {
             List<BOArticleMonth> dates = null;
