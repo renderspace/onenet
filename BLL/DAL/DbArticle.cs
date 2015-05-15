@@ -152,11 +152,11 @@ WHERE a2.publish = @publishFlag ";
             {
                 while (reader.Read())
                 {
-                    int day = (int)reader["date_day"];
+                    var day = (DateTime)reader["date_day"];
 
                     var d = new BOArticleMonthDay();
-    
-                    d.Date = new DateTime(year, month, day);
+
+                    d.Date = day;
 
                     if (showArticleCount)
                         d.ArticleCount = (int)reader["cnt"];
