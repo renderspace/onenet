@@ -113,7 +113,7 @@ namespace One.Net.BLL.DAL
         {
             var results = new List<BOArticleMonthDay>();
             string regularIdString = StringTool.RenderAsString(regularIDs);
-            string sql = @"SELECT DISTINCT DATE(a.display_date) date_day";
+            string sql = @"SELECT DISTINCT CAST(a.display_date AS DATE) date_day";
 
             if (showArticleCount)
             {
@@ -127,7 +127,7 @@ WHERE a2.publish = @publishFlag ";
                 if (!string.IsNullOrEmpty(regularIdString))
                     sql += @" AND ra.regular_fk_id IN (" + regularIdString + @") ";
 
-                sql += @" AND DATE(a2.display_date)=DATE(a.display_date)) cnt ";
+                sql += @" AND YEAR(a2.display_date)=YEAR(a.display_date) AND MONTH(a2.display_date)=MONTH(a.display_date) AND DAY(a2.display_date)=DAY(a.display_date)) cnt ";
             }
 
             sql += @"      FROM [dbo].[article] a
@@ -139,7 +139,7 @@ WHERE a2.publish = @publishFlag ";
             if (!string.IsNullOrEmpty(regularIdString))
                 sql += " AND ra.regular_fk_id IN (" + regularIdString + ")";
 
-            sql += " YEAR(a.display_date) = @year AND MONTH(a.display_date) = @month ";
+            sql += " AND YEAR(a.display_date) = @year AND MONTH(a.display_date) = @month ";
 
             var paramsToPass = new SqlParameter[4];
 
