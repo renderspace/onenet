@@ -109,6 +109,65 @@ namespace One.Net.BLL.DAL
             return article;
         }
 
+        public List<BOArticleMonthDay> ListArticleMonthDays(bool publishFlag, List<int> regularIDs, bool showArticleCount, int year, int month, int languageId)
+        {
+            var results = new List<BOArticleMonthDay>();
+            string regularIdString = StringTool.RenderAsString(regularIDs);
+            string sql = @"SELECT DISTINCT DATE(a.display_date) date_day";
+
+            if (showArticleCount)
+            {
+                sql += @",
+(SELECT Count(a2.id) FROM [dbo].[article] a2
+INNER JOIN [dbo].[content] c ON c.id=a2.content_fk_id
+INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a2.id and ra.article_fk_publish=a2.publish
+INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId 
+WHERE a2.publish = @publishFlag ";
+
+                if (!string.IsNullOrEmpty(regularIdString))
+                    sql += @" AND ra.regular_fk_id IN (" + regularIdString + @") ";
+
+                sql += @" AND DATE(a2.display_date)=DATE(a.display_date)) cnt ";
+            }
+
+            sql += @"      FROM [dbo].[article] a
+		                   INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
+		                   INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish
+		                   INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId 
+		                   WHERE a.publish = @publishFlag ";
+
+            if (!string.IsNullOrEmpty(regularIdString))
+                sql += " AND ra.regular_fk_id IN (" + regularIdString + ")";
+
+            sql += " YEAR(a.display_date) = @year AND MONTH(a.display_date) = @month ";
+
+            var paramsToPass = new SqlParameter[4];
+
+            paramsToPass[0] = new SqlParameter("@publishFlag", publishFlag);
+            paramsToPass[1] = new SqlParameter("@languageId", languageId);
+            paramsToPass[2] = new SqlParameter("@year", year);
+            paramsToPass[3] = new SqlParameter("@month", month);
+
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            {
+                while (reader.Read())
+                {
+                    int day = (int)reader["date_day"];
+
+                    var d = new BOArticleMonthDay();
+    
+                    d.Date = new DateTime(year, month, day);
+
+                    if (showArticleCount)
+                        d.ArticleCount = (int)reader["cnt"];
+
+                    results.Add(d);
+                }
+            }
+
+            return results;
+        }
+
         public List<BOArticleMonth> ListArticleMonths(bool publishFlag, List<int> regularIDs, bool showArticleCount, int languageId)
         {
             List<BOArticleMonth> results = new List<BOArticleMonth>();
