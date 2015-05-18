@@ -18,7 +18,7 @@ namespace One.Net.BLL.Scaffold
             get { return ConfigurationManager.ConnectionStrings["Bamboo"].ConnectionString; }
         }
         
-        public static void InternationalizeColumn(int columnId)
+        public static bool InternationalizeColumn(int columnId)
         {
             var virtualTable = Schema.GetVirtualColumnTable(columnId);
             if (virtualTable != null)
@@ -27,7 +27,7 @@ namespace One.Net.BLL.Scaffold
                 if (virtualColumn != null)
                 {
                     var tableName = virtualTable.StartingPhysicalTable;
-                    if (!virtualColumn.IsMultiLanguageContent && virtualColumn.DbType.ToString() == "System.String")
+                    if (!virtualColumn.IsMultiLanguageContent && virtualColumn.DbType.ToString().Contains("String"))
                     {
                         var oldColumnName = virtualColumn.Name.ToLower();
 
@@ -121,10 +121,11 @@ namespace One.Net.BLL.Scaffold
 
                         // finally, remove old column from virtual columns
                         Schema.RemoveVirtualColumn(columnId);
-
+                        return true;
                     }
                 }
             }
+            return false;
         }
 
         public static List<VirtualTable> ListVirtualTables()
