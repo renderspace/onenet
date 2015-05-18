@@ -77,9 +77,21 @@ namespace OneMainWeb.adm
 
             if (id > 0)
             {
-                Schema.InternationalizeColumn(id);
-                GridViewItemsDataBind();
-                Notifier1.Message = "Message: Column successfully internationalized";
+                var result = Schema.InternationalizeColumn(id);
+                if (result)
+                {
+                    GridViewItemsDataBind();
+                    Notifier1.Message = "Column successfully internationalized";
+                }
+                else 
+                {
+                    Notifier1.ExceptionMessage = "Unknown error occured while internationalizing.";
+                }
+                
+            }
+            else
+            {
+                Notifier1.ExceptionMessage= "No column selected";
             }
         }
 
@@ -93,7 +105,7 @@ namespace OneMainWeb.adm
                 if (CmdInternationalize != null && row != null)
                 {
                     CmdInternationalize.Visible = false;
-                    if (row["DbType"].ToString() == "System.String")
+                    if (row["DbType"].ToString().Contains("String"))
                     {
                         CmdInternationalize.Visible = true;
                     }
