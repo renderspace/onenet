@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace One.Net.BLL
 {
+    [Serializable]
     public class BOContentTemplate
     {
         public BOContentTemplate()
