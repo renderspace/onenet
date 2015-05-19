@@ -215,6 +215,11 @@ namespace One.Net.BLL
             return articles;
         }
 
+        public DateTime? GetFirstDateWithArticles(string regularIds, int fromYear, int fromMonth)
+        {
+            return articleDB.GetFirstDateWithArticles(PublishFlag, StringTool.SplitStringToIntegers(regularIds), fromYear, fromMonth, LanguageId);
+        }
+
         public List<BOArticleMonthDay> ListArticleMonthDays(string regularIds, bool showArticleCount, int year, int month)
         {
             List<BOArticleMonthDay> dates = null;

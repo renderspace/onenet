@@ -109,6 +109,41 @@ namespace One.Net.BLL.DAL
             return article;
         }
 
+        public DateTime? GetFirstDateWithArticles(bool publishFlag, List<int> regularIDs, int fromYear, int fromMonth, int languageId)
+        {
+            DateTime? result = null;
+            string regularIdString = StringTool.RenderAsString(regularIDs);
+            string sql = @"SELECT MIN(a.display_date) date_day ";
+
+            sql += @"   FROM [dbo].[article] a
+		                INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
+		                INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish
+		                INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId 
+		                WHERE a.publish = @publishFlag ";
+
+            if (!string.IsNullOrEmpty(regularIdString))
+                sql += " AND ra.regular_fk_id IN (" + regularIdString + ") ";
+
+            sql += " AND ((YEAR(a.display_date) = @year AND MONTH(a.display_date) >= @month) OR (YEAR(a.display_date) > @year)) ";
+
+            var paramsToPass = new SqlParameter[4];
+
+            paramsToPass[0] = new SqlParameter("@publishFlag", publishFlag);
+            paramsToPass[1] = new SqlParameter("@languageId", languageId);
+            paramsToPass[2] = new SqlParameter("@year", fromYear);
+            paramsToPass[3] = new SqlParameter("@month", fromMonth);
+
+            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            {
+                if (reader.Read())
+                {
+                    result = (DateTime)reader["date_day"];
+                }
+            }
+
+            return result;
+        }
+
         public List<BOArticleMonthDay> ListArticleMonthDays(bool publishFlag, List<int> regularIDs, bool showArticleCount, int year, int month, int languageId)
         {
             var results = new List<BOArticleMonthDay>();
