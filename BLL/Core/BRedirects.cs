@@ -56,24 +56,6 @@ namespace One.Net.BLL
                     return null;
                 }
             });
-
-            /*
-            var redirect = cache.Get<BORedirect>(ItemCacheKey + redirectId);
-
-            if (redirect == null)
-            {
-                var cmdParams = new[] { new SqlParameter("@redirectId", redirectId) };
-                var sql = @"SELECT id, from_link, to_link, is_shortener, created FROM dbo.redirects WHERE id = @redirectId";
-                using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, System.Data.CommandType.Text, sql, cmdParams))
-                {
-                    if (reader.Read())
-                    {
-                        redirect = PopulateRedirect(reader);
-                        cache.Put(ItemCacheKey + redirectId, redirect);
-                    }
-                }
-            }
-            return redirect;*/
         }
 
         public static BORedirect Find(string fromLink)

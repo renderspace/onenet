@@ -525,8 +525,7 @@ namespace One.Net.BLL.DAL
         {
             if (rdr[7] != DBNull.Value && rdr.GetInt32(2) == 1)
             {
-                BOModuleInstance moduleInstance = new BOModuleInstance(rdr.GetInt32(7), rdr.GetInt32(8), rdr.GetInt32(9), rdr.GetInt32(10), rdr.GetString(11));
-                moduleInstance.PlaceHolderId = rdr.GetInt32(12);
+                var moduleInstance = new BOModuleInstance { Id = rdr.GetInt32(7), ModuleId = rdr.GetInt32(8), Order = rdr.GetInt32(9), PageId = rdr.GetInt32(10), Name = rdr.GetString(11), PlaceHolderId =  rdr.GetInt32(12) };
                 moduleInstance.IsInherited = rdr.GetInt32(1) != sitePage.Level;
 
                 if (!sitePage.PlaceHolders.ContainsKey(moduleInstance.PlaceHolderId))
@@ -767,7 +766,7 @@ ORDER BY name ASC";
                 {
                     if (instance == null)
                     {
-                        instance = new BOModuleInstance((int)rdr["ModuleInstanceID"], (int)rdr["ModuleID"], (int)rdr["ModuleOrder"], (int)rdr["PageID"], (string)rdr["ModuleName"]);
+                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], Name = (string)rdr["ModuleName"] };
                         instance.PendingDelete = bool.Parse(rdr["PendingDelete"].ToString());
                         instance.Changed = bool.Parse(rdr["Changed"].ToString());
                         instance.PlaceHolderId = (int)rdr["place_holder_fk_id"];
@@ -820,7 +819,7 @@ ORDER BY name ASC";
                 {
                     if (rdr.Read())
                     {
-                        instance = new BOModuleInstance((int)rdr["ModuleInstanceID"], (int)rdr["ModuleID"], (int)rdr["ModuleOrder"], (int)rdr["PageID"], (string)rdr["name"]);
+                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], Name = (string)rdr["name"] };
                         instance.PendingDelete = bool.Parse(rdr["PendingDelete"].ToString());
                         instance.Changed = bool.Parse(rdr["Changed"].ToString());
                         instance.PlaceHolderId = (int)rdr["place_holder_fk_id"];
