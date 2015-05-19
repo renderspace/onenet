@@ -8,6 +8,7 @@ namespace One.Net.BLL
 	/// <summary>
 	/// Summary description for BOPage.
 	/// </summary>
+    [Serializable]
     public class BOPage : PublishableInternalContent
 	{
         private string parLink = "";

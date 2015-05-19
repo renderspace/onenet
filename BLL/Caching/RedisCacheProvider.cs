@@ -18,8 +18,9 @@ namespace One.Net.BLL.Caching
 
         public RedisCacheProvider()
         {
-            var connectionString = ConfigurationManager.AppSettings["Cache.ConnectionString"];
-            _connection = ConnectionMultiplexer.Connect(connectionString); //"contoso5.redis.cache.windows.net,password=...");
+            var redisAccessKey = ConfigurationManager.AppSettings["Cache.RedisAccessKey"];
+            var connectionString = ConfigurationManager.AppSettings["Cache.ConnectionString"];//"contoso5.redis.cache.windows.net,password=...");
+            _connection = ConnectionMultiplexer.Connect(string.Format("{0},ssl=true,password={1}", connectionString, redisAccessKey));
             _database = _connection.GetDatabase();
         }
 

@@ -1,26 +1,17 @@
+using System;
 using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
+    [Serializable]
     public class BOPlaceHolder
     {
-        int? id;
-        string name;
-
         List<BOModuleInstance> instances = new List<BOModuleInstance>();
 
 
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
+        public string Name { get; set; }
 
-        public int? Id
-        {
-            get { return this.id; }
-            set { this.id = value;}
-        }
+        public int? Id { get; set; }
 
         public List<BOModuleInstance> ModuleInstances
         {

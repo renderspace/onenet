@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
+    [Serializable]
     public class BOModuleInstance
     {
 
