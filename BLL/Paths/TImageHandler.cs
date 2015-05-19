@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Configuration;
 using NLog;
+using One.Net.BLL.Caching;
 
 namespace One.Net.BLL
 {
@@ -16,6 +17,7 @@ namespace One.Net.BLL
     public class TImageHandler : IHttpHandler
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
+        protected static ICacheProvider cache = CacheFactory.ResolveCacheFromConfig();
 
         private const int DEFAULT_QUALITY = 80;
 
@@ -204,7 +206,7 @@ namespace One.Net.BLL
 
             string cacheKey = CACHE_ID + virtualPath + "W" + width + "H" + height + "Q" + quality;
 
-            encodedImage = OCache.Get(cacheKey) as byte[];
+            encodedImage = cache.Get<byte[]>(cacheKey);
 
             if (encodedImage == null)
             {
@@ -227,9 +229,9 @@ namespace One.Net.BLL
                         encodedImage = GetByteArray(processedBitmap, GetImageFormat(virtualPath), encParams);
                         lock (cacheLockingEncodedImage)
                         {
-                            byte[] tempEncodedImage = OCache.Get(cacheKey) as byte[];
+                            byte[] tempEncodedImage = cache.Get<byte[]>(cacheKey);
                             if (null == tempEncodedImage)
-                                OCache.Max(cacheKey, encodedImage);
+                                cache.Put(cacheKey, encodedImage);
                         }
                     }
                     else
@@ -332,7 +334,7 @@ namespace One.Net.BLL
                 }
                 else
                 {
-                    encodedImage = OCache.Get(cacheKey) as byte[];
+                    encodedImage = cache.Get<byte[]>(cacheKey);
                 }
             }
                 
@@ -377,9 +379,9 @@ namespace One.Net.BLL
                                 }
                                 else
                                 {
-                                    byte[] tempEncodedImage = OCache.Get(cacheKey) as byte[];
+                                    byte[] tempEncodedImage = cache.Get<byte[]>(cacheKey);
                                     if (null == tempEncodedImage)
-                                        OCache.Max(cacheKey, encodedImage);
+                                        cache.Put(cacheKey, encodedImage);
                                 }
                             }
                         }

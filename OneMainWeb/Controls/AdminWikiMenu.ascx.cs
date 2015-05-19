@@ -42,7 +42,7 @@ namespace OneMainWeb.Controls
 
         protected void LinkButtonClearCache_Click(object sender, EventArgs e)
         {
-            OCache.Clear();
+            webSiteB.ClearCache();
             OneSiteMapProvider.ReloadSiteMap();
         }
 
@@ -55,11 +55,11 @@ namespace OneMainWeb.Controls
             {
                 case BWebsite.DeletePageByIdResult.DeletedRoot:
                     // well, what can we do...
-                    OCache.Clear();
+                    webSiteB.ClearCache();
                     OneSiteMapProvider.ReloadSiteMap();
                     break;
                 case BWebsite.DeletePageByIdResult.Deleted:
-                    OCache.Clear();
+                    webSiteB.ClearCache();
                     OneSiteMapProvider.ReloadSiteMap();
                     Response.Redirect(ParentPageUrl);
                     break;

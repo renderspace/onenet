@@ -285,9 +285,9 @@ ga('create', '" + code + @"', 'auto');";
 
                                 try
                                 {
-                                    if (File.Exists(OContext.Current.MapPath(relCustomPath)))
+                                    if (File.Exists(HttpContext.Current.Server.MapPath(relCustomPath)))
                                         control = LoadControl(relCustomPath);
-                                    else if (File.Exists(OContext.Current.MapPath(relPath)))
+                                    else if (File.Exists(HttpContext.Current.Server.MapPath(relPath)))
                                         control = LoadControl(relPath);
                                     else
                                         control = LoadControl("~/Controls/Blank.ascx");

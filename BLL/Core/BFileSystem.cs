@@ -90,10 +90,10 @@ namespace One.Net.BLL
             // Categorize the item against folder info
             categorizationB.Categorize(file.Folder, file.Id.Value);
 
-            OCache.Remove(CACHE_ID + file.Id.Value);
+            cache.Remove(CACHE_ID + file.Id.Value);
             // the following string must be the same as
-            OCache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
-            OCache.Remove(BYTES_CACHE_ID + file.Id.Value);
+            cache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
+            cache.Remove(BYTES_CACHE_ID + file.Id.Value);
         }
 
         private static string DYNAMIC_FOLDER_CACHE_ID(int folderId, int languageId)
@@ -113,7 +113,7 @@ namespace One.Net.BLL
                 if (file.Folder != null)
                 {
                     // TODO: clear all languages from cache!
-                    OCache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
+                    cache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
                     categorizationB.RemoveCategorizationFromItem(file.Folder, Id);
                 }
                 if (file.Content != null)
@@ -136,8 +136,8 @@ namespace One.Net.BLL
                 //}
 
                 fileDb.Delete(Id);
-                OCache.Remove(CACHE_ID + Id);
-                OCache.Remove(BYTES_CACHE_ID + Id);
+                cache.Remove(CACHE_ID + Id);
+                cache.Remove(BYTES_CACHE_ID + Id);
                 return true;
             }
             else
@@ -152,7 +152,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public BOFile Get(int id)
         {
-            BOFile file = OCache.Get(CACHE_ID + id) as BOFile;
+            BOFile file = cache.Get<BOFile>(CACHE_ID + id);
             if (file == null)
             {
                 file = GetUnCached(id);
@@ -160,9 +160,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingFile)
                     {
-                        BOFile tempFile = OCache.Get(CACHE_ID + id) as BOFile;
+                        BOFile tempFile = cache.Get<BOFile>(CACHE_ID + id);
                         if (null == tempFile)
-                            OCache.Max(CACHE_ID + id, file);
+                            cache.Put(CACHE_ID + id, file);
                     }
                 }
             }
@@ -202,7 +202,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public static byte[] GetCachedFileBytes(int fileId)
         {
-            byte[] bytes = OCache.Get(BYTES_CACHE_ID + fileId) as byte[];
+            byte[] bytes = cache.Get<byte[]>(BYTES_CACHE_ID + fileId);
             if (bytes == null)
             {
                 bytes = fileDb.GetFileBytes(fileId);
@@ -210,13 +210,10 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingFileBytes)
                     {
-                        byte[] tempBytes = OCache.Get(BYTES_CACHE_ID + fileId) as byte[];
+                        byte[] tempBytes = cache.Get<byte[]>(BYTES_CACHE_ID + fileId);
                         if (null == tempBytes)
                         {
-                            if (bytes.Length > 307200) // > 300kB
-                                OCache.Max(BYTES_CACHE_ID + fileId, bytes, CacheItemPriority.Low);
-                            else
-                                OCache.Max(BYTES_CACHE_ID + fileId, bytes, CacheItemPriority.Normal);
+                            cache.Put(BYTES_CACHE_ID + fileId, bytes);
                         }
                     }
                 }
@@ -238,11 +235,11 @@ namespace One.Net.BLL
         /// <returns></returns>
         public List<BOFile> List(int folderId) 
         {
-            var list = OCache.Get(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId)) as List<BOFile>;
+            var list = cache.Get<List<BOFile>>(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId));
             if (list == null)
             {
                 list = fileDb.ListFolder(folderId, LanguageId, "f.id", SortDir.Descending);
-                OCache.Max(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId), list);
+                cache.Put(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId), list);
             }
             // return clone, because the will sort it later.
             return new List<BOFile>(list);
@@ -256,11 +253,11 @@ namespace One.Net.BLL
         /// <returns></returns>
         public List<BOFile> List(int folderId, string sortBy, SortDir sortDir)
         {
-            var list = OCache.Get(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId) + ":" + sortBy + ":" + sortDir.ToString() ) as List<BOFile>;
+            var list = cache.Get<List<BOFile>>(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId) + ":" + sortBy + ":" + sortDir.ToString());
             if (list == null)
             {
                 list = fileDb.ListFolder(folderId, LanguageId, sortBy, sortDir);
-                OCache.Max(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId) + ":" + sortBy + ":" + sortDir.ToString(), list);
+                cache.Put(DYNAMIC_FOLDER_CACHE_ID(folderId, LanguageId) + ":" + sortBy + ":" + sortDir.ToString(), list);
             }
             // return clone, because the will sort it later.
             return new List<BOFile>(list);
@@ -275,10 +272,10 @@ namespace One.Net.BLL
         {
             categorizationB.MoveItem(file.Id.Value, file.Folder, newFolder);
 
-            OCache.Remove(CACHE_ID + file.Id.Value);
+            cache.Remove(CACHE_ID + file.Id.Value);
             // the following string must be the same as
-            OCache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(newFolder.Id.Value, LanguageId));
-            OCache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
+            cache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(newFolder.Id.Value, LanguageId));
+            cache.RemoveWithPartialKey(DYNAMIC_FOLDER_CACHE_ID(file.Folder.Id.Value, LanguageId));
         }
 
         //public List<string> ListFileUses(int fileId)

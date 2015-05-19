@@ -28,7 +28,7 @@ namespace One.Net.BLL.Service
 
         public IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId)
         {
-            BAudit auditB = new BAudit();
+            var auditB = new BInternalContent();
             var audits = auditB.ListAudits(contentId, languageId);
 
             var result = new List<DTOAuditItem>();

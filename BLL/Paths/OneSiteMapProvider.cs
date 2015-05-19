@@ -10,6 +10,7 @@ using System.Web.Caching;
 using System.Web.Routing;
 using NLog;
 using One.Net.BLL.DAL;
+using One.Net.BLL.Caching;
 
 
 // http://codeproject.com/aspnet/aspnet2security.asp?df=100&forumid=123760&exp=0&select=1198046
@@ -102,7 +103,9 @@ namespace One.Net.BLL
                     }
                 }
 
-                OCache.Add(_cacheDependencyName, new object(), null, Cache.NoAbsoluteExpiration, 
+                //key, obj, dep, absoluteExpiration, slidingExpiration, priority, onRemoveCallback);
+
+                HttpContext.Current.Cache.Add(_cacheDependencyName, new object(), null, Cache.NoAbsoluteExpiration, 
                     new TimeSpan(1,0,0), CacheItemPriority.AboveNormal, 
                     OnSiteMapChanged);
                 return _root;
@@ -111,7 +114,7 @@ namespace One.Net.BLL
 
         public static void ReloadSiteMap()
         {
-            OCache.Remove(_cacheDependencyName);
+            HttpContext.Current.Cache.Remove(_cacheDependencyName);
         }
 
         protected SiteMapNode AddPage(BOPage page)

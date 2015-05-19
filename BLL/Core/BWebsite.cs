@@ -61,7 +61,7 @@ namespace One.Net.BLL
         private BOPage GetPage(int pageId, int languageId)
         {
             string cacheKey = PAGE_CACHE_ID(pageId, languageId, PublishFlag);
-            BOPage page = OCache.Get(cacheKey) as BOPage;
+            BOPage page = cache.Get<BOPage>(cacheKey);
 
             if (page == null)
             {
@@ -80,9 +80,9 @@ namespace One.Net.BLL
                     }
                     lock (cacheLockingPage)
                     {
-                        BOPage tempPage = OCache.Get(cacheKey) as BOPage;
+                        BOPage tempPage = cache.Get<BOPage>(cacheKey);
                         if (null == tempPage)
-                            OCache.Max(cacheKey, page);
+                            cache.Put(cacheKey, page);
                     }
                 }
             }
@@ -262,14 +262,14 @@ namespace One.Net.BLL
             {
                 page.Level = 0;
                 page.URI.TrimStart(new char[] { '/' });
-                OCache.Remove(CACHE_SITE_LIST);
+                cache.Remove(CACHE_SITE_LIST);
             }
             else
             {
                 page.Level = webSiteDb.GetPage(page.ParentId.Value, page.PublishFlag, page.LanguageId).Level + 1;
             }
             webSiteDb.ChangePage(page);
-            OCache.Remove(PAGE_CACHE_ID(page.Id, page.LanguageId, page.PublishFlag));
+            cache.Remove(PAGE_CACHE_ID(page.Id, page.LanguageId, page.PublishFlag));
         }
 
         public void SwapOrderOfPages(int page1Id, int page2Id)
@@ -331,7 +331,7 @@ namespace One.Net.BLL
             }
 
             if (offlinePage.IsRoot)
-                OCache.Remove(CACHE_SITE_LIST);
+                cache.Remove(CACHE_SITE_LIST);
 
             if (offlinePage.MarkedForDeletion && markedCount == 0)
             {
@@ -394,7 +394,7 @@ namespace One.Net.BLL
             }
 
             if (offlinePage.IsRoot)
-                OCache.Remove(CACHE_SITE_LIST);
+                cache.Remove(CACHE_SITE_LIST);
 
             if (!hasChildren && offlinePage.MarkedForDeletion)
             {
@@ -429,7 +429,7 @@ namespace One.Net.BLL
                 intContentB.Delete(onlinePage.ContentId.Value);
                 offlinePage.IsChanged = true;
                 webSiteDb.ChangePage(offlinePage);
-                OCache.Remove(PAGE_CACHE_ID(offlinePage.Id, offlinePage.LanguageId, offlinePage.PublishFlag));
+                cache.Remove(PAGE_CACHE_ID(offlinePage.Id, offlinePage.LanguageId, offlinePage.PublishFlag));
                 return true;
             }
             else
@@ -824,16 +824,16 @@ namespace One.Net.BLL
 
         public List<BOWebSite> List()
         {
-            List<BOWebSite> websites = OCache.Get(CACHE_SITE_LIST) as List<BOWebSite>;
+            List<BOWebSite> websites = cache.Get<List<BOWebSite>>(CACHE_SITE_LIST);
             if (websites == null)
             {
                 websites = webSiteDb.List();
                 
                 lock (cacheLockingWebSiteList)
                 {
-                    List<BOWebSite> tempWebsites = OCache.Get(CACHE_SITE_LIST) as List<BOWebSite>;
+                    List<BOWebSite> tempWebsites = cache.Get<List<BOWebSite>>(CACHE_SITE_LIST);
                     if (null == tempWebsites)
-                        OCache.Max(CACHE_SITE_LIST, websites);
+                        cache.Put(CACHE_SITE_LIST, websites);
                 }
             }
             if (websites != null)
@@ -850,14 +850,14 @@ namespace One.Net.BLL
         {
             intContentB.Change(website);
             webSiteDb.Change(website);
-            OCache.Remove(CACHE_SITE_LIST);
+            cache.Remove(CACHE_SITE_LIST);
         }
 
         internal void ChangeWebsite(BOWebSite website, string connString)
         {
             intContentB.Change(website, connString);
             webSiteDb.Change(website, connString);
-            OCache.Remove(CACHE_SITE_LIST);
+            cache.Remove(CACHE_SITE_LIST);
         }
 
         public bool SiteExistsInDatabase(string title, string previewUrl)
@@ -1077,11 +1077,11 @@ namespace One.Net.BLL
         
         public static BOTemplate GetTemplate(int id)
         {
-            BOImageTemplate imageTemplate = OCache.Get("Template_" + id) as BOImageTemplate;
+            BOImageTemplate imageTemplate = cache.Get<BOImageTemplate>("Template_" + id);
             if (imageTemplate != null)
                 return imageTemplate;
 
-            BOTemplate template = OCache.Get("Template_" + id) as BOTemplate;
+            BOTemplate template = cache.Get<BOTemplate>("Template_" + id);
             if (template == null)
             {
                 template = ListTemplates(null).Where(t => t.Id == id).FirstOrDefault();
@@ -1099,9 +1099,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingTemplatesList)
                     {
-                        var temp = OCache.Get("Template_" + id) as BOTemplate;
+                        var temp = cache.Get<BOTemplate>("Template_" + id);
                         if (null == temp)
-                            OCache.Max("Template_" + id, template);
+                            cache.Put("Template_" + id, template);
                     }
                 }
             }
@@ -1116,7 +1116,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         public static List<BOTemplate> ListTemplates(string typeIdsString)
         {
-            List<BOTemplate> list = OCache.Get("ListTemplates:" + typeIdsString) as List<BOTemplate>;
+            List<BOTemplate> list = cache.Get<List<BOTemplate>>("ListTemplates:" + typeIdsString);
             if (list == null)
             {
                 list = webSiteDb.ListTemplates();
@@ -1124,9 +1124,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingTemplatesList)
                     {
-                        List<BOTemplate> tempList = OCache.Get("ListTemplates:" + typeIdsString) as List<BOTemplate>;
+                        List<BOTemplate> tempList = cache.Get<List<BOTemplate>>("ListTemplates:" + typeIdsString);
                         if (null == tempList)
-                            OCache.Max("ListTemplates:" + typeIdsString, list);
+                            cache.Put("ListTemplates:" + typeIdsString, list);
                     }
                     if (log.IsDebugEnabled)
                         log.Debug("ListTemplates found " + list.Count + " templates.");
@@ -1154,13 +1154,13 @@ namespace One.Net.BLL
         public void ChangeTemplate(BOTemplate template)
         {
             webSiteDb.ChangeTemplate(template);
-            OCache.RemoveWithPartialKey("ListTemplates");
+            cache.RemoveWithPartialKey("ListTemplates");
         }
 
         public void DeleteTemplate(int templateId)
         {
             webSiteDb.DeleteTemplate(templateId);
-            OCache.RemoveWithPartialKey("ListTemplates");
+            cache.RemoveWithPartialKey("ListTemplates");
         }
 
         /// <summary>
@@ -1169,11 +1169,11 @@ namespace One.Net.BLL
         /// <returns></returns>
         public static List<BOPlaceHolder> ListPlaceHolders()
         {
-            List<BOPlaceHolder> list = OCache.Get("ListPlaceHolders") as List<BOPlaceHolder>;
+            List<BOPlaceHolder> list = cache.Get<List<BOPlaceHolder>>("ListPlaceHolders");
             if (list == null)
             {
                 list = webSiteDb.ListPlaceHolders();
-                OCache.Max("ListPlaceHolders", list);
+                cache.Put("ListPlaceHolders", list);
             }
 
             return list;
@@ -1182,7 +1182,7 @@ namespace One.Net.BLL
         public void ChangePlaceHolder(BOPlaceHolder placeHolder)
         {
             webSiteDb.ChangePlaceHolder(placeHolder);
-            OCache.Remove("ListPlaceHolders");
+            cache.Remove("ListPlaceHolders");
         }
 
         /// <summary>
@@ -1191,7 +1191,14 @@ namespace One.Net.BLL
         /// <returns></returns>
         public static List<BOModule> ListModules(bool includeUsageCount = false)
         {
-            return webSiteDb.ListModules(includeUsageCount);
+            var cacheKey = "ListModules" + includeUsageCount.ToString();
+            var c = cache.Get<List<BOModule>>(cacheKey);
+            if (c == null)
+            { 
+                c = webSiteDb.ListModules(includeUsageCount);
+                cache.Put(cacheKey, c);
+            }
+            return c;
         }
 
         public DataTable ListModuleUsage(int id)

@@ -38,7 +38,7 @@ namespace One.Net.BLL
 
             string cacheKey = DICT_CACHE_ID + "L_" + Thread.CurrentThread.CurrentCulture.LCID + "_" + keyWord;
 
-            string meaning = OCache.Get(cacheKey) as string;
+            string meaning = cache.Get<string>(cacheKey);
             if (string.IsNullOrEmpty(meaning))
             {
 
@@ -49,9 +49,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingDictionary)
                     {
-                        string tempMeaning = OCache.Get(cacheKey) as string;
+                        string tempMeaning = cache.Get<string>(cacheKey);
                         if (string.IsNullOrEmpty(tempMeaning))
-                            OCache.Max(cacheKey, meaning);
+                            cache.Put(cacheKey, meaning);
                     }
                 }
             }
@@ -88,7 +88,7 @@ namespace One.Net.BLL
             string cacheKey = CPLX_DICT_CACHE_ID + "L_" + Thread.CurrentThread.CurrentCulture.LCID + 
                 "_" + keyWord;
 
-            BODictionaryEntry meaning = OCache.Get(cacheKey) as BODictionaryEntry;
+            BODictionaryEntry meaning = cache.Get<BODictionaryEntry>(cacheKey);
             if (null == meaning)
             {
                 BODictionaryEntry stc = contentDb.GetDictionaryEntry(keyWord, Thread.CurrentThread.CurrentCulture.LCID);
@@ -96,9 +96,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingDictionary)
                     {
-                        BODictionaryEntry tempMeaning = OCache.Get(cacheKey) as BODictionaryEntry;
+                        BODictionaryEntry tempMeaning = cache.Get<BODictionaryEntry>(cacheKey);
                         if (null == tempMeaning)
-                            OCache.Max(cacheKey, stc);
+                            cache.Put(cacheKey, stc);
                     }
                     return stc;
                 }
