@@ -551,18 +551,6 @@ namespace One.Net.BLL
             return true;
         }
 
-        /*
-        public void PublishPageTree(int pageId)
-        {
-            PublishPage(pageId);
-            List<BOPage> children = ListChildrenPages(pageId);
-            foreach (BOPage page in children)
-            {
-                PublishPageTree(page.Id);
-            }
-        }
-        */
-
         private void PublishTemplateContentModuleInstance(BOModuleInstance instance, int languageId)
         {
             instance.Changed = false;

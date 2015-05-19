@@ -6,122 +6,52 @@ namespace One.Net.BLL
     [Serializable]
     public class BOModuleInstance
     {
-
-        private Dictionary<string, BOSetting> settings = new Dictionary<string, BOSetting>();
-
-        int id;
-        int moduleId;
-        int order, persistTo, persistFrom;
-        int pageId;
-        bool pendingDelete, changed, publishFlag, isInherited;
-
-        string name;
-        int placeHolderId;
-
         public BOModuleInstance()
-        { }
-
-
-        public BOModuleInstance(int moduleInstanceID, int moduleID, int order, int pageID, string name)
         {
-            this.id = moduleInstanceID;
-            this.moduleId = moduleID;
-            this.order = order;
-            this.pageId = pageID;
-            this.name = name;
+            Settings = new Dictionary<string, BOSetting>();
         }
 
-        public string Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
-        }
+        // private Dictionary<string, BOSetting> settings = new Dictionary<string, BOSetting>();
+
+        public string Name { get; set; }
 
         public string ExpandedName
         {
-            get { return this.name + " [" + Id + "]"; }
+            get { return Name + " [" + Id + "]"; }
         }
 
-        public int Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
+        public int Id { get; set; }
 
-        public int ModuleId
-        {
-            get { return this.moduleId; }
-            set { this.moduleId = value; }
-        }
+        public int ModuleId { get; set; }
 
-        public bool IsInherited
-        {
-            get { return isInherited; }
-            set { isInherited = value; }
-        }
+        public bool IsInherited { get; set; }
 
-        public int Order
-        {
-            get { return this.order; }
-            set { this.order = value; }
-        }
+        public int Order { get; set; }
 
-        public int PageId
-        {
-            get { return this.pageId; }
-            set { this.pageId = value; }
-        }
+        public int PageId { get; set; }
 
-        public int PlaceHolderId
-        {
-            set { this.placeHolderId = value; }
-            get { return placeHolderId; }
-        }
+        public int PlaceHolderId { get; set; }
 
         public string ModuleSource
         {
             get
             {
-                string moduleSource = Settings.ContainsKey("ModuleSource") && Settings["ModuleSource"].Value.Length > 0 ? Settings["ModuleSource"].Value : name;
+                string moduleSource = Settings.ContainsKey("ModuleSource") && Settings["ModuleSource"].Value.Length > 0 ? Settings["ModuleSource"].Value : Name;
                 return moduleSource + ".ascx";
             }
         }
 
-        public Dictionary<string, BOSetting> Settings
-        {
-            get { return settings; }
-            set { this.settings = value; }
-        }
+        public Dictionary<string, BOSetting> Settings { get; set; }
 
-        public int PersistFrom
-        {
-            get { return persistFrom; }
-            set { this.persistFrom = value; }
-        }
+        public int PersistFrom { get; set; }
 
-        public int PersistTo
-        {
-            get { return persistTo; }
-            set { this.persistTo = value; }
-        }
+        public int PersistTo { get; set; }
 
-        public bool PendingDelete
-        {
-            get { return pendingDelete; }
-            set { this.pendingDelete = value; }
-        }
+        public bool PendingDelete { get; set; }
 
-        public bool Changed
-        {
-            get { return changed; }
-            set { this.changed = value; }
-        }
+        public bool Changed { get; set; }
 
-        public bool PublishFlag
-        {
-            get { return publishFlag; }
-            set { publishFlag = value; }
-        }
+        public bool PublishFlag { get; set; }
 
         public bool Persists
         {
