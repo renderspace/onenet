@@ -39,7 +39,7 @@ namespace One.Net.BLL
         public BORssFeed Get(int id)
         {
             string cacheKey = "RssFeed-" + id;
-            BORssFeed cRss = OCache.Get(cacheKey) as BORssFeed;
+            BORssFeed cRss = cache.Get<BORssFeed>(cacheKey);
             if (cRss == null)
             {
                 cRss = GetUnCached(id);
@@ -47,9 +47,9 @@ namespace One.Net.BLL
                 {
                     lock (rssFeedDb)
                     {
-                        BORssFeed tempRss = OCache.Get(cacheKey) as BORssFeed;
+                        BORssFeed tempRss = cache.Get<BORssFeed>(cacheKey);
                         if (null == tempRss)
-                            OCache.Max(cacheKey, cRss);
+                            cache.Put(cacheKey, cRss);
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace One.Net.BLL
         public XmlDocument GetRssChannel(int channelId)
         {
             string cacheKey = "RssChannel-" + channelId + "_" + LanguageId;
-            XmlDocument cDoc = OCache.Get(cacheKey) as XmlDocument;
+            XmlDocument cDoc = cache.Get<XmlDocument>(cacheKey);
 
             if (cDoc == null)
             {
@@ -73,9 +73,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingRssChannel)
                     {
-                        XmlDocument tempRssChannel = OCache.Get(cacheKey) as XmlDocument;
+                        XmlDocument tempRssChannel = cache.Get<XmlDocument>(cacheKey);
                         if (null == tempRssChannel)
-                            OCache.Max(cacheKey, cDoc);
+                            cache.Put(cacheKey, cDoc);
                     }
                 }
             }
@@ -281,13 +281,13 @@ namespace One.Net.BLL
 
         public List<BORssCategory> ListCategories(string providerName)
         {
-            List<BORssCategory> cCategories = OCache.Get("RssLC_" + LanguageId) as List<BORssCategory>;
+            List<BORssCategory> cCategories = cache.Get<List<BORssCategory>>("RssLC_" + LanguageId);
 
             if (cCategories == null)
             {
                 cCategories = ListUnCachedCategories(providerName);
                 if (cCategories != null)
-                    OCache.Max("RssLC_" + LanguageId, cCategories);
+                    cache.Put("RssLC_" + LanguageId, cCategories);
             }
 
             return cCategories;

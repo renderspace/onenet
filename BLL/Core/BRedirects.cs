@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace One.Net.BLL
 {
-    public class BRedirects
+    public class BRedirects : BusinessBaseClass
     {
         private const string ItemCacheKey = "Core:Item:BORedirect:";
         private const string ListCacheKey = "Core:BRedirect:List<BORedirect>";
@@ -43,7 +43,22 @@ namespace One.Net.BLL
 
         public static BORedirect Get(int redirectId)
         {
-            var redirect = OCache.Get(ItemCacheKey + redirectId) as BORedirect;
+
+            return cache.Get<BORedirect>(ItemCacheKey + redirectId, delegate()
+            {
+                var sql = @"SELECT id, from_link, to_link, is_shortener, created FROM dbo.redirects WHERE id = @redirectId";
+                using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@redirectId", redirectId)))
+                {
+                    if (reader.Read())
+                    {
+                        return PopulateRedirect(reader);
+                    }
+                    return null;
+                }
+            });
+
+            /*
+            var redirect = cache.Get<BORedirect>(ItemCacheKey + redirectId);
 
             if (redirect == null)
             {
@@ -54,16 +69,16 @@ namespace One.Net.BLL
                     if (reader.Read())
                     {
                         redirect = PopulateRedirect(reader);
-                        OCache.Max(ItemCacheKey + redirectId, redirect);
+                        cache.Put(ItemCacheKey + redirectId, redirect);
                     }
                 }
             }
-            return redirect;
+            return redirect;*/
         }
 
         public static BORedirect Find(string fromLink)
         {
-            var redirect = OCache.Get(ItemCacheKey + fromLink) as BORedirect;
+            var redirect = cache.Get<BORedirect>(ItemCacheKey + fromLink);
 
             if (redirect == null)
             {
@@ -78,31 +93,10 @@ namespace One.Net.BLL
                         }
                     );
                     if (redirect != null)
-                        OCache.Max(ItemCacheKey + fromLink, redirect);
+                        cache.Put(ItemCacheKey + fromLink, redirect);
                 }
             }
 
-            return redirect;
-        }
-
-        public static BORedirect Get(string fromLink)
-        {
-            var redirect = OCache.Get(ItemCacheKey + fromLink) as BORedirect;
-
-            if (redirect == null)
-            {
-                var cmdParams = new[] { new SqlParameter("@fromLink", fromLink) };
-                var sql = @"SELECT id, from_link, to_link, is_shortener, created FROM dbo.redirects WHERE from_link = @fromLink";
-                using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, System.Data.CommandType.Text, sql, cmdParams))
-                {
-                    if (reader.Read())
-                    {
-                        redirect = PopulateRedirect(reader);
-                        OCache.Max(ItemCacheKey + fromLink, redirect);
-                    }
-                }
-
-            }
             return redirect;
         }
 
@@ -119,7 +113,7 @@ namespace One.Net.BLL
 
         public static List<BORedirect> List()
         {
-            var list = OCache.Get(ListCacheKey) as List<BORedirect>;
+            var list = cache.Get<List<BORedirect>>(ListCacheKey);
 
             if (list == null)
             {
@@ -133,7 +127,7 @@ namespace One.Net.BLL
                         list.Add(PopulateRedirect(reader));
                 }
 
-                OCache.Max(ListCacheKey, list);
+                cache.Put(ListCacheKey, list);
             }
 
             return list;
@@ -199,8 +193,8 @@ namespace One.Net.BLL
 						END";
             redirect.Id = (int)SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, System.Data.CommandType.Text, sql, cmdParams.ToArray());
             
-            OCache.Remove(ItemCacheKey + redirect.FromLink);
-            OCache.Remove(ItemCacheKey + redirect.Id.Value);
+            cache.Remove(ItemCacheKey + redirect.FromLink);
+            cache.Remove(ItemCacheKey + redirect.Id.Value);
             return redirect.Id > 0;
         }
 
@@ -212,8 +206,8 @@ namespace One.Net.BLL
                 var cmdParams = new[] { new SqlParameter("@id", redirectId) };
                 var sql = @"DELETE FROM [dbo].[redirects] WHERE id = @id";
                 SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, System.Data.CommandType.Text, sql, cmdParams);
-                OCache.Remove(ItemCacheKey + redirect.FromLink);
-                OCache.Remove(ItemCacheKey + redirect.Id.Value);
+                cache.Remove(ItemCacheKey + redirect.FromLink);
+                cache.Remove(ItemCacheKey + redirect.Id.Value);
             }
         }
 

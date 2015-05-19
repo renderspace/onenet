@@ -70,7 +70,7 @@ namespace One.Net.BLL
             bool useCache = !showUntranslated;
             string cacheKey = CACHE_LANG_PREFIX + ARTICLE_CACHE_ID(articleId, publish);
             if (useCache)
-                article = OCache.Get(cacheKey) as BOArticle;
+                article = cache.Get<BOArticle>(cacheKey);
 
             if (article == null)
             {
@@ -80,9 +80,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingArticleGet)
                     {
-                        BOArticle tempArticle = OCache.Get(cacheKey) as BOArticle;
+                        BOArticle tempArticle = cache.Get<BOArticle>(cacheKey);
                         if (null == tempArticle)
-                            OCache.Max(cacheKey, article); 
+                            cache.Put(cacheKey, article); 
                     }
                 }
             }
@@ -183,7 +183,7 @@ namespace One.Net.BLL
             bool useCache = !showUntranslated && PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
             
             if (useCache)
-                articles = OCache.Get(LIST_CACHE_ID) as PagedList<BOArticle>;
+                articles = cache.Get<PagedList<BOArticle>>(LIST_CACHE_ID);
 
             if (articles == null)
             {
@@ -206,9 +206,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingArticleList)
                     {
-                        PagedList<BOArticle> tempArticles = OCache.Get(LIST_CACHE_ID) as PagedList<BOArticle>;
+                        PagedList<BOArticle> tempArticles = cache.Get<PagedList<BOArticle>>(LIST_CACHE_ID);
                         if (null == tempArticles)
-                            OCache.Max(LIST_CACHE_ID, articles);
+                            cache.Put(LIST_CACHE_ID, articles);
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace One.Net.BLL
             string LIST_CACHE_ID = "LAMD_" + LanguageId + regularIds + PublishFlag + showArticleCount + year + month;
 
             if (PublishFlag)
-                dates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonthDay>;
+                dates = cache.Get<List<BOArticleMonthDay>>(LIST_CACHE_ID);
 
             if (dates == null)
             {
@@ -231,9 +231,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingArticleDateListGet)
                     {
-                        List<BOArticleMonthDay> tempDates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonthDay>;
+                        List<BOArticleMonthDay> tempDates = cache.Get<List<BOArticleMonthDay>>(LIST_CACHE_ID);
                         if (tempDates == null)
-                            OCache.Max(LIST_CACHE_ID, dates);
+                            cache.Put(LIST_CACHE_ID, dates);
                     }
                 }
             }
@@ -247,7 +247,7 @@ namespace One.Net.BLL
             string LIST_CACHE_ID = "LAD_" + LanguageId + regularIds + PublishFlag + showArticleCount;
 
             if (PublishFlag)
-                dates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonth>;
+                dates = cache.Get<List<BOArticleMonth>>(LIST_CACHE_ID);
 
             if (dates == null)
             {
@@ -257,9 +257,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingArticleDateListGet)
                     {
-                        List<BOArticleMonth> tempDates = OCache.Get(LIST_CACHE_ID) as List<BOArticleMonth>;
+                        List<BOArticleMonth> tempDates = cache.Get<List<BOArticleMonth>>(LIST_CACHE_ID);
                         if (tempDates == null)
-                            OCache.Max(LIST_CACHE_ID, dates);
+                            cache.Put(LIST_CACHE_ID, dates);
                     }
                 }
             }
@@ -315,14 +315,14 @@ namespace One.Net.BLL
         /// <returns></returns>
         public BORegular GetRegular(int regularId)
         {
-            BORegular regular = OCache.Get(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(regularId)) as BORegular;
+            BORegular regular = cache.Get<BORegular>(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(regularId));
             if (regular == null)
             {
                 regular = GetUnCachedRegular(regularId);
 
                 if (regular != null && !regular.MissingTranslation)
                 {
-                    OCache.Max(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(regularId), regular);
+                    cache.Put(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(regularId), regular);
                 }
             }
             return regular;

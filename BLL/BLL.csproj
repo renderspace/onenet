@@ -89,6 +89,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StackExchange.Redis.1.0.450\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -97,6 +101,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -116,8 +121,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\CacheFactory.cs" />
+    <Compile Include="Caching\ICacheProvider.cs" />
+    <Compile Include="Caching\NetMemoryCacheProvider.cs" />
+    <Compile Include="Caching\RedisCacheProvider.cs" />
     <Compile Include="Core\BArticle.cs" />
-    <Compile Include="Core\BAudit.cs" />
     <Compile Include="Core\BCategorization.cs" />
     <Compile Include="Core\BContent.cs" />
     <Compile Include="Core\BContentTemplate.cs" />
@@ -211,8 +219,6 @@
     <Compile Include="Utility\FormatTool.cs" />
     <Compile Include="Utility\IISHelper.cs" />
     <Compile Include="Utility\LoosyFormatter.cs" />
-    <Compile Include="Utility\OCache.cs" />
-    <Compile Include="Utility\OContext.cs" />
     <Compile Include="Utility\StringTool.cs" />
     <Compile Include="Utility\UrlBuilder.cs" />
     <Compile Include="Utility\XHTMLValidator.cs" />

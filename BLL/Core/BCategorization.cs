@@ -112,13 +112,13 @@ namespace One.Net.BLL
             BOCategory category = null;
             bool useCache = !showUntranslated;
             if (useCache)
-                category = OCache.Get(CACHE_LANG_PREFIX + CAT_CACHE_ID(id)) as BOCategory;
+                category = cache.Get<BOCategory>(CACHE_LANG_PREFIX + CAT_CACHE_ID(id));
 
             if (category == null)
             {
                 category = GetUnCached(id, showUntranslated);
                 if (useCache)
-                    OCache.Max(CACHE_LANG_PREFIX + CAT_CACHE_ID(id), category);
+                    cache.Put(CACHE_LANG_PREFIX + CAT_CACHE_ID(id), category);
             }
             return category;
         }
@@ -148,7 +148,7 @@ namespace One.Net.BLL
             bool useCache = !showUntranslated && PublishFlag;
             
             if (useCache)
-                list = OCache.Get(LIST_CACHE_ID) as List<BOCategory>;
+                list = cache.Get<List<BOCategory>>(LIST_CACHE_ID);
 
             if (list == null)
             {
@@ -166,7 +166,7 @@ namespace One.Net.BLL
 
                     if (useCache)
                     {
-                        OCache.Max(LIST_CACHE_ID, list);
+                        cache.Put(LIST_CACHE_ID, list);
                     }
                 }
             }

@@ -41,7 +41,7 @@ namespace OneMainWeb
                 Control control = null;
                 string relPath = "~/AdminExtensions/" + controlName + ".ascx";
 
-                if (!string.IsNullOrEmpty(relPath) && File.Exists(OContext.Current.MapPath(relPath)))
+                if (!string.IsNullOrEmpty(relPath) && File.Exists(HttpContext.Current.Server.MapPath(relPath)))
                 {
                     try
                     {

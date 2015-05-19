@@ -24,7 +24,7 @@ namespace One.Net.BLL
         {
             string cacheKey = CACHE_LANG_PREFIX + CACHE_ID + contentID;
 
-            BOInternalContent content = OCache.Get(cacheKey) as BOInternalContent;
+            var content = cache.Get<BOInternalContent>(cacheKey);
             if (content == null)
             {
                 content = GetUnCached(contentID, languageID);
@@ -34,9 +34,9 @@ namespace One.Net.BLL
                     // inserts will invalidate cache. Better to check for existence first.
                     lock (cacheLockingInternalContent)
                     {
-                        BOInternalContent tempContent = OCache.Get(cacheKey) as BOInternalContent;
+                        var tempContent = cache.Get<BOInternalContent>(cacheKey);
                         if (null == tempContent)
-                            OCache.Max(cacheKey, content);
+                            cache.Put(cacheKey, content);
                     }
                 }
             }

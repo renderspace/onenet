@@ -12,7 +12,8 @@ namespace OneMainWeb.Utils
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            OCache.Clear();
+            BWebsite webSiteB = new BWebsite();
+            webSiteB.ClearCache();
             OneSiteMapProvider.ReloadSiteMap();
             RouteConfig.ReloadRoutes(RouteTable.Routes);
             Label1.Text = "Cache cleared at: " + DateTime.Now;

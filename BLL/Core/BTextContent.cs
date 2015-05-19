@@ -44,7 +44,7 @@ namespace One.Net.BLL
             var useCache = PublishFlag;
             string cacheKey = CACHE_LANG_PREFIX + INTERNAL_CONTENT_CACHE_ID(moduleInstanceID);
             if (useCache)
-                moduleInstance = OCache.Get(cacheKey) as BOInternalContent;
+                moduleInstance = cache.Get<BOInternalContent>(cacheKey);
 
             if (moduleInstance == null)
             {
@@ -54,9 +54,9 @@ namespace One.Net.BLL
                 {
                     lock (cacheLockingTextContentModuleInstance)
                     {
-                        var temp = OCache.Get(cacheKey) as BOInternalContent;
+                        var temp = cache.Get<BOInternalContent>(cacheKey);
                         if (null == temp)
-                            OCache.Max(cacheKey, moduleInstance);
+                            cache.Put(cacheKey, moduleInstance);
                     }
                 }
             }

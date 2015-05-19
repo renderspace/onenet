@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Threading;
 using NLog;
 using One.Net.BLL.DAL;
+using One.Net.BLL.Caching;
 
 namespace One.Net.BLL
 {
@@ -12,6 +13,7 @@ namespace One.Net.BLL
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
         protected static readonly DbContent contentDb = new DbContent();
+        protected static ICacheProvider cache = CacheFactory.ResolveCacheFromConfig();
 
         protected virtual int LanguageId { get { return Thread.CurrentThread.CurrentCulture.LCID; } }
 
@@ -27,13 +29,18 @@ namespace One.Net.BLL
             bool.TryParse(ConfigurationManager.AppSettings["PublishFlag"], out publishFlag);        
         }
 
+        public void ClearCache()
+        {
+            cache.RemoveAll();
+        }
+
         public List<int> ListLanguages()
         {
-            List<int> list = OCache.Get("Languages") as List<int>;
+            List<int> list = cache.Get<List<int>>("Languages");
             if (list == null)
             {
                 list = contentDb.ListLanguages();
-                OCache.Max("Languages", list);
+                cache.Put("Languages", list);
             }
             return list;
         }
@@ -47,7 +54,7 @@ namespace One.Net.BLL
             List<int> languages = ListLanguages();
             foreach (int i in languages)
             {
-                OCache.Remove(LNG_PREFIX + i + cacheIdentification);
+                cache.Remove(LNG_PREFIX + i + cacheIdentification);
             }
         }
 
