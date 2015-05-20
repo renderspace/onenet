@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Caching;
 using StackExchange.Redis;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 using System.Configuration;
-using System.Runtime.Serialization;
+using System.IO;
 
 namespace One.Net.BLL.Caching
 {
     public class RedisCacheProvider : ICacheProvider
     {
+        private static object lockMe = new object();
         IDatabase _database;
         ConnectionMultiplexer _connection;
 
@@ -40,12 +44,24 @@ namespace One.Net.BLL.Caching
         public T Get<T>(string key, Func<T> fn, TimeSpan? slidingExpiryWindow = null) where T : class
         {
             var obj = this.Get<T>(key);
-            if (obj == default(T))
+            if (obj == default(T) || obj == null)
             {
-                obj = fn();
-                this.Put(key, obj, slidingExpiryWindow);
+                lock (lockMe)
+                {
+                    if (obj == default(T) || obj == null)
+                    {
+                        obj = fn();
+                        if (obj is IList && ((IList)obj).Count > 0)
+                        {
+                            this.Put(key, obj, slidingExpiryWindow);
+                        }
+                        else if (obj != default(T) && obj != null)
+                        {
+                            this.Put(key, obj, slidingExpiryWindow);
+                        }
+                    }
+                }
             }
-
             return obj;
         }
 

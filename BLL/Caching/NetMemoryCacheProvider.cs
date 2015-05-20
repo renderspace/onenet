@@ -64,7 +64,11 @@ namespace One.Net.BLL.Caching
                     if (obj == default(T) || obj == null)
                     {
                         obj = fn();
-                        if (obj != default(T) && obj != null)
+                        if (obj is IList && ((IList)obj).Count > 0)
+                        {
+                            this.Put(key, obj, slidingExpiryWindow);
+                        }
+                        else if (obj != default(T) && obj != null)
                         {
                             this.Put(key, obj, slidingExpiryWindow);
                         }
