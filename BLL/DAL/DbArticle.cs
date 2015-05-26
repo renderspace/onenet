@@ -278,7 +278,7 @@ WHERE a2.publish = @publishFlag ";
 
             if (publishFlag)
             {
-                sql += " 1 ";
+                sql += " 1 countPublished ";
             }
             else
             {
