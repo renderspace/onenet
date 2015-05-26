@@ -107,13 +107,13 @@ namespace OneMainWeb
         {
             if (!IsPostBack)
             {
-                log.Info("Master master_Page_PreLoad, Set Anti-XSRF token");
+                log.Debug("Master master_Page_PreLoad, Set Anti-XSRF token");
                 ViewState[AntiXsrfTokenKey] = Page.ViewStateUserKey;
                 ViewState[AntiXsrfUserNameKey] = Context.User.Identity.Name ?? String.Empty;
             }
             else
             {
-                log.Info("Master master_Page_PreLoad, Validate the Anti-XSRF token");
+                log.Debug("Master master_Page_PreLoad, Validate the Anti-XSRF token");
                 if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue
                     || (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
                 {
