@@ -9,7 +9,7 @@ using One.Net.BLL.Web;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class ArticleSingle : MModule, IBasicSEOProvider
+    public partial class ArticleSingle : MModule, IBasicSEOProvider, IImageListProvider
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
@@ -85,10 +85,12 @@ namespace OneMainWeb.CommonModules
                 {
                     DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
                 }
+                ListImages = article.Images;
             }
             else
             {
                 MultiView1.ActiveViewIndex = 0;
+                ListImages = new List<BOIntContImage>();
             }
         }
 
@@ -105,6 +107,12 @@ namespace OneMainWeb.CommonModules
         }
 
         public string OgImageUrl
+        {
+            get;
+            set;
+        }
+
+        public List<BOIntContImage> ListImages
         {
             get;
             set;
