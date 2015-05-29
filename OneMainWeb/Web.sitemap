@@ -11,13 +11,13 @@
 			<siteMapNode url="adm/Articles.aspx" title="Articles" description="" roles="all, admin, Articles" />
       <siteMapNode url="adm/Regulars.aspx" title="Regulars" roles="all, admin, Regulars" />
       <siteMapNode url="adm/Forms.aspx" title="Forms" roles="all, admin, Forms" />
-			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="all, admin, Subscriptions" />
+			<siteMapNode url="adm/SubscriptionManager.aspx" title="Newsletter subscriptions" description="" roles="admin, Subscriptions" />
 		</siteMapNode>
     <siteMapNode url="" title="Advanced" description="" roles="*">
-      <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="all, admin, RssFeeds" />
-      <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="all, admin, Scaffold" />
-      <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="all, admin" />
-      <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="all, admin, Website" />
+      <siteMapNode url="adm/RssFeeds.aspx" title="RSS manager" description="" roles="admin, RssFeeds" />
+      <siteMapNode url="adm/ScaffoldConfig.aspx" title="Scaffold config" description="" roles="admin" />
+      <siteMapNode url="adm/SQLEditor.aspx" title="SQL editor" description="" roles="admin" />
+      <siteMapNode url="adm/Website.aspx" title="Website" description="" roles="admin, Website" />
       <siteMapNode url="adm/Users.aspx" title="Users" description="" roles="admin" />
     </siteMapNode>
 	</siteMapNode>
