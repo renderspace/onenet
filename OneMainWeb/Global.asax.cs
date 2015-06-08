@@ -116,7 +116,7 @@ namespace OneMainWeb
             if (log.IsDebugEnabled)
             {
                 string req = Request.Url.ToString();
-                if (req.Contains(".aspx"))
+                if (req.Contains(".aspx") || req.EndsWith("/"))
                 {
                     log.Debug("EndRequest " + req);
                 }

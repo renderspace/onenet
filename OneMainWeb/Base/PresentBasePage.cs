@@ -161,6 +161,7 @@ ga('create', '" + code + @"', 'auto');";
                 customAfterBodyStartCode = fbCode;
             }
 
+            log.Debug("PresentBasePage render start");
             if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode) || !string.IsNullOrEmpty(customAfterBodyStartCode))
             {
                 StringBuilder sb = new StringBuilder();
@@ -183,6 +184,7 @@ ga('create', '" + code + @"', 'auto');";
             {
                 base.Render(writer);
             }
+            log.Debug("PresentBasePage render end");
         }
 
         protected void AddMetaTag(string name, string content)
