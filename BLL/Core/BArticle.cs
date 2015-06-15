@@ -139,6 +139,7 @@ namespace One.Net.BLL
 
         public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
         {
+            log.Debug("ListArticles:" + regularIds.ToArray().ToString());
             PagedList<BOArticle> articles = null;
             if (string.IsNullOrEmpty(titleSearch))
                 articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, false);
