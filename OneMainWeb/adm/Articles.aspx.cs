@@ -348,6 +348,31 @@ namespace OneMainWeb
             }
         }
 
+        protected void ButtonUnPublish_Click(object sender, EventArgs e)
+        {
+            if (!PublishRights)
+            {
+                Notifier1.Warning = "You don't have publish rights.";
+                Notifier1.Message = "Contact administrator";
+                return;
+            }
+
+            int unPublishCount = 0;
+            var list = GetCheckedIds();
+            foreach (var i in list)
+            {
+                if (articleB.UnPublish(i))
+                {
+                    unPublishCount++;
+                }
+            }
+            if (unPublishCount > 0)
+            {
+                Notifier1.Title = string.Format("Unpublished {0} articles", unPublishCount);
+                Articles_DataBind();
+            }
+        }
+
         protected void ButtonRevert_Click(object sender, EventArgs e)
         {
             if (!PublishRights)
