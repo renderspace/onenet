@@ -130,6 +130,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.LinkButton ButtonPublish;
         
         /// <summary>
+        /// ButtonUnPublish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonUnPublish;
+        
+        /// <summary>
         /// ButtonRevert control.
         /// </summary>
         /// <remarks>

@@ -76,6 +76,7 @@
                     <div class="col-sm-12">
                         <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
                         <asp:LinkButton CssClass="btn btn-warning" ID="ButtonPublish" OnClick="ButtonPublish_Click" runat="server" CausesValidation="false" Text="Publish selected" />
+                        <asp:LinkButton CssClass="btn btn-default" ID="ButtonUnPublish" OnClick="ButtonUnPublish_Click" runat="server" CausesValidation="false" Text="Unpublish selected" />
                         <asp:LinkButton CssClass="btn btn-info" ID="ButtonRevert" OnClick="ButtonRevert_Click" runat="server" CausesValidation="false" Text="Revert selected to published state" />
                     </div>
                 </asp:Panel>
