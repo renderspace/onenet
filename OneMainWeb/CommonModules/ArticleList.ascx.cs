@@ -169,8 +169,11 @@ namespace OneMainWeb.CommonModules
                     Time2.Attributes.Add("pubdate", article.DateCreated.ToString("yyyy-MM-dd"));
                     Time2.InnerHtml = article.DisplayDate.ToString(DateFormatString);
                 }
-               
-                HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
+
+                if (HtmlArticle.Attributes["class"] == null)
+                    HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
+                else
+                    HtmlArticle.Attributes["class"] += " hentry a" + id.ToString() + " " + MModule.RenderOrder(id);
             }
         }
     }
