@@ -42,7 +42,7 @@
 							    <asp:CheckBox ID="chkFor" runat="server" Text="" />
 							</ItemTemplate>
 						</asp:TemplateField>
-                        <asp:TemplateField HeaderText="Id" SortExpression="a.id">
+                        <asp:TemplateField HeaderText="Id" SortExpression="id">
 							<ItemTemplate>
 								<%# Eval("Id") %>
 							</ItemTemplate>
@@ -52,10 +52,10 @@
 							<%# RenderStatusIcons(Eval("MarkedForDeletion"), Eval("IsChanged")) %>
 							</ItemTemplate>
 						</asp:TemplateField>
-						<asp:TemplateField HeaderText="Title" SortExpression="cds.title">
+						<asp:TemplateField HeaderText="Title" SortExpression="title">
 							<ItemTemplate><%# Eval("Title") %></ItemTemplate>
 						</asp:TemplateField>
-						<asp:TemplateField HeaderText="Display date" SortExpression="a.display_date">
+						<asp:TemplateField HeaderText="Display date" SortExpression="display_date">
 							<ItemTemplate><%# ((DateTime)Eval("DisplayDate")).ToShortDateString()%></ItemTemplate>
 						</asp:TemplateField>
 							    

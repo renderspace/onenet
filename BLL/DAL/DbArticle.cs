@@ -272,64 +272,44 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[3] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
             paramsToPass[4] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
 
-            string sql = @"	SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
-				c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				a.display_date, a.marked_for_deletion, a.changed, ";
+            string sql = 
+            
+            @"  SELECT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
+                @") AS rownum, NEWID() as random
+                INTO #pagedlist 
+                FROM (
+                    SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
+			        c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
+				    a.display_date, a.marked_for_deletion, a.changed, ";
 
             if (publishFlag)
-                sql += " 1 countPublished, ";
+                sql += " 1 countPublished ";
             else
-                sql += " ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, ";
+                sql += " (select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
 
-            sql += @" newid() random, 
-                0 AS rownum,
-                ROW_NUMBER() OVER (PARTITION BY a.id ORDER BY a.id) AS unique_article_idx
-                INTO #pagedlist 
-                FROM [dbo].[article] a
-		        INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
-		        INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish ";
+            sql += 
+                @"  FROM [dbo].[article] a
+		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
+		            INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
 
-            sql += showUntranslated ? "	LEFT " : " INNER ";
-            sql += " JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
+
+            sql += (showUntranslated ? " LEFT " : " INNER ") + @" JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
             sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
 
             if (regularIds.Count > 0)
-            {
                 sql += " AND ra.regular_fk_id IN (" + regularIds.ToCommaSeparatedValues<int>() + ")";
-            }
             if (from.HasValue && from.Value != DateTime.MinValue)
-            {
                 sql += " AND a.display_date >= @dateFrom ";
-            }
             if (to.HasValue && to.Value != DateTime.MinValue)
-            {
                 sql += " AND a.display_date <= @dateTo ";
-            }
             if (changed.HasValue)
-            {
                 sql += " AND a.changed = " + (changed.Value ? "1" : "0");
-            }
 
-            if (state.SortField.Length > 1)
-            {
-                sql += " ORDER BY " + state.SortField + " ";
-                sql += state.SortDirection == SortDir.Ascending ? "ASC" : "DESC";
-            }
+            sql += @") [articles] ";
 
-            // when regulars_has_articles table is joined we get duplicated articles returned because of the random column we use above for sorting by random.
-            // in order to prevent this and get unique articles returned, and also preserve paging and stuff, we must use the following code
-            // to first delete the duplicate rows (achived by the delete of rows with unique_article_idx=2) 
-            // and then we must repopulate the rownum column before doing paging.
-            sql += @";
-                        DELETE FROM #pagedlist WHERE unique_article_idx = 2;
-                        update T
-                        set rownum = rn
-                        from (
-                               select rownum,
-                                      row_number() over(order by (select 1)) as rn
-                               from #pagedlist
-                             ) T;
-                        SELECT *
+            sql += " ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
+
+            sql += @";  SELECT *
 						FROM #pagedlist
 						WHERE rownum BETWEEN @fromRecordIndex AND @toRecordIndex
 						ORDER BY rownum;
