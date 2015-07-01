@@ -54,7 +54,7 @@ namespace One.Net.BLL
             List<int> languages = ListLanguages();
             foreach (int i in languages)
             {
-                cache.Remove(LNG_PREFIX + i + cacheIdentification);
+                cache.Remove(PublishFlag + "_" + LNG_PREFIX + i + cacheIdentification);
             }
         }
 
