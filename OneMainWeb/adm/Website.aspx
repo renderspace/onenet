@@ -262,7 +262,7 @@
 						    <uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />
                         </div>
                         <div class="col-sm-9">
-                            <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save website"  ValidationGroup="PageSett" OnClick="ButtonSave_Click" />
+                            <asp:LinkButton	id="ButtonSave" Runat="server"	CssClass="btn-success btn causesValidation" Text="Save website"  OnClick="ButtonSave_Click" />
                         </div>
 				    </div>
               </div>

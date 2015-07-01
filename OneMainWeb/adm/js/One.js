@@ -735,7 +735,7 @@ function Validate(evt) {
     var isValid = true;
     $group.find(':input').each(function (i, item) {
         if (!$(item).valid()) {
-            isValid = fals; e
+            isValid = false;
             $(item).closest('.form-group').addClass('has-error');
         } else {
             $(item).closest('.form-group').removeClass('has-error');
