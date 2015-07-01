@@ -744,11 +744,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
                     if (column.ValueInteger <= 1)
                     {
-                        var contentDbBuilder = new SqlConnectionStringBuilder(MsSqlDBUtility.SqlHelper.ConnStringMain);
-
-                        // check if content exists
-                        var result = SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text,
-                            "SELECT TOP(1) content_fk_id FROM [" + contentDbBuilder.InitialCatalog + "].[dbo].[content_data_store] WHERE content_fk_id = @id_content", new SqlParameter("@id_content", column.ValueInteger));
+                        var result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text,
+                            "SELECT TOP(1) content_fk_id FROM [dbo].[content_data_store] WHERE content_fk_id = @id_content", 
+                            new SqlParameter("@id_content", column.ValueInteger));
 
                         isInsert = result == null;
                         if (!isInsert)
@@ -771,11 +769,8 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                                         new SqlParameter("@id_language", l),
                                         new SqlParameter("@html", c.Html)
                                     };
-
-                            var contentDbBuilder = new SqlConnectionStringBuilder(MsSqlDBUtility.SqlHelper.ConnStringMain);
-
-                            var sql = "SELECT TOP(1) content_fk_id FROM [" + contentDbBuilder.InitialCatalog + "].[dbo].[content_data_store] WHERE content_fk_id = @id_content AND language_fk_id = @id_language";
-                            var result = SqlHelper.ExecuteScalar(Schema.ConnectionString, CommandType.Text, sql, p);
+                            var sql = "SELECT TOP(1) content_fk_id FROM [dbo].[content_data_store] WHERE content_fk_id = @id_content AND language_fk_id = @id_language";
+                            var result = SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text, sql, p);
 
                             if (isInsert && result != null)
                                 throw new Exception("This should be insert.");
