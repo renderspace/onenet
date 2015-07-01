@@ -30,7 +30,7 @@
             </div>
             <asp:GridView	ID="GridViewWebsites"
 					runat="server"
-					CssClass="table table-hover"
+					CssClass="table table-hover table-clickable-row"
 					AutoGenerateColumns="false"
 					AllowSorting="false"
 					DataKeyNames="Id" OnSelectedIndexChanged="GridViewWebsites_SelectedIndexChanged">

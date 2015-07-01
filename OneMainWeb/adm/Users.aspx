@@ -13,7 +13,7 @@
             </div>
             <asp:GridView	ID="GridViewUsers"
 					runat="server"
-					CssClass="table table-hover"
+					CssClass="table table-hover table-clickable-row"
 					AutoGenerateColumns="false"
 					AllowPaging="false"
 					AllowSorting="false"

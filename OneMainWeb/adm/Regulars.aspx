@@ -13,7 +13,7 @@
 		        <asp:TextBox runat="server" ID="TextBoxRegular" MaxLength="255" placeholder="New article category" CssClass="required"></asp:TextBox>
                 <asp:LinkButton ID="cmdAddRegular" text="<span class='glyphicon glyphicon-plus'></span> Add" runat="server" OnClick="cmdAddRegular_Click"  CssClass="btn btn-success causesValidation" />		
 		    </div>
-	        <asp:GridView OnSelectedIndexChanged="GridViewRegular_SelectedIndexChanged" ID="GridViewRegular" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id" OnSorting="GridViewRegular_Sorting">
+	        <asp:GridView OnSelectedIndexChanged="GridViewRegular_SelectedIndexChanged" ID="GridViewRegular" runat="server" CssClass="table table-hover table-clickable-row" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" DataKeyNames="Id" OnSorting="GridViewRegular_Sorting">
 		        <Columns>
                         <asp:TemplateField>
                         <HeaderTemplate>

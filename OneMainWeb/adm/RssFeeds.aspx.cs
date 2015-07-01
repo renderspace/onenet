@@ -282,10 +282,10 @@ namespace OneMainWeb
     {
         private static readonly BRssFeed rssFeedB = new BRssFeed();
 
-        public List<BORssFeed> SelectRssFeeds(int recordsPerPage, int firstRecordIndex, string sortBy)
+        public List<BORssFeed> SelectRssFeeds(string sortBy)
         {
             ListingState state = 
-                new ListingState(recordsPerPage, firstRecordIndex,
+                new ListingState(1000, 0,
                                  (sortBy.Contains("ASC") || !sortBy.Contains("DESC")
                                       ? SortDir.Ascending
                                       : SortDir.Descending), sortBy.Replace("DESC", "").Replace("ASC", ""));

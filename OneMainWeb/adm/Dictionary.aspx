@@ -25,7 +25,7 @@
                 <asp:Label ID="LabelNoResults" runat="server" Visible="false" EnableViewState="false"></asp:Label>
                 <asp:GridView ID="GridViewEntries" runat="server" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" OnSorting="GridViewEntries_Sorting" OnRowDeleting="GridViewEntries_RowDeleting"
                         EnableViewState="true" OnRowDataBound="GridViewEntries_RowDataBound"
-						CssClass="table table-hover"
+						CssClass="table table-hover table-clickable-row"
 						DataKeyNames="KeyWord"
 						OnSelectedIndexChanged="GridViewEntries_SelectedIndexChanged">
 						<Columns>

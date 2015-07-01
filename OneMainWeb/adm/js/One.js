@@ -388,6 +388,17 @@ $(document).ready(function () {
 
     loadAllToManyRelationships();
 
+    $('.table-clickable-row tr td').on('click', function () {
+        var $col = $(this).parent().children().index($(this));
+        var $link = $(this).parent().children().find("a");
+        if ($col > 0 && $link.length === 1)
+        {
+            eval($($link[0]).attr('href'));
+        }
+    });
+
+    
+
     $('#CheckBoxShowPath').change(function () {
         var selectedFolderId = $('#HiddenSelectedFolderId').val();
         if (selectedFolderId > 0) {

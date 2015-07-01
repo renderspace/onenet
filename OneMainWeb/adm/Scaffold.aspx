@@ -25,7 +25,7 @@
         </div>
 
 
-        <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True"  CssClass="table table-hover"
+        <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True"  CssClass="table table-hover table-clickable-row"
             AutoGenerateColumns="false" 
             onselectedindexchanged="GridViewItems_SelectedIndexChanged" 
             OnSorting="GridViewItems_Sorting">
