@@ -8,14 +8,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<one:Notifier runat="server" ID="Notifier1" />
 
-    <asp:LinkButton ID="LinkButton1" runat="server">LinkButton</asp:LinkButton>
-    <asp:LinkButton ID="LinkButton2" runat="server">LinkButton</asp:LinkButton>
-    <asp:LinkButton ID="LinkButton3" runat="server">LinkButton</asp:LinkButton>
-
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="TabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">
                 <div class="adminSection">
-			        <asp:Button ID="AddRssFeed" runat="server" Text="$add_rss_feed" OnClick="AddRssFeed_Click" />
+			        <asp:Button ID="AddRssFeed" runat="server" Text="Add RSS feed" OnClick="AddRssFeed_Click" />
 			    </div>
 
 			    <div class="centerFull">
@@ -27,42 +23,39 @@
 				            PagerSettings-FirstPageText="$first"
 				            PagerSettings-PageButtonCount="7"
 				            AllowSorting="True"
-				            AllowPaging="True"
 				            AutoGenerateColumns="False"
 				            DataSourceID="ObjectDataSourceRssFeedList"
-				            CssClass="gv"
+				            CssClass="table table-hover"
 				            DataKeyNames="Id"
 				            OnSelectedIndexChanged="FeedsGridView_SelectedIndexChanged"
 				            OnRowCommand="FeedsGridView_RowCommand">
 				            <Columns>
-					            <asp:TemplateField HeaderText="$Id" SortExpression="id">
+					            <asp:TemplateField HeaderText="Id" SortExpression="id">
 						            <ItemTemplate><%# Eval("Id")%></ItemTemplate>
 					            </asp:TemplateField>					        
-					            <asp:TemplateField HeaderText="$Title" SortExpression="title">
+					            <asp:TemplateField HeaderText="Title" SortExpression="title">
 						            <ItemTemplate><%# Eval("Title")%></ItemTemplate>
 					            </asp:TemplateField>
-					            <asp:TemplateField HeaderText="$Type" SortExpression="type">
+					            <asp:TemplateField HeaderText="Type" SortExpression="type">
 						            <ItemTemplate><%# Eval("Type")%></ItemTemplate>
 					            </asp:TemplateField>
-					            <asp:TemplateField HeaderText="$Categories" SortExpression="categories">
+					            <asp:TemplateField HeaderText="Categories" SortExpression="categories">
 						            <ItemTemplate><%# StringTool.RenderAsString((List<int>)Eval("Categories"))%></ItemTemplate>
 					            </asp:TemplateField>
 						        <asp:TemplateField>
 						            <ItemTemplate>
-						                <asp:LinkButton Text="$delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
+						                <asp:LinkButton Text="Delete" CommandName="Delete" CommandArgument='<%# Eval("Id") %>' ID="cmdDelete" runat="server" />
 						            </ItemTemplate>
 						        </asp:TemplateField>					        
 						        <asp:TemplateField>
 						            <ItemTemplate>
-						                <asp:LinkButton Text="$edit" CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" />
+						                <asp:LinkButton Text="Edit" CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="cmdEdit" runat="server" />
 						            </ItemTemplate>
 						        </asp:TemplateField>					        
-					        </Columns>
-					        <PagerSettings FirstPageText="$first" LastPageText="$last" Mode="NumericFirstLast"
-						        PageButtonCount="7" />					    
+					        </Columns>			    
 			            </asp:GridView>
 			           <asp:ObjectDataSource MaximumRowsParameterName="recordsPerPage" StartRowIndexParameterName="firstRecordIndex"
-					        EnablePaging="True" ID="ObjectDataSourceRssFeedList" runat="server" SelectMethod="SelectRssFeeds"
+					        EnablePaging="false" ID="ObjectDataSourceRssFeedList" runat="server" SelectMethod="SelectRssFeeds"
 					        TypeName="OneMainWeb.RssFeedDataSource" DeleteMethod="Delete" OnSelecting="ObjectDataSourceRssFeedList_Selecting" 
 					        SelectCountMethod="SelectRssFeedCount" SortParameterName="sortBy">
 			           </asp:ObjectDataSource>			        

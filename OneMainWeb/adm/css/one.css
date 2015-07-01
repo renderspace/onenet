@@ -615,3 +615,10 @@ details .form-group select {width: 100%;}
 	.s1a {padding: 0!important;}
 	.treeview ul {width: 238px;}
 }
+
+
+.main .table-clickable-row tr:hover td { 
+    background-color: #9BD0FF;
+    cursor: pointer; cursor: hand;
+}
+

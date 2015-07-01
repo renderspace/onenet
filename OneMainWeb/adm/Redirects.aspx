@@ -31,7 +31,7 @@
                 AllowSorting="True" 
                 AutoGenerateColumns="False"
                 DataKeyNames="Id"
-                CssClass="table table-hover"
+                CssClass="table table-hover table-clickable-row"
                 OnSorting="GridViewRedirects_Sorting"
                 OnSelectedIndexChanged="GridViewRedirects_SelectedIndexChanged">
                 <Columns>
