@@ -356,7 +356,7 @@ ga('create', '" + code + @"', 'auto');";
             }
         }
 
-        protected void Page_Load(object sender, System.EventArgs e)
+        protected void Page_Init(object sender, System.EventArgs e)
         {
             if(!PublishFlag)
             { 
