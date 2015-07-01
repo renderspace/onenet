@@ -5,6 +5,6 @@
 <HeaderTemplate><ul></HeaderTemplate>
 <FooterTemplate></ul></FooterTemplate>
 <ItemTemplate>
-    <li <%# (((Request[OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID] != null) && (Request[OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID].ToString() == Eval("Id").ToString())) ? "class=\"sel\"" : "")  %> ><a href="/adm/Scaffold.aspx?<%# OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID %>=<%# Eval("Id") %>"><%# Eval("FriendlyName") %></a></li>
+    <li><a  <%# (((Request[OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID] != null) && (Request[OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID].ToString() == Eval("Id").ToString())) ? "class=\"selected\"" : "")  %>  href="/adm/Scaffold.aspx?<%# OneMainWeb.adm.Scaffold.REQUEST_VIRTUAL_TABLE_ID %>=<%# Eval("Id") %>"><%# Eval("FriendlyName") %></a></li>
 </ItemTemplate>
 </asp:Repeater>
