@@ -948,17 +948,6 @@ namespace One.Net.BLL
             {
                 ChangeWebsite(website);
             }
-
-            // EDIT web.config
-            using (var sm = new ServerManager())
-            {
-                if (newDatabase)
-                {
-                    IISHelper.AddConnectionString(sm, siteUrl.Host, "MsSqlConnectionString", builder.ConnectionString);
-                }
-                IISHelper.AddAppSetting(sm, siteUrl.Host, "WebSiteId", website.Id.ToString());
-                sm.CommitChanges();
-            }
             return AddWebSiteResult.Success;
         }
 

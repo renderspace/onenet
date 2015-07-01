@@ -163,34 +163,6 @@ namespace One.Net.BLL.Utility
             errors.Add(element404);
         }
 
-        public static void AddConnectionString(ServerManager sm, string siteName, string attributeName, string attributeValue)
-        {
-            var siteConfig = sm.Sites[siteName].GetWebConfiguration();
-            var connectionStrings = siteConfig.GetSection("connectionStrings").GetCollection();
-
-            if (connectionStrings.Any(t => t.GetAttributeValue("name").ToString() == attributeName))
-                connectionStrings.Remove(connectionStrings.First(t => t.GetAttributeValue("name").ToString() == attributeName));
-
-            ConfigurationElement addElement = connectionStrings.CreateElement("add");
-            addElement["name"] = attributeName;
-            addElement["connectionString"] = attributeValue;
-            connectionStrings.Add(addElement);
-        }
-
-        public static void AddAppSetting(ServerManager sm, string siteName, string key, string value)
-        {
-            var siteConfig = sm.Sites[siteName].GetWebConfiguration();
-            var appSettings = siteConfig.GetSection("appSettings").GetCollection();
-
-            if (appSettings.Any(t => t.GetAttributeValue("key").ToString() == key))
-                appSettings.Remove(appSettings.First(t => t.GetAttributeValue("key").ToString() == key));
-
-            ConfigurationElement addElement = appSettings.CreateElement("add");
-            addElement["key"] = key;
-            addElement["value"] = value;
-            appSettings.Add(addElement);
-        }
-
         public static void DirectoryCopy(string sourceDirName, DirectoryInfo destDir, bool copyAdminFolders)
         {
             log.Info("About to start directory copy: sourceDirName " + sourceDirName + " - destDirName " + destDir.FullName);
