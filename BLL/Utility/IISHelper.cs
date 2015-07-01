@@ -95,10 +95,11 @@ namespace One.Net.BLL.Utility
             appPool.ProcessModel.IdentityType = ProcessModelIdentityType.NetworkService;
 
             // Shut down after being idle for 10 minutes.
-            appPool.ProcessModel.IdleTimeout = TimeSpan.FromMinutes(10);
+            appPool.ProcessModel.IdleTimeout = TimeSpan.FromMinutes(0);
 
             // Max. number of IIS worker processes (W3WP.EXE)
             appPool.ProcessModel.MaxProcesses = 1;
+
         }
 
         private static System.Configuration.Configuration OpenConfigFile(string configPath, string siteName)
