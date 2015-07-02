@@ -11,14 +11,7 @@ namespace One.Net.BLL
             Settings = new Dictionary<string, BOSetting>();
         }
 
-        // private Dictionary<string, BOSetting> settings = new Dictionary<string, BOSetting>();
-
-        public string Name { get; set; }
-
-        public string ExpandedName
-        {
-            get { return Name + " [" + Id + "]"; }
-        }
+        public string ModuleName { get; set; }
 
         public int Id { get; set; }
 
@@ -36,7 +29,7 @@ namespace One.Net.BLL
         {
             get
             {
-                string moduleSource = Settings.ContainsKey("ModuleSource") && Settings["ModuleSource"].Value.Length > 0 ? Settings["ModuleSource"].Value : Name;
+                string moduleSource = Settings.ContainsKey("ModuleSource") && Settings["ModuleSource"].Value.Length > 0 ? Settings["ModuleSource"].Value : ModuleName;
                 return moduleSource + ".ascx";
             }
         }
@@ -56,6 +49,16 @@ namespace One.Net.BLL
         public bool Persists
         {
             get { return this.PersistFrom != this.PersistTo; }
+        }
+
+        public DateTime DateCreated { get; set; }
+
+        public bool IsVeryRecent
+        {
+            get
+            {
+                return DateTime.Now.Subtract(DateCreated).TotalMinutes < 2;
+            }
         }
     }
 }

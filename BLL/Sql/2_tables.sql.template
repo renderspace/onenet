@@ -333,12 +333,18 @@ CREATE TABLE [dbo].[module_instance](
 	[persistence_idx] [int] NOT NULL,
 	[persistent_from] [int] NOT NULL,
 	[persistent_to] [int] NOT NULL,
+	[date_created] [datetime] NULL,
  CONSTRAINT [PK_module_instance] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC,
 	[pages_fk_publish] ASC
 )WITH (PAD_INDEX  = OFF, IGNORE_DUP_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+
+ALTER TABLE dbo.module_instance ADD CONSTRAINT
+	DF_module_instance_date_created DEFAULT getdate() FOR date_created
 
 GO
 

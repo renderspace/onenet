@@ -354,26 +354,26 @@ namespace OneMainWeb.adm
 
                 deleteButton.Visible = !moduleInstance.PendingDelete && !moduleInstance.IsInherited;
                 undeleteButton.Visible = moduleInstance.PendingDelete && !moduleInstance.IsInherited;
-                ButtonModalEdit.Visible = (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
-                ButtonContentTemplateModalEdit.Visible = (moduleInstance.Name == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonModalEdit.Visible = (moduleInstance.ModuleName == "TextContent" || moduleInstance.ModuleName == "SpecialContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
+                ButtonContentTemplateModalEdit.Visible = (moduleInstance.ModuleName == "TemplateContent") ? (!moduleInstance.IsInherited && !moduleInstance.PendingDelete) : false;
 
                 BOInternalContent textContentModel = null;
-                if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
+                if (moduleInstance.ModuleName == "TextContent" || moduleInstance.ModuleName == "SpecialContent")
                 {
                     textContentModel = textContentB.GetTextContent(moduleInstance.Id);
                     if (textContentModel.IsComplete)
                     {
                         ButtonModalEdit.Attributes.Add("data-content-id", textContentModel.ContentId.Value.ToString());
-                        ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.Name == "TextContent" ? "true" : "false");
+                        ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.ModuleName == "TextContent" ? "true" : "false");
                     }
                 }
-                if (moduleInstance.Name == "TextContent" || moduleInstance.Name == "SpecialContent")
+                if (moduleInstance.ModuleName == "TextContent" || moduleInstance.ModuleName == "SpecialContent")
                 {
                     if (textContentModel != null && textContentModel.IsComplete)
                     {
                         LabelModuleDistinctName.Visible = true;
                         var distinctName = "";
-                        if (moduleInstance.Name == "SpecialContent")
+                        if (moduleInstance.ModuleName == "SpecialContent")
                         {
                             distinctName = StringTool.StripHtmlTags(textContentModel.Html);
                         }
@@ -402,7 +402,7 @@ namespace OneMainWeb.adm
 
                 moduleSettings.Visible = moduleSettings.Visible && !moduleInstance.IsInherited;
 
-                if (moduleInstance.Name == "TemplateContent" && moduleInstance.Settings.ContainsKey("TemplateId"))
+                if (moduleInstance.ModuleName == "TemplateContent" && moduleInstance.Settings.ContainsKey("TemplateId"))
                 {
                     var templateId = Int32.Parse(moduleInstance.Settings["TemplateId"].Value.ToString());
                     if (templateId > 0)

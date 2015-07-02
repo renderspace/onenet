@@ -191,7 +191,7 @@
                     <FooterTemplate>
                     </FooterTemplate>
 		            <ItemTemplate>
-                        <div class="moduleInstance">
+                        <div class="moduleInstance <%# (bool) Eval("IsVeryRecent") ? "very-recent" : "" %>">
                             <h4 class="row">
                                 
                                 
@@ -203,7 +203,7 @@
 
 
 
-                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("Name"))%></span>
+                                <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("ModuleName"))%></span>
                                  
                                 <span class="bg-primary distinct-name">
                                      [<%# Eval("Id") %>]

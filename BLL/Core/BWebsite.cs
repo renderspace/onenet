@@ -507,11 +507,11 @@ namespace One.Net.BLL
                         {
                             if (instance.PendingDelete)
                                 webSiteDb.DeleteModuleInstance(instance.Id);
-                            else if (instance.Name == "TextContent")
+                            else if (instance.ModuleName == "TextContent")
                                 PublishTextContentModuleInstance(instance, page.LanguageId);
-                            else if (instance.Name == "SpecialContent")
+                            else if (instance.ModuleName == "SpecialContent")
                                 PublishTextContentModuleInstance(instance, page.LanguageId);
-                            else if (instance.Name == "TemplateContent")
+                            else if (instance.ModuleName == "TemplateContent")
                                 PublishTemplateContentModuleInstance(instance, page.LanguageId);
                             else
                             {
@@ -742,7 +742,7 @@ namespace One.Net.BLL
 
             foreach (var mi in instances)
             {
-                if (mi != null && (mi.Name == "TextContent" || mi.Name == "SpecialContent") && !mi.IsInherited)
+                if (mi != null && (mi.ModuleName == "TextContent" || mi.ModuleName == "SpecialContent") && !mi.IsInherited)
                 {
                     if (mi.Settings != null && mi.Settings.ContainsKey("ContentId"))
                     {

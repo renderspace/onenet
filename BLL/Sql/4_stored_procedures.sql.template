@@ -462,48 +462,6 @@ EXEC  [dbo].[GetMenu_acc_Path] @CurrentNodeID, @CurrentPublishFlag
 DROP TABLE #MenuTempTable
 GO
 
-CREATE PROC [dbo].[ListPageModInstances]
-    (
-         @PageID int,
-	     @LCID int,
-		 @publishFlag int
-    )
-    AS
-
-    DECLARE @currentDepth int
-
-
-    CREATE TABLE #MenuTempTable (id int IDENTITY (1, 1) NOT NULL, NodeID int, AbsDepth int) 
-    INSERT INTO #MenuTempTable    SELECT @PageID, NULL
-
-    EXEC  [dbo].[GetMenu_acc_Path] @PageID, @publishFlag
-
-    SELECT @currentDepth = MAX(id) -1  FROM #MenuTempTable
-
-    SELECT m.NodeID, @currentDepth - m.id + 1 as AbsDepth,
-	    CASE 
-	    WHEN((@currentDepth >= mi.persistent_from) AND 
-		    (@currentDepth <= mi.persistent_to)) OR 
-		    (@currentDepth = @currentDepth - m.id + 1 ) THEN 1
-	    ELSE 0
-	    END as module_visibility, i.par_link, i.par_link_name, 
-		    mi.persistent_from, mi.persistent_to, 
-		mi.id, mi.module_fk_id, mi.idx, @PageID, mod.name, mi.place_holder_fk_id, ph.place_holder_id
-    FROM #MenuTempTable m
-	    LEFT JOIN int_link i ON i.pages_fk_id=m.NodeID 
-		    AND i.pages_fk_publish = @publishFlag
-	    LEFT JOIN pages p ON i.pages_fk_id=p.id AND i.pages_fk_publish = p.publish
-	    RIGHT JOIN module_instance mi ON mi.pages_fk_id = m.NodeID AND mi.pages_fk_publish = @publishFlag
-	    LEFT JOIN module mod ON mi.module_fk_id = mod.id
-		INNER JOIN place_holder ph ON ph.id = mi.place_holder_fk_id
-    WHERE i.language_fk_id = @LCID
-    ORDER BY mi.place_holder_fk_id, mi.idx ASC
-
-    DROP TABLE #MenuTempTable
-
-
-GO
-
 
 
 CREATE PROCEDURE [dbo].[DeletePage] 
