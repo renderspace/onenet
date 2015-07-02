@@ -278,7 +278,7 @@ ga('create', '" + code + @"', 'auto');";
                             if (module.PersistFrom <= CurrentPage.Level && (PublishFlag || !module.PendingDelete))
                             {
                                 var p = new Section();
-                                p.CssClass = "mi " + module.Name.ToLower();
+                                p.CssClass = "mi " + module.ModuleName.ToLower();
                                 p.CssClass += " mi" + module.Id;
 
                                 Control control = null;

@@ -624,3 +624,8 @@ details .form-group select {width: 100%;}
 
 .ui-autocomplete {background:#FFF; padding: 10px; width: 40%; border: 1px #dddddd solid;  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 .ui-autocomplete li {margin: 4px 0 4px 20px; cursor: pointer;}
+
+.very-recent {
+    border-color: #9BD0FF;
+    border-width: 5px;
+}

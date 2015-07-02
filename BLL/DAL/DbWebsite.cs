@@ -422,19 +422,81 @@ namespace One.Net.BLL.DAL
                 }
             }
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[ListPageModInstances]", parms))
+            // ex ListPageModInstances stored procedure
+            parms = new SqlParameter[] {
+					new SqlParameter("@CurrentNodeID ", pageId),
+					new SqlParameter("@LanguageID ", languageId),
+                    new SqlParameter("@CurrentPublishFlag", publishFlag)
+                    };
+
+            var pagesFromPath = new List<int>();
+            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+                CommandType.StoredProcedure, "[dbo].[GetPath]", parms))
             {
                 while (rdr.Read())
                 {
-                    PopulateModuleInstances(rdr, page);
+                    pagesFromPath.Add((int)rdr["NodeID"]);
                 }
             }
 
+            var currentNodeDepth = 0;
+            foreach (var nodeId in pagesFromPath)
+            {
+                using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
+      @"SELECT mi.id, mi.idx, mi.module_fk_id, mod.name, mi.date_created,
+                    mi.place_holder_fk_id, ph.place_holder_id,
+		            mi.persistent_from, mi.persistent_to
+        FROM module_instance mi
+	    LEFT JOIN pages p ON mi.pages_fk_id = p.id AND p.publish = mi.pages_fk_publish
+	    LEFT JOIN module mod ON mi.module_fk_id = mod.id
+		INNER JOIN place_holder ph ON ph.id = mi.place_holder_fk_id
+    WHERE 
+        mi.pages_fk_id = @nodeId AND 
+        mi.pages_fk_publish = @nodePublishFlag
+    ORDER BY mi.place_holder_fk_id, mi.idx ASC", new SqlParameter("@nodeId", nodeId), new SqlParameter("@nodePublishFlag", publishFlag)))
+                {
+                    while (rdr.Read())
+                    {
+                        if (rdr[0] != DBNull.Value)
+                        {
+                            var from = (int)rdr["persistent_from"];
+                            var to = (int)rdr["persistent_to"];
+                            
+                            var moduleInstance = new BOModuleInstance 
+                            { 
+                                Id = (int) rdr["id"],
+                                Order = (int)rdr["idx"],
+                                ModuleId = (int)rdr["module_fk_id"],
+                                ModuleName = (string) rdr["name"],
+                                PlaceHolderId = (int)rdr["place_holder_fk_id"],
+                                PageId = nodeId,
+                                DateCreated = rdr["date_created"] == DBNull.Value ? DateTime.MinValue : (DateTime)rdr["date_created"]
+                            };
+                            moduleInstance.IsInherited = currentNodeDepth != page.Level;
+
+                            if (moduleInstance.IsInherited && !(page.Level >= from && page.Level <= to))
+                            {
+                                continue;
+                            }
+
+                            if (!page.PlaceHolders.ContainsKey(moduleInstance.PlaceHolderId))
+                            {
+                                BOPlaceHolder placeHolder = new BOPlaceHolder();
+                                placeHolder.Id = moduleInstance.PlaceHolderId;
+                                placeHolder.Name = (string) rdr["place_holder_id"];
+                                page.PlaceHolders.Add(moduleInstance.PlaceHolderId, placeHolder);
+                            }
+                            if (!(page.BreakPersistance && moduleInstance.IsInherited))
+                            {
+                                page.PlaceHolders[moduleInstance.PlaceHolderId].ModuleInstances.Add(moduleInstance);
+                            } 
+                        }
+                    }
+                }
+                currentNodeDepth++;
+            }
             LoadPageLinks(page, publishFlag, languageId);
             LoadPageSettings(page, publishFlag);
-
-            
-
             return page;
         }
 
@@ -519,27 +581,6 @@ namespace One.Net.BLL.DAL
                 sitePage.SubRouteUrl = (string) rdr["sub_route_url"];
             else
                 sitePage.SubRouteUrl = "";
-        }
-
-        private static void PopulateModuleInstances(IDataReader rdr, BOPage sitePage)
-        {
-            if (rdr[7] != DBNull.Value && rdr.GetInt32(2) == 1)
-            {
-                var moduleInstance = new BOModuleInstance { Id = rdr.GetInt32(7), ModuleId = rdr.GetInt32(8), Order = rdr.GetInt32(9), PageId = rdr.GetInt32(10), Name = rdr.GetString(11), PlaceHolderId =  rdr.GetInt32(12) };
-                moduleInstance.IsInherited = rdr.GetInt32(1) != sitePage.Level;
-
-                if (!sitePage.PlaceHolders.ContainsKey(moduleInstance.PlaceHolderId))
-                {
-                    BOPlaceHolder placeHolder = new BOPlaceHolder();
-                    placeHolder.Id = moduleInstance.PlaceHolderId;
-                    placeHolder.Name = rdr.GetString(13);
-                    sitePage.PlaceHolders.Add(moduleInstance.PlaceHolderId, placeHolder);
-                }
-                if (!(sitePage.BreakPersistance && moduleInstance.IsInherited))
-                {
-                    sitePage.PlaceHolders[moduleInstance.PlaceHolderId].ModuleInstances.Add(moduleInstance);
-                }
-            }
         }
 
         public string GetPageUri(int pageId, bool publishFlag, int languageId)
@@ -716,7 +757,7 @@ ORDER BY name ASC";
                 }
             }
             return modules;
-        }
+         }
 
         public static DataTable ListTopModuleUsage(int id)
         {
@@ -752,7 +793,8 @@ ORDER BY name ASC";
                     mi.changed Changed,
                     mi.pending_delete pendingDelete,
                     mi.place_holder_fk_id,
-                    msl.options
+                    msl.options,
+                    mi.date_created
                 FROM [dbo].[module_instance] mi
 		            INNER  JOIN [dbo].[module] m ON m.id = mi.module_fk_id
 		            INNER JOIN [dbo].[settings_list] msl ON m.[name] =	msl.[subsystem]		
@@ -766,12 +808,13 @@ ORDER BY name ASC";
                 {
                     if (instance == null)
                     {
-                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], Name = (string)rdr["ModuleName"] };
+                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], ModuleName = (string)rdr["ModuleName"] };
                         instance.PendingDelete = bool.Parse(rdr["PendingDelete"].ToString());
                         instance.Changed = bool.Parse(rdr["Changed"].ToString());
                         instance.PlaceHolderId = (int)rdr["place_holder_fk_id"];
                         instance.PersistFrom = (int)rdr["persistent_from"];
                         instance.PersistTo = (int)rdr["persistent_to"];
+                        instance.DateCreated = rdr["date_created"] == DBNull.Value ? DateTime.MinValue : (DateTime)rdr["date_created"];
                     }
                     string settingKey = rdr["SettingName"].ToString();
                     BOSetting setting = new BOSetting(settingKey, rdr["type"].ToString(), rdr["value"].ToString(), rdr["user_visibility"].ToString());
@@ -812,19 +855,21 @@ ORDER BY name ASC";
                             mi.idx ModuleOrder,
                             mi.changed Changed,
                             mi.pending_delete pendingDelete,
-                            mi.place_holder_fk_id
+                            mi.place_holder_fk_id,
+                            mi.date_created
                         FROM 	[dbo].[module_instance] mi
 		                    INNER  JOIN [dbo].[module] m ON m.id = mi.module_fk_id
                             WHERE mi.id = @moduleInstanceID AND mi.pages_fk_publish = @publishFlag", paramsToPass))
                 {
                     if (rdr.Read())
                     {
-                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], Name = (string)rdr["name"] };
+                        instance = new BOModuleInstance { Id = (int)rdr["ModuleInstanceID"], ModuleId = (int)rdr["ModuleID"], Order = (int)rdr["ModuleOrder"], PageId = (int)rdr["PageID"], ModuleName = (string)rdr["name"] };
                         instance.PendingDelete = bool.Parse(rdr["PendingDelete"].ToString());
                         instance.Changed = bool.Parse(rdr["Changed"].ToString());
                         instance.PlaceHolderId = (int)rdr["place_holder_fk_id"];
                         instance.PersistFrom = (int)rdr["persistent_from"];
                         instance.PersistTo = (int)rdr["persistent_to"];
+                        instance.DateCreated = rdr["date_created"] == DBNull.Value ? DateTime.MinValue : (DateTime)rdr["date_created"];
                     }
                 }
             }
@@ -856,7 +901,7 @@ ORDER BY name ASC";
 				new SqlParameter("@PublishFlag", moduleInstance.PublishFlag),
                 new SqlParameter("@Name", SqlDbType.VarChar, 255),
                 new SqlParameter("@Value", SqlDbType.VarChar, 4000),
-                new SqlParameter("@SubSystem", moduleInstance.Name)
+                new SqlParameter("@SubSystem", moduleInstance.ModuleName)
             };
             foreach (BOSetting setting in moduleInstance.Settings.Values)
             {
