@@ -161,6 +161,27 @@ ga('create', '" + code + @"', 'auto');";
                 customAfterBodyStartCode = fbCode;
             }
 
+            if (CurrentPage.Settings.ContainsKey("RelatedContentLink") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["RelatedContentLink"].Value))
+            {
+                var link = CurrentPage.Settings["RelatedContentLink"].Value;
+                var isMobile = false;
+                var mobileMedia = "";
+                if (CurrentWebsite.Settings.ContainsKey("IsMobile"))
+                {
+                    isMobile = FormatTool.GetBoolean(CurrentWebsite.Settings["IsMobile"].Value);
+                } 
+                if (CurrentWebsite.Settings.ContainsKey("MobileMedia"))
+                {
+                    mobileMedia = CurrentWebsite.Settings["MobileMedia"].Value;
+                }
+
+                var rel = isMobile ? "canonical" : "alternate";
+                customHeadCode += "<link rel=\"" + rel + "\" href=\"" + link + "\" ";
+                customHeadCode += string.IsNullOrWhiteSpace(mobileMedia) || isMobile ? "/>" : "media=\"" + mobileMedia + "\" />";
+            }
+
+            
+
             log.Debug("PresentBasePage render start");
             if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode) || !string.IsNullOrEmpty(customAfterBodyStartCode))
             {
