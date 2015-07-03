@@ -8,6 +8,8 @@ using System.Web.UI.WebControls;
 using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.WebControls;
+using System.ComponentModel.DataAnnotations;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
@@ -34,7 +36,11 @@ namespace OneMainWeb.CommonModules
                     return list;
             } 
         }
+
+        [Setting("SortByColumn", SettingType.String)]
         protected string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
+
+
         protected bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
         protected int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
         protected bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }

@@ -1,4 +1,5 @@
 ﻿using One.Net.BLL;
+using One.Net.BLL.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,13 @@ namespace OneMainWeb.adm
                     Multiview1.ActiveViewIndex = 1;
                 }
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            var control = (MModule) Page.LoadControl("~/CommonModules/ArticleList.ascx");
+
+            control.Settings = null;
         }
     }
 }
