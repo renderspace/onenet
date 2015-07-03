@@ -21,7 +21,7 @@ WHILE @@FETCH_STATUS = 0
 BEGIN   
 	
 	SET @newArticleId = NULL;
-	EXEC ChangeArticle @publish, @changed, @contentId, @markedForDeletion, @displayDate, @newArticleId output;
+	EXEC ChangeArticle @publish, 1, @contentId, @markedForDeletion, @displayDate, @newArticleId output;
 
 	INSERT INTO regular_has_articles
 	(article_fk_id, regular_fk_id, article_fk_publish)
