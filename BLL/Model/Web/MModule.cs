@@ -45,6 +45,14 @@ namespace One.Net.BLL.Web
             } 
         }
 
+        public string InstanceComment
+        {
+            get
+            {
+                return GetStringSetting("InstanceComment");
+            }
+        }
+
         protected static bool PublishFlag
         {
             get { return bool.Parse(ConfigurationManager.AppSettings["PublishFlag"]); }
