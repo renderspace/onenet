@@ -148,6 +148,7 @@
     <Compile Include="DAL\DbRssFeed.cs" />
     <Compile Include="DAL\DbRSSProviderSql.cs" />
     <Compile Include="DAL\DbWebsite.cs" />
+    <Compile Include="Model\Attributes\Setting.cs" />
     <Compile Include="Model\BOArticle.cs" />
     <Compile Include="Model\BOCategory.cs" />
     <Compile Include="Model\BOContentTemplate.cs" />

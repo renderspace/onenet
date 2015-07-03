@@ -25,7 +25,9 @@ namespace OneMainWeb.CommonModules
         private static readonly BArticle articleB = new BArticle();
 
         #region Settings
-        protected string CategoriesList 
+
+        [Setting("CategoriesList", SettingType.String)]
+        public string CategoriesList 
         { 
             get 
             {
@@ -38,26 +40,54 @@ namespace OneMainWeb.CommonModules
         }
 
         [Setting("SortByColumn", SettingType.String)]
-        protected string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
+        public string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
 
+        [Setting("SortDescending", SettingType.String)]
+        public bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
 
-        protected bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
-        protected int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
-        protected bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
-        protected bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
-        protected bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
-        protected bool ShowTitle { get { return GetBooleanSetting("ShowTitle"); } }
-        protected bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
-        protected bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
-        protected bool ShowHtml { get { return GetBooleanSetting("ShowHtml"); } }
-        protected bool ShowMore { get { return GetBooleanSetting("ShowMore"); } }
-        protected bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
-        protected string SingleArticleUri { get { return GetStringSetting("SingleArticleUri"); } }
-        protected string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
-        protected int OffSet { get { return GetIntegerSetting("OffSet"); } }
-        protected string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
+        [Setting("RecordsPerPage", SettingType.String)]
+        public int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
 
+        [Setting("ShowPager", SettingType.String)]
+        public bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
 
+        [Setting("ShowDate", SettingType.String)]
+        public bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
+
+        [Setting("ShowDateBelowTitle", SettingType.String)]
+        public bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
+
+        [Setting("ShowTitle", SettingType.String)]
+        public bool ShowTitle { get { return GetBooleanSetting("ShowTitle"); } }
+
+        [Setting("ShowSubTitle", SettingType.String)]
+        public bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
+
+        [Setting("ShowTeaser", SettingType.String)]
+        public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
+
+        [Setting("ShowHtml", SettingType.String)]
+        public bool ShowHtml { get { return GetBooleanSetting("ShowHtml"); } }
+
+        [Setting("ShowMore", SettingType.String)]
+        public bool ShowMore { get { return GetBooleanSetting("ShowMore"); } }
+
+        [Setting("ShowModuleTitle", SettingType.String)]
+        public bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
+
+        [Setting("SingleArticleUri", SettingType.String)]
+        public string SingleArticleUri { get { return GetStringSetting("SingleArticleUri"); } }
+
+        [Setting("ArticleListUri", SettingType.String)]
+        public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
+
+        [Setting("OffSet", SettingType.String)]
+        public int OffSet { get { return GetIntegerSetting("OffSet"); } }
+
+        [Setting("DateFormatString", SettingType.String)]
+        public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
+
+        [Setting("ImageTemplate", SettingType.String)]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
 
