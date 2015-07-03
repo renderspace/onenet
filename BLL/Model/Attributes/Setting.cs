@@ -17,6 +17,7 @@ namespace One.Net.BLL.Model.Attributes
         public SettingVisibility Visibility { get; set; }
 
         public string DefaultValue { get; set; }
+        public string Options { get; set; }
 
         public Setting( SettingType type)
         {
