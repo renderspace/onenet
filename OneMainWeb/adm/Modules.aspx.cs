@@ -1,8 +1,10 @@
 ﻿using One.Net.BLL;
+using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -55,9 +57,26 @@ namespace OneMainWeb.adm
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            var control = (MModule) Page.LoadControl("~/CommonModules/ArticleList.ascx");
+            var control = Page.LoadControl("~/CommonModules/ArticleList.ascx");
 
-            control.Settings = null;
+
+            var propCollection = control.GetType().GetProperties();
+            Console.WriteLine("Properties of System.Type are:");
+            LiteralResult.Text = "<ul>";
+            foreach (PropertyInfo property in propCollection)
+            {
+                // LiteralResult.Text += "<li>" + property.Name + "</li>";
+                foreach (var att in property.GetCustomAttributes(true))
+                {
+                    if (att is Setting)
+                    {
+                        LiteralResult.Text += "<li>" + property.Name +  " [ " + ((Setting)att).Name + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] </li>";
+                    }
+                }
+            }
+            LiteralResult.Text += "<ul>";
+
+            // control.Settings = null;
         }
     }
 }

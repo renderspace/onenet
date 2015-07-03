@@ -7,7 +7,8 @@
     <asp:MultiView runat="server" ID="Multiview1" ActiveViewIndex="0" OnActiveViewChanged="Multiview1_ActiveViewChanged">
         <asp:View ID="View1" runat="server">
             <div class="adminSection validationGroup">
-                <asp:Button runat="server" ID="Button1" OnClick="Button1_Click" />
+                <asp:Button runat="server" ID="Button1" OnClick="Button1_Click" Text="Reload all module settings" />
+                <asp:Literal runat="server" ID="LiteralResult"></asp:Literal>
 		    </div>
 	        <asp:GridView ID="GridViewModules" runat="server" CssClass="gv" AutoGenerateColumns="false" AllowPaging="false" DataKeyNames="Id" OnSelectedIndexChanged="GridViewModules_SelectedIndexChanged" >
 		        <Columns>
