@@ -26,7 +26,7 @@ namespace OneMainWeb.CommonModules
 
         #region Settings
 
-        [Setting("CategoriesList", SettingType.String)]
+        [Setting(SettingType.CSInteger)]
         public string CategoriesList 
         { 
             get 
@@ -39,55 +39,55 @@ namespace OneMainWeb.CommonModules
             } 
         }
 
-        [Setting("SortByColumn", SettingType.String)]
+        [Setting(SettingType.String, DefaultValue = "title,subitle,teaser,display_date")]
         public string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
 
-        [Setting("SortDescending", SettingType.String)]
+        [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
 
-        [Setting("RecordsPerPage", SettingType.String)]
+        [Setting(SettingType.Int, DefaultValue = "10")]
         public int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
 
-        [Setting("ShowPager", SettingType.String)]
+        [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
 
-        [Setting("ShowDate", SettingType.String)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
 
-        [Setting("ShowDateBelowTitle", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
 
-        [Setting("ShowTitle", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowTitle { get { return GetBooleanSetting("ShowTitle"); } }
 
-        [Setting("ShowSubTitle", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
 
-        [Setting("ShowTeaser", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
 
-        [Setting("ShowHtml", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowHtml { get { return GetBooleanSetting("ShowHtml"); } }
 
-        [Setting("ShowMore", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowMore { get { return GetBooleanSetting("ShowMore"); } }
 
-        [Setting("ShowModuleTitle", SettingType.String)]
+        [Setting(SettingType.Bool)]
         public bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
 
-        [Setting("SingleArticleUri", SettingType.String)]
+        [Setting(SettingType.Url)]
         public string SingleArticleUri { get { return GetStringSetting("SingleArticleUri"); } }
 
-        [Setting("ArticleListUri", SettingType.String)]
+        [Setting(SettingType.Url)]
         public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
 
-        [Setting("OffSet", SettingType.String)]
+        [Setting(SettingType.Int)]
         public int OffSet { get { return GetIntegerSetting("OffSet"); } }
 
-        [Setting("DateFormatString", SettingType.String)]
+        [Setting(SettingType.String)]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
-        [Setting("ImageTemplate", SettingType.String)]
+        [Setting(SettingType.ImageTemplate)]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
 
