@@ -362,7 +362,7 @@ namespace One.Net.BLL
             return categorizationB.Get(folderId, BOFile.FOLDER_CATEGORIZATION_TYPE, false);
         }
 
-        public List<FileSystemInfo> ListPhysicalFolder(string path, string rootPath)
+        public static List<FileSystemInfo> ListPhysicalFolder(string path, string rootPath)
         {
             bool isRootPath = String.Compare(path, rootPath) == 0;
 

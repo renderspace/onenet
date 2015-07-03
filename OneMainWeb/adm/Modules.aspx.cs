@@ -57,29 +57,60 @@ namespace OneMainWeb.adm
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            var control = Page.LoadControl("~/CommonModules/ArticleList.ascx");
+            LiteralResult.Text = "";
 
+           // string relPath = "~/CommonModules/" + module.ModuleSource;
+           // string relCustomPath = "~/site_specific/custom_modules/" + module.ModuleSource;
 
-            var propCollection = control.GetType().GetProperties();
-            LiteralResult.Text = "<ul>";
-            foreach (PropertyInfo property in propCollection)
+            /*
+        if (File.Exists(HttpContext.Current.Server.MapPath(relCustomPath)))
+            control = LoadControl(relCustomPath);
+        else if (File.Exists(HttpContext.Current.Server.MapPath(relPath)))
+            control = LoadControl(relPath);*/
+
+            var files = BFileSystem.ListPhysicalFolder(HttpContext.Current.Server.MapPath("~/CommonModules/"), HttpContext.Current.Server.MapPath("~/"));
+
+            LiteralResult.Text += "<ul>";
+
+            foreach (var f in files.Where(fi => fi.Extension == ".ascx"))
             {
-                // LiteralResult.Text += "<li>" + property.Name + "</li>";
-                foreach (var att in property.GetCustomAttributes(true))
+                Control control = null;
+
+                try
                 {
-                    if (att is Setting)
+                    control = Page.LoadControl("~/CommonModules/" + f.Name);
+                }
+                catch (Exception ex)
+                {
+                    LiteralResult.Text += "<li>error loading: " + f.Name + " " + ex.Message + "</li>";
+                    continue;
+                }
+
+                LiteralResult.Text += "<li>" + f.Name + (control is MModule).ToString();
+
+                var propCollection = control.GetType().GetProperties();
+                LiteralResult.Text += "<ul>";
+                foreach (PropertyInfo property in propCollection)
+                {
+                    // LiteralResult.Text += "<li>" + property.Name + "</li>";
+                    foreach (var att in property.GetCustomAttributes(true))
                     {
-                        LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] ";
-                        if (!string.IsNullOrWhiteSpace(((Setting)att).Options))
+                        if (att is Setting)
                         {
-                            LiteralResult.Text += "Options: " + ((Setting)att).Options;
+                            LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] ";
+                            if (!string.IsNullOrWhiteSpace(((Setting)att).Options))
+                            {
+                                LiteralResult.Text += "Options: " + ((Setting)att).Options;
+                            }
+                            LiteralResult.Text += "</li>";
+
                         }
-                        LiteralResult.Text += "</li>";
-                            
                     }
                 }
+                LiteralResult.Text += "</ul>";
             }
-            LiteralResult.Text += "<ul>";
+            LiteralResult.Text += "</ul>";
+            
 
             // control.Settings = null;
         }
