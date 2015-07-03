@@ -61,7 +61,6 @@ namespace OneMainWeb.adm
 
 
             var propCollection = control.GetType().GetProperties();
-            Console.WriteLine("Properties of System.Type are:");
             LiteralResult.Text = "<ul>";
             foreach (PropertyInfo property in propCollection)
             {
@@ -70,7 +69,13 @@ namespace OneMainWeb.adm
                 {
                     if (att is Setting)
                     {
-                        LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] Options: " + ((Setting)att).Options + "</li>";
+                        LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] ";
+                        if (!string.IsNullOrWhiteSpace(((Setting)att).Options))
+                        {
+                            LiteralResult.Text += "Options: " + ((Setting)att).Options;
+                        }
+                        LiteralResult.Text += "</li>";
+                            
                     }
                 }
             }
