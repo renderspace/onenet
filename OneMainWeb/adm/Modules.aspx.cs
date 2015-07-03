@@ -70,7 +70,7 @@ namespace OneMainWeb.adm
                 {
                     if (att is Setting)
                     {
-                        LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] </li>";
+                        LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] Options: " + ((Setting)att).Options + "</li>";
                     }
                 }
             }

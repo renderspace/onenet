@@ -39,7 +39,7 @@ namespace OneMainWeb.CommonModules
             } 
         }
 
-        [Setting(SettingType.String, DefaultValue = "title,subitle,teaser,display_date")]
+        [Setting(SettingType.String, DefaultValue = "title", Options = "title,subtitle,teaser,display_date")]
         public string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
 
         [Setting(SettingType.Bool, DefaultValue = "true")]
