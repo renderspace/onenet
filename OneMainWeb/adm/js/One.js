@@ -416,6 +416,15 @@ $(document).ready(function () {
         }
     });
 
+    $('.deleteAll').confirmation({
+        title: 'This operation is not reversible! Are you sure?',
+        btnOkLabel: 'Yes',
+        href: function (e) {
+            return $(this).attr('href');
+        },
+        btnOkClass: 'btn btn-sm btn-danger'
+    });
+
     $('.ckeditor4').each(function (index) {
         trace("CKEDITOR " + index + ": " + this.id);
         replaceCKEditor(this.id);
