@@ -1,4 +1,5 @@
 ﻿using One.Net.BLL;
+using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.Web;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,14 @@ namespace OneMainWeb.CommonModules
     public partial class MagnificGallery : MModule
     {
 
-        protected BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
+        [Setting(SettingType.ImageTemplate)]
+        public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
-        protected BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
+        [Setting(SettingType.ImageTemplate)]
+        public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
-        protected int FolderId { get { return GetIntegerSetting("FolderId"); } }
+        [Setting(SettingType.Int, DefaultValue = "0")]
+        public int FolderId { get { return GetIntegerSetting("FolderId"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {

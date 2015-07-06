@@ -17,6 +17,10 @@ using MsSqlDBUtility;
 using System.Data;
 using System.Text;
 using System.Xml;
+using System.Web;
+using System.Web.UI;
+using System.Data;
+using One.Net.BLL.Model.Attributes;
 
 namespace One.Net.BLL
 {
@@ -1178,6 +1182,50 @@ namespace One.Net.BLL
             return c;
         }
 
+        public static DataTable ListAvailibleModules(HttpContext context)
+        {
+            var coreModules = BFileSystem.ListPhysicalFolder(context.Server.MapPath("~/CommonModules/"), context.Server.MapPath("~/")).Where(fi => fi.Extension == ".ascx");
+            var customModules = BFileSystem.ListPhysicalFolder(context.Server.MapPath("~/site_specific/custom_modules"), context.Server.MapPath("~/")).Where(fi => fi.Extension != null && fi.Extension == ".ascx");
+
+            var diskModules = coreModules.Concat(customModules).ToList();
+            var databaseModules = ListModules(true).OrderByDescending(m => m.NoUnpublishedInstances);
+
+            var dt = new DataTable();
+            dt.Columns.Add("Id");
+            dt.Columns.Add("Name");
+            dt.Columns.Add("NoUnpublishedInstances");
+            dt.Columns.Add("NoPublishedInstances");
+            dt.Columns.Add("NoSettingsInDatabase");
+            dt.Columns.Add("NoSettingsInModule");
+
+            foreach (var m in databaseModules)
+            {
+                var dr = dt.NewRow();
+                dr["Id"] = m.Id;
+                dr["Name"] = m.Name;
+                dr["NoUnpublishedInstances"] = m.NoUnpublishedInstances;
+                dr["NoPublishedInstances"] = m.NoPublishedInstances;
+                dr["NoSettingsInDatabase"] = m.NoSettingsInDatabase;
+
+
+                var onDisk = diskModules.Where(fi => fi.Name == m.Name + ".ascx").FirstOrDefault();
+                if (onDisk != null)
+                {
+                    diskModules.Remove(onDisk);
+                }
+                dt.Rows.Add(dr);
+            }
+            foreach (var fi in diskModules)
+            {
+                var dr = dt.NewRow();
+                dr["Name"] = Path.GetFileNameWithoutExtension(fi.Name);
+                dt.Rows.InsertAt(dr, 0);
+            }
+            return dt;
+        }
+
+        
+
         public DataTable ListModuleUsage(int id)
         {
             var pages = DbWebsite.ListTopModuleUsage(id);
@@ -1198,6 +1246,35 @@ namespace One.Net.BLL
                 
             }
             return result;
+        }
+
+        public static bool AddModule(string moduleName)
+        {
+            var module = ListModules().Where(m => m.Name == moduleName).FirstOrDefault();
+            if (module != null)
+                return false;
+
+            if (moduleName.EndsWith("ascx"))
+                return false;
+
+            return DbWebsite.AddModule(moduleName);
+        }
+
+        public static int UpdateModuleSettings(string moduleName, IEnumerable<Setting> settings)
+        {
+            var module = ListModules().Where(m => m.Name == moduleName).FirstOrDefault();
+            if (module == null || string.IsNullOrWhiteSpace(module.Name))
+                return -1;
+
+            foreach (var s in settings)
+            {
+                if (string.IsNullOrWhiteSpace(s.Name) || s.Name.Equals("Page", StringComparison.InvariantCultureIgnoreCase) || s.Name.Equals("Website", StringComparison.InvariantCultureIgnoreCase))
+                    return -1;
+            }
+
+
+
+            return DbWebsite.UpdateModuleSettings(module.Name, settings);
         }
 
         #region Old Stuff

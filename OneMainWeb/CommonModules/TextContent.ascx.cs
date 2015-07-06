@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -13,50 +12,38 @@ using System.Web.UI.HtmlControls;
 using One.Net.BLL;
 
 using One.Net.BLL.Web;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class TextContent : MModule, IImageListProvider
+    public partial class TextContent : MModule
     {
         private static readonly BTextContent textContentB = new BTextContent();
         BOInternalContent textContent;
 
-        protected bool EnableImageProvider { get { return GetBooleanSetting("EnableImageProvider"); } }
-        public bool EnableCommentProvider { get { return GetBooleanSetting("EnableCommentProvider"); } }
+        [Setting(SettingType.ImageTemplate)]
+        public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
-        protected BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
-        
-
-        /// <summary>
-        /// Provides a list of all images displayed by this module (if EnableImageProvider is enabled). 
-        /// Availible after Load event.
-        /// </summary>
-        public List<BOIntContImage> ListImages 
+        [Setting(SettingType.Int, DefaultValue="-1", Visibility=SettingVisibility.SPECIAL )]
+        public int ContentId
         {
-            get 
+            get
             {
-                if (textContent != null && EnableImageProvider)
+                if (textContent == null || !textContent.ContentId.HasValue)
                 {
-                    return textContent.Images;
+                    return -1;
                 }
-                else { return null; }
+
+                return textContent.ContentId.Value;
             }
         }
-
+        
         protected override void OnLoad(EventArgs e)
         {
             textContent = textContentB.GetTextContent(InstanceId);
 
             if (null != textContent)
             {
-                if (EnableImageProvider)
-                {
-                    foreach (BOIntContImage image in textContent.Images)
-                    {
-                        textContent.RemoveImages.Add(image);
-                    }
-                }
-
                 if (ImageTemplate != null)
                     textContent.ImageTemplate = ImageTemplate;
             }
@@ -102,19 +89,6 @@ namespace OneMainWeb.CommonModules
 				    output.Write(textContent.ProcessedHtml);
 				    output.WriteEndTag("div");
 			    }
-            }
-        }
-
-        public int? ContentId
-        {
-            get 
-            {
-                if (textContent == null)
-                { 
-                    return null; 
-                }
-
-                return textContent.ContentId;
             }
         }
     }

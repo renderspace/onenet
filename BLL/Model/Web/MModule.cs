@@ -1,6 +1,6 @@
+using One.Net.BLL.Model.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Threading;
 using System.Web;
 using System.Web.UI;
@@ -37,6 +37,7 @@ namespace One.Net.BLL.Web
                 return BContent.GetComplexMeaningRendered(keyword);
         }
 
+        [Setting(SettingType.String)]
         public string ExtraCssClass 
         { 
             get 
@@ -45,6 +46,7 @@ namespace One.Net.BLL.Web
             } 
         }
 
+        [Setting(SettingType.String)]
         public string InstanceComment
         {
             get
@@ -53,9 +55,16 @@ namespace One.Net.BLL.Web
             }
         }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        protected bool UniqueTranslation
+        {
+            get { return GetBooleanSetting("UniqueTranslation"); }
+        }
+
+
         protected static bool PublishFlag
         {
-            get { return bool.Parse(ConfigurationManager.AppSettings["PublishFlag"]); }
+            get { return bool.Parse(System.Configuration.ConfigurationManager.AppSettings["PublishFlag"]); }
         }
 
         public string CustomClientID { get; set; }
@@ -76,11 +85,7 @@ namespace One.Net.BLL.Web
                 return BContent.GetMeaning(keyword);
         }
 
-        protected bool UniqueTranslation
-        {
-            get { return GetBooleanSetting("UniqueTranslation"); }
-        }
-
+       
         public bool HasHumanReadableUrlParameter
         {
             get

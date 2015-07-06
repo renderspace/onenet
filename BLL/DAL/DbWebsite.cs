@@ -6,6 +6,7 @@ using System.Security.Permissions;
 using System.Web.Caching;
 using MsSqlDBUtility;
 using System.Security;
+using One.Net.BLL.Model.Attributes;
 // for old stuff
 
 namespace One.Net.BLL.DAL
@@ -733,6 +734,7 @@ namespace One.Net.BLL.DAL
             {
                 sql += ",(SELECT COUNT(id) FROM module_instance mi WHERE mi.module_fk_id = m.id AND pages_fk_publish = 0) as unpublished_instances";
                 sql += ",(SELECT COUNT(id) FROM module_instance mi WHERE mi.module_fk_id = m.id AND pages_fk_publish = 1) as published_instances";
+                sql += ",(SELECT COUNT(sl.id) FROM settings_list sl WHERE m.[name] = sl.[subsystem]) as no_of_settings";
             }
             sql += @"	
 FROM [dbo].[module] m
@@ -752,6 +754,7 @@ ORDER BY name ASC";
                     { 
                         module.NoUnpublishedInstances = rdr.GetInt32(3);
                         module.NoPublishedInstances = rdr.GetInt32(4);
+                        module.NoSettingsInDatabase = rdr.GetInt32(5);
                     }
                     modules.Add(module);
                 }
@@ -766,6 +769,52 @@ ORDER BY name ASC";
                 WHERE module_fk_id = @id AND pages_fk_publish = 0 AND pending_delete = 0", new SqlParameter("@id", id));
             return result.Tables[0];
         }
+
+        public static bool AddModule(string moduleName)
+        {
+            var result = SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text,
+                        @"INSERT INTO [dbo].[module] ([name],[module_source])
+                            VALUES (@name,@source)", new SqlParameter("@name", moduleName), new SqlParameter("@source", moduleName + ".ascx"));
+            return result != 0;
+        }
+
+        public static int UpdateModuleSettings(string moduleName, IEnumerable<Setting> settings)
+        {
+            var i = 0;
+            var pn = new SqlParameter("@Subsystem", moduleName);
+            foreach (var s in settings)
+            {
+                var sn = new SqlParameter("@Name", s.Name);
+                var settingId = 0;
+                var settingType = "";
+                using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, "SELECT ISNULL(id, 0) AS id, type FROM settings_list WHERE subsystem = @Subsystem AND name = @Name",
+                    pn, sn))
+                {
+                    if (reader.Read())
+                    {
+                        settingId = (int)reader["id"];
+                        settingType = (string)reader["type"];
+                    }
+                }
+                if (settingId < 1)
+                {
+                    var p = new[] { 
+                        pn,
+                        sn, 
+                        new SqlParameter("@type", Enum.GetName(typeof(SettingType), s.Type)), 
+                        new SqlParameter("@defaultValue", s.DefaultValue ?? ""), 
+                        new SqlParameter("@userVisibility", Enum.GetName(typeof(SettingVisibility), s.Visibility).ToUpper()), 
+                        new SqlParameter("@options", s.Options ?? "")
+                    };
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, 
+                        @"INSERT INTO [dbo].[settings_list] ([type],[subsystem],[name],[default_value],[user_visibility],[options])
+                            VALUES (@type,@Subsystem,@Name,@defaultValue,@userVisibility,@options)", p);
+                    i++;
+                }
+            }
+            return i;
+        }
+
 
         public static BOModuleInstance GetModuleInstance(int moduleInstanceID, bool publishFlag)
         {

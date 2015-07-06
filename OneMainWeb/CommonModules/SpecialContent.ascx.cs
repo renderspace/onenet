@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -12,6 +11,7 @@ using System.Web.UI.HtmlControls;
 
 using One.Net.BLL;
 using One.Net.BLL.Web;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
@@ -20,6 +20,9 @@ namespace OneMainWeb.CommonModules
         private static readonly BTextContent specialContentB = new BTextContent();
 
         BOInternalContent specialContent;
+
+        [Setting(SettingType.Int, DefaultValue = "-1", Visibility = SettingVisibility.SPECIAL)]
+        public int ContentId { get { throw new Exception("Not intended to be used directly"); } }
 
         protected override void OnLoad(EventArgs e)
         {

@@ -3,6 +3,8 @@ using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.Web;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -33,86 +35,157 @@ namespace OneMainWeb.adm
         {
             if (Multiview1.ActiveViewIndex == 0)
             {
-                var modules = BWebsite.ListModules(true).OrderByDescending(m => m.NoUnpublishedInstances);
-                GridViewModules.DataSource = modules;
-                GridViewModules.DataBind();
+                GridViewModules_DataBind();
             }
         }
 
-        protected void GridViewModules_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GridViewModules_DataBind()
         {
-            var grid = sender as GridView;
-            if (grid != null && grid.SelectedValue != null)
+            var modules = BWebsite.ListAvailibleModules(HttpContext.Current);
+
+            foreach (DataRow dr in modules.Rows)
             {
-                SelectedModule = BWebsite.ListModules(true).Where(m => m.Id == int.Parse(grid.SelectedValue.ToString())).FirstOrDefault();
-                if (SelectedModule != null)
+                var moduleName = dr["Name"] + ".ascx";
+                var moduleOnDisk = GetDiskModuleInfo(HttpContext.Current, moduleName);
+                if (moduleOnDisk != null && moduleOnDisk.Item2 != null)
                 {
-                    var usage = webSiteB.ListModuleUsage(SelectedModule.Id);
-                    GridViewUsage.DataSource = usage;
-                    GridViewUsage.DataBind();
-                    Multiview1.ActiveViewIndex = 1;
+                    dr["NoSettingsInModule"] = moduleOnDisk.Item2.Count();
                 }
             }
+
+            GridViewModules.DataSource = modules;
+            GridViewModules.DataBind();
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        public Tuple<string, IEnumerable<Setting>> GetDiskModuleInfo(HttpContext context, string fileName)
         {
-            LiteralResult.Text = "";
+            Control control = null;
 
-           // string relPath = "~/CommonModules/" + module.ModuleSource;
-           // string relCustomPath = "~/site_specific/custom_modules/" + module.ModuleSource;
+            string relPath = "~/CommonModules/" + fileName;
+            string relCustomPath = "~/site_specific/custom_modules/" + fileName;
 
-            /*
-        if (File.Exists(HttpContext.Current.Server.MapPath(relCustomPath)))
-            control = LoadControl(relCustomPath);
-        else if (File.Exists(HttpContext.Current.Server.MapPath(relPath)))
-            control = LoadControl(relPath);*/
-
-            var files = BFileSystem.ListPhysicalFolder(HttpContext.Current.Server.MapPath("~/CommonModules/"), HttpContext.Current.Server.MapPath("~/"));
-
-            LiteralResult.Text += "<ul>";
-
-            foreach (var f in files.Where(fi => fi.Extension == ".ascx"))
+            try
             {
-                Control control = null;
+                if (File.Exists(HttpContext.Current.Server.MapPath(relCustomPath)))
+                    control = LoadControl(relCustomPath);
+                else if (File.Exists(HttpContext.Current.Server.MapPath(relPath)))
+                    control = LoadControl(relPath);
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                // "<li>error loading: " + f.Name + " " + ex.Message + "</li>";
+                return new Tuple<string, IEnumerable<Setting>>(fileName, null);
+            }
 
-                try
+            var moduleSettings = new List<Setting>();
+            var propCollection = control.GetType().GetProperties();
+            foreach (PropertyInfo property in propCollection)
+            {
+                foreach (var att in property.GetCustomAttributes(true))
                 {
-                    control = Page.LoadControl("~/CommonModules/" + f.Name);
-                }
-                catch (Exception ex)
-                {
-                    LiteralResult.Text += "<li>error loading: " + f.Name + " " + ex.Message + "</li>";
-                    continue;
-                }
-
-                LiteralResult.Text += "<li>" + f.Name + (control is MModule).ToString();
-
-                var propCollection = control.GetType().GetProperties();
-                LiteralResult.Text += "<ul>";
-                foreach (PropertyInfo property in propCollection)
-                {
-                    // LiteralResult.Text += "<li>" + property.Name + "</li>";
-                    foreach (var att in property.GetCustomAttributes(true))
+                    if (att is Setting)
                     {
-                        if (att is Setting)
-                        {
-                            LiteralResult.Text += "<li>" + property.Name + " [ " + ((Setting)att).DefaultValue + " / " + Enum.GetName(typeof(SettingType), ((Setting)att).Type) + "] ";
-                            if (!string.IsNullOrWhiteSpace(((Setting)att).Options))
-                            {
-                                LiteralResult.Text += "Options: " + ((Setting)att).Options;
-                            }
-                            LiteralResult.Text += "</li>";
-
-                        }
+                        var a = (Setting)att;
+                        a.Name = property.Name;
+                        moduleSettings.Add(a);
                     }
                 }
-                LiteralResult.Text += "</ul>";
             }
-            LiteralResult.Text += "</ul>";
-            
+            return new Tuple<string, IEnumerable<Setting>>(fileName, moduleSettings);
+        }
 
-            // control.Settings = null;
+        protected void GridViewModules_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = 0;
+            Int32.TryParse(e.CommandArgument.ToString(), out id);
+
+            switch (e.CommandName.ToLower())
+            {
+                case "install":
+                    var name1 = e.CommandArgument.ToString();
+                    if (!string.IsNullOrWhiteSpace(name1))
+                    {
+                        var loadedModule = GetDiskModuleInfo(HttpContext.Current, name1 + ".ascx");
+
+                        var result = BWebsite.AddModule(name1);
+                        if (result)
+                            Notifier1.Title = "Module added.";
+                        else
+                            Notifier1.Warning = "Not added.";
+                        GridViewModules_DataBind();
+                        BWebsite webSiteB = new BWebsite();
+                        webSiteB.ClearCache();
+                    }
+                    break;
+                case "updatesettings":
+                    var name2 = e.CommandArgument.ToString();
+                    if (!string.IsNullOrWhiteSpace(name2))
+                    {
+                        var loadedModule = GetDiskModuleInfo(HttpContext.Current, name2 + ".ascx");
+
+                        var result2 = BWebsite.UpdateModuleSettings(name2, loadedModule.Item2);
+
+                        Notifier1.Title = "Updated settings: " + result2;
+                        if (result2 > 0)
+                        {
+                            BWebsite webSiteB = new BWebsite();
+                            webSiteB.ClearCache();
+                            GridViewModules_DataBind();
+                        }
+                    }
+                    break;
+                case "showinstances":
+                    SelectedModule = BWebsite.ListModules(true).Where(m => m.Id == id).FirstOrDefault();
+                    if (SelectedModule != null)
+                    {
+                        var usage = webSiteB.ListModuleUsage(SelectedModule.Id);
+                        GridViewUsage.DataSource = usage;
+                        GridViewUsage.DataBind();
+                        Multiview1.ActiveViewIndex = 1;
+                    }
+                    break;
+            }
+        }
+
+        protected void GridViewModules_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var LinkButtonUpdateSettings = e.Row.FindControl("LinkButtonUpdateSettings") as LinkButton;
+                var LinkButtonShowInstances = e.Row.FindControl("LinkButtonShowInstances") as LinkButton;
+                var LinkButtonInstall = e.Row.FindControl("LinkButtonInstall") as LinkButton;
+                var LinkButtonDelete = e.Row.FindControl("LinkButtonDelete") as LinkButton;
+                
+                var row = e.Row.DataItem as DataRowView;
+
+                LinkButtonShowInstances.Visible = !string.IsNullOrWhiteSpace(row["id"].ToString());
+                var  noSettingsInModule = -1;
+                if (!string.IsNullOrWhiteSpace(row["NoSettingsInModule"].ToString()))
+                {
+                    noSettingsInModule = int.Parse(row["NoSettingsInModule"].ToString());
+                }
+
+
+                var noUnpublishedInstances = -1;
+                if (!string.IsNullOrWhiteSpace(row["NoUnpublishedInstances"].ToString()))
+                {
+                    noUnpublishedInstances = int.Parse(row["NoUnpublishedInstances"].ToString());
+                }
+
+                LinkButtonInstall.Visible = noUnpublishedInstances < 0;
+                LinkButtonUpdateSettings.Visible = noUnpublishedInstances >= 0 && noSettingsInModule > 0;
+
+                var noPublishedInstances = -1;
+                if (!string.IsNullOrWhiteSpace(row["NoPublishedInstances"].ToString()))
+                {
+                    noPublishedInstances = int.Parse(row["NoPublishedInstances"].ToString());
+                }
+
+                LinkButtonDelete.Visible = false; // !(noPublishedInstances > 0 || noUnpublishedInstances > 0);
+
+            }
         }
     }
 }
