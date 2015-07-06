@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Configuration;
 using System.Collections;
 using System.Web;
 using System.Web.Security;
@@ -14,14 +13,22 @@ using One.Net.BLL;
 
 using One.Net.BLL.Web;
 using OneMainWeb.Controls;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class Directory : MModule
     {
+        [Setting(SettingType.Int, DefaultValue = "0")]
         public int MinLevel { get { return GetIntegerSetting("MinLevel"); } }
+
+        [Setting(SettingType.Int, DefaultValue = "4")]
         public int MaxLevel { get { return GetIntegerSetting("MaxLevel"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool ShowCurrentPage { get { return GetBooleanSetting("ShowCurrentPage"); } }
+
+        [Setting(SettingType.CSInteger)]
         public List<int> ExcludeMenuGroupsList { get { return GetIntegerListSetting("ExcludeMenuGroupsList"); } }
 
         protected static Logger log = LogManager.GetCurrentClassLogger();
