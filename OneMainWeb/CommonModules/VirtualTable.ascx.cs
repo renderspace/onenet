@@ -13,17 +13,29 @@ using One.Net.BLL.Web;
 
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Scaffold;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class VirtualTable : MModule
     {
-        protected int VirtualTableId { get { return GetIntegerSetting("VirtualTableId"); } }
-        protected string ModuleSource { get { return GetStringSetting("ModuleSource"); } }
-        protected string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
-        protected bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
-        protected int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
-        protected bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
+        [Setting(SettingType.Int, DefaultValue = "0")]
+        public int VirtualTableId { get { return GetIntegerSetting("VirtualTableId"); } }
+
+        [Setting(SettingType.String)]
+        public string ModuleSource { get { return GetStringSetting("ModuleSource"); } }
+
+        [Setting(SettingType.String)]
+        public string SortByColumn { get { return GetStringSetting("SortByColumn"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "true")]
+        public bool SortDescending { get { return GetBooleanSetting("SortDescending"); } }
+
+        [Setting(SettingType.Int, DefaultValue = "10")]
+        public int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "true")]
+        public bool ShowPager { get { return GetBooleanSetting("ShowPager"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {

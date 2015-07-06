@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using One.Net.BLL;
 using One.Net.BLL.Web;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
@@ -14,12 +15,23 @@ namespace OneMainWeb.CommonModules
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
 
-        protected string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
-        protected bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
-        protected bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
-        protected bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
-        protected bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
-        protected string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
+        [Setting(SettingType.Url, DefaultValue = "true")]
+        public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "true")]
+        public bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
+
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
+
+        [Setting(SettingType.String, DefaultValue = "dd-MM-yy")]
+        public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Configuration;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web;
@@ -13,12 +12,15 @@ using System.Text.RegularExpressions;
 
 using One.Net.BLL;
 using One.Net.BLL.Web;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class TemplateContent : MModule
     {
-        protected int TemplateId { get { return GetIntegerSetting("TemplateId"); } }
+
+        [Setting(SettingType.Int, DefaultValue = "-1")]
+        public int TemplateId { get { return GetIntegerSetting("TemplateId"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -11,6 +11,7 @@ using System.Xml;
 
 using NLog;
 using One.Net.BLL.Utility;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
@@ -18,8 +19,11 @@ namespace OneMainWeb.CommonModules
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
-        protected string SearchUri { get { return GetStringSetting("SearchUri"); } }
-        protected string SearchDomain { get { return GetStringSetting("SearchDomain"); } }
+        [Setting(SettingType.String, DefaultValue = "")]
+        public string SearchUri { get { return GetStringSetting("SearchUri"); } }
+
+        [Setting(SettingType.String, DefaultValue = "")]
+        public string SearchDomain { get { return GetStringSetting("SearchDomain"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
