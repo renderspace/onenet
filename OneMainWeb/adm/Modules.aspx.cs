@@ -114,9 +114,9 @@ namespace OneMainWeb.adm
                             Notifier1.Title = "Module added.";
                         else
                             Notifier1.Warning = "Not added.";
-                        GridViewModules_DataBind();
                         BWebsite webSiteB = new BWebsite();
                         webSiteB.ClearCache();
+                        GridViewModules_DataBind();
                     }
                     break;
                 case "updatesettings":
