@@ -224,6 +224,7 @@ namespace One.Net.BLL.Scaffold
                 case "varchar":
                 case "nchar":
                 case "ntext":
+                case "text":
                 case "nvarchar":
                 case "sysname":
                 case "uniqueidentifier":
