@@ -21,7 +21,7 @@ namespace OneMainWeb.CommonModules
         private static readonly BTextContent textContentB = new BTextContent();
         BOInternalContent textContent;
 
-        [Setting(SettingType.ImageTemplate)]
+        [Setting(SettingType.ImageTemplate, DefaultValue = "-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
         [Setting(SettingType.Int, DefaultValue="-1", Visibility=SettingVisibility.SPECIAL )]

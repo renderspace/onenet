@@ -787,6 +787,12 @@ ORDER BY name ASC";
                 var sn = new SqlParameter("@Name", s.Name);
                 var settingId = 0;
                 var settingType = "";
+
+                if (s.Type == SettingType.ImageTemplate && string.IsNullOrWhiteSpace(s.DefaultValue))
+                {
+                    s.DefaultValue = "-1";
+                }
+
                 using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, "SELECT ISNULL(id, 0) AS id, type FROM settings_list WHERE subsystem = @Subsystem AND name = @Name",
                     pn, sn))
                 {
