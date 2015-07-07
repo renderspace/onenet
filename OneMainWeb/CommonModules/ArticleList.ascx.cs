@@ -32,7 +32,7 @@ namespace OneMainWeb.CommonModules
             get 
             {
                 var result = GetIntegerListSetting("CategoriesList");
-
+                 
                 var regid = 0;
                 if (Request["regid"] != null && int.TryParse(Request["regid"], out regid))
                 {
