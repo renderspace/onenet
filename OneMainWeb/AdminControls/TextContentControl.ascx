@@ -4,7 +4,7 @@
 <asp:Panel CssClass="form-group" runat="server" ID="PanelTitle">
     <asp:Label AssociatedControlID="TextBoxTitle" ID="LabelTitle" Text="Title" runat="server" CssClass="col-sm-3 control-label"></asp:Label>
     <div class="col-sm-9">
-        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255"  CssClass="form-control"></asp:TextBox>
+        <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="4000"  CssClass="form-control"></asp:TextBox>
     </div>
 </asp:Panel>
 <asp:Panel CssClass="form-group" runat="server" ID="PanelSubTitle">
