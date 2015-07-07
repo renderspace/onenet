@@ -160,9 +160,8 @@ namespace One.Net.BLL
         /// Uses delegate SingleArticleGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public PagedList<BOArticle> ListArticles(string categories, bool showUntranslated, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, bool showUntranslated, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
         {
-            var regularIds = StringTool.SplitStringToIntegers(categories);
             DateTime? from = null;
             DateTime? to = null;
 
@@ -179,7 +178,7 @@ namespace One.Net.BLL
             }
 
             PagedList<BOArticle> articles = null;
-            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + categories + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
+            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
             bool useCache = !showUntranslated && PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
             
