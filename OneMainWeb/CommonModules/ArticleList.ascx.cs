@@ -27,15 +27,19 @@ namespace OneMainWeb.CommonModules
         #region Settings
 
         [Setting(SettingType.CSInteger)]
-        public string CategoriesList 
+        public List<int> CategoriesList 
         { 
             get 
             {
-                var list = GetStringSetting("CategoriesList");
-                if (string.IsNullOrWhiteSpace(list))
-                    return GetStringSetting("RegularsList"); 
-                else
-                    return list;
+                var result = GetIntegerListSetting("CategoriesList");
+
+                var regid = 0;
+                if (Request["regid"] != null && int.TryParse(Request["regid"], out regid))
+                {
+                    if (regid > 0 && result.Contains(regid))
+                        result = new List<int>() { regid };
+                }
+                return result;
             } 
         }
 
@@ -111,6 +115,8 @@ namespace OneMainWeb.CommonModules
                 HyperLinkMore.NavigateUrl = ArticleListUri;
                 HyperLinkMore.Text = Translate("article_list");
             }
+
+            //rid
 
             if (Request[REQUEST_DATE] != null)
             {
