@@ -13,10 +13,10 @@ namespace OneMainWeb.CommonModules
     public partial class MagnificGallery : MModule
     {
 
-        [Setting(SettingType.ImageTemplate)]
+        [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
         public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
-        [Setting(SettingType.ImageTemplate)]
+        [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
         [Setting(SettingType.Int, DefaultValue = "0")]

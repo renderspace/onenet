@@ -87,7 +87,7 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.String)]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
-        [Setting(SettingType.ImageTemplate)]
+        [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
 
