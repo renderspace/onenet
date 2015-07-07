@@ -146,7 +146,7 @@ namespace OneMainWeb.Controls
             {
                 int currentItemId = 0;
                 int preControlsCount = this.Controls.Count;
-                RecursiveCreateChildControls(new SiteMapNodeCollection(SiteMap.RootNode), ref currentItemId, false);
+                RecursiveCreateChildControls(new SiteMapNodeCollection(SiteMap.RootNode), ref currentItemId);
                 int postControlsCount = this.Controls.Count;
 
                 if (postControlsCount > preControlsCount)
@@ -157,7 +157,7 @@ namespace OneMainWeb.Controls
             Enabled = Visible = controlsAdded;
         }
 
-        private void RecursiveCreateChildControls(IHierarchicalEnumerable dataItems, ref int currentItemId, bool itemStartRendered)
+        private void RecursiveCreateChildControls(IHierarchicalEnumerable dataItems, ref int currentItemId)
         {
             bool headerRendered = false;
             int? depth = null;
@@ -261,7 +261,7 @@ namespace OneMainWeb.Controls
                         {
                             if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || ((this.LocalExpand && this.ExpandToLevel > depth && levelAncestorSelected) || (!LocalExpand && ExpandToLevel > depth)))
                             {
-                                RecursiveCreateChildControls(data.GetChildren(), ref currentItemId, false);
+                                RecursiveCreateChildControls(data.GetChildren(), ref currentItemId);
                             }
                         }
                     }
@@ -277,19 +277,11 @@ namespace OneMainWeb.Controls
                             cssClass += (" l" + depth.Value + " p" + pageId).Trim();
                         }
 
-                        var startRendered = false;
                         linkCssClass = linkCssClass.Trim();
                         if (showNode)
                         {
                             if (!headerRendered)
                             {
-                                if (!itemStartRendered && depth.Value > 1)
-                                {
-                                    Literal subItemHeader = new Literal();
-                                    subItemHeader.Text = CreateIndentTabs(depth.Value + 1) + "<li class=\" l" + (depth.Value - 1) + "\">";
-                                    subItemHeader.ID = "SubItemHeader" + currentItemId;
-                                    Controls.Add(subItemHeader);
-                                }
                                 //  Render the header only once <ul>
                                 Literal header = new Literal();
                                 header.Text = "\n" + CreateIndentTabs(depth.Value) + "<ul class=\"" + FirstUlClass + "\">";
@@ -304,7 +296,6 @@ namespace OneMainWeb.Controls
                             itemHeader.Text = CreateIndentTabs(depth.Value + 1) + "<li class=\"" + cssClass + "\">";
                             itemHeader.ID = "ItemHeader" + currentItemId;
                             Controls.Add(itemHeader);
-                            startRendered = true;
 
                             var item = RenderItem(linkCssClass, dataItem.Title, url, dataItem.Description, dataItem["_ogImage"], currentItemId);
 
@@ -319,7 +310,7 @@ namespace OneMainWeb.Controls
                             if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || ((this.LocalExpand && this.ExpandToLevel > depth && levelAncestorSelected) || (!LocalExpand && ExpandToLevel > depth)))
                             {
                                 //  Create any child items
-                                RecursiveCreateChildControls(data.GetChildren(), ref currentItemId, startRendered);
+                                RecursiveCreateChildControls(data.GetChildren(), ref currentItemId);
                             }
                         }
 
@@ -358,14 +349,6 @@ namespace OneMainWeb.Controls
                 Literal footer = new Literal();
                 footer.Text = CreateIndentTabs(depth.Value) + "</ul>\n";
                 Controls.Add(footer);
-
-                if (!itemStartRendered && depth.Value > 1)
-                {
-                    Literal subItemFooter = new Literal();
-                    subItemFooter.Text = CreateIndentTabs(depth.Value + 1) + "</li>";
-                    subItemFooter.ID = "SubItemFooter" + currentItemId;
-                    Controls.Add(subItemFooter);
-                }
             }
         }
 
