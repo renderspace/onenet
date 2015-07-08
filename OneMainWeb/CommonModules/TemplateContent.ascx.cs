@@ -22,6 +22,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Int, DefaultValue = "-1")]
         public int TemplateId { get { return GetIntegerSetting("TemplateId"); } }
 
+        [Setting(SettingType.Int, DefaultValue = "-1", Visibility=SettingVisibility.SPECIAL)]
+        public int ContentTemplateId { get { throw new Exception("not intended for direct access"); } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             LiteralTemplateOutput.Text = "";

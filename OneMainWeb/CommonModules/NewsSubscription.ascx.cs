@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.Net;
 
 using One.Net.BLL;
@@ -10,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
 using One.Net.BLL.Utility;
+using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
@@ -36,14 +36,20 @@ namespace OneMainWeb.CommonModules
 
         #region Settings
 
-        protected string ConfirmationPage { get { return GetStringSetting("ConfirmationPage"); } }
-        protected string CancelationPage { get { return GetStringSetting("CancelationPage"); } }
-        protected string SubscriptionEmailSubject { get { return GetStringSetting("SubscriptionEmailSubject"); } }
-        protected List<int> NewsletterIds { get { return StringTool.SplitStringToIntegers(GetStringSetting("NewsletterId")); } }
+        [Setting(SettingType.Url)]
+        public string ConfirmationPage { get { return GetStringSetting("ConfirmationPage"); } }
 
-        protected string SubscriptionEmailBody { get { return GetStringSetting("SubscriptionEmailBody"); } }
+        [Setting(SettingType.Url)]
+        public string CancelationPage { get { return GetStringSetting("CancelationPage"); } }
 
-        
+        [Setting(SettingType.String)]
+        public string SubscriptionEmailSubject { get { return GetStringSetting("SubscriptionEmailSubject"); } }
+
+        [Setting(SettingType.CSInteger)]
+        public List<int> NewsletterIds { get { return GetIntegerListSetting("NewsletterId"); } }
+
+        [Setting(SettingType.String, DefaultValue = "Confirm registration here: {$confirmRegistration}", Visibility = SettingVisibility.MULTILINE)]
+        public string SubscriptionEmailBody { get { return GetStringSetting("SubscriptionEmailBody"); } }
 
         #endregion Settings
 

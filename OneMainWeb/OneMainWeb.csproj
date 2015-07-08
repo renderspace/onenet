@@ -379,13 +379,6 @@
     <Compile Include="CommonModules\ArticleSingle.ascx.designer.cs">
       <DependentUpon>ArticleSingle.ascx</DependentUpon>
     </Compile>
-    <Compile Include="CommonModules\CustomWidget.ascx.cs">
-      <DependentUpon>CustomWidget.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="CommonModules\CustomWidget.ascx.designer.cs">
-      <DependentUpon>CustomWidget.ascx</DependentUpon>
-    </Compile>
     <Compile Include="CommonModules\MagnificGallery.ascx.cs">
       <DependentUpon>MagnificGallery.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -545,7 +538,6 @@
     </Content>
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
-    <Content Include="CommonModules\CustomWidget.ascx" />
     <Content Include="CommonModules\MagnificGallery.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NajdiSearch.ascx" />

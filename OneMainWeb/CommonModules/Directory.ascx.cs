@@ -28,7 +28,7 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool ShowCurrentPage { get { return GetBooleanSetting("ShowCurrentPage"); } }
 
-        [Setting(SettingType.CSInteger)]
+        [Setting(SettingType.CSInteger, DefaultValue="98")]
         public List<int> ExcludeMenuGroupsList { get { return GetIntegerListSetting("ExcludeMenuGroupsList"); } }
 
         protected static Logger log = LogManager.GetCurrentClassLogger();
