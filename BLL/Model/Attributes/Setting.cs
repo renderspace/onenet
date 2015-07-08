@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace One.Net.BLL.Model.Attributes
 {
     public enum SettingType { String, Int, Bool, ImageTemplate, Url, CSInteger, CSString }
-    public enum SettingVisibility { NORMAL, SPECIAL }
+    public enum SettingVisibility { NORMAL, SPECIAL, MULTILINE }
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class Setting : System.Attribute

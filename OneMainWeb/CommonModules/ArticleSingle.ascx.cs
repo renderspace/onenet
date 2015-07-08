@@ -15,7 +15,7 @@ namespace OneMainWeb.CommonModules
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
 
-        [Setting(SettingType.Url, DefaultValue = "true")]
+        [Setting(SettingType.Url)]
         public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
 
         [Setting(SettingType.Bool, DefaultValue = "false")]
@@ -30,7 +30,7 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
 
-        [Setting(SettingType.String, DefaultValue = "dd-MM-yy")]
+        [Setting(SettingType.String, DefaultValue = "dd.MM.yy")]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
         protected void Page_Load(object sender, EventArgs e)

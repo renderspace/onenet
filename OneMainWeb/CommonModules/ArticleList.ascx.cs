@@ -58,25 +58,25 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowDate { get { return GetBooleanSetting("ShowDate"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowDateBelowTitle { get { return GetBooleanSetting("ShowDateBelowTitle"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool ShowTitle { get { return GetBooleanSetting("ShowTitle"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowSubTitle { get { return GetBooleanSetting("ShowSubTitle"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowHtml { get { return GetBooleanSetting("ShowHtml"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowMore { get { return GetBooleanSetting("ShowMore"); } }
 
-        [Setting(SettingType.Bool)]
+        [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowModuleTitle { get { return GetBooleanSetting("ShowModuleTitle"); } }
 
         [Setting(SettingType.Url)]
@@ -85,10 +85,10 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Url)]
         public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
 
-        [Setting(SettingType.Int)]
+        [Setting(SettingType.Int, DefaultValue = "0")]
         public int OffSet { get { return GetIntegerSetting("OffSet"); } }
 
-        [Setting(SettingType.String)]
+        [Setting(SettingType.String, DefaultValue = "dd.MM.yy")]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
         [Setting(SettingType.ImageTemplate, DefaultValue="-1")]

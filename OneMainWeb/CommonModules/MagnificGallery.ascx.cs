@@ -13,14 +13,17 @@ namespace OneMainWeb.CommonModules
     public partial class MagnificGallery : MModule
     {
 
-        [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
+        [Setting(SettingType.ImageTemplate, DefaultValue="0")]
         public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
-        [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
+        [Setting(SettingType.ImageTemplate, DefaultValue="0")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
         [Setting(SettingType.Int, DefaultValue = "0")]
         public int FolderId { get { return GetIntegerSetting("FolderId"); } }
+
+        [Setting(SettingType.String)]
+        public string ModuleSource { get { return GetStringSetting("ModuleSource"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
