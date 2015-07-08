@@ -151,7 +151,7 @@ namespace One.Net.BLL.DAL
             sql += " JOIN [dbo].[content_data_store] cds ON c.id= cds.content_fk_id AND language_fk_id =  @languageId";
             sql += @" WHERE uc.id = @categoryID";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -182,7 +182,7 @@ namespace One.Net.BLL.DAL
             sql +=  " WHERE ucategorie_type = @categoryType";
             // sql += " ORDER BY uc.id DESC";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -208,7 +208,7 @@ namespace One.Net.BLL.DAL
             sql += " JOIN [dbo].[content_data_store] cds ON c.id= cds.content_fk_id AND language_fk_id =  @languageId";
             sql += " WHERE uc.ucategories_fk_id=@folderId";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -238,7 +238,7 @@ namespace One.Net.BLL.DAL
             sql += " JOIN [dbo].[content_data_store] cds ON c.id= cds.content_fk_id AND language_fk_id =  @languageId";
             sql += " WHERE ucategorie_type = @categoryType";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -272,7 +272,7 @@ namespace One.Net.BLL.DAL
             string sql = @"SELECT fkid FROM [dbo].[ucategorie_belongs_to] 
                            WHERE ucategories_fk_id = @categoryID ORDER BY idx";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {

@@ -73,7 +73,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[3] = new SqlParameter("@sortOrder", state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
             paramsToPass[4] = new SqlParameter("@languageId", languageId);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.StoredProcedure, "[dbo].[ListPagedRssFeeds]", paramsToPass))
             {
                 while (reader.Read())
@@ -100,7 +100,7 @@ namespace One.Net.BLL.DAL
             string sql = @" SELECT rf.id, rf.title, rf.description, rf.type, rf.link_to_list, rf.link_to_single, rf.categories, rf.language_fk_id
 		                    FROM [dbo].[rss_feeds] rf WHERE rf.id=@id";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 sql, paramsToPass))
             {
                 if (reader.Read())

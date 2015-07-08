@@ -25,7 +25,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[0] = new SqlParameter("@contentID", contentID);
             paramsToPass[1] = new SqlParameter("@languageID", languageID);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, c.principal_modified_by, c.date_modified, c.votes, c.score
                     FROM [dbo].[content] c
                     INNER JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageID
@@ -45,7 +45,7 @@ namespace One.Net.BLL.DAL
         public static IEnumerable<int> GetTextContentInstanceId(int contentId)
         { 
             var result = new List<int>();
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT module_instance_fk_id from module_settings ms 
 INNER JOIN settings_list sl ON sl.id = ms.settings_list_fk_id
 WHERE ms.value = @contentID AND sl.name = 'ContentId' AND 
@@ -138,7 +138,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
                            FROM [dbo].[content_data_store_audit]
                            WHERE guid=@guid";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -163,7 +163,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
                            WHERE content_fk_id=@contentId AND language_fk_id=@languageId
                            ORDER BY date_saved DESC";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -193,7 +193,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
         {
             List<int> langList = new List<int>();
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
             "SELECT DISTINCT id FROM [dbo].[language] WHERE id != 1279"))
             {
                 while (rdr.Read())
@@ -221,7 +221,7 @@ WHERE ms.value = @contentID AND sl.name = 'ContentId' AND
             sql += " INNER JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId";
             sql += " WHERE d.keyword LIKE @searchKeyword ";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
@@ -283,7 +283,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             entries.AllRecords = 0;
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
@@ -338,7 +338,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                            FROM [dbo].[dictionary] 
                            WHERE keyword=@keyWord COLLATE SQL_Latin1_General_CP1_CS_AS";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -367,7 +367,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             sql += @"JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId
                           WHERE keyword=@keyWord COLLATE SQL_Latin1_General_CP1_CS_AS";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -397,7 +397,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var prevKeyword = "";
             List<BODictionaryEntry> innerEntries = new List<BODictionaryEntry>();
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
