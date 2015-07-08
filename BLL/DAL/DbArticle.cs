@@ -97,7 +97,7 @@ namespace One.Net.BLL.DAL
                       ON cds.content_fk_id = c.id AND cds.language_fk_id=@languageId 
                       WHERE a.id=@id AND a.publish=@publishFlag";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -133,7 +133,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[2] = new SqlParameter("@year", fromYear);
             paramsToPass[3] = new SqlParameter("@month", fromMonth);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -183,7 +183,7 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[2] = new SqlParameter("@year", year);
             paramsToPass[3] = new SqlParameter("@month", month);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -236,7 +236,7 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[0] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -316,7 +316,7 @@ WHERE a2.publish = @publishFlag ";
 						SELECT COUNT(id) FROM #pagedlist";
 
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -432,7 +432,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             list.AllRecords = 0;
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass.ToArray()))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass.ToArray()))
             {
                 
                 while (reader.Read())
@@ -518,7 +518,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                       ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId 
                       WHERE r.id=@id";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {
@@ -571,7 +571,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             sql += state.SortDirection == SortDir.Descending ? " DESC" : " ASC";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, 
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, 
                 CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())

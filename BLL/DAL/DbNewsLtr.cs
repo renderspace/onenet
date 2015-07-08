@@ -96,7 +96,7 @@ namespace One.Net.BLL.DAL
 
             sql += " ORDER BY email ASC";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, commandType, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, commandType, sql, paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -130,7 +130,7 @@ namespace One.Net.BLL.DAL
             SqlParameter[] paramsToPass = new SqlParameter[1];
             paramsToPass[0] = new SqlParameter("@email", email);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, "select ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email from newsletter_subscription ns inner join email e on e.id=ns.email_fk_id where e.email=@email and date_confirmed is not null and date_unsubscribed is null", paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, "select ns.id, newsletter_fk_id, email_fk_id, date_subscribed, date_unsubscribed, hash, date_confirmed, ip_confirmed, e.email from newsletter_subscription ns inner join email e on e.id=ns.email_fk_id where e.email=@email and date_confirmed is not null and date_unsubscribed is null", paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -165,7 +165,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = SqlHelper.GetNullable("@email", email);
             paramsToPass[2] = (newsletterID <= 0 ? new SqlParameter("@newsletterID", DBNull.Value) : new SqlParameter("@newsletterID", newsletterID));
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "newsletter_subscription_get", paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "newsletter_subscription_get", paramsToPass))
             {
                 while (reader.Read())
                 {
@@ -189,7 +189,7 @@ namespace One.Net.BLL.DAL
             BONewsLtr newsletter = null;
             SqlParameter paramsToPass = new SqlParameter("@newsletterID", newsletterID);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
                 @"SELECT n.id, n.name newsletter_name
                     FROM [dbo].[newsletter] n 
                         WHERE n.id = @newsletterID", paramsToPass))
@@ -218,7 +218,7 @@ namespace One.Net.BLL.DAL
             if (newsletterIds != null && newsletterIds.Count > 0)
                 sql += " AND n.id IN (" + StringTool.RenderAsString(newsletterIds) + ")";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
                 sql, paramsToPass.ToArray()))
             {
                 while (reader.Read())

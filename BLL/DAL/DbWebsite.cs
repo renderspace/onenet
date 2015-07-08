@@ -39,7 +39,7 @@ namespace One.Net.BLL.DAL
                     
            sql += " ORDER BY PageId ASC";
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 sql, paramsToPass))
             {
                 while (rdr.Read())
@@ -73,7 +73,7 @@ namespace One.Net.BLL.DAL
 					new SqlParameter("@LCID", languageId),
                     new SqlParameter("@publishFlag", publishFlag)
                     };
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT p.id AS ID, p.pages_fk_id AS Parent, CAST(p.publish AS int) AS publish, il.par_link, sc2.title AS Title, sc2.subtitle AS SubTitle, sc2.teaser AS Teaser, sub_route_url,
                     t.name AS Template, t.id AS TemplateID, p.content_fk_id AS ContentID, menu_group, idx, changed, pending_delete, 
                     p.level, p.redirectToUrl,  [viewGroups], [editGroups], [requireSSL], date_modified, date_created
@@ -164,7 +164,7 @@ namespace One.Net.BLL.DAL
                    new SqlParameter[] {
                            new SqlParameter("@pageId", pageId),
                            new SqlParameter("@PublishFlag", publishFlag)};
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT p.id AS ID
                      FROM [dbo].pages p
                      WHERE p.pages_fk_id = @pageId AND p.publish = @PublishFlag
@@ -182,7 +182,7 @@ namespace One.Net.BLL.DAL
 	    public List<BOWebSite> List()
 		{
 			List<BOWebSite> websiteList = new List<BOWebSite>();
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT w.id, w.content_fk_id, 
 	                    (SELECT p.id FROM [dbo].[pages] p 
 	                     WHERE publish = 0 AND web_site_fk_id = w.id AND pages_fk_id IS NULL) AS rootPageId
@@ -202,7 +202,7 @@ namespace One.Net.BLL.DAL
             foreach (BOWebSite site in websiteList)
             {
                 SqlParameter paramsToPass = new SqlParameter("@webSiteID", site.Id);
-                using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+                using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT sl.name, ISNULL( ws.value, sl.default_value), sl.type, sl.user_visibility
                     FROM [dbo].[settings_list] sl 
                     LEFT JOIN [dbo].[web_site_settings] ws ON  sl.id = ws.settings_list_fk_id AND web_site_fk_id = @webSiteID
@@ -388,7 +388,7 @@ namespace One.Net.BLL.DAL
 					new SqlParameter("@LCID", languageId),
                     new SqlParameter("@publishFlag", publishFlag)
                     };
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT  cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
                           c.principal_modified_by, c.date_modified, c.votes, c.score, c.id ContentId, p.id PageId, p.pages_fk_id, p.menu_group, p.idx,
 			              t.id TemplateId, t.name, level, pending_delete, changed, 
@@ -431,7 +431,7 @@ namespace One.Net.BLL.DAL
                     };
 
             var pagesFromPath = new List<int>();
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.StoredProcedure, "[dbo].[GetPath]", parms))
             {
                 while (rdr.Read())
@@ -443,7 +443,7 @@ namespace One.Net.BLL.DAL
             var currentNodeDepth = 0;
             foreach (var nodeId in pagesFromPath)
             {
-                using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
+                using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
       @"SELECT mi.id, mi.idx, mi.module_fk_id, mod.name, mi.date_created,
                     mi.place_holder_fk_id, ph.place_holder_id,
 		            mi.persistent_from, mi.persistent_to
@@ -509,7 +509,7 @@ namespace One.Net.BLL.DAL
                     new SqlParameter("@LanguageID", languageId)
                     };
             string par_link = "";
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[GetPath]", parms))
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[GetPath]", parms))
             {
                 while (rdr.Read())
                 {
@@ -540,7 +540,7 @@ namespace One.Net.BLL.DAL
 					new SqlParameter("@PublishFlag", publishFlag)
                     };
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT sl.name AS SettingName, ISNULL(ps.value, sl.default_value) as Value,
                          sl.type Type, sl.user_visibility UserVisibility
                   FROM [dbo].[settings_list] sl
@@ -594,7 +594,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[2] = new SqlParameter("@LanguageID", languageId);
             int i = 0;
 
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.StoredProcedure, "[dbo].[GetPath]", paramsToPass))
             {
                 while (rdr.Read())
@@ -665,7 +665,7 @@ namespace One.Net.BLL.DAL
         public List<BOPlaceHolder> ListPlaceHolders()
         {
             List<BOPlaceHolder> placeHolders = new List<BOPlaceHolder>();
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, @"SELECT id, place_holder_id FROM [dbo].[place_holder] "))
             {
                 while (rdr.Read())
@@ -710,7 +710,7 @@ namespace One.Net.BLL.DAL
 	    public List<BOTemplate> ListTemplates()
         {
             List<BOTemplate> templates = new List<BOTemplate>();
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, @"SELECT id, template_type, name, content FROM [dbo].[template] ORDER BY name ASC"))
             {
                 while (rdr.Read())
@@ -741,7 +741,7 @@ FROM [dbo].[module] m
 ORDER BY name ASC";
 
             List<BOModule> modules = new List<BOModule>();
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, sql))
             {
                 while (rdr.Read())
@@ -831,7 +831,7 @@ ORDER BY name ASC";
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
 
             // The following SELECT will return empty if there are no settings on a module (which is completely valid).
-            using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 @"SELECT  m.name ModuleName,
                     msl.name AS SettingName,
                     ISNULL(ms.value, msl.default_value) as value,
@@ -898,7 +898,7 @@ ORDER BY name ASC";
             // if module has 0 settings, previous select will return empty.
             if (instance == null)
             {
-                using (SqlDataReader rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+                using (var rdr = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                     @"SELECT	m.name name,
                             mi.id ModuleInstanceID,
                             mi.persistent_from,
@@ -991,7 +991,7 @@ ORDER BY name ASC";
                              AND p.id != @pageId
                              AND par_link = @parLink";
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 if (reader.Read())
                 {

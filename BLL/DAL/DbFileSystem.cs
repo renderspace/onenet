@@ -99,7 +99,7 @@ namespace One.Net.BLL.DAL
             LEFT JOIN [dbo].[content_data_store] cds on c.id = cds.content_fk_id AND language_fk_id = @languageId
             WHERE f.id = @Id";
 
-            using ( SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using ( var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 sql, paramsToPass))
             {
                 if (reader.Read())
@@ -129,7 +129,7 @@ namespace One.Net.BLL.DAL
             SqlParameter[] paramsToPass = new SqlParameter[1];
             paramsToPass[0] = new SqlParameter("@Id", fileId);
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
             @"SELECT content_data_store FROM [dbo].[files] WHERE id = @Id", paramsToPass))
             {
                 if (reader.Read())
@@ -158,7 +158,7 @@ namespace One.Net.BLL.DAL
             if (!string.IsNullOrEmpty(sortBy))
                 sql += " ORDER BY " + sortBy + (sortDir == SortDir.Ascending ? " ASC " : " DESC ");
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text,
                 DbHelper.CONTENT_SELECT_PART + sql, paramsToPass))
             {
                 while (reader.Read())
@@ -208,7 +208,7 @@ namespace One.Net.BLL.DAL
 //                  FROM nform_submitted_answer nsa
 //                  WHERE nsa.files_fk_id=@fileId";
 
-//            using (SqlDataReader reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+//            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
 //            {
 //                if (reader.Read())
 //                {

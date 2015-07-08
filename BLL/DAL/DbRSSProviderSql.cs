@@ -22,7 +22,7 @@ namespace One.Net.BLL.DAL
 
             connectionString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;
 
-            using (SqlDataReader reader = SqlHelper.ExecuteReader(connectionString,
+            using (var reader = SqlHelper.ExecuteReader(connectionString,
                 CommandType.StoredProcedure, listItemsSP, paramsToPass))
             {
                 while (reader.Read())
@@ -71,7 +71,7 @@ namespace One.Net.BLL.DAL
 
             if (!string.IsNullOrEmpty(listItemsSP))
             {
-                using (SqlDataReader reader = SqlHelper.ExecuteReader(connectionString,
+                using (var reader = SqlHelper.ExecuteReader(connectionString,
                     CommandType.StoredProcedure, listItemsSP, paramsToPass))
                 {
                     while (reader.Read())
