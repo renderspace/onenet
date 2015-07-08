@@ -257,7 +257,14 @@ namespace OneMainWeb.Controls
 
                     if ((_menuGroup != Group) || (depth < MinDepth))
                     {
-                        if (dataItemHasChildren)
+                        if (depth == MinDepth && Controls.Count > 0)
+                        {
+                            // Samo and I consulted and it was decided that if page at MinDepth does not match
+                            // the Group we want to display, we do not recursively display anything that is a child 
+                            // of that page.
+                            // I added Controls.Count > 0 in order to allow for root page to not match if MinDepth is 0.
+                        } 
+                        else if (dataItemHasChildren)
                         {
                             if ((dataItemChildSelected || dataItemDescendantSelected || dataItemSelected) || ((this.LocalExpand && this.ExpandToLevel > depth && levelAncestorSelected) || (!LocalExpand && ExpandToLevel > depth)))
                             {
