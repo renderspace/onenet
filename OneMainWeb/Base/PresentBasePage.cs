@@ -534,8 +534,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             // 1. provided
             // 2. page
             var title = "";
-            if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
-                title = CurrentPage.Title;
+            if (!string.IsNullOrWhiteSpace(CurrentPage.SeoTitle))
+                title = CurrentPage.SeoTitle;
             if (!string.IsNullOrWhiteSpace(provided))
                 title = provided;
 
