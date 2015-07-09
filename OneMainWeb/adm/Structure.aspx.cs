@@ -93,6 +93,7 @@ namespace OneMainWeb.adm
             LastChangeAndHistory1.Text = "";
             LastChangeAndHistory1.SelectedContentId = 0;
             TextBoxTitle.Text = "";
+            TextBoxTitle.Text = "";
             TextBoxSubtitle.Text = "";
             TextBoxDescription.Text = "";
             ButtonPublish.Visible = false;
@@ -186,6 +187,7 @@ namespace OneMainWeb.adm
                 TextBoxTitle.Text = SelectedPage.Title;
                 TextBoxSubtitle.Text = SelectedPage.SubTitle;
                 TextBoxDescription.Text = SelectedPage.Teaser;
+                TextBoxSeoTitle.Text = SelectedPage.Html;
                 ButtonPublish.Visible = SelectedPage.IsChanged && PublishRights;
                 ButtonUnPublish.Visible = !SelectedPage.IsNew && PublishRights;
                 ButtonDelete.Visible = !SelectedPage.MarkedForDeletion && DeletePageRights;
@@ -689,6 +691,7 @@ namespace OneMainWeb.adm
                 page.Title = TextBoxTitle.Text;
                 page.SubTitle = TextBoxSubtitle.Text;
                 page.Teaser = TextBoxDescription.Text;
+                page.Html = TextBoxSeoTitle.Text;
                 page.ParLink = newParLink;
                 page.BreakPersistance = CheckBoxBreakPersitence.Checked;
                 page.RedirectToUrl = InputRedirectToUrl1.Text;

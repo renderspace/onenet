@@ -75,9 +75,15 @@
                             </div>
                         </div>
                          <div class="form-group">
-                            <label class="col-sm-4 control-label">Title</label>
+                            <label class="col-sm-4 control-label">Menu title</label>
                             <div class="col-sm-8">
                                 <asp:TextBox runat="server" ID="TextBoxTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control required boldInput"></asp:TextBox>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">SEO title</label>
+                            <div class="col-sm-8">
+                                <asp:TextBox runat="server" ID="TextBoxSeoTitle" MaxLength="255" ValidationGroup="PageSett" CssClass="form-control boldInput" placeholder="Important for SEO, this will also show on browser tab. If left empty, menu title will be used."></asp:TextBox>
                             </div>
                         </div>
                          <div class="form-group">

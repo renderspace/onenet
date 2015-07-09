@@ -67,6 +67,16 @@ namespace One.Net.BLL
             }
         }
 
+        public string SeoTitle
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Html))
+                    return Title;
+                return Html;
+            }
+        }
+
         public string URI { get; set; }
 
         public string RedirectToUrl { get; set; }
