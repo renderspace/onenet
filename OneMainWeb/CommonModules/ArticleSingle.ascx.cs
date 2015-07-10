@@ -39,6 +39,10 @@ namespace OneMainWeb.CommonModules
             if (Request[REQUEST_ARTICLE_ID] != null)
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
+            } 
+            else if (HasHumanReadableUrlParameter)
+            {
+                int.TryParse(HumanReadableUrlParameter, out articleId);
             }
 
             var article = articleB.GetArticle(articleId, false);
