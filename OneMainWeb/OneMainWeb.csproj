@@ -818,9 +818,7 @@
     </Content>
     <Content Include="adm\css\bootstrap.css.map" />
     <Content Include="JavaScript\jquery-2.1.3.min.map" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
