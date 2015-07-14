@@ -3,8 +3,6 @@ using System.Web;
 
 namespace One.Net.BLL
 {
-    public enum FileBelongsTo { Person = 1, Photogallery }
-
 	[Serializable]
     public class BOFile : ICategorizable
     {
