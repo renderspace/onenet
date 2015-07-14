@@ -1,0 +1,116 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+	position: fixed;
+	top: 50px;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	display: block;
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	background-color: #334454;
+	width: 250px;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: 0; /* 20px padding + 1px border */
+  margin-bottom: 0;
+  margin-left: 0;
+}
+.nav-sidebar > li > a {
+  padding-right: 0;
+  padding-left: 0;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 10px 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+.main-right-bar {
+	padding-left: 270px;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.radio label, .checkbox label {padding-left: 7px; margin-bottom: 20px;}
+
+/*Custom*/
+.title {position: relative; display: block; font-weight: bold; padding: 10px 20px; border-bottom: 1px #ddd solid;}
+.navbar-inverse {background: #334454; color: #FFF;}
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li>a {color: #FFF;}
+.navbar-nav>li>a {line-height: 21px;}
+.nav>li:nth-child(3)>a, .nav>li:nth-child(4)>a {background: url('/Res/lleft.gif') repeat-y left top!important; padding-left: 2px;}
+.nav>li:nth-child(3)>a:hover, .nav>li:nth-child(4)>a:hover {background: #2e3d4c url('/Res/lleft.gif') repeat-y left top!important;}
+.tall input[type="text"] {padding: 5px;}
+
+label input {position: relative!important;}
