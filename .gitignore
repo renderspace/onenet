@@ -55,3 +55,4 @@ packages/
 LocalAppSettings.config
 LocalConnectionStrings.config
 LocalRewriteMaps.config
+LocalRewrite.config
