@@ -825,7 +825,7 @@
     </Content>
     <Content Include="adm\css\bootstrap.css.map" />
     <Content Include="JavaScript\jquery-2.1.3.min.map" />
-    <Content Include="One.Net.nuspec" />
+    <None Include="One.Net.nuspec" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
