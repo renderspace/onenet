@@ -37,23 +37,20 @@
       <file src="Controls\**.ascx" target="Controls" />
 
         
-        <file src="App_Browsers\one.browser" target="App_Browsers\one.browser" />
-        <file src="App_Data\blank.txt" target="App_Data\blank.txt" />
+      <file src="App_Browsers\one.browser" target="App_Browsers\one.browser" />
+      <file src="App_Data\blank.txt" target="App_Data\blank.txt" />
 
       <file src="JavaScript\**.js" target="JavaScript" />
 
-
-        <file src="Res\**.gif" target="Res" />
-        <file src="Res\**.png" target="Res" />
-
+      <file src="Res\**.gif" target="Res" />
+      <file src="Res\**.png" target="Res" />
       
+      <file src="Utils\*.ashx" target="Utils" />
+      <file src="Utils\*.aspx" target="Utils" />
       
-        <file src="Utils\*.ashx" target="Utils" />
-        <file src="Utils\*.aspx" target="Utils" />
-      
-        <file src="Global.asax" target="Global.asax" />
-        <file src="OneMain.Master" target="OneMain.Master" />
-        <file src="Web.sitemap" target="Web.sitemap" />
-        <file src="bin\*.dll" target="bin" />
+      <file src="Global.asax" target="Global.asax" />
+      <file src="OneMain.Master" target="OneMain.Master" />
+      <file src="Web.sitemap" target="Web.sitemap" />
+      <file src="bin\*.dll" target="bin" />
     </files>
 </package>
