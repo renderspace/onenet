@@ -51,3 +51,7 @@ Ankh.NoLoad
 packages/
 
 *.nupkg
+
+LocalAppSettings.config
+LocalConnectionStrings.config
+LocalRewriteMaps.config
