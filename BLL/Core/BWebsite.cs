@@ -27,8 +27,6 @@ namespace One.Net.BLL
     [Serializable]
     public class BWebsite : BusinessBaseClass
     {
-        protected static Logger log = LogManager.GetCurrentClassLogger();
-
         public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
         static readonly DbWebsite webSiteDb = new DbWebsite();
         readonly BInternalContent intContentB = new BInternalContent();
