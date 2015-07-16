@@ -21,9 +21,13 @@ namespace One.Net.BLL.WebControls
         int recordsPerPage;
         int pageCount;
 
-        string containerClass;
+        string containerCssClass;
+        string listCssClass;
         string pagerTitle;
         string pagerSubTitle;
+
+        bool showFirstLastLinks;
+        bool showPrevNextLinks;
 
         #endregion Variables
 
@@ -98,13 +102,43 @@ namespace One.Net.BLL.WebControls
         }
 
         /// <summary>
+        /// Show/Hide the first/last links of pager
+        /// </summary>
+        [Category("One Pager"), DefaultValue("false"), Description("Show/Hide the first/last links of pager")]
+        public bool ShowFirstLastLinks
+        {
+            get { return showFirstLastLinks; }
+            set { showFirstLastLinks = value; }
+        }
+
+        /// <summary>
+        /// Show/Hide the prev/next links of pager
+        /// </summary>
+        [Category("One Pager"), DefaultValue("false"), Description("Show/Hide the prev/next links of pager")]
+        public bool ShowPrevNextLinks
+        {
+            get { return showPrevNextLinks; }
+            set { showPrevNextLinks = value; }
+        }
+
+        /// <summary>
         /// Get/Set the CSS class of the container
         /// </summary>
         [Category("One Pager"), DefaultValue(""), Description("Get/Set the CSS class of the container")]
         public string ContainerCssClass
         {
-            get { return containerClass; }
-            set { containerClass = value; }
+            get { return containerCssClass; }
+            set { containerCssClass = value; }
+        }
+
+        /// <summary>
+        /// Get/Set the CSS class of the list element
+        /// </summary>
+        [Category("One Pager"), DefaultValue(""), Description("Get/Set the CSS class of the list element")]
+        public string ListCssClass
+        {
+            get { return listCssClass; }
+            set { listCssClass = value; }
         }
 
         /// <summary>
@@ -185,7 +219,7 @@ namespace One.Net.BLL.WebControls
         protected override object SaveControlState()
         {
             object cSBase = base.SaveControlState();
-            object[] cSThis = new object[9];
+            object[] cSThis = new object[12];
 
             cSThis[0] = cSBase;
             cSThis[1] = maxColsPerRow;
@@ -193,9 +227,12 @@ namespace One.Net.BLL.WebControls
             cSThis[3] = selectedPage;
             cSThis[4] = totalRecords;
             cSThis[5] = recordsPerPage;
-            cSThis[6] = containerClass;
+            cSThis[6] = containerCssClass;
             cSThis[7] = pagerTitle;
             cSThis[8] = pagerSubTitle;
+            cSThis[9] = listCssClass;
+            cSThis[10] = showFirstLastLinks;
+            cSThis[11] = showPrevNextLinks;
 
             return cSThis;
         }
@@ -211,9 +248,12 @@ namespace One.Net.BLL.WebControls
             selectedPage = (int)cSThis[3];
             totalRecords = (int)cSThis[4];
             recordsPerPage = (int)cSThis[5];
-            containerClass = (string)cSThis[6];
+            containerCssClass = (string)cSThis[6];
             pagerTitle = (string)cSThis[7];
             pagerSubTitle = (string)cSThis[8];
+            listCssClass = (string)cSThis[9];
+            showFirstLastLinks = (bool)cSThis[10];
+            showPrevNextLinks = (bool)cSThis[11];
 
             DetermineData();
 
@@ -224,7 +264,7 @@ namespace One.Net.BLL.WebControls
 
         public override void RenderBeginTag(HtmlTextWriter writer)
         {
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(containerClass) ? "pager" : containerClass);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(containerCssClass) ? "pager" : containerCssClass);
             writer.RenderBeginTag("section");
         }
 
@@ -245,21 +285,58 @@ namespace One.Net.BLL.WebControls
                 int fromPage = lowerHalf;
                 int toPage = upperHalf;
 
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(listCssClass) ? "" : listCssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+
+                if (ShowFirstLastLinks && pageCount > 1)
+                {
+                    var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
+                    pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
+                    // remove the previous key/value for this pager from any newly created uris
+                    pagerUrlBuilder.QueryString.Add(REQUEST_PAGE_ID + base.ID, "1");
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "first");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, pagerUrlBuilder.ToString());
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write("&laquo;");
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
+                }
+
+                if (ShowPrevNextLinks && pageCount > 1 && SelectedPage > 1)
+                {
+                    var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
+                    pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
+                    // remove the previous key/value for this pager from any newly created uris
+                    pagerUrlBuilder.QueryString.Add(REQUEST_PAGE_ID + base.ID, (SelectedPage - 1).ToString());
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "previous");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, pagerUrlBuilder.ToString());
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write("&laquo;");
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
+                }
 
                 for (int i = fromPage; i <= toPage; i++)
                 {
                     string cssClassBuilder = "";
-                    if (i == fromPage)
+
+                    if (!ShowFirstLastLinks)
                     {
-                        cssClassBuilder = " first";
-                    }
-                    if (i == toPage)
-                    {
-                        cssClassBuilder = " last";
+                        if (i == fromPage)
+                        {
+                            cssClassBuilder = " first";
+                        }
+                        if (i == toPage)
+                        {
+                            cssClassBuilder = " last";
+                        }
                     }
 
-                    UrlBuilder pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
+                    var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
                     pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
                     // remove the previous key/value for this pager from any newly created uris
                     pagerUrlBuilder.QueryString.Add(REQUEST_PAGE_ID + base.ID, i.ToString());
@@ -290,6 +367,38 @@ namespace One.Net.BLL.WebControls
                     {
                         writer.RenderEndTag();
                     }
+                }
+                
+                if (ShowPrevNextLinks && pageCount > 1 && SelectedPage < pageCount)
+                {
+                    var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
+                    pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
+                    // remove the previous key/value for this pager from any newly created uris
+                    pagerUrlBuilder.QueryString.Add(REQUEST_PAGE_ID + base.ID, (SelectedPage + 1).ToString());
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "next");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, pagerUrlBuilder.ToString());
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write("&raquo;");
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
+                }
+
+                if (ShowFirstLastLinks && pageCount > 1)
+                {
+                    var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
+                    pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
+                    // remove the previous key/value for this pager from any newly created uris
+                    pagerUrlBuilder.QueryString.Add(REQUEST_PAGE_ID + base.ID, pageCount.ToString());
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "last");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, pagerUrlBuilder.ToString());
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write("&raquo;");
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
                 }
 
                 /*
