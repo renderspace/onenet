@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>One.NET</id>
+        <id>One.NET plain deploy</id>
         <version>3.0.1.0</version>
         <title>One.NET Content management system</title>
         <authors>samof</authors>
