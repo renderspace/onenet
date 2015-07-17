@@ -288,7 +288,7 @@ namespace One.Net.BLL.WebControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, string.IsNullOrEmpty(listCssClass) ? "" : listCssClass);
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
-                if (ShowFirstLastLinks && pageCount > 1)
+                if (ShowFirstLastLinks && pageCount > 1 && SelectedPage > 1)
                 {
                     var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
                     pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
@@ -385,7 +385,7 @@ namespace One.Net.BLL.WebControls
                     writer.RenderEndTag();
                 }
 
-                if (ShowFirstLastLinks && pageCount > 1)
+                if (ShowFirstLastLinks && pageCount > 1 && SelectedPage < pageCount)
                 {
                     var pagerUrlBuilder = new UrlBuilder(this.Page.Request.Url.AbsoluteUri);
                     pagerUrlBuilder.QueryString.Remove(REQUEST_PAGE_ID + base.ID);
