@@ -52,7 +52,22 @@ packages/
 
 *.nupkg
 
-LocalAppSettings.config
-LocalConnectionStrings.config
-LocalRewriteMaps.config
-LocalRewrite.config
+#LocalAppSettings.config
+#LocalConnectionStrings.config
+#LocalRewriteMaps.config
+#LocalRewrite.config
+
+Account
+adm
+AdminControls
+AdminExtensions
+App_Browsers
+App_GlobalResources
+App_Start
+Base
+CommonModules
+Controls
+JavaScript
+Models
+Res
+Utils
