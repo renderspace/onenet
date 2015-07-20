@@ -7,9 +7,6 @@
 <html>
 <head runat="server">
     <link href="/adm/css/bootstrap.css" rel="stylesheet"/>
-
-    <Controls:BundleRender ID="BundleRender2" runat="server" Path="~/Bundles/Sass" />
-    <Controls:BundleRender ID="BundleRender1" runat="server" Path="~/Bundles/Jquery" IsScript="true" />
     <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 </head>
 <body role="document">
@@ -67,9 +64,6 @@
 		    </div>
 
         </div> <!-- /container -->	
-
-        <Controls:BundleRender ID="BundleRender4" runat="server" Path="~/Bundles/BootstrapJS" IsScript="true" />
-		<Controls:BundleRender ID="BundleRender5" runat="server" Path="~/Bundles/_js" IsScript="true" />
     </form>
 </body>
 </html>

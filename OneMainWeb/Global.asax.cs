@@ -23,7 +23,6 @@ using One.Net.BLL;
 using One.Net.BLL.Service;
 using Microsoft.AspNet.Identity;
 using System.Net;
-using System.Web.Optimization;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.Models;
 using OneMainWeb.Base;
@@ -68,8 +67,6 @@ namespace OneMainWeb
 
             // Code that runs on application startup
             // RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //HttpContext ctx = HttpContext.Current;
             //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
