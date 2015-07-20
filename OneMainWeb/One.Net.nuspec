@@ -17,8 +17,13 @@
           <dependency id="Microsoft.Owin.Host.SystemWeb" version="3.0.1" />
           <dependency id="Microsoft.Owin.Security.Facebook" version="3.0.1" />
           <dependency id="Microsoft.Owin.Security.Google" version="3.0.1" />
+          <dependency id="Microsoft.Owin.Security.OAuth" version="3.0.1" />
+          <dependency id="Microsoft.Owin.Security.Cookies" version="3.0.1" />
           <dependency id="MsSqlDBUtility" version="1.0.3" />
           <dependency id="NLog.Config" version="4.0.1" />
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="Microsoft.Web.Administration" version="7.0.0" />
+          <dependency id="StackExchange.Redis" version="1.0" />
         </dependencies>
     </metadata>
     <files>
