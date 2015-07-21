@@ -10,7 +10,7 @@
         <description>A simple enterprise content management system</description>
         <copyright>Copyright © Renderspace d.o.o. 2015</copyright>
         <dependencies>
-          <dependency id="AdaptedCSSFriendly" version="1.0.1" />
+          
           <dependency id="Kentor.OwinCookieSaver" version="1.0.2" />
           <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.2.1" />
           <dependency id="Microsoft.AspNet.Identity.Owin" version="2.2.1" />
@@ -19,11 +19,15 @@
           <dependency id="Microsoft.Owin.Security.Google" version="3.0.1" />
           <dependency id="Microsoft.Owin.Security.OAuth" version="3.0.1" />
           <dependency id="Microsoft.Owin.Security.Cookies" version="3.0.1" />
-          <dependency id="MsSqlDBUtility" version="1.0.3" />
-          <dependency id="NLog.Config" version="4.0.1" />
+          
           <dependency id="Newtonsoft.Json" version="7.0.1" />
           <dependency id="Microsoft.Web.Administration" version="7.0.0" />
           <dependency id="StackExchange.Redis" version="1.0" />
+        
+          <dependency id="AdaptedCSSFriendly"  />
+          <dependency id="MsSqlDBUtility"  />
+          <dependency id="NLog.Config" version="4.0.1" />
+  
         </dependencies>
     </metadata>
     <files>

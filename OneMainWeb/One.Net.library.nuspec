@@ -10,6 +10,10 @@
         <description>Files required for building custom modules.</description>
         <copyright>Copyright © Renderspace d.o.o. 2015</copyright>
         <dependencies>
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="AdaptedCSSFriendly"  />
+          <dependency id="MsSqlDBUtility"  />
+          <dependency id="NLog.Config" version="4.0.1" />
         </dependencies>
     </metadata>
     <files>
