@@ -33,6 +33,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.String, DefaultValue = "dd.MM.yy")]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public string HideImages { get { return GetStringSetting("HideImages"); } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             int articleId = 0;

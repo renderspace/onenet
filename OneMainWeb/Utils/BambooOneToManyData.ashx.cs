@@ -47,7 +47,7 @@ namespace OneMainWeb.Utils
             }
             catch (Exception ex)
             {
-                log.Error("OneToManyData", ex);
+                log.Error(ex, "OneToManyData");
                 context.Response.Write(ex.Message);
             }
         }

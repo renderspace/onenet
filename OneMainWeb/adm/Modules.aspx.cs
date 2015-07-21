@@ -75,6 +75,7 @@ namespace OneMainWeb.adm
             }
             catch (Exception ex)
             {
+                log.Error(ex, "GetDiskModuleInfo");
                 // "<li>error loading: " + f.Name + " " + ex.Message + "</li>";
                 return new Tuple<string, IEnumerable<Setting>>(fileName, null);
             }

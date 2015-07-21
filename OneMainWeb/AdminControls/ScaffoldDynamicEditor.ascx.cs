@@ -58,7 +58,7 @@ namespace OneMainWeb.AdminControls
 
         public event EventHandler<EventArgs> Exit;
         public event EventHandler<DynamicEditorEventArgs> Saved;
-        public event EventHandler<DynamicEditorEventArgs> Error;
+        public event EventHandler<DynamicEditorEventArgs> ErrorEvent;
 
         protected EditableItem Item
         {
@@ -935,11 +935,11 @@ jQuery.validator.addMethod(
             }
             else
             {
-                if (Error != null)
+                if (ErrorEvent != null)
                 {
                     var result = new DynamicEditorEventArgs();
                     result.Errors = errors;
-                    Error(this, result);
+                    ErrorEvent(this, result);
                 }
             }
             return false;

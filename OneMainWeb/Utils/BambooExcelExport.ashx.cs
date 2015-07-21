@@ -81,7 +81,7 @@ namespace OneMainWeb.Utils
             }
             catch (Exception ex)
             {
-                log.Error("ExcelExport", ex);
+                log.Error(ex, "ExcelExport");
                 error = true;
             }
 

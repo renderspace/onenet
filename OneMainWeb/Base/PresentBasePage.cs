@@ -317,7 +317,7 @@ ga('create', '" + code + @"', 'auto');";
                                 }
                                 catch (Exception ex)
                                 {
-                                    log.Error("Error while loading module", ex);
+                                    log.Error(ex, "Error while loading module");
                                     Literal message = new Literal();
                                     message.Text = "<h3 style=\"color:red;\">Error while loading module</h3>";
                                     if (!PublishFlag)
