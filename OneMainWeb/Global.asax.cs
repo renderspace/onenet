@@ -127,11 +127,11 @@ namespace OneMainWeb
 
             if (x.Message.Contains("File does not exist"))
             {
-                log.Fatal("Application_Error 404: " + Request.Url.ToString() , x);
+                log.Fatal(x, "Application_Error 404: " + Request.Url.ToString());
             }
             else
             {
-                log.Fatal("Application_Error", x);
+                log.Fatal(x, "Application_Error");
             }
         }
     }
