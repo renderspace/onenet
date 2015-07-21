@@ -382,6 +382,15 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.Panel PanelNoModuleInstances;
         
         /// <summary>
+        /// PanelHasInheritedModuleInstances control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelHasInheritedModuleInstances;
+        
+        /// <summary>
         /// RepeaterModuleInstances control.
         /// </summary>
         /// <remarks>

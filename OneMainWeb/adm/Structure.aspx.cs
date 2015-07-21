@@ -300,9 +300,13 @@ namespace OneMainWeb.adm
         protected void RepeaterModuleInstances_DataBind()
         {
             var instances = webSiteB.ListModuleInstances(SelectedPage.Id);
+
+            PanelHasInheritedModuleInstances.Visible = instances.Where(i => i.IsInherited).Count() > 0;
+            var editableInstances = instances.Where(i => !i.IsInherited);
+
             PanelNoModuleInstances.Visible = instances.Count == 0;
-            RepeaterModuleInstances.Visible = instances.Count != 0;
-            RepeaterModuleInstances.DataSource = instances;
+            RepeaterModuleInstances.Visible = editableInstances.Count() != 0;
+            RepeaterModuleInstances.DataSource = editableInstances;
             RepeaterModuleInstances.DataBind();
         }
 
