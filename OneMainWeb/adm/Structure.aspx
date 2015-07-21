@@ -191,6 +191,11 @@
                     <br />
                     <div class="alert alert-info" role="alert"><h4>There are not module instances on this page yet.</h4><p>Please use the dropdown above to add them.</p></div>
                 </asp:Panel>
+
+                <asp:Panel runat="server" ID="PanelHasInheritedModuleInstances">
+                    <br />
+                    <div class="alert alert-info" role="alert"><h4>There are inherited module instances on this page.</h4><p>Please select a parent page to edit them.</p></div>
+                </asp:Panel>
 		        <asp:Repeater ID="RepeaterModuleInstances" runat="server" OnItemDataBound="RepaterModuleInstances_ItemDataBound" OnItemCommand="RepeaterModuleInstances_ItemCommand" >
                     <HeaderTemplate>
                     </HeaderTemplate>
