@@ -12,6 +12,7 @@
                 <time class="published" id="Time2" runat="server" noid="True"></time>
 	        </header>
 	        <div class="entry-summary" runat="server" id="SectionTeaser" noid="True"></div>	
+            <div class="entry-teaser-image" runat="server" id="DivTeaserImage" noid="True"></div>	
 	        <div class="entry-content" runat="server" id="SectionHtml" noid="True">
 		        <%# Eval("Html") %>
 	        </div>
