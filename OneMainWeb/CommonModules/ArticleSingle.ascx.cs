@@ -34,7 +34,10 @@ namespace OneMainWeb.CommonModules
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
         [Setting(SettingType.Bool, DefaultValue = "false")]
-        public string HideImages { get { return GetStringSetting("HideImages"); } }
+        public bool HideImages { get { return GetBooleanSetting("HideImages"); } }
+
+        [Setting(SettingType.ImageTemplate, DefaultValue = "0")]
+        public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,12 +50,30 @@ namespace OneMainWeb.CommonModules
             {
                 int.TryParse(HumanReadableUrlParameter, out articleId);
             }
-
-            var article = articleB.GetArticle(articleId, false);
-
-            if (article != null)
+            var tempArticle = articleB.GetArticle(articleId, false);
+            if (tempArticle != null)
             {
                 MultiView1.ActiveViewIndex = 1;
+
+                ListImages = tempArticle.Images;
+                var article = (BOArticle)tempArticle.Clone();
+                if (HideImages)
+                {
+                    foreach (BOIntContImage image in article.Images)
+                    {
+                        article.RemoveImages.Add(image);
+                    }
+                }
+                if (DivTeaserImage != null && ThumbTemplate != null && ListImages.Count > 0)
+                { 
+                    DivTeaserImage.Visible = true;
+                    var image = ListImages.FirstOrDefault();
+                    DivTeaserImage.InnerHtml = ThumbTemplate.RenderHtml(image.Alt, image.FullUri, image.CssClass);
+                } 
+                else if (DivTeaserImage != null )
+                {
+                    DivTeaserImage.Visible = false;
+                }
 
                 if (Time1 != null)
                 {
@@ -104,7 +125,6 @@ namespace OneMainWeb.CommonModules
                 {
                     DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
                 }
-                ListImages = article.Images;
             }
             else
             {
