@@ -71,3 +71,8 @@ JavaScript
 Models
 Res
 Utils
+
+node_modules
+.sass-cache
+*.log
+bower_components
