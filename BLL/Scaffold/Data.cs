@@ -469,7 +469,6 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                                         break;
                                     default:
                                         throw new Exception("Unsupported datatype on read: " + item.Columns[field.FQName].DbType);
-                                        break;
                                 }
                             }
                         }

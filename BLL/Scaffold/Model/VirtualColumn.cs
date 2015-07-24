@@ -151,22 +151,6 @@ namespace One.Net.BLL.Scaffold.Model
         {
             get
             {
-                if (DbType == null)
-                {
-                    // this happens when field doesn't exist in given table at all
-                    // e.g. when field is displaying n:m relation
-                    if (ValueIntegerList == null)
-                        return null;
-                    if (ValueIntegerList.Count == 0)
-                        return "";
-                    var result = "";
-                    foreach (var c in ValueIntegerList)
-                    {
-                        result += c + ",";
-                    }
-                    return result.Substring(0, result.Length - 1);
-                }
-
                 switch (DbType)
                 {
                     case DataType.Int:
@@ -197,10 +181,6 @@ namespace One.Net.BLL.Scaffold.Model
                 if (NewValueIsNull)
                 {
                     return DBNull.Value;
-                }
-                if (DbType == null)
-                {
-                    return NewValueIntegerList;
                 }
                 if (IsMultiLanguageContent)
                 {

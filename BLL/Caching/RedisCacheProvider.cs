@@ -11,11 +11,13 @@ using StackExchange.Redis;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Configuration;
 using System.IO;
+using NLog;
 
 namespace One.Net.BLL.Caching
 {
     public class RedisCacheProvider : ICacheProvider
     {
+        protected static Logger log = LogManager.GetCurrentClassLogger();
         private static object lockMe = new object();
         IDatabase _database;
         ConnectionMultiplexer _connection;
@@ -109,7 +111,7 @@ namespace One.Net.BLL.Caching
                     }
                     catch (Exception ex)
                     {
-   
+                        log.Error(ex, "RemoveAll");
                     }
                 }
             }

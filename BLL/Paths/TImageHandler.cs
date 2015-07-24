@@ -169,7 +169,7 @@ namespace One.Net.BLL
             }
             catch (DirectoryNotFoundException ioex)
             {
-                log.Error("Directory not found", ioex);
+                log.Error(ioex, "Directory not found");
                 log.Debug("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");
                 context.Response.StatusCode = 404;
@@ -177,7 +177,7 @@ namespace One.Net.BLL
             }
             catch (FileNotFoundException ioex)
             {
-                log.Error("File not found", ioex);
+                log.Error(ioex, "File not found");
                 log.Debug("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");
                 context.Response.StatusCode = 404;
@@ -185,7 +185,7 @@ namespace One.Net.BLL
             }
             catch (Exception ex)
             {
-                log.Fatal("Uknown error", ex);
+                log.Fatal(ex, "Uknown error");
                 log.Fatal("Url: " + context.Request.Url.ToString());
                 log.Fatal("UrlReferrer: " + context.Request.UrlReferrer);
                 context.Response.AddHeader("Content-Type", "text/html");

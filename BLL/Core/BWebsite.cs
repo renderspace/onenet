@@ -19,7 +19,6 @@ using System.Text;
 using System.Xml;
 using System.Web;
 using System.Web.UI;
-using System.Data;
 using One.Net.BLL.Model.Attributes;
 
 namespace One.Net.BLL
@@ -938,7 +937,7 @@ namespace One.Net.BLL
             }
             catch (Exception ex)
             {
-                log.Error("AddWebSite", ex);
+                log.Error(ex, "AddWebSite");
                 return AddWebSiteResult.FileSystemError;
             }
 
@@ -968,7 +967,7 @@ namespace One.Net.BLL
             }
             catch (Exception ex)
             {
-                log.Error("PopulateNewDatabase", ex);
+                log.Error(ex, "PopulateNewDatabase");
             }
             return false;
         }
@@ -982,7 +981,7 @@ namespace One.Net.BLL
             }
             catch(Exception ex)
             {
-                log.Info("CheckIfItLooksLikeOurDatabase says non likely", ex);
+                log.Info(ex, "CheckIfItLooksLikeOurDatabase says non likely");
                 return false;
             }
         }
@@ -1037,7 +1036,7 @@ namespace One.Net.BLL
             }
             catch (Exception ex)
             {
-                log.Error("PopulateNewDatabase", ex);
+                log.Error(ex, "PopulateNewDatabase");
             }
             return false;
         }
