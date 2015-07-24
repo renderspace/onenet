@@ -776,12 +776,6 @@
     <None Include="One.Net.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\ck.css" />
