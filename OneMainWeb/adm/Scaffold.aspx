@@ -42,7 +42,7 @@
 
     </asp:View>
     <asp:View ID="View2" runat="server">
-        <uc1:ScaffoldDynamicEditor ID="DynamicEditor1" runat="server" OnExit="DynamicEditor1_Canceled" OnSaved="DynamicEditor1_Saved" OnError="DynamicEditor1_Error"></uc1:ScaffoldDynamicEditor>
+        <uc1:ScaffoldDynamicEditor ID="DynamicEditor1" runat="server" OnExit="DynamicEditor1_Canceled" OnSaved="DynamicEditor1_Saved" OnErrorEvent="DynamicEditor1_Error"></uc1:ScaffoldDynamicEditor>
     </asp:View>
 </asp:MultiView>
     
