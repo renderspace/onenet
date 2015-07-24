@@ -770,7 +770,6 @@
     </Content>
     <Content Include="adm\css\bootstrap.css.map" />
     <Content Include="JavaScript\jquery-2.1.3.min.map" />
-    <None Include="One.Net.deploy.nuspec" />
     <None Include="gitignore.template" />
     <None Include="One.Net.library.nuspec" />
     <None Include="One.Net.nuspec">
