@@ -49,6 +49,7 @@
       <file src="adm\**.woff" target="content\adm" />
       <file src="adm\**.woff2" target="content\adm" />
       <file src="adm\**.png" target="content\adm" />
+      <file src="adm\**.css" target="content\adm" />
 
       <file src="AdminControls\**.ascx" target="content\AdminControls" />
       <file src="CommonModules\**.ascx" target="content\CommonModules" />
