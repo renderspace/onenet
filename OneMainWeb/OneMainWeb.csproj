@@ -783,17 +783,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
-    <Content Include="Scripts\dropzone\basic.css" />
-    <Content Include="Scripts\dropzone\basic.min.css" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
-    <Content Include="Scripts\dropzone\dropzone.css" />
-    <Content Include="Scripts\dropzone\dropzone.js" />
-    <Content Include="Scripts\dropzone\dropzone.min.css" />
-    <Content Include="Scripts\dropzone\dropzone.min.js" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\ck.css" />
     <Content Include="site_specific\ckstyles.js" />
@@ -815,7 +804,6 @@
     <Content Include="site_specific\aspx_templates\demo.Master" />
     <Content Include="site_specific\_sass\demo.sass" />
     <Content Include="Utils\Favicon.ashx" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Structure.aspx" />
