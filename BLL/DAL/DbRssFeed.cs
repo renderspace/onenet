@@ -10,7 +10,7 @@ namespace One.Net.BLL.DAL
     {
         public void Change(BORssFeed rssFeed )
         {
-            string categories = StringTool.RenderAsString(rssFeed.Categories);
+            string categories = string.Join(",", rssFeed.Categories);
 
             SqlParameter[] paramsToPass = new SqlParameter[8];
             paramsToPass[0] = new SqlParameter("@title", rssFeed.Title);

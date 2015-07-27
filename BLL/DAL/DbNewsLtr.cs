@@ -216,7 +216,7 @@ namespace One.Net.BLL.DAL
                     FROM newsletter n";
 
             if (newsletterIds != null && newsletterIds.Count > 0)
-                sql += " AND n.id IN (" + StringTool.RenderAsString(newsletterIds) + ")";
+                sql += " WHERE n.id IN (" + string.Join(",", newsletterIds) + ")";
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, 
                 sql, paramsToPass.ToArray()))
