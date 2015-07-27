@@ -17,7 +17,7 @@ namespace One.Net.BLL.DAL
             List<BORssItem> items = new List<BORssItem>();
 
             SqlParameter[] paramsToPass = new SqlParameter[2];
-            paramsToPass[0] = new SqlParameter("@categoryIds", StringTool.RenderAsString(categories));
+            paramsToPass[0] = new SqlParameter("@categoryIds", string.Join(",", categories));
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
 
             connectionString = ConfigurationManager.ConnectionStrings[connectionString].ConnectionString;

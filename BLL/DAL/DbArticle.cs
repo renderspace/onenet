@@ -112,7 +112,7 @@ namespace One.Net.BLL.DAL
         public DateTime? GetFirstDateWithArticles(bool publishFlag, List<int> regularIDs, int fromYear, int fromMonth, int languageId)
         {
             DateTime? result = null;
-            string regularIdString = StringTool.RenderAsString(regularIDs);
+            string regularIdString = string.Join(",",  regularIDs);
             string sql = @"SELECT MIN(a.display_date) date_day ";
 
             sql += @"   FROM [dbo].[article] a
@@ -147,7 +147,7 @@ namespace One.Net.BLL.DAL
         public List<BOArticleMonthDay> ListArticleMonthDays(bool publishFlag, List<int> regularIDs, bool showArticleCount, int year, int month, int languageId)
         {
             var results = new List<BOArticleMonthDay>();
-            string regularIdString = StringTool.RenderAsString(regularIDs);
+            string regularIdString = string.Join(",", regularIDs);
             string sql = @"SELECT DISTINCT CAST(a.display_date AS DATE) date_day";
 
             if (showArticleCount)
@@ -206,7 +206,7 @@ WHERE a2.publish = @publishFlag ";
         public List<BOArticleMonth> ListArticleMonths(bool publishFlag, List<int> regularIDs, bool showArticleCount, int languageId)
         {
             List<BOArticleMonth> results = new List<BOArticleMonth>();
-            string regularIdString = StringTool.RenderAsString(regularIDs);
+            string regularIdString = string.Join(",", regularIDs);
             string sql = @"SELECT DISTINCT month(a.display_date) date_month, year(a.display_date) date_year";
 
             if (showArticleCount)

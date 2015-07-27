@@ -89,37 +89,6 @@ namespace One.Net.BLL
             return answer.Trim();
         }
 
-        public static string RenderAsString(List<int> categories)
-        {
-            char separator = ',';
-            if (categories != null)
-            {
-                string cats = "";
-                foreach (int cat in categories)
-                    cats += cat.ToString() + separator;
-                return cats.TrimEnd(separator);
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public static string RenderAsString(List<string> strings, char separator)
-        {
-            if (strings != null)
-            {
-                string strs = "";
-                foreach (string str in strings)
-                    strs += str.ToString() + separator;
-                return strs.TrimEnd(separator);
-            }
-            else
-            {
-                return "";
-            }
-        }
-
         public static List<int> SplitStringToIntegers(string list)
         {
             List<int> ret = new List<int>();

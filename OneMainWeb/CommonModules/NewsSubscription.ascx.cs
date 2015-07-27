@@ -46,7 +46,7 @@ namespace OneMainWeb.CommonModules
         public string SubscriptionEmailSubject { get { return GetStringSetting("SubscriptionEmailSubject"); } }
 
         [Setting(SettingType.CSInteger)]
-        public List<int> NewsletterIds { get { return GetIntegerListSetting("NewsletterId"); } }
+        public List<int> NewsletterIds { get { return GetIntegerListSetting("NewsletterIds"); } }
 
         [Setting(SettingType.String, DefaultValue = "Confirm registration here: {$confirmRegistration}", Visibility = SettingVisibility.MULTILINE)]
         public string SubscriptionEmailBody { get { return GetStringSetting("SubscriptionEmailBody"); } }
