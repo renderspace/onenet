@@ -60,7 +60,6 @@ packages/
 Account
 adm
 AdminControls
-AdminExtensions
 App_Browsers
 App_GlobalResources
 App_Start
