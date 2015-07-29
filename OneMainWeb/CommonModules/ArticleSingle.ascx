@@ -4,7 +4,7 @@
         <%= TranslateComplex("article_single_no_article") %>
     </asp:View>
     <asp:View ID="View2" runat="server">
-        <article id="HtmlArticle" runat="server">
+        <article id="HtmlArticle" runat="server" noid="true">
 	        <header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"></time>
 		        <h1 class="entry-title" id="H1Title" runat="server" noid="True"></h1>

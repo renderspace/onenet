@@ -104,13 +104,13 @@ namespace OneMainWeb.CommonModules
                 }
                 if (H2SubTitle != null)
                 {
-                    H2SubTitle.Visible = ShowSubTitle;
+                    H2SubTitle.Visible = ShowSubTitle && !string.IsNullOrWhiteSpace(article.SubTitle);
                     H2SubTitle.InnerHtml = article.SubTitle;
                 }
 
                 if (SectionTeaser != null)
                 {
-                    SectionTeaser.Visible = ShowTeaser;
+                    SectionTeaser.Visible = ShowTeaser && !string.IsNullOrWhiteSpace(article.ProcessedTeaser);
                     SectionTeaser.InnerHtml = article.ProcessedTeaser;
                 }
 
