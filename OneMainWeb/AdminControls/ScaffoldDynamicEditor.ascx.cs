@@ -23,6 +23,7 @@ using One.Net.BLL.Web;
 using One.Net.BLL;
 using One.Net.BLL.WebControls;
 using System.Data.SqlTypes;
+using System.Data.SqlClient;
 
 namespace OneMainWeb.AdminControls
 {
@@ -908,10 +909,34 @@ jQuery.validator.addMethod(
 
             if (errors.Count == 0)
             {
+                var result = false;
                 var primaryKeys = PrimaryKeys;
-                Data.ChangeMultiLanguageContent(Item);
-                var result = Data.ChangeItem(VirtualTableId, Item, ref primaryKeys);
-                Data.UpdateItemManyToManyFields(VirtualTableId, Item, primaryKeys);
+                try
+                {
+                    Data.ChangeMultiLanguageContent(Item);
+                    result = Data.ChangeItem(VirtualTableId, Item, ref primaryKeys);
+                    Data.UpdateItemManyToManyFields(VirtualTableId, Item, primaryKeys);
+                }
+                catch (SqlException e)
+                {
+                    result = false;
+                    switch (e.Number)
+                    {
+                        case 2601:
+                            if (ErrorEvent != null)
+                            {
+                                var r = new DynamicEditorEventArgs();
+                                r.Errors.Add("One of the fields you were trying to save is already taken.");
+                                r.Errors.Add(e.Message);
+                                ErrorEvent(this, r);
+                            }
+                            break;
+                        default:
+                            throw;
+                    }
+                }
+
+                
                 if (result)
                 {
                     if (Saved != null)
