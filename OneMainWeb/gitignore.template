@@ -9,7 +9,6 @@ Junk Files
 [Bb]uild/
 *.user
 *.suo
-*.exe
 *.pdb
 *.aps
 *_i.c
