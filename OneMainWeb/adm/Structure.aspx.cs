@@ -460,15 +460,18 @@ namespace OneMainWeb.adm
                     ddlPlaceHolder.DataBind();
 
                     int maxLevel = 6;
+                    ddlPersistentFromDGrid.Items.Clear();
                     ddlPersistentToDGrid.Items.Clear();
                     for (int i = SelectedPage.Level; i <= maxLevel; i++)
                     {
-                        ListItem item = new ListItem(i.ToString(), i.ToString());
-                        ddlPersistentToDGrid.Items.Add(item);
-                        ddlPersistentFromDGrid.Items.Add(item);
+                        var listItemFrom = new ListItem(i.ToString(), i.ToString());
+                        listItemFrom.Selected = i == moduleInstance.PersistFrom;
+                        ddlPersistentFromDGrid.Items.Add(listItemFrom);
+
+                        var listItemTo = new ListItem(i.ToString(), i.ToString());
+                        listItemTo.Selected = i == moduleInstance.PersistTo;
+                        ddlPersistentToDGrid.Items.Add(listItemTo);
                     }
-                    ddlPersistentFromDGrid.SelectedValue =  moduleInstance.PersistFrom.ToString();
-                    ddlPersistentToDGrid.SelectedValue = moduleInstance.PersistTo.ToString();
                 }
             }
         }
