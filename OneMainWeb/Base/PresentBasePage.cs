@@ -53,6 +53,15 @@ namespace OneMainWeb
         public BOPage CurrentPage { get; set; }
         public BOWebSite CurrentWebsite { get; set; }
 
+        /// <summary>
+        /// Contains the title that should be displayed in menu (as opposed to the title that should be displayed in title tag
+        /// </summary>
+        public string MenuTitle
+        {
+            get;
+            set;
+        }
+
         public static bool ReadPublishFlag()
         { 
             var publishFlag = false;
@@ -534,10 +543,19 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             // 1. provided
             // 2. page
             var title = "";
+            if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
+            {
+                title = CurrentPage.Title;
+                MenuTitle = title;
+            }
             if (!string.IsNullOrWhiteSpace(CurrentPage.SeoTitle))
                 title = CurrentPage.SeoTitle;
             if (!string.IsNullOrWhiteSpace(provided))
+            {
                 title = provided;
+                MenuTitle = title;
+            }
+                
 
             title = title.Replace('\n', ' ').Replace('\r', ' ');
             title = StringTool.StripHtmlTags(title);

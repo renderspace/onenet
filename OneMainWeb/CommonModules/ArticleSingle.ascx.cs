@@ -131,29 +131,6 @@ namespace OneMainWeb.CommonModules
                 MultiView1.ActiveViewIndex = 0;
                 ListImages = new List<BOIntContImage>();
             }
-            if (!string.IsNullOrWhiteSpace(Title))
-            {
-                SiteMap.SiteMapResolve += new SiteMapResolveEventHandler(this.ExpandPaths);
-            }
-        }
-
-        private SiteMapNode ExpandPaths(Object sender, SiteMapResolveEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(Title))
-            {
-                SiteMapNode currentNode = SiteMap.CurrentNode.Clone(true);
-                SiteMapNode tempNode = currentNode;
-                tempNode.Title = Title;
-                if (!string.IsNullOrWhiteSpace(Description))
-                {
-                    tempNode.Description = Description;
-                }
-                return tempNode;
-            }
-            else
-            {
-                return SiteMap.CurrentNode;
-            }
         }
 
         public string Description
