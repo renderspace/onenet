@@ -12,9 +12,14 @@ using One.Net.BLL.Utility;
 namespace One.Net.BLL
 {
 
-    public class StringTool
+    public static class StringTool
     {
         private static readonly Random random = new Random();
+
+        public static string Truncate(this string value, int maxChars)
+        {
+            return value.Length <= maxChars ? value : value.Substring(0, maxChars) + " ...";
+        }
 
         public static string GetTextContentFromResource(string fileName)
         {
@@ -108,7 +113,7 @@ namespace One.Net.BLL
             return ret;
         }
 
-        public static string StripHtmlTags(string str)
+        public static string StripHtmlTags(this string str)
         {
             Regex stripper = new Regex("<(.|\n)+?>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             string strNoTags = stripper.Replace(str, "");
@@ -131,68 +136,6 @@ namespace One.Net.BLL
                 return builder.ToString().ToLower();
             }
             return builder.ToString();
-        }
-
-        /// <summary>
-        /// This method is primarily used by search mechanizym to obtain a string
-        /// from original text where match has appeared. Its returns a substring from
-        /// original with wordsBefore count backwards and wordsAfter count onwards
-        /// </summary>
-        /// <param name="original"></param>
-        /// <param name="matchString"></param>
-        /// <param name="wordsBefore"></param>
-        /// <param name="wordsAfter"></param>
-        /// <returns></returns>
-        public static string GetStringWithWordsAndAfter(string original, string matchString, int wordsBefore, int wordsAfter)
-        {
-            string retValue = "";
-
-            string[] matchedWords = matchString.Split(new char[] { ' ' });
-
-            string[] words = original.Split(new char[] { ' ' });
-            int matchedStringIndex = -1;
-            for (int i = 0; i < words.Length; i++)
-            {
-                string word = words[i];
-                if (matchedWords.Length > 1)
-                {
-                    for (int j = 0; j < matchedWords.Length; j++)
-                    {
-                        if (word.ToLower().IndexOf(matchedWords[j].ToLower()) > -1)
-                        {
-                            if (i + 1 < words.Length && j + 1 < matchedWords.Length)
-                            {
-                                if (words[i + 1].ToLower().IndexOf(matchedWords[j + 1].ToLower()) > -1)
-                                    matchedStringIndex = i;
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (word.ToLower().IndexOf(matchString.ToLower()) > -1)
-                    {
-                        matchedStringIndex = i;
-                        break;
-                    }
-                }
-            }
-
-            if (matchedStringIndex > -1)
-            {
-                int startCount = Math.Max(0, matchedStringIndex - wordsBefore);
-                int endCount = Math.Min(words.Length, matchedStringIndex + wordsAfter);
-
-                for (int i = startCount; i < endCount; i++)
-                {
-                    if (i + 1 == endCount)
-                        retValue += words[i];
-                    else
-                        retValue += words[i] + " ";
-                }
-            }
-            return retValue;
         }
 
         public static Color HexStringToColor(string hexColor)

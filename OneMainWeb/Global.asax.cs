@@ -27,6 +27,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.Models;
 using OneMainWeb.Base;
 using System.Collections.Specialized;
+using One.Net.BLL.Web;
 
 namespace OneMainWeb
 {
@@ -65,12 +66,6 @@ namespace OneMainWeb
             Version version = this.GetType().BaseType.Assembly.GetName().Version;
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
 
-            // Code that runs on application startup
-            // RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            //HttpContext ctx = HttpContext.Current;
-            //Application["Config"] = WebConfigurationManager.OpenWebConfiguration(ctx.Request.ApplicationPath);
-
             TByNumberPathProvider pathProvider = new TByNumberPathProvider();
             System.Web.Hosting.HostingEnvironment.RegisterVirtualPathProvider(pathProvider);
 
@@ -79,16 +74,27 @@ namespace OneMainWeb
 
             RouteConfig.ReloadRoutes(RouteTable.Routes);
             log.Info("-------------- MVC ROUTES ADDED --------------");
-            /*
 
-           //RouteTable.Routes.Add(new Route("Category/{action}/{categoryName}", new One.Net.BLL.Paths.CustomRouteHandler("2col.aspx")));
-           
-           RouteTable.Routes.MapPageRoute("EvalRoutes", "Evals/{type}/New.aspx", "~/spored", false);
+            SiteMap.SiteMapResolve += new SiteMapResolveEventHandler(Provider_SiteMapResolve);
+        }
 
-           RouteTable.Routes.MapPageRoute("EvalRoutes2", "mijav", "~/Login.aspx");*/
+        SiteMapNode Provider_SiteMapResolve(object sender, SiteMapResolveEventArgs e)
+        {
+            if (e.Context.CurrentHandler is PresentBasePage)
+            {
+                var title = ((PresentBasePage)e.Context.CurrentHandler).MenuTitle;
+                if (string.IsNullOrWhiteSpace(title))
+                    return null;
 
-            
-        }        
+                title = title.StripHtmlTags();
+                SiteMapNode currentNode = SiteMap.CurrentNode.Clone(true);
+                SiteMapNode tempNode = currentNode;
+                tempNode.Title = title;
+                return tempNode;
+            }
+            else
+                return null;
+        }
 
         protected void Application_End(object sender, EventArgs e)
         {

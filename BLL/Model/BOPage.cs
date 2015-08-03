@@ -72,7 +72,7 @@ namespace One.Net.BLL
             get
             {
                 if (string.IsNullOrWhiteSpace(Html))
-                    return Title;
+                    return Html;
                 return Html;
             }
         }
