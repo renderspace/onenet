@@ -76,13 +76,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonExport;
         
         /// <summary>
-        /// LabelNoResults control.
+        /// PanelNoResults control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelNoResults;
+        protected global::System.Web.UI.WebControls.Panel PanelNoResults;
         
         /// <summary>
         /// GridViewEntries control.
@@ -227,14 +227,5 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonListWriteTypes;
-        
-        /// <summary>
-        /// View4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View4;
     }
 }

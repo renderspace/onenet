@@ -22,7 +22,11 @@
                         <asp:LinkButton ID="LinkButtonExport" runat="server" OnClick="LinkButtonExport_Click" CssClass="btn btn-info" Text="Import / export keywords" />
 			         </div>
                 </div>
-                <asp:Label ID="LabelNoResults" runat="server" Visible="false" EnableViewState="false"></asp:Label>
+                <asp:Panel runat="server" ID="PanelNoResults"  CssClass="col-md-12">
+                     <div class="alert alert-info" role="alert">
+                        No dictionary entries to show.
+                         </div>
+                </asp:Panel>
                 <asp:GridView ID="GridViewEntries" runat="server" AutoGenerateColumns="false" AllowPaging="false" AllowSorting="true" OnSorting="GridViewEntries_Sorting" OnRowDeleting="GridViewEntries_RowDeleting"
                         EnableViewState="true" OnRowDataBound="GridViewEntries_RowDataBound"
 						CssClass="table table-hover table-clickable-row"
@@ -104,6 +108,5 @@
 	                </div>
                 </div>  
             </asp:View>
-            <asp:View ID="View4" runat="server"></asp:View>
         </asp:MultiView>
 </asp:Content>
