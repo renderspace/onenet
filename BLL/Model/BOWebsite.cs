@@ -58,11 +58,6 @@ namespace One.Net.BLL
             {
                 return GetIntegerSetting("WebSiteGroup");
             }
-            set
-            {
-                BOSetting setting = new BOSetting("WebSiteGroup", "int", value.ToString(), BOSetting.USER_VISIBILITY_NORMAL);
-                Settings["WebSiteGroup"] = setting;
-            }
         }
 
         public int? RootPageId
