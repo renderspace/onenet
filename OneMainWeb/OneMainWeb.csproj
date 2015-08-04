@@ -403,6 +403,7 @@
     <Compile Include="Controls\BreadCrumb.cs" />
     <Compile Include="Controls\GetMeaning.cs" />
     <Compile Include="Controls\JavascriptVars.cs" />
+    <Compile Include="Controls\LanguageSelector.cs" />
     <Compile Include="Controls\MenuGroup.cs" />
     <Compile Include="EFConfiguration.cs" />
     <Compile Include="Global.asax.cs">
