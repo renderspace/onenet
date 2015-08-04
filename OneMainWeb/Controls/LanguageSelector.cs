@@ -33,7 +33,8 @@ namespace OneMainWeb.Controls
             writer.Write("\n");
             writer.Indent = 0;
             writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
+            if (!string.IsNullOrEmpty(CssClass))
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
             writer.RenderBeginTag("nav");
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
             writer.RenderBeginTag("span");
@@ -59,20 +60,20 @@ namespace OneMainWeb.Controls
 
             foreach (var website in list)
             {
-                if (website.WebSiteGroup == Group && Group > -1)
+                if (website.WebSiteGroup == Group && Group > 0)
                 {
-                    var websiteUrl = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
+                    var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
-                    if (!string.IsNullOrEmpty(websiteUrl))
+                    if (!string.IsNullOrEmpty(websiteUri))
                     {
-                        var cssClass = "lang-" + website.Languge.TwoLetterISOLanguageName;
-                        if (Thread.CurrentThread.CurrentCulture.LCID == website.Languge.LCID)
+                        var cssClass = "lang-" + website.Language.TwoLetterISOLanguageName;
+                        if (Thread.CurrentThread.CurrentCulture.LCID == website.Language.LCID)
                             cssClass += " current";
 
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                         writer.RenderBeginTag("li");
 
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUrl);
+                        writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUri);
                         writer.AddAttribute(HtmlTextWriterAttribute.Title, website.Title);
                         writer.RenderBeginTag("a");
                         writer.Write(website.Title);
