@@ -30,28 +30,22 @@ namespace OneMainWeb.Controls
 
         public override void RenderBeginTag(System.Web.UI.HtmlTextWriter writer)
         {
-            if (controlsRendered)
-            {
-                writer.Write("\n");
-                writer.Indent = 0;
-                writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
-                writer.RenderBeginTag("nav");
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
-                writer.RenderBeginTag("span");
-                writer.Write(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
-                writer.RenderEndTag();
-                writer.RenderBeginTag("ul");
-            }
+            writer.Write("\n");
+            writer.Indent = 0;
+            writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
+            writer.RenderBeginTag("nav");
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
+            writer.RenderBeginTag("span");
+            writer.Write(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
+            writer.RenderEndTag();
+            writer.RenderBeginTag("ul");
         }
 
         public override void RenderEndTag(HtmlTextWriter writer)
         {
-            if (controlsRendered)
-            {
-                writer.RenderEndTag();
-                writer.RenderEndTag();
-            }
+            writer.RenderEndTag();
+            writer.RenderEndTag();
         }
 
         protected static bool PublishFlag
@@ -59,7 +53,7 @@ namespace OneMainWeb.Controls
             get { return PresentBasePage.ReadPublishFlag(); }
         }
 
-        protected override void Render(HtmlTextWriter writer)
+        protected override void RenderContents(HtmlTextWriter writer)
         {
             var list = webSiteB.List();
 
@@ -71,7 +65,11 @@ namespace OneMainWeb.Controls
 
                     if (!string.IsNullOrEmpty(websiteUrl))
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lang-" + website.Languge.TwoLetterISOLanguageName);
+                        var cssClass = "lang-" + website.Languge.TwoLetterISOLanguageName;
+                        if (Thread.CurrentThread.CurrentCulture.LCID == website.Languge.LCID)
+                            cssClass += " current";
+
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                         writer.RenderBeginTag("li");
 
                         writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUrl);
@@ -81,13 +79,12 @@ namespace OneMainWeb.Controls
                         writer.RenderEndTag();
 
                         writer.RenderEndTag();
-
-                        controlsRendered = true;
                     }
                 }
             }
-            
-            base.Render(writer);
+
+            base.RenderContents(writer);
         }
+
     }
 }
