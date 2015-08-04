@@ -95,7 +95,7 @@ namespace One.Net.BLL
             }
         }
 
-        public CultureInfo Languge
+        public CultureInfo Language
         {
             get
             {
