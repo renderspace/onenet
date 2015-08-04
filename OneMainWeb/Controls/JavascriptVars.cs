@@ -22,7 +22,7 @@ namespace OneMainWeb.Controls
 
             output.Write("<script>");
             output.Write("websiteLanguageId = " + Thread.CurrentThread.CurrentCulture.LCID.ToString() + ";");
-            output.Write("websiteTwoLetterISOLanguageName = " + Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName + ";");
+            output.Write("websiteTwoLetterISOLanguageName = '" + Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName + "';");
             output.Write("tracing = " + (publishFlag ? "false" : "true") + ";");
             output.Write(@"
             function trace(msg) {
