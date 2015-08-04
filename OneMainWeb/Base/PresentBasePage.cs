@@ -163,7 +163,7 @@ ga('create', '" + code + @"', 'auto');";
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
-     js.src = ""//connect.facebook.net/" + CurrentWebsite.Languge.IetfLanguageTag.Replace("-", "_") + @"/sdk.js"";
+     js.src = ""//connect.facebook.net/" + CurrentWebsite.Language.IetfLanguageTag.Replace("-", "_") + @"/sdk.js"";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>";
@@ -486,6 +486,32 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             RenderOgImage(providedOgImage);
             RenderMetaData();
             RenderKeywords(providedKeywords);
+
+            websiteB = new BWebsite();
+            var list = websiteB.List();
+
+            if (list != null)
+            {
+                foreach (var website in list)
+                {
+                    if (CurrentWebsite != null && 
+                        website.WebSiteGroup == CurrentWebsite.WebSiteGroup && 
+                        CurrentWebsite.WebSiteGroup > 0 &&
+                        website.Id != CurrentWebsite.Id)
+                    {
+                        var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
+
+                        if (!string.IsNullOrEmpty(websiteUri))
+                        {
+                            var linkTag = new HtmlLink();
+                            linkTag.Attributes.Add("rel", "alternate");
+                            linkTag.Href = HttpUtility.HtmlEncode(websiteUri);
+                            linkTag.Attributes.Add("hreflang", website.Language.TwoLetterISOLanguageName);
+                            Header.Controls.Add(linkTag);
+                        }
+                    }
+                }
+            }
 
             if (providedLinkTags != null && providedLinkTags.Keys != null && providedLinkTags.Keys.Count > 0)
             {
