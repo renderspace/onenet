@@ -59,6 +59,19 @@ namespace One.Net.BLL
 			set { id = value; }
 		}
 
+        public int WebSiteGroup
+        {
+            get
+            {
+                return GetSettingValueInt("WebSiteGroup");
+            }
+            set
+            {
+                BOSetting setting = new BOSetting("WebSiteGroup", "int", value.ToString(), BOSetting.USER_VISIBILITY_NORMAL);
+                Settings["WebSiteGroup"] = setting;
+            }
+        }
+
         public int? RootPageId
         {
             get { return rootPageId; }
@@ -80,7 +93,6 @@ namespace One.Net.BLL
                 return new CultureInfo(LanguageId);
             }
         }
-
      
         public override int LanguageId
         {
