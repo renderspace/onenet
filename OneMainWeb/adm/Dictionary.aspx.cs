@@ -33,7 +33,6 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             Notifier1.Visible = true;
-            LabelNoResults.Text = "$no_search_results";
 
             if (SelectedWebsite == null)
             {
@@ -126,12 +125,12 @@ namespace OneMainWeb
             if (!string.IsNullOrEmpty(TextBoxSearch.Text) && entries.AllRecords == 0)
             {
                 GridViewEntries.Visible = false;
-                LabelNoResults.Visible = true;
+                PanelNoResults.Visible = true;
             }
             else
             {
                 GridViewEntries.Visible = true;
-                LabelNoResults.Visible = false;
+                PanelNoResults.Visible = false;
             }
 
             TwoPostbackPager1.Visible = entries.AllRecords > 0;
