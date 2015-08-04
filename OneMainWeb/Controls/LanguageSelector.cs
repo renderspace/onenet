@@ -30,28 +30,23 @@ namespace OneMainWeb.Controls
 
         public override void RenderBeginTag(System.Web.UI.HtmlTextWriter writer)
         {
-            if (controlsRendered)
-            {
-                writer.Write("\n");
-                writer.Indent = 0;
-                writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
+            writer.Write("\n");
+            writer.Indent = 0;
+            writer.AddAttribute(HtmlTextWriterAttribute.Id, this.ClientID);
+            if (!string.IsNullOrEmpty(CssClass))
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, this.CssClass);
-                writer.RenderBeginTag("nav");
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
-                writer.RenderBeginTag("span");
-                writer.Write(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
-                writer.RenderEndTag();
-                writer.RenderBeginTag("ul");
-            }
+            writer.RenderBeginTag("nav");
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
+            writer.RenderBeginTag("span");
+            writer.Write(Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
+            writer.RenderEndTag();
+            writer.RenderBeginTag("ul");
         }
 
         public override void RenderEndTag(HtmlTextWriter writer)
         {
-            if (controlsRendered)
-            {
-                writer.RenderEndTag();
-                writer.RenderEndTag();
-            }
+            writer.RenderEndTag();
+            writer.RenderEndTag();
         }
 
         protected static bool PublishFlag
@@ -59,35 +54,38 @@ namespace OneMainWeb.Controls
             get { return PresentBasePage.ReadPublishFlag(); }
         }
 
-        protected override void Render(HtmlTextWriter writer)
+        protected override void RenderContents(HtmlTextWriter writer)
         {
             var list = webSiteB.List();
 
             foreach (var website in list)
             {
-                if (website.WebSiteGroup == Group && Group > -1)
+                if (website.WebSiteGroup == Group && Group > 0)
                 {
-                    var websiteUrl = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
+                    var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
-                    if (!string.IsNullOrEmpty(websiteUrl))
+                    if (!string.IsNullOrEmpty(websiteUri))
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lang-" + website.Languge.TwoLetterISOLanguageName);
+                        var cssClass = "lang-" + website.Language.TwoLetterISOLanguageName;
+                        if (Thread.CurrentThread.CurrentCulture.LCID == website.Language.LCID)
+                            cssClass += " current";
+
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                         writer.RenderBeginTag("li");
 
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUrl);
+                        writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUri);
                         writer.AddAttribute(HtmlTextWriterAttribute.Title, website.Title);
                         writer.RenderBeginTag("a");
                         writer.Write(website.Title);
                         writer.RenderEndTag();
 
                         writer.RenderEndTag();
-
-                        controlsRendered = true;
                     }
                 }
             }
-            
-            base.Render(writer);
+
+            base.RenderContents(writer);
         }
+
     }
 }
