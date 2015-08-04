@@ -504,7 +504,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
         protected void RenderKeywords(string provided)
         {
             var keywords = "";
-            var webSiteKeywords = CurrentWebsite.GetSettingValue("MetaKeywords");
+            var webSiteKeywords = CurrentWebsite.GetStringSetting("MetaKeywords");
             var pageKeywords = CurrentPage.GetSettingValue("MetaKeywords");
             if (!string.IsNullOrWhiteSpace(webSiteKeywords))
                 keywords = webSiteKeywords;
@@ -605,7 +605,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 {
                     AddMetaProperty("fb:app_id", CurrentWebsite.FacebookApplicationID.ToString());
                 }
-                var webmasterToolsId = CurrentWebsite.GetSettingValue("GoogleSiteVerification");
+                var webmasterToolsId = CurrentWebsite.GetStringSetting("GoogleSiteVerification");
                 AddMetaTag("google-site-verification", webmasterToolsId);
                 if (!PublishFlag)
                 {

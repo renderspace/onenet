@@ -26,7 +26,7 @@ namespace OneMainWeb.Utils
             var website = websiteB.Get(selectedWebSiteId);
             if (website != null)
             {
-                var content = website.GetSettingValue("Favicon");
+                var content = website.GetStringSetting("Favicon");
                 if (string.IsNullOrWhiteSpace(content))
                 {
                     content = @"AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAA
