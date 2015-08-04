@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using One.Net.BLL;
+using System.Threading;
 
 namespace OneMainWeb.Controls 
 {
@@ -20,7 +21,8 @@ namespace OneMainWeb.Controls
             var publishFlag = PresentBasePage.ReadPublishFlag();
 
             output.Write("<script>");
-            output.Write("websiteLanguageId = " + System.Threading.Thread.CurrentThread.CurrentCulture.LCID.ToString() + ";");
+            output.Write("websiteLanguageId = " + Thread.CurrentThread.CurrentCulture.LCID.ToString() + ";");
+            output.Write("websiteTwoLetterISOLanguageName = " + Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName + ";");
             output.Write("tracing = " + (publishFlag ? "false" : "true") + ";");
             output.Write(@"
             function trace(msg) {
