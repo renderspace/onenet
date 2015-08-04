@@ -545,7 +545,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             var title = "";
             if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
             {
-                title = CurrentPage.Title;
+                if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
+                {
+                    title = CurrentWebsite.Title + " - ";
+                }
+                title += CurrentPage.Title;
                 MenuTitle = title;
             }
             if (!string.IsNullOrWhiteSpace(CurrentPage.SeoTitle))
@@ -555,8 +559,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 title = provided;
                 MenuTitle = title;
             }
-                
-
             title = title.Replace('\n', ' ').Replace('\r', ' ');
             title = StringTool.StripHtmlTags(title);
             AddMetaProperty("og:title", title);
