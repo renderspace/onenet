@@ -13,25 +13,9 @@ using One.Net.BLL;
 
 namespace OneMainWeb.Controls
 {
-    /// <summary>
-    /// ****** IMPORTANT NOTE!!! ******
-    /// What is INamingContainer?
-    /// INamingContainer is a marker interface, meaning it has no methods to implement. 
-    /// A control "implements" this interface to let the framework know that it plans on giving it's child controls really specific IDs. 
-    /// It's important to the framework, because if two instances of the same control are on the same page, 
-    /// and the control gives its child controls some specific ID, there'd end up being multiple controls with the same ID on the page, 
-    /// which is going to cause problems. 
-    /// So when a Control is a naming container, the UniqueID for all controls within it will have the parent's ID as a prefix. 
-    /// This scopes it to that control. So while a child control might have ID "foo", its UniqueID will be "parentID$foo" (where parentID = the ID of the parent). 
-    /// Now even if this control exists twice on the page, everyone will still have a UniqueID.
-    /// INamingContainer also has the property that any controls within it that do not have a specific ID will have its ID automatically determined based on a counter that is scoped to it. 
-    /// So if there were two naming containers, foo and bar, they might have child controls with UniqueIDs foo$ctl01 and bar$ctl01. 
-    /// Each naming container gets its own little counter.
-    /// ****** END IMPORTANT NOTE ******
-    /// </summary>
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:LanguageSelector runat=server></{0}:LanguageSelector>")]
-    public class LanguageSelector : WebControl, INamingContainer // HierarchicalDataBoundControl
+    public class LanguageSelector : WebControl
     {
         protected readonly static BWebsite webSiteB = new BWebsite();
         protected static Logger log = LogManager.GetCurrentClassLogger();
@@ -104,11 +88,6 @@ namespace OneMainWeb.Controls
             }
             
             base.Render(writer);
-        }
-
-        private static string CreateIndentTabs(int indentLevel)
-        {
-            return new string('\t', indentLevel);
         }
     }
 }
