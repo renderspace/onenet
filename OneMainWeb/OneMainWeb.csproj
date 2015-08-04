@@ -52,6 +52,9 @@
     <Reference Include="AdaptedCSSFriendly">
       <HintPath>..\packages\AdaptedCSSFriendly.1.0.1\lib\net40\AdaptedCSSFriendly.dll</HintPath>
     </Reference>
+    <Reference Include="CKFinder">
+      <HintPath>..\packages\CKFinder.library.1.0.0.0\lib\net45\CKFinder.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
