@@ -18,33 +18,26 @@ namespace One.Net.BLL
             Settings = new Dictionary<string, BOSetting>();
         }
 
-        public BOWebSite(int id, int contentID) 
-            : base()
-		{
-			this.id = id;
-			this.ContentId = contentID;
-		}
-
 		public Dictionary<string, BOSetting> Settings { get; set;}
 
-        public string GetSettingValue(string key)
+        public string GetStringSetting(string key)
         {
             if (Settings == null || Settings.Count == 0 || !Settings.ContainsKey(key))
                 return "";
             return Settings[key].Value;
         }
 
-        public int GetSettingValueInt(string key)
+        public int GetIntegerSetting(string key)
         {
-            var result = -1;
-            var v = GetSettingValue(key);
+            var result = 0;
+            var v = GetStringSetting(key);
             int.TryParse(v, out result);
             return result;
         }
 
-        public bool GetSettingValueBool(string key)
+        public bool GetBooleanSetting(string key)
         {
-            var result = FormatTool.GetBoolean(GetSettingValue(key));
+            var result = FormatTool.GetBoolean(GetStringSetting(key));
             return result;
         }
 
@@ -63,7 +56,7 @@ namespace One.Net.BLL
         {
             get
             {
-                return GetSettingValueInt("WebSiteGroup");
+                return GetIntegerSetting("WebSiteGroup");
             }
             set
             {
@@ -98,7 +91,7 @@ namespace One.Net.BLL
         {
             get 
             {
-                return GetSettingValueInt("PrimaryLanguageId");
+                return GetIntegerSetting("PrimaryLanguageId");
             }
             set 
             {
@@ -130,7 +123,7 @@ namespace One.Net.BLL
         {
             get
             {
-                var url = GetSettingValue("PreviewUrl");
+                var url = GetStringSetting("PreviewUrl");
                 if (url.StartsWith("http"))
                     return url;
                 return "";
@@ -150,7 +143,7 @@ namespace One.Net.BLL
         {
             get
             {
-                var url = GetSettingValue("ProductionUrl");
+                var url = GetStringSetting("ProductionUrl");
                 if (url.StartsWith("http"))
                     return url;
                 return "";
@@ -171,7 +164,7 @@ namespace One.Net.BLL
         {
             get
             {
-                var appIdStr = GetSettingValue("FacebookApplicationID");
+                var appIdStr = GetStringSetting("FacebookApplicationID");
                 long appId = 0;
                 long.TryParse(appIdStr, out appId);
                 return appId;
@@ -182,7 +175,7 @@ namespace One.Net.BLL
         { 
             get 
             {
-                var code = GetSettingValue("GoogleAnalyticsWebPropertyID");
+                var code = GetStringSetting("GoogleAnalyticsWebPropertyID");
                 if (!(code.Equals("UA-xxxx-x") || code.Length < 6))
                     return true;
                 return false;
@@ -193,7 +186,7 @@ namespace One.Net.BLL
         {
             get
             {
-                return GetSettingValueBool("AdvertisingFeatures");
+                return GetBooleanSetting("AdvertisingFeatures");
             }
         }
     }
