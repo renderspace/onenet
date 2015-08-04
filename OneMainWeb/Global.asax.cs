@@ -28,6 +28,7 @@ using OneMainWeb.Models;
 using OneMainWeb.Base;
 using System.Collections.Specialized;
 using One.Net.BLL.Web;
+using System.Data.Entity;
 
 namespace OneMainWeb
 {
@@ -65,6 +66,8 @@ namespace OneMainWeb
         {
             Version version = this.GetType().BaseType.Assembly.GetName().Version;
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
+            Database.SetInitializer<ApplicationDbContext>(null);
+
 
             TByNumberPathProvider pathProvider = new TByNumberPathProvider();
             System.Web.Hosting.HostingEnvironment.RegisterVirtualPathProvider(pathProvider);

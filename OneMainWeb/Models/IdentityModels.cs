@@ -24,6 +24,7 @@ namespace OneMainWeb.Models
     {
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
+            
         }
         public DbSet<IdentityUserLogin> Logins { get; set; }
 
@@ -35,11 +36,12 @@ namespace OneMainWeb.Models
             return users;
         }
 
+        /*
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // modelBuilder.Configurations.Add( <EFConfiguration>(new EFConfiguration()); 
-        }
+            // reference: modelBuilder.Configurations.Add( <EFConfiguration>(new EFConfiguration()); 
+        }*/
     }
 
     public static class IdentityManager
