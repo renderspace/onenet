@@ -60,6 +60,10 @@
       <file src="App_Browsers\one.browser" target="content\App_Browsers\one.browser" />
       <file src="App_Data\blank.txt" target="content\App_Data\blank.txt" />
 
+      <file src="site_specific\ck.css" target="content\site_specific\ck.css" />
+      <file src="site_specific\ckstyles.js" target="content\site_specific\ckstyles.js" />
+      
+
       <file src="JavaScript\**.js" target="content\JavaScript" />
 
       <file src="Res\**.gif" target="content\Res" />
