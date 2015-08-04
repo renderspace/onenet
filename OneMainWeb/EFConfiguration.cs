@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OneMainWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.SqlServer;
@@ -12,6 +13,7 @@ namespace OneMainWeb
         public EFConfiguration()
         {
             SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy());
+            // Database.SetInitializer<ApplicationDbContext>(null);
         }
     }
 }
