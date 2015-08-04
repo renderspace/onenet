@@ -373,14 +373,13 @@ WHERE a2.publish = @publishFlag ";
             string sql =
                 @"
                     ;WITH ArticleCTE(title, subtitle, teaser, html, principal_created_by, date_created, principal_modified_by, 
-                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, countPublished, commentCount, RowNumber)
+                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, countPublished, RowNumber)
                     AS
                     (
 		                    SELECT	DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 				                    c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
 				                    a.display_date, a.marked_for_deletion, a.changed, 
                                     ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished,
-                                    ( select count(ct.id) FROM [dbo].[comments] ct WHERE ct.content_fk_id=a.content_fk_id AND ct.publish=a.publish) commentCount,
                                     ROW_NUMBER() OVER (";
             if (state.SortField.Length > 1)
                 sql += "  ORDER BY " + state.SortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
