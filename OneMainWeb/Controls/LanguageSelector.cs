@@ -83,13 +83,9 @@ namespace OneMainWeb.Controls
             {
                 if (website.WebSiteGroup == Group && Group > -1)
                 {
-                    var websiteUrl = "";
-                    if (PublishFlag)
-                        websiteUrl = website.ProductionUrl;
-                    else
-                        websiteUrl = website.PreviewUrl;
+                    var websiteUrl = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
-                    if (string.IsNullOrEmpty(websiteUrl))
+                    if (!string.IsNullOrEmpty(websiteUrl))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "lang-" + website.Languge.TwoLetterISOLanguageName);
                         writer.RenderBeginTag("li");
