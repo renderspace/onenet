@@ -425,11 +425,12 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     gallery.Images = imagesOnThisPage;
                 }
 
-                if (mod is IBasicSEOProvider)
+                // only take the information from the first IBasicSEOProvider. Ignore the rest.
+                if (mod is IBasicSEOProvider && string.IsNullOrWhiteSpace(providedPageName))
                 {
                     IBasicSEOProvider pageNameProvider = (IBasicSEOProvider)mod;
                     if (!string.IsNullOrWhiteSpace(pageNameProvider.Title))
-                        providedPageName += pageNameProvider.Title+ " ";
+                        providedPageName += pageNameProvider.Title + " ";
                     if (!string.IsNullOrWhiteSpace(pageNameProvider.Description))
                         providedDescription += pageNameProvider.Description + " ";
 
