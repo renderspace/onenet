@@ -12,6 +12,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 
 using One.Net.BLL;
 using One.Net.BLL.Model.Web;
@@ -482,28 +483,18 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             RenderLanguage();
 
             websiteB = new BWebsite();
-            var list = websiteB.List();
-
-            if (list != null)
+            var altLangWebsites = websiteB.List().Where(w => w.WebSiteGroup == CurrentWebsite.WebSiteGroup && w.Id != CurrentWebsite.Id);
+            foreach (var website in altLangWebsites)
             {
-                foreach (var website in list)
-                {
-                    if (CurrentWebsite != null && 
-                        website.WebSiteGroup == CurrentWebsite.WebSiteGroup && 
-                        CurrentWebsite.WebSiteGroup > 0 &&
-                        website.Id != CurrentWebsite.Id)
-                    {
-                        var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
+                var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
-                        if (!string.IsNullOrEmpty(websiteUri))
-                        {
-                            var linkTag = new HtmlLink();
-                            linkTag.Attributes.Add("rel", "alternate");
-                            linkTag.Href = HttpUtility.HtmlEncode(websiteUri);
-                            linkTag.Attributes.Add("hreflang", website.Language.TwoLetterISOLanguageName);
-                            Header.Controls.Add(linkTag);
-                        }
-                    }
+                if (!string.IsNullOrEmpty(websiteUri))
+                {
+                    var linkTag = new HtmlLink();
+                    linkTag.Attributes.Add("rel", "alternate");
+                    linkTag.Href = HttpUtility.HtmlEncode(websiteUri);
+                    linkTag.Attributes.Add("hreflang", website.Language.TwoLetterISOLanguageName);
+                    Header.Controls.Add(linkTag);
                 }
             }
 

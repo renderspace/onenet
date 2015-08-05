@@ -811,7 +811,7 @@ namespace One.Net.BLL
 
         #endregion
 
-        public List<BOWebSite> List()
+        public IEnumerable<BOWebSite> List()
         {
             List<BOWebSite> websites = cache.Get<List<BOWebSite>>(CACHE_SITE_LIST);
             if (websites == null)
