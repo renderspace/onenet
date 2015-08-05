@@ -570,6 +570,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             // 1. provided
             // 2. page
             var title = "";
+            MenuTitle = "";
             if (!string.IsNullOrWhiteSpace(CurrentPage.Title))
             {
                 if (!string.IsNullOrWhiteSpace(CurrentWebsite.Title))
@@ -577,7 +578,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     title = CurrentWebsite.Title + " - ";
                 }
                 title += CurrentPage.Title;
-                MenuTitle = title;
+                MenuTitle = CurrentPage.Title;
             }
             if (!string.IsNullOrWhiteSpace(CurrentPage.SeoTitle))
                 title = CurrentPage.SeoTitle;
