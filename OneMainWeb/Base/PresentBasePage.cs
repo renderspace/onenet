@@ -188,8 +188,16 @@ ga('create', '" + code + @"', 'auto');";
                 customHeadCode += "<link rel=\"" + rel + "\" href=\"" + link + "\" ";
                 customHeadCode += string.IsNullOrWhiteSpace(mobileMedia) || isMobile ? "/>" : "media=\"" + mobileMedia + "\" />";
             }
-
-            
+            if (!PublishFlag)
+            {
+                Version version = Page.GetType().BaseType.Assembly.GetName().Version;
+                string debugBanner = string.Format(@"<div class=""preview_banner"" style=""z-index: 100; padding: 10px 10px 10px 10px; Position: absolute;Bottom: 0;Right: 0; 
+Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; background-color: Gray; "">
+<span style=""font-size: 100%"">One.NET v{0}</span><br/>
+<span style=""font-size: 100%"">{1} {2}</span>
+</div>", version, Request.Browser.Browser, Request.Browser.Version);
+                customBodyCode += debugBanner;
+            }
 
             log.Debug("PresentBasePage render start");
             if (!string.IsNullOrEmpty(customHeadCode) || !string.IsNullOrEmpty(customBodyCode) || !string.IsNullOrEmpty(customAfterBodyStartCode))
@@ -285,8 +293,6 @@ ga('create', '" + code + @"', 'auto');";
                         Response.End();
                     }
                 }
-                if (!PublishFlag)
-                    InsertDebugBanner();
 
                 Form.Attributes.Add("class",
                     Thread.CurrentThread.CurrentCulture.Name + " page" + CurrentPage.Id + " depth" + CurrentPage.Level +
@@ -392,20 +398,6 @@ ga('create', '" + code + @"', 'auto');";
             { 
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
             }
-        }
-
-        private void InsertDebugBanner()
-        {
-            Literal lit = new Literal();
-            Version version = Page.GetType().BaseType.Assembly.GetName().Version;
-            string szHtml = string.Format(@"<div class=""preview_banner"" style=""z-index: 100; padding: 10px 10px 10px 10px; Position: absolute;Bottom: 0;Right: 0; 
-Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; background-color: Gray; "">
-<span style=""font-size: 100%"">One.NET v{0}</span><br/>
-<span style=""font-size: 100%"">{1} {2}</span>
-</div>", version, Request.Browser.Browser, Request.Browser.Version);
-            lit.Text = szHtml;
-            if (Master.Controls.Count > 1)
-                Master.Controls.AddAt(Master.Controls.Count - 2, lit);
         }
 
         protected override void OnLoadComplete(EventArgs e)
