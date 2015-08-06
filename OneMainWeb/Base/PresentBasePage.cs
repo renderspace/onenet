@@ -95,6 +95,7 @@ namespace OneMainWeb
         {
             var customBodyCode = "";
             var customHeadCode = "";
+            var customAfterBodyStartCode = "";
 
             if (CurrentWebsite.HasGoogleAnalytics)
             {
@@ -144,7 +145,10 @@ ga('create', '" + code + @"', 'auto');";
                 customHeadCode += CurrentWebsite.Settings["CustomHeadJs"].Value;
             }
 
-            var customAfterBodyStartCode = "";
+            if (CurrentWebsite.Settings.ContainsKey("CustomAfterBodyJs"))
+            {
+                customAfterBodyStartCode += CurrentWebsite.Settings["CustomAfterBodyJs"].Value;
+            }
 
             if (CurrentWebsite.FacebookApplicationID > 0)
             {
