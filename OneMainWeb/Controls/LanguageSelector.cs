@@ -17,11 +17,18 @@ namespace OneMainWeb.Controls
     [ToolboxData("<{0}:LanguageSelector runat=server></{0}:LanguageSelector>")]
     public class LanguageSelector : WebControl
     {
-        protected readonly static BWebsite webSiteB = new BWebsite();
-        protected static Logger log = LogManager.GetCurrentClassLogger();
-        private bool controlsRendered = false;
+        public enum WebSiteDisplayField
+        {
+            TwoLetterCode,
+            ThreeLetterCode,
+            NativeName,
+            EnglishName
+        }
 
+        public WebSiteDisplayField DisplayField { get; set; }
         public int Group { get; set; }
+
+        protected readonly static BWebsite webSiteB = new BWebsite();
 
         public LanguageSelector()
         {
@@ -76,9 +83,27 @@ namespace OneMainWeb.Controls
                         writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUri);
                         writer.AddAttribute(HtmlTextWriterAttribute.Title, website.Title);
                         writer.RenderBeginTag("a");
-                        writer.Write(website.Title);
-                        writer.RenderEndTag();
 
+                        switch (DisplayField)
+                        {
+                            case WebSiteDisplayField.TwoLetterCode :
+                                writer.Write(website.Language.TwoLetterISOLanguageName);
+                                break;
+                            case WebSiteDisplayField.ThreeLetterCode:
+                                writer.Write(website.Language.ThreeLetterISOLanguageName);
+                                break;
+                            case WebSiteDisplayField.NativeName:
+                                writer.Write(website.Language.NativeName);
+                                break;
+                            case WebSiteDisplayField.EnglishName:
+                                writer.Write(website.Language.EnglishName);
+                                break;
+                            default:
+                                writer.Write(website.Language.TwoLetterISOLanguageName);
+                                break;
+                        }
+                        
+                        writer.RenderEndTag();
                         writer.RenderEndTag();
                     }
                 }
