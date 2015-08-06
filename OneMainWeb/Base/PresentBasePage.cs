@@ -172,7 +172,7 @@ ga('create', '" + code + @"', 'auto');";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>";
-                customAfterBodyStartCode = fbCode;
+                customAfterBodyStartCode += fbCode;
             }
 
             if (CurrentPage.Settings.ContainsKey("RelatedContentLink") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["RelatedContentLink"].Value))
