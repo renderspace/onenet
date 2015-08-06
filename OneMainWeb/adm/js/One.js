@@ -699,7 +699,6 @@ $(document).ready(function () {
     });
 
     $('#audit-history').on('show.bs.modal', function (e) {
-        //var selectedItemId =  $('#audit-history').data('selected-item-id');
         var selectedItemId = $(this).data('content-id');
         var languageId = $(this).data('language-id');
         if (selectedItemId > 0) {
@@ -713,7 +712,6 @@ $(document).ready(function () {
                     $('#audit-history-table tbody').empty();
                     $.map(data, function (item) {
                         $('#audit-history-table tbody').append('<tr><td>' + item.DisplayLastChanged + '</td><td>' + item.Title + '</td></tr>');
-                        trace(item);
                     });
                 },
                 error: logError
