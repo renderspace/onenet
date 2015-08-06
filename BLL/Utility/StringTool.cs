@@ -16,6 +16,20 @@ namespace One.Net.BLL
     {
         private static readonly Random random = new Random();
 
+        public static T ParseToEnum<T>(this string str) where T : struct
+        {
+            try
+            {
+                T res = (T)Enum.Parse(typeof(T), str);
+                if (!Enum.IsDefined(typeof(T), res)) return default(T);
+                return res;
+            }
+            catch
+            {
+                return default(T);
+            }
+        } 
+
         public static string Truncate(this string value, int maxChars)
         {
             return value.Length <= maxChars ? value : value.Substring(0, maxChars) + " ...";

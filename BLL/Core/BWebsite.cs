@@ -572,7 +572,7 @@ namespace One.Net.BLL
 
             publishedInstance = instance;
 
-            publishedInstance.Settings["ContentTemplateId"] = new BOSetting { Name = "ContentTemplateId", Type = "Int", Value = contentTemplate.Id.Value.ToString(), UserVisibility = BOSetting.USER_VISIBILITY_SPECIAL };
+            publishedInstance.Settings["ContentTemplateId"] = new BOSetting { Name = "ContentTemplateId", Type = "Int", Value = contentTemplate.Id.Value.ToString(), UserVisibility = Visibility.SPECIAL };
             publishedInstance.PublishFlag = true;
             ChangeModuleInstance(publishedInstance, languageId, true);
         }
@@ -597,7 +597,7 @@ namespace One.Net.BLL
             intContentB.Change(content);
             publishedInstance = instance;
 
-            publishedInstance.Settings["ContentId"] = new BOSetting { Name = "ContentId", Type = "Int", Value = content.ContentId.Value.ToString(), UserVisibility = BOSetting.USER_VISIBILITY_SPECIAL };
+            publishedInstance.Settings["ContentId"] = new BOSetting { Name = "ContentId", Type = "Int", Value = content.ContentId.Value.ToString(), UserVisibility = Visibility.SPECIAL  };
             publishedInstance.PublishFlag = true;
             ChangeModuleInstance(publishedInstance, languageId, true);
         }
@@ -761,7 +761,7 @@ namespace One.Net.BLL
                             content.Html = "";
                             content.LanguageId = LanguageId;
                             intContentB.Change(content);
-                            mi.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
+                            mi.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), Visibility.SPECIAL);
                             ChangeModuleInstance(mi);
                         }
                     }

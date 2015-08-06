@@ -90,7 +90,7 @@ namespace One.Net.BLL
             }
             set 
             {
-                BOSetting setting = new BOSetting("PrimaryLanguageId", "int", value.ToString(), BOSetting.USER_VISIBILITY_SPECIAL);
+                BOSetting setting = new BOSetting("PrimaryLanguageId", "int", value.ToString(), Visibility.SPECIAL);
                 Settings["PrimaryLanguageId"] = setting;
             }
         }
@@ -131,7 +131,7 @@ namespace One.Net.BLL
                 if (Settings.ContainsKey("PreviewUrl"))
                     Settings["PreviewUrl"].Value = value;
                 else
-                    Settings.Add("PreviewUrl", new BOSetting("PreviewUrl", "Url", value, BOSetting.USER_VISIBILITY_NORMAL));
+                    Settings.Add("PreviewUrl", new BOSetting("PreviewUrl", "Url", value, Visibility.NORMAL));
             }
         }
         public string ProductionUrl
@@ -151,7 +151,7 @@ namespace One.Net.BLL
                 if (Settings.ContainsKey("ProductionUrl"))
                     Settings["ProductionUrl"].Value = value;
                 else
-                    Settings.Add("ProductionUrl", new BOSetting("ProductionUrl", "Url", value, BOSetting.USER_VISIBILITY_NORMAL));
+                    Settings.Add("ProductionUrl", new BOSetting("ProductionUrl", "Url", value, Visibility.NORMAL));
             }
         }
 

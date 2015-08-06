@@ -3,58 +3,35 @@ using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
+    public enum Visibility { NORMAL, COMMON, SPECIAL, MULTILINE };
+
 	[Serializable]
 	public class BOSetting
-	{
-        public const string USER_VISIBILITY_NORMAL = "NORMAL";
-        public const string USER_VISIBILITY_COMMON = "COMMON";
-        public const string USER_VISIBILITY_SPECIAL = "SPECIAL";
-        public const string USER_VISIBILITY_MULTILINE = "MULTILINE";
+	{    
+        private Dictionary<string, string> options;
 
-        private string name;
-        private string type;
-        private string value;
-        private string userVisibility;
-	    private Dictionary<string, string> options;
-		
-		public BOSetting()
-		{}
+        public BOSetting()
+        { }
 
-        public BOSetting(string settingName, string settingType, string settingValue, string userVisibility)
-		{
-			this.name = settingName;
-			this.type = settingType;
-            this.value = settingValue;
-            this.userVisibility = userVisibility;
-		}
-		
-		public string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
-
-		public string Type
-		{
-			get { return type; }
-			set { type = value; }
-		}
-
-        public string Value
+        public BOSetting(string settingName, string settingType, string settingValue, Visibility userVisibility)
         {
-            get { return this.value; }
-            set { this.value = value; }
+            Name = settingName;
+            Type = settingType;
+            Value = settingValue;
+            UserVisibility = userVisibility;
         }
+		
+		public string Name { get; set; }
 
-        public string UserVisibility
-        {
-            get { return this.userVisibility.ToUpper(); }
-            set { this.userVisibility = value; }
-        }
+        public string Type { get; set; }
+
+        public string Value { get; set; }
+
+        public Visibility UserVisibility { get; set; }
 
         public bool IsVisible
         {
-            get { return UserVisibility != BOSetting.USER_VISIBILITY_SPECIAL; }
+            get { return UserVisibility != Visibility.SPECIAL; }
         }
 
 	    public Dictionary<string, string> Options
