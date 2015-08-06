@@ -5,7 +5,7 @@ namespace One.Net.BLL
 {
     public enum VisibilityEnum { NORMAL, COMMON, SPECIAL, MULTILINE };
 
-    public enum SettingTypeEnum { Int, Bool, PageId, Image, ImageTemplate, CSInteger, CSString, String, Url}
+    public enum SettingTypeEnum { Int, Bool, Image, ImageTemplate, CSInteger, CSString, String, Url };
 
 	[Serializable]
 	public class BOSetting
@@ -15,7 +15,7 @@ namespace One.Net.BLL
         public BOSetting()
         { }
 
-        public BOSetting(string settingName, string settingType, string settingValue, VisibilityEnum userVisibility)
+        public BOSetting(string settingName, SettingTypeEnum settingType, string settingValue, VisibilityEnum userVisibility)
         {
             Name = settingName;
             Type = settingType;
@@ -25,7 +25,7 @@ namespace One.Net.BLL
 		
 		public string Name { get; set; }
 
-        public string Type { get; set; }
+        public SettingTypeEnum Type { get; set; }
 
         public string Value { get; set; }
 
