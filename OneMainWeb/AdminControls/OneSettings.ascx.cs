@@ -159,7 +159,7 @@ namespace OneMainWeb.AdminControls
                     TextBox1.Text = setting.Value;
                     LabelValue.Text = setting.Value;
 
-                    if (setting.UserVisibility != Visibility.SPECIAL && setting.UserVisibility != Visibility.MULTILINE)
+                    if (setting.UserVisibility != VisibilityEnum.SPECIAL && setting.UserVisibility != VisibilityEnum.MULTILINE)
                     {
                         if (setting.HasOptions || setting.Type == "ImageTemplate")
                         {
@@ -238,7 +238,7 @@ namespace OneMainWeb.AdminControls
                             }
                         }
                     }
-                    else if (setting.UserVisibility == Visibility.MULTILINE)
+                    else if (setting.UserVisibility == VisibilityEnum.MULTILINE)
                     {
                         switch (setting.Type)
                         {
@@ -276,7 +276,7 @@ namespace OneMainWeb.AdminControls
 
                     BOSetting setting = Settings[LiteralKey.Text];
 
-                    if (setting.UserVisibility != Visibility.SPECIAL && setting.UserVisibility != Visibility.MULTILINE)
+                    if (setting.UserVisibility != VisibilityEnum.SPECIAL && setting.UserVisibility != VisibilityEnum.MULTILINE)
                     {
                         switch (setting.Type)
                         {
@@ -330,7 +330,7 @@ namespace OneMainWeb.AdminControls
                                 }
                         }
                     }
-                    else if (setting.UserVisibility == Visibility.MULTILINE)
+                    else if (setting.UserVisibility == VisibilityEnum.MULTILINE)
                     {
                         switch (setting.Type)
                         {

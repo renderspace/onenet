@@ -95,7 +95,7 @@ namespace One.Net.BLL
                 content.Html = htmlContent;
                 content.LanguageId = LanguageId;
                 contentB.Change(content);
-                instance.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), Visibility.SPECIAL);
+                instance.Settings["ContentId"] = new BOSetting("ContentId", "Int", content.ContentId.Value.ToString(), VisibilityEnum.SPECIAL);
             }
 
             webSiteB.ChangeModuleInstance(instance);
