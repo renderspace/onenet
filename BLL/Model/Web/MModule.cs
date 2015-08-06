@@ -124,7 +124,7 @@ namespace One.Net.BLL.Web
                 return new List<int>();
 
             BOSetting setting = Settings[settingName];
-            if (!(setting.Type.Equals("CSInteger")))
+            if (!(setting.Type.Equals(SettingTypeEnum.CSInteger)))
             {
                 throw new ApplicationException("not a string/IntList setting; probably error in database");
             }
@@ -137,7 +137,7 @@ namespace One.Net.BLL.Web
                 return new string[0];
 
             BOSetting setting = Settings[settingName];
-            if (!(setting.Type.Equals("CSString")))
+            if (!(setting.Type.Equals(SettingTypeEnum.CSString)))
             {
                 throw new ApplicationException("not a comma separated strings setting; probably error in database");
             }
@@ -151,7 +151,7 @@ namespace One.Net.BLL.Web
                 return defaultValue;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("String") && !(setting.Type.Equals("CSInteger")) && !(setting.Type.Equals("Url")))
+            if (!setting.Type.Equals(SettingTypeEnum.String) && !(setting.Type.Equals(SettingTypeEnum.CSInteger)) && !(setting.Type.Equals(SettingTypeEnum.Url)))
             {
                 throw new ApplicationException("not a String setting; probably error in database " + settingName);
             }
@@ -164,7 +164,7 @@ namespace One.Net.BLL.Web
                 return null;
 
             BOSetting setting = Settings[settingName];
-            if (!(setting.Type.Equals("ImageTemplate") || setting.Type.Equals("Int")))
+            if (!(setting.Type.Equals(SettingTypeEnum.ImageTemplate) || setting.Type.Equals(SettingTypeEnum.Int)))
             {
                 throw new ApplicationException("not a Image template setting; probably error in database");
             }
@@ -186,7 +186,7 @@ namespace One.Net.BLL.Web
                 return -1;
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("Int") && !setting.Type.Equals("ImageTemplate"))
+            if (!setting.Type.Equals(SettingTypeEnum.Int) && !setting.Type.Equals(SettingTypeEnum.ImageTemplate))
             {
                 throw new ApplicationException("not a Int setting; probably error in database");
             }
@@ -201,7 +201,7 @@ namespace One.Net.BLL.Web
             }
 
             BOSetting setting = Settings[settingName];
-            if (!setting.Type.Equals("Bool"))
+            if (!setting.Type.Equals(SettingTypeEnum.Bool))
             {
                 throw new ApplicationException("not a boolean setting; probably error in database");
             }
