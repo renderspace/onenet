@@ -219,7 +219,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 if (!string.IsNullOrEmpty(customHeadCode))
                     sContent = sContent.Replace("</head>", customHeadCode + "</head>");
                 if (!string.IsNullOrEmpty(customAfterBodyStartCode))
+                { 
                     sContent = sContent.Replace("<body>", "<body>" + customAfterBodyStartCode );
+                    sContent = sContent.Replace("<body role=\"document\">", "<body role=\"document\">" + customAfterBodyStartCode );
+                }
+                    
                 //Now output it to the page, if you want
                 writer.Write(sContent);
             }
