@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace One.Net.BLL
 {
-    public enum Visibility { NORMAL, COMMON, SPECIAL, MULTILINE };
+    public enum VisibilityEnum { NORMAL, COMMON, SPECIAL, MULTILINE };
+
+    public enum SettingTypeEnum { Int, Bool, PageId, Image, ImageTemplate, CSInteger, CSString, String, Url}
 
 	[Serializable]
 	public class BOSetting
@@ -13,7 +15,7 @@ namespace One.Net.BLL
         public BOSetting()
         { }
 
-        public BOSetting(string settingName, string settingType, string settingValue, Visibility userVisibility)
+        public BOSetting(string settingName, string settingType, string settingValue, VisibilityEnum userVisibility)
         {
             Name = settingName;
             Type = settingType;
@@ -27,11 +29,11 @@ namespace One.Net.BLL
 
         public string Value { get; set; }
 
-        public Visibility UserVisibility { get; set; }
+        public VisibilityEnum UserVisibility { get; set; }
 
         public bool IsVisible
         {
-            get { return UserVisibility != Visibility.SPECIAL; }
+            get { return UserVisibility != VisibilityEnum.SPECIAL; }
         }
 
 	    public Dictionary<string, string> Options

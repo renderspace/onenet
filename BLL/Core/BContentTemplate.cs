@@ -41,7 +41,7 @@ namespace One.Net.BLL
 
             if (instance != null && instance.Settings != null && contentTemplateId <= 0)
             {
-                instance.Settings["ContentTemplateId"] = new BOSetting("ContentTemplateId", "Int", contentTemplate.Id.Value.ToString(), Visibility.SPECIAL);
+                instance.Settings["ContentTemplateId"] = new BOSetting("ContentTemplateId", "Int", contentTemplate.Id.Value.ToString(), VisibilityEnum.SPECIAL);
                 webSiteB.ChangeModuleInstance(instance);
             }
         }
