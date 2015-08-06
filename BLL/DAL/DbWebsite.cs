@@ -210,7 +210,7 @@ namespace One.Net.BLL.DAL
                 {
                     while (rdr.Read())
                     {
-                        BOSetting setting = new BOSetting(rdr.GetString(0), rdr.GetString(2), rdr.GetString(1), rdr.GetString(3).ParseToEnum<VisibilityEnum>());
+                        BOSetting setting = new BOSetting(rdr.GetString(0), rdr.GetString(2).ParseToEnum<SettingTypeEnum>(), rdr.GetString(1), rdr.GetString(3).ParseToEnum<VisibilityEnum>());
                         site.Settings.Add(rdr.GetString(0), setting);
                     }
                 }
@@ -549,7 +549,7 @@ namespace One.Net.BLL.DAL
             {
                 while (rdr.Read())
                 {
-                    page.Settings.Add(rdr["SettingName"].ToString(), new BOSetting(rdr["SettingName"].ToString(), rdr["Type"].ToString(), rdr["Value"].ToString(), rdr["UserVisibility"].ToString().ParseToEnum<VisibilityEnum>()));
+                    page.Settings.Add(rdr["SettingName"].ToString(), new BOSetting(rdr["SettingName"].ToString(), rdr["Type"].ToString().ParseToEnum<SettingTypeEnum>(), rdr["Value"].ToString(), rdr["UserVisibility"].ToString().ParseToEnum<VisibilityEnum>()));
                 }
             }
         }
@@ -872,7 +872,7 @@ ORDER BY name ASC";
                         instance.DateCreated = rdr["date_created"] == DBNull.Value ? DateTime.MinValue : (DateTime)rdr["date_created"];
                     }
                     string settingKey = rdr["SettingName"].ToString();
-                    BOSetting setting = new BOSetting(settingKey, rdr["type"].ToString(), rdr["value"].ToString(), rdr["user_visibility"].ToString().ParseToEnum<VisibilityEnum>());
+                    BOSetting setting = new BOSetting(settingKey, rdr["type"].ToString().ParseToEnum<SettingTypeEnum>(), rdr["value"].ToString(), rdr["user_visibility"].ToString().ParseToEnum<VisibilityEnum>());
 
                     // adding possible options in multipleoptins setting
                     if (rdr["options"] != DBNull.Value && rdr["options"].ToString().Length > 0)

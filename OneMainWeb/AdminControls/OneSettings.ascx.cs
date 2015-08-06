@@ -161,11 +161,11 @@ namespace OneMainWeb.AdminControls
 
                     if (setting.UserVisibility != VisibilityEnum.SPECIAL && setting.UserVisibility != VisibilityEnum.MULTILINE)
                     {
-                        if (setting.HasOptions || setting.Type == "ImageTemplate")
+                        if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate)
                         {
                             PanelInput.Visible = true;
                             DropDownList1.Visible = true;
-                            if (setting.Type == "ImageTemplate")
+                            if (setting.Type == SettingTypeEnum.ImageTemplate)
                             {
                                 var templates = BWebsite.ListTemplates("ImageTemplate");
                                 templates.Add(new BOTemplate { Name = "No image", Id = 0 });
@@ -193,33 +193,33 @@ namespace OneMainWeb.AdminControls
                         {
                             switch (setting.Type)
                             {
-                                case "Int":
+                                case SettingTypeEnum.Int:
                                     {
                                         TextBox1.CssClass = "form-control number";
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
                                         break;
                                     }
-                                case "String":
+                                case SettingTypeEnum.String:
                                     {
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
                                         break;
                                     }
-                                case "Bool":
+                                case SettingTypeEnum.Bool:
                                     {
                                         PanelCheckbox.Visible = true;
                                         CheckBox1.Checked = FormatTool.GetBoolean(setting.Value);
                                         break;
                                     }
-                                case "Url":
+                                case SettingTypeEnum.Url:
                                     {
                                         TextBox1.CssClass = "form-control absrelurl";
                                         PanelInput.Visible = true;
                                         TextBox1.Visible = true;
                                         break;
                                     }
-                                case "Image":
+                                case SettingTypeEnum.Image:
                                     {
                                         PanelInput.Visible = true;
                                         PanelFile.Visible = true;
@@ -242,7 +242,7 @@ namespace OneMainWeb.AdminControls
                     {
                         switch (setting.Type)
                         {
-                            case "String":
+                            case SettingTypeEnum.String:
                                 {
                                     PanelInput.Visible = true;
                                     TextBox1.Visible = true;
@@ -280,7 +280,7 @@ namespace OneMainWeb.AdminControls
                     {
                         switch (setting.Type)
                         {
-                            case "Int":
+                            case SettingTypeEnum.Int:
                                 {
                                     if (setting.HasOptions)
                                     {
@@ -294,17 +294,12 @@ namespace OneMainWeb.AdminControls
                                     }
                                     break;
                                 }
-                            case "Bool":
+                            case SettingTypeEnum.Bool:
                                 {
                                     setting.Value = CheckBox1.Checked.ToString();
                                     break;
                                 }
-                            case "PageId":
-                                {
-                                    setting.Value = FormatTool.GetInteger(TextBox1.Text).ToString();
-                                    break;
-                                }
-                            case "Image":
+                            case SettingTypeEnum.Image:
                                 {
 #warning this will not work for multiple images on same page.
                                     if (Request.Files.Count > 0 && Request.Files[0] != null)
@@ -322,7 +317,7 @@ namespace OneMainWeb.AdminControls
                                 }
                             default:
                                 {
-                                    if (setting.HasOptions || setting.Type == "ImageTemplate")
+                                    if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate)
                                         setting.Value = DropDownList1.SelectedValue;
                                     else
                                         setting.Value = TextBox1.Text;
@@ -334,7 +329,7 @@ namespace OneMainWeb.AdminControls
                     {
                         switch (setting.Type)
                         {
-                            case "String":
+                            case SettingTypeEnum.String:
                                 setting.Value = TextBox1.Text;
                                 break;
                             default: break;
