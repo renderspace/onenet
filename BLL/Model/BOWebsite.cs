@@ -60,6 +60,14 @@ namespace One.Net.BLL
             }
         }
 
+        public string CustomLanguageName
+        {
+            get
+            {
+                return GetStringSetting("CustomLanguageName");
+            }
+        }
+
         public int? RootPageId
         {
             get { return rootPageId; }
