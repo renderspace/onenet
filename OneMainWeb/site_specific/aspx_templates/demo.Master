@@ -1,6 +1,5 @@
 <%@ Master Language="C#" AutoEventWireup="true" Inherits="System.Web.UI.MasterPage" %>
 <%@ Register TagPrefix="Controls" Namespace="OneMainWeb.Controls" Assembly="OneMainWeb" %>
-<%@ Register Src="../custom_modules/CookieConsent.ascx" TagName="CookieConsent" TagPrefix="uc1" %>
 <%@ Import Namespace="One.Net.BLL" %>
 
 <!DOCTYPE HTML>
