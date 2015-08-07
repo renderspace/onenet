@@ -4,11 +4,15 @@
 
 <asp:Repeater runat="server" ID="RepeaterData">
     <HeaderTemplate>
+        <table class="table">
     </HeaderTemplate>
     <FooterTemplate>
+        </table>
     </FooterTemplate>
     <ItemTemplate>
-        <%# ((DataRow)Container.DataItem)["[dbo].[category].[id]"]%>
+        <tr>
+            <td><%# ((DataRow)Container.DataItem)[0] %></td>
+        </tr>
     </ItemTemplate>
 </asp:Repeater>
 <bll:PostbackPager id="PostbackPager1" OnCommand="PostbackPager1_Command" runat="server" MaxColsPerRow="11" NumPagesShown="10" />	

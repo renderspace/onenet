@@ -269,11 +269,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 }
 
                 /*
-                if (!PublishFlag && Master.Controls.Count > 2)
+                if (!PublishFlag && Page.Form.Controls.Count > 0)
                 {
                     var control = LoadControl("~/Controls/AdminWikiMenu.ascx");
-                    Master.Controls[3].Controls.AddAt(0, control);
-                } */
+                    Page.Form.Controls.Add(control);
+                }*/
 
                 if (CurrentPage.RequireSSL && !Request.IsSecureConnection)
                 {
