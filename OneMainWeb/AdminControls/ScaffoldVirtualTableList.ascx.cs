@@ -42,7 +42,7 @@ namespace OneMainWeb.AdminControls
 
         private void DataBind_MenuVirtualTables()
         {
-            var virtualTables = Schema.ListVirtualTables().Where(t => t.ShowOnMenu && t.GroupValues.Contains(CurrentWebSite.WebSiteGroup));
+            var virtualTables = Schema.ListVirtualTables().Where(t => t.ShowOnMenu && (t.GroupValues.Count == 0 || t.GroupValues.Contains(CurrentWebSite.WebSiteGroup)));
             RepeaterTables.DataSource = virtualTables;
             RepeaterTables.DataBind();
         }
