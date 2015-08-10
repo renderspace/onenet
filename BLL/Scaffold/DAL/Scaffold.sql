@@ -20,6 +20,7 @@ CREATE TABLE [dbo].[_virtual_table](
 	[condition] [varchar](255) NOT NULL DEFAULT (''),
 	[friendly_name] [nvarchar](100) NOT NULL DEFAULT (''),
 	[has_pager] [bit] NOT NULL DEFAULT (1),
+	[web_site_groups] [nvarchar](255) NOT NULL DEFAULT (''),
  CONSTRAINT [PK_virtual_table] PRIMARY KEY CLUSTERED  ([id] ASC)
 	WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]

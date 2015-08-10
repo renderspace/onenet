@@ -285,9 +285,10 @@ namespace OneMainWeb.adm
                 var CheckEnablePager = row.FindControl("CheckEnablePager") as CheckBox;
                 var TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
                 var TextBoxWhereCondition = row.FindControl("TextBoxWhereCondition") as TextBox;
+                var TextBoxWebsiteGroups = row.FindControl("TextBoxWebsiteGroups") as TextBox;
                 var DropDownListOrder = row.FindControl("DropDownListOrder") as DropDownList;
 
-                if (CmdDelete != null && CheckBoxShowOnMenu != null && TextBoxFriendlyName != null && TextBoxWhereCondition != null && DropDownListOrder != null)
+                if (TextBoxWebsiteGroups != null && CmdDelete != null && CheckBoxShowOnMenu != null && TextBoxFriendlyName != null && TextBoxWhereCondition != null && DropDownListOrder != null)
                 {
                     if (string.IsNullOrEmpty(TextBoxWhereCondition.Text.Trim()) || TextBoxWhereCondition.Text.Trim().StartsWith("AND", StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -299,6 +300,8 @@ namespace OneMainWeb.adm
                         table.Condition = TextBoxWhereCondition.Text;
                         table.ShowOnMenu = CheckBoxShowOnMenu.Checked;
                         table.HasPager = CheckEnablePager.Checked;
+                        table.Groups = TextBoxWebsiteGroups.Text;
+
                         Schema.ChangeVirtualTable(table);
                     }
                     else

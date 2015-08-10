@@ -53,7 +53,12 @@
                         <ItemTemplate>
                             <asp:DropDownList runat="server" ID="DropDownListOrder" />
                         </ItemTemplate>
-                    </asp:TemplateField>              
+                    </asp:TemplateField>  
+                    <asp:TemplateField HeaderText="Website groups" >
+                        <ItemTemplate>
+                            <asp:TextBox ID="TextBoxWebsiteGroups" runat="server" Text='<%# Eval("Groups") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>  
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton ID="CmdSelect" runat="server" Text="Edit columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" CssClass="btn btn-info btn-xs" />

@@ -38,6 +38,15 @@ namespace One.Net.BLL.Scaffold.Model
         }
 
         public List<string> PrimaryKeys { get; set; }
+        public string Groups { get; set; }
+
+        public List<int> GroupValues
+        {
+            get
+            {
+                return StringTool.SplitStringToIntegers(Groups);
+            }
+        }
 
         public List<VirtualColumn> VirtualColumns { get; set; }
         public List<Relation> Relations { get; set; }
