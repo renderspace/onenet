@@ -170,6 +170,9 @@ namespace OneMainWeb.AdminControls
             if (Item == null)
                 return;
 
+            if (Item.HasAudit)
+                LabelChanged.Text = Item.DisplayLastChanged;
+
             var validationJQueryRules = "";
             var datepickerJQueryCall = "";
 

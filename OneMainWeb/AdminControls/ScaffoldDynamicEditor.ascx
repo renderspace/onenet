@@ -3,6 +3,7 @@
 
 <div class="adminSection form-horizontal validationGroup">
     <asp:Literal ID="LiteralResultsDebug" runat="server" EnableViewState="false"></asp:Literal>
+    <div class="lastChange"><asp:Label runat="server" ID="LabelChanged"></asp:Label></div>
     <asp:PlaceHolder ID="PanelFieldsHolder" runat="server"></asp:PlaceHolder>
     <div class="form-group">
             <div class="col-sm-offset-3 col-sm-9">

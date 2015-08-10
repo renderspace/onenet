@@ -29,6 +29,22 @@ namespace One.Net.BLL.Scaffold.Model
         
         public string Name { get; set; }
 
+        public bool IsModifiedField
+        {
+            get 
+            {
+                return ((Name == "principal_modified") || (Name == "date_modified" && DbType == DataType.DateTime));
+            }
+        }
+
+        public bool IsCreatedField
+        {
+            get
+            {
+                return ((Name == "principal_created") || (Name == "date_created" && DbType == DataType.DateTime && !IsNullable));
+            }
+        }
+
         public string Hint
         {
             get

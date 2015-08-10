@@ -31,6 +31,15 @@ namespace OneMainWeb.AdminControls {
         protected global::System.Web.UI.WebControls.Literal LiteralResultsDebug;
         
         /// <summary>
+        /// LabelChanged control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelChanged;
+        
+        /// <summary>
         /// PanelFieldsHolder control.
         /// </summary>
         /// <remarks>
