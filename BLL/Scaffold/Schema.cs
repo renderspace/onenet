@@ -132,18 +132,11 @@ namespace One.Net.BLL.Scaffold
         {
             var result = new List<VirtualTable>();
             using (var reader = SqlHelper.ExecuteReader(ConnectionString, CommandType.Text,
-                "SELECT id, starting_table, order_col, show_on_menu, condition, friendly_name, has_pager FROM _virtual_table"))
+                "SELECT * FROM _virtual_table"))
             {
                 while (reader.Read())
                 {
-                    var virtualTable = new VirtualTable();
-                    virtualTable.Id = (int)reader["id"];
-                    virtualTable.StartingPhysicalTable = (string)reader["starting_table"];
-                    virtualTable.OrderColumn = (string)reader["order_col"];
-                    virtualTable.ShowOnMenu = (bool)reader["show_on_menu"];
-                    virtualTable.Condition = (string)reader["condition"];
-                    virtualTable.FriendlyName = (string)reader["friendly_name"];
-                    virtualTable.HasPager = (bool)reader["has_pager"];
+                    var virtualTable = PopulateVirtualTable(reader);
                     result.Add(virtualTable);
                 }
             }
@@ -154,21 +147,12 @@ namespace One.Net.BLL.Scaffold
         {
             VirtualTable virtualTable = null;
             using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                                   "SELECT starting_table, show_on_menu, order_col, condition, friendly_name, has_pager FROM _virtual_table WHERE id = @virtualTableId",
+                                   "SELECT * FROM _virtual_table WHERE id = @virtualTableId",
                                    new SqlParameter("@virtualTableId", virtualTableId)))
             {
                 if (reader.Read())
                 {
-                    virtualTable = new VirtualTable
-                    {
-                        Id = virtualTableId,
-                        StartingPhysicalTable = (string)reader["starting_table"],
-                        OrderColumn = (string)reader["order_col"],
-                        ShowOnMenu = (bool)reader["show_on_menu"],
-                        Condition = (string)reader["condition"],
-                        FriendlyName = (string)reader["friendly_name"],
-                        HasPager = (bool)reader["has_pager"]
-                    };
+                    virtualTable = PopulateVirtualTable(reader);
                     virtualTable.PrimaryKeys = ListPrimaryKeys(virtualTable.StartingPhysicalTable);
                 }
             }
@@ -179,6 +163,22 @@ namespace One.Net.BLL.Scaffold
                 ListVirtualColumns(virtualTable);
                 virtualTable.Relations = ListRelations(virtualTable.Id);
             }
+            return virtualTable;
+        }
+
+        private static VirtualTable PopulateVirtualTable(IDataRecord reader)
+        {
+            var virtualTable = new VirtualTable();
+
+            virtualTable.Id = (int)reader["id"];
+            virtualTable.StartingPhysicalTable = (string)reader["starting_table"];
+            virtualTable.OrderColumn = (string)reader["order_col"];
+            virtualTable.ShowOnMenu = (bool)reader["show_on_menu"];
+            virtualTable.Condition = (string)reader["condition"];
+            virtualTable.FriendlyName = (string)reader["friendly_name"];
+            virtualTable.HasPager = (bool)reader["has_pager"];
+            virtualTable.Groups = (string)reader["web_site_groups"];
+
             return virtualTable;
         }
 
@@ -308,15 +308,16 @@ namespace One.Net.BLL.Scaffold
                 new SqlParameter("@ShowOnMenu", virtualTable.ShowOnMenu),
                 new SqlParameter("@Condition", virtualTable.Condition),
                 new SqlParameter("@FriendlyName", virtualTable.FriendlyName),
-                new SqlParameter("@HasPager", virtualTable.HasPager)
+                new SqlParameter("@HasPager", virtualTable.HasPager),
+                new SqlParameter("@Groups", virtualTable.Groups)
 			};
 
             if (virtualTable.Id == 0)
                 p[0].Direction = ParameterDirection.Output;
 
             var sql = virtualTable.Id > 0
-                          ? "UPDATE _virtual_table SET starting_table = @StartingTable, order_col = @OrderColumn, show_on_menu = @ShowOnMenu, condition = @Condition, friendly_name = @FriendlyName, has_pager = @HasPager  WHERE id = @Id"
-                          : "INSERT INTO _virtual_table (starting_table,order_col,show_on_menu,condition, friendly_name, has_pager) VALUES (@StartingTable, @OrderColumn,@ShowOnMenu,@Condition,@FriendlyName,@HasPager); SET @Id = (SELECT @@IDENTITY) ";
+                          ? "UPDATE _virtual_table SET web_site_groups = @Groups, starting_table = @StartingTable, order_col = @OrderColumn, show_on_menu = @ShowOnMenu, condition = @Condition, friendly_name = @FriendlyName, has_pager = @HasPager  WHERE id = @Id"
+                          : "INSERT INTO _virtual_table (web_site_groups, starting_table,order_col,show_on_menu,condition, friendly_name, has_pager) VALUES (@Groups, @StartingTable, @OrderColumn,@ShowOnMenu,@Condition,@FriendlyName,@HasPager); SET @Id = (SELECT @@IDENTITY) ";
 
             var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, p);
 
