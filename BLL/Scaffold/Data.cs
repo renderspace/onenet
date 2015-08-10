@@ -352,7 +352,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 {
                     editableColumn.Ordinal = i++;
                     editableColumn.BackendType = FieldType.Display;
-                    mainSql += column.FQName + ", ";
+                    mainSql += editableColumn.FQName + ", ";
                     item.Columns.Add(column.FQName, editableColumn);
                 }
                 else if (column.IsPartOfUserView)
@@ -365,6 +365,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                         editableColumn.BackendType = FieldType.MultiLanguageText;
                     }
                     item.Columns.Add(editableColumn.FQName, editableColumn);
+                }
+                else if (column.IsCreatedField || (column.IsModifiedField))
+                {
+                    column.Ordinal = i++;
+                    mainSql += column.FQName + ", ";
                 }
             }
 
@@ -436,11 +441,33 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             var f = reader[field.Ordinal];
                             if (f == DBNull.Value)
                             {
-                                item.Columns[field.FQName].ValueIsNull = true;
+                                if (item.Columns.ContainsKey(field.FQName))
+                                {
+                                    item.Columns[field.FQName].ValueIsNull = true;
+                                }
+                            }
+                            else if (field.IsCreatedField || field.IsModifiedField)
+                            { 
+                                if (field.Name == "principal_created")
+                                {
+                                    item.PrincipalCreated = (string)f;
+                                }
+                                if (field.Name == "principal_modified")
+                                {
+                                    item.PrincipalModified = (string)f;
+                                }
+                                if (field.Name == "date_modified")
+                                {
+                                    item.DateModified = (DateTime)f;
+                                }
+                                if (field.Name == "date_created")
+                                {
+                                    item.DateCreated = (DateTime)f;
+                                }
                             }
                             else
                             {
-                                switch (item.Columns[field.FQName].DbType)
+                                switch (field.DbType)
                                 {
                                     case DataType.Int:
                                         item.Columns[field.FQName].ValueInteger = (int)f;
@@ -454,7 +481,6 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                                     case DataType.Date:
                                         item.Columns[field.FQName].ValueDateTime = (DateTime)f;
                                         break;
-
                                     case DataType.Decimal:
                                         item.Columns[field.FQName].ValueDecimal = (decimal)f;
                                         break;
@@ -528,6 +554,16 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 var columnsSql = "";
                 var valuesSql = "";
 
+                foreach (var column in virtualTable.VirtualColumns)
+                {
+                    if (column.IsCreatedField && column.Name == "principal_created")
+                    {
+                        columnsSql += column.FQName + ", ";
+                        valuesSql += "@V" + column.Name + ", ";
+                        parameters.Add(new SqlParameter("@V" + column.Name, Thread.CurrentPrincipal.Identity.Name));
+                    }
+                }
+
                 foreach (var column in item.Columns.Values)
                 {
                     if (column.IsPartOfPrimaryKey && !column.IsPartOfForeignKey)
@@ -563,6 +599,26 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             else
             {
                 sql += "UPDATE " + virtualTable.StartingPhysicalTable + " SET ";
+
+                foreach (var column in virtualTable.VirtualColumns)
+                {
+                    if (column.IsModifiedField)
+                    {
+                        sql += column.FQName + " = " + "@V" + column.Name + ", ";
+                        if (column.Name == "principal_modified")
+                        {
+                            parameters.Add(new SqlParameter("@V" + column.Name, Thread.CurrentPrincipal.Identity.Name));
+                        }
+                        else if (column.Name == "date_modified")
+                        {
+                            parameters.Add(new SqlParameter("@V" + column.Name, DateTime.Now));
+                        }
+                        else
+                        {
+                            throw new Exception("wrong modified fields");
+                        }
+                    }
+                }
 
                 foreach (var column in item.Columns.Values)
                 {

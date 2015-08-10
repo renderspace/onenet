@@ -12,7 +12,32 @@ namespace One.Net.BLL.Scaffold.Model
         public string StartingTable { get; set; }
         public string FriendlyName { get; set; }
 
-        
+        public DateTime LastChanged
+        {
+            get { return DateModified.HasValue ? DateModified.Value : DateCreated; }
+        }
+
+        public string LastChangedBy
+        {
+            get { return (DateModified == null) ? PrincipalCreated : PrincipalModified; }
+        }
+
+        public string DisplayLastChanged
+        {
+            get { return LastChanged + ", " + LastChangedBy; }
+        }
+
+
+        public DateTime? DateModified { get; set;}
+        public string PrincipalModified { get; set; }
+        public DateTime DateCreated { get; set; }
+
+        public string PrincipalCreated { get; set; }
+
+        public bool HasAudit
+        {
+            get { return true; }
+        }
 
         public List<string> PrimaryKeys { get; set; }
         public Dictionary<string, VirtualColumn> Columns { get; set; }
