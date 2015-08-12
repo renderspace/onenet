@@ -212,6 +212,7 @@ function buildFormControl(fieldLabel, fieldId, fieldType) {
 
 function getContentTemplate(instanceId, templateId) {
 
+    $(".loading").show();
     $(".j_control_content_template_instance_id").val(instanceId);
     $(".j_control_template_id").val(templateId);
 
@@ -220,8 +221,8 @@ function getContentTemplate(instanceId, templateId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: "GET",
+        async: false,
         success: function (template) {
-            trace(template);
 
             if (typeof (template) != "undefined" && typeof (template.ContentFields) != "undefined" && template.ContentFields.length > 0) {
 
@@ -246,6 +247,7 @@ function getContentTemplate(instanceId, templateId) {
                 });
 
             }
+            
         },
         error: logError
     });
@@ -255,8 +257,8 @@ function getContentTemplate(instanceId, templateId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         type: "GET",
+        async: false,
         success: function (contentTemplate) {
-            trace(contentTemplate);
 
             $(".modal-body .col-sm-9").show();
 
@@ -279,6 +281,8 @@ function getContentTemplate(instanceId, templateId) {
             }
 
             $(".modal-footer .btn-success").show();
+
+            $(".loading").hide();
         },
         error: logError
     });
