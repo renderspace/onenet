@@ -21,7 +21,7 @@ namespace OneMainWeb.Utils
                     try
                     {
                         Uri baseUri = new Uri(currentWebsite.PreviewUrl);
-                        Uri admUri = new Uri(baseUri, "adm");
+                        Uri admUri = new Uri(baseUri, "adm/Structure.aspx");
                         LiteralCms.Text = "<a href=\"" + admUri.ToString() + "\">Back to CMS..</a>";
                     }
                     catch { }
