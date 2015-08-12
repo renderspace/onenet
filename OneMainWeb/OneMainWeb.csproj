@@ -716,6 +716,9 @@
     <Content Include="Res\browsers\ch.png" />
     <Content Include="Res\browsers\ff.png" />
     <Content Include="Res\browsers\ie.png" />
+    <Content Include="Res\busy_working_animation.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Res\colapse.png" />
     <Content Include="Res\dark-bg-horiz.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
