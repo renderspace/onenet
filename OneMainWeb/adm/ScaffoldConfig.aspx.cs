@@ -68,7 +68,7 @@ namespace OneMainWeb.adm
             var virtualTable = Schema.GetVirtualTable(SelectedVirtualTableId.Value);
 
             var physicalColumns =
-                (from c in virtualTable.VirtualColumns where !c.IsPartOfUserView select c);
+                (from c in virtualTable.VirtualColumns where (!c.IsPartOfUserView && c.Name != "principal_created" && c.Name != "principal_modified" && c.Name != "date_created" && c.Name != "date_modified") select c);
 
             ListBoxPhysicalColumns.DataSource = physicalColumns;
             ListBoxPhysicalColumns.DataBind();
@@ -204,6 +204,11 @@ namespace OneMainWeb.adm
                     Schema.DeleteVirtualTable(id);
                     GridViewVirtualTablesDataBind();
                     break;
+                case "initaudit":
+                    var table = Schema.GetVirtualTable(id);
+                    PhysicalSchema.InitializeAuditColumns(table.StartingPhysicalTable.Replace("[dbo].[", "").Replace("]", ""));
+                    GridViewVirtualTablesDataBind();
+                    break;
             }
         }
 
@@ -213,6 +218,7 @@ namespace OneMainWeb.adm
             {
                 DropDownList DropDownListOrder = e.Row.FindControl("DropDownListOrder") as DropDownList;
                 VirtualTable table = e.Row.DataItem as VirtualTable;
+
                 if (DropDownListOrder != null && table != null)
                 {
                     if (DropDownListOrder.Items.Count == 0)
@@ -225,6 +231,22 @@ namespace OneMainWeb.adm
 
                         if (!string.IsNullOrEmpty(table.OrderColumn))
                             DropDownListOrder.SelectedValue = table.OrderColumn;
+                    }
+                }
+
+                CheckBox CheckBoxShowOnMenu = e.Row.FindControl("CheckBoxShowOnMenu") as CheckBox;
+                LinkButton CmdInitAuditFields = e.Row.FindControl("CmdInitAuditFields") as LinkButton;
+
+                CmdInitAuditFields.Visible = false;
+                if (CmdInitAuditFields != null && CheckBoxShowOnMenu != null)
+                {
+                    if (CheckBoxShowOnMenu.Checked)
+                    {
+                        var tableId = Int32.Parse(CmdInitAuditFields.CommandArgument);
+                        table = Schema.GetVirtualTable(tableId);
+
+                        var exists = PhysicalSchema.PhysicalColumnExists("principal_created", table.StartingPhysicalTable);
+                        CmdInitAuditFields.Visible = !exists;
                     }
                 }
             }

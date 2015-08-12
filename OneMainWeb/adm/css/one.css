@@ -628,3 +628,11 @@ details .form-group select {width: 100%;}
     border-color: #9BD0FF;
     border-width: 5px;
 }
+
+.loading {
+    /* Replace #333 with the background-color of your choice */
+    /* Replace loading.gif with the loading image of your choice */
+    background: #fff url('/Res/busy_working_animation.gif') no-repeat 50% 50%;
+    width:100%;
+    padding:20%;    
+}
