@@ -175,7 +175,8 @@ namespace OneMainWeb.adm
                 {
                     StartingPhysicalTable = DropDownListPhysical.SelectedValue,
                     OrderColumn = "",
-                    HasPager = true
+                    HasPager = true,
+                    Groups = ""
                 };
                 Schema.ChangeVirtualTable(t);
                 GridViewVirtualTablesDataBind();
