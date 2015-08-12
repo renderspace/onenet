@@ -245,6 +245,53 @@ namespace One.Net.BLL.Scaffold
             return new List<VirtualColumn>();
         }
 
+        public static bool PhysicalColumnExists(string columnName, string tableName)
+        {
+            var sql = @"SELECT COUNT(*) ct FROM sys.columns WHERE Name = N'" + columnName + "' AND Object_ID = Object_ID(N'" + tableName + "')";
+
+            var count = Int32.Parse(SqlHelper.ExecuteScalar(SqlHelper.ConnStringMainCustom, CommandType.Text, sql).ToString());
+            return count > 0;
+        }
+
+        public static void InitializeAuditColumns(string tableName)
+        {
+            var sql = @"SELECT COUNT(*) ct FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '" + tableName + "'";
+            var count = Int32.Parse(SqlHelper.ExecuteScalar(SqlHelper.ConnStringMainCustom, CommandType.Text, sql, new SqlParameter("@tableName", tableName)).ToString());
+
+            if (count > 0)
+            {
+                // table exists so proceed to check for and add columns if they don't exist.
+                if (!PhysicalColumnExists("principal_created", tableName))
+                {
+                    // column doesn't exist so create it.
+                    sql = @"ALTER TABLE [dbo].[" + tableName + @"] 
+                            ADD [principal_created] [nvarchar](255) not null default '';";
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql);
+                }
+                if (!PhysicalColumnExists("principal_modified", tableName))
+                {
+                    // column doesn't exist so create it.
+                    sql = @"ALTER TABLE [dbo].[" + tableName + @"] 
+                            ADD [principal_modified] [nvarchar](255) not null default '';";
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql);
+                }
+                if (!PhysicalColumnExists("date_created", tableName))
+                {
+                    // column doesn't exist so create it.
+                    sql = @"ALTER TABLE [dbo].[" + tableName + @"] 
+                            ADD [date_created] datetime not null default getdate();";
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql);
+                }
+                if (!PhysicalColumnExists("date_modified", tableName))
+                {
+                    // column doesn't exist so create it.
+                    sql = @"ALTER TABLE [dbo].[" + tableName + @"] 
+                            ADD [date_modified] datetime null;";
+                    SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMainCustom, CommandType.Text, sql);
+                }
+            }
+        }
+
         public static List<VirtualTable> ListPhysicalTables()
         {
             var result = new List<VirtualTable>();

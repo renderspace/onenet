@@ -61,6 +61,11 @@
                     </asp:TemplateField>  
                     <asp:TemplateField>
                         <ItemTemplate>
+                            <asp:LinkButton ID="CmdInitAuditFields" runat="server" Text="Init audit columns" CommandArgument='<%# Eval("Id") %>' CommandName="initaudit" CssClass="btn btn-info btn-xs" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
                             <asp:LinkButton ID="CmdSelect" runat="server" Text="Edit columns" CommandArgument='<%# Eval("Id") %>' CommandName="select" CssClass="btn btn-info btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
