@@ -204,6 +204,11 @@ namespace OneMainWeb.adm
                     Schema.DeleteVirtualTable(id);
                     GridViewVirtualTablesDataBind();
                     break;
+                case "initaudit":
+                    var table = Schema.GetVirtualTable(id);
+                    PhysicalSchema.InitializeAuditColumns(table.StartingPhysicalTable.Replace("[dbo].[", "").Replace("]", ""));
+                    GridViewVirtualTablesDataBind();
+                    break;
             }
         }
 
@@ -213,6 +218,8 @@ namespace OneMainWeb.adm
             {
                 DropDownList DropDownListOrder = e.Row.FindControl("DropDownListOrder") as DropDownList;
                 VirtualTable table = e.Row.DataItem as VirtualTable;
+                LinkButton CmdInitAuditFields = e.Row.FindControl("CmdInitAuditFields") as LinkButton;
+
                 if (DropDownListOrder != null && table != null)
                 {
                     if (DropDownListOrder.Items.Count == 0)
@@ -226,6 +233,17 @@ namespace OneMainWeb.adm
                         if (!string.IsNullOrEmpty(table.OrderColumn))
                             DropDownListOrder.SelectedValue = table.OrderColumn;
                     }
+                }
+
+                CmdInitAuditFields.Visible = false;
+                if (CmdInitAuditFields != null)
+                {
+
+                    var tableId = Int32.Parse(CmdInitAuditFields.CommandArgument);
+                    table = Schema.GetVirtualTable(tableId);
+
+                    var exists = PhysicalSchema.PhysicalColumnExists("principal_created", table.StartingPhysicalTable);
+                    CmdInitAuditFields.Visible = !exists;
                 }
             }
         }
