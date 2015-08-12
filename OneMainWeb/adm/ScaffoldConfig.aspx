@@ -61,7 +61,7 @@
                     </asp:TemplateField>  
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="CmdInitAuditFields" runat="server" Text="Init audit columns" CommandArgument='<%# Eval("Id") %>' CommandName="initaudit" CssClass="btn btn-info btn-xs" />
+                            <asp:LinkButton ID="CmdInitAuditFields" runat="server" Text="Enable audit" CommandArgument='<%# Eval("Id") %>' CommandName="initaudit" CssClass="btn btn-info btn-xs" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField>

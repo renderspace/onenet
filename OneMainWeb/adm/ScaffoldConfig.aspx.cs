@@ -68,7 +68,7 @@ namespace OneMainWeb.adm
             var virtualTable = Schema.GetVirtualTable(SelectedVirtualTableId.Value);
 
             var physicalColumns =
-                (from c in virtualTable.VirtualColumns where !c.IsPartOfUserView select c);
+                (from c in virtualTable.VirtualColumns where (!c.IsPartOfUserView && c.Name != "principal_created" && c.Name != "principal_modified" && c.Name != "date_created" && c.Name != "date_modified") select c);
 
             ListBoxPhysicalColumns.DataSource = physicalColumns;
             ListBoxPhysicalColumns.DataBind();
@@ -218,7 +218,6 @@ namespace OneMainWeb.adm
             {
                 DropDownList DropDownListOrder = e.Row.FindControl("DropDownListOrder") as DropDownList;
                 VirtualTable table = e.Row.DataItem as VirtualTable;
-                LinkButton CmdInitAuditFields = e.Row.FindControl("CmdInitAuditFields") as LinkButton;
 
                 if (DropDownListOrder != null && table != null)
                 {
@@ -235,15 +234,20 @@ namespace OneMainWeb.adm
                     }
                 }
 
+                CheckBox CheckBoxShowOnMenu = e.Row.FindControl("CheckBoxShowOnMenu") as CheckBox;
+                LinkButton CmdInitAuditFields = e.Row.FindControl("CmdInitAuditFields") as LinkButton;
+
                 CmdInitAuditFields.Visible = false;
-                if (CmdInitAuditFields != null)
+                if (CmdInitAuditFields != null && CheckBoxShowOnMenu != null)
                 {
+                    if (CheckBoxShowOnMenu.Checked)
+                    {
+                        var tableId = Int32.Parse(CmdInitAuditFields.CommandArgument);
+                        table = Schema.GetVirtualTable(tableId);
 
-                    var tableId = Int32.Parse(CmdInitAuditFields.CommandArgument);
-                    table = Schema.GetVirtualTable(tableId);
-
-                    var exists = PhysicalSchema.PhysicalColumnExists("principal_created", table.StartingPhysicalTable);
-                    CmdInitAuditFields.Visible = !exists;
+                        var exists = PhysicalSchema.PhysicalColumnExists("principal_created", table.StartingPhysicalTable);
+                        CmdInitAuditFields.Visible = !exists;
+                    }
                 }
             }
         }
