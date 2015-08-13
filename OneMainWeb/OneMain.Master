@@ -77,10 +77,10 @@
                 </div>
             </nav> 
             <div class="clear-cache">
-                <asp:HyperLink ID="HyperLinkPreview" runat="server" Text="Clear cache on preview" CssClass="btn btn-default btn-sm" />
+                <asp:Literal runat="server" ID="LiteralClearPreviewCache"></asp:Literal>
             </div>
             <div class="clear-cache">
-                <asp:HyperLink ID="HyperLinkProduction" runat="server" Text="Clear cache on production" CssClass="btn btn-info btn-sm" />
+                <asp:Literal runat="server" ID="LiteralClearProductionCache"></asp:Literal>
             </div>
         </div>
         <div class="main main-right-bar">
