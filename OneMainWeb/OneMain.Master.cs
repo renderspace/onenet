@@ -177,18 +177,18 @@ namespace OneMainWeb
                 if (MainContent.Visible  && (Page.User.IsInRole("Scaffold") || Page.User.IsInRole("admin")))
                     VirtualTableList1.Visible = true;
 
-                HyperLinkProduction.Visible = HyperLinkPreview.Visible = false;
+                LiteralClearPreviewCache.Visible = LiteralClearProductionCache.Visible = false;
                 if (webSiteIsSelected)
                 {
                     if (selectedWebsite.PreviewUrl.StartsWith("http"))
                     {
-                        HyperLinkPreview.NavigateUrl = selectedWebsite.PreviewUrl.TrimEnd('/') + "/Utils/Clear.aspx";
-                        HyperLinkPreview.Visible = true;
+                        LiteralClearPreviewCache.Text = "<iframe style=\"width: 100%; height: 36px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.PreviewUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>" ;
+                        LiteralClearPreviewCache.Visible = true;
                     }
                     if (selectedWebsite.ProductionUrl.StartsWith("http"))
                     {
-                        HyperLinkProduction.NavigateUrl = selectedWebsite.ProductionUrl.TrimEnd('/') + "/Utils/Clear.aspx";
-                        HyperLinkProduction.Visible = true;
+                        LiteralClearProductionCache.Text = "<iframe style=\"width: 100%; height: 36px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.ProductionUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>";
+                        LiteralClearProductionCache.Visible = true;
                     } 
                 }       
             }

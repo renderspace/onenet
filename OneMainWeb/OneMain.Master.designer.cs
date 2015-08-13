@@ -85,22 +85,22 @@ namespace OneMainWeb {
         protected global::OneMainWeb.AdminControls.ScaffoldVirtualTableList VirtualTableList1;
         
         /// <summary>
-        /// HyperLinkPreview control.
+        /// LiteralClearPreviewCache control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLinkPreview;
+        protected global::System.Web.UI.WebControls.Literal LiteralClearPreviewCache;
         
         /// <summary>
-        /// HyperLinkProduction control.
+        /// LiteralClearProductionCache control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLinkProduction;
+        protected global::System.Web.UI.WebControls.Literal LiteralClearProductionCache;
         
         /// <summary>
         /// MainContent control.

@@ -687,6 +687,13 @@
       <DependentUpon>MenuGroups.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\OneClear.aspx.cs">
+      <DependentUpon>OneClear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utils\OneClear.aspx.designer.cs">
+      <DependentUpon>OneClear.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Robots.ashx.cs">
       <DependentUpon>Robots.ashx</DependentUpon>
     </Compile>
@@ -778,7 +785,9 @@
     <Content Include="adm\css\bootstrap.css.map" />
     <Content Include="JavaScript\jquery-2.1.3.min.map" />
     <None Include="gitignore.template" />
-    <None Include="One.Net.library.nuspec" />
+    <None Include="One.Net.library.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="One.Net.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -789,6 +798,7 @@
     <Content Include="site_specific\_css\default.html" />
     <Content Include="site_specific\_js\default.html" />
     <Content Include="Utils\MenuGroups.asmx" />
+    <Content Include="Utils\OneClear.aspx" />
     <Content Include="Utils\TestException.aspx" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
