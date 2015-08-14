@@ -376,7 +376,7 @@ function replaceCKEditor(id) {
         // stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
         contentsCss: '/site_specific/ck.css',
-        height: 500,
+        height: 350,
         disableObjectResizing: true,
         resize_enabled: false,
         allowedContent: true, //,extraPlugins: 'youtube'
