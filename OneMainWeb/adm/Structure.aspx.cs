@@ -846,15 +846,15 @@ namespace OneMainWeb.adm
 
             if (!publishingPage.IsNew)
             {
-                bool hasChildren = webSiteB.ListChildrenIds(SelectedPageId).Count > 0;
-                if (hasChildren)
+                List<int> publishedDescendantIds = webSiteB.ListPublishedDescendantIds(SelectedPageId);
+
+                if (publishedDescendantIds.Count > 0)
                 {
-                    Notifier1.Warning = "Unpublish was not successful because the page has children.";
-                    Notifier1.Message = "Unpublish children pages first.";
+                    Notifier1.Warning = "Unpublish was not successful because the page has descendants which are published.";
+                    Notifier1.Message = "Unpublish descendant pages first.";
                     return;
                 }
-
-
+                
                 if (webSiteB.UnPublishPage(SelectedPageId))
                 {
                     Notifier1.Message = "Unpublish successfull";
