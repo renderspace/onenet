@@ -132,6 +132,34 @@ namespace One.Net.BLL
             return webSiteDb.ListChildrenIds(pageId, PublishFlag);
         }
 
+        public List<int> ListPublishedDescendantIds(int pageId)
+        {
+            List<int> publishedDescendantIds = null;
+            
+            this.ListDescendantIds(pageId, ref publishedDescendantIds);
+            
+            return publishedDescendantIds;
+        }
+
+        private void ListDescendantIds(int pageId, ref List<int> publishedDescendantIds)
+        {
+            if (publishedDescendantIds == null)
+                publishedDescendantIds = new List<int>();
+
+            var foundUnPublishedChildren = webSiteDb.ListChildrenIds(pageId, false);
+            var foundPublishedChildren = webSiteDb.ListChildrenIds(pageId, true);
+
+            foreach (int childId in foundPublishedChildren)
+            {
+                publishedDescendantIds.Add(childId);
+            }
+
+            foreach (int childId in foundUnPublishedChildren)
+            {
+                ListDescendantIds(childId, ref publishedDescendantIds);
+            }
+        }
+
         public string GetPageUri(int pageId)
         {
             BOPage page = GetPage(pageId, LanguageId);
