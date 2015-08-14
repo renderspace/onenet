@@ -479,6 +479,7 @@ namespace OneMainWeb.adm
         protected void moduleSettings_SettingsSaved(object sender, EventArgs e)
         {
             SelectedPage_DataBind();
+            TreeViewPages_DataBind();
         }
 
         protected void RepeaterModuleInstances_ItemCommand(object source, RepeaterCommandEventArgs e)
