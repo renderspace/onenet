@@ -99,7 +99,7 @@ namespace OneMainWeb.Controls
             {
                 foreach (var website in list)
                 {
-                    if (website.WebSiteGroup == Group && Group > 0)
+                    if (website.WebSiteGroup == Group)
                     {
                         var websiteUri = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
 
