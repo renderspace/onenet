@@ -127,6 +127,9 @@ function files_databind(selectedFolderId) {
 };
 
 function getContent(contentId, languageId, enableHtml, enableCk) {
+
+    $(".loading").show();
+
     var ckEditor = CKEDITOR.instances["content-html"];
     if (ckEditor !== undefined) {
         ckEditor.destroy();
@@ -149,6 +152,7 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
                 $(".j_control_content_id").val(contentId);
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
                 
+                $(".loading").hide();
             },
             error: logError
         });
@@ -533,6 +537,11 @@ $(document).ready(function () {
     });
 
     $('#text-content-modal a.btn-success').on('click', function (e) {
+
+        $(".loading").show();
+        $(".modal-body").hide();
+        $(".modal-footer").hide();
+
         var $saveButton = $(this);
         var content = new Object();
         content['Title'] = $("#content-title").val();
@@ -561,6 +570,11 @@ $(document).ready(function () {
             type: "POST",
             success: function (data) {
                 if (data === true) {
+
+                    $(".loading").hide();
+                    $(".modal-body").show();
+                    $(".modal-footer").show();
+
                     if ($saveButton.hasClass("modal-save-close")) {
                         if (content['FileId'].length > 0) {
                             $('#text-content-modal').modal('hide');
