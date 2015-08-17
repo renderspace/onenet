@@ -63,6 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="forms">
+      <HintPath>..\packages\Forms.3.0.0.2\lib\net45\forms.dll</HintPath>
+    </Reference>
     <Reference Include="Kentor.OwinCookieSaver, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Kentor.OwinCookieSaver.1.0.2\lib\net45\Kentor.OwinCookieSaver.dll</HintPath>
@@ -473,6 +476,7 @@
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="adm\Forms.aspx" />
     <Content Include="adm\images\drag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -747,6 +751,7 @@
     <Content Include="Res\objavljeno.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="adm\ExcelExport.ashx" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="Account\Account.Master" />
@@ -795,8 +800,11 @@
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\ck.css" />
     <Content Include="site_specific\ckstyles.js" />
+    <Content Include="site_specific\custom_modules\Form.ascx" />
+    <Content Include="site_specific\custom_modules\FormSelector.ascx" />
     <Content Include="site_specific\_css\default.html" />
     <Content Include="site_specific\_js\default.html" />
+    <Content Include="site_specific\_js\Forms.js" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\OneClear.aspx" />
     <Content Include="Utils\TestException.aspx" />
@@ -898,7 +906,6 @@
     <Folder Include="AdminExtensions\" />
     <Folder Include="adm\ashx\" />
     <Folder Include="App_GlobalResources\" />
-    <Folder Include="site_specific\custom_modules\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
