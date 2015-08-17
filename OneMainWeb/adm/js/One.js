@@ -722,6 +722,11 @@ $(document).ready(function () {
     });
 
     $('#audit-history').on('show.bs.modal', function (e) {
+
+        $('.loading').show();
+        $('.modal-body').hide();
+        $('.modal-footer').hide();
+
         var selectedItemId = $(this).data('content-id');
         var languageId = $(this).data('language-id');
         if (selectedItemId > 0) {
@@ -732,10 +737,15 @@ $(document).ready(function () {
                 type: "GET",
                 success: function (data) {
                     trace("GetContentHistory success");
+
                     $('#audit-history-table tbody').empty();
                     $.map(data, function (item) {
                         $('#audit-history-table tbody').append('<tr><td>' + item.DisplayLastChanged + '</td><td>' + item.Title + '</td></tr>');
                     });
+
+                    $('.loading').hide();
+                    $('.modal-body').show();
+                    $('.modal-footer').show();
                 },
                 error: logError
             });
