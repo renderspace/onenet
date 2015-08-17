@@ -151,8 +151,6 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
                 $("#content-teaser").val(content.Teaser);
                 $(".j_control_content_id").val(contentId);
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
-                
-                $(".loading").hide();
             },
             error: logError
         });
@@ -194,6 +192,7 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
     }
     $(".modal-body .col-sm-9").show();
     $(".modal-footer .btn-success").show();
+    $(".loading").hide();
 }
 
 
@@ -286,10 +285,11 @@ function getContentTemplate(instanceId, templateId) {
 
             $(".modal-footer .btn-success").show();
 
-            $(".loading").hide();
         },
         error: logError
     });
+
+    $(".loading").hide();
 }
 
 function get_field_id(field_name) {
@@ -403,9 +403,7 @@ $(document).ready(function () {
         {
             eval($($link[0]).attr('href'));
         }
-    });
-
-    
+    });    
 
     $('#CheckBoxShowPath').change(function () {
         var selectedFolderId = $('#HiddenSelectedFolderId').val();
@@ -541,6 +539,7 @@ $(document).ready(function () {
         $(".loading").show();
         $(".modal-body").hide();
         $(".modal-footer").hide();
+        $('#text-content-modal').modal('show');
 
         var $saveButton = $(this);
         var content = new Object();
@@ -571,16 +570,17 @@ $(document).ready(function () {
             success: function (data) {
                 if (data === true) {
 
-                    $(".loading").hide();
-                    $(".modal-body").show();
-                    $(".modal-footer").show();
-
                     if ($saveButton.hasClass("modal-save-close")) {
                         if (content['FileId'].length > 0) {
                             $('#text-content-modal').modal('hide');
+                            $(".loading").hide();
                         } else {
                             window.location.href = "/adm/structure.aspx";
                         }
+                    } else {
+                        $(".modal-body").show();
+                        $(".modal-footer").show();
+                        $(".loading").hide();
                     }
                 }
                 else {
@@ -650,6 +650,7 @@ $(document).ready(function () {
     });
 
     $('#content-template-modal').on('shown.bs.modal', function (e) {
+
         var button = e.relatedTarget;
         if (button == null) {
             return false;
@@ -674,6 +675,10 @@ $(document).ready(function () {
         if (button == null) {
             return false;
         }
+
+        $(".modal-body").show();
+        $(".modal-footer").show();
+
         $(".modal-body .col-sm-9").hide();
         $(".modal-footer .btn-success").hide();
         $(".modal-body input").val("");
