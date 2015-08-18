@@ -56,6 +56,7 @@
                 <a href="#" Class="btn btn-success modal-save">Save</a>
                 <a href="#" Class="btn btn-success modal-save-close">Save and close</a>
             </div>
+            <div class="loading"></div>
         </div>
     </div>
 </div>

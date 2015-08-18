@@ -127,6 +127,9 @@ function files_databind(selectedFolderId) {
 };
 
 function getContent(contentId, languageId, enableHtml, enableCk) {
+
+    $(".loading").show();
+
     var ckEditor = CKEDITOR.instances["content-html"];
     if (ckEditor !== undefined) {
         ckEditor.destroy();
@@ -148,7 +151,6 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
                 $("#content-teaser").val(content.Teaser);
                 $(".j_control_content_id").val(contentId);
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
-                
             },
             error: logError
         });
@@ -190,6 +192,7 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
     }
     $(".modal-body .col-sm-9").show();
     $(".modal-footer .btn-success").show();
+    $(".loading").hide();
 }
 
 
@@ -282,10 +285,11 @@ function getContentTemplate(instanceId, templateId) {
 
             $(".modal-footer .btn-success").show();
 
-            $(".loading").hide();
         },
         error: logError
     });
+
+    $(".loading").hide();
 }
 
 function get_field_id(field_name) {
@@ -399,9 +403,7 @@ $(document).ready(function () {
         {
             eval($($link[0]).attr('href'));
         }
-    });
-
-    
+    });    
 
     $('#CheckBoxShowPath').change(function () {
         var selectedFolderId = $('#HiddenSelectedFolderId').val();
@@ -533,6 +535,12 @@ $(document).ready(function () {
     });
 
     $('#text-content-modal a.btn-success').on('click', function (e) {
+
+        $(".loading").show();
+        $(".modal-body").hide();
+        $(".modal-footer").hide();
+        $('#text-content-modal').modal('show');
+
         var $saveButton = $(this);
         var content = new Object();
         content['Title'] = $("#content-title").val();
@@ -561,12 +569,18 @@ $(document).ready(function () {
             type: "POST",
             success: function (data) {
                 if (data === true) {
+
                     if ($saveButton.hasClass("modal-save-close")) {
                         if (content['FileId'].length > 0) {
                             $('#text-content-modal').modal('hide');
+                            $(".loading").hide();
                         } else {
                             window.location.href = "/adm/structure.aspx";
                         }
+                    } else {
+                        $(".modal-body").show();
+                        $(".modal-footer").show();
+                        $(".loading").hide();
                     }
                 }
                 else {
@@ -636,6 +650,7 @@ $(document).ready(function () {
     });
 
     $('#content-template-modal').on('shown.bs.modal', function (e) {
+
         var button = e.relatedTarget;
         if (button == null) {
             return false;
@@ -660,6 +675,10 @@ $(document).ready(function () {
         if (button == null) {
             return false;
         }
+
+        $(".modal-body").show();
+        $(".modal-footer").show();
+
         $(".modal-body .col-sm-9").hide();
         $(".modal-footer .btn-success").hide();
         $(".modal-body input").val("");
@@ -703,6 +722,11 @@ $(document).ready(function () {
     });
 
     $('#audit-history').on('show.bs.modal', function (e) {
+
+        $('.loading').show();
+        $('.modal-body').hide();
+        $('.modal-footer').hide();
+
         var selectedItemId = $(this).data('content-id');
         var languageId = $(this).data('language-id');
         if (selectedItemId > 0) {
@@ -713,10 +737,15 @@ $(document).ready(function () {
                 type: "GET",
                 success: function (data) {
                     trace("GetContentHistory success");
+
                     $('#audit-history-table tbody').empty();
                     $.map(data, function (item) {
                         $('#audit-history-table tbody').append('<tr><td>' + item.DisplayLastChanged + '</td><td>' + item.Title + '</td></tr>');
                     });
+
+                    $('.loading').hide();
+                    $('.modal-body').show();
+                    $('.modal-footer').show();
                 },
                 error: logError
             });
