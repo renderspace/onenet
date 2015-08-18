@@ -90,6 +90,8 @@ namespace OneMainWeb
                     return null;
 
                 title = title.StripHtmlTags();
+                if (SiteMap.CurrentNode == null)
+                    return null;
                 SiteMapNode currentNode = SiteMap.CurrentNode.Clone(true);
                 SiteMapNode tempNode = currentNode;
                 tempNode.Title = title;
