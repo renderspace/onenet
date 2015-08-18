@@ -54,7 +54,7 @@ namespace OneMainWeb
             {
                 Notifier1.ExceptionMessage =
                     "$missing_rssConfiguration_providers_section_from_web_config";
-                Notifier1.ExceptionName = "$error_loading";
+                Notifier1.ExceptionName = "Error loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;
@@ -63,7 +63,7 @@ namespace OneMainWeb
             {
                 Notifier1.ExceptionMessage =
                     "$missing_rssConfiguration_providers_from_web_config";
-                Notifier1.ExceptionName = "$error_loading";
+                Notifier1.ExceptionName = "Error loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;
@@ -82,7 +82,7 @@ namespace OneMainWeb
                     diagnosticsValid = false;
                     MultiView1.ActiveViewIndex = 0;
                     Notifier1.ExceptionMessage = ((Exception)sqex).Message;
-                    Notifier1.ExceptionName = "$error_loading";
+                    Notifier1.ExceptionName = "Error loading";
                     Notifier1.Visible = true;
                     AddRssFeed.Enabled = false;
                 }
@@ -204,7 +204,7 @@ namespace OneMainWeb
             catch (Exception ex)
             {
                 Notifier1.Visible = true;
-                Notifier1.ExceptionName = "$error_loading";
+                Notifier1.ExceptionName = "Error loading";
                 Notifier1.ExceptionMessage = ex.Message;
                 Notifier1.ExceptionMessage += "<br/>" + ex.StackTrace;
             }
