@@ -24,6 +24,9 @@ namespace One.Net.BLL.Model
         public string LinkToSingle { get { return linkToSingle; } set { linkToSingle = value; } }
         public List<int> Categories { get { return categories; } set { categories = value; } }
         public int LanguageId { get { return languageId; } set { languageId = value; } }
+
+
+        public string DisplayCategories { get { return string.Join(",", Categories); } }
     }
 
     [Serializable]
@@ -54,5 +57,6 @@ namespace One.Net.BLL.Model
 
         public string Title { get { return title; } set { title = value; } }
         public int Id { get { return id; } set { id = value; } }
+
     }
 }
