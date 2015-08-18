@@ -44,9 +44,8 @@ namespace OneMainWeb
         {
             if (RssConfiguration.Configuration == null)
             {
-                Notifier1.ExceptionMessage =
-                    "$rss_configuration_element_missing_from_web_config";
-                Notifier1.ExceptionName = "$error_loading";
+                Notifier1.ExceptionMessage = "RSS configuration element missing from web.config";
+                Notifier1.ExceptionName = "Error loading";
                 Notifier1.Visible = true;
                 AddRssFeed.Enabled = false;
                 diagnosticsValid = false;

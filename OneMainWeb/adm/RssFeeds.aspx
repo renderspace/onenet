@@ -40,7 +40,7 @@
 						            <ItemTemplate><%# Eval("Type")%></ItemTemplate>
 					            </asp:TemplateField>
 					            <asp:TemplateField HeaderText="Categories" SortExpression="categories">
-						            <ItemTemplate><%# StringTool.RenderAsString((List<int>)Eval("Categories"))%></ItemTemplate>
+						            <ItemTemplate><%# Eval("DisplayCategories") %></ItemTemplate>
 					            </asp:TemplateField>
 						        <asp:TemplateField>
 						            <ItemTemplate>
