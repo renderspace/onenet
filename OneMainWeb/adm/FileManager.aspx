@@ -103,11 +103,6 @@
                     $("#previews").empty();
                 }
             });
-
-            //myDropzone.on("totaluploadprogress", function (progress) {
-            //    document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
-            //});
-
         });
     </script>
 
