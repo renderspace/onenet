@@ -204,7 +204,7 @@
                 <thead>
                     <tr>
                         <th><input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" /></th>
-                        <th>ID</th>
+                        <th></th>
                         <th>Preview</th>
                         <th>Size</th>
                         <th>Filename</th>

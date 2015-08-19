@@ -98,9 +98,9 @@ function files_databind(selectedFolderId) {
             $('#files-table tbody').empty();
             $.map(data, function (item) {
                 //trace(item);
-                var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
-                    item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>';
+                var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
                 r += '<a href="#" class="btn btn-xs btn-default copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
+                r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>';
                 r += item.Name;
                 r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
@@ -112,8 +112,6 @@ function files_databind(selectedFolderId) {
             console.log(client);
             client.on("ready", function (readyEvent) {
                 client.on("aftercopy", function (event) {
-                    // `this` === `client`
-                    // `event.target` === the element that was clicked
                     event.target.innerHTML = '<span class="glyphicon glyphicon-copy"></span> Copied';
                 });
             });
