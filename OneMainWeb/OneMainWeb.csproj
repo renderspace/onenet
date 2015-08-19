@@ -529,6 +529,8 @@
     </Content>
     <Content Include="JavaScript\jquery.validate.min.js" />
     <Content Include="JavaScript\moment.min.js" />
+    <Content Include="JavaScript\ZeroClipboard.min.js" />
+    <Content Include="JavaScript\ZeroClipboard.swf" />
     <Content Include="OneMain.Master" />
   </ItemGroup>
   <ItemGroup>
