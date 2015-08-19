@@ -85,9 +85,12 @@ function getTree(callback) {
     });
 };
 
-
-
 function files_databind(selectedFolderId) {
+    $('#files-table thead').hide();
+    $('.fileManagerDeleteButtons').hide();
+    $('#files-table tbody').empty();
+    $('#files-table tbody').html('<tr><td colspan="6"><div class="loading"></div></td></tr>');
+    
     $.ajax({
         url: "/AdminService/ListFiles?folderId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
@@ -116,12 +119,9 @@ function files_databind(selectedFolderId) {
                 });
             });
 
-            if (data.length == 0) {
-                $('#files-table thead').hide();
-                $('#ButtonDelete').hide();
-            } else {
+            if (data.length > 0) {
                 $('#files-table thead').show();
-                $('#ButtonDelete').show();
+                $('.fileManagerDeleteButtons').show();
             }
         },
         error: logError
