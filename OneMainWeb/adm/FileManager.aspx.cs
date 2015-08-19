@@ -166,11 +166,10 @@ namespace OneMainWeb
 
         protected void CmdRecursiveDelete_Click(object sender, EventArgs e)
         {
-            if (CheckBoxConfirm.Checked && SelectedFolderId > 0)
+            if (SelectedFolderId > 0)
             {
                 fileB.RecursiveFolderDelete(SelectedFolderId);
                 Notifier1.Message = "Folder deleted";
-                CheckBoxConfirm.Checked = false;
                 SetRootAsSelected();
             }
             else
