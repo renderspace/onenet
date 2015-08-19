@@ -8,6 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Routing;
+using System.Linq;
 using NLog;
 using One.Net.BLL.DAL;
 using One.Net.BLL.Caching;
@@ -67,7 +68,7 @@ namespace One.Net.BLL
 
                 List<BOPage> pages = webSiteDb.GetSiteStructure(webSiteID, Thread.CurrentThread.CurrentCulture.LCID, publishFlag);
 
-                foreach (BOPage page in pages)
+                foreach (BOPage page in pages.Where(p => !p.MarkedForDeletion))
                 {
                     SiteMapNode addedNode = null;
                     if (_root == null)
