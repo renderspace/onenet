@@ -112,15 +112,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Label LabelFolderId;
         
         /// <summary>
-        /// CmdRecursiveDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton CmdRecursiveDelete;
-        
-        /// <summary>
         /// chkAll control.
         /// </summary>
         /// <remarks>
@@ -137,6 +128,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
+        
+        /// <summary>
+        /// CmdRecursiveDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton CmdRecursiveDelete;
         
         /// <summary>
         /// TextContentModal1 control.
