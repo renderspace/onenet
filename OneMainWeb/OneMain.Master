@@ -20,11 +20,8 @@
     <script type="text/javascript" src="/JavaScript/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery-ui.autocomplete.min.js"></script>
-
-    
-
     <script type="text/javascript" src="/JavaScript/dropzone/dropzone.min.js"></script>
-
+    <script type="text/javascript" src="/JavaScript/ZeroClipboard.min.js"></script>
 
     <link href="/adm/css/dropzone.min.css" rel="stylesheet"/>
     <link href="/adm/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>

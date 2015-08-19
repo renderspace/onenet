@@ -85,12 +85,9 @@ function getTree(callback) {
     });
 };
 
+
+
 function files_databind(selectedFolderId) {
-
-    var showPath = $("#CheckBoxShowPath").is(':checked');
-
-    trace("showPath:" + showPath);
-
     $.ajax({
         url: "/AdminService/ListFiles?folderId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
@@ -103,17 +100,24 @@ function files_databind(selectedFolderId) {
                 //trace(item);
                 var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>' +
                     item.Id + '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>';
-                if (showPath) {
-                    r += '<input type="text" name="textbox" value="' + item.Uri + '" onclick="this.select()" class="hun" />';
-                }
-                else {
-                    r += item.Name;
-                }
-
+                r += '<a href="#" class="btn btn-xs btn-default copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
+                r += item.Name;
                 r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                 $('#files-table tbody').append(r);
             });
+
+            var cb = document.getElementsByClassName('copy-button');
+            var client = new ZeroClipboard(cb);
+            console.log(client);
+            client.on("ready", function (readyEvent) {
+                client.on("aftercopy", function (event) {
+                    // `this` === `client`
+                    // `event.target` === the element that was clicked
+                    event.target.innerHTML = '<span class="glyphicon glyphicon-copy"></span> Copied';
+                });
+            });
+
             if (data.length == 0) {
                 $('#files-table thead').hide();
                 $('#ButtonDelete').hide();
@@ -393,7 +397,6 @@ if (typeof (CKEDITOR) !== 'undefined') {
 }
 
 $(document).ready(function () {
-
     loadAllToManyRelationships();
 
     $('.table-clickable-row tr td').on('click', function () {
