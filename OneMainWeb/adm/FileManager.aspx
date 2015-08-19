@@ -188,36 +188,42 @@
 
 <div class="s2a">
     <div class="mainEditor ce-it-2">
-			<div class="col-sm-3">
-				<span class="btn btn-success fileinput-button">
-					<i class="glyphicon glyphicon-plus"></i>
-					<span>Upload...</span>
-				</span>
-			</div>
-            <div class="col-sm-9">
-                <div class="col-sm-6 pull-right">
-                </div>
-                <div class="col-sm-6 pull-right">
-                    <asp:Label runat="server" ID="LabelFolderId" ClientIDMode="Static"></asp:Label>
-                    <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger deleteAll"/>
+            <div class="row">
+			    <div class="col-sm-3">
+				    <span class="btn btn-success fileinput-button">
+					    <i class="glyphicon glyphicon-plus"></i>
+					    <span>Upload...</span>
+				    </span>
+			    </div>
+                <div class="col-sm-9">
+                       <h4><asp:Label runat="server" ID="LabelFolderId" ClientIDMode="Static"></asp:Label></h4>
                 </div>
             </div>
 
-        <table id="files-table" class="table">
-            <thead>
-                <tr>
-                    <th><input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" /></th>
-                    <th>ID</th>
-                    <th>Preview</th>
-                    <th>Size</th>
-                    <th>Filename</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            <table id="files-table" class="table">
+                <thead>
+                    <tr>
+                        <th><input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" /></th>
+                        <th>ID</th>
+                        <th>Preview</th>
+                        <th>Size</th>
+                        <th>Filename</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
-        <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
+            <div class="row">
+                <div class="col-sm-6">
+                    <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
+                </div>
+                <div class="col-sm-6">
+                    <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger deleteAll pull-right"/>
+                    <span style="color: #ff0000; padding: 10px;" class="pull-right">DANGER!!!</span> 
+                </div>
+            </div>
+        
         <one:TextContentModal runat="server" ID="TextContentModal1" EnableHtml="false" Title="File description edit" />
     </div>
 </div>   
