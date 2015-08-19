@@ -65,7 +65,7 @@ namespace OneMainWeb
             if (!IsPostBack)
             {
                 HiddenFieldLanguageId.Value = Thread.CurrentThread.CurrentCulture.LCID.ToString();
-                CmdRecursiveDelete.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeleteFolder");
+                ButtonDelete.Visible = CmdRecursiveDelete.Visible = Authorization.IsInRole("admin") || Authorization.IsInRole("AllowDeleteFolder");
 
                 if (SelectedFolderId < 1)
                 {
@@ -79,7 +79,33 @@ namespace OneMainWeb
             var count = 0;
             BOFile file = null;
             var parameterFolderId = 0;
-            if (SelectedFolderId > 0 || (Request["SelectedFolderId"] != null && int.TryParse(Request["SelectedFolderId"], out parameterFolderId)))
+            var replaceFileId = 0;
+            if (Request["ReplaceFileId"] != null && int.TryParse(Request["ReplaceFileId"], out replaceFileId) && Request.Files.Count == 1)
+            {
+                file = fileB.Get(replaceFileId);
+                if (file == null)
+                {
+                    Notifier1.ExceptionName = "File to replace doesn't exist";
+                    return;
+                }
+                HttpPostedFile postedFile = Request.Files[0];
+                var fileName = postedFile.FileName;
+                var fileExtension = Path.GetExtension(fileName);
+                int fileSizeInBytes = postedFile.ContentLength;
+                if (file.Extension != fileExtension || file.MimeType != postedFile.ContentType)
+                {
+                    Notifier1.ExceptionName = "File must of the same type";
+                    return;
+                }
+                byte[] fileData = new Byte[postedFile.InputStream.Length];
+                postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
+                postedFile.InputStream.Close();
+                file.File = fileData;
+                file.Size = ((int)fileData.Length);
+                fileB.Change(file);
+                Notifier1.Message = "Replaced file.";
+            }
+            else if (SelectedFolderId > 0 || (Request["SelectedFolderId"] != null && int.TryParse(Request["SelectedFolderId"], out parameterFolderId)))
             {
                 if (parameterFolderId > 0)
                     SelectedFolderId = parameterFolderId;
@@ -121,37 +147,6 @@ namespace OneMainWeb
                     }
                 }
             }
-
-            /*
-            if (fileUpload != null && fileUpload.HasFile &&)
-            {
-                
-
-                string filePath = fileUpload.PostedFile.FileName;
-                var fi = new System.IO.FileInfo(filePath);
-
-                if (folder != null)
-                {
-                    byte[] fileData;
-                    using (fileUpload.PostedFile.InputStream)
-                    {
-                        fileData = new Byte[fileUpload.PostedFile.InputStream.Length];
-                        fileUpload.PostedFile.InputStream.Read(fileData, 0, (int)fileUpload.PostedFile.InputStream.Length);
-                        fileUpload.PostedFile.InputStream.Close();
-                    }
-
-                    file = new BOFile
-                    {
-                        File = fileData,
-                        Id = null,
-                        Folder = folder,
-                        Name = fi.Name,
-                        Extension = fi.Extension,
-                        MimeType = fileUpload.PostedFile.ContentType,
-                        Size = ((int)fileData.Length)
-                    };
-                }
-            }*/
         }
 
         private void SetRootAsSelected()
@@ -175,8 +170,6 @@ namespace OneMainWeb
                 Notifier1.Warning = "No foder selected.";
             }
         }
-
-        
 
         protected void TreeNodeAdd_Click(object sender, EventArgs e)
         {

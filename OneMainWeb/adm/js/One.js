@@ -100,11 +100,13 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-                //trace(item);
                 var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
-                r += '<a href="#" class="btn btn-xs btn-default copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
-                r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB</td><td>';
+                r += '<a href="#" class="btn btn-xs btn-primary copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
+                r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB';
+                r += ' <br/><a href="#" class="btn btn-xs btn-warning openFileReplace"  data-file-id="' + item.Id + '">Replace file</a>';
+                r += ' </td><td>';
                 r += item.Name;
+                
                 r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                 $('#files-table tbody').append(r);
@@ -112,10 +114,38 @@ function files_databind(selectedFolderId) {
 
             var cb = document.getElementsByClassName('copy-button');
             var client = new ZeroClipboard(cb);
-            console.log(client);
             client.on("ready", function (readyEvent) {
                 client.on("aftercopy", function (event) {
                     event.target.innerHTML = '<span class="glyphicon glyphicon-copy"></span> Copied';
+                });
+            });
+
+            $('.openFileReplace').each(function (e) {
+                var fileId = $(this).data("file-id");
+                var dz = $(this).dropzone({
+                    url: "/adm/FileManager.aspx",
+                    autoProcessQueue: true,
+                    previewsContainer: "#previews",
+                    parallelUploads: 2,
+                    previewTemplate: globalPreviewTemplate,
+                    init: function () {
+                        //console.log(fileId);
+                        this.on('complete', function () {
+                            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                                var selectedFolderId = $('#HiddenSelectedFolderId').val();
+                                trace("complete: " + selectedFolderId);
+                                files_databind(selectedFolderId);
+                                $(".adminSection").before('<div class="alert alert-success"><p><span>Replaced file.</span></p></div>');
+                                $("#previews").empty();
+                            }
+                        });
+                        this.on("sending", function (file, xhr, formData) {
+                            console.log("DZ sending");
+                            if (fileId > 0) {
+                                formData.append("ReplaceFileId", fileId);
+                            }
+                        });
+                    }
                 });
             });
 
