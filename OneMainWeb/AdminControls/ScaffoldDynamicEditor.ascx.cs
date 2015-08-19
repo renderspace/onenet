@@ -634,7 +634,7 @@ jQuery.validator.addMethod(
 
             var TextBoxSuggest = new TextBox();
             TextBoxSuggest.ID = "TB" + suggestIdentification;
-            if(!column.IsNullable)
+            if (!column.IsNullable && !skipSelectedLookup) // we don't need required on many to many
                 TextBoxSuggest.CssClass += " required";
 
             TextBoxSuggest.CssClass += " form-control suggest ";
