@@ -73,7 +73,7 @@
         $(document).ready(function () {
             var previewNode = document.querySelector("#template");
             previewNode.id = "";
-            var previewTemplate = previewNode.parentNode.innerHTML;
+            globalPreviewTemplate = previewNode.parentNode.innerHTML;
             previewNode.parentNode.removeChild(previewNode);
 
             var myDropzone = new Dropzone("div#PanelUpload", {
@@ -82,7 +82,7 @@
                 thumbnailWidth: 80,
                 thumbnailHeight: 80,
                 parallelUploads: 20,
-                previewTemplate: previewTemplate,
+                previewTemplate: globalPreviewTemplate,
                 clickable: ".fileinput-button",
                 previewsContainer: "#previews" // Define the container to display the previews
             });
@@ -100,9 +100,7 @@
                     trace("complete: " + selectedFolderId);
                     files_databind(selectedFolderId);
                     $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
-                    //$(".alert").remove();
                     $("#previews").empty();
-
                 }
             });
 
