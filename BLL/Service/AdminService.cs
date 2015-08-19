@@ -191,7 +191,7 @@ namespace One.Net.BLL.Service
             var files = fileB.List(folderId);
 
             var result = new List<DTOFile>();
-            foreach (var f in files)
+            foreach (var f in files.OrderByDescending(f => f.Created))
             {
                 result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString(), Uri = "/_files/" + f.Id.Value + "/" + f.Name });
             }
@@ -251,18 +251,30 @@ namespace One.Net.BLL.Service
 
         private static string GenerateFileIcon(BOFile file, int width)
         {
-            string extension = file.Extension.ToLower().Replace(".", "");
-            string ret;
-
-            ret = "<a href=\"/_files/" + file.Id.Value + "/" + file.Name + "\" target=\"_blank\">";
-
-            if (extension == "jpg" || extension == "gif" || extension == "png" || extension == "jpeg")// ||
+            var lastChanged = "";
+            if (file == null)
+                return "";
+            if (file.Content != null)
             {
-                ret += "<img src=\"/_files/" + file.Id.Value + "/" + file.Name + "?w=" + width + "\" /></a>";
+                lastChanged = "title=\"" + file.Content.DisplayLastChanged + "\"";
             }
             else
             {
-                ret += "<img src=\"/adm/Icons.ashx?extension=" + extension.Trim('.').ToLower() + "\" />";
+                lastChanged = "title=\"" + file.LastChanged.ToString() + "\"";
+            }
+            
+            string extension = file.Extension.ToLower().Replace(".", "");
+            string ret;
+
+            ret = "<a " + lastChanged + " href=\"/_files/" + file.Id.Value + "/" + file.Name + "\" target=\"_blank\">";
+
+            if (extension == "jpg" || extension == "gif" || extension == "png" || extension == "jpeg")// ||
+            {
+                ret += "<img  src=\"/_files/" + file.Id.Value + "/" + file.Name + "?w=" + width + "\" /></a>";
+            }
+            else
+            {
+                ret += "<img  src=\"/adm/Icons.ashx?extension=" + extension.Trim('.').ToLower() + "\" />";
             }
 
             return ret;
