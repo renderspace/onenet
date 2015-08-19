@@ -91,6 +91,11 @@ namespace One.Net.BLL
 		public DateTime Created { get; set; }
 		public DateTime? Modified { get; set; }
 
+        public DateTime LastChanged
+        {
+            get { return Modified.HasValue ? Modified.Value : Created; }
+        }
+
         #endregion Properties
     }
 }
