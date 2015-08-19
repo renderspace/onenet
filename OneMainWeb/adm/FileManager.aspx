@@ -201,7 +201,7 @@
             </div>
 
             <table id="files-table" class="table">
-                <thead>
+                <thead style="display: none;">
                     <tr>
                         <th><input id="chkAll" onclick="SelectAllCheckboxes(this);" runat="server" type="checkbox" /></th>
                         <th></th>
@@ -213,8 +213,8 @@
                 </thead>
                 <tbody></tbody>
             </table>
-
-            <div class="row">
+         
+            <div class="row fileManagerDeleteButtons" style="display: none;">
                 <div class="col-sm-6">
                     <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
                 </div>
