@@ -174,7 +174,7 @@ namespace OneMainWeb
             }
             else
             {
-                Notifier1.Warning = "Please use checkbox to confirm recursive delete";
+                Notifier1.Warning = "No foder selected.";
             }
         }
 
