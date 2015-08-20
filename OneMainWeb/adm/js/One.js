@@ -130,12 +130,13 @@ function files_databind(selectedFolderId) {
                     previewTemplate: globalPreviewTemplate,
                     init: function () {
                         //console.log(fileId);
-                        this.on('complete', function () {
+                        this.on('complete', function (e) {
+                            console.log(e);
                             if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                                 var selectedFolderId = $('#HiddenSelectedFolderId').val();
                                 trace("complete: " + selectedFolderId);
                                 files_databind(selectedFolderId);
-                                $(".adminSection").before('<div class="alert alert-success"><p><span>Replaced file.</span></p></div>');
+                                $(".adminSection").before('<div class="alert alert-success"><p><span>Replaced file. Please double check if the file was really replaced.</span></p></div>');
                                 $("#previews").empty();
                             }
                         });
