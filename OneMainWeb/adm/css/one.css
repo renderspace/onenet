@@ -629,6 +629,10 @@ details .form-group select {width: 100%;}
     border-width: 5px;
 }
 
+tr.very-recent td {
+    background-color: #9BD0FF !important;
+}
+
 .loading {
     /* Replace #333 with the background-color of your choice */
     /* Replace loading.gif with the loading image of your choice */
