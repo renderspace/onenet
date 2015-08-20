@@ -689,6 +689,11 @@ namespace One.Net.BLL
             return false;
         }
 
+        public void MarkModuleInstanceChanged(int instanceId)
+        {
+            DbWebsite.MarkModuleInstanceChanged(instanceId);
+        }
+
         public void ChangeModuleInstance(BOModuleInstance instance)
         {
             ChangeModuleInstance(instance, LanguageId, false);
