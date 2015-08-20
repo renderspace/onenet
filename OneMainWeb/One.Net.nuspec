@@ -66,6 +66,7 @@
       
 
       <file src="JavaScript\**.js" target="content\JavaScript" />
+      <file src="JavaScript\**.swf" target="content\JavaScript" />
 
       <file src="Res\**.gif" target="content\Res" />
       <file src="Res\**.png" target="content\Res" />
