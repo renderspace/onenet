@@ -170,10 +170,8 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
     var ckEditor = CKEDITOR.instances["content-html"];
     if (ckEditor !== undefined) {
         ckEditor.destroy();
-        trace("ckEditor.destroy");
     }
     $(".ckbox").empty();
-    trace("enableHtml: " + enableHtml + " enableCk:" + enableCk + " contentId:" + contentId);
 
     if (contentId > 0) {
         $.ajax({
@@ -182,17 +180,17 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
             dataType: 'json',
             type: "GET",
             success: function (content) {
-                trace(content);
+
                 $("#content-title").val(content.Title);
                 $("#content-subtitle").val(content.Subtitle);
                 $("#content-teaser").val(content.Teaser);
                 $(".j_control_content_id").val(contentId);
+
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
             },
             error: logError
         });
     } else {
-        trace("data.ContentId == 0");
         setUpHtmlEditing(enableHtml, enableCk, "");
     }
 }
@@ -572,6 +570,8 @@ $(document).ready(function () {
 
     $('#text-content-modal a.btn-success').on('click', function (e) {
 
+        var start = window.performance.now();
+
         $(".loading").show();
         $(".modal-body").hide();
         $(".modal-footer").hide();
@@ -597,6 +597,7 @@ $(document).ready(function () {
         content['LanguageId'] = $(".j_control_language_id").val();
         content['ContentId'] = $(".j_control_content_id").val();
         content['FileId'] = $(".j_control_file_id").val();
+
         $.ajax({
             url: "/AdminService/ChangeContent",
             data: JSON.stringify(content),
@@ -611,6 +612,9 @@ $(document).ready(function () {
                             $('#text-content-modal').modal('hide');
                             $(".loading").hide();
                         } else {
+
+                            var end = window.performance.now();
+                            trace('console.time ChangeContent done ' + (end - start));
                             window.location.href = "/adm/structure.aspx";
                         }
                     } else {

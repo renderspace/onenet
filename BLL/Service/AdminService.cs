@@ -159,6 +159,8 @@ namespace One.Net.BLL.Service
             if (content.Html != null)
                 existingContent.Html = content.Html;
 
+            var webSiteB = new BWebsite();
+
             if (file == null)
             {
                 var result = contentB.Change(existingContent);
@@ -166,13 +168,13 @@ namespace One.Net.BLL.Service
                 {
                     log.Error(" contentB.Change returned false");
                 }
+                
                 var instanceIds = DbContent.GetTextContentInstanceId(existingContent.ContentId.Value);
                 foreach (var moduleInstanceId in instanceIds)
                 {
-                    var instance = DbWebsite.GetModuleInstance(moduleInstanceId, false);
-                    BWebsite webSiteB = new BWebsite();
-                    webSiteB.ChangeModuleInstance(instance);
+                    webSiteB.MarkModuleInstanceChanged(moduleInstanceId);
                 }
+
                 return result;
             }
             else
