@@ -204,15 +204,11 @@
 		            <ItemTemplate>
                         <div class="moduleInstance <%# (bool) Eval("IsVeryRecent") ? "very-recent" : "" %>">
                             <h4 class="row">
-                                
-                                
                                 <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
 
                                 <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonContentTemplateModalEdit"  runat="server" data-toggle="modal" data-target="#content-template-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
-
-
 
                                 <span class="m-ops"><%# RenderModuleName(Eval("Changed"), Eval("PendingDelete"), Eval("ModuleName"))%></span>
                                  

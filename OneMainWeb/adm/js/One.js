@@ -90,7 +90,7 @@ function files_databind(selectedFolderId) {
     $('.fileManagerDeleteButtons').hide();
     $('#files-table tbody').empty();
     $('#files-table tbody').html('<tr><td colspan="6"><div class="loading"></div></td></tr>');
-    
+    var searchString = $('#ctl00_MainContent_TextBoxSearch').val();
     $.ajax({
         url: "/AdminService/ListFiles?folderId=" + selectedFolderId + "&languageId=" + languageId,
         contentType: 'application/json; charset=utf-8',
@@ -100,13 +100,17 @@ function files_databind(selectedFolderId) {
             trace("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
-                var r = '<tr><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
+                var r = '<tr';
+                if (item.Id == searchString) {
+                    r += ' class="very-recent" ';
+                    console.log("got it");
+                }
+                r += '><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
                 r += '<a href="#" class="btn btn-xs btn-primary copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
                 r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB';
                 r += ' <br/><a href="#" class="btn btn-xs btn-warning openFileReplace"  data-file-id="' + item.Id + '">Replace file</a>';
                 r += ' </td><td>';
                 r += item.Name;
-                
                 r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                 $('#files-table tbody').append(r);
