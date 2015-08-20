@@ -931,6 +931,15 @@ ORDER BY name ASC";
             return instance;
         }
 
+        public static void MarkModuleInstanceChanged(int instanceId)
+        {
+            SqlParameter moduleInstanceIdParam = new SqlParameter("@Id", instanceId);
+
+            var sql = @"UPDATE [dbo].[module_instance] SET changed=1 WHERE id = @Id AND pages_fk_publish = 0 ";
+
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, moduleInstanceIdParam);
+        }
+
         public static void ChangeModuleInstance(BOModuleInstance moduleInstance)
         {
             SqlParameter moduleInstanceIdParam = new SqlParameter("@Id", moduleInstance.Id);
