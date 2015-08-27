@@ -1452,7 +1452,7 @@ namespace One.Net.BLL
             if (website == null)
                 return "";
 
-            var rootUrl = PublishFlag ? website.ProductionUrl : website.PreviewUrl;
+            var rootUrl = (PublishFlag ? website.ProductionUrl : website.PreviewUrl).TrimEnd('/');
 
             BOPage _root = null;
 
