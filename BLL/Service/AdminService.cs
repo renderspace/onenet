@@ -170,9 +170,16 @@ namespace One.Net.BLL.Service
                 }
                 
                 var instanceIds = DbContent.GetTextContentInstanceId(existingContent.ContentId.Value);
+                int i = 0;
+                int pageId = 0;
                 foreach (var moduleInstanceId in instanceIds)
                 {
-                    webSiteB.MarkModuleInstanceChanged(moduleInstanceId);
+                    if (i == 0) {
+                        var moduleInstance = webSiteB.GetModuleInstance(moduleInstanceId);
+                        pageId = moduleInstance.PageId;
+                    }
+                    webSiteB.MarkModuleInstanceChanged(moduleInstanceId, pageId);
+                    i++;
                 }
 
                 return result;
