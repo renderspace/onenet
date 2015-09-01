@@ -940,6 +940,15 @@ ORDER BY name ASC";
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, moduleInstanceIdParam);
         }
 
+        public static void MarkPageChanged(int pageId)
+        {
+            SqlParameter pageIdParam = new SqlParameter("@Id", pageId);
+
+            var sql = @"UPDATE [dbo].[pages] SET changed=1 WHERE id = @Id AND publish = 0 ";
+
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, pageIdParam);
+        }
+
         public static void ChangeModuleInstance(BOModuleInstance moduleInstance)
         {
             SqlParameter moduleInstanceIdParam = new SqlParameter("@Id", moduleInstance.Id);
