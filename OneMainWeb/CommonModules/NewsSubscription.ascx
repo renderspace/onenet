@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="One.Net.BLL"  %>
 
-<h1><%=Translate("newsletter_module_title") %></h1>
+<h2><%=Translate("newsletter_module_title") %></h2>
 
 <asp:PlaceHolder id="PlaceHolderSubscribe" runat="server">
 
@@ -31,8 +31,8 @@
     
     <asp:Panel ID="PanelEmail" runat="server" CssClass="emailPannel">
         <asp:Label AssociatedControlID="InputEmail" ID="LabelEmail" runat="server" EnableViewState="false" />
-        <asp:TextBox runat="server" ID="InputEmail" CssClass="text" ValidationGroup="NLSUB" />
         <asp:CheckBoxList ID="CheckBoxListNewsletters" CssClass="multiNlItems" runat="server" />
+        <asp:TextBox runat="server" ID="InputEmail" CssClass="text" ValidationGroup="NLSUB" />
         <span class="button"><asp:LinkButton Text="submit" ID="CmdSubscribe" CausesValidation="true" OnClick="CmdSubscribe_Click" runat="server" ValidationGroup="NLSUB" /></span>
     </asp:Panel>
 	

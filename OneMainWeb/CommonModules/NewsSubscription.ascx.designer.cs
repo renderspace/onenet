@@ -112,15 +112,6 @@ namespace OneMainWeb.CommonModules {
         protected global::System.Web.UI.WebControls.Label LabelEmail;
         
         /// <summary>
-        /// InputEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox InputEmail;
-        
-        /// <summary>
         /// CheckBoxListNewsletters control.
         /// </summary>
         /// <remarks>
@@ -128,6 +119,15 @@ namespace OneMainWeb.CommonModules {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxListNewsletters;
+        
+        /// <summary>
+        /// InputEmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox InputEmail;
         
         /// <summary>
         /// CmdSubscribe control.
