@@ -49,7 +49,7 @@ namespace OneMainWeb.AdminControls
     public partial class ScaffoldDynamicEditor : System.Web.UI.UserControl
     {
         static readonly BInternalContent intContentB = new BInternalContent();
-        private const int SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 40;
+        private const int SUGGEST_ENTRIES_IN_DROPDOWN_LIMIT = 80;
         private const string NULL = "NULL";
 
         public string DATE_FORMAT = "M/d/yyyy";
