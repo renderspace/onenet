@@ -689,9 +689,11 @@ namespace One.Net.BLL
             return false;
         }
 
-        public void MarkModuleInstanceChanged(int instanceId)
+        public void MarkModuleInstanceChanged(int instanceId, int pageId)
         {
             DbWebsite.MarkModuleInstanceChanged(instanceId);
+            DbWebsite.MarkPageChanged(pageId);
+            cache.Remove(PAGE_CACHE_ID(pageId, LanguageId, PublishFlag));
         }
 
         public void ChangeModuleInstance(BOModuleInstance instance)
