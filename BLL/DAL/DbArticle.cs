@@ -137,7 +137,7 @@ namespace One.Net.BLL.DAL
             {
                 if (reader.Read())
                 {
-                    result = (DateTime)reader["date_day"];
+                    result = reader["date_day"] != DBNull.Value ? (DateTime)reader["date_day"] : (DateTime?)null;
                 }
             }
 
