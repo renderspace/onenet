@@ -356,7 +356,7 @@ namespace One.Net.BLL
         /// </summary>
         public List<BORegular> ListRegulars(ListingState state, bool showUntranslated, int? articleId, bool? publish)
         {
-            List<BORegular> regulars = articleDB.ListRegulars(state, showUntranslated, articleId, publish, LanguageId);
+            var regulars = articleDB.ListRegulars(state, showUntranslated, articleId, publish, LanguageId);
 
             if (showUntranslated)
                 for (int i = 0; i < regulars.Count; i++)
@@ -365,6 +365,18 @@ namespace One.Net.BLL
 
             return regulars;
         }
+
+        public List<BORegular> ListRegulars(List<int> regularIds)
+        {
+            var regulars = articleDB.ListRegulars(regularIds, !PublishFlag, PublishFlag, LanguageId);
+
+            if (!PublishFlag)
+                for (int i = 0; i < regulars.Count; i++)
+                    if (regulars[i] != null && regulars[i].MissingTranslation && regulars[i].ContentId.HasValue)
+                        regulars[i].Title = BInternalContent.GetContentTitleInAnyLanguage(regulars[i].ContentId.Value);
+
+            return regulars;
+        }        
 
         #endregion General Regular methods
 
