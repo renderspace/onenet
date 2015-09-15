@@ -195,9 +195,7 @@ namespace OneMainWeb.Controls
 
                     string parentUrl = "";
                     if (dataItem.ParentNode != null)
-                    {
                         parentUrl = dataItem.ParentNode.Url;
-                    }
 
                     string pageId = dataItem["_pageID"];
                     bool dataItemHasChildren = dataItem.HasChildNodes;
@@ -240,9 +238,13 @@ namespace OneMainWeb.Controls
                         cssClass += " selc ";
                         linkCssClass += " aselc ";
                     }
+
+                    var openInNewWindow = false;
                     if (dataItem["_IsRedirected"] == "True")
                     {
                         url = dataItem["_redirectToUrl"].ToString();
+                        if (url.StartsWith("http"))
+                            openInNewWindow = true;
                     }
 
                     if (parentUrl == _selectedUrl)
@@ -304,7 +306,7 @@ namespace OneMainWeb.Controls
                             itemHeader.ID = "ItemHeader" + currentItemId;
                             Controls.Add(itemHeader);
 
-                            var item = RenderItem(linkCssClass, dataItem.Title, url, dataItem.Description, dataItem["_ogImage"], currentItemId);
+                            var item = RenderItem(linkCssClass, dataItem.Title, url, dataItem.Description, dataItem["_ogImage"], currentItemId, openInNewWindow);
 
                             if (_menuGroup == Group)
                                 Controls.Add(item);
@@ -359,7 +361,7 @@ namespace OneMainWeb.Controls
             }
         }
 
-        protected Literal RenderItem(string linkCssClass, string title, string url, string description, string leadImageUri, int currentItemId)
+        protected Literal RenderItem(string linkCssClass, string title, string url, string description, string leadImageUri, int currentItemId, bool openInNewWindow)
         {
             var item = new Literal();
 
@@ -368,7 +370,7 @@ namespace OneMainWeb.Controls
             {
                 leadImageTag = LeadImageTemplate.RenderHtml(description, leadImageUri, "");
             }
-            item.Text = "<a href=\"" + url + "\" class=\"" + linkCssClass + "\">" + leadImageTag + "<span>" + title + "</span>" + (ShowDescription && !string.IsNullOrWhiteSpace(description) ? "<span class=\"d\">" + description + "</span>" : "") + "</a>";
+            item.Text = "<a" + (openInNewWindow ? " target=\"_blank\" " : "") + " href=\"" + url + "\" class=\"" + linkCssClass + "\">" + leadImageTag + "<span>" + title + "</span>" + (ShowDescription && !string.IsNullOrWhiteSpace(description) ? "<span class=\"d\">" + description + "</span>" : "") + "</a>";
             item.ID = "Item" + currentItemId;
             return item;
         }
