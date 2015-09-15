@@ -587,13 +587,19 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return regulars;
         }
         
-        public List<BORegular> ListRegulars(List<int> regularIds, bool showUntranslated, bool? publish, int languageId)
+        public List<BORegular> ListRegulars(ListingState state, List<int> regularIds, bool showUntranslated, bool? publish, int languageId)
         {
             var regulars = new List<BORegular>();
 
-            SqlParameter[] paramsToPass = new SqlParameter[2];
-            paramsToPass[0] = new SqlParameter("@languageId", languageId);
-            paramsToPass[1] = SqlHelper.GetNullable("@publishFlag", publish);
+            if (string.IsNullOrEmpty(state.SortField))
+            {
+                state.SortField = "id";
+            }
+
+            SqlParameter[] paramsToPass = new SqlParameter[3];
+            paramsToPass[0] = new SqlParameter("@sortBy", state.SortField);
+            paramsToPass[1] = new SqlParameter("@languageId", languageId);
+            paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", publish);
 
             string sql = REGULAR_SELECT_PART;
 
