@@ -366,9 +366,9 @@ namespace One.Net.BLL
             return regulars;
         }
 
-        public List<BORegular> ListRegulars(List<int> regularIds)
+        public List<BORegular> ListRegulars(ListingState state, List<int> regularIds)
         {
-            var regulars = articleDB.ListRegulars(regularIds, !PublishFlag, PublishFlag, LanguageId);
+            var regulars = articleDB.ListRegulars(state, regularIds, !PublishFlag, PublishFlag, LanguageId);
 
             if (!PublishFlag)
                 for (int i = 0; i < regulars.Count; i++)
