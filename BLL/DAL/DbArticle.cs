@@ -586,5 +586,52 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             return regulars;
         }
+        
+        public List<BORegular> ListRegulars(List<int> regularIds, bool showUntranslated, bool? publish, int languageId)
+        {
+            var regulars = new List<BORegular>();
+
+            SqlParameter[] paramsToPass = new SqlParameter[2];
+            paramsToPass[0] = new SqlParameter("@languageId", languageId);
+            paramsToPass[1] = SqlHelper.GetNullable("@publishFlag", publish);
+
+            string sql = REGULAR_SELECT_PART;
+
+            sql += showUntranslated ? "LEFT" : "INNER";
+
+            sql += @" JOIN [dbo].[content_data_store] cds 
+                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId ";
+
+            sql += @" WHERE 1=1 ";
+
+            if (regularIds.Count > 0) {
+                var regularIdsString = FormatTool.ToCommaSeparatedValues(regularIds);
+                sql += " AND r.id IN (" + regularIdsString + ") ";
+            }
+
+            sql += @"   ORDER BY 
+                        CASE @sortBy WHEN 'title' THEN title ELSE NULL END,
+                        CASE @sortBy WHEN 'subtitle' THEN subtitle ELSE NULL END,
+                        CASE @sortBy WHEN 'principal_created_by' THEN principal_created_by ELSE NULL END,
+                        CASE @sortBy WHEN 'principal_modified_by' THEN principal_modified_by ELSE NULL END,
+                        CASE @sortBy WHEN 'content_fk_id' THEN r.content_fk_id ELSE NULL END,
+                        CASE @sortBy WHEN 'id' THEN r.id ELSE NULL END ";
+
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+                CommandType.Text, sql, paramsToPass))
+            {
+                while (reader.Read())
+                {
+                    BORegular regular = new BORegular();
+                    regular.ContentId = reader.GetInt32(10);
+                    DbHelper.PopulateContent(reader, regular, languageId);
+                    regular.Id = reader.GetInt32(11);
+                    regular.ArticleCount = reader.GetInt32(12);
+                    regulars.Add(regular);
+                }
+            }
+
+            return regulars;
+        }
     }
 }
