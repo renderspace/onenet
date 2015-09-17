@@ -182,12 +182,12 @@ namespace OneMainWeb
                 {
                     if (selectedWebsite.PreviewUrl.StartsWith("http"))
                     {
-                        LiteralClearPreviewCache.Text = "<iframe style=\"width: 100%; height: 36px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.PreviewUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>" ;
+                        LiteralClearPreviewCache.Text = "<iframe style=\"width: 100%; height: 60px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.PreviewUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>" ;
                         LiteralClearPreviewCache.Visible = true;
                     }
                     if (selectedWebsite.ProductionUrl.StartsWith("http"))
                     {
-                        LiteralClearProductionCache.Text = "<iframe style=\"width: 100%; height: 36px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.ProductionUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>";
+                        LiteralClearProductionCache.Text = "<iframe style=\"width: 100%; height: 60px; overflow: hidden; border: none;\" src=\"" + selectedWebsite.ProductionUrl.TrimEnd('/') + "/Utils/OneClear.aspx\"></iframe>";
                         LiteralClearProductionCache.Visible = true;
                     } 
                 }       
