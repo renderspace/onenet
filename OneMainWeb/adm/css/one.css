@@ -640,3 +640,7 @@ tr.very-recent td {
     width:100%;
     padding:20%;    
 }
+
+.clear-cache {
+	padding: 0 20px;
+}
