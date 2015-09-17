@@ -8,11 +8,11 @@
     <link href="/adm/css/bootstrap.css" rel="stylesheet" />
 
 </head>
-<body style="background-color: #2e3d4c;">
+<body style="background-color: #334454; text-align:center;">
     <form id="form1" runat="server">
     <div>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Clear cache" Cssclass="btn btn-default btn-sm" />
-        <asp:Label ID="Label1" runat="server" style="color: white;"></asp:Label>
+			<asp:Label ID="Label1" runat="server" style="color: white;"></asp:Label>
     </div>
     </form>
 </body>
