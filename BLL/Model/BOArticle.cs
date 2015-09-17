@@ -71,6 +71,12 @@ namespace One.Net.BLL
             }
         }
 
+        public string HumanReadableUrl
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         #region Methods

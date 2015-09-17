@@ -194,6 +194,7 @@ CREATE TABLE [dbo].[article](
 	[content_fk_id] [int] NOT NULL,
 	[display_date] [datetime] NOT NULL,
 	[marked_for_deletion] [bit] NOT NULL,
+	[human_readable_url] [varchar](255) NOT NULL,
  CONSTRAINT [PK_article] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC,
@@ -206,6 +207,7 @@ GO
 CREATE TABLE [dbo].[regular](
 	[id] [int]  IDENTITY(1,1)  NOT NULL,
 	[content_fk_id] [int] NOT NULL,
+	[human_readable_url] [varchar](255) NOT NULL,
  CONSTRAINT [PK_regular] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
