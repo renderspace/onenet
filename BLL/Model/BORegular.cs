@@ -26,6 +26,12 @@ namespace One.Net.BLL
             set { articleCount = value; }
         }
 
+        public string HumanReadableUrl
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         public BORegular() { }

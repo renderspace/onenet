@@ -14,7 +14,7 @@ namespace One.Net.BLL.DAL
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public const string REGULAR_SELECT_PART =
-            DbHelper.CONTENT_SELECT_PART + @" r.content_fk_id, r.id, (SELECT Count(article_fk_id) FROM regular_has_articles WHERE regular_fk_id=r.id AND article_fk_publish=@publishFlag) ArticleCount
+            DbHelper.CONTENT_SELECT_PART + @" r.content_fk_id, r.human_readable_url, r.id, (SELECT Count(article_fk_id) FROM regular_has_articles WHERE regular_fk_id=r.id AND article_fk_publish=@publishFlag) ArticleCount
                         FROM [dbo].[regular] r 
                         INNER JOIN [dbo].[content] c ON c.id = r.content_fk_id ";
 
@@ -34,7 +34,7 @@ namespace One.Net.BLL.DAL
 
         public void ChangeArticle(BOArticle article)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[6];
+            SqlParameter[] paramsToPass = new SqlParameter[7];
             paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id); 
             paramsToPass[0].Direction = ParameterDirection.InputOutput;
             paramsToPass[0].SqlDbType = SqlDbType.Int;
@@ -44,6 +44,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[3] = new SqlParameter("@contentId", article.ContentId.Value);
             paramsToPass[4] = new SqlParameter("@markedForDeletion", article.MarkedForDeletion);
             paramsToPass[5] = new SqlParameter("@displayDate", article.DisplayDate);
+            paramsToPass[6] = new SqlParameter("@humanReadableUrl", article.HumanReadableUrl);
 
             string sql = @"[dbo].[ChangeArticle]";
 
@@ -85,7 +86,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed,  ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.human_readable_url, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed,  ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -333,7 +334,9 @@ WHERE a2.publish = @publishFlag ";
 
         private static void PopulateArticle(IDataReader reader, BOArticle article, int languageId)
         {
+
             DbHelper.PopulateContent(reader, article, languageId);
+
             article.Id = reader.GetInt32(10);
             article.PublishFlag = reader.GetBoolean(11);
             article.ContentId = reader.GetInt32(12);
@@ -341,6 +344,7 @@ WHERE a2.publish = @publishFlag ";
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
             article.IsNew = reader.GetInt32(16) == 0;
+            article.HumanReadableUrl = (string)reader["human_readable_url"];
         }
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
@@ -373,12 +377,12 @@ WHERE a2.publish = @publishFlag ";
             string sql =
                 @"
                     ;WITH ArticleCTE(title, subtitle, teaser, html, principal_created_by, date_created, principal_modified_by, 
-                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, countPublished, RowNumber)
+                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, human_readable_url, countPublished, RowNumber)
                     AS
                     (
 		                    SELECT	DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 				                    c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				                    a.display_date, a.marked_for_deletion, a.changed, 
+				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url,
                                     ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished,
                                     ROW_NUMBER() OVER (";
             if (state.SortField.Length > 1)
@@ -466,21 +470,22 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
         public void ChangeRegular(BORegular regular)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[2];
+            SqlParameter[] paramsToPass = new SqlParameter[3];
             paramsToPass[0] = SqlHelper.GetNullable("Id", regular.Id);
             paramsToPass[1] = new SqlParameter("@ContentId", regular.ContentId.Value);
+            paramsToPass[2] = new SqlParameter("@HumanReadableUrl", regular.HumanReadableUrl);
 
             string sql;
 
             if (regular.Id.HasValue)
             {
-                sql = @"UPDATE [dbo].[regular] SET content_fk_id=@ContentId WHERE id=@Id";
+                sql = @"UPDATE [dbo].[regular] SET content_fk_id=@ContentId, human_readable_url=@HumanReadableUrl WHERE id=@Id";
             }
             else
             {
                 paramsToPass[0].Direction = ParameterDirection.InputOutput;
                 paramsToPass[0].SqlDbType = SqlDbType.Int;
-                sql = @"INSERT INTO [dbo].[regular]  (content_fk_id) VALUES (@ContentId); SET @id=SCOPE_IDENTITY();";
+                sql = @"INSERT INTO [dbo].[regular]  (content_fk_id, human_readable_url, @HumanReadableUrl) VALUES (@ContentId); SET @id=SCOPE_IDENTITY();";
             }
 
             int affectedRows = SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
@@ -489,7 +494,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 paramsToPass[0].Direction = ParameterDirection.InputOutput;
                 paramsToPass[0].SqlDbType = SqlDbType.Int;
-                sql = @"SET IDENTITY_INSERT [dbo].[regular] ON; INSERT INTO [dbo].[regular]  (content_fk_id, id) VALUES (@ContentId, @Id); SET IDENTITY_INSERT [dbo].[regular] OFF; SET @id=SCOPE_IDENTITY();";
+                sql = @"SET IDENTITY_INSERT [dbo].[regular] ON; INSERT INTO [dbo].[regular]  (content_fk_id, id, human_readable_url) VALUES (@ContentId, @Id, @HumanReadableUrl); SET IDENTITY_INSERT [dbo].[regular] OFF; SET @id=SCOPE_IDENTITY();";
                 SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
                 // since it did't exist, we erase it (and allow for the next statement to load it)
                 regular.Id = null;
@@ -526,6 +531,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
                     regular.Id = reader.GetInt32(11);
                     regular.ArticleCount = reader.GetInt32(12);
+                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
                 }
             }
 
@@ -566,6 +572,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                         CASE @sortBy WHEN 'principal_created_by' THEN principal_created_by ELSE NULL END,
                         CASE @sortBy WHEN 'principal_modified_by' THEN principal_modified_by ELSE NULL END,
                         CASE @sortBy WHEN 'content_fk_id' THEN r.content_fk_id ELSE NULL END,
+                        CASE @sortBy WHEN 'human_readable_url' THEN r.human_readable_url ELSE NULL END,
                         CASE @sortBy WHEN 'id' THEN r.id ELSE NULL END ";
 
             sql += state.SortDirection == SortDir.Descending ? " DESC" : " ASC";
@@ -575,11 +582,13 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 while (reader.Read())
                 {
-                    BORegular regular = new BORegular();
+                    var regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, languageId);
                     regular.Id = reader.GetInt32(11);
                     regular.ArticleCount = reader.GetInt32(12);
+                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
+
                     regulars.Add(regular);
                 }
             }
@@ -621,6 +630,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                         CASE @sortBy WHEN 'principal_created_by' THEN principal_created_by ELSE NULL END,
                         CASE @sortBy WHEN 'principal_modified_by' THEN principal_modified_by ELSE NULL END,
                         CASE @sortBy WHEN 'content_fk_id' THEN r.content_fk_id ELSE NULL END,
+                        CASE @sortBy WHEN 'human_readable_url' THEN r.human_readable_url ELSE NULL END,
                         CASE @sortBy WHEN 'id' THEN r.id ELSE NULL END ";
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
@@ -633,6 +643,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     DbHelper.PopulateContent(reader, regular, languageId);
                     regular.Id = reader.GetInt32(11);
                     regular.ArticleCount = reader.GetInt32(12);
+                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
                     regulars.Add(regular);
                 }
             }
