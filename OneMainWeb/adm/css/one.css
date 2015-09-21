@@ -463,7 +463,7 @@ div.calendar
 
 .audit-history-table {max-height: 500px; overflow: auto;}
 .ModuleDistinctName { font-size: 11px; font-weight: normal;}
-.m-ops { margin: 3px 10px 0 20px; }
+.m-ops { margin: 5px 10px 0 20px; }
 
 .glyphicon-none:before {
     content: "\2122";
@@ -474,8 +474,8 @@ div.calendar
 
 .adminSection {display: block; border: 1px #dddddd solid; width: 100%;padding: 20px; background-color: #FFF; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;float: left;margin: 10px 0;}
 
-.moduleInstance {border: 1px #dddddd solid; background: #f0f0f0; padding: 15px; margin-top: 15px; width: 100%; float: left; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
-.moduleInstance h4 {display: inline-block; width: 100%; margin: 0; padding: 0;}
+.moduleInstance {border: 1px #dddddd solid; background: #f0f0f0; padding: 15px 15px 10px 15px; margin-top: 15px; width: 100%; float: left; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
+.moduleInstance h4 {display: inline-block; width: 100%; margin: 0 0 5px 0; padding: 0;}
 .moduleInstance .btn.btn-info.btn-lg {padding: 6px 12px; font-size: 14px; margin-left: 20px;}
 .moduleInstance > .row > .col-sm-4 {padding-right: 0;}
 .moduleInstance .m-ops {margin-left: 0;}
@@ -508,6 +508,10 @@ details .form-group select {width: 100%;}
     color:    #CCC;
 }
 
+.form-control {
+	box-shadow: none;
+}
+
 .modal-dialog .cke_contents {
     height: 320px !important;
 }
@@ -538,7 +542,7 @@ details .form-group select {width: 100%;}
 
 .fi-top {border-bottom: 1px #ccc solid; margin-bottom: 10px;}
 .fi-top input[type="text"] {margin-top: 0!important; padding: 6px 5px!important; margin-bottom: 10px;}
-.fi-top a {margin-bottom: 10px;}
+.fi-top a {margin: 1px 0 9px 6px;}
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {background: #5cace7!important; border-color: #5cace7!important;}
 .node-selected {background: #5cace7!important;}
@@ -576,7 +580,7 @@ details .form-group select {width: 100%;}
     border-radius: 0 0 6px 0;
 }
 
-.tabl {display: table;}
+.tabl {display: table; width: 100%;}
 .tabltr {display: table-row;}
 .s1a, .s2a {display: table-cell; vertical-align: top;}
 .s1a {min-width: 280px; padding-right: 20px;}
@@ -585,7 +589,7 @@ details .form-group select {width: 100%;}
 .s1a, .s2a {width: 100%; display: inline-block;}
 }
 
-.bg-primary.distinct-name {margin-left: 10px; background: #e6e6e6; border: 1px #dddddd solid; padding: 7px 10px; color: #333; font-size: 16px; font-weight: bold; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
+.bg-primary.distinct-name {display: inline-block; margin-top: 0px; margin-left: 10px; background: #e6e6e6; border: 1px #dddddd solid; padding: 7px 10px; color: #333; font-size: 16px; font-weight: bold; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;}
 .bg-primary.distinct-name span {font-size: 11px; font-weight: normal;}
 
 .list-group-item {padding: 4px 5px;}
@@ -644,3 +648,15 @@ tr.very-recent td {
 .clear-cache {
 	padding: 0 20px;
 }
+
+.with_buttons .btn {
+	margin: 3px 0 0 -20px;
+}
+
+@media (max-width: 768px){ 
+	.with_buttons .btn {
+		margin: 3px 0 0 0;
+	}
+}
+
+.pbtns .btn {margin-left: 6px;}

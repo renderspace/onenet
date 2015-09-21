@@ -160,7 +160,7 @@
 				        <div class="form-group">
 
                             <div class="col-sm-12">
-                                <span class="pull-right">
+                                <span class="pull-right pbtns">
 					            <asp:LinkButton id="ButtonDelete" CssClass="left btn btn-danger" Runat="server" Text="Delete" onclick="cmdDelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonUndoDelete" CssClass="left btn btn-info" runat="server" Text="Undelete" OnClick="ButtonUndelete_Click" Visible="false" />
 			                    <asp:LinkButton ID="ButtonPublish"  runat="server" OnClick="ButtonPublish_Click" Cssclass="right btn-success btn" />				     
@@ -180,9 +180,15 @@
 				
                 <div class="with_buttons">
                     <asp:Panel ID="PanelAddInstance" runat="server" CssClass="addStuff">
-				        <asp:dropdownlist id="DropDownListModules" Runat="server" />
-                        <asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="ButtonAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
-                    </asp:Panel>
+						<div class="row">
+							<div class="col-sm-7">
+								<asp:dropdownlist id="DropDownListModules" Runat="server" />
+							</div>
+							<div class="col-sm-5">	
+								<asp:LinkButton	id="cmdAddInstance"	Runat="server" text="Add module instance" CssClass="btn btn-success" onclick="ButtonAddInstance_Click"><span class="glyphicon glyphicon-plus"></span> Add</asp:LinkButton>
+							</div>
+						</div>
+					</asp:Panel>
                 </div>
                
 
