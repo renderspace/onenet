@@ -55,10 +55,12 @@
 						<asp:TemplateField HeaderText="Title" SortExpression="title">
 							<ItemTemplate><%# Eval("Title") %></ItemTemplate>
 						</asp:TemplateField>
+						<asp:TemplateField HeaderText="HumanReadableUrl" SortExpression="human_readable_url">
+							<ItemTemplate><%# Eval("HumanReadableUrl") %></ItemTemplate>
+						</asp:TemplateField>
 						<asp:TemplateField HeaderText="Display date" SortExpression="display_date">
 							<ItemTemplate><%# ((DateTime)Eval("DisplayDate")).ToShortDateString()%></ItemTemplate>
-						</asp:TemplateField>
-							    
+						</asp:TemplateField>							    
 						<asp:TemplateField HeaderText="Categories">
 							<ItemTemplate><%# Eval("RegularsList")%></ItemTemplate>
 						</asp:TemplateField>
@@ -124,7 +126,14 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
+                    <div class="col-sm-9">
+                        <div class='input-group'>
+                            <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="form-control" />
+                        </div>
+                    </div>
+                </div>
                 <one:TextContentControl ID="TextContentEditor" runat="server" />
 			    <div class="form-group">
                     <div class="col-sm-3">

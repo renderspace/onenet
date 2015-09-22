@@ -48,6 +48,7 @@ namespace One.Net.BLL
             this.CloneContent(result);
             result.Id = this.Id;
             result.ArticleCount = this.ArticleCount;
+            result.HumanReadableUrl = this.HumanReadableUrl;
             return result;
         }
     }

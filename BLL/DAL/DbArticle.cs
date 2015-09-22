@@ -77,16 +77,49 @@ namespace One.Net.BLL.DAL
             }
         }
 
+        public BOArticle GetArticle(string humanReadableUrl, bool publishFlag, int languageId, bool showUntranslated) 
+        {
+            BOArticle article = null;
+
+            var paramsToPass = new SqlParameter[3];
+            paramsToPass[0] = new SqlParameter("@humanReadableUrl", humanReadableUrl);
+            paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
+            paramsToPass[2] = new SqlParameter("@languageId", languageId);
+
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
+            if (publishFlag)
+                sql += " 1 ";
+            else
+                sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
+            sql += @"   FROM [dbo].[article] a
+                        INNER JOIN [dbo].[content] c ON c.id = a.content_fk_id ";
+            sql += showUntranslated ? "LEFT" : "INNER";
+            sql += @" JOIN [dbo].[content_data_store] cds 
+                      ON cds.content_fk_id = c.id AND cds.language_fk_id=@languageId 
+                      WHERE a.human_readable_url=@humanReadableUrl AND a.publish=@publishFlag";
+
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            {
+                if (reader.Read())
+                {
+                    article = new BOArticle();
+                    PopulateArticle(reader, article, languageId);
+                }
+            }
+
+            return article;
+        }
+
         public BOArticle GetArticle(int id, bool publishFlag, int languageId, bool showUntranslated)
         {
             BOArticle article = null;
 
-            SqlParameter[] paramsToPass = new SqlParameter[3];
+            var paramsToPass = new SqlParameter[3];
             paramsToPass[0] = new SqlParameter("@id", id);
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.human_readable_url, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed,  ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -281,7 +314,7 @@ WHERE a2.publish = @publishFlag ";
                 FROM (
                     SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 			        c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				    a.display_date, a.marked_for_deletion, a.changed, ";
+				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
 
             if (publishFlag)
                 sql += " 1 countPublished ";
@@ -321,7 +354,7 @@ WHERE a2.publish = @publishFlag ";
             {
                 while (reader.Read())
                 {
-                    BOArticle article = new BOArticle();
+                    var article = new BOArticle();
                     PopulateArticle(reader, article, languageId);
                     list.Add(article);
                 }
@@ -334,7 +367,6 @@ WHERE a2.publish = @publishFlag ";
 
         private static void PopulateArticle(IDataReader reader, BOArticle article, int languageId)
         {
-
             DbHelper.PopulateContent(reader, article, languageId);
 
             article.Id = reader.GetInt32(10);
@@ -343,8 +375,8 @@ WHERE a2.publish = @publishFlag ";
             article.DisplayDate = reader.GetDateTime(13);
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
-            article.IsNew = reader.GetInt32(16) == 0;
-            article.HumanReadableUrl = (string)reader["human_readable_url"];
+            article.HumanReadableUrl = reader.GetString(16);
+            article.IsNew = reader.GetInt32(17) == 0;
         }
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
@@ -529,9 +561,41 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.Id = reader.GetInt32(11);
-                    regular.ArticleCount = reader.GetInt32(12);
-                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
+                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.Id = reader.GetInt32(12);
+                    regular.ArticleCount = reader.GetInt32(13);
+                }
+            }
+
+            return regular;
+        }
+        
+        public BORegular GetRegular(string humanReadableUrl, bool showUntranslated)
+        {
+            BORegular regular = null;
+
+            SqlParameter[] paramsToPass = new SqlParameter[3];
+            paramsToPass[0] = new SqlParameter("@humanReadableUrl", humanReadableUrl);
+            paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
+            paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", false);
+
+
+            string sql = REGULAR_SELECT_PART;
+            sql += showUntranslated ? "LEFT" : "INNER";
+            sql += @" JOIN [dbo].[content_data_store] cds 
+                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId 
+                      WHERE r.human_readable_url=@humanReadableUrl";
+
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            {
+                if (reader.Read())
+                {
+                    regular = new BORegular();
+                    regular.ContentId = reader.GetInt32(10);
+                    DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
+                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.Id = reader.GetInt32(12);
+                    regular.ArticleCount = reader.GetInt32(13);
                 }
             }
 
@@ -585,9 +649,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     var regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.Id = reader.GetInt32(11);
-                    regular.ArticleCount = reader.GetInt32(12);
-                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
+                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.Id = reader.GetInt32(12);
+                    regular.ArticleCount = reader.GetInt32(13);
 
                     regulars.Add(regular);
                 }
@@ -641,9 +705,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     BORegular regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.Id = reader.GetInt32(11);
-                    regular.ArticleCount = reader.GetInt32(12);
-                    regular.HumanReadableUrl = (string)reader["human_readable_url"];
+                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.Id = reader.GetInt32(12);
+                    regular.ArticleCount = reader.GetInt32(13);
                     regulars.Add(regular);
                 }
             }
