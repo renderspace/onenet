@@ -13,7 +13,7 @@ using One.Net.BLL.Model.Attributes;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class ArticleList : MModule
+    public partial class ArticleList : MModule, IBasicSEOProvider
     {
         public const string REQUEST_ARTICLE_TEXT_SEARCH = "atsearch";
         public const string REQUEST_DATE = "adfd";
@@ -31,14 +31,26 @@ namespace OneMainWeb.CommonModules
         { 
             get 
             {
-                var result = GetIntegerListSetting("CategoriesList");
-                 
-                var regid = 0;
-                if (Request["regid"] != null && int.TryParse(Request["regid"], out regid))
+                List<int> result = new List<int>();
+
+                if (HasHumanReadableUrlParameter)
                 {
-                    if (regid > 0 && result.Contains(regid))
-                        result = new List<int>() { regid };
+                    var regular = articleB.GetRegular(HumanReadableUrlParameter);
+                    if (regular != null)
+                        result.Add(regular.Id.Value);
                 }
+
+                if (result.Count == 0) {
+                    result = GetIntegerListSetting("CategoriesList");
+
+                    var regid = 0;
+                    if (Request["regid"] != null && int.TryParse(Request["regid"], out regid))
+                    {
+                        if (regid > 0 && result.Contains(regid))
+                            result = new List<int>() { regid };
+                    }
+                }
+
                 return result;
             } 
         }
@@ -94,8 +106,25 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
-
         #endregion Settings
+
+        public string Description
+        {
+            get;
+            set;
+        }
+
+        public string Title
+        {
+            get;
+            set;
+        }
+
+        public string OgImageUrl
+        {
+            get;
+            set;
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -153,10 +182,9 @@ namespace OneMainWeb.CommonModules
            PagerArticles.DetermineData();
         }
 
-        protected string RenderLink(object articleId)
+        protected string RenderLink(string humanReadableUrl)
         {
-            var aid = int.Parse(articleId.ToString());
-            return SingleArticleUri + "?aid=" + aid.ToString();
+            return SingleArticleUri + "/" + humanReadableUrl;
         }
 
         protected void RepeaterArticles_ItemDataBound(object sender, RepeaterItemEventArgs e)

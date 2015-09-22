@@ -132,6 +132,8 @@ namespace OneMainWeb
                         TextBoxDate.Text = SelectedArticle.DisplayDate.ToString("d", Thread.CurrentThread.CurrentUICulture) + " " + SelectedArticle.DisplayDate.ToString("HH:mm", Thread.CurrentThread.CurrentUICulture);
                     }
 
+                    TextBoxHumanReadableUrl.Text = string.IsNullOrEmpty(SelectedArticle.HumanReadableUrl) ? "" : SelectedArticle.HumanReadableUrl;
+
                     TextContentEditor.Title = SelectedArticle.Title;
                     TextContentEditor.SubTitle = SelectedArticle.SubTitle;
                     TextContentEditor.Teaser = SelectedArticle.Teaser;
@@ -169,6 +171,8 @@ namespace OneMainWeb
                 var d = SqlDateTime.MinValue.Value;
                 DateTime.TryParse(TextBoxDate.Text, Thread.CurrentThread.CurrentUICulture, DateTimeStyles.None, out d);
 
+                var humanReadableUrl = TextBoxHumanReadableUrl.Text.Trim();
+
                 if (ListBoxAssignedToArticle.Items.Count == 0)
                 {
                     Notifier1.Warning = "You need to select at least one category/regular. Use the 'right' botton below.";
@@ -177,6 +181,11 @@ namespace OneMainWeb
                 else if (d <= SqlDateTime.MinValue.Value)
                 {
                     Notifier1.Warning = "Please select article date.";
+                    return;
+                }
+                else if (String.IsNullOrEmpty(humanReadableUrl))
+                {
+                    Notifier1.Warning = "Human readable url cannot be empty.";
                     return;
                 }
                 else
@@ -225,6 +234,7 @@ namespace OneMainWeb
                     }
                     else
                     {
+                        SelectedArticle.HumanReadableUrl = humanReadableUrl;
                         SelectedArticle.Title = TextContentEditor.Title;
                         SelectedArticle.SubTitle = TextContentEditor.SubTitle;
                         SelectedArticle.Teaser = TextContentEditor.Teaser;

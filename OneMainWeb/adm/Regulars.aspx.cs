@@ -53,6 +53,7 @@ namespace OneMainWeb.adm
 
                 if (SelectedRegular != null)
                 {
+                    TextBoxHumanReadableUrl.Text = SelectedRegular.HumanReadableUrl;
                     TxtRegularContent.Title = SelectedRegular.Title;
                     TxtRegularContent.SubTitle = SelectedRegular.SubTitle;
                     TxtRegularContent.Teaser = SelectedRegular.Teaser;
@@ -65,6 +66,7 @@ namespace OneMainWeb.adm
         {
             BORegular regular = new BORegular();
 
+            regular.HumanReadableUrl = string.IsNullOrEmpty(TextBoxHumanReadableUrl.Text) ? "" : TextBoxHumanReadableUrl.Text;
             regular.Title = TextBoxRegular.Text;
             regular.SubTitle = regular.Teaser = regular.Html = "";
             regular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
@@ -134,6 +136,7 @@ namespace OneMainWeb.adm
                 SelectedRegular.Teaser = TxtRegularContent.Teaser;
                 SelectedRegular.SubTitle = TxtRegularContent.SubTitle;
                 SelectedRegular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                SelectedRegular.HumanReadableUrl = TextBoxHumanReadableUrl.Text;
 
                 articleB.ChangeRegular(SelectedRegular);
 
