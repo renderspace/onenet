@@ -64,12 +64,25 @@ namespace One.Net.BLL
         /// <returns></returns>
         public BOArticle GetArticle(string humanReadableUrl)
         {
+            BOArticle article = null;
+            bool useCache = PublishFlag;
             string cacheKey = CACHE_LANG_PREFIX + ARTICLE_CACHE_ID(humanReadableUrl, PublishFlag);
-            var article = cache.Get<BOArticle>(cacheKey);
+            if (useCache)
+                article = cache.Get<BOArticle>(cacheKey);
 
             if (article == null)
             {
-                article = articleDB.GetArticle(humanReadableUrl, PublishFlag, LanguageId, !PublishFlag);
+                article = GetUnCachedArticle(humanReadableUrl, PublishFlag, !PublishFlag);
+
+                if (article != null && !article.MissingTranslation && useCache)
+                {
+                    lock (cacheLockingArticleGet)
+                    {
+                        BOArticle tempArticle = cache.Get<BOArticle>(cacheKey);
+                        if (null == tempArticle)
+                            cache.Put(cacheKey, article);
+                    }
+                }
             }
 
             return article;
@@ -120,6 +133,21 @@ namespace One.Net.BLL
         private BOArticle GetUnCachedArticle(int id, bool publish, bool showUntranslated)
         {
             BOArticle article = articleDB.GetArticle(id, publish, LanguageId, showUntranslated);
+
+            if (article != null && article.Id.HasValue)
+            {
+                article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), showUntranslated, article.Id, article.PublishFlag, LanguageId);
+
+                if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
+                    article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
+            }
+
+            return article;
+        }
+
+        private BOArticle GetUnCachedArticle(string humanReadableUrl, bool publish, bool showUntranslated)
+        {
+            BOArticle article = articleDB.GetArticle(humanReadableUrl, publish, LanguageId, showUntranslated);
 
             if (article != null && article.Id.HasValue)
             {
