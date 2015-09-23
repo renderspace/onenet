@@ -3,7 +3,7 @@
 <%@ Import Namespace="One.Net.BLL" %>
 
 <!DOCTYPE HTML>
-<html>
+<html runat="server" id="html">
 <head runat="server">
     <link href="/adm/css/bootstrap.css" rel="stylesheet"/>
     <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
