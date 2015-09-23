@@ -41,16 +41,22 @@ namespace OneMainWeb.CommonModules
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!HasHumanReadableUrlParameter)
+                return;
+
+            BOArticle tempArticle = null;
+
             int articleId = 0;
             if (Request[REQUEST_ARTICLE_ID] != null)
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
+                tempArticle = articleB.GetArticle(articleId, false);
             } 
             else if (HasHumanReadableUrlParameter)
             {
-                int.TryParse(HumanReadableUrlParameter, out articleId);
+                tempArticle = articleB.GetArticle(HumanReadableUrlParameter);
             }
-            var tempArticle = articleB.GetArticle(articleId, false);
+                        
             if (tempArticle != null)
             {
                 MultiView1.ActiveViewIndex = 1;

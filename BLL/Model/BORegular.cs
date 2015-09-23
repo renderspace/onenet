@@ -26,6 +26,12 @@ namespace One.Net.BLL
             set { articleCount = value; }
         }
 
+        public string HumanReadableUrl
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         public BORegular() { }
@@ -42,6 +48,7 @@ namespace One.Net.BLL
             this.CloneContent(result);
             result.Id = this.Id;
             result.ArticleCount = this.ArticleCount;
+            result.HumanReadableUrl = this.HumanReadableUrl;
             return result;
         }
     }
