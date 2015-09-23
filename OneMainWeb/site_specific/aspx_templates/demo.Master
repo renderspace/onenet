@@ -3,10 +3,14 @@
 <%@ Import Namespace="One.Net.BLL" %>
 
 <!DOCTYPE HTML>
-<html>
+<html runat="server" id="html">
 <head runat="server">
     <link href="/adm/css/bootstrap.css" rel="stylesheet"/>
+	<link href="/_css/demo.css" rel="stylesheet"/>
     <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
+
+	
+	
 </head>
 <body role="document">
     <form id="form1" runat="server">
@@ -32,9 +36,17 @@
 					    </div><!--/.nav-collapse -->
 				      </div>
 			    </div>
-        	    <div class="col-xs-12"><h1></h1></div>
             </div>
-
+			
+		</div>
+		
+		<div class="slider">
+			<div class="container">
+				<div class="col-xs-12"><h1><%= Page.Header.Title %></h1></div>
+			</div>
+		</div>
+		
+		<div class="container">
 		    <div class="row">
               <div class="col-sm-3">
                 <div class="sidebar-nav">
@@ -61,6 +73,14 @@
 				    </asp:ContentPlaceHolder>
 		      </div>
 		    </div>
+			
+			<footer>
+				<div class="row">
+					<div class="col-sm-12">
+						&copy; 2015
+					</div>
+				</div>
+			</footer>
 
         </div> <!-- /container -->	
     </form>
