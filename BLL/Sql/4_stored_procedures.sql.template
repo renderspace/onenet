@@ -237,7 +237,6 @@ CREATE PROCEDURE [dbo].[ChangeArticle]
 	@contentId int,
 	@markedForDeletion bit,
 	@displayDate datetime,
-	@humanReadableUrl varchar(255),
 	@id int=null output
 AS
 
@@ -245,8 +244,8 @@ AS
 	BEGIN
 		EXEC [dbo].[nextval] 'articles', @id out		
 
-		INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url)
-		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @humanReadableUrl)
+		INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
+		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
 	END
 	ELSE
 	BEGIN
@@ -255,13 +254,13 @@ AS
 
 		IF ( @Exists = 0 )
 		BEGIN
-			INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url)
-			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @humanReadableUrl)
+			INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
+			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
 		END
 		ELSE
 		BEGIN
 			UPDATE [dbo].[article]
-			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@humanReadableUrl
+			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate
 			WHERE id=@id AND publish=@publishFlag
 		END
 	END

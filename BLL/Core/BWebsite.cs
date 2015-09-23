@@ -231,7 +231,7 @@ namespace One.Net.BLL
             return addingRootPage ? AddSubPageResult.OkRootPage : AddSubPageResult.Ok;
         }
 
-        public string PrepareParLink(string parLink)
+        public static string PrepareParLink(string parLink)
         {
             return CleanStringForUrl((parLink.ToLower()).Replace(" ", "-")); ;
         }

@@ -19,6 +19,7 @@ using System.Data.SqlTypes;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using MsSqlDBUtility;
+using System.Linq;
 
 namespace OneMainWeb
 {
@@ -35,8 +36,6 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            log.Debug("Articles Page_Load");
-
             if (SelectedWebsite == null)
             {
                 Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
@@ -46,29 +45,38 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
+                Multiview1.ActiveViewIndex = 0;
+                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
                 try
                 {
-                    Multiview1.ActiveViewIndex = 0;
-                    Regulars_DataBind(DropDownListRegularFilter);
-                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
+                    Regulars_DataBind(DropDownListRegularFilter);   
                 }
-                catch (SqlException ex)
+                catch (Exception ex)
                 {
-                    if (ex.Message.Contains("human_readable_url"))
+                    if (ex.Message.Contains("articles human readable URL problem"))
                     {
-                        try
-                        {
-                            articleB.UpgradeArticles();
-                        }
-                        catch (Exception exInner)
-                        {
-                            log.Debug(exInner);
-                        }
+                        var result = articleB.AutoCreateHumanReadableUrlArticles();
+                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
+                        Articles_DataBind();
+                    }
+                    else if (ex.Message.Contains("regulars human readable URL problem"))
+                    {
+                        var result = articleB.AutoCreateHumanReadableUrlRegulars();
+                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
+                        Articles_DataBind();
+                    }
+                    else if (ex.Message.Contains("human_readable_url"))
+                    {
+                        articleB.UpgradeArticles();
+                        articleB.AutoCreateHumanReadableUrlArticles();
+                        var result = articleB.AutoCreateHumanReadableUrlRegulars();
+                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
                     }
                     else
                     {
                         throw ex;
                     }
+                    
                 }
             }            
         }
@@ -112,7 +120,19 @@ namespace OneMainWeb
         {
             if (lb != null)
             {
-                lb.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
+
+                var regulars = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), false, null, null);
+                if (regulars.Count == 0)
+                {
+                    Notifier1.Warning = "You need to add at least one regular (article category). Use menu on the left.";
+                    return;
+                }
+                if (regulars.Where(r => string.IsNullOrWhiteSpace(r.HumanReadableUrl)).Count() > 0)
+                {
+                    throw new Exception("regulars human readable URL problem");
+                }
+
+                lb.DataSource = regulars; 
                 lb.DataTextField = "Title";
                 lb.DataValueField = "Id";
                 lb.DataBind();
@@ -445,6 +465,11 @@ namespace OneMainWeb
             state.SortField = GridViewSortExpression;
             var regularIds = StringTool.SplitStringToIntegers(regularsFilter);
             PagedList<BOArticle> articles = articleB.ListArticles(regularIds, null, null, state, searchBy);
+            var missingUrlArticles = articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl));
+            if (missingUrlArticles.Count() > 0)
+            {
+                throw new Exception("articles human readable URL problem");
+            }
             TwoPostbackPager1.TotalRecords = articles.AllRecords;
             TwoPostbackPager1.DetermineData();
             GridViewArticles.DataSource = articles;
