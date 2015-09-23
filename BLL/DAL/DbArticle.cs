@@ -18,6 +18,18 @@ namespace One.Net.BLL.DAL
                         FROM [dbo].[regular] r 
                         INNER JOIN [dbo].[content] c ON c.id = r.content_fk_id ";
 
+        public void UpgradeArticles()
+        {
+            var sql = @"ALTER TABLE [dbo].[article] ADD 
+                                    human_readable_url varchar(255) NULL;";
+
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
+            sql = @"ALTER TABLE [dbo].[regular] ADD 
+                                    human_readable_url varchar(255) NULL;";
+
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
+        }
+
         public void DeleteArticle(int id, bool publishFlag)
         {
             SqlParameter[] paramsToPass = new SqlParameter[2];

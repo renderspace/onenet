@@ -20,6 +20,16 @@ namespace One.Net.BLL
         #region Article methods
 
         /// <summary>
+        /// Upgrades article and regular tables to add human_readable_url field.
+        /// Clears cache.
+        /// </summary>
+        public void UpgradeArticles()
+        {
+            articleDB.UpgradeArticles();
+            ClearCache();
+        }
+
+        /// <summary>
         /// Changes underlying BOInternalContent object and changes BOArticle object.
         /// Performs article actions based on article.PublishFlag.
         /// Removes object from Cache then adds new object to Cache.

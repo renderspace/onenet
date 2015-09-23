@@ -58,14 +58,7 @@ namespace OneMainWeb
                     {
                         try
                         {
-                            var sql = @"ALTER TABLE [dbo].[article] ADD 
-                                    human_readable_url varchar(255) NULL;";
-
-                            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
-                            sql = @"ALTER TABLE [dbo].[regular] ADD 
-                                    human_readable_url varchar(255) NULL;";
-
-                            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
+                            articleB.UpgradeArticles();
                         }
                         catch (Exception exInner)
                         {
