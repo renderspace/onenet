@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Transactions;
 using One.Net.BLL.DAL;
+using System.Linq;
 
 namespace One.Net.BLL
 {
@@ -27,6 +28,64 @@ namespace One.Net.BLL
         {
             articleDB.UpgradeArticles();
             ClearCache();
+        }
+
+        public int AutoCreateHumanReadableUrlArticles()
+        {
+            var regulars = new List<int>();
+            var state = new ListingState();
+            state.RecordsPerPage = 10000;
+
+            var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId, false);
+            var count = 0;
+            foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
+            {
+                var humanReadableUrlPart = BWebsite.PrepareParLink(a.Title);
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
+                        throw new Exception("IsNullOrWhiteSpace(humanReadableUrlPart");
+                    a.HumanReadableUrl = humanReadableUrlPart;
+                    ChangeArticle(a);
+                }
+                catch (Exception ex)
+                {
+                    a.HumanReadableUrl = humanReadableUrlPart + "-" + a.Id.ToString();
+                    ChangeArticle(a);
+                } 
+                count++;
+            }
+            ClearCache();
+            return count;
+        }
+
+        public int AutoCreateHumanReadableUrlRegulars()
+        {
+            var regulars = new List<int>();
+            var state = new ListingState();
+            state.RecordsPerPage = 10000;
+
+            var reg = articleDB.ListRegulars(state, false, null, false, LanguageId);
+            var count = 0;
+            foreach (var r in reg.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
+            {
+                var humanReadableUrlPart = BWebsite.PrepareParLink(r.Title);
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
+                        throw new Exception("IsNullOrWhiteSpace(humanReadableUrlPart");
+                    r.HumanReadableUrl = humanReadableUrlPart;
+                    ChangeRegular(r);
+                }
+                catch (Exception ex)
+                {
+                    r.HumanReadableUrl = humanReadableUrlPart + "-" + r.Id.ToString();
+                    ChangeRegular(r);
+                }
+                count++;
+            }
+            ClearCache();
+            return count;
         }
 
         /// <summary>

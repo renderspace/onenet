@@ -20,13 +20,9 @@ namespace One.Net.BLL.DAL
 
         public void UpgradeArticles()
         {
-            var sql = @"ALTER TABLE [dbo].[article] ADD 
-                                    human_readable_url varchar(255) NULL;";
-
+            var sql = @"ALTER TABLE [dbo].[article] ADD human_readable_url varchar(255) NULL;";
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
-            sql = @"ALTER TABLE [dbo].[regular] ADD 
-                                    human_readable_url varchar(255) NULL;";
-
+            sql = @"ALTER TABLE [dbo].[regular] ADD human_readable_url varchar(255) NULL;";
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
         }
 
@@ -46,7 +42,7 @@ namespace One.Net.BLL.DAL
 
         public void ChangeArticle(BOArticle article)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[7];
+            SqlParameter[] paramsToPass = new SqlParameter[6];
             paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id); 
             paramsToPass[0].Direction = ParameterDirection.InputOutput;
             paramsToPass[0].SqlDbType = SqlDbType.Int;
@@ -56,13 +52,15 @@ namespace One.Net.BLL.DAL
             paramsToPass[3] = new SqlParameter("@contentId", article.ContentId.Value);
             paramsToPass[4] = new SqlParameter("@markedForDeletion", article.MarkedForDeletion);
             paramsToPass[5] = new SqlParameter("@displayDate", article.DisplayDate);
-            paramsToPass[6] = new SqlParameter("@humanReadableUrl", article.HumanReadableUrl);
 
             string sql = @"[dbo].[ChangeArticle]";
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, sql, paramsToPass);
 
             article.Id = Int32.Parse(paramsToPass[0].Value.ToString());
+
+            sql = "UPDATE article SET human_readable_url = @hru WHERE id = @articleId";
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@hru", article.HumanReadableUrl), new SqlParameter("@articleId", article.Id.Value));
 
             paramsToPass = new SqlParameter[2];
             paramsToPass[0] = new SqlParameter("@articleId", article.Id.Value);
@@ -377,17 +375,16 @@ WHERE a2.publish = @publishFlag ";
             return list;
         }
 
-        private static void PopulateArticle(IDataReader reader, BOArticle article, int languageId)
+        private static void PopulateArticle(IDataReader reader, BOArticle article, int languageId, bool allowNullInHumanReadableUrl = false)
         {
             DbHelper.PopulateContent(reader, article, languageId);
-
+            article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
             article.Id = reader.GetInt32(10);
             article.PublishFlag = reader.GetBoolean(11);
             article.ContentId = reader.GetInt32(12);
             article.DisplayDate = reader.GetDateTime(13);
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
-            article.HumanReadableUrl = reader.GetString(16);
             article.IsNew = reader.GetInt32(17) == 0;
         }
 
@@ -573,7 +570,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                     regular.Id = reader.GetInt32(12);
                     regular.ArticleCount = reader.GetInt32(13);
                 }
@@ -605,7 +602,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                     regular.Id = reader.GetInt32(12);
                     regular.ArticleCount = reader.GetInt32(13);
                 }
@@ -661,10 +658,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     var regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "": reader["human_readable_url"].ToString();
                     regular.Id = reader.GetInt32(12);
                     regular.ArticleCount = reader.GetInt32(13);
-
                     regulars.Add(regular);
                 }
             }
@@ -717,7 +713,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     BORegular regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.HumanReadableUrl = reader.GetString(11);
+                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                     regular.Id = reader.GetInt32(12);
                     regular.ArticleCount = reader.GetInt32(13);
                     regulars.Add(regular);

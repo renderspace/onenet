@@ -7,39 +7,22 @@ namespace One.Net.BLL
     [Serializable]
     public class BOArticle : PublishableInternalContent, IPublishable, ICloneable
     {
-        #region Variables
-
-        private List<BORegular> regulars = new List<BORegular>();
-        private int? id;
-        
-        private DateTime displayDate;
-
-        #endregion Variables
-
         #region Properties
 
-        public int? Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int? Id { get; set;  }
 
-        public List<BORegular> Regulars
-        {
-            get { return regulars; }
-            set { regulars = value; }
-        }
+        public List<BORegular> Regulars { get; set; }
 
         public string RegularsList
         {
             get 
             {
                 string answer = "";
-                foreach (BORegular regular in regulars)
+                foreach (BORegular regular in Regulars)
                 {
                     answer += regular.Title + ", ";
                 }
-                if (regulars.Count > 0)
+                if (Regulars.Count > 0)
                 {
                     answer = answer.Remove(answer.Length - 2);
                 }
@@ -47,11 +30,7 @@ namespace One.Net.BLL
             }
         }
 
-        public DateTime DisplayDate
-        {
-            get { return displayDate; }
-            set { displayDate = value; }
-        }
+        public DateTime DisplayDate { get; set; }
 
         /// <summary>
         /// Returns first image id in the content.
@@ -71,26 +50,27 @@ namespace One.Net.BLL
             }
         }
 
-        public string HumanReadableUrl
-        {
-            get;
-            set;
-        }
+        public string HumanReadableUrl { get; set; }
 
         #endregion Properties
+
+        public BOArticle()
+        {
+            Regulars = new List<BORegular>();
+        }
 
         #region Methods
 
         public string RenderRegulars()
         {
             var result = "";
-            if (regulars.Count > 0)
+            if (Regulars.Count > 0)
                 result += "<ul>";
-            foreach (var regular in regulars)
+            foreach (var regular in Regulars)
             {
                 result += "<li>" + regular.Title + "</li>";
             }
-            if (regulars.Count > 0)
+            if (Regulars.Count > 0)
                 result += "</ul>";
 
             return result;
@@ -112,7 +92,7 @@ namespace One.Net.BLL
             article.DisplayDate = this.DisplayDate;
             article.HumanReadableUrl = this.HumanReadableUrl;
 
-            foreach (BORegular regular in regulars)
+            foreach (BORegular regular in Regulars)
             {
 				article.Regulars.Add((BORegular) regular.Clone());
             }
