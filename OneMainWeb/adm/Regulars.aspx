@@ -26,6 +26,7 @@
 					</asp:TemplateField>
 			        <asp:BoundField HeaderText="Id" DataField="Id" SortExpression="Id" ReadOnly="True" />
 			        <asp:BoundField HeaderText="Category title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
+			        <asp:BoundField HeaderText="Human readable url" DataField="HumanReadableUrl" NullDisplayText="" SortExpression="human_readable_url" ReadOnly="False" />
                     <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton  CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs" CausesValidation="false" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" />
@@ -42,6 +43,14 @@
         <asp:View ID="View3" runat="server">
             <div class="adminSection form-horizontal validationGroup">
 			    <one:TextContentControl ID="TxtRegularContent" runat="server" HtmlRows="10" />
+                <div class="form-group">
+                    <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
+                    <div class="col-sm-9">
+                        <div class='input-group'>
+                            <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="form-control" />
+                        </div>
+                    </div>
+                </div>
 			    <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
 				        <asp:LinkButton ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success causesValidation" />

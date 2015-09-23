@@ -56,6 +56,38 @@ namespace One.Net.BLL
             return GetArticle(id, PublishFlag, showUntranslated);
         }
 
+
+        /// <summary>
+        /// Retrieves BOArticle object based on human readable url.
+        /// </summary>
+        /// <param name="humanReadableUrl"></param>
+        /// <returns></returns>
+        public BOArticle GetArticle(string humanReadableUrl)
+        {
+            BOArticle article = null;
+            bool useCache = PublishFlag;
+            string cacheKey = CACHE_LANG_PREFIX + ARTICLE_CACHE_ID(humanReadableUrl, PublishFlag);
+            if (useCache)
+                article = cache.Get<BOArticle>(cacheKey);
+
+            if (article == null)
+            {
+                article = GetUnCachedArticle(humanReadableUrl, PublishFlag, !PublishFlag);
+
+                if (article != null && !article.MissingTranslation && useCache)
+                {
+                    lock (cacheLockingArticleGet)
+                    {
+                        BOArticle tempArticle = cache.Get<BOArticle>(cacheKey);
+                        if (null == tempArticle)
+                            cache.Put(cacheKey, article);
+                    }
+                }
+            }
+
+            return article;
+        }
+
         /// <summary>
         /// Retrieves BOArticle object based on id and publishFlag.
         /// If publishFlag is true, an attempt is made to return a fully cached object. If object is not cached, an uncached object is returned.
@@ -101,6 +133,21 @@ namespace One.Net.BLL
         private BOArticle GetUnCachedArticle(int id, bool publish, bool showUntranslated)
         {
             BOArticle article = articleDB.GetArticle(id, publish, LanguageId, showUntranslated);
+
+            if (article != null && article.Id.HasValue)
+            {
+                article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), showUntranslated, article.Id, article.PublishFlag, LanguageId);
+
+                if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
+                    article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
+            }
+
+            return article;
+        }
+
+        private BOArticle GetUnCachedArticle(string humanReadableUrl, bool publish, bool showUntranslated)
+        {
+            BOArticle article = articleDB.GetArticle(humanReadableUrl, publish, LanguageId, showUntranslated);
 
             if (article != null && article.Id.HasValue)
             {
@@ -334,6 +381,27 @@ namespace One.Net.BLL
         }
 
         /// <summary>
+        /// Retrieves BORegular object based on humanReadableParameter.
+        /// An attempt is made to return a fully cached object. 
+        /// </summary>
+        /// <param name="humanReadableParameter"></param>
+        /// <returns></returns>
+        public BORegular GetRegular(string humanReadableParameter)
+        {
+            BORegular regular = cache.Get<BORegular>(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(humanReadableParameter));
+            if (regular == null)
+            {
+                regular = GetUnCachedRegular(humanReadableParameter);
+
+                if (regular != null && !regular.MissingTranslation)
+                {
+                    cache.Put(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(humanReadableParameter), regular);
+                }
+            }
+            return regular;
+        }
+
+        /// <summary>
         /// Retrieves BORegular object based on id and publishFlag.
         /// Loads object Content
         /// </summary>
@@ -342,6 +410,22 @@ namespace One.Net.BLL
         private BORegular GetUnCachedRegular(int id)
         {
             BORegular regular = articleDB.GetRegular(id, !PublishFlag);
+
+            if (regular != null && regular.MissingTranslation && regular.ContentId.HasValue)
+                regular.Title = BInternalContent.GetContentTitleInAnyLanguage(regular.ContentId.Value);
+
+            return regular;
+        }
+
+        /// <summary>
+        /// Retrieves BORegular object based on id and publishFlag.
+        /// Loads object Content
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private BORegular GetUnCachedRegular(string humanReadableParameter)
+        {
+            var regular = articleDB.GetRegular(humanReadableParameter, !PublishFlag);
 
             if (regular != null && regular.MissingTranslation && regular.ContentId.HasValue)
                 regular.Title = BInternalContent.GetContentTitleInAnyLanguage(regular.ContentId.Value);
@@ -513,9 +597,19 @@ namespace One.Net.BLL
             return "_Regular_" + regularId;
         }
 
+        private static string REGULAR_CACHE_ID(string humanReadableParameter)
+        {
+            return "_Regular_" + humanReadableParameter;
+        }
+
         private static string ARTICLE_CACHE_ID(int articleId, bool publishFlag)
         {
             return (publishFlag ? "_Article_" : "_PreviewArticle_") + articleId;
+        }
+
+        private static string ARTICLE_CACHE_ID(string humanReadableUrl, bool publishFlag)
+        {
+            return (publishFlag ? "_Article_" : "_PreviewArticle_") + humanReadableUrl;
         }
 
         #endregion Cache Ids

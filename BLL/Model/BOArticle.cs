@@ -71,6 +71,12 @@ namespace One.Net.BLL
             }
         }
 
+        public string HumanReadableUrl
+        {
+            get;
+            set;
+        }
+
         #endregion Properties
 
         #region Methods
@@ -104,6 +110,7 @@ namespace One.Net.BLL
             article.MarkedForDeletion = this.MarkedForDeletion;
             article.PublishFlag = this.PublishFlag;
             article.DisplayDate = this.DisplayDate;
+            article.HumanReadableUrl = this.HumanReadableUrl;
 
             foreach (BORegular regular in regulars)
             {
