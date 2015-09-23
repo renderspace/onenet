@@ -20,9 +20,17 @@ namespace One.Net.BLL.DAL
 
         public void UpgradeArticles()
         {
-            var sql = @"ALTER TABLE [dbo].[article] ADD human_readable_url varchar(255) NULL;";
+            var sql = @"IF NOT EXISTS(SELECT * FROM sys.columns 
+                        WHERE Name = N'human_readable_url' AND Object_ID = Object_ID(N'article'))
+                        BEGIN
+                            ALTER TABLE [dbo].[article] ADD human_readable_url varchar(255) NULL
+                        END;";
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
-            sql = @"ALTER TABLE [dbo].[regular] ADD human_readable_url varchar(255) NULL;";
+            sql = @"IF NOT EXISTS(SELECT * FROM sys.columns 
+                        WHERE Name = N'human_readable_url' AND Object_ID = Object_ID(N'regular'))
+                        BEGIN
+                            ALTER TABLE [dbo].[regular] ADD human_readable_url varchar(255) NULL
+                        END;";
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql);
         }
 
@@ -333,8 +341,10 @@ WHERE a2.publish = @publishFlag ";
 
             sql += 
                 @"  FROM [dbo].[article] a
-		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
-		            INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
+		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id ";
+
+            if (regularIds.Count > 0)
+                sql += @" INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
 
 
             sql += (showUntranslated ? " LEFT " : " INNER ") + @" JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
@@ -359,7 +369,6 @@ WHERE a2.publish = @publishFlag ";
 						ORDER BY rownum;
 						SELECT COUNT(id) FROM #pagedlist";
 
-
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())
@@ -378,7 +387,7 @@ WHERE a2.publish = @publishFlag ";
         private static void PopulateArticle(IDataReader reader, BOArticle article, int languageId, bool allowNullInHumanReadableUrl = false)
         {
             DbHelper.PopulateContent(reader, article, languageId);
-            article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
+
             article.Id = reader.GetInt32(10);
             article.PublishFlag = reader.GetBoolean(11);
             article.ContentId = reader.GetInt32(12);
@@ -386,6 +395,8 @@ WHERE a2.publish = @publishFlag ";
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
             article.IsNew = reader.GetInt32(17) == 0;
+
+            article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
         }
 
         public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
@@ -477,8 +488,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             list.AllRecords = 0;
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass.ToArray()))
-            {
-                
+            {                
                 while (reader.Read())
                 {
                     BOArticle article = new BOArticle();
@@ -526,7 +536,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 paramsToPass[0].Direction = ParameterDirection.InputOutput;
                 paramsToPass[0].SqlDbType = SqlDbType.Int;
-                sql = @"INSERT INTO [dbo].[regular]  (content_fk_id, human_readable_url, @HumanReadableUrl) VALUES (@ContentId); SET @id=SCOPE_IDENTITY();";
+                sql = @"INSERT INTO [dbo].[regular]  (content_fk_id, human_readable_url) VALUES (@ContentId, @HumanReadableUrl); SET @id=SCOPE_IDENTITY();";
             }
 
             int affectedRows = SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
@@ -570,9 +580,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     regular = new BORegular();
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                     regular.Id = reader.GetInt32(12);
                     regular.ArticleCount = reader.GetInt32(13);
+                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                 }
             }
 

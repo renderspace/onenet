@@ -45,10 +45,11 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
-                Multiview1.ActiveViewIndex = 0;
-                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
                 try
                 {
+                    Multiview1.ActiveViewIndex = 0;
+                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
+
                     Regulars_DataBind(DropDownListRegularFilter);   
                 }
                 catch (Exception ex)
@@ -75,8 +76,14 @@ namespace OneMainWeb
                     else
                     {
                         throw ex;
-                    }
-                    
+                    }                    
+                }
+                finally
+                {
+                    Multiview1.ActiveViewIndex = 0;
+                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
+
+                    Regulars_DataBind(DropDownListRegularFilter);  
                 }
             }            
         }
@@ -145,10 +152,11 @@ namespace OneMainWeb
             {
                 TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
                 TwoPostbackPager1.SelectedPage = 1;
+
                 GridViewSortExpression = "display_date";
                 GridViewSortDirection = SortDir.Descending;
+                
                 Articles_DataBind();
-
             }
             else if (((MultiView)sender).ActiveViewIndex == 1)
             {
@@ -465,6 +473,7 @@ namespace OneMainWeb
             state.SortField = GridViewSortExpression;
             var regularIds = StringTool.SplitStringToIntegers(regularsFilter);
             PagedList<BOArticle> articles = articleB.ListArticles(regularIds, null, null, state, searchBy);
+
             var missingUrlArticles = articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl));
             if (missingUrlArticles.Count() > 0)
             {
