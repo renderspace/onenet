@@ -59,7 +59,8 @@ namespace OneMainWeb.CommonModules
                         
             if (tempArticle != null)
             {
-                MultiView1.ActiveViewIndex = 1;
+                if (MultiView1 != null)
+                    MultiView1.ActiveViewIndex = 1;
 
                 ListImages = tempArticle.Images;
                 var article = (BOArticle)tempArticle.Clone();
@@ -71,12 +72,12 @@ namespace OneMainWeb.CommonModules
                     }
                 }
                 if (DivTeaserImage != null && ThumbTemplate != null && ListImages.Count > 0)
-                { 
+                {
                     DivTeaserImage.Visible = true;
                     var image = ListImages.FirstOrDefault();
                     DivTeaserImage.InnerHtml = ThumbTemplate.RenderHtml(image.Alt, image.FullUri, image.CssClass);
-                } 
-                else if (DivTeaserImage != null )
+                }
+                else if (DivTeaserImage != null)
                 {
                     DivTeaserImage.Visible = false;
                 }
@@ -101,7 +102,7 @@ namespace OneMainWeb.CommonModules
                 {
                     HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
                 }
-                
+
                 Title = article.Title;
 
                 if (H1Title != null)
