@@ -124,8 +124,7 @@ namespace One.Net.BLL
         {
             return GetArticle(id, PublishFlag, showUntranslated);
         }
-
-
+        
         /// <summary>
         /// Retrieves BOArticle object based on human readable url.
         /// </summary>
