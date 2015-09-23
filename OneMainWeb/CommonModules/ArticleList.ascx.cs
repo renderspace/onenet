@@ -31,24 +31,13 @@ namespace OneMainWeb.CommonModules
         { 
             get 
             {
-                List<int> result = new List<int>();
+                List<int> result = GetIntegerListSetting("CategoriesList");
 
-                if (HasHumanReadableUrlParameter)
+                if (result.Count == 0 && HasHumanReadableUrlParameter)
                 {
                     var regular = articleB.GetRegular(HumanReadableUrlParameter);
                     if (regular != null)
                         result.Add(regular.Id.Value);
-                }
-
-                if (result.Count == 0) {
-                    result = GetIntegerListSetting("CategoriesList");
-
-                    var regid = 0;
-                    if (Request["regid"] != null && int.TryParse(Request["regid"], out regid))
-                    {
-                        if (regid > 0 && result.Contains(regid))
-                            result = new List<int>() { regid };
-                    }
                 }
 
                 return result;
