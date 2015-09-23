@@ -45,10 +45,11 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
+                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
+
                 try
                 {
                     Multiview1.ActiveViewIndex = 0;
-                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
 
                     Regulars_DataBind(DropDownListRegularFilter);   
                 }
