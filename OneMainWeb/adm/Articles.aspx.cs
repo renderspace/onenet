@@ -16,7 +16,9 @@ using One.Net.BLL;
 using One.Net.BLL.Utility;
 using System.Globalization;
 using System.Data.SqlTypes;
-
+using System.Data.Sql;
+using System.Data.SqlClient;
+using MsSqlDBUtility;
 
 namespace OneMainWeb
 {
@@ -34,6 +36,7 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             log.Debug("Articles Page_Load");
+
             if (SelectedWebsite == null)
             {
                 Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";
@@ -43,12 +46,31 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
-                Multiview1.ActiveViewIndex = 0;
-                DropDownListRegularFilter.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
-                DropDownListRegularFilter.DataBind();
-                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
-            }
-            
+                try
+                {
+                    Multiview1.ActiveViewIndex = 0;
+                    Regulars_DataBind(DropDownListRegularFilter);
+                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
+                }
+                catch (SqlException ex)
+                {
+                    if (ex.Message.Contains("human_readable_url"))
+                    {
+                        try
+                        {
+                            articleB.UpgradeArticles();
+                        }
+                        catch (Exception exInner)
+                        {
+                            log.Debug(exInner);
+                        }
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+            }            
         }
 
         private void PrepareEmptyArticle()
@@ -90,7 +112,7 @@ namespace OneMainWeb
         {
             if (lb != null)
             {
-                lb.DataSource = articleB.ListRegulars(new ListingState(), ShowUntranslated, null, null);
+                lb.DataSource = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), ShowUntranslated, null, null);
                 lb.DataTextField = "Title";
                 lb.DataValueField = "Id";
                 lb.DataBind();
