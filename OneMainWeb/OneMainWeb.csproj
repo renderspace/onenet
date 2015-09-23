@@ -754,6 +754,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\ExcelExport.ashx" />
+    <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config" />
     <Content Include="Account\Account.Master" />
@@ -798,6 +799,7 @@
     <None Include="One.Net.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\ck.css" />
@@ -824,6 +826,9 @@
     <Content Include="site_specific\aspx_templates\demo.Master" />
     <Content Include="site_specific\_sass\demo.sass" />
     <Content Include="Utils\Favicon.ashx" />
+    <None Include="Web.prirocnik.renderspace.net.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Structure.aspx" />
