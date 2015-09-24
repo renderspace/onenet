@@ -559,51 +559,27 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
         public BORegular GetRegular(int id, bool showUntranslated )
         {
-            BORegular regular = null;
-
-            SqlParameter[] paramsToPass = new SqlParameter[3];
-            paramsToPass[0] = new SqlParameter("@id", id);
-            paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
-            paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", false);
-
-
-            string sql = REGULAR_SELECT_PART;
-            sql += showUntranslated ? "LEFT" : "INNER";
-            sql += @" JOIN [dbo].[content_data_store] cds 
-                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId 
-                      WHERE r.id=@id";
-
-            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
-            {
-                if (reader.Read())
-                {
-                    regular = new BORegular();
-                    regular.ContentId = reader.GetInt32(10);
-                    DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.Id = reader.GetInt32(12);
-                    
-                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
-                }
-            }
-
-            return regular;
+            return GetRegular(id, "", showUntranslated);
         }
         
         public BORegular GetRegular(string humanReadableUrl, bool showUntranslated)
         {
-            BORegular regular = null;
+            return GetRegular(0, humanReadableUrl, showUntranslated);
+        }
 
-            SqlParameter[] paramsToPass = new SqlParameter[3];
-            paramsToPass[0] = new SqlParameter("@humanReadableUrl", humanReadableUrl);
+        internal BORegular GetRegular(int id, string humanReadableUrl, bool showUntranslated)
+        {
+            BORegular regular = null;
+            var paramsToPass = new SqlParameter[3];
+            paramsToPass[0] = id > 0 ? new SqlParameter("@id", id) : new SqlParameter("@humanReadableUrl", humanReadableUrl);
             paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
             paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", false);
-
 
             string sql = REGULAR_SELECT_PART;
             sql += showUntranslated ? "LEFT" : "INNER";
             sql += @" JOIN [dbo].[content_data_store] cds 
-                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId 
-                      WHERE r.human_readable_url=@humanReadableUrl";
+                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId ";
+            sql += id > 0 ? "WHERE r.id=@id" : "WHERE r.human_readable_url=@humanReadableUrl";
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
             {
@@ -613,7 +589,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
                 }
             }
-            return regular;
+            return regular;        
         }
 
         public List<BORegular> ListArticleRegulars(int articleId, bool publish, int languageId)
