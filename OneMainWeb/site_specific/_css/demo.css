@@ -15,8 +15,20 @@ p, ul {margin-bottom: 20px;}
 
 footer {background-color: #f8f8f8; margin-top: 20px; padding: 15px;}
 
+.expandCollapseHtml .entry-content { display: none; margin-top: 20px;}
+.expandCollapseHtml  article {padding: 6px 0 7px 0 !important;}
+.expandCollapseHtml  article .entry-title {margin-bottom: 0;}
 
-.expandCollapseHtml .entry-content { display: none; }
-.expandCollapseHtml  article {
-	padding: 6px 0 7px 0 !important;
-}
+.magnificgallery  ul {padding: 0; margin: 0;}
+.magnificgallery  ul li {float: left; list-style: none; margin-right: 20px;}
+.magnificgallery  ul li figcaption {display: none;}
+
+.articlelist  .hentry {margin-bottom: 20px;}
+
+.expandCollapseHtml .hentry .entry-content {background-color: #f8f8f8; padding: 15px;}
+
+.more {font-size: 13px;}
+
+.gsc-input-box {height: 32px!important;}
+.gsst_a .gscb_a {margin-top: 6px!important;}
+.cse .gsc-search-button input.gsc-search-button-v2, input.gsc-search-button-v2 {height: 31px!important;}
