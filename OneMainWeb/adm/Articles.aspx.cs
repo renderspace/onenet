@@ -122,8 +122,8 @@ namespace OneMainWeb
             if (lb != null)
             {
 
-                var regulars = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""), false, null, null);
-                if (regulars.Count == 0)
+                var regulars = articleB.ListRegulars(new ListingState(SortDir.Ascending, ""));
+                if (regulars.Count() == 0)
                 {
                     Notifier1.Warning = "You need to add at least one regular (article category). Use menu on the left.";
                     return;

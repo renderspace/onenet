@@ -41,7 +41,7 @@ namespace OneMainWeb.adm
             state.SortDirection = GridViewSortDirection;
             state.SortField = GridViewSortExpression;
 
-            GridViewRegular.DataSource = articleB.ListRegulars(state, ShowUntranslated, null, null);
+            GridViewRegular.DataSource = articleB.ListRegulars(state);
             GridViewRegular.DataBind();
         }
 

@@ -581,7 +581,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     regular.ContentId = reader.GetInt32(10);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
                     regular.Id = reader.GetInt32(12);
-                    regular.ArticleCount = reader.GetInt32(13);
+                    
                     regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
                 }
             }
@@ -609,20 +609,54 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 if (reader.Read())
                 {
-                    regular = new BORegular();
-                    regular.ContentId = reader.GetInt32(10);
+                    regular = PopulateRegular(reader, Thread.CurrentThread.CurrentCulture.LCID);
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
-                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
-                    regular.Id = reader.GetInt32(12);
-                    regular.ArticleCount = reader.GetInt32(13);
                 }
             }
-
             return regular;
         }
 
-        public List<BORegular> ListRegulars(ListingState state, bool showUntranslated, int? articleId, bool? publish, int languageId)
+        public List<BORegular> ListArticleRegulars(int articleId, bool publish, int languageId)
+        { 
+            var paramsToPass = new SqlParameter[3];
+            paramsToPass[0] = new SqlParameter("@languageId", languageId);
+            paramsToPass[1] = SqlHelper.GetNullable("@articleId", articleId);
+            paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", publish);
+
+            string sql = REGULAR_SELECT_PART;
+            sql += @" INNER JOIN [dbo].[regular_has_articles] rha ON rha.regular_fk_id=r.id ";
+            sql += @" INNER JOIN [dbo].[content_data_store] cds 
+                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId ";
+            sql += @" WHERE rha.article_fk_id=@articleId AND rha.article_fk_publish=@publishFlag ";
+            sql += @"   ORDER BY title DESC";
+
+            List<BORegular> regulars = new List<BORegular>();
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
+                CommandType.Text, sql, paramsToPass))
+            {
+                while (reader.Read())
+                {
+                    var regular = PopulateRegular(reader, languageId);
+                    regulars.Add(regular);
+                }
+            }
+            return regulars;
+        }
+
+        private static BORegular PopulateRegular(IDataReader reader, int languageId)
         {
+            var regular = new BORegular();
+            regular.ContentId = reader.GetInt32(10);
+            DbHelper.PopulateContent(reader, regular, languageId);
+            regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
+            regular.Id = reader.GetInt32(12);
+            regular.ArticleCount = reader.GetInt32(13);
+            return regular;
+        }
+
+        public List<BORegular> ListRegulars(ListingState state, bool publish, bool showUntranslated, int languageId)
+        {
+            //, bool includeArticleCount
             List<BORegular> regulars = new List<BORegular>();
 
             if (string.IsNullOrEmpty(state.SortField))
@@ -630,24 +664,16 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 state.SortField = "id";
             }
 
-            SqlParameter[] paramsToPass = new SqlParameter[4];
+            SqlParameter[] paramsToPass = new SqlParameter[3];
             paramsToPass[0] = new SqlParameter("@sortBy", state.SortField);
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
-            paramsToPass[2] = SqlHelper.GetNullable("@articleId", articleId);
-            paramsToPass[3] = SqlHelper.GetNullable("@publishFlag", publish);
+            paramsToPass[2] = new SqlParameter("@publishFlag", publish); 
             
             string sql = REGULAR_SELECT_PART;
-
-            if ( articleId.HasValue && publish.HasValue )
-                sql += @" INNER JOIN [dbo].[regular_has_articles] rha ON rha.regular_fk_id=r.id ";
-
             sql += showUntranslated ? "LEFT" : "INNER";
 
             sql += @" JOIN [dbo].[content_data_store] cds 
                       ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId ";
-
-            if (articleId.HasValue && publish.HasValue)
-                sql += @" WHERE rha.article_fk_id=@articleId AND rha.article_fk_publish=@publishFlag ";
 
             sql += @"   ORDER BY 
                         CASE @sortBy WHEN 'title' THEN title ELSE NULL END,
@@ -665,71 +691,10 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             {
                 while (reader.Read())
                 {
-                    var regular = new BORegular();
-                    regular.ContentId = reader.GetInt32(10);
-                    DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "": reader["human_readable_url"].ToString();
-                    regular.Id = reader.GetInt32(12);
-                    regular.ArticleCount = reader.GetInt32(13);
+                    var regular = PopulateRegular(reader, languageId);
                     regulars.Add(regular);
                 }
             }
-
-            return regulars;
-        }
-        
-        public List<BORegular> ListRegulars(ListingState state, List<int> regularIds, bool showUntranslated, bool? publish, int languageId)
-        {
-            var regulars = new List<BORegular>();
-
-            if (string.IsNullOrEmpty(state.SortField))
-            {
-                state.SortField = "id";
-            }
-
-            SqlParameter[] paramsToPass = new SqlParameter[3];
-            paramsToPass[0] = new SqlParameter("@sortBy", state.SortField);
-            paramsToPass[1] = new SqlParameter("@languageId", languageId);
-            paramsToPass[2] = SqlHelper.GetNullable("@publishFlag", publish);
-
-            string sql = REGULAR_SELECT_PART;
-
-            sql += showUntranslated ? "LEFT" : "INNER";
-
-            sql += @" JOIN [dbo].[content_data_store] cds 
-                      ON cds.content_fk_id = r.content_fk_id AND cds.language_fk_id=@languageId ";
-
-            sql += @" WHERE 1=1 ";
-
-            if (regularIds.Count > 0) {
-                var regularIdsString = FormatTool.ToCommaSeparatedValues(regularIds);
-                sql += " AND r.id IN (" + regularIdsString + ") ";
-            }
-
-            sql += @"   ORDER BY 
-                        CASE @sortBy WHEN 'title' THEN title ELSE NULL END,
-                        CASE @sortBy WHEN 'subtitle' THEN subtitle ELSE NULL END,
-                        CASE @sortBy WHEN 'principal_created_by' THEN principal_created_by ELSE NULL END,
-                        CASE @sortBy WHEN 'principal_modified_by' THEN principal_modified_by ELSE NULL END,
-                        CASE @sortBy WHEN 'content_fk_id' THEN r.content_fk_id ELSE NULL END,
-                        CASE @sortBy WHEN 'human_readable_url' THEN r.human_readable_url ELSE NULL END,
-                        CASE @sortBy WHEN 'id' THEN r.id ELSE NULL END ";
-
-            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
-                CommandType.Text, sql, paramsToPass))
-            {
-                while (reader.Read())
-                {
-                    BORegular regular = new BORegular();
-                    regular.ContentId = reader.GetInt32(10);
-                    DbHelper.PopulateContent(reader, regular, languageId);
-                    regular.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
-                    regular.Id = reader.GetInt32(12);
-                    regular.ArticleCount = reader.GetInt32(13);
-                    regulars.Add(regular);
-                }
-            }
-
             return regulars;
         }
     }
