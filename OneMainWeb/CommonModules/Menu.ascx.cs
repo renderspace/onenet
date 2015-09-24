@@ -6,13 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
+using One.Net.BLL;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class Menu : MModule
     {
         [Setting(SettingType.Bool, DefaultValue = "false")]
-        public bool LocalExpand { get { return GetBooleanSetting("ArticleListUri"); } }
+        public bool LocalExpand { get { return GetBooleanSetting("LocalExpand"); } }
 
         [Setting(SettingType.Int, DefaultValue = "1")]
         public int MinDepth { get { return GetIntegerSetting("MinDepth"); } }
@@ -35,8 +36,8 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowDescription { get { return GetBooleanSetting("ShowDescription"); } }
 
-        [Setting(SettingType.Int, DefaultValue = "0")]
-        public int LeadImageTemplate { get { return GetIntegerSetting("LeadImageTemplate"); } }
+        [Setting(SettingType.ImageTemplate, DefaultValue = "0")]
+        public BOImageTemplate LeadImageTemplate { get { return GetImageTemplate("LeadImageTemplate"); } }
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -49,7 +50,10 @@ namespace OneMainWeb.CommonModules
             MenuGroup1.FirstUlClass = FirstUlClass;
             MenuGroup1.CssClass = CssClass;
             MenuGroup1.ShowDescription = ShowDescription;
-            MenuGroup1.LeadImageTemplateId = GetIntegerSetting("LeadImageTemplate");
+            if (LeadImageTemplate != null)
+            {
+                MenuGroup1.LeadImageTemplateId = LeadImageTemplate.Id.Value;
+            }
         }
     }
 }
