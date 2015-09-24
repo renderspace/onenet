@@ -7,6 +7,7 @@
 <head runat="server">
     <link href="/adm/css/bootstrap.css" rel="stylesheet"/>
 	<link href="/_css/demo.css" rel="stylesheet"/>
+	<link href="/_css/magnific-popup.css" rel="stylesheet" >
     <Controls:JavascriptVars ID="JavascriptVars1" runat="server" />
 
 	
@@ -83,6 +84,9 @@
 			</footer>
 
         </div> <!-- /container -->	
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="/_js/jquery.magnific-popup.min.js"></script>
+		<script src="/_js/demo.js"></script>
     </form>
 </body>
 </html>
