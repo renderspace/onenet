@@ -78,7 +78,7 @@
             </asp:Panel>
             <asp:Panel runat="server" ID="PanelNoResults"  CssClass="col-md-12">
                     <div class="alert alert-info" role="alert">
-                    No articles to show.
+                    No forms found in database.
                         </div>
             </asp:Panel>
         </asp:View>
