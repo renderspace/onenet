@@ -65,7 +65,7 @@ namespace One.Net.BLL
             var state = new ListingState();
             state.RecordsPerPage = 10000;
 
-            var reg = articleDB.ListRegulars(state, false, null, false, LanguageId);
+            var reg = articleDB.ListRegulars(state, false, false, LanguageId);
             var count = 0;
             foreach (var r in reg.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
@@ -204,7 +204,7 @@ namespace One.Net.BLL
 
             if (article != null && article.Id.HasValue)
             {
-                article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), showUntranslated, article.Id, article.PublishFlag, LanguageId);
+                article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
 
                 if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
                     article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
@@ -219,7 +219,7 @@ namespace One.Net.BLL
 
             if (article != null && article.Id.HasValue)
             {
-                article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), showUntranslated, article.Id, article.PublishFlag, LanguageId);
+                article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
 
                 if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
                     article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
@@ -265,7 +265,7 @@ namespace One.Net.BLL
 
             foreach (BOArticle article in articles)
             {
-                article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), false, article.Id, article.PublishFlag, LanguageId);
+                article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
             }
             return articles;
         }
@@ -314,7 +314,7 @@ namespace One.Net.BLL
                     if ( showUntranslated && article.ContentId.HasValue && article.MissingTranslation  )
                         article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
 
-                    article.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), showUntranslated, article.Id, article.PublishFlag, LanguageId);
+                    article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
                 }
 
                 if (useCache)
@@ -506,28 +506,16 @@ namespace One.Net.BLL
         /// Uses delegate SingleRegularGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public List<BORegular> ListRegulars(ListingState state, bool showUntranslated, int? articleId, bool? publish)
+        public IEnumerable<BORegular> ListRegulars(ListingState state)
         {
-            var regulars = articleDB.ListRegulars(state, showUntranslated, articleId, publish, LanguageId);
-
-            if (showUntranslated)
-                for (int i = 0; i < regulars.Count; i++)
-                    if (regulars[i] != null && regulars[i].MissingTranslation && regulars[i].ContentId.HasValue)
-                        regulars[i].Title = BInternalContent.GetContentTitleInAnyLanguage(regulars[i].ContentId.Value);
-
+            var regulars = articleDB.ListRegulars(state, PublishFlag, false, LanguageId);
             return regulars;
         }
 
-        public List<BORegular> ListRegulars(ListingState state, List<int> regularIds)
+        public IEnumerable<BORegular> ListRegulars(ListingState state, List<int> regularIds)
         {
-            var regulars = articleDB.ListRegulars(state, regularIds, !PublishFlag, PublishFlag, LanguageId);
-
-            if (!PublishFlag)
-                for (int i = 0; i < regulars.Count; i++)
-                    if (regulars[i] != null && regulars[i].MissingTranslation && regulars[i].ContentId.HasValue)
-                        regulars[i].Title = BInternalContent.GetContentTitleInAnyLanguage(regulars[i].ContentId.Value);
-
-            return regulars;
+            var regulars = articleDB.ListRegulars(state, PublishFlag, false, LanguageId);
+            return regulars.Where(r => regularIds.Contains(r.Id.Value));
         }        
 
         #endregion General Regular methods
@@ -555,7 +543,7 @@ namespace One.Net.BLL
 
                 if (articleOffline != null)
                 {
-                    articleOffline.Regulars = articleDB.ListRegulars(new ListingState(SortDir.Ascending, "title"), true, id, false, i);
+                    articleOffline.Regulars = articleDB.ListArticleRegulars(id, false, i);
 
                     if (articleOffline.MarkedForDeletion)
                     {

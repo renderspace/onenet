@@ -5,41 +5,23 @@ namespace One.Net.BLL
     [Serializable]
     public class BORegular : BOInternalContent, ICloneable
     {
-        #region Variables
-
-        private int? id;
-        private int articleCount = 0;
-
-        #endregion Variables
 
         #region Properties
 
-        public int? Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int? Id { get; set;}
 
-        public int ArticleCount
-        {
-            get { return articleCount; }
-            set { articleCount = value; }
-        }
+        public int ArticleCount { get; set; }
 
-        public string HumanReadableUrl
-        {
-            get;
-            set;
-        }
+        public string HumanReadableUrl { get; set; }
 
         #endregion Properties
 
         public BORegular() { }
         public BORegular(int? id, int? contentId, int articleCount)
         {
-            this.id = id;
+            Id = id;
             this.ContentId = contentId;
-            this.articleCount = articleCount;
+            ArticleCount = articleCount;
         }
 
         public object Clone()

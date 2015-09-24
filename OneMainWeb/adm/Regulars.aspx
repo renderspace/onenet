@@ -27,6 +27,7 @@
 			        <asp:BoundField HeaderText="Id" DataField="Id" SortExpression="Id" ReadOnly="True" />
 			        <asp:BoundField HeaderText="Category title" DataField="Title" NullDisplayText="" SortExpression="title" ReadOnly="False" />
 			        <asp:BoundField HeaderText="Human readable url" DataField="HumanReadableUrl" NullDisplayText="" SortExpression="human_readable_url" ReadOnly="False" />
+                    <asp:BoundField HeaderText="No. of articles" DataField="ArticleCount" NullDisplayText="" SortExpression="ArticleCount" ReadOnly="False" />
                     <asp:TemplateField>
                             <ItemTemplate>
                                 <asp:LinkButton  CommandName="Select" CommandArgument='<%# Eval("Id") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs" CausesValidation="false" Text="<span class='glyphicon glyphicon-pencil'></span> Edit" />
