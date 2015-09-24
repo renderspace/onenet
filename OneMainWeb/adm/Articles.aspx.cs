@@ -45,12 +45,10 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
-                ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
-
+                
                 try
                 {
                     Multiview1.ActiveViewIndex = 0;
-
                     Regulars_DataBind(DropDownListRegularFilter);   
                 }
                 catch (Exception ex)
@@ -58,7 +56,8 @@ namespace OneMainWeb
                     if (ex.Message.Contains("articles human readable URL problem"))
                     {
                         var result = articleB.AutoCreateHumanReadableUrlArticles();
-                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
+                        result += articleB.AutoCreateHumanReadableUrlRegulars();
+                        Notifier1.Warning = "Updated " + result.ToString() + " items with human readable URLs.";
                         Articles_DataBind();
                     }
                     else if (ex.Message.Contains("regulars human readable URL problem"))
@@ -77,13 +76,7 @@ namespace OneMainWeb
                     else
                     {
                         throw ex;
-                    }                    
-                }
-                finally
-                {
-                    Multiview1.ActiveViewIndex = 0;
-                    ButtonRevert.Visible = ButtonPublish.Visible = PublishRights;
-
+                    }
                     Regulars_DataBind(DropDownListRegularFilter);  
                 }
             }            
@@ -484,6 +477,7 @@ namespace OneMainWeb
             TwoPostbackPager1.DetermineData();
             GridViewArticles.DataSource = articles;
             GridViewArticles.DataBind();
+            ButtonRevert.Visible = ButtonPublish.Visible = (articles.Count != 0) && PublishRights;
             PanelGridButtons.Visible = (articles.Count != 0);
             TwoPostbackPager1.Visible = (articles.Count != 0);
             GridViewArticles.Visible = (articles.Count != 0);
