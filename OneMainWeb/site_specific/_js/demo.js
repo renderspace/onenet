@@ -11,6 +11,14 @@ $(document).ready(function () {
 			}
 		}
 	});
+	$(".expandCollapseHtml .entry-title").click(function (event) {
+			event.preventDefault();
+			console.log($(this).parent());
+			console.log($(this).parent().parent().find(".entry-content"));
+			
+			$(this).parent().parent().find(".entry-content").slideToggle("slow", function () {
+		});
+	});
 });
 
 
