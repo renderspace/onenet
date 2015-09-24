@@ -15,7 +15,7 @@ namespace OneMainWeb.CommonModules
     public partial class Image : MModule
     {
         [Setting(SettingType.String)]
-        public string Href { get { return GetStringSetting("href"); } }
+        public string Href { get { return GetStringSetting("Href"); } }
         [Setting(SettingType.String)]
         public string Src { get { return GetStringSetting("Src"); } }
         [Setting(SettingType.String)]
@@ -27,7 +27,7 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool OpenInNewWindow { get { return GetBooleanSetting("OpenInNewWindow"); } }
 
-        public bool IsLinked { get { return GetStringSetting("href").Length > 0; } }
+        public bool IsLinked { get { return Href.Length > 0; } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,7 +36,6 @@ namespace OneMainWeb.CommonModules
 
         protected string RenderImageTag()
         {
-
             string linkTag = "<a href=\"" + Href + "\" ";
             if (OpenInNewWindow && IsLinked)
                 linkTag += "onclick=\"window.open(this.href); return false;\"";
