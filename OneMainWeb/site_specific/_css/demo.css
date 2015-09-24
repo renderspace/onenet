@@ -14,3 +14,9 @@ p, ul {margin-bottom: 20px;}
 .slider h1 {font-size: 40px; margin: 0;}
 
 footer {background-color: #f8f8f8; margin-top: 20px; padding: 15px;}
+
+
+.expandCollapseHtml .entry-content { display: none; }
+.expandCollapseHtml  article {
+	padding: 6px 0 7px 0 !important;
+}
