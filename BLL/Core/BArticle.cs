@@ -512,12 +512,6 @@ namespace One.Net.BLL
             return regulars;
         }
 
-        public IEnumerable<BORegular> ListRegulars(ListingState state, List<int> regularIds)
-        {
-            var regulars = articleDB.ListRegulars(state, PublishFlag, false, LanguageId);
-            return regulars.Where(r => regularIds.Contains(r.Id.Value));
-        }        
-
         #endregion General Regular methods
 
         #region IPublisher Members
