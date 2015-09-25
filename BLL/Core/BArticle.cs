@@ -36,6 +36,9 @@ namespace One.Net.BLL
             var state = new ListingState();
             state.RecordsPerPage = 10000;
 
+            state.SortDirection = SortDir.Descending;
+            state.SortField = "Id";
+
             var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId, false);
             var count = 0;
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
