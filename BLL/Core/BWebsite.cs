@@ -233,7 +233,11 @@ namespace One.Net.BLL
 
         public static string PrepareParLink(string parLink)
         {
-            return CleanStringForUrl((parLink.ToLower()).Replace(" ", "-")); ;
+            parLink = (parLink.ToLower()).Replace(" ", "-");
+            var regex = new Regex("[-]{2,}"); // match 2 or more occurences of - dash character
+            parLink = regex.Replace(parLink, "-"); // and replace them with a single dash
+            parLink = parLink.Substring(0, Math.Min(parLink.Length, 100));
+            return CleanStringForUrl(parLink);
         }
 
         /// <summary>
