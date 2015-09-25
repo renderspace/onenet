@@ -261,6 +261,9 @@ namespace One.Net.BLL
             answer = answer.Replace("Č", "C");
             answer = answer.Replace("Ð", "D");
 
+            var regex = new Regex(@"[-_,+.^&'""=*?=#]{2,}"); // match 2 or more occurences of - _ ? * ' '' & ^ . , = + # characters
+            answer = regex.Replace(answer, "-"); // and replace them with a single dash
+
             answer = answer.Replace("/", "-");
             answer = answer.Replace(" ", "-");
             answer = answer.Replace("?", "");
