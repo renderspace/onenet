@@ -30,7 +30,6 @@ namespace OneMainWeb
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
-        protected bool EnableXHTMLValidator;
         private AuthorizationHelper authorizationHelper = null;
 
         public bool PublishRights
@@ -110,7 +109,6 @@ namespace OneMainWeb
         {
 
             authorizationHelper = new AuthorizationHelper(Context);
-            bool.TryParse(ConfigurationManager.AppSettings["EnableXHTMLValidator"], out EnableXHTMLValidator);
             log.Debug("OneBasePage() contructor (end)");
         }
 

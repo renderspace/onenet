@@ -250,7 +250,7 @@ namespace OneMainWeb
                         hasAmpersands = ampersands.Count > 0;
                     }
 
-                    if (EnableXHTMLValidator && (hasErrors || hasAmpersands))
+                    if (hasErrors || hasAmpersands)
                     {
                         if (hasErrors)
                             Notifier1.Warning += "<h3>" + "Errors:" + "</h3><ul>";
