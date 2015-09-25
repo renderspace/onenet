@@ -40,7 +40,12 @@ namespace One.Net.BLL
             var count = 0;
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
-                var humanReadableUrlPart = BWebsite.PrepareParLink(a.Title);
+                var humanReadableUrlPart = "";
+                if (LanguageId == 1060 || LanguageId == 1033)
+                    humanReadableUrlPart = BWebsite.PrepareParLink(a.Title);
+                else
+                    humanReadableUrlPart = a.Id.ToString();
+
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
@@ -69,7 +74,12 @@ namespace One.Net.BLL
             var count = 0;
             foreach (var r in reg.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
-                var humanReadableUrlPart = BWebsite.PrepareParLink(r.Title);
+                var humanReadableUrlPart = "";
+                if (LanguageId == 1060 || LanguageId == 1033)
+                    humanReadableUrlPart = BWebsite.PrepareParLink(r.Title);
+                else
+                    humanReadableUrlPart = r.Id.ToString();
+
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))

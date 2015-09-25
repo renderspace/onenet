@@ -237,6 +237,7 @@ namespace One.Net.BLL
             var regex = new Regex("[-]{2,}"); // match 2 or more occurences of - dash character
             parLink = regex.Replace(parLink, "-"); // and replace them with a single dash
             parLink = parLink.Substring(0, Math.Min(parLink.Length, 100));
+            parLink = parLink.TrimStart('-');
             return CleanStringForUrl(parLink);
         }
 
@@ -262,7 +263,7 @@ namespace One.Net.BLL
             answer = answer.Replace("Ð", "D");
 
             // pattern tested on https://www.myregextester.com/index.php
-            var regex = new Regex(@"[-\/;:_,+.^&'""=*?=#]{2,}"); // match 2 or more occurences of - / : ; _ ? * ' '' & ^ . , = + # characters
+            var regex = new Regex(@"[-!$%@\(\)\[\]<>{}«»\/;:_,+.^&'""=*?=#]{2,}"); // match 2 or more occurences of - / : ; _ ? * ' '' & ^ . , = + # characters
             answer = regex.Replace(answer, "-"); // and replace them with a single dash
 
             answer = answer.Replace("/", "-");
@@ -272,7 +273,23 @@ namespace One.Net.BLL
             answer = answer.Replace(":", "-");
             answer = answer.Replace(".", "-");
             answer = answer.Replace(";", "-");
-            answer = answer.Replace("&", "and");
+            answer = answer.Replace("&", "-");
+            answer = answer.Replace("«", "-");
+            answer = answer.Replace("»", "-");
+            answer = answer.Replace("<", "-");
+            answer = answer.Replace(">", "-");
+            answer = answer.Replace("@", "-");
+            answer = answer.Replace("$", "-");
+            answer = answer.Replace("%", "-");
+            answer = answer.Replace("(", "-");
+            answer = answer.Replace(")", "-");
+            answer = answer.Replace("[", "-");
+            answer = answer.Replace("]", "-");
+            answer = answer.Replace("{", "-");
+            answer = answer.Replace("}", "-");
+            answer = answer.Replace(" and ", "-");
+            answer = answer.Replace(" an ", "-");
+            answer = answer.Replace(" a ", "-");
             answer = answer.Replace("#", "No");
             answer = answer.Replace("\"", "-");
             answer = answer.Replace("*", "-");
