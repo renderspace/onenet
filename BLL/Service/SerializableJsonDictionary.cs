@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace One.Net.BLL.Service
             throw new NotImplementedException();
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        [SecurityCritical]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             foreach (K key in dict.Keys)
             {

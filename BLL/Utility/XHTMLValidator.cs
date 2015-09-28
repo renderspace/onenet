@@ -58,7 +58,7 @@ namespace One.Net.BLL.Utility
                     {
                         if (commentTags.Count > 0)
                         {
-                            error.Add(new ValidatorError { Error = "nested_comments_not_allowed" } );
+                            error.Add(new ValidatorError { Error = "Nested comments not allowed" } );
                             return;
                         }
                         commentTags.Push(commentTag);
@@ -73,7 +73,7 @@ namespace One.Net.BLL.Utility
 
                         if (tag.ToLower() != tag)
                         {
-                            error.Add(new ValidatorError { Error = "uppercase_tags_not_allowed", Tag = tag});
+                            error.Add(new ValidatorError { Error = "Uppercase tags are not allowed", Tag = tag});
                             return;
                         }
 
@@ -82,7 +82,7 @@ namespace One.Net.BLL.Utility
                             string alt = StringTool.GetHtmlAttributeValue(attributes, "alt");
                             if (string.IsNullOrEmpty(alt))
                             {
-                                error.Add(new ValidatorError { Error = "missing_alt_in_image_tag"});
+                                error.Add(new ValidatorError { Error = "Missing alt attribute in image"});
                                 return;
                             }
                         }
@@ -91,7 +91,7 @@ namespace One.Net.BLL.Utility
                         {
                             if (!isSolo)
                             {
-                                error.Add(new ValidatorError { Error = "solo_tag_should_be_solo", Tag = tag });
+                                error.Add(new ValidatorError { Error = "Solo tag should be solo.", Tag = tag });
                                 return;
                             }
                         }
@@ -101,7 +101,7 @@ namespace One.Net.BLL.Utility
                             {
                                 if (tags.Count == 0)
                                 {
-                                    error.Add(new ValidatorError { Error = "missing_closing_of_tag", Tag = tag });
+                                    error.Add(new ValidatorError { Error = "Missing closing of tag", Tag = tag });
                                     return;
                                 }
                                 // Tag on stack must be equal to this closing tag
@@ -112,7 +112,7 @@ namespace One.Net.BLL.Utility
                                 }
                                 else
                                 {
-                                    error.Add(new ValidatorError { Error = "mismatched_closing_tag", Tag = tag });
+                                    error.Add(new ValidatorError { Error = "Mismatched closing tag", Tag = tag });
                                     return;
                                 }
                             }
@@ -134,7 +134,7 @@ namespace One.Net.BLL.Utility
                     {
                         if (commentTags.Count == 0)
                         {
-                            error.Add(new ValidatorError { Error = "closing_comment_tag", });
+                            error.Add(new ValidatorError { Error = "Closing comment tag", });
                             return;
                         }
                         else
@@ -147,12 +147,12 @@ namespace One.Net.BLL.Utility
 
             foreach (string tagName in tags)
             {
-                error.Add(new ValidatorError { Error = "extra_tag_left_on_stack", Tag = tagName });
+                error.Add(new ValidatorError { Error = "HTML tag not closed ", Tag = tagName });
             }
 
             foreach (string tagName in commentTags)
             {
-                error.Add(new ValidatorError { Error = "extra__comment_tag_left_on_stack", Tag = tagName });
+                error.Add(new ValidatorError { Error = "HTML comment not closed ", Tag = tagName });
             }
         }
 
