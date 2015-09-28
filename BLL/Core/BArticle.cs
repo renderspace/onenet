@@ -58,6 +58,7 @@ namespace One.Net.BLL
                 }
                 catch (Exception ex)
                 {
+                    log.Info(ex, "duplicate human readable url");
                     a.HumanReadableUrl = humanReadableUrlPart + "-" + a.Id.ToString();
                     ChangeArticle(a);
                 } 
@@ -92,6 +93,7 @@ namespace One.Net.BLL
                 }
                 catch (Exception ex)
                 {
+                    log.Info(ex, "duplicate human readable url");
                     r.HumanReadableUrl = humanReadableUrlPart + "-" + r.Id.ToString();
                     ChangeRegular(r);
                 }
