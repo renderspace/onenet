@@ -39,12 +39,12 @@ namespace One.Net.BLL
             state.SortDirection = SortDir.Descending;
             state.SortField = "Id";
 
-            var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId, false);
+            var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId);
             var count = 0;
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
                 var humanReadableUrlPart = autoGeneratePartialLink ? BWebsite.PrepareParLink(a.Title) : a.Id.ToString();
-                var article = articleDB.GetArticle(a.Id.Value, a.PublishFlag, a.LanguageId, false);
+                var article = articleDB.GetArticle(a.Id.Value, a.PublishFlag, a.LanguageId);
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
@@ -107,7 +107,7 @@ namespace One.Net.BLL
             // retrieve existing content id from db in case its not provided
             if (article.Id.HasValue)
             {
-                BOArticle existingArticle = GetUnCachedArticle(article.Id.Value, article.PublishFlag, true);
+                BOArticle existingArticle = GetUnCachedArticle(article.Id.Value, article.PublishFlag);
                 if (existingArticle != null && existingArticle.Id.HasValue && existingArticle.ContentId.HasValue)
                     article.ContentId = existingArticle.ContentId;
             }
@@ -124,11 +124,10 @@ namespace One.Net.BLL
         /// If publishFlag is false, an uncached object is returned.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="showUntranslated"></param>
         /// <returns></returns>
-        public BOArticle GetArticle(int id, bool showUntranslated)
+        public BOArticle GetArticle(int id)
         {
-            return GetArticle(id, PublishFlag, showUntranslated);
+            return GetArticle(id, PublishFlag);
         }
         
         /// <summary>
@@ -146,7 +145,7 @@ namespace One.Net.BLL
 
             if (article == null)
             {
-                article = GetUnCachedArticle(humanReadableUrl, PublishFlag, !PublishFlag);
+                article = GetUnCachedArticle(humanReadableUrl, PublishFlag);
 
                 if (article != null && !article.MissingTranslation && useCache)
                 {
@@ -168,19 +167,18 @@ namespace One.Net.BLL
         /// If publishFlag is false, an uncached object is returned.
         /// </summary>        /// <param name="articleId"></param>
         /// <param name="publish"></param>
-        /// <param name="showUntranslated"></param>
         /// <returns></returns>
-        private BOArticle GetArticle(int articleId, bool publish, bool showUntranslated)
+        private BOArticle GetArticle(int articleId, bool publish)
         {
             BOArticle article = null;
-            bool useCache = !showUntranslated;
+            bool useCache = true;
             string cacheKey = CACHE_LANG_PREFIX + ARTICLE_CACHE_ID(articleId, publish);
             if (useCache)
                 article = cache.Get<BOArticle>(cacheKey);
 
             if (article == null)
             {
-                article = GetUnCachedArticle(articleId, publish, showUntranslated);
+                article = GetUnCachedArticle(articleId, publish);
 
                 if (article != null && !article.MissingTranslation && useCache)
                 {
@@ -202,33 +200,26 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="publish"></param>
-        /// <param name="showUntranslated"></param>
         /// <returns></returns>
-        private BOArticle GetUnCachedArticle(int id, bool publish, bool showUntranslated)
+        private BOArticle GetUnCachedArticle(int id, bool publish)
         {
-            BOArticle article = articleDB.GetArticle(id, publish, LanguageId, showUntranslated);
+            BOArticle article = articleDB.GetArticle(id, publish, LanguageId);
 
             if (article != null && article.Id.HasValue)
             {
                 article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
-
-                if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
-                    article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
             }
 
             return article;
         }
 
-        private BOArticle GetUnCachedArticle(string humanReadableUrl, bool publish, bool showUntranslated)
+        private BOArticle GetUnCachedArticle(string humanReadableUrl, bool publish)
         {
-            BOArticle article = articleDB.GetArticle(humanReadableUrl, publish, LanguageId, showUntranslated);
+            BOArticle article = articleDB.GetArticle(humanReadableUrl, publish, LanguageId);
 
             if (article != null && article.Id.HasValue)
             {
                 article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
-
-                if (showUntranslated && article.ContentId.HasValue && article.MissingTranslation)
-                    article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
             }
 
             return article;
@@ -243,19 +234,7 @@ namespace One.Net.BLL
         /// <returns></returns>
         private BOArticle GetPublishableArticle(int id, bool publishFlag, int languageId)
         {
-            return articleDB.GetArticle(id, publishFlag, languageId, false);
-        }
-
-        /// <summary>
-        /// Retrieves paged list of unpublished, changed, translated articles based on ListingState and languageId
-        /// Uses delegate SingleArticleGet to retrieve individual objects. 
-        /// Individual objects are not cached
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public PagedList<BOArticle> ListUnpublishedArticles(ListingState state)
-        {
-            return articleDB.ListUnpublishedArticles(state, LanguageId);
+            return articleDB.GetArticle(id, publishFlag, languageId);
         }
 
         public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
@@ -263,10 +242,10 @@ namespace One.Net.BLL
             log.Debug("ListArticles:" + regularIds.ToArray().ToString());
             PagedList<BOArticle> articles = null;
             if (string.IsNullOrEmpty(titleSearch))
-                articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, false);
+                articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId);
             else
             {
-                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, false, titleSearch, regularIds);
+                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds);
             }
 
             foreach (BOArticle article in articles)
@@ -281,7 +260,7 @@ namespace One.Net.BLL
         /// Uses delegate SingleArticleGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public PagedList<BOArticle> ListArticles(List<int> regularIds, bool showUntranslated, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
         {
             DateTime? from = null;
             DateTime? to = null;
@@ -301,7 +280,7 @@ namespace One.Net.BLL
             PagedList<BOArticle> articles = null;
             string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
-            bool useCache = !showUntranslated && PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
+            bool useCache = PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
             
             if (useCache)
                 articles = cache.Get<PagedList<BOArticle>>(LIST_CACHE_ID);
@@ -309,16 +288,14 @@ namespace One.Net.BLL
             if (articles == null)
             {
                 if (string.IsNullOrEmpty(titleSearch))
-                    articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, showUntranslated);
+                    articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId);
                 else
                 {
-                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, showUntranslated, titleSearch, regularIds);
+                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds);
                 }
 
                 foreach (BOArticle article in articles)
                 {
-                    if ( showUntranslated && article.ContentId.HasValue && article.MissingTranslation  )
-                        article.Title = BInternalContent.GetContentTitleInAnyLanguage(article.ContentId.Value);
 
                     article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
                 }
@@ -589,8 +566,8 @@ namespace One.Net.BLL
         public bool UnPublish(int id)
         {
             ClearCache(id);
-            BOArticle articleOffline = GetUnCachedArticle(id, false, false);
-            BOArticle articleOnline = GetUnCachedArticle(id, true, false);
+            BOArticle articleOffline = GetUnCachedArticle(id, false);
+            BOArticle articleOnline = GetUnCachedArticle(id, true);
 
             if (articleOffline != null && articleOnline != null)
             {
@@ -607,7 +584,7 @@ namespace One.Net.BLL
         public bool MarkForDeletion(int id)
         {
             ClearCache(id);
-            BOArticle articleOffline = GetUnCachedArticle(id, false, false);
+            BOArticle articleOffline = GetUnCachedArticle(id, false);
             if (articleOffline != null && articleOffline.MarkedForDeletion == false)
             {
                 articleOffline.MarkedForDeletion = true;
@@ -621,8 +598,8 @@ namespace One.Net.BLL
         public bool RevertToPublished(int id)
         {
             ClearCache(id);
-            BOArticle articleOffline = GetUnCachedArticle(id, false, false);
-            BOArticle articleOnline = GetUnCachedArticle(id, true, false);
+            BOArticle articleOffline = GetUnCachedArticle(id, false);
+            BOArticle articleOnline = GetUnCachedArticle(id, true);
 
             if (articleOffline != null && articleOnline != null)
             {

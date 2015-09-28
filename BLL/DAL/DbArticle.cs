@@ -95,7 +95,7 @@ namespace One.Net.BLL.DAL
             }
         }
 
-        public BOArticle GetArticle(string humanReadableUrl, bool publishFlag, int languageId, bool showUntranslated) 
+        public BOArticle GetArticle(string humanReadableUrl, bool publishFlag, int languageId) 
         {
             BOArticle article = null;
 
@@ -111,7 +111,7 @@ namespace One.Net.BLL.DAL
                 sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
             sql += @"   FROM [dbo].[article] a
                         INNER JOIN [dbo].[content] c ON c.id = a.content_fk_id ";
-            sql += showUntranslated ? "LEFT" : "INNER";
+            sql += "INNER";
             sql += @" JOIN [dbo].[content_data_store] cds 
                       ON cds.content_fk_id = c.id AND cds.language_fk_id=@languageId 
                       WHERE a.human_readable_url=@humanReadableUrl AND a.publish=@publishFlag";
@@ -128,7 +128,7 @@ namespace One.Net.BLL.DAL
             return article;
         }
 
-        public BOArticle GetArticle(int id, bool publishFlag, int languageId, bool showUntranslated)
+        public BOArticle GetArticle(int id, bool publishFlag, int languageId)
         {
             BOArticle article = null;
 
@@ -144,7 +144,7 @@ namespace One.Net.BLL.DAL
                 sql += @" ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
             sql += @"   FROM [dbo].[article] a
                         INNER JOIN [dbo].[content] c ON c.id = a.content_fk_id ";
-            sql += showUntranslated ? "LEFT" : "INNER";
+            sql += "INNER";
             sql += @" JOIN [dbo].[content_data_store] cds 
                       ON cds.content_fk_id = c.id AND cds.language_fk_id=@languageId 
                       WHERE a.id=@id AND a.publish=@publishFlag";
@@ -308,7 +308,7 @@ WHERE a2.publish = @publishFlag ";
             return results;
         }
 
-        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool showUntranslated, bool? changed)
+        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool? changed)
         {
             if (regularIds == null)
                 regularIds = new List<int>();
@@ -347,7 +347,7 @@ WHERE a2.publish = @publishFlag ";
                 sql += @" INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
 
 
-            sql += (showUntranslated ? " LEFT " : " INNER ") + @" JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
+            sql += " INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
             sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
 
             if (regularIds.Count > 0)
@@ -399,12 +399,7 @@ WHERE a2.publish = @publishFlag ";
             article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
         }
 
-        public PagedList<BOArticle> ListUnpublishedArticles(ListingState state, int languageId)
-        {
-            return ListPagedArticles(false, null, null, null, state, languageId, false, true);
-        }
-
-        public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, bool showUntranslated, string titleSearch, List<int> regulars)
+        public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars)
         {
             // TODO: regularIds
             PagedList<BOArticle> list = new PagedList<BOArticle>();
@@ -414,7 +409,6 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass.Add(new SqlParameter("@languageId", languageId));
             paramsToPass.Add(new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex));
             paramsToPass.Add(new SqlParameter("@toRecordIndex", state.DbToRecordIndex));
-            paramsToPass.Add(new SqlParameter("@showUntranslated", showUntranslated));
 
             var searchParam = new SqlParameter("@titleSearch", SqlDbType.NVarChar, 255);
             searchParam.Value = "%" + titleSearch + "%";
@@ -446,13 +440,7 @@ WHERE a2.publish = @publishFlag ";
 		                    FROM [dbo].[article] a
 		                    INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
                 ";
-
-            if (showUntranslated)
-                sql += " LEFT ";
-            else
-                sql += " INNER ";
-
-            sql += @" JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
+            sql += @" INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
 
             if (regulars.Count > 0)
                 sql += @" INNER JOIN [dbo].[regular_has_articles] rha ON rha.article_fk_id = a.id AND rha.article_fk_publish = @publishFlag ";
@@ -503,9 +491,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return list;            
         }
 
-        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool showUntranslated)
+        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId)
         {
-            return ListPagedArticles(publishFlag, from, to, regularIds, state, languageId, showUntranslated, null);
+            return ListPagedArticles(publishFlag, from, to, regularIds, state, languageId, null);
         }
 
         public void DeleteRegular(int id)

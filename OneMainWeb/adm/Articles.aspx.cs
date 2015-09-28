@@ -203,7 +203,7 @@ namespace OneMainWeb
             GridView grid = sender as GridView;
             if (grid != null && grid.SelectedValue != null)
             {
-                SelectedArticle = articleB.GetArticle(Int32.Parse(grid.SelectedValue.ToString()), true);
+                SelectedArticle = articleB.GetArticle(Int32.Parse(grid.SelectedValue.ToString()));
                 Multiview1.ActiveViewIndex = 1;
             }
         }
@@ -495,7 +495,7 @@ namespace OneMainWeb
 
             if (id > -1)
             {
-                SelectedArticle = articleB.GetArticle(id, ShowUntranslated);
+                SelectedArticle = articleB.GetArticle(id);
 
                 if (SelectedArticle != null)
                 {

@@ -50,7 +50,7 @@ namespace OneMainWeb.CommonModules
             if (Request[REQUEST_ARTICLE_ID] != null)
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
-                tempArticle = articleB.GetArticle(articleId, false);
+                tempArticle = articleB.GetArticle(articleId);
             } 
             else if (HasHumanReadableUrlParameter)
             {
