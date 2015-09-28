@@ -30,7 +30,7 @@ namespace One.Net.BLL
             ClearCache();
         }
 
-        public int AutoCreateHumanReadableUrlArticles()
+        public int AutoCreateHumanReadableUrlArticles(bool autoGeneratePartialLink = true)
         {
             var regulars = new List<int>();
             var state = new ListingState();
@@ -43,24 +43,20 @@ namespace One.Net.BLL
             var count = 0;
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
-                var humanReadableUrlPart = "";
-                if (LanguageId == 1060 || LanguageId == 1033)
-                    humanReadableUrlPart = BWebsite.PrepareParLink(a.Title);
-                else
-                    humanReadableUrlPart = a.Id.ToString();
-
+                var humanReadableUrlPart = autoGeneratePartialLink ? BWebsite.PrepareParLink(a.Title) : a.Id.ToString();
+                var article = articleDB.GetArticle(a.Id.Value, a.PublishFlag, a.LanguageId, false);
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
                         throw new Exception("IsNullOrWhiteSpace(humanReadableUrlPart");
-                    a.HumanReadableUrl = humanReadableUrlPart;
-                    ChangeArticle(a);
+                    article.HumanReadableUrl = humanReadableUrlPart;
+                    ChangeArticle(article);
                 }
                 catch (Exception ex)
                 {
                     log.Info(ex, "duplicate human readable url");
-                    a.HumanReadableUrl = humanReadableUrlPart + "-" + a.Id.ToString();
-                    ChangeArticle(a);
+                    article.HumanReadableUrl = humanReadableUrlPart + "-" + article.Id.ToString();
+                    ChangeArticle(article);
                 } 
                 count++;
             }
