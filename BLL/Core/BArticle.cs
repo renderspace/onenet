@@ -44,7 +44,7 @@ namespace One.Net.BLL
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
                 var humanReadableUrlPart = autoGeneratePartialLink ? BWebsite.PrepareParLink(a.Title) : a.Id.ToString();
-                var article = articleDB.GetArticle(a.Id.Value, a.PublishFlag, a.LanguageId);
+                var article = GetUnCachedArticle(a.Id.Value, a.PublishFlag);
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
