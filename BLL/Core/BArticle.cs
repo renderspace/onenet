@@ -225,18 +225,6 @@ namespace One.Net.BLL
             return article;
         }
 
-        /// <summary>
-        /// Retrieves BOArticle object based on id and languageId.
-        /// Note: This method is used by publisher only
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="languageId"></param>
-        /// <returns></returns>
-        private BOArticle GetPublishableArticle(int id, bool publishFlag, int languageId)
-        {
-            return articleDB.GetArticle(id, publishFlag, languageId);
-        }
-
         public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
         {
             log.Debug("ListArticles:" + regularIds.ToArray().ToString());
@@ -515,8 +503,8 @@ namespace One.Net.BLL
 
             foreach (int i in languages)
             {
-                BOArticle articleOffline = GetPublishableArticle(id, false, i);
-                BOArticle articleOnline = GetPublishableArticle(id, true, i);
+                BOArticle articleOffline = articleDB.GetArticle(id, false, i);
+                BOArticle articleOnline = articleDB.GetArticle(id, true, i);
 
                 if (articleOffline != null)
                 {
