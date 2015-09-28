@@ -162,7 +162,7 @@ namespace OneMainWeb.CommonModules
                     SortByColumn);
                 listingState.OffSet = OffSet; 
 
-           var articles = articleB.ListArticles(CategoriesList, false, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
+           var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
 
            RepeaterArticles.DataSource = articles;
            RepeaterArticles.DataBind();

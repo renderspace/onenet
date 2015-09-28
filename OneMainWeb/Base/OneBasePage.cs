@@ -145,11 +145,6 @@ namespace OneMainWeb
             get { return false; }
         }
 
-        protected bool ShowUntranslated
-        {
-            get { return false; }
-        }
-
         protected int? RootNodeID
         {
             get
