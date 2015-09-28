@@ -74,12 +74,7 @@ namespace One.Net.BLL
             var count = 0;
             foreach (var r in reg.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
-                var humanReadableUrlPart = "";
-                if (LanguageId == 1060 || LanguageId == 1033)
-                    humanReadableUrlPart = BWebsite.PrepareParLink(r.Title);
-                else
-                    humanReadableUrlPart = r.Id.ToString();
-
+                var humanReadableUrlPart = (LanguageId == 1060 || LanguageId == 1033) ? BWebsite.PrepareParLink(r.Title) : r.Id.ToString();
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))
