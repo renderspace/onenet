@@ -442,7 +442,6 @@ namespace One.Net.BLL
                     buffer = new Byte[lChunkSize];
                     dataToRead = dataToRead - length;
                 }
-                fileStream.Close();
             }
             return fileLength;
         }

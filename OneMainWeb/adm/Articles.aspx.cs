@@ -23,7 +23,6 @@ using System.Linq;
 
 namespace OneMainWeb
 {
-    [Serializable]
     public partial class Articles : OneBasePage
     {
         private static readonly BArticle articleB = new BArticle();
@@ -75,7 +74,7 @@ namespace OneMainWeb
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                     Regulars_DataBind(DropDownListRegularFilter);  
                 }

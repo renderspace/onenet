@@ -23,7 +23,6 @@ using One.Net.BLL.Model.Attributes;
 
 namespace One.Net.BLL
 {
-    [Serializable]
     public class BWebsite : BusinessBaseClass
     {
         public const string CACHE_SITE_LIST = "List<BOWebSite> List()";
