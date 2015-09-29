@@ -145,5 +145,18 @@
 			    </div>
             </div>         
         </asp:View>
+        <asp:View ID="View3" runat="server">
+            <div class="adminSection">
+			    <div class="col-md-8">
+                    <p>"Missing human readable urls detected. Please select the type of conversion: AutomaticUrl or ID</p>
+                </div>
+                <div class="col-sm-2">
+                    <asp:LinkButton ID="LinkButtonConvertId" Text="by Id" runat="server" CausesValidation="False" CommandArgument="Id" OnClick="LinkButtonConvert_Click"  CssClass="btn btn-success" />
+                </div>
+                <div class="col-sm-2">
+                    <asp:LinkButton ID="LinkButtonConvertUrl" Text="by Url" runat="server" CausesValidation="False" CommandArgument="Url" OnClick="LinkButtonConvert_Click"  CssClass="btn btn-success" />
+                </div>
+            </div>
+        </asp:View>
     </asp:MultiView>
 </asp:Content>
