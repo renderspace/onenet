@@ -50,33 +50,9 @@ namespace OneMainWeb
                     Multiview1.ActiveViewIndex = 0;
                     Regulars_DataBind(DropDownListRegularFilter);   
                 }
-                catch (Exception ex)
+                catch
                 {
-                    if (ex.Message.Contains("articles human readable URL problem"))
-                    {
-                        var result = articleB.AutoCreateHumanReadableUrlArticles();
-                        result += articleB.AutoCreateHumanReadableUrlRegulars();
-                        Notifier1.Warning = "Updated " + result.ToString() + " items with human readable URLs.";
-                        Articles_DataBind();
-                    }
-                    else if (ex.Message.Contains("regulars human readable URL problem"))
-                    {
-                        var result = articleB.AutoCreateHumanReadableUrlRegulars();
-                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
-                        Articles_DataBind();
-                    }
-                    else if (ex.Message.Contains("human_readable_url"))
-                    {
-                        articleB.UpgradeArticles();
-                        articleB.AutoCreateHumanReadableUrlArticles();
-                        var result = articleB.AutoCreateHumanReadableUrlRegulars();
-                        Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                    Regulars_DataBind(DropDownListRegularFilter);  
+                    Multiview1.ActiveViewIndex = 2;
                 }
             }            
         }
@@ -194,7 +170,69 @@ namespace OneMainWeb
                     InsertUpdateCloseButton.Text = "Save & Close";
                 }
             }
+
             log.Debug("Articles Multiview1_ActiveViewChanged (end)");
+        }
+
+        protected void LinkButtonConvert_Click(object sender, EventArgs e)
+        {
+            var button = sender as LinkButton;
+            var commandArgument = button.CommandArgument.ToString();
+            if (commandArgument == "Id")
+            {
+                ConfigureArticles(false);
+            }
+            else
+            {
+                ConfigureArticles(true);
+            }
+
+            Multiview1.ActiveViewIndex = 0;
+        }
+
+        private void ConfigureArticles(bool autoGeneratePartialLinks)
+        {
+            try
+            {
+                Regulars_DataBind(DropDownListRegularFilter);
+
+                TwoPostbackPager1.RecordsPerPage = GridViewPageSize;
+                TwoPostbackPager1.SelectedPage = 1;
+
+                GridViewSortExpression = "display_date";
+                GridViewSortDirection = SortDir.Descending;
+
+                Articles_DataBind();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("articles human readable URL problem"))
+                {
+                    var result = articleB.AutoCreateHumanReadableUrlArticles(autoGeneratePartialLinks);
+                    result += articleB.AutoCreateHumanReadableUrlRegulars(autoGeneratePartialLinks);
+                    Notifier1.Warning = "Updated " + result.ToString() + " items with human readable URLs.";
+                    Articles_DataBind();
+                }
+                else if (ex.Message.Contains("regulars human readable URL problem"))
+                {
+                    var result = articleB.AutoCreateHumanReadableUrlRegulars(autoGeneratePartialLinks);
+                    Notifier1.Warning = "Updated " + result.ToString() + " regulars with human readable URLs.";
+                    Articles_DataBind();
+                }
+                else if (ex.Message.Contains("human_readable_url"))
+                {
+                    articleB.UpgradeArticles();
+                    var result = articleB.AutoCreateHumanReadableUrlArticles(autoGeneratePartialLinks);
+                    result += articleB.AutoCreateHumanReadableUrlRegulars(autoGeneratePartialLinks);
+                    Notifier1.Warning = "Updated " + result.ToString() + " items with human readable URLs.";
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            Regulars_DataBind(DropDownListRegularFilter);  
         }
 
         protected void GridViewArticles_SelectedIndexChanged(object sender, EventArgs e)

@@ -64,7 +64,7 @@ namespace One.Net.BLL
             return count;
         }
 
-        public int AutoCreateHumanReadableUrlRegulars()
+        public int AutoCreateHumanReadableUrlRegulars(bool autoGeneratePartialLink = true)
         {
             var regulars = new List<int>();
             var state = new ListingState();
@@ -74,7 +74,8 @@ namespace One.Net.BLL
             var count = 0;
             foreach (var r in reg.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
-                var humanReadableUrlPart = (LanguageId == 1060 || LanguageId == 1033) ? BWebsite.PrepareParLink(r.Title) : r.Id.ToString();
+                var humanReadableUrlPart = autoGeneratePartialLink ? BWebsite.PrepareParLink(r.Title) : r.Id.ToString();
+
                 try
                 {
                     if (string.IsNullOrWhiteSpace(humanReadableUrlPart))

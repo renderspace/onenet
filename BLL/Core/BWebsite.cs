@@ -236,7 +236,7 @@ namespace One.Net.BLL
             var regex = new Regex("[-]{2,}"); // match 2 or more occurences of - dash character
             parLink = regex.Replace(parLink, "-"); // and replace them with a single dash
             parLink = parLink.Substring(0, Math.Min(parLink.Length, 60));
-            parLink = parLink.TrimStart('-');
+            parLink = parLink.TrimStart('-').TrimEnd('-');
             return CleanStringForUrl(parLink);
         }
 
