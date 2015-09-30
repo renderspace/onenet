@@ -14,6 +14,7 @@ namespace OneMainWeb.CommonModules
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
+        protected BOArticle RequestedArticle;
 
         [Setting(SettingType.Url)]
         public string ArticleListUri { get { return GetStringSetting("ArticleListUri"); } }
@@ -44,26 +45,30 @@ namespace OneMainWeb.CommonModules
             if (!HasHumanReadableUrlParameter)
                 return;
 
-            BOArticle tempArticle = null;
-
             int articleId = 0;
+
+            BOArticle originalArticle = null;
+
             if (Request[REQUEST_ARTICLE_ID] != null)
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
-                tempArticle = articleB.GetArticle(articleId);
+                originalArticle = articleB.GetArticle(articleId);
             } 
             else if (HasHumanReadableUrlParameter)
             {
-                tempArticle = articleB.GetArticle(HumanReadableUrlParameter);
+                originalArticle = articleB.GetArticle(HumanReadableUrlParameter);
             }
-                        
-            if (tempArticle != null)
+
+            if (originalArticle != null)
             {
                 if (MultiView1 != null)
                     MultiView1.ActiveViewIndex = 1;
 
-                ListImages = tempArticle.Images;
-                var article = (BOArticle)tempArticle.Clone();
+                ListImages = originalArticle.Images;
+
+                var article = (BOArticle)originalArticle.Clone();
+                RequestedArticle = article;
+
                 if (HideImages)
                 {
                     foreach (BOIntContImage image in article.Images)
@@ -71,10 +76,13 @@ namespace OneMainWeb.CommonModules
                         article.RemoveImages.Add(image);
                     }
                 }
+
                 if (DivTeaserImage != null && ThumbTemplate != null && ListImages.Count > 0)
                 {
-                    DivTeaserImage.Visible = true;
                     var image = ListImages.FirstOrDefault();
+                    article.RemoveImages.Add(image);
+
+                    DivTeaserImage.Visible = true;
                     DivTeaserImage.InnerHtml = ThumbTemplate.RenderHtml(image.Alt, image.FullUri, image.CssClass);
                 }
                 else if (DivTeaserImage != null)
