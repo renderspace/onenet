@@ -249,6 +249,7 @@ namespace One.Net.BLL
         public static string CleanStringForUrl(string str)
         {
             string answer = str.ToLower(CultureInfo.InvariantCulture);
+
             answer = answer.Replace("š", "s");
             answer = answer.Replace("ž", "z");
             answer = answer.Replace("ć", "c");
@@ -262,7 +263,7 @@ namespace One.Net.BLL
             answer = answer.Replace("Ð", "D");
 
             // pattern tested on https://www.myregextester.com/index.php
-            var regex = new Regex(@"[-!$%@\(\)\[\]<>{}«»\/;:_,+.^&'""=*?=#]{2,}"); // match 2 or more occurences of - / : ; _ ? * ' '' & ^ . , = + # characters
+            var regex = new Regex(@"[-”“!$%@\(\)\[\]<>{}«»\/;:_,+.^&'""=*?=#]{2,}"); // match 2 or more occurences of various characters
             answer = regex.Replace(answer, "-"); // and replace them with a single dash
 
             answer = answer.Replace("/", "-");
@@ -292,6 +293,9 @@ namespace One.Net.BLL
             answer = answer.Replace("#", "No");
             answer = answer.Replace("\"", "-");
             answer = answer.Replace("*", "-");
+            answer = answer.Replace("“", "-");
+            answer = answer.Replace("”", "-");
+
             return answer;
         }
 
