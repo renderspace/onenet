@@ -109,18 +109,18 @@
                     <div class="col-sm-9 col-sm-offset-3 jumbotron jumbo-less-padding">
                         <div class="col-sm-5">
                             <asp:Label runat="server" AssociatedControlID="ListBoxRegulars">Choose from possible categories:</asp:Label>
-                            <asp:ListBox ID="ListBoxRegulars" runat="server" Rows="5" CssClass="form-control" />
+                            <asp:ListBox TabIndex="1" ID="ListBoxRegulars" runat="server" Rows="5" CssClass="form-control" />
                         </div>
                         <div class="col-sm-1">
-                            <asp:LinkButton ValidationGroup="ATR" ID="cmdAssignRegularToArticle" runat="server"  OnClick="cmdAssignRegularToArticle_Click" CssClass="btn btn-info"> 
+                            <asp:LinkButton TabIndex="2" ValidationGroup="ATR" ID="cmdAssignRegularToArticle" runat="server"  OnClick="cmdAssignRegularToArticle_Click" CssClass="btn btn-info"> 
                                 <span class="glyphicon glyphicon-arrow-right"></span></asp:LinkButton>
                                 <br />
-							<asp:LinkButton ValidationGroup="ATR" ID="cmdRemoveRegularFromArticle" runat="Server" CssClass="btn btn-info" OnClick="cmdRemoveRegularFromArticle_Click" >
+							<asp:LinkButton TabIndex="3" ValidationGroup="ATR" ID="cmdRemoveRegularFromArticle" runat="Server" CssClass="btn btn-info" OnClick="cmdRemoveRegularFromArticle_Click" >
                                 <span class="glyphicon glyphicon-arrow-left"></span></asp:LinkButton>
                         </div>
                         <div class="col-sm-6">
                              <asp:Label runat="server" AssociatedControlID="ListBoxAssignedToArticle">Categories assigned to current article:</asp:Label>
-								<asp:ListBox ID="ListBoxAssignedToArticle" runat="server" Rows="5" CssClass="form-control" />
+								<asp:ListBox TabIndex="4" ID="ListBoxAssignedToArticle" runat="server" Rows="5" CssClass="form-control" />
                         </div>
                     </div>
                 </div>
@@ -128,16 +128,16 @@
                     <asp:Label AssociatedControlID="TextBoxDate" runat="server" ID="LabelDate" Text="Display date" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
                         <div class='input-group datetime' id='datetimepicker-article'>
-                                <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxDate" CssClass="form-control" />
+                                <asp:TextBox TabIndex="5" runat="server" ClientIDMode="Static" ID="TextBoxDate" CssClass="form-control" />
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
                         </div>
                     </div>
                 </div>
-                <one:TextContentControl ID="TextContentEditor" runat="server" />
+                <one:TextContentControl TabIndex="6" ID="TextContentEditor" runat="server" />
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="form-control" />
+                        <asp:TextBox TabIndex="10" runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="human-readable-url-input form-control" />
                     </div>
                 </div>
 			    <div class="form-group">
@@ -146,8 +146,8 @@
                     </div>
                     <div class="col-sm-9">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				        <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
-				        <asp:LinkButton ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="11" ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="12" ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
                     </div>
 			    </div>
             </div>         

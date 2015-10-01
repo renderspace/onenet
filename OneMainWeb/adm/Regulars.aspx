@@ -48,17 +48,17 @@
                 window.TextBoxHumanReadableUrlClientId = '<%=TextBoxHumanReadableUrl.ClientID %>';
 
                 </script>
-			    <one:TextContentControl ID="TxtRegularContent" runat="server" HtmlRows="10" />
+			    <one:TextContentControl TabIndex="1" ID="TxtRegularContent" runat="server" HtmlRows="10" />
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="form-control" />
+                        <asp:TextBox runat="server" TabIndex="5" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="human-readable-url-input form-control" />
                     </div>
                 </div>
 			    <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-				        <asp:LinkButton ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success causesValidation" />
-				        <asp:LinkButton ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click"  Text="Save & close" CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="6" ID="RegularInsertUpdateButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateButton_Click" Text="Save" CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="7" ID="RegularInsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="RegularInsertUpdateCloseButton_Click"  Text="Save & close" CssClass="btn btn-success causesValidation" />
                     </div>
 			    </div>
 			</div>
