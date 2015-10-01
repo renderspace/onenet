@@ -43,6 +43,11 @@
         </asp:View>
         <asp:View ID="View3" runat="server">
             <div class="adminSection form-horizontal validationGroup">
+                <script>
+
+                window.TextBoxHumanReadableUrlClientId = '<%=TextBoxHumanReadableUrl.ClientID %>';
+
+                </script>
 			    <one:TextContentControl ID="TxtRegularContent" runat="server" HtmlRows="10" />
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>

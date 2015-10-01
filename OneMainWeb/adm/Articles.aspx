@@ -92,6 +92,13 @@
         <asp:View ID="View2" runat="server">
 
             <script type="text/javascript" charset="utf-8">
+
+                <% if (SelectedArticle != null && SelectedArticle.IsNew) { %>
+                window.AutoGenerateArticleParLinks = true;
+                <% } %>
+
+                window.TextBoxHumanReadableUrlClientId = '<%=TextBoxHumanReadableUrl.ClientID %>';
+
                 $(document).ready(function () {
                     $("#datetimepicker-article").datetimepicker({ format: 'MM/DD/YYYY H:mm' });
                 });
@@ -126,13 +133,13 @@
                         </div>
                     </div>
                 </div>
+                <one:TextContentControl ID="TextContentEditor" runat="server" />
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
                         <asp:TextBox runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="form-control" />
                     </div>
                 </div>
-                <one:TextContentControl ID="TextContentEditor" runat="server" />
 			    <div class="form-group">
                     <div class="col-sm-3">
 						<uc2:LastChangeAndHistory ID="LastChangeAndHistory1" runat="server" />

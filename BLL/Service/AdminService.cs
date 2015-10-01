@@ -18,12 +18,22 @@ namespace One.Net.BLL.Service
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     public class AdminService : IAdminService
     {
-
+        protected static BArticle articleB = new BArticle();
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
         public string Ping()
         {
             return "AdminService:" + Thread.CurrentPrincipal.Identity.Name;
+        }
+
+        public string GenerateArticleParLink(string title)
+        {
+            return articleB.GenerateHumanReadableArticleUrl(title);
+        }
+
+        public string GenerateRegularParLink(string title)
+        {
+            return articleB.GenerateHumanReadableRegularUrl(title);
         }
 
         public IEnumerable<DTOAuditItem> GetContentHistory(int contentId, int languageId)

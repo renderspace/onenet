@@ -52,5 +52,13 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ChangeContentTemplate")]
         [Description("bool ChangeContentTemplate(DTOContentTemplate contentTemplate)")]
         bool ChangeContentTemplate(DTOContentTemplate contentTemplate);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GenerateArticleParLink?title={title}")]
+        [Description("string GenerateArticleParLink(string title)")]
+        string GenerateArticleParLink(string title);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GenerateRegularParLink?title={title}")]
+        [Description("string GenerateRegularParLink(string title)")]
+        string GenerateRegularParLink(string title);
     }
 }

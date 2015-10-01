@@ -30,6 +30,50 @@ namespace One.Net.BLL
             ClearCache();
         }
 
+        public string GenerateHumanReadableArticleUrl(string title)
+        {
+            return GenerateHumanReadableArticleUrl(title, 0);
+        }
+
+        private string GenerateHumanReadableArticleUrl(string title, int postFix = 0)
+        {
+            var humanReadableUrlPart = "";
+
+            var urlPart = BWebsite.PrepareParLink(title);
+            if (postFix > 0)
+                urlPart += "-" + postFix;
+
+            var existingArticle = GetUnCachedArticle(urlPart, false);
+            if (existingArticle == null)
+                humanReadableUrlPart = urlPart;
+            else
+                humanReadableUrlPart = GenerateHumanReadableArticleUrl(title, (postFix + 1));
+
+            return humanReadableUrlPart;
+        }
+
+        public string GenerateHumanReadableRegularUrl(string title)
+        {
+            return GenerateHumanReadableRegularUrl(title, 0);
+        }
+
+        private string GenerateHumanReadableRegularUrl(string title, int postFix = 0)
+        {
+            var humanReadableUrlPart = "";
+
+            var urlPart = BWebsite.PrepareParLink(title);
+            if (postFix > 0)
+                urlPart += "-" + postFix;
+
+            var existingRegular = GetUnCachedRegular(urlPart);
+            if (existingRegular == null)
+                humanReadableUrlPart = urlPart;
+            else
+                humanReadableUrlPart = GenerateHumanReadableRegularUrl(title, (postFix + 1));
+
+            return humanReadableUrlPart;
+        }
+
         public int AutoCreateHumanReadableUrlArticles(bool autoGeneratePartialLink = true)
         {
             var regulars = new List<int>();

@@ -66,12 +66,13 @@ namespace OneMainWeb.adm
         {
             BORegular regular = new BORegular();
 
-            regular.HumanReadableUrl = string.IsNullOrEmpty(TextBoxHumanReadableUrl.Text) ? "" : TextBoxHumanReadableUrl.Text;
+            regular.HumanReadableUrl = articleB.GenerateHumanReadableRegularUrl(TextBoxRegular.Text);
             regular.Title = TextBoxRegular.Text;
             regular.SubTitle = regular.Teaser = regular.Html = "";
             regular.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             regular.ContentId = null;
             articleB.ChangeRegular(regular);
+
             RegularDataBind();
         }
 
