@@ -195,6 +195,61 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
     }
 }
 
+function generateArticleParLink(title) {
+
+    var parLink = "";
+    $(".loading").show();
+
+    if (title.length > 0) {
+        $.ajax({
+            url: "/AdminService/GenerateArticleParLink?title=" + title,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            async: false,
+            success: function (content) {
+
+                parLink = content;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+    } else {
+        setUpHtmlEditing(enableHtml, enableCk, "");
+    }
+
+    $(".loading").show();
+    return parLink;
+}
+
+function generateRegularParLink(title) {
+
+    var parLink = "";
+    $(".loading").show();
+
+    if (title.length > 0) {
+        $.ajax({
+            url: "/AdminService/GenerateRegularParLink?title=" + title,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            async: false,
+            success: function (content) {
+
+                parLink = content;
+            },
+            error: logError
+        });
+    } else {
+        setUpHtmlEditing(enableHtml, enableCk, "");
+    }
+
+    $(".loading").show();
+    return parLink;
+}
+
 function setUpHtmlEditing(enableHtml, enableCk, html) {
     trace("setUpHtmlEditing");
     $("#form-title").show();
@@ -807,6 +862,33 @@ $(document).ready(function () {
         }
     });
     trace("%cOne.NET DOM ready.", "color:green; background-color:yellow");
+
+    if (window.TextBoxHumanReadableUrlClientId && window.TextBoxHumanReadableUrlClientId.length > 0 && window.TextBoxTitleClientId && window.TextBoxTitleClientId.length > 0) {
+
+        var $textBoxHumanReadableUrl = $('#' + window.TextBoxHumanReadableUrlClientId);
+        var $textBoxTitle = $('#' + window.TextBoxTitleClientId);
+
+        if ($textBoxHumanReadableUrl.length > 0 &&
+            $textBoxTitle.length > 0 &&
+            $textBoxHumanReadableUrl.parent() && 
+            $textBoxTitle.parent() &&
+            $textBoxHumanReadableUrl.parent().parent() &&
+            $textBoxTitle.parent().parent()) {
+            var $textBoxHumanReadableUrlPanel = $('#' + window.TextBoxHumanReadableUrlClientId).parent().parent();
+            var $textBoxTitlePanel = $('#' + window.TextBoxTitleClientId).parent().parent();
+
+            $textBoxHumanReadableUrlPanel.detach().insertAfter($textBoxTitlePanel);
+
+            if (window.AutoGenerateArticleParLinks) {
+                $('#' + window.TextBoxTitleClientId).on('blur', function (e) {
+                    var title = $('#' + window.TextBoxTitleClientId).val();
+                    var parLink = generateArticleParLink(title);
+                    $('#' + window.TextBoxHumanReadableUrlClientId).val(parLink);
+                });
+            }
+        }
+    }
+
 });
 
 function Validate(evt) {

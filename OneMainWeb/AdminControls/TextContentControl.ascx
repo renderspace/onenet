@@ -1,6 +1,12 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TextContentControl.ascx.cs" Inherits="OneMainWeb.AdminControls.TextContentControl" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 
+<script>
+
+    window.TextBoxTitleClientId = '<%=TextBoxTitle.ClientID %>';
+
+</script>
+
 <asp:Panel CssClass="form-group" runat="server" ID="PanelTitle">
     <asp:Label AssociatedControlID="TextBoxTitle" ID="LabelTitle" Text="Title" runat="server" CssClass="col-sm-3 control-label"></asp:Label>
     <div class="col-sm-9">
