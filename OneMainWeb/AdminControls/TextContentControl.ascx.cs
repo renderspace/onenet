@@ -61,8 +61,20 @@ namespace OneMainWeb.AdminControls
             set { TextBoxHtml.Text = value; }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
+        [Bindable(true), Category("Data"), DefaultValue("")]
+        public short TabIndex
         {
+            get
+            {
+                return TextBoxTitle.TabIndex;
+            }
+            set
+            {
+                TextBoxTitle.TabIndex = (short)value;
+                TextBoxSubTitle.TabIndex = (short)(value + 1);
+                TextBoxTeaser.TabIndex = (short)(value + 2);
+                TextBoxHtml.TabIndex = (short)(value + 3);
+            }
         }
 
         protected override void Render(HtmlTextWriter writer)
@@ -92,16 +104,20 @@ namespace OneMainWeb.AdminControls
         {
             object[] cSThis = new object[2];
             object cSBase = base.SaveControlState();
+            
             cSThis[0] = cSBase;
             cSThis[1] = useCkEditor;
+
             return cSThis;
         }
 
         protected override void LoadControlState(object savedState)
         {
             object[] cSThis = (object[])savedState;
+            
             object cSBase = cSThis[0];
             useCkEditor = (bool)cSThis[1];
+            
             base.LoadControlState(cSBase);
         }
 
