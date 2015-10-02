@@ -84,6 +84,7 @@ namespace OneMainWeb.CommonModules
 
                     DivTeaserImage.Visible = true;
                     DivTeaserImage.InnerHtml = ThumbTemplate.RenderHtml(image.Alt, image.FullUri, image.CssClass);
+                    DivTeaserImage.Attributes.Add("data-full-size-image-uri", image.FullUri);
                 }
                 else if (DivTeaserImage != null)
                 {
