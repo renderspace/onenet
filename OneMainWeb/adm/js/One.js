@@ -340,7 +340,7 @@ function getContentTemplate(instanceId, templateId) {
                 });
 
             }
-            
+
         },
         error: logError
     });
@@ -488,11 +488,10 @@ $(document).ready(function () {
     $('.table-clickable-row tr td').on('click', function () {
         var $col = $(this).parent().children().index($(this));
         var $link = $(this).parent().children().find("a");
-        if ($col > 0 && $link.length === 1)
-        {
+        if ($col > 0 && $link.length === 1) {
             eval($($link[0]).attr('href'));
         }
-    });    
+    });
 
     $('#CheckBoxShowPath').change(function () {
         var selectedFolderId = $('#HiddenSelectedFolderId').val();
@@ -654,34 +653,54 @@ $(document).ready(function () {
         content['FileId'] = $(".j_control_file_id").val();
 
         $.ajax({
-            url: "/AdminService/ChangeContent",
-            data: JSON.stringify(content),
+            url: "/AdminService/ValidateHtml",
+            data: JSON.stringify(content['Html']),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             type: "POST",
-            success: function (data) {
-                if (data === true) {
-
-                    if ($saveButton.hasClass("modal-save-close")) {
-                        if (content['FileId'].length > 0) {
-                            $('#text-content-modal').modal('hide');
-                            $(".loading").hide();
-                        } else {
-
-                            var end = window.performance.now();
-                            trace('console.time ChangeContent done ' + (end - start));
-                            window.location.href = "/adm/structure.aspx";
-                        }
-                    } else {
-                        $(".modal-body").show();
-                        $(".modal-footer").show();
-                        $(".loading").hide();
-                    }
+            success: function (result) {
+                if (result !== "OK") {
+                    console.log(result);
+                    $(".modal-body .alert").remove();
+                    $(".modal-body").show();
+                    $(".modal-body").prepend('<div class="alert alert-warning" role="alert">' + result + '</div>');
+                    $(".modal-footer").show();
+                    $(".loading").hide();
                 }
                 else {
-                    logError(null, null, "error while saving - content not saved");
+                    $.ajax({
+                        url: "/AdminService/ChangeContent",
+                        data: JSON.stringify(content),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (data) {
+                            if (data === true) {
+                                if ($saveButton.hasClass("modal-save-close")) {
+                                    if (content['FileId'].length > 0) {
+                                        $('#text-content-modal').modal('hide');
+                                        $(".loading").hide();
+                                    } else {
+
+                                        var end = window.performance.now();
+                                        trace('console.time ChangeContent done ' + (end - start));
+                                        window.location.href = "/adm/structure.aspx";
+                                    }
+                                } else {
+                                    $(".modal-body").show();
+                                    $(".modal-footer").show();
+                                    $(".loading").hide();
+                                }
+                            }
+                            else {
+                                logError(null, null, "error while saving - content not saved");
+                            }
+                        }
+                    });
                 }
-            }
+                
+            },
+            error: logError
         });
     });
 
@@ -870,7 +889,7 @@ $(document).ready(function () {
 
         if ($textBoxHumanReadableUrl.length > 0 &&
             $textBoxTitle.length > 0 &&
-            $textBoxHumanReadableUrl.parent() && 
+            $textBoxHumanReadableUrl.parent() &&
             $textBoxTitle.parent() &&
             $textBoxHumanReadableUrl.parent().parent() &&
             $textBoxTitle.parent().parent()) {

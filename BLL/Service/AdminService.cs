@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using NLog;
 using System.ServiceModel;
+using One.Net.BLL.Utility;
 
 namespace One.Net.BLL.Service
 {
@@ -24,6 +25,49 @@ namespace One.Net.BLL.Service
         public string Ping()
         {
             return "AdminService:" + Thread.CurrentPrincipal.Identity.Name;
+        }
+
+        public string ValidateHtml(string html)
+        {
+            var ampersands = Validator.CheckForAmpersand(html);
+            var errors = new List<ValidatorError>();
+
+            Validator.CheckHtml(html, ref errors);
+            var hasErrors = errors.Count > 0;
+            var hasAmpersands = ampersands.Count > 0;
+            var ret = "";
+
+            if (hasErrors || hasAmpersands)
+            {
+                if (hasErrors)
+                    ret += "<h3>" + "Errors:" + "</h3><ul>";
+
+                foreach (var validatorError in errors)
+                {
+                    ret  += "<li>" + validatorError.Error;
+                    if (!string.IsNullOrEmpty(validatorError.Tag))
+                        ret  += "<span>" + validatorError.Tag + "</span>";
+                    ret  += "</li>";
+                }
+
+                if (hasErrors)
+                    ret += "</ul>";
+
+                if (hasAmpersands)
+                {
+                    ret  += "<h3>" + "ampersands" + "</h3><ul>";
+                    foreach (int i in ampersands)
+                    {
+                        ret += "<li>" + "position" + "<span>" + i + "</span></li>";
+                    }
+                    ret += "</ul>";
+                }
+            }
+            else 
+            {
+                ret = "OK";
+            }
+            return ret;
         }
 
         public string GenerateArticleParLink(string title)
