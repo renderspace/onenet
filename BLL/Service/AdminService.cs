@@ -46,7 +46,7 @@ namespace One.Net.BLL.Service
                 {
                     ret  += "<li>" + validatorError.Error;
                     if (!string.IsNullOrEmpty(validatorError.Tag))
-                        ret  += "<span>" + validatorError.Tag + "</span>";
+                        ret  += " <span>" + validatorError.Tag + "</span>";
                     ret  += "</li>";
                 }
 
