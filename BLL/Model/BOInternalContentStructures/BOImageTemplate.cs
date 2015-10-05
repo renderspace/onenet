@@ -12,6 +12,7 @@ namespace One.Net.BLL
     [Serializable]
     public class BOImageTemplate : BOTemplate
     {
+        // do not replace private fields with get/set!!
         private string bgColor;
 
         public string BgColor
