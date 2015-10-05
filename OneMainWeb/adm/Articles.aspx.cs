@@ -296,7 +296,7 @@ namespace OneMainWeb
                         {
                             Notifier1.Warning += "<li>" + validatorError.Error;
                             if (!string.IsNullOrEmpty(validatorError.Tag))
-                                Notifier1.Warning += "<span>" + validatorError.Tag + "</span>";
+                                Notifier1.Warning += " <span>" + validatorError.Tag + "</span>";
                             Notifier1.Warning += "</li>";
                         }
 
