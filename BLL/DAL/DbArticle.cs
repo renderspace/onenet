@@ -361,7 +361,10 @@ WHERE a2.publish = @publishFlag ";
 
             sql += @") [articles] ";
 
-            sql += " ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
+            if (!string.IsNullOrWhiteSpace(sortField))
+            {
+                sql += " ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
+            }
 
             sql += @";  SELECT *
 						FROM #pagedlist
@@ -431,7 +434,7 @@ WHERE a2.publish = @publishFlag ";
 				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url,
                                     ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished,
                                     ROW_NUMBER() OVER (";
-            if (state.SortField.Length > 1)
+            if (!string.IsNullOrWhiteSpace(state.SortField))
                 sql += "  ORDER BY " + state.SortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
             else
                 sql += " ORDER BY a.id";

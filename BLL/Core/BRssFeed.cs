@@ -230,7 +230,7 @@ namespace One.Net.BLL
             catch (Exception ex)
             {
                 return CreateErrorDocument("Exception loading RSS channel:'" + ex.Message + "'");
-                log.Error("loading RSS channel", ex);
+                log.Error(ex, "loading RSS channel");
             }
 
             return null;

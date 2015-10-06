@@ -298,6 +298,10 @@ namespace One.Net.BLL
             DateTime? from = null;
             DateTime? to = null;
 
+            var isRandomSort = state.SortField == "random";
+            var randomSortRecordsPerPage = state.RecordsPerPage.Value;
+            var randomSortFromRecord = state.DbFromRecordIndex;
+
             if (requestedMonth.HasValue)
             {
                 from = new DateTime(requestedMonth.Value.Year, requestedMonth.Value.Month, 1, 0, 0, 0);
@@ -314,25 +318,34 @@ namespace One.Net.BLL
             string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
             bool useCache = PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
-            
+
             if (useCache)
+            {
                 articles = cache.Get<PagedList<BOArticle>>(LIST_CACHE_ID);
+            }
 
             if (articles == null)
             {
+                if (isRandomSort)
+                {
+                    state.RecordsPerPage = 1000;
+                    state.SortField = "";
+                }
                 if (string.IsNullOrEmpty(titleSearch))
+                {
                     articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId);
+                }
                 else
                 {
                     articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds);
                 }
-
-                foreach (BOArticle article in articles)
+                if (!isRandomSort)
                 {
-
-                    article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
+                    foreach (BOArticle article in articles)
+                    {
+                        article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
+                    }
                 }
-
                 if (useCache)
                 {
                     lock (cacheLockingArticleList)
@@ -342,6 +355,14 @@ namespace One.Net.BLL
                             cache.Put(LIST_CACHE_ID, articles);
                     }
                 }
+            }
+            // if the sorting is random, the cache should contain a list of many articles, and we apply random sort and records per page here
+            if (isRandomSort)
+            {
+                var toReturn = articles.OrderBy(x => Guid.NewGuid()).Skip(randomSortFromRecord).Take(randomSortRecordsPerPage);
+                var temp = new PagedList<BOArticle>(toReturn);
+                temp.AllRecords = articles.AllRecords;
+                return temp;
             }
             return articles;
         }
