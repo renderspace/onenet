@@ -195,7 +195,7 @@
                 <%-- *************************************** Module instances ********************************************* --%>	
                 <asp:Panel runat="server" ID="PanelNoModuleInstances">
                     <br />
-                    <div class="alert alert-info" role="alert"><h4>There are not module instances on this page yet.</h4><p>Please use the dropdown above to add them.</p></div>
+                    <div class="alert alert-info" role="alert"><h4>There are no module instances on this page yet.</h4><p>Please use the dropdown above to add them.</p></div>
                 </asp:Panel>
 
                 <asp:Panel runat="server" ID="PanelHasInheritedModuleInstances">
