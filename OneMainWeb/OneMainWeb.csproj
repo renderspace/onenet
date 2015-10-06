@@ -792,6 +792,7 @@
     <None Include="One.Net.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\intranet.renderspace.si.pubxml" />
     <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
@@ -819,6 +820,9 @@
     <Content Include="site_specific\aspx_templates\demo.Master" />
     <Content Include="site_specific\_sass\demo.sass" />
     <Content Include="Utils\Favicon.ashx" />
+    <None Include="Web.intranet.renderspace.si.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
     <None Include="Web.prirocnik.renderspace.net.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

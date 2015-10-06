@@ -6,26 +6,18 @@ namespace One.Net.BLL
     [Serializable]
     public class PagedList<T> : List<T>
     {
-        private int currentPage;
-        private int allRecords;
-        private int recordsPerPage;
+        public int CurrentPage { get; set; }
 
-        public int CurrentPage
+        public int AllRecords { get; set; }
+
+        public int RecordsPerPage { get; set; }
+
+        public PagedList()
         {
-            get { return this.currentPage; }
-            set { this.currentPage = value; }
         }
 
-        public int AllRecords
+        public PagedList(IEnumerable<T> source) : base(source)
         {
-            get { return this.allRecords; }
-            set { this.allRecords = value; }
-        }
-
-        public int RecordsPerPage
-        {
-            get { return this.recordsPerPage; }
-            set { this.recordsPerPage = value; }
         }
         
         public new PagedList<T> GetRange(int index, int count)
