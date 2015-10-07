@@ -13,20 +13,20 @@ using One.Net.BLL;
 
 namespace OneMainWeb.Controls
 {
+    public enum WebSiteDisplayField
+    {
+        TwoLetterCode,
+        ThreeLetterCode,
+        NativeName,
+        EnglishName,
+        Custom,
+        None
+    }
+
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:LanguageSelector runat=server></{0}:LanguageSelector>")]
     public class LanguageSelector : WebControl
     {
-        public enum WebSiteDisplayField
-        {
-            TwoLetterCode,
-            ThreeLetterCode,
-            NativeName,
-            EnglishName,
-            Custom,
-            None
-        }
-
         public WebSiteDisplayField DisplayField { get; set; }
         public WebSiteDisplayField DisplayFieldCurrent { get; set; }
         public int Group { get; set; }
@@ -128,7 +128,7 @@ namespace OneMainWeb.Controls
             base.RenderContents(writer);
         }
 
-        private void RenderDisplayField(BOWebSite website, HtmlTextWriter writer, WebSiteDisplayField displayField)
+        internal static void RenderDisplayField(BOWebSite website, HtmlTextWriter writer, WebSiteDisplayField displayField)
         {
             switch (displayField)
             {
