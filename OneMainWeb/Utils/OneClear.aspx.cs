@@ -15,19 +15,27 @@ namespace OneMainWeb.Utils
         {
             var selectedWebSiteId = PresentBasePage.ReadWebSiteId();
 
-            var websiteB = new BWebsite();
-            var currentWebsite = websiteB.Get(selectedWebSiteId);
-
-            var publishFlag = PresentBasePage.ReadPublishFlag();
-
-            if (!publishFlag && !string.IsNullOrWhiteSpace(currentWebsite.PreviewUrl))
+            try
             {
-                Button1.Text = "Clear cache on preview";
+                var websiteB = new BWebsite();
+                var currentWebsite = websiteB.Get(selectedWebSiteId);
+
+                var publishFlag = PresentBasePage.ReadPublishFlag();
+
+                if (!publishFlag && !string.IsNullOrWhiteSpace(currentWebsite.PreviewUrl))
+                {
+                    Button1.Text = "Clear cache on preview";
+                }
+                if (publishFlag && !string.IsNullOrWhiteSpace(currentWebsite.ProductionUrl))
+                {
+                    Button1.Text = "Clear cache on production";
+                }
             }
-            if (publishFlag && !string.IsNullOrWhiteSpace(currentWebsite.ProductionUrl))
+            catch
             {
-                Button1.Text = "Clear cache on production";
+                Label1.Text = "Error occured, please check website id and language";
             }
+            
         }
 
         protected void Button1_Click(object sender, EventArgs e)

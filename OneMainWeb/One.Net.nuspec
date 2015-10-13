@@ -79,6 +79,7 @@
       <file src="Web.sitemap" target="content\Web.sitemap" />
       <file src="bin\One.Net.BLL.dll" target="lib\net45" />
       <file src="bin\OneMainWeb.dll" target="lib\net45" />
+	  <file src="bin\Forms.dll" target="lib\net45" />
       <file src="gitignore.template" target="content" />
       <file src="Web.config" target="content" />
       <file src="LocalRewrite.config" target="content" />      
