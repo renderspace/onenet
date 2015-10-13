@@ -11,20 +11,25 @@ namespace OneMainWeb.Utils
         {
             if (!IsPostBack)
             {
-                var selectedWebSiteId = PresentBasePage.ReadWebSiteId();
-
-                var websiteB = new BWebsite();
-                var currentWebsite = websiteB.Get(selectedWebSiteId);
-
-                if (!string.IsNullOrWhiteSpace(currentWebsite.PreviewUrl))
+                try
                 {
-                    try
+                    var selectedWebSiteId = PresentBasePage.ReadWebSiteId();
+
+                    var websiteB = new BWebsite();
+                    var currentWebsite = websiteB.Get(selectedWebSiteId);
+
+                    if (!string.IsNullOrWhiteSpace(currentWebsite.PreviewUrl))
                     {
-                        Uri baseUri = new Uri(currentWebsite.PreviewUrl);
-                        Uri admUri = new Uri(baseUri, "adm/Structure.aspx");
-                        LiteralCms.Text = "<a href=\"" + admUri.ToString() + "\">Back to CMS..</a>";
+                    
+                            Uri baseUri = new Uri(currentWebsite.PreviewUrl);
+                            Uri admUri = new Uri(baseUri, "adm/Structure.aspx");
+                            LiteralCms.Text = "<a href=\"" + admUri.ToString() + "\">Back to CMS..</a>";
+                    
                     }
-                    catch { }
+                }
+                catch 
+                {
+                    LiteralCms.Text = "Error occured, please check website id and language";
                 }
             }
         }
