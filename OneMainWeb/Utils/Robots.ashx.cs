@@ -20,7 +20,6 @@ namespace OneMainWeb.Utils
             if (publishFlag)
             {
                 context.Response.Write(@"User-agent: *
-Sitemap: /sitemap.xml
 Disallow: /adm/
 Disallow: /Account/
 Allow: /");
