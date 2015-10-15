@@ -53,6 +53,12 @@ namespace OneMainWeb.CommonModules
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
                 originalArticle = articleB.GetArticle(articleId);
+                /*
+                if (originalArticle != null && !string.IsNullOrWhiteSpace(originalArticle.HumanReadableUrl) && Request["redirect"] == null)
+                {
+                    var redirectTo = new UrlBuilder(Page);
+                    redirectTo.QueryString["redirect"] = "1";
+                }*/
             } 
             else if (HasHumanReadableUrlParameter)
             {

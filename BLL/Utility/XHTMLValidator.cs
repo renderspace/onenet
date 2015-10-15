@@ -13,21 +13,6 @@ namespace One.Net.BLL.Utility
 
     public static class Validator
     {
-        public static List<int> CheckForAmpersand (string html)
-        {
-            var regex = @"&(?!(\w+|\#\d+);)";
-
-            var finder = new Regex(regex, RegexOptions.IgnoreCase);
-            var matches = finder.Matches(html);
-            var results = new List<int>();
-            foreach (Match m in matches)
-            {
-                results.Add(m.Index);
-            }
-            return results;
-        }
-
-
         /// <summary>
         /// Whether the HTML is likely valid. Error paremeter will be empty
         /// if no errors were found.
@@ -91,7 +76,7 @@ namespace One.Net.BLL.Utility
                         {
                             if (!isSolo)
                             {
-                                error.Add(new ValidatorError { Error = "Solo tag should be solo.", Tag = tag });
+                                // error.Add(new ValidatorError { Error = "Solo tag should be solo.", Tag = tag });
                                 return;
                             }
                         }
