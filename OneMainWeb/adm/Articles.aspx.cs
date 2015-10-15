@@ -271,26 +271,21 @@ namespace OneMainWeb
                 }
                 else
                 {
-                    var ampersands = Validator.CheckForAmpersand(TextContentEditor.Html);
                     var errors = new List<ValidatorError>();
 
                     Validator.CheckHtml(TextContentEditor.Html, ref errors);
                     var hasErrors = errors.Count > 0;
-                    var hasAmpersands = ampersands.Count > 0;
 
-                    if (!hasErrors && !hasAmpersands)
+                    if (!hasErrors)
                     {
-                        ampersands = Validator.CheckForAmpersand(TextContentEditor.Teaser);
-
                         Validator.CheckHtml(TextContentEditor.Teaser, ref errors);
                         hasErrors = errors.Count > 0;
-                        hasAmpersands = ampersands.Count > 0;
                     }
 
-                    if (hasErrors || hasAmpersands)
+                    if (hasErrors)
                     {
                         if (hasErrors)
-                            Notifier1.Warning += "<h3>" + "Errors:" + "</h3><ul>";
+                            Notifier1.Warning += "<h3>" + "Warning:" + "</h3><ul>";
 
                         foreach (var validatorError in errors)
                         {
@@ -302,16 +297,6 @@ namespace OneMainWeb
 
                         if (hasErrors)
                             Notifier1.Warning += "</ul>";
-
-                        if (hasAmpersands)
-                        {
-                            Notifier1.Warning += "<h3>" + "ampersands" + "</h3><ul>";
-                            foreach (int i in ampersands)
-                            {
-                                Notifier1.Warning += "<li>" + "position" + "<span>" + i + "</span></li>";
-                            }
-                            Notifier1.Warning += "</ul>";
-                        }
                     }
                     else
                     {

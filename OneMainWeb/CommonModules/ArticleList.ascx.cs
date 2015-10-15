@@ -33,13 +33,21 @@ namespace OneMainWeb.CommonModules
             {
                 List<int> result = GetIntegerListSetting("CategoriesList");
 
-                if (result.Count == 0 && HasHumanReadableUrlParameter)
+                if (Request["regid"] != null)
+                {
+                    var categoriesFilter = FormatTool.GetInteger(Request["regid"]);
+                    if (result.Contains(categoriesFilter))
+                    {
+                        result.Clear();
+                        result.Add(categoriesFilter);
+                    }
+                }
+                else if (result.Count == 0 && HasHumanReadableUrlParameter)
                 {
                     var regular = articleB.GetRegular(HumanReadableUrlParameter);
                     if (regular != null)
                         result.Add(regular.Id.Value);
                 }
-
                 return result;
             } 
         }
