@@ -63,7 +63,7 @@
                     </div>
                     <div class="navbar-collapse collapse sidebar-navbar-collapse">
 				
-				      <Controls:MenuGroup ID="LeftNavig" runat="server" LocalExpand="true" MinDepth="2" MaxDepth="3" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
+				      <Controls:MenuGroup ID="LeftNavig" runat="server" LocalExpand="true" MinDepth="2" MaxDepth="4" Group="0" ExpandToLevel="2" FirstUlClass="nav navbar-nav" CssClass="" />		
 
                     </div><!--/.nav-collapse -->
                   </div>
