@@ -50,7 +50,7 @@ namespace OneMainWeb.CommonModules
             MenuGroup1.FirstUlClass = FirstUlClass;
             MenuGroup1.CssClass = CssClass;
             MenuGroup1.ShowDescription = ShowDescription;
-            if (LeadImageTemplate != null)
+            if (LeadImageTemplate != null && LeadImageTemplate.Id.HasValue)
             {
                 MenuGroup1.LeadImageTemplateId = LeadImageTemplate.Id.Value;
             }
