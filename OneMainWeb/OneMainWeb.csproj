@@ -795,7 +795,6 @@
     </None>
     <None Include="Properties\PublishProfiles\intranet.renderspace.si.pubxml" />
     <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
-    <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <Content Include="site_specific\aspx_templates\demo.aspx" />
     <Content Include="site_specific\ck.css" />
     <Content Include="site_specific\ckstyles.js" />
@@ -897,11 +896,8 @@
     <Content Include="adm\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
-    <None Include="Properties\PublishProfiles\Disk.pubxml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\Tartar2-ZRSZ2-test.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
