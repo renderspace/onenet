@@ -183,11 +183,12 @@ namespace OneMainWeb.AdminControls
                                 if (setting.Options.ContainsKey(setting.Value))
                                     DropDownList1.SelectedValue = setting.Value;
                             }
-                            if (string.IsNullOrWhiteSpace(DropDownList1.SelectedValue))
-                                DropDownList1.ForeColor = Color.Red;
+                            
 
                             LabelHiddenInfo.Text = setting.Value;
                             DropDownList1.DataBind();
+                            if (string.IsNullOrWhiteSpace(DropDownList1.SelectedValue))
+                                DropDownList1.Attributes.Add("style", "background-color: #FF8485");
                         } 
                         else
                         {

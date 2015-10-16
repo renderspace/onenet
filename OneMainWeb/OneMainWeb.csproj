@@ -818,7 +818,6 @@
     <Content Include="Utils\SiteMapHandler.ashx" />
     <Content Include="Utils\Robots.ashx" />
     <Content Include="site_specific\aspx_templates\demo.Master" />
-    <Content Include="site_specific\_sass\demo.sass" />
     <Content Include="Utils\Favicon.ashx" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
