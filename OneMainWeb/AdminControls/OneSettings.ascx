@@ -16,7 +16,6 @@
             </asp:Panel> 
             <asp:Panel runat="server" CssClass="form-group" ID="PanelInput">
                 <label class="col-sm-3 control-label"><%# ((KeyValuePair<string, BOSetting>)Container.DataItem).Value.Name %> </label>
-                    
                 <div class="col-sm-9">
                     <asp:TextBox ID="TextBox1" runat="server"   CssClass="form-control" ValidationGroup="ModuleInstanceSettings" Visible="false" />
                     <asp:Label  runat="server" ID="LabelValue" Visible="false"></asp:Label>
@@ -26,13 +25,7 @@
                         <p class="imageFileUploadStatus"><asp:FileUpload runat="server"  CssClass="imageFileUploadWithPreview" ID="FileUploadFromSettings" />
                             <asp:Literal runat="server" ID="LiteralFileDisplay"></asp:Literal>
                         </p>
-                        
-                        <script>
-                            
-                        </script>
-
                     </asp:Panel>
-
                 </div>
                 </asp:Panel>       
         </ItemTemplate>
