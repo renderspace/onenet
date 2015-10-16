@@ -111,7 +111,7 @@ namespace OneMainWeb.Controls
 
                             writer.AddAttribute(HtmlTextWriterAttribute.Class, cssClass);
                             writer.RenderBeginTag("li");
-
+                            writer.AddAttribute("hreflang", website.Language.TwoLetterISOLanguageName);
                             writer.AddAttribute(HtmlTextWriterAttribute.Href, websiteUri);
                             writer.AddAttribute(HtmlTextWriterAttribute.Title, website.Title);
                             writer.RenderBeginTag("a");
