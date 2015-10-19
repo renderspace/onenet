@@ -1138,6 +1138,7 @@ namespace One.Net.BLL
                 }
                 if (template != null)
                 {
+                    template.Id = id;
                     lock (cacheLockingTemplatesList)
                     {
                         var temp = cache.Get<BOTemplate>("Template_" + id);
