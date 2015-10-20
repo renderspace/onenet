@@ -795,14 +795,14 @@
     </None>
     <None Include="Properties\PublishProfiles\intranet.renderspace.si.pubxml" />
     <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
-    <Content Include="site_specific\aspx_templates\demo.aspx" />
-    <Content Include="site_specific\ck.css" />
-    <Content Include="site_specific\ckstyles.js" />
+    <Content Include="SiteDefault\aspx_templates\demo.aspx" />
+    <Content Include="SiteDefault\ck.css" />
+    <Content Include="SiteDefault\ckstyles.js" />
     <Content Include="site_specific\custom_modules\Form.ascx" />
     <Content Include="site_specific\custom_modules\FormSelector.ascx" />
-    <Content Include="site_specific\_css\default.html" />
-    <Content Include="site_specific\_js\default.html" />
-    <Content Include="site_specific\_js\Forms.js" />
+    <Content Include="SiteDefault\_css\default.html" />
+    <Content Include="SiteDefault\_js\default.html" />
+    <Content Include="SiteDefault\_js\Forms.js" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\OneClear.aspx" />
     <Content Include="Utils\TestException.aspx" />
@@ -817,7 +817,7 @@
     <Content Include="Utils\VirtualTable.ashx" />
     <Content Include="Utils\SiteMapHandler.ashx" />
     <Content Include="Utils\Robots.ashx" />
-    <Content Include="site_specific\aspx_templates\demo.Master" />
+    <Content Include="SiteDefault\aspx_templates\demo.Master" />
     <Content Include="Utils\Favicon.ashx" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
