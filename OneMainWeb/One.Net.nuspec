@@ -79,7 +79,7 @@
       <file src="bin\OneMainWeb.dll" target="lib\net45" />
 	    <file src="bin\Forms.dll" target="lib\net45" />
       <file src="gitignore.template" target="content\SiteDefault" />
-      <file src="Web.config" target="content" />
+      <file src="Web.config" target="content\SiteDefault" />
       <file src="LocalRewrite.config" target="content\SiteDefault" />      
     </files>
 </package>
