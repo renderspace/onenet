@@ -63,6 +63,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="forms, Version=3.1.0.3, Culture=en-US, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Forms.3.1.0.4\lib\net45\forms.dll</HintPath>
+    </Reference>
     <Reference Include="Kentor.OwinCookieSaver, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Kentor.OwinCookieSaver.1.0.2\lib\net45\Kentor.OwinCookieSaver.dll</HintPath>
@@ -467,6 +471,7 @@
     <Content Include="adm\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="adm\Forms.aspx" />
     <Content Include="adm\images\drag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -742,6 +747,8 @@
     <Content Include="Res\objavljeno.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="adm\ExcelExport.ashx" />
+    <Content Include="LocalRewrite.config" />
     <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -900,6 +907,7 @@
     <Folder Include="AdminExtensions\" />
     <Folder Include="adm\ashx\" />
     <Folder Include="App_GlobalResources\" />
+    <Folder Include="site_specific\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
