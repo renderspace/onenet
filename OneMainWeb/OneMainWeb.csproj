@@ -21,8 +21,7 @@
     <TargetFrameworkProfile />
     <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <BuildPackage>false</BuildPackage>
+    <BuildPackage>true</BuildPackage>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -947,9 +946,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
+	<PostBuildEvent></PostBuildEvent>
+	<!--
     <PostBuildEvent>"$(SolutionDir).nuget\nuget.exe" pack "$(SolutionDir)OneMainWeb\One.Net.nuspec" -OutputDirectory $(SolutionDir)
 "$(SolutionDir).nuget\nuget.exe" pack "$(SolutionDir)OneMainWeb\One.Net.library.nuspec" -OutputDirectory $(SolutionDir)</PostBuildEvent>
+	-->
   </PropertyGroup>
 </Project>
