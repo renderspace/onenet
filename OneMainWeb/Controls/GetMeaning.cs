@@ -85,7 +85,7 @@ namespace OneMainWeb.Controls
                     }
                     else
                     {
-                        output.Write(meaning.Html.Trim());
+                        output.Write(meaning.Html.Trim().Replace("\n", "").Replace("\r", ""));
                     }
                 }
                     

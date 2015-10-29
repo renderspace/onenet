@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.0.58</version>
+        <version>3.0.59</version>
         <title>One.NET</title>
         <authors>samof</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -74,12 +74,13 @@
 
       <file src="Global.asax" target="content\Global.asax" />
       <file src="OneMain.Master" target="content\OneMain.Master" />
-      <file src="Web.sitemap" target="content\Web.sitemap" />
+      
       <file src="bin\One.Net.BLL.dll" target="lib\net45" />
       <file src="bin\OneMainWeb.dll" target="lib\net45" />
 	    <file src="bin\Forms.dll" target="lib\net45" />
       <file src="gitignore.template" target="content\SiteDefault" />
       <file src="Web.config" target="content\SiteDefault" />
-      <file src="LocalRewrite.config" target="content\SiteDefault" />      
+      <file src="LocalRewrite.config" target="content\SiteDefault" />
+      <file src="Web.sitemap" target="content\SiteDefault" />
     </files>
 </package>

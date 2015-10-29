@@ -62,9 +62,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="forms, Version=3.1.0.3, Culture=en-US, processorArchitecture=MSIL">
+    <Reference Include="forms, Version=3.1.0.5, Culture=en-US, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Forms.3.1.0.4\lib\net45\forms.dll</HintPath>
+      <HintPath>..\packages\Forms.3.1.0.5\lib\net45\forms.dll</HintPath>
     </Reference>
     <Reference Include="Kentor.OwinCookieSaver, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -493,6 +493,8 @@
     </Content>
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
+    <Content Include="CommonModules\Form.ascx" />
+    <Content Include="CommonModules\FormSelector.ascx" />
     <Content Include="CommonModules\MagnificGallery.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />
@@ -745,8 +747,8 @@
     <Content Include="Res\objavljeno.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="adm\ExcelExport.ashx" />
     <Content Include="LocalRewrite.config" />
+    <Content Include="adm\ExcelExport.ashx" />
     <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -797,8 +799,6 @@
     <Content Include="SiteDefault\aspx_templates\demo.aspx" />
     <Content Include="SiteDefault\ck.css" />
     <Content Include="SiteDefault\ckstyles.js" />
-    <Content Include="CommonModules\Form.ascx" />
-    <Content Include="CommonModules\FormSelector.ascx" />
     <Content Include="SiteDefault\_css\default.html" />
     <Content Include="SiteDefault\_js\default.html" />
     <Content Include="SiteDefault\_js\Forms.js" />
@@ -948,9 +948,7 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
-    <!--
     <PostBuildEvent>"$(SolutionDir).nuget\nuget.exe" pack "$(SolutionDir)OneMainWeb\One.Net.nuspec" -OutputDirectory $(SolutionDir)
 "$(SolutionDir).nuget\nuget.exe" pack "$(SolutionDir)OneMainWeb\One.Net.library.nuspec" -OutputDirectory $(SolutionDir)</PostBuildEvent>
-	-->
   </PropertyGroup>
 </Project>
