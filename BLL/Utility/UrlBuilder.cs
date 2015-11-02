@@ -132,6 +132,12 @@ namespace One.Net.BLL.Utility
             HttpContext.Current.Response.Redirect(uri, endResponse);
         }
 
+        public void RedirectPermanent()
+        {
+            string uri = this.ToString();
+            HttpContext.Current.Response.RedirectPermanent(uri, true);
+        }
+
         /// <summary>
         /// Format options:
         ///	"e" is the default and returns the string encoded using the specified encoder, or the default encoder if none specified.
