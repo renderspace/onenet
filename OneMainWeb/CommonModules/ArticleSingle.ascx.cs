@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {
@@ -53,12 +54,16 @@ namespace OneMainWeb.CommonModules
             {
                 int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
                 originalArticle = articleB.GetArticle(articleId);
-                /*
-                if (originalArticle != null && !string.IsNullOrWhiteSpace(originalArticle.HumanReadableUrl) && Request["redirect"] == null)
+                if (originalArticle != null && !string.IsNullOrWhiteSpace(originalArticle.HumanReadableUrl))
                 {
                     var redirectTo = new UrlBuilder(Page);
-                    redirectTo.QueryString["redirect"] = "1";
-                }*/
+                    if (redirectTo.Path.Trim('/').Contains("/"))
+                    {
+                        redirectTo.QueryString.Remove(REQUEST_ARTICLE_ID);
+                        redirectTo.Path = redirectTo.Path.Substring(0, redirectTo.Path.LastIndexOf("/") + 1).Trim('/') + "/" + originalArticle.HumanReadableUrl;
+                        redirectTo.RedirectPermanent();
+                    }
+                }
             } 
             else if (HasHumanReadableUrlParameter)
             {
