@@ -307,6 +307,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                     Thread.CurrentThread.CurrentCulture.Name + " page" + CurrentPage.Id + " depth" + CurrentPage.Level +
                     " " + CurrentPage.parentPagesSimpleList + " " + (Page.User != null && Page.User.Identity != null && Page.User.Identity.IsAuthenticated ? "isAuth" : "notAuth") + " T" + (CurrentPage.Template != null ? CurrentPage.Template.Name : ""));
 
+                if (CurrentPage.Settings.ContainsKey("ExtraCssClass") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["ExtraCssClass"].Value))
+                {
+                    Form.Attributes["class"] += " " + CurrentPage.Settings["ExtraCssClass"].Value;
+                }
+
                 log.Debug("-OnInit (load ModuleInstances)");
 
                 Dictionary<int, ContentPlaceHolder> contentPlaceHolders = new Dictionary<int, ContentPlaceHolder>(10);
