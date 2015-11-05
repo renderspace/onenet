@@ -50,25 +50,51 @@ namespace One.Net.BLL.DAL
 
         public void ChangeArticle(BOArticle article)
         {
-            SqlParameter[] paramsToPass = new SqlParameter[6];
-            paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id); 
-            paramsToPass[0].Direction = ParameterDirection.InputOutput;
-            paramsToPass[0].SqlDbType = SqlDbType.Int;
+            if (article == null)
+                return;
 
+            if (!article.Id.HasValue || article.Id.Value < 1)
+            { 
+                var idParam = new SqlParameter();
+                idParam.ParameterName = "@sequence_id";
+                idParam.Value = 0;
+                idParam.Direction = ParameterDirection.Output;
+                SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[nextval]", new SqlParameter("@sequence", "articles"), idParam);
+                article.Id = (int) idParam.Value;
+                if (article.Id.Value < 1)
+                    throw new Exception("Database returned negative next id for articles");
+            }
+
+            var exists = ((int) SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain,
+                CommandType.Text, 
+                "SELECT count(*) FROM [dbo].[article] WHERE id=@id AND publish=@publishFlag", 
+                new SqlParameter("@id", article.Id.Value), 
+                new SqlParameter("@publishFlag", article.PublishFlag) )
+                ) > 0;
+
+            SqlParameter[] paramsToPass = new SqlParameter[7];
+            paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id);
             paramsToPass[1] = new SqlParameter("@publishFlag", article.PublishFlag);
             paramsToPass[2] = new SqlParameter("@changed", article.IsChanged);
             paramsToPass[3] = new SqlParameter("@contentId", article.ContentId.Value);
             paramsToPass[4] = new SqlParameter("@markedForDeletion", article.MarkedForDeletion);
             paramsToPass[5] = new SqlParameter("@displayDate", article.DisplayDate);
+            paramsToPass[6] = new SqlParameter("@hru", article.HumanReadableUrl);
 
-            string sql = @"[dbo].[ChangeArticle]";
+            var sql = "";
+            if (exists)
+            {
+                sql = @"UPDATE [dbo].[article]
+			                    SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@hru 
+			                    WHERE id=@id AND publish=@publishFlag";
+            }
+            else
+            {
+                sql = @"INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url)
+			                VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @hru)";
+            }
 
-            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, sql, paramsToPass);
-
-            article.Id = Int32.Parse(paramsToPass[0].Value.ToString());
-
-            sql = "UPDATE article SET human_readable_url = @hru WHERE id = @articleId";
-            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, new SqlParameter("@hru", article.HumanReadableUrl), new SqlParameter("@articleId", article.Id.Value));
+            SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
 
             paramsToPass = new SqlParameter[2];
             paramsToPass[0] = new SqlParameter("@articleId", article.Id.Value);
