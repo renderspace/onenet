@@ -822,6 +822,7 @@
     <Content Include="SiteDefault\aspx_templates\demo.Master" />
     <Content Include="Utils\Favicon.ashx" />
     <Content Include="Utils\BambooCsvExport.ashx" />
+    <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
