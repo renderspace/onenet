@@ -231,42 +231,6 @@ AS
 GO
 
 
-CREATE PROCEDURE [dbo].[ChangeArticle]
-	@publishFlag bit,
-	@changed bit,
-	@contentId int,
-	@markedForDeletion bit,
-	@displayDate datetime,
-	@id int=null output
-AS
-
-	IF ( @id is null )
-	BEGIN
-		EXEC [dbo].[nextval] 'articles', @id out		
-
-		INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
-		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
-	END
-	ELSE
-	BEGIN
-		DECLARE @Exists int
-		SELECT @Exists = count(*) FROM [dbo].[article] WHERE id=@id AND publish=@publishFlag
-
-		IF ( @Exists = 0 )
-		BEGIN
-			INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date)
-			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate)
-		END
-		ELSE
-		BEGIN
-			UPDATE [dbo].[article]
-			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate
-			WHERE id=@id AND publish=@publishFlag
-		END
-	END
-
-GO
-
 CREATE PROC [dbo].[GetMenu_acc_Path]
 (
      @CurrentNodeID int,

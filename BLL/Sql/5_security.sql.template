@@ -54,7 +54,7 @@ GRANT EXECUTE ON Acc_CharList2Table TO [One.Net.BackEnd]
 GRANT EXECUTE ON ChangeEvent TO [One.Net.BackEnd]  
 GRANT EXECUTE ON email_modify TO [One.Net.BackEnd]  
 GRANT EXECUTE ON newsletter_subscription_get TO [One.Net.BackEnd]  
-GRANT EXECUTE ON ChangeArticle TO [One.Net.BackEnd]  
+
 GRANT EXECUTE ON GetMenu_acc_Path TO [One.Net.BackEnd]  
 GRANT EXECUTE ON GetMenu_acc_Hierarchy TO [One.Net.BackEnd]  
 GRANT EXECUTE ON GetMenu TO [One.Net.BackEnd]  
