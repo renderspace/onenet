@@ -667,6 +667,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\BambooCsvExport.ashx.cs">
+      <DependentUpon>BambooCsvExport.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\BambooExcelExport.ashx.cs">
       <DependentUpon>BambooExcelExport.ashx</DependentUpon>
     </Compile>
@@ -818,6 +821,7 @@
     <Content Include="Utils\Robots.ashx" />
     <Content Include="SiteDefault\aspx_templates\demo.Master" />
     <Content Include="Utils\Favicon.ashx" />
+    <Content Include="Utils\BambooCsvExport.ashx" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
