@@ -19,11 +19,13 @@
                 <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID" CssClass="required digits "></asp:TextBox>
                 <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" CssClass="btn btn-info causesValidation" />
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-2">
                 <asp:LinkButton ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="Export to Excel" CssClass="btn btn-info" />
 			 </div>
+			<div class="col-md-2">
+                <asp:LinkButton ID="ButtonExportToCsv" runat="server" onclick="ButtonExportToCsv_Click" Text="Export to Csv" CssClass="btn btn-info" />
+			 </div>
         </div>
-
 
         <asp:GridView ID="GridViewItems" runat="server" AllowSorting="True"  CssClass="table table-hover table-clickable-row"
             AutoGenerateColumns="false" 
