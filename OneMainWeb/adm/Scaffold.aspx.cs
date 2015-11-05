@@ -249,6 +249,11 @@ namespace OneMainWeb.adm
             Response.Redirect("/Utils/BambooExcelExport.ashx?virtualTableId=" + VirtualTableId);
         }
 
+        protected void ButtonExportToCsv_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Utils/BambooCsvExport.ashx?virtualTableId=" + VirtualTableId);
+        }
+
         private void ProcessCustomBoundFieldsInGridViewItems(Action action)
         {
             var deletedCount = 0;
