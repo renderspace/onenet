@@ -72,7 +72,7 @@ namespace OneMainWeb.Utils
                 context.Response.Buffer = true;
                 context.Response.ContentType = "text/csv";
                 context.Response.AddHeader("Content-Disposition", "attachment; filename=\"VirtualTable" + virtualTableId + "-" + DateTime.Now.ToShortDateString() + ".csv\";");
-                context.Response.ContentEncoding = Encoding.UTF32;
+                context.Response.ContentEncoding = Encoding.UTF8;
                 context.Response.Charset = "";
                 context.Response.Write(sb.ToString());
             }
