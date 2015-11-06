@@ -1245,8 +1245,15 @@ namespace One.Net.BLL
 
         public static DataTable ListAvailibleModules(HttpContext context)
         {
+            var customModulesPath = context.Server.MapPath("~/site_specific/custom_modules");
+            var hasCustomModules = Directory.Exists(customModulesPath);
+            if (!hasCustomModules)
+            {
+                throw new Exception("Missing folder ~/site_specific/custom_modules");
+            }
+
             var coreModules = BFileSystem.ListPhysicalFolder(context.Server.MapPath("~/CommonModules/"), context.Server.MapPath("~/")).Where(fi => fi.Extension == ".ascx");
-            var customModules = BFileSystem.ListPhysicalFolder(context.Server.MapPath("~/site_specific/custom_modules"), context.Server.MapPath("~/")).Where(fi => fi.Extension != null && fi.Extension == ".ascx");
+            var customModules = BFileSystem.ListPhysicalFolder(customModulesPath, context.Server.MapPath("~/")).Where(fi => fi.Extension != null && fi.Extension == ".ascx");
 
             var diskModules = coreModules.Concat(customModules).ToList();
             var databaseModules = ListModules(true).OrderByDescending(m => m.NoUnpublishedInstances);
