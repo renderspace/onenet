@@ -9,5 +9,6 @@
       CustomCollectFiles;
       ;
     </CopyAllFilesToSingleFolderForMsdeployDependsOn>
+    <AutoParameterizationWebConfigConnectionStrings>false</AutoParameterizationWebConfigConnectionStrings>
   </PropertyGroup>
 </Project>

@@ -124,6 +124,8 @@ namespace OneMainWeb
     {
         // Used for XSRF when linking external logins
         public const string XsrfKey = "XsrfId";
+        public const string CodeKey = "code";
+        public const string UserIdKey = "userId";
 
         public static void SignIn(UserManager manager, OneNetUser user, bool isPersistent)
         {
@@ -159,6 +161,12 @@ namespace OneMainWeb
             {
                 response.Redirect("~/");
             }
+        }
+
+        public static string GetResetPasswordRedirectUrl(string code, string userId, HttpRequest request)
+        {
+            var absoluteUri = "/Account/RecoverPassword.aspx?" + CodeKey + "=" + HttpUtility.UrlEncode(code) + "&" + UserIdKey + "=" + HttpUtility.UrlEncode(userId);
+            return new Uri(request.Url, absoluteUri).AbsoluteUri.ToString();
         }
     }
 }
