@@ -49,6 +49,10 @@
                     <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register</asp:HyperLink>
                     if you don't have a local account.
                 </p>
+                <p>
+                    <asp:HyperLink runat="server" ID="RecoverPasswordHyperLink" ViewStateMode="Disabled">Forgotten password?</asp:HyperLink>
+                    recover your password if you have lost it.
+                </p>
             </section>
         </div>
 
