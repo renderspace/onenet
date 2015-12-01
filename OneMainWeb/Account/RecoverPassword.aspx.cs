@@ -2,6 +2,8 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
+
 using System;
 using System.Linq;
 using System.Web;
@@ -38,6 +40,7 @@ namespace OneMainWeb.Account
             if (IsValid)
             {
                 var manager = new UserManager();
+                var provider = new DpapiDataProtectionProvider("OneMainWeb");
                 var user = manager.FindByEmail(Email.Text);
 
                 if (user != null)
@@ -47,7 +50,11 @@ namespace OneMainWeb.Account
                     var code = manager.GeneratePasswordResetToken(user.Id);
 
                     string callbackUrl = IdentityHelper.GetResetPasswordRedirectUrl(code, user.Id, Request);
+                    Response.Write(callbackUrl);
                     manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+
+                    FailureText.Text = "Email sent!";
+                    ErrorMessage.Visible = true;
                 }
                 else
                 {
@@ -73,7 +80,7 @@ namespace OneMainWeb.Account
 
                     manager.ResetPassword(user.Id, Token, newPassword);
                     manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
-                    MultiView1.ActiveViewIndex = 1;
+                    MultiView1.ActiveViewIndex = 2;
                 }
                 else
                 {

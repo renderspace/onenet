@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using System.Web.ModelBinding;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.AspNet.Identity.Owin;
+using System.Net.Mail;
 
 namespace OneMainWeb.Models
 {
@@ -114,6 +117,8 @@ namespace OneMainWeb.Models
     {
         public UserManager() : base(new UserStore<OneNetUser>(new ApplicationDbContext())) 
         {
+            var dataProtectionProvider = Startup.DataProtectionProvider;
+            this.UserTokenProvider = new DataProtectorTokenProvider<OneNetUser>(dataProtectionProvider.Create("ASP.NET Identity"));
         }
     }
 }
