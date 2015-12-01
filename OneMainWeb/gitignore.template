@@ -51,25 +51,6 @@ packages/
 
 *.nupkg
 
-#LocalAppSettings.config
-#LocalConnectionStrings.config
-#LocalRewriteMaps.config
-#LocalRewrite.config
-
-Account
-adm
-AdminControls
-App_Browsers
-App_GlobalResources
-App_Start
-Base
-CommonModules
-Controls
-JavaScript
-Models
-Res
-Utils
-
 node_modules
 .sass-cache
 *.log
