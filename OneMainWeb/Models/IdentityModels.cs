@@ -128,14 +128,15 @@ namespace OneMainWeb.Models
         public async Task SendAsync(IdentityMessage message)
         {
             // convert IdentityMessage to a MailMessage
-            var email = new MailMessage();
-            email.Subject = message.Subject;
-            email.Body = message.Body;
-            email.To.Add(message.Destination);
+            var m = new MailMessage();
+            m.Subject = message.Subject;
+            m.Body = message.Body;
+            m.To.Add(message.Destination);
+            m.IsBodyHtml = true;
 
             using (var client = new SmtpClient()) // SmtpClient configuration comes from config file
             {
-                await client.SendMailAsync(email);
+                await client.SendMailAsync(m);
             }
         }
     }
