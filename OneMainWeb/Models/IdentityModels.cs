@@ -119,11 +119,11 @@ namespace OneMainWeb.Models
         {
             var dataProtectionProvider = Startup.DataProtectionProvider;
             this.UserTokenProvider = new DataProtectorTokenProvider<OneNetUser>(dataProtectionProvider.Create("ASP.NET Identity"));
-            this.EmailService = new EmailService();
+            this.EmailService = new OneNetEmailService();
         }
     }
 
-    public class EmailService : IIdentityMessageService
+    public class OneNetEmailService : IIdentityMessageService
     {
         public async Task SendAsync(IdentityMessage message)
         {
