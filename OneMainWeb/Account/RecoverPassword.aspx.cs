@@ -45,7 +45,6 @@ namespace OneMainWeb.Account
             if (IsValid)
             {
                 var manager = new UserManager();
-                var provider = new DpapiDataProtectionProvider("OneMainWeb");
                 var user = manager.FindByEmail(EmailTextBox.Text);
 
                 if (user != null)
@@ -56,9 +55,20 @@ namespace OneMainWeb.Account
 
                     string callbackUrl = IdentityHelper.GetResetPasswordRedirectUrl(code, user.Id, Request);
 
-                    manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+                    var success = true;
+                    try
+                    {
+                        manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
+                    }
+                    catch (SmtpException ex)
+                    {
+                        FailureLiteral.Text = "Failed to send email. SMTP exception thrown. Exception error:" + ex.Message;
+                        PlaceHolderErrorMessage.Visible = true;
+                        success = false;
+                    }
 
-                    MultiView1.ActiveViewIndex = 1;
+                    if (success)
+                        MultiView1.ActiveViewIndex = 1;
                 }
                 else
                 {
@@ -95,7 +105,15 @@ namespace OneMainWeb.Account
                     }
                     else
                     {
-                        manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
+                        try
+                        {
+                            manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
+                        }
+                        catch (SmtpException ex)
+                        {
+                            // don't really want to do anything here, because we are only sending out an email to let the user know that their password was reset ok.
+                        }
+
                         MultiView1.ActiveViewIndex = 3;
                     }
                 }
