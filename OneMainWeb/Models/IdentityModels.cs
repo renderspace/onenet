@@ -119,6 +119,24 @@ namespace OneMainWeb.Models
         {
             var dataProtectionProvider = Startup.DataProtectionProvider;
             this.UserTokenProvider = new DataProtectorTokenProvider<OneNetUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+            this.EmailService = new EmailService();
+        }
+    }
+
+    public class EmailService : IIdentityMessageService
+    {
+        public async Task SendAsync(IdentityMessage message)
+        {
+            // convert IdentityMessage to a MailMessage
+            var email = new MailMessage();
+            email.Subject = message.Subject;
+            email.Body = message.Body;
+            email.To.Add(message.Destination);
+
+            using (var client = new SmtpClient()) // SmtpClient configuration comes from config file
+            {
+                await client.SendMailAsync(email);
+            }
         }
     }
 }
