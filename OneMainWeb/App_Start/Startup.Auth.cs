@@ -8,6 +8,7 @@ using System;
 using System.Configuration;
 using System.Reflection;
 using System.Web.Hosting;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace OneMainWeb
 {
@@ -27,11 +28,13 @@ namespace OneMainWeb
             log.Info("OnApplyRedirect");
         }
 
-        
+        internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301883
         public void ConfigureAuth(IAppBuilder app)
         {
+            DataProtectionProvider = app.GetDataProtectionProvider();
+
             app.UseKentorOwinCookieSaver();
 
 
