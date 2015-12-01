@@ -3,6 +3,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Net.Mail;
 
 using System;
 using System.Linq;
@@ -21,15 +24,17 @@ namespace OneMainWeb.Account
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                if (Request[IdentityHelper.CodeKey] != null)
-                    Token = Request[IdentityHelper.CodeKey];
-                if (Request[IdentityHelper.UserIdKey] != null)
-                    UserId = Request[IdentityHelper.UserIdKey];
+            if (Request[IdentityHelper.CodeKey] != null)
+                Token = Request[IdentityHelper.CodeKey];
+            if (Request[IdentityHelper.UserIdKey] != null)
+                UserId = Request[IdentityHelper.UserIdKey];
 
+            LoginHyperLink.NavigateUrl = "Login.aspx?ReturnUrl=" + HttpUtility.UrlEncode("/adm");
+
+            if (!IsPostBack) 
+            {
                 if (!string.IsNullOrEmpty(Token) && !string.IsNullOrEmpty(UserId))
-                    MultiView1.ActiveViewIndex = 1;
+                    MultiView1.ActiveViewIndex = 2;
                 else
                     MultiView1.ActiveViewIndex = 0;
             }
@@ -41,26 +46,25 @@ namespace OneMainWeb.Account
             {
                 var manager = new UserManager();
                 var provider = new DpapiDataProtectionProvider("OneMainWeb");
-                var user = manager.FindByEmail(Email.Text);
+                var user = manager.FindByEmail(EmailTextBox.Text);
 
                 if (user != null)
                 {
-                    log.Info("Recover password request.. " + Email.Text);
+                    log.Info("Recover password request.. " + EmailTextBox.Text);
 
                     var code = manager.GeneratePasswordResetToken(user.Id);
 
                     string callbackUrl = IdentityHelper.GetResetPasswordRedirectUrl(code, user.Id, Request);
-                    Response.Write(callbackUrl);
+
                     manager.SendEmail(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
-                    FailureText.Text = "Email sent!";
-                    ErrorMessage.Visible = true;
+                    MultiView1.ActiveViewIndex = 1;
                 }
                 else
                 {
-                    log.Info("Invalid email. " + Email.Text);
-                    FailureText.Text = "Invalid email.";
-                    ErrorMessage.Visible = true;
+                    log.Info("Invalid email. " + EmailTextBox.Text);
+                    FailureLiteral.Text = "Invalid email.";
+                    PlaceHolderErrorMessage.Visible = true;
                 }
             }
         }
@@ -76,17 +80,30 @@ namespace OneMainWeb.Account
                 {
                     log.Info("Reset password request... UserId:" + UserId);
 
-                    var newPassword = NewPassword.Text;
+                    var newPassword = NewPasswordTextBox.Text;
 
-                    manager.ResetPassword(user.Id, Token, newPassword);
-                    manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
-                    MultiView1.ActiveViewIndex = 2;
+                    var result = manager.ResetPassword(user.Id, Token, newPassword);
+
+                    if (result.Errors.Count() > 0)
+                    {
+                        FailureLiteral2.Text = "Reset failed. Please correct the following errors before proceeding:<br />";
+                        foreach (var error in result.Errors)
+                        {
+                             FailureLiteral2.Text += error + "<br />";
+                        }
+                        PlaceHolderErrorMessage2.Visible = true;
+                    }
+                    else
+                    {
+                        manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
+                        MultiView1.ActiveViewIndex = 3;
+                    }
                 }
                 else
                 {
                     log.Info("Invalid email for reset attempt. UserId" + UserId);
-                    FailureText.Text = "Invalid user.";
-                    ErrorMessage.Visible = true;
+                    FailureLiteral2.Text = "Invalid user.";
+                    PlaceHolderErrorMessage2.Visible = true;
                 }
             }
         }
