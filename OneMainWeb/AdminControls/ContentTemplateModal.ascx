@@ -11,6 +11,11 @@
                 <h4 class="modal-title" id="myModalLabel2"><%= Title %></h4>
             </div>
             <div class="modal-body form-horizontal">
+                <div class="form-group sessionTimeoutError" style="display:none">
+                    <p class="alert alert-danger col-sm-10 col-sm-offset-1">
+                        Your session has timed out. Please copy your text to a texteditor and relogin to one.net.
+                    </p>
+                </div>
                 <input type="hidden" class="j_control_content_template_instance_id" />
                 <input type="hidden" class="j_control_template_id" />
                 <input type="hidden" class="j_control_principal" value="<%=Thread.CurrentPrincipal.Identity.Name %>" />

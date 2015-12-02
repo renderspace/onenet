@@ -1,3 +1,11 @@
+function handleAjaxError(XMLHttpRequest, textStatus, errorThrown) {
+    if (XMLHttpRequest.responseText.indexOf("Access is denied") > -1) {
+        $('.sessionTimeoutError').show();
+    }
+    $(".loading").hide();
+    logError(XMLHttpRequest, textStatus, errorThrown);
+}
+
 function trace(msg, style) {
     if (typeof (tracing) === 'undefined' || (tracing !== true)) {
         return;
@@ -15,11 +23,12 @@ function logError(XMLHttpRequest, textStatus, errorThrown) {
     var errorToLog = "textStatus: " + textStatus + " errorThrown: " + errorThrown;
     trace(errorToLog);
     trace(XMLHttpRequest);
-    bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
+    if (XMLHttpRequest.responseText.indexOf("Access is denied") == -1) {
+        bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
+    }
     if (typeof (ga) !== 'undefined') {
         ga('send', 'event', 'JS logError', 'error', errorToLog);
     }
-
 }
 
 function GetUrlParam(paramName) {
@@ -81,7 +90,7 @@ function getTree(callback) {
         dataType: 'json',
         type: "GET",
         success: callback,
-        error: logError
+        error: handleAjaxError
     });
 };
 
@@ -159,7 +168,7 @@ function files_databind(selectedFolderId) {
                 $('.fileManagerDeleteButtons').show();
             }
         },
-        error: logError
+        error: handleAjaxError
     });
 };
 
@@ -188,7 +197,7 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
 
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
             },
-            error: logError
+            error: handleAjaxError
         });
     } else {
         setUpHtmlEditing(enableHtml, enableCk, "");
@@ -211,10 +220,7 @@ function generateArticleParLink(title) {
 
                 parLink = content;
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
+            error: handleAjaxError
         });
     } else {
         setUpHtmlEditing(enableHtml, enableCk, "");
@@ -240,7 +246,7 @@ function generateRegularParLink(title) {
 
                 parLink = content;
             },
-            error: logError
+            error: handleAjaxError
         });
     } else {
         setUpHtmlEditing(enableHtml, enableCk, "");
@@ -342,7 +348,7 @@ function getContentTemplate(instanceId, templateId) {
             }
 
         },
-        error: logError
+        error: handleAjaxError
     });
 
     $.ajax({
@@ -376,7 +382,7 @@ function getContentTemplate(instanceId, templateId) {
             $(".modal-footer .btn-success").show();
 
         },
-        error: logError
+        error: handleAjaxError
     });
 
     $(".loading").hide();
@@ -627,8 +633,7 @@ $(document).ready(function () {
         var start = window.performance.now();
 
         $(".loading").show();
-        $(".modal-body").hide();
-        $(".modal-footer").hide();
+
         $('#text-content-modal').modal('show');
 
         var $saveButton = $(this);
@@ -659,6 +664,10 @@ $(document).ready(function () {
             dataType: 'json',
             type: "POST",
             success: function (result) {
+
+                $(".modal-body").hide();
+                $(".modal-footer").hide();
+
                 if (result !== "OK") {
                     console.log(result);
                     $(".modal-body .alert").remove();
@@ -695,12 +704,13 @@ $(document).ready(function () {
                             else {
                                 logError(null, null, "error while saving - content not saved");
                             }
-                        }
+                        },
+                        error: handleAjaxError
                     });
                 }
                 
             },
-            error: logError
+            error: handleAjaxError
         });
     });
 
@@ -754,11 +764,7 @@ $(document).ready(function () {
                         trace("data:" + data);
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    trace(xhr.status);
-                    trace(xhr.responseText);
-                    trace(thrownError);
-                }
+                error: handleAjaxError
             });
         }
     });
@@ -827,7 +833,7 @@ $(document).ready(function () {
                     getContent(data.ContentId, languageId, false, false);
                     $(".j_control_file").empty().append(data.Icon);
                 },
-                error: logError
+                error: handleAjaxError
             });
         } else if (contentId > 0) {
             $(".j_control_file").empty();
@@ -861,7 +867,7 @@ $(document).ready(function () {
                     $('.modal-body').show();
                     $('.modal-footer').show();
                 },
-                error: logError
+                error: handleAjaxError
             });
         }
     });
@@ -982,7 +988,7 @@ function populateForeignKeyOptions(virtualTableId, v, whenSelected) {
                 });
             }
         },
-        error: function () { alert("OneToMany"); }
+        error: handleAjaxError
     });
 }
 
@@ -1036,7 +1042,7 @@ function loadAllToManyRelationships() {
                             '" data-target="#to-many-modal" data-toggle="modal" data-backdrop="false" data-keyboard="true" class="btn btn-info">' +
                             '<span class="glyphicon glyphicon-plus"></span> Add</a>');
                 },
-                error: logError
+                error: handleAjaxError
             });
         }
     });
@@ -1154,7 +1160,8 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     $(v.InputId + " input").val(v.Value);
                 }
             });
-        }
+        },
+        error: handleAjaxError
     });
 });
 
@@ -1255,6 +1262,6 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
                 trace(data);
             }
         },
-        error: logError
+        error: handleAjaxError
     });
 });
