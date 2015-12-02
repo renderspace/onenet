@@ -13,6 +13,12 @@
                 <input type="hidden" class="j_control_content_id" />
                 <input type="hidden" class="j_control_file_id" />
                 
+                <div class="form-group sessionTimeoutError" style="display:none">
+                    <p class="alert alert-danger col-sm-10 col-sm-offset-1">
+                        Your session has timed out. Please copy your text to a texteditor and relogin to one.net.
+                    </p>
+                </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Language</label> 
                     <div class="col-sm-3">
