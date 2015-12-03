@@ -22,6 +22,7 @@ namespace One.Net.BLL
                 if (app.Context == null) return;
 
                 var redirect = BRedirects.Find(app.Context.Request.RawUrl);
+
                 if ( redirect != null)
                 {
                     if (!string.IsNullOrEmpty(redirect.ToLink))
