@@ -86,8 +86,8 @@ namespace One.Net.BLL
         {
             var redirect = new BORedirect();
             redirect.Id = (int)reader["id"];
-            redirect.FromLink = (string)reader["from_link"];
-            redirect.ToLink = (string)reader["to_link"];
+            redirect.FromLink = ((string)reader["from_link"]).TrimEnd('/');
+            redirect.ToLink = ((string)reader["to_link"]).TrimEnd('/');
             redirect.IsShortener = (bool)reader["is_shortener"];
             redirect.Created = (DateTime)reader["created"];
             return redirect;
