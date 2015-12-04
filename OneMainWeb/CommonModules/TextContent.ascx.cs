@@ -21,6 +21,9 @@ namespace OneMainWeb.CommonModules
         private static readonly BTextContent textContentB = new BTextContent();
         BOInternalContent textContent;
 
+        [Setting(SettingType.String, DefaultValue = "false")]
+        public bool TitleDisplayAsH1 { get { return GetBooleanSetting("TitleDisplayAsH1"); } }
+
         [Setting(SettingType.ImageTemplate, DefaultValue = "-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
@@ -56,20 +59,36 @@ namespace OneMainWeb.CommonModules
             {
                 if (textContent.Title.Length > 0)
                 {
-                    output.WriteBeginTag("h2");
+                    if (TitleDisplayAsH1)
+                        output.WriteBeginTag("h1");
+                    else
+                        output.WriteBeginTag("h2");
+
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContent.Title);
-                    output.WriteEndTag("h1");
+                    
+                    if (TitleDisplayAsH1)
+                        output.WriteEndTag("h1");
+                    else
+                        output.WriteEndTag("h2");
                 }
 
                 if (textContent.SubTitle.Length > 0)
                 {
-                    output.WriteBeginTag("h3");
+                    if (TitleDisplayAsH1)
+                        output.WriteBeginTag("h2");
+                    else
+                        output.WriteBeginTag("h3");
+
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContent.SubTitle);
-                    output.WriteEndTag("h2");
+
+                    if (TitleDisplayAsH1)
+                        output.WriteEndTag("h2");
+                    else
+                        output.WriteEndTag("h3");
                 }
 
                 if (textContent.Teaser.Length > 0)
