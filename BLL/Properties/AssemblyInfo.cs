@@ -18,5 +18,5 @@ using System.Security;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("3.2.4")]
+[assembly: AssemblyVersion("3.2.5")]
 [assembly: AssemblyKeyName("")]
