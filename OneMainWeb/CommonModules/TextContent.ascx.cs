@@ -21,8 +21,8 @@ namespace OneMainWeb.CommonModules
         private static readonly BTextContent textContentB = new BTextContent();
         BOInternalContent textContent;
 
-        [Setting(SettingType.String, DefaultValue = "false")]
-        public bool TitleDisplayAsH1 { get { return GetBooleanSetting("TitleDisplayAsH1"); } }
+        [Setting(SettingType.String, DefaultValue = "true")]
+        public bool TitleDisplayAsH2 { get { return GetBooleanSetting("TitleDisplayAsH2"); } }
 
         [Setting(SettingType.ImageTemplate, DefaultValue = "-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
@@ -59,36 +59,36 @@ namespace OneMainWeb.CommonModules
             {
                 if (textContent.Title.Length > 0)
                 {
-                    if (TitleDisplayAsH1)
-                        output.WriteBeginTag("h1");
-                    else
+                    if (TitleDisplayAsH2)
                         output.WriteBeginTag("h2");
+                    else
+                        output.WriteBeginTag("h1");
 
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContent.Title);
                     
-                    if (TitleDisplayAsH1)
-                        output.WriteEndTag("h1");
-                    else
+                    if (TitleDisplayAsH2)
                         output.WriteEndTag("h2");
+                    else
+                        output.WriteEndTag("h1");
                 }
 
                 if (textContent.SubTitle.Length > 0)
                 {
-                    if (TitleDisplayAsH1)
-                        output.WriteBeginTag("h2");
-                    else
+                    if (TitleDisplayAsH2)
                         output.WriteBeginTag("h3");
+                    else
+                        output.WriteBeginTag("h2");
 
                     output.WriteAttribute("class", "st");
                     output.Write(HtmlTextWriter.TagRightChar);
                     output.Write(textContent.SubTitle);
 
-                    if (TitleDisplayAsH1)
-                        output.WriteEndTag("h2");
-                    else
+                    if (TitleDisplayAsH2)
                         output.WriteEndTag("h3");
+                    else
+                        output.WriteEndTag("h2");
                 }
 
                 if (textContent.Teaser.Length > 0)
