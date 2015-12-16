@@ -21,7 +21,7 @@ namespace OneMainWeb.CommonModules
         private static readonly BTextContent textContentB = new BTextContent();
         BOInternalContent textContent;
 
-        [Setting(SettingType.String, DefaultValue = "true")]
+        [Setting(SettingType.Bool, DefaultValue = "true")]
         public bool TitleDisplayAsH2 { get { return GetBooleanSetting("TitleDisplayAsH2"); } }
 
         [Setting(SettingType.ImageTemplate, DefaultValue = "-1")]
