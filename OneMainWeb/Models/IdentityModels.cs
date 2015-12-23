@@ -13,6 +13,8 @@ using System.Web.ModelBinding;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.AspNet.Identity.Owin;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace OneMainWeb.Models
 {
@@ -120,6 +122,7 @@ namespace OneMainWeb.Models
             var dataProtectionProvider = Startup.DataProtectionProvider;
             this.UserTokenProvider = new DataProtectorTokenProvider<OneNetUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             this.EmailService = new OneNetEmailService();
+            this.PasswordHasher = new SqlPasswordHasher();
         }
     }
 
@@ -191,6 +194,92 @@ namespace OneMainWeb
         {
             var absoluteUri = "/Account/RecoverPassword.aspx?" + CodeKey + "=" + HttpUtility.UrlEncode(code) + "&" + UserIdKey + "=" + HttpUtility.UrlEncode(userId);
             return new Uri(request.Url, absoluteUri).AbsoluteUri.ToString();
+        }
+    }
+
+    /// <summary>
+    /// This class is used for transitioning from legacy membership provider code to new identity system provider
+    /// when migrating passwords from aspnet_Users table to AspNetUsers table.
+    /// </summary>
+    public class SqlPasswordHasher : PasswordHasher
+    {
+        public override string HashPassword(string password)
+        {
+            return base.HashPassword(password);
+        }
+
+        public override PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
+        {
+            string[] passwordProperties = hashedPassword.Split('|');
+            if (passwordProperties.Length != 3)
+            {
+                return base.VerifyHashedPassword(hashedPassword, providedPassword);
+            }
+            else
+            {
+                string passwordHash = passwordProperties[0];
+                int passwordformat = 1;
+                string salt = passwordProperties[2];
+                if (String.Equals(EncryptPassword(providedPassword, passwordformat, salt), passwordHash, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return PasswordVerificationResult.SuccessRehashNeeded;
+                }
+                else
+                {
+                    return PasswordVerificationResult.Failed;
+                }
+            }
+        }
+
+        // This is copied from the existing SQL providers and is provided only for back-compat.
+        private string EncryptPassword(string pass, int passwordFormat, string salt)
+        {
+            if (passwordFormat == 0) // MembershipPasswordFormat.Clear
+                return pass;
+
+            byte[] bIn = Encoding.Unicode.GetBytes(pass);
+            byte[] bSalt = Convert.FromBase64String(salt);
+            byte[] bRet = null;
+
+            if (passwordFormat == 1)
+            { // MembershipPasswordFormat.Hashed 
+                HashAlgorithm hm = HashAlgorithm.Create("SHA1");
+                if (hm is KeyedHashAlgorithm)
+                {
+                    KeyedHashAlgorithm kha = (KeyedHashAlgorithm)hm;
+                    if (kha.Key.Length == bSalt.Length)
+                    {
+                        kha.Key = bSalt;
+                    }
+                    else if (kha.Key.Length < bSalt.Length)
+                    {
+                        byte[] bKey = new byte[kha.Key.Length];
+                        Buffer.BlockCopy(bSalt, 0, bKey, 0, bKey.Length);
+                        kha.Key = bKey;
+                    }
+                    else
+                    {
+                        byte[] bKey = new byte[kha.Key.Length];
+                        for (int iter = 0; iter < bKey.Length; )
+                        {
+                            int len = Math.Min(bSalt.Length, bKey.Length - iter);
+                            Buffer.BlockCopy(bSalt, 0, bKey, iter, len);
+                            iter += len;
+                        }
+                        kha.Key = bKey;
+                    }
+                    bRet = kha.ComputeHash(bIn);
+                }
+                else
+                {
+                    byte[] bAll = new byte[bSalt.Length + bIn.Length];
+                    Buffer.BlockCopy(bSalt, 0, bAll, 0, bSalt.Length);
+                    Buffer.BlockCopy(bIn, 0, bAll, bSalt.Length, bIn.Length);
+                    bRet = hm.ComputeHash(bAll);
+                }
+            }
+
+            return Convert.ToBase64String(bRet);
         }
     }
 }
