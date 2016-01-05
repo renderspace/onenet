@@ -163,9 +163,11 @@ function files_databind(selectedFolderId) {
                 });
             });
 
+            $('.fileManagerDeleteButtons').show();
             if (data.length > 0) {
                 $('#files-table thead').show();
-                $('.fileManagerDeleteButtons').show();
+            } else {
+                $('.fileManagerDeleteButtons #ButtonDelete').hide();
             }
         },
         error: handleAjaxError

@@ -212,7 +212,7 @@
                     <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" ClientIDMode="Static" OnClick="ButtonDelete_Click" />
                 </div>
                 <div class="col-sm-6">
-                    <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger deleteAll pull-right"/>
+                    <asp:LinkButton OnClick="CmdRecursiveDelete_Click" id="CmdRecursiveDelete" runat="server" Text="<span class='glyphicon glyphicon-trash'></span> Delete folder" CssClass="btn btn-danger deleteAll pull-right" data-placement="left"/>
                     <span style="color: #ff0000; padding: 10px;" class="pull-right">DANGER!!!</span> 
                 </div>
             </div>
