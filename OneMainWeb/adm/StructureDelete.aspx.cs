@@ -5,24 +5,62 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Threading;
 
 namespace OneMainWeb.adm
 {
     public partial class StructureDelete : OneBasePage
     {
         BWebsite websiteB = new BWebsite();
-
-        private List<BOWebSite> Websites
-        {
-            get { return ViewState["Websites"] != null ? ViewState["Websites"] as List<BOWebSite> : null; }
-            set { ViewState["Websites"] = value; }
-        }
+        BOPage SelectedPage { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SelectedWebsite_ValidateDataBind();
+            TreeView2_DataBind();
+
             if (!IsPostBack)
             {
-                TreeView2_DataBind();
+
+            }
+        }
+
+        protected void ResetAllControlsToDefault(string message)
+        {
+            SelectedPageId = 0;
+            TreeView2.Nodes.Clear();
+            TreeView2.DataBind();
+        }
+        
+        protected void SelectedWebsite_ValidateDataBind()
+        {
+            // WEBSITE
+            if (SelectedWebsite == null)
+            {
+                ResetAllControlsToDefault("You don't have permissions for any site or there are no websites defined in database.");
+                return;
+            }
+            // ROOT PAGE
+            RootNodeID = websiteB.GetRootPageId(SelectedWebSiteId);
+            if (!RootNodeID.HasValue)
+            {
+                ResetAllControlsToDefault("Website doesn't have a root page.");
+                return;
+            }
+            // SELECTED PAGE
+            if (SelectedPageId < 1)
+                SelectedPageId = RootNodeID.Value;
+
+            SelectedPage = websiteB.GetPage(SelectedPageId);
+            if (SelectedPage == null || SelectedPage.WebSiteId != SelectedWebSiteId || SelectedPage.LanguageId != Thread.CurrentThread.CurrentCulture.LCID)
+            {
+                ResetAllControlsToDefault("Please select a page on the left;");
+                return;
+            }
+            if (!SelectedPage.IsEditabledByCurrentPrincipal)
+            {
+                ResetAllControlsToDefault("You do not have the rights to edit this page. Please select another page on the left.");
+                return;
             }
         }
 

@@ -1,7 +1,7 @@
-﻿<%@ Page Title="One.NET delete" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="StructureDelete.aspx.cs" Inherits="OneMainWeb.adm.StructureDelete" %>
+﻿<%@ Page Title="One.NET delete" Language="C#" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="StructureDelete.aspx.cs" Inherits="OneMainWeb.adm.StructureDelete" EnableEventValidation="false" ValidateRequest="false" %>
+<%@ OutputCache Location="None" VaryByParam="None" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="Head" runat="server">
-</asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <one:Notifier runat="server" ID="notifier" />
     <div class="tabl">
