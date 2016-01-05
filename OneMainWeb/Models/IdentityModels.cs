@@ -210,25 +210,29 @@ namespace OneMainWeb
 
         public override PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
-            string[] passwordProperties = hashedPassword.Split('|');
-            if (passwordProperties.Length != 3)
+            if (!string.IsNullOrEmpty(hashedPassword) && !string.IsNullOrEmpty(providedPassword))
             {
-                return base.VerifyHashedPassword(hashedPassword, providedPassword);
-            }
-            else
-            {
-                string passwordHash = passwordProperties[0];
-                int passwordformat = 1;
-                string salt = passwordProperties[2];
-                if (String.Equals(EncryptPassword(providedPassword, passwordformat, salt), passwordHash, StringComparison.CurrentCultureIgnoreCase))
+                string[] passwordProperties = hashedPassword.Split('|');
+                if (passwordProperties.Length != 3)
                 {
-                    return PasswordVerificationResult.SuccessRehashNeeded;
+                    return base.VerifyHashedPassword(hashedPassword, providedPassword);
                 }
                 else
                 {
-                    return PasswordVerificationResult.Failed;
+                    string passwordHash = passwordProperties[0];
+                    int passwordformat = 1;
+                    string salt = passwordProperties[2];
+                    if (String.Equals(EncryptPassword(providedPassword, passwordformat, salt), passwordHash, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        return PasswordVerificationResult.SuccessRehashNeeded;
+                    }
+                    else
+                    {
+                        return PasswordVerificationResult.Failed;
+                    }
                 }
             }
+            return PasswordVerificationResult.Failed;
         }
 
         // This is copied from the existing SQL providers and is provided only for back-compat.
