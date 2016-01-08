@@ -814,12 +814,6 @@
     <Content Include="SiteDefault\_css\default.html" />
     <Content Include="SiteDefault\_js\default.html" />
     <Content Include="SiteDefault\_js\Forms.js" />
-    <Content Include="site_specific\aspx_templates\demo.aspx" />
-    <Content Include="site_specific\ck.css" />
-    <Content Include="site_specific\ckstyles.js" />
-    <Content Include="site_specific\_css\default.html" />
-    <Content Include="site_specific\_js\default.html" />
-    <Content Include="site_specific\_js\Forms.js" />
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\OneClear.aspx" />
     <Content Include="Utils\TestException.aspx" />
@@ -838,7 +832,6 @@
     <Content Include="Utils\Favicon.ashx" />
     <Content Include="Utils\BambooCsvExport.ashx" />
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
-    <Content Include="site_specific\aspx_templates\demo.Master" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
