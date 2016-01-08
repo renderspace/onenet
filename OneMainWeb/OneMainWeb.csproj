@@ -52,9 +52,8 @@
     <Reference Include="AdaptedCSSFriendly">
       <HintPath>..\packages\AdaptedCSSFriendly.1.0.1\lib\net40\AdaptedCSSFriendly.dll</HintPath>
     </Reference>
-    <Reference Include="CKFinder, Version=2.0.0.945, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CKFinder.library.1.1.0.0\lib\net45\CKFinder.dll</HintPath>
+    <Reference Include="CKFinder">
+      <HintPath>..\packages\CKFinder.library.1.4.0.0\lib\net45\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -807,7 +806,6 @@
     <None Include="One.Net.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\intranet.renderspace.si.pubxml" />
     <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
     <Content Include="SiteDefault\aspx_templates\demo.aspx" />
@@ -841,6 +839,7 @@
     <Content Include="Utils\BambooCsvExport.ashx" />
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <Content Include="site_specific\aspx_templates\demo.Master" />
+    <None Include="Properties\PublishProfiles\to_file.pubxml" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
