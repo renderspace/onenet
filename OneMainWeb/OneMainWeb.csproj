@@ -839,7 +839,6 @@
     <Content Include="Utils\BambooCsvExport.ashx" />
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <Content Include="site_specific\aspx_templates\demo.Master" />
-    <None Include="Properties\PublishProfiles\to_file.pubxml" />
     <None Include="Web.intranet.renderspace.si.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
