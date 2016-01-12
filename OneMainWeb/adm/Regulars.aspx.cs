@@ -140,7 +140,7 @@ namespace OneMainWeb.adm
                 SelectedRegular.HumanReadableUrl = TextBoxHumanReadableUrl.Text;
 
                 articleB.ChangeRegular(SelectedRegular);
-
+                RegularDataBind();
                 Notifier1.Message = "Saved";
 
                 if (close)
