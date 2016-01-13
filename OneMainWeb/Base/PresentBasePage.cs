@@ -527,7 +527,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
         protected void RenderLanguage()
         {
-            var html = this.Page.Master.FindControl("html") as HtmlGenericControl;
+            var html = this.Page.Master.FindControl("html") as HtmlControl;
             if (html == null)
                 throw new Exception("Please add or replace <html> tag on all Master templates with this one: <html runat=\"server\" id=\"html\">. Also check if tag is properly closed.");
             html.Attributes.Add("lang", Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
