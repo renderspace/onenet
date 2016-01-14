@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using OneMainWeb.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using NLog;
 using One.Net.BLL;
 
@@ -13,15 +15,10 @@ namespace OneMainWeb.adm
 {
     public partial class Users : OneBasePage
     {
-
         protected string SelectedUser
         {
-            get 
-            {
-                if (GridViewUsers.SelectedValue == null)
-                    return "";
-                return GridViewUsers.SelectedValue.ToString(); 
-            }
+            get;
+            set;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -67,8 +64,10 @@ namespace OneMainWeb.adm
 
         protected void GridViewUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(SelectedUser))
+            if (GridViewUsers.SelectedValue != null)
             {
+                SelectedUser = GridViewUsers.SelectedValue.ToString();
+                     
                 User_DataBind();
                 MultiView1.ActiveViewIndex = 1;
             }
@@ -82,6 +81,8 @@ namespace OneMainWeb.adm
                     Users_DataBind();
                     break;
                 case 1:
+                    break;
+                case 2:
                     break;
             }
 
@@ -107,9 +108,50 @@ namespace OneMainWeb.adm
             }
         }
 
+        protected void ButtonAddUser_Click(object sender, EventArgs e)
+        {
+            var publishFlag = PresentBasePage.ReadPublishFlag();
+
+            if (!publishFlag)
+            {
+                MultiView1.ActiveViewIndex = 2;
+            }
+        }
+
+        protected void ButtonSaveUser_Click(object sender, EventArgs e)
+        {
+            var manager = new UserManager();
+
+            var user = new OneNetUser()
+            {
+                UserName = TextBoxUsername.Text,
+                Email = TextBoxEmail.Text
+            };
+
+            IdentityResult result = manager.Create(user, TextBoxPassword.Text);
+
+            if (result.Succeeded)
+            {
+                SelectedUser = TextBoxUsername.Text;
+                User_DataBind();
+                MultiView1.ActiveViewIndex = 1;
+                Notifier1.Message = "User successfully created";
+            }
+            else
+            {
+                Notifier1.Warning = "Failed to create user.";
+                foreach (var error in result.Errors)
+                {
+                    Notifier1.Warning += "<br />";
+                    Notifier1.Warning += error;
+                }
+            }
+        }
+
         protected void ButtonUpdateRoles_Click(object sender, EventArgs e)
         {
             var publishFlag = PresentBasePage.ReadPublishFlag();
+
             if (!publishFlag)
             {
                 IdentityManager.CreateRoleIfNotExists("admin");
@@ -133,6 +175,7 @@ namespace OneMainWeb.adm
 
                 var websiteB = new BWebsite();
                 var list = websiteB.List();
+
                 foreach (var w in list)
                 {
                     var previewUrl = w.PreviewUrl;
@@ -141,6 +184,7 @@ namespace OneMainWeb.adm
                         IdentityManager.CreateRoleIfNotExists(previewUrl);
                     }
                 }
+
                 log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
             }
         }
