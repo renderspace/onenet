@@ -17,8 +17,14 @@ namespace OneMainWeb.adm
     {
         protected string SelectedUser
         {
-            get;
-            set;
+            get 
+            {
+                return ViewState["SelectedUser"] != null ? (string)ViewState["SelectedUser"] : "";
+            }
+            set 
+            {
+                ViewState["SelectedUser"] = value;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
