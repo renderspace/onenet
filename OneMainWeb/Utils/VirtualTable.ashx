@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="VirtualTable.ashx.cs" Class="Bamboo._ashx.VirtualTable" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="VirtualTable.ashx.cs" Class="OneMainWeb.Utils.VirtualTable" %>
