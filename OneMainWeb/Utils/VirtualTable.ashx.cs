@@ -40,7 +40,7 @@ namespace OneMainWeb.Utils
 
                 foreach (DataColumn col in table.Columns)
                 {
-                    col.ColumnName = col.ColumnName.Replace("[dbo].", "").Replace("[", "").Replace("]", "").Replace('.', '-');
+                    col.ColumnName = col.ColumnName.Replace("[dbo].", "").Replace("[", "").Replace("]", "").Replace('.', '_').Replace('-', '_');
                 }
 
                 if (table != null)
