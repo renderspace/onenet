@@ -37,6 +37,12 @@ namespace OneMainWeb.Utils
                 };
 
                 var table = Data.ListItems(vtId, state);
+
+                foreach (DataColumn col in table.Columns)
+                {
+                    col.ColumnName = col.ColumnName.Replace("[dbo].", "").Replace("[", "").Replace("]", "").Replace('.', '-');
+                }
+
                 if (table != null)
                 {
                     var output = Serialize(table);
