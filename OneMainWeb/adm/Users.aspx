@@ -17,8 +17,16 @@
                 AutoGenerateColumns="false"
                 AllowPaging="false"
                 AllowSorting="false"
-                DataKeyNames="UserName" OnSelectedIndexChanged="GridViewUsers_SelectedIndexChanged">
+                DataKeyNames="UserName"
+                OnSelectedIndexChanged="GridViewUsers_SelectedIndexChanged"
+                OnRowDataBound="GridViewUsers_RowDataBound">
                 <Columns>
+                    <asp:TemplateField>
+						<ItemTemplate>
+                            <asp:Literal ID="LiteralUserId" Visible="false" runat="server" Text='<%# Eval("Id") %>' />
+							<asp:CheckBox ID="CheckBoxDelete" runat="server" Text="" />
+						</ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField HeaderText="UserName" DataField="UserName" />
                     <asp:BoundField HeaderText="Email" DataField="Email" />
                     <asp:TemplateField>
@@ -28,6 +36,11 @@
                     </asp:TemplateField>
                 </Columns>
             </asp:GridView>
+            <asp:Panel runat="server" ID="PanelGridButtons" CssClass="form-group">
+                <div class="col-sm-12">
+                    <asp:LinkButton CssClass="btn btn-danger" ID="ButtonDelete" OnClick="ButtonDelete_Click" runat="server" CausesValidation="false" Text="<span class='glyphicon glyphicon-trash'></span> Delete selected" />
+                </div>
+            </asp:Panel>
         </asp:View>
         <asp:View runat="server">
             <div class="adminSection form-horizontal edit-users">
