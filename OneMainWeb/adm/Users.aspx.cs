@@ -136,11 +136,14 @@ namespace OneMainWeb.adm
 
             IdentityResult result = manager.Create(user, TextBoxPassword.Text);
 
+            Notifier1.Title = "Add user: ";
+
             if (result.Succeeded)
             {
                 SelectedUser = TextBoxUsername.Text;
                 User_DataBind();
                 MultiView1.ActiveViewIndex = 1;
+
                 Notifier1.Message = "User successfully created";
             }
             else
@@ -192,6 +195,80 @@ namespace OneMainWeb.adm
                 }
 
                 log.Info("-------------- CreateRoleIfNotExists FINISHED --------------");
+            }
+        }
+
+        protected void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            Notifier1.Title = "Deleting users... ";
+
+            var manager = new UserManager();
+            int deletedCount = 0;
+            var userIds = GetCheckedIds();
+
+            foreach (var userId in userIds)
+            {
+                var user = manager.FindById(userId);
+
+                if (user != null)
+                {
+                    if (!manager.IsInRole(userId, "admin"))
+                    {
+                        manager.Delete(user);
+                        deletedCount++;
+                    }
+                }
+            }
+
+            if (deletedCount > 0)
+            {
+                Notifier1.Title += string.Format("Deleted {0} users", deletedCount);
+                Users_DataBind();
+            }
+            else
+            {
+                Notifier1.Title += "Nothing found";
+            }
+        }
+
+        protected IEnumerable<string> GetCheckedIds()
+        {
+            var userIds = new List<string>();
+
+            foreach (GridViewRow row in GridViewUsers.Rows)
+            {
+                var CheckBoxDelete = row.FindControl("CheckBoxDelete") as CheckBox;
+                var LiteralUserId = row.FindControl("LiteralUserId") as Literal;
+
+                if (LiteralUserId != null && CheckBoxDelete != null && CheckBoxDelete.Checked)
+                {
+                    string userId = LiteralUserId.Text;
+
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        userIds.Add(userId);
+                    }
+                }
+            }
+            return userIds;
+        }
+
+        protected void GridViewUsers_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                var CheckBoxDelete = e.Row.FindControl("CheckBoxDelete") as CheckBox;
+                var LiteralUserId = e.Row.FindControl("LiteralUserId") as Literal;
+
+                if (CheckBoxDelete != null && LiteralUserId != null)
+                {
+                    var manager = new UserManager();
+
+                    if (manager.IsInRole(LiteralUserId.Text, "admin")) 
+                    {
+                        CheckBoxDelete.Visible = false;
+                    }
+                }
             }
         }
     }
