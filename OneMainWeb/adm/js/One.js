@@ -655,6 +655,9 @@ $(document).ready(function () {
             trace("myCodeMirror !== undefined");
             content['Html'] = myCodeMirror.getValue();
         }
+        else {
+            content['Html'] = '';
+        }
         content['LanguageId'] = $(".j_control_language_id").val();
         content['ContentId'] = $(".j_control_content_id").val();
         content['FileId'] = $(".j_control_file_id").val();
