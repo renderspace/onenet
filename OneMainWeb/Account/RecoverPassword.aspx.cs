@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.DataProtection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Mail;
+using System.Configuration;
 
 using System;
 using System.Linq;
@@ -21,6 +22,16 @@ namespace OneMainWeb.Account
         protected static Logger log = LogManager.GetCurrentClassLogger();
         protected string Token { get; set; }
         protected string UserId { get; set; }
+        protected string RecoverPasswordReturnLink
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["RecoverPasswordReturnLink"] != null)
+                    return ConfigurationManager.AppSettings["RecoverPasswordReturnLink"];
+                else
+                    return "Login.aspx?ReturnUrl=" + HttpUtility.UrlEncode("/adm");
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -29,7 +40,7 @@ namespace OneMainWeb.Account
             if (Request[IdentityHelper.UserIdKey] != null)
                 UserId = Request[IdentityHelper.UserIdKey];
 
-            LoginHyperLink.NavigateUrl = "Login.aspx?ReturnUrl=" + HttpUtility.UrlEncode("/adm");
+            LoginHyperLink.NavigateUrl = RecoverPasswordReturnLink;
 
             if (!IsPostBack) 
             {
