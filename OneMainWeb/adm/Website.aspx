@@ -268,6 +268,25 @@
               </div>
         </asp:View>
         <asp:View ID="View2" runat="server">
+
+            <script>
+
+                $(document).ready(function () {
+                    if (typeof (CodeMirror) !== undefined) {
+                        var textAreas = document.getElementsByClassName('code-mirror');
+                        if (textAreas !== undefined && textAreas.length > 0) {
+                            for (var i = 0; i < textAreas.length; i++) {
+                                var myCodeMirror = CodeMirror.fromTextArea(textAreas[i], {
+                                    lineNumbers: true,
+                                    mode: "htmlembedded"
+                                });
+                            }
+                        }
+                    }
+                });
+
+            </script>
+
             <div class="adminSection form-horizontal validationGroup">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">ID</label> 
@@ -293,7 +312,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Content</label>
                     <div class="col-sm-9">
-                        <asp:TextBox runat="server" ID="TextBoxTemplateContent" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="template" CssClass="form-control" placeholder="Template content"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="TextBoxTemplateContent" MaxLength="4000" TextMode="MultiLine" Rows="3" ValidationGroup="template" CssClass="form-control code-mirror" placeholder="Template content"></asp:TextBox>
                     </div>
                 </div>
                 <div class="form-group">
