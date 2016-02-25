@@ -254,7 +254,7 @@
 
 
                                 <div  id="divFrontEndQuestionTypes" runat="server" class="form-group">
-                                    <label class="col-sm-3 control-label">user_question_type</label>
+                                    <label class="col-sm-3 control-label">Type of validation</label>
                                         <div class="col-sm-9">
                                         <asp:RadioButtonList OnSelectedIndexChanged="radFrontEndQuestionTypes_SelectedIndexChanged" ID="radFrontEndQuestionTypes" AutoPostBack="true" runat="server" RepeatDirection="Vertical" RepeatLayout="Flow" TextAlign="Right" />
                                         </div>
