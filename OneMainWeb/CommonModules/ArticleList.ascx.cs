@@ -17,6 +17,7 @@ namespace OneMainWeb.CommonModules
     {
         public const string REQUEST_ARTICLE_TEXT_SEARCH = "atsearch";
         public const string REQUEST_DATE = "adfd";
+        public const string REQUEST_ARTICLE_REGULAR_ID = "regid";
 
         private DateTime? requestedMonth;
         private DateTime? requestedYear;
@@ -33,9 +34,9 @@ namespace OneMainWeb.CommonModules
             {
                 List<int> result = GetIntegerListSetting("CategoriesList");
 
-                if (Request["regid"] != null)
+                if (Request[REQUEST_ARTICLE_REGULAR_ID] != null)
                 {
-                    var categoriesFilter = FormatTool.GetInteger(Request["regid"]);
+                    var categoriesFilter = FormatTool.GetInteger(Request[REQUEST_ARTICLE_REGULAR_ID]);
                     if (result.Contains(categoriesFilter))
                     {
                         result.Clear();
