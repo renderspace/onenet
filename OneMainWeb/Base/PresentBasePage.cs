@@ -597,6 +597,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 title = provided;
                 MenuTitle = title;
             }
+            SiteMap.CurrentNode.Title = MenuTitle;
             title = title.Replace('\n', ' ').Replace('\r', ' ');
             title = StringTool.StripHtmlTags(title);
             AddMetaProperty("og:title", title);
