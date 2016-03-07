@@ -157,6 +157,7 @@ namespace One.Net.BLL
             node["_redirectToUrl"] = page.RedirectToUrl;
             node["_subRouteUrl"] = page.SubRouteUrl;
             node["_ogImage"] = page.OgImage;
+            node["_hasSubPageRouting"] = page.HasSubPageRouting.ToString();
 
             _nodes.Add(page.Id, node);
             return node;
@@ -178,6 +179,51 @@ namespace One.Net.BLL
                     _nodes.Clear();
                     _root = null;
                 }
+            }
+        }
+
+        public override SiteMapNode CurrentNode
+        {
+            get
+            {
+                if (base.CurrentNode == null)
+                {
+                    var url = this.FindCurrentUrl();
+                    url = url.Substring(0, url.LastIndexOf('/'));
+                    var parentNode = FindSiteMapNode(url);
+                    if (parentNode != null && parentNode.ChildNodes != null && parentNode.ChildNodes.Count > 0)
+                    {
+                        var hasSubPageRouting = bool.Parse(parentNode["_hasSubPageRouting"]);
+                        if (hasSubPageRouting)
+                        {
+                            return parentNode.ChildNodes[0];
+                        }
+                    }
+                    return parentNode;
+                }
+                else
+                {
+                    return base.CurrentNode;
+                }
+            }
+        }
+
+        // Get the URL of the currently displayed page.
+        private string FindCurrentUrl()
+        {
+            try
+            {
+                // The current HttpContext.
+                var currentContext = HttpContext.Current;
+
+                if (currentContext != null) return currentContext.Request.Path;
+
+                throw new Exception("HttpContext.Current is Invalid");
+
+            }
+            catch (Exception e)
+            {
+                throw new NotSupportedException("This provider requires a valid context.", e);
             }
         }
     }
