@@ -114,16 +114,16 @@ namespace OneMainWeb
                     gaCode += @"(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga')
 
-ga('create', '" + code + @"', 'auto', {
-  anonymizeIp: true
-});";
+ga('create', '" + code + @"', 'auto')
+ga('set', 'anonymizeIp', true)
+";
                     if (CurrentWebsite.HasAdvertisingFeatures)
                     {
-                        gaCode += "ga('require', 'displayfeatures');";
+                        gaCode += "ga('require', 'displayfeatures')";
                     }
-                    gaCode += @"ga('send', 'pageview');
+                    gaCode += @"ga('send', 'pageview')
 
 </script>
 <!-- End Google Analytics -->";
@@ -597,6 +597,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 title = provided;
                 MenuTitle = title;
             }
+            SiteMap.CurrentNode.Title = MenuTitle;
             title = title.Replace('\n', ' ').Replace('\r', ' ');
             title = StringTool.StripHtmlTags(title);
             AddMetaProperty("og:title", title);
