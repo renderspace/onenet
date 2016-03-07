@@ -157,6 +157,7 @@ namespace One.Net.BLL
             node["_redirectToUrl"] = page.RedirectToUrl;
             node["_subRouteUrl"] = page.SubRouteUrl;
             node["_ogImage"] = page.OgImage;
+            node["_hasSubPageRouting"] = page.HasSubPageRouting.ToString();
 
             _nodes.Add(page.Id, node);
             return node;
@@ -192,7 +193,11 @@ namespace One.Net.BLL
                     var parentNode = FindSiteMapNode(url);
                     if (parentNode != null && parentNode.ChildNodes != null && parentNode.ChildNodes.Count > 0)
                     {
-                        return parentNode.ChildNodes[0];
+                        var hasSubPageRouting = bool.Parse(parentNode["_hasSubPageRouting"]);
+                        if (hasSubPageRouting)
+                        {
+                            return parentNode.ChildNodes[0];
+                        }
                     }
                     return parentNode;
                 }
