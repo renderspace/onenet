@@ -23,6 +23,7 @@ namespace OneMainWeb.Controls
         private int _minDepth;
         private int _maxDepth;
         private string _separator;
+		private string _group;
 
         public int MaxDepth
         {
@@ -41,6 +42,12 @@ namespace OneMainWeb.Controls
             get { return _separator; }
             set { _separator = value; }
         }
+		
+        public string Group
+        {
+            get { return _group; }
+            set { _group = value; }
+        }		
         
         public BreadCrumb()
         {
@@ -86,8 +93,9 @@ namespace OneMainWeb.Controls
         private void RecursiveCreateChildControls(SiteMapNode node)
         {
             var depth = Int32.Parse(node["_absDepth"]);
+            var _menuGroup = node["_menuGroup"];
 
-            if (depth >= MinDepth && depth <= MaxDepth)
+            if (depth >= MinDepth && depth <= MaxDepth && (string.IsNullOrEmpty(Group) || Group == _menuGroup))
             {
                 var item = new Literal();
                 var sep = new Literal();
