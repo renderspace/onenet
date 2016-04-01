@@ -294,21 +294,27 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
     $(".loading").hide();
 }
 
-
 function buildFormControl(fieldLabel, fieldId, fieldType) {
-    var controlHtml = '<div class="form-group"><label class="col-sm-3 control-label">' + fieldLabel + '</label><div class="col-sm-9">';
-    controlHtml += '<span class="">';
-    if (fieldType == 'html')
-        controlHtml += '<textarea  class="form-control ckeditor4" id="' + fieldId + '" name="' + fieldId + '"></textarea>';
-    else if (fieldType == 'singleline')
-        controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
-    else if (fieldType == 'file')
-        controlHtml += '<input type="text" maxlength="255" class="form-control absrelurl" id="' + fieldId + '" name="' + fieldId + '" />';
-    else
-        controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
-    controlHtml += '</span>';
-    controlHtml += '</div>';
-    controlHtml += '</div>';
+    var controlHtml = '';
+    if (fieldType != 'builtin') {
+
+        controlHtml = '<div class="form-group">';
+
+        controlHtml += '<label class="col-sm-3 control-label">' + fieldLabel + '</label><div class="col-sm-9">';
+
+        controlHtml += '<span class="">';
+        if (fieldType == 'html')
+            controlHtml += '<textarea  class="form-control ckeditor4" id="' + fieldId + '" name="' + fieldId + '"></textarea>';
+        else if (fieldType == 'singleline')
+            controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
+        else if (fieldType == 'file')
+            controlHtml += '<input type="text" maxlength="255" class="form-control absrelurl" id="' + fieldId + '" name="' + fieldId + '" />';
+        else
+            controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
+        controlHtml += '</span>';
+        controlHtml += '</div>';
+        controlHtml += '</div>';
+    }
     return controlHtml;
 }
 

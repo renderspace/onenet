@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Text.RegularExpressions;
 
 using One.Net.BLL;
+using One.Net.BLL.Utility;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
 
@@ -18,12 +19,20 @@ namespace OneMainWeb.CommonModules
 {
     public partial class TemplateContent : MModule
     {
-
         [Setting(SettingType.Int, DefaultValue = "-1")]
         public int TemplateId { get { return GetIntegerSetting("TemplateId"); } }
 
         [Setting(SettingType.Int, DefaultValue = "-1", Visibility=SettingVisibility.SPECIAL)]
         public int ContentTemplateId { get { throw new Exception("not intended for direct access"); } }
+
+        protected string CurrentUri
+        {
+            get
+            {
+                var builder = new UrlBuilder(Page);
+                return builder.ToString();
+            }        
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -45,9 +54,7 @@ namespace OneMainWeb.CommonModules
                             var pairString = match.Value.Replace("{", "").Replace("}", "");
                             var pair = StringTool.SplitString(pairString);
                             var key = pair[0];
-                            var value = "";
-                            if (pair.Count > 1)
-                                value = pair[1];
+                            var value = (pair.Count > 1 ? pair[1] : "");
 
                             templateFields.Add(key, value);
                         }
@@ -63,12 +70,23 @@ namespace OneMainWeb.CommonModules
                     {
                         foreach (var field in templateFields)
                         {
-                            if (contentTemplate.ContentFields.ContainsKey(field.Key))
+                            if (field.Value == "builtin")
+                            {
+                                var valueToReplaceWith = "";
+                                if (field.Key == "currenturi")
+                                {
+                                    valueToReplaceWith = CurrentUri;
+                                }
+                                LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", valueToReplaceWith);
+                            } 
+                            else if (contentTemplate.ContentFields.ContainsKey(field.Key))
                             {
                                 if (string.IsNullOrEmpty(field.Value))
                                     LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "}", contentTemplate.ContentFields[field.Key]);
                                 else
+                                {
                                     LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", contentTemplate.ContentFields[field.Key]);
+                                }
                             }
                         }
                     }
