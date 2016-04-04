@@ -50,8 +50,16 @@
             var $group = $(this).closest('.validationGroup');
             var isValid = true;
 			var $firstInvalidItem;
-            $group.find(':input').each(function (i, item) {
-				if (!$(item).valid()) {
+			$group.find(':input').each(function (i, item) {
+			    if ($(item).is(':checkbox')) {
+			        if ($(item).hasClass("required") && !$(item).is(':checked')) {
+			            isValid = false;
+			            if (typeof ($firstInvalidItem) == 'undefined') {
+			                $firstInvalidItem = $(item);
+			            }
+			            $(item).closest('.form-group').addClass('has-error');
+			        }
+			    } else if (!$(item).valid()) {
 					isValid = false;
 					if (typeof($firstInvalidItem) == 'undefined') {
 						$firstInvalidItem = $(item);

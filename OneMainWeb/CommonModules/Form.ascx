@@ -68,14 +68,14 @@
         <h2 runat="server" id="DivFormTitle"></h2>
         <asp:Panel ID="PanelThankYouNote" runat="server" Visible="false" CssClass="form-thank-you" noid="True">
             <script>
-                $(function () {
+                (function($){
                     var page = document.location.pathname + '/thank-you-for-form-<%= FormId %>' + location.search + location.hash;
                     if (window.ga) {
                         ga('send', 'pageview', page);
                     } else {
                         console.log("no GA... but if it was here, we would track this: " + page);
                     }
-                });
+                })(jQuery); 
             </script>
             <asp:Literal ID="lblThankYouNote" runat="server"></asp:Literal>
         </asp:Panel>
