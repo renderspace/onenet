@@ -56,7 +56,10 @@ namespace OneMainWeb.CommonModules
                             var key = pair[0];
                             var value = (pair.Count > 1 ? pair[1] : "");
 
-                            templateFields.Add(key, value);
+                            if (!templateFields.ContainsKey(key))
+                            {
+                                templateFields.Add(key, value);
+                            }
                         }
                     }
                 }
@@ -75,7 +78,7 @@ namespace OneMainWeb.CommonModules
                                 var valueToReplaceWith = "";
                                 if (field.Key == "currenturi")
                                 {
-                                    valueToReplaceWith = CurrentUri;
+                                    valueToReplaceWith = HttpUtility.UrlEncode(CurrentUri);
                                 }
                                 LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", valueToReplaceWith);
                             } 
