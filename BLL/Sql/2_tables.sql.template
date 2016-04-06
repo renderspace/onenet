@@ -122,7 +122,7 @@ GO
 CREATE TABLE [dbo].[pages_settings](
 	[pages_fk_publish] [tinyint] NOT NULL,
 	[pages_fk_id] [int] NOT NULL,
-	[value] [varchar](MAX) NULL,
+	[value] [nvarchar](MAX) NULL,
 	[settings_list_fk_id] [int] NOT NULL,
  CONSTRAINT [PK_pages_settings] PRIMARY KEY CLUSTERED 
 (
@@ -314,7 +314,7 @@ CREATE TABLE [dbo].[web_site_settings](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[web_site_fk_id] [int] NOT NULL,
 	[settings_list_fk_id] [int] NOT NULL,
-	[value] [text] NULL,
+	[value] [nvarchar](MAX) NULL,
  CONSTRAINT [PK_web_site_settings] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -354,7 +354,7 @@ CREATE TABLE [dbo].[module_settings](
 	[module_instance_fk_pages_fk_publish] [tinyint] NOT NULL,
 	[module_instance_fk_id] [int] NOT NULL,
 	[settings_list_fk_id] [int] NOT NULL,
-	[value] [varchar](MAX) NULL,
+	[value] [nvarchar](MAX) NULL,
  CONSTRAINT [PK_module_settings] PRIMARY KEY CLUSTERED 
 (
 	[module_instance_fk_pages_fk_publish] ASC,
