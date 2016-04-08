@@ -73,7 +73,7 @@ var Forms = {
     return isValid
   },
   load: function (evt) {
-    if (window.FormId > 0) {
+    if (window.FormId > 0 && $('.form-thank-you').length > 0) {
       var page = document.location.pathname + '/thank-you-for-form-' + window.FormId + location.search + location.hash
       if (window.ga) {
         ga('send', 'pageview', page)
