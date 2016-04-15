@@ -624,7 +624,7 @@ namespace One.Net.BLL
             else
                 contentTemplate.Id = null;
 
-            contentTemplateB.ChangeContentTemplate(instance.Id, contentTemplate);
+            contentTemplateB.ChangeContentTemplate(contentTemplate);
 
             publishedInstance = instance;
 

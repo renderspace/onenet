@@ -47,7 +47,7 @@ namespace One.Net.BLL
             webSiteB.ChangeModuleInstance(instance);
         }
 
-        private void ChangeContentTemplate(BOContentTemplate contentTemplate)
+        public void ChangeContentTemplate(BOContentTemplate contentTemplate)
         {
             var paramsToPass = new List<SqlParameter>();
 

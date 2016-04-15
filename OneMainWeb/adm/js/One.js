@@ -733,6 +733,7 @@ $(document).ready(function () {
         var divsWithErrors = $(this).closest('.validationGroup').find('.has-error');
         if (divsWithErrors.length == 0) {
             var contentTemplate = new Object();
+            var $saveButton = $(this);
 
             trace("saving:");
 
@@ -770,7 +771,14 @@ $(document).ready(function () {
                 type: "POST",
                 success: function (data) {
                     if (data === true) {
-                        $('#content-template-modal').modal('hide');
+                        if ($saveButton.hasClass("modal-save-close")) {
+                            $('#content-template-modal').modal('hide');
+                            window.location.href = "/adm/structure.aspx";
+                        } else {
+                            $(".modal-body").show();
+                            $(".modal-footer").show();
+                            $(".loading").hide();
+                        }
                     }
                     else {
                         trace("data:" + data);
