@@ -603,6 +603,7 @@ namespace One.Net.BLL
             catch (System.Data.SqlClient.SqlException ex)
             {
                 log.Error("Publish failed", ex);
+                throw ex;
                 return false;
             }
             return true;
