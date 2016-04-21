@@ -56,7 +56,7 @@ namespace One.Net.BLL
             string sql;
             if (contentTemplate.Id.HasValue)
             {
-                paramsToPass.Add(new SqlParameter("@DateModified", contentTemplate.DateModified));
+                paramsToPass.Add(new SqlParameter("@DateModified", DateTime.Now));
                 paramsToPass.Add(new SqlParameter("@PrincipalModified", contentTemplate.PrincipalModified));
 
                 sql = @"UPDATE [dbo].[content_template] 
