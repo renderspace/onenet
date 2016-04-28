@@ -147,7 +147,10 @@ namespace One.Net.BLL
                     {
                         while (reader.Read())
                         {
-                            answer.ContentFields.Add((string)reader["field_name"], (string)reader["field_content"]);
+                            if (!answer.ContentFields.ContainsKey((string)reader["field_name"]))
+                            {
+                                answer.ContentFields.Add((string)reader["field_name"], (string)reader["field_content"]);
+                            }
                         }
                     }
                 }
