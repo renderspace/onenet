@@ -137,7 +137,7 @@ namespace One.Net.BLL.Service
                 foreach (var field in dtoTemplate.ContentFields)
                 {
                     var fieldId = field.Key.Trim().Replace(" ", "_").ToLower();
-                    if (postedContentTemplate.ContentFields.ContainsKey(fieldId))
+                    if (postedContentTemplate.ContentFields.ContainsKey(fieldId) && !storedContentTemplate.ContentFields.ContainsKey(fieldId))
                     {
                         storedContentTemplate.ContentFields.Add(field.Key, postedContentTemplate.ContentFields[fieldId]);
                     }
@@ -388,7 +388,11 @@ namespace One.Net.BLL.Service
                         var value = "";
                         if (pair.Count > 1)
                             value = pair[1];
-                        ContentFields.Add(key, value);
+                        if (!ContentFields.ContainsKey(key))
+                        {
+                            ContentFields.Add(key, value);
+                        }
+                        
                     }
                 }
             }

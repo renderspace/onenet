@@ -81,7 +81,7 @@ namespace OneMainWeb.CommonModules
                                     valueToReplaceWith = HttpUtility.UrlEncode(CurrentUri);
                                 }
                                 LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", valueToReplaceWith);
-                            } 
+                            }
                             else if (contentTemplate.ContentFields.ContainsKey(field.Key))
                             {
                                 if (string.IsNullOrEmpty(field.Value))
