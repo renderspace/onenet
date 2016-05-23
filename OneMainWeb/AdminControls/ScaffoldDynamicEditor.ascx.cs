@@ -550,7 +550,7 @@ jQuery.validator.addMethod(
                 MaxLength = 11 //(-2,147,483,648 to 2,147,483,647)
             };
             TextBox4.Attributes.Add("type", "number");
-            TextBox4.CssClass += " digits";
+            TextBox4.CssClass += " number";
             if (!column.IsNullable)
                 TextBox4.CssClass += " required";
             PanelField.Controls.Add(TextBox4);
