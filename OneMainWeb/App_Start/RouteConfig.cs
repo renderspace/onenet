@@ -35,7 +35,20 @@ namespace OneMainWeb
                 {
                     routes.MapPageRoute("Root", "", "~/site_specific/aspx_templates/" + node["_template"]);
                     var i = 0;
-                    PopulateRoutes(routes, node, ref i);
+
+                    if (!string.IsNullOrWhiteSpace(node["_subRouteUrl"]) && node["_subRouteUrl"].StartsWith("{") && node.HasChildNodes && node.ChildNodes.Count == 1)
+                    {
+                        // route subroute parameter is taken from parent, the rest is taken from subpage where single module should reside.
+                        // in this case, subroute rewrite is set on ROOT!
+                        var s = node.ChildNodes[0];
+                        Route additionalRoute = new Route(node["_subRouteUrl"], new PageRouteHandler("~/site_specific/aspx_templates/" + s["_template"], false));
+                        additionalRoute.DataTokens = new RouteValueDictionary { { "_pageID", s["_pageID"] } };
+                        routes.Add(additionalRoute);
+                    }
+                    else 
+                    {
+                        PopulateRoutes(routes, node, ref i);
+                    }                    
                 }
             }
         }
