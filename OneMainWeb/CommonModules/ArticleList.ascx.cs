@@ -104,6 +104,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.ImageTemplate, DefaultValue="-1")]
         public BOImageTemplate ImageTemplate { get { return GetImageTemplate("ImageTemplate"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowCategories { get { return GetBooleanSetting("ShowCategories"); } }
+
         #endregion Settings
 
         public string Description
@@ -201,6 +204,8 @@ namespace OneMainWeb.CommonModules
                 var Time2 = e.Item.FindControl("Time2") as HtmlGenericControl;
                 var HtmlArticle = e.Item.FindControl("HtmlArticle") as HtmlGenericControl;
 
+                var RepeaterCategories = e.Item.FindControl("RepeaterCategories") as Repeater;
+
                 var id = article.Id.Value;
                 var TeaserImage1 = e.Item.FindControl("TeaserImage1") as HtmlGenericControl;
                 if (article.TeaserImageId > 0 && TeaserImage1 != null && ImageTemplate != null)
@@ -242,6 +247,12 @@ namespace OneMainWeb.CommonModules
                     HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
                 else
                     HtmlArticle.Attributes["class"] += " hentry a" + id.ToString() + " " + MModule.RenderOrder(id);
+
+                if (RepeaterCategories != null && ShowCategories)
+                {
+                    RepeaterCategories.DataSource = article.Regulars;
+                    RepeaterCategories.DataBind();
+                }
             }
         }
     }
