@@ -14,6 +14,14 @@
                 <time class="published" id="Time2" runat="server" noid="True"><%# Eval("DisplayDate") %></time>
 			</header>
 
+            <asp:Repeater runat="server" ID="RepeaterCategories">
+                <HeaderTemplate><ul class="tags"></HeaderTemplate>
+                <FooterTemplate></ul></FooterTemplate>
+                <ItemTemplate>
+                    <a onclick="return false"><%# Eval("Title") %></a>
+                </ItemTemplate>
+            </asp:Repeater>
+
 			<div class="entry-summary" runat="server" id="SectionTeaser" noid="True">
 			    <%# Eval("ProcessedTeaser") %>
 			</div>	
