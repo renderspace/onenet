@@ -34,6 +34,9 @@ ipch/
 *.vssscc
 *.bak.*
 *.bak
+.vs
+UpgradeLog.htm
+Backup/
  
 #Tools
 _ReSharper.*
