@@ -60,12 +60,12 @@ namespace One.Net.BLL
             if (FirstRecordIndex.HasValue && RecordsPerPage.HasValue)
             {
                 fromRecordIndex = FirstRecordIndex.Value + 1 + offSet;
-                toRecordIndex = (fromRecordIndex + RecordsPerPage.Value) - 1 + offSet;
+                toRecordIndex = (fromRecordIndex + RecordsPerPage.Value) - 1; // + offset... there is no need to tack on offset here... fromRecordIndex is already offset!
             }
             if (fromRecordIndex < 0)
                 fromRecordIndex = 0;
-            if (toRecordIndex < RecordsPerPage.Value - 1 + offSet)
-                toRecordIndex = RecordsPerPage.Value - 1 + offSet;
+            if (toRecordIndex < (fromRecordIndex+ RecordsPerPage.Value - 1))
+                toRecordIndex = fromRecordIndex + RecordsPerPage.Value - 1;
         }
 
         public int DbFromRecordIndex
