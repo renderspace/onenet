@@ -18,7 +18,7 @@
                 <HeaderTemplate><ul class="tags"></HeaderTemplate>
                 <FooterTemplate></ul></FooterTemplate>
                 <ItemTemplate>
-                    <a onclick="return false"><%# Eval("Title") %></a>
+                    <li><a onclick="return false"><%# Eval("Title") %></a></li>
                 </ItemTemplate>
             </asp:Repeater>
 
