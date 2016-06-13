@@ -221,6 +221,7 @@
                                 <span class="bg-primary distinct-name">
                                      [<%# Eval("Id") %>]
                                      <asp:label ID="LabelModuleDistinctName" runat="server" Visible="false"></asp:label> 
+                                     Idx: [<%# Eval("Order") %>]
                                 </span>
 
 								<span class="m-btns">

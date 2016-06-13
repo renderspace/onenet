@@ -691,7 +691,16 @@ namespace One.Net.BLL
             {
                 int tempIdx = instanceOne.Order;
                 instanceOne.Order = instanceTwo.Order;
-                instanceTwo.Order = tempIdx;
+                if (tempIdx == instanceOne.Order)
+                {
+                    var newIdx = webSiteDb.GetMaxModuleInstanceIdx(instanceOne.PageId, instanceOne.PublishFlag, instanceOne.PlaceHolderId) + 1;
+                    instanceTwo.Order = tempIdx;
+                }
+                else
+                {
+                    instanceTwo.Order = tempIdx;
+                }
+                
                 this.ChangeModuleInstance(instanceOne, LanguageId, false);
                 this.ChangeModuleInstance(instanceTwo, LanguageId, false);
             }

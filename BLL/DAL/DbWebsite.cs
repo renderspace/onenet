@@ -378,6 +378,19 @@ namespace One.Net.BLL.DAL
                 @"DeletePage", parms);
         }
 
+        public int GetMaxModuleInstanceIdx(int pageId, bool publishFlag, int placeHolderId)
+        {
+            var sql = @"SELECT ISNULL(MAX(idx), -1) idx 
+                        FROM [dbo].[module_instance] 
+                        WHERE pages_fk_id=@pageId and pages_fk_publish=@publishFlag AND place_holder_fk_id=@placeHolderId";
+
+            return Int32.Parse(SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain, CommandType.Text, sql,
+                new SqlParameter("@pageId", pageId),
+                new SqlParameter("@publishFlag", publishFlag),
+                new SqlParameter("@placeHolderId", placeHolderId)
+                ).ToString());
+        }
+
         public BOPage GetPage(int pageId, bool publishFlag, int languageId)
         {
             //cacheDep = null;
