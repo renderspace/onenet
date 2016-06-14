@@ -41,6 +41,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.ImageTemplate, DefaultValue = "0")]
         public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowCategories { get { return GetBooleanSetting("ShowCategories"); } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!HasHumanReadableUrlParameter)
@@ -151,6 +154,12 @@ namespace OneMainWeb.CommonModules
                 if (DivReadon != null)
                 {
                     DivReadon.Visible = !string.IsNullOrWhiteSpace(ArticleListUri);
+                }
+
+                if (RepeaterCategories != null && ShowCategories)
+                {
+                    RepeaterCategories.DataSource = article.Regulars;
+                    RepeaterCategories.DataBind();
                 }
             }
             else
