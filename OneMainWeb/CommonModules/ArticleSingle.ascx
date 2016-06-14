@@ -11,6 +11,13 @@
 		        <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"></h4>
                 <time class="published" id="Time2" runat="server" noid="True"></time>
 	        </header>
+            <asp:Repeater runat="server" ID="RepeaterCategories">
+                <HeaderTemplate><ul class="tags"></HeaderTemplate>
+                <FooterTemplate></ul></FooterTemplate>
+                <ItemTemplate>
+                    <li><a onclick="return false"><%# Eval("Title") %></a></li>
+                </ItemTemplate>
+            </asp:Repeater>
 	        <div class="entry-summary" runat="server" id="SectionTeaser" noid="True"></div>	
             <div class="entry-teaser-image" runat="server" id="DivTeaserImage" noid="True"></div>	
 	        <div class="entry-content" runat="server" id="SectionHtml" noid="True">
