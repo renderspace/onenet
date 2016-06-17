@@ -124,6 +124,7 @@ namespace OneMainWeb.CommonModules
                 if (HtmlArticle != null)
                 {
                     HtmlArticle.Attributes.Add("class", "hentry a" + id.ToString() + " " + MModule.RenderOrder(id));
+                    HtmlArticle.Attributes.Add("data-article-id", id.ToString());
                 }
 
                 Title = article.Title;
