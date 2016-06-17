@@ -427,12 +427,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
 
             foreach (MModule mod in activeModules)
             {
-                if (mod is IImageListConsumer)
-                {
-                    IImageListConsumer gallery = (IImageListConsumer)mod;
-                    gallery.Images = imagesOnThisPage;
-                }
-
                 // only take the information from the first IBasicSEOProvider. Ignore the rest.
                 if (mod is IBasicSEOProvider && string.IsNullOrWhiteSpace(providedPageName))
                 {
@@ -487,6 +481,15 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                                 providedMetaTags.Add(key, tempMetaDataProvider.ExtraMetaData[key]);
                         }
                     }
+                }
+            }
+
+            foreach (MModule mod in activeModules)
+            {
+                if (mod is IImageListConsumer)
+                {
+                    IImageListConsumer gallery = (IImageListConsumer)mod;
+                    gallery.Images = imagesOnThisPage;
                 }
             }
 
