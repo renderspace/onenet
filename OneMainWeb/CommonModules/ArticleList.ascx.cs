@@ -133,12 +133,6 @@ namespace OneMainWeb.CommonModules
             PagerArticles.RecordsPerPage = RecordsPerPage;
             PagerArticles.SelectedPage = 1;
 
-            if (ShowModuleTitle)
-            {
-                H2ModuleTitle.Visible = true;
-                H2ModuleTitle.InnerHtml = Translate("article_list_title");
-            }
-
             if (!string.IsNullOrWhiteSpace(ArticleListUri))
             {
                 PanelArchive.Visible = true;
@@ -185,6 +179,12 @@ namespace OneMainWeb.CommonModules
             {
                 PagerArticles.TotalRecords = articles.AllRecords;
                 PagerArticles.DetermineData();
+            }
+
+            if (ShowModuleTitle && articles.AllRecords > 0)
+            {
+                H2ModuleTitle.Visible = true;
+                H2ModuleTitle.InnerHtml = Translate("article_list_title");
             }
         }
 
