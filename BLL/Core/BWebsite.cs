@@ -693,8 +693,7 @@ namespace One.Net.BLL
                 instanceOne.Order = instanceTwo.Order;
                 if (tempIdx == instanceOne.Order)
                 {
-                    var newIdx = webSiteDb.GetMaxModuleInstanceIdx(instanceOne.PageId, instanceOne.PublishFlag, instanceOne.PlaceHolderId) + 1;
-                    instanceTwo.Order = tempIdx;
+                    instanceTwo.Order = webSiteDb.GetMaxModuleInstanceIdx(instanceOne.PageId, instanceOne.PublishFlag, instanceOne.PlaceHolderId) + 1;
                 }
                 else
                 {
