@@ -338,6 +338,8 @@ WHERE a2.publish = @publishFlag ";
         {
             if (regularIds == null)
                 regularIds = new List<int>();
+            if (excludeRegularIds == null)
+                excludeRegularIds = new List<int>();
 
             var sortField = state.SortField.Length > 1 ? state.SortField : "id";
 
@@ -369,12 +371,11 @@ WHERE a2.publish = @publishFlag ";
                 @"  FROM [dbo].[article] a
 		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id ";
 
-            if (regularIds.Count > 0 || excludeRegularIds.Count > 0)
+            if (regularIds.Count > 0)
             {
                 sql += @" INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
             }
-
-
+            
             sql += " INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
             sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
 
@@ -385,7 +386,9 @@ WHERE a2.publish = @publishFlag ";
 
             if (excludeRegularIds.Count > 0)
             {
-                sql += " AND ra.regular_fk_id NOT IN (" + excludeRegularIds.ToCommaSeparatedValues<int>() + ")";
+                sql += @" AND ra.article_fk_id NOT IN (
+                SELECT ra2.article_fk_id FROM [dbo].[regular_has_articles] ra2 WHERE ra2.regular_fk_id IN (" + excludeRegularIds.ToCommaSeparatedValues<int>() + ")" +
+                ")";
             }
 
             if (from.HasValue && from.Value != DateTime.MinValue)
@@ -401,7 +404,7 @@ WHERE a2.publish = @publishFlag ";
             {
                 sql += " ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
             }
-
+            
             sql += @";  SELECT *
 						FROM #pagedlist
 						WHERE rownum BETWEEN @fromRecordIndex AND @toRecordIndex
@@ -440,6 +443,11 @@ WHERE a2.publish = @publishFlag ";
 
         public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars, List<int> excludeRegulars)
         {
+            if (regulars == null)
+                regulars = new List<int>();
+            if (excludeRegulars == null)
+                excludeRegulars = new List<int>();
+
             // TODO: regularIds
             PagedList<BOArticle> list = new PagedList<BOArticle>();
 
@@ -481,7 +489,7 @@ WHERE a2.publish = @publishFlag ";
                 ";
             sql += @" INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
 
-            if (regulars.Count > 0 || excludeRegulars.Count > 0)
+            if (regulars.Count > 0)
                 sql += @" INNER JOIN [dbo].[regular_has_articles] rha ON rha.article_fk_id = a.id AND rha.article_fk_publish = @publishFlag ";
 
             sql += @" WHERE a.publish=@publishFlag ";
@@ -504,7 +512,9 @@ WHERE a2.publish = @publishFlag ";
 
             if (excludeRegulars.Count > 0)
             {
-                sql += " AND rha.regular_fk_id NOT IN (" + excludeRegulars.ToCommaSeparatedValues<int>() + ")";
+                sql += @" AND rha.article_fk_id NOT IN (
+                SELECT ra2.article_fk_id FROM [dbo].[regular_has_articles] ra2 WHERE ra2.regular_fk_id IN (" + excludeRegulars.ToCommaSeparatedValues<int>() + ")" +
+                ")";
             }
 
             sql += @") SELECT *, (SELECT max(RowNumber) FROM ArticleCTE) AllRecords 

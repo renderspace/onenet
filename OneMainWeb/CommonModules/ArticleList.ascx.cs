@@ -28,6 +28,15 @@ namespace OneMainWeb.CommonModules
         #region Settings
 
         [Setting(SettingType.CSInteger)]
+        public List<int> HiddenTagsList
+        {
+            get
+            {
+                return GetIntegerListSetting("HiddenTagsList");
+            }
+        }
+
+        [Setting(SettingType.CSInteger)]
         public List<int> ExcludeCategoriesList
         {
             get
@@ -264,7 +273,13 @@ namespace OneMainWeb.CommonModules
 
                 if (RepeaterCategories != null && ShowCategories)
                 {
-                    RepeaterCategories.DataSource = article.Regulars;
+                    var regulars = article.Regulars;
+                    if (HiddenTagsList != null && HiddenTagsList.Count > 0)
+                    {
+                        regulars.RemoveAll(r => HiddenTagsList.Contains(r.Id.Value));
+                    }
+
+                    RepeaterCategories.DataSource = regulars;
                     RepeaterCategories.DataBind();
                 }
             }
