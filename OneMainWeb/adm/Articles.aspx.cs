@@ -488,7 +488,8 @@ namespace OneMainWeb
             state.FirstRecordIndex = (TwoPostbackPager1.SelectedPage - 1) * GridViewPageSize;
             state.SortField = GridViewSortExpression;
             var regularIds = StringTool.SplitStringToIntegers(regularsFilter);
-            PagedList<BOArticle> articles = articleB.ListArticles(regularIds, null, null, state, searchBy);
+            var excludeRegularIds = new List<int>();
+            PagedList<BOArticle> articles = articleB.ListArticles(regularIds, null, null, state, searchBy, excludeRegularIds);
 
             var missingUrlArticles = articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl));
             if (missingUrlArticles.Count() > 0)

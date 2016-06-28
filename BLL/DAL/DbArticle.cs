@@ -334,7 +334,7 @@ WHERE a2.publish = @publishFlag ";
             return results;
         }
 
-        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool? changed)
+        private static PagedList<BOArticle> ListPagedArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, bool? changed, List<int> excludeRegularIds)
         {
             if (regularIds == null)
                 regularIds = new List<int>();
@@ -369,15 +369,25 @@ WHERE a2.publish = @publishFlag ";
                 @"  FROM [dbo].[article] a
 		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id ";
 
-            if (regularIds.Count > 0)
+            if (regularIds.Count > 0 || excludeRegularIds.Count > 0)
+            {
                 sql += @" INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
+            }
 
 
             sql += " INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
             sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
 
             if (regularIds.Count > 0)
+            {
                 sql += " AND ra.regular_fk_id IN (" + regularIds.ToCommaSeparatedValues<int>() + ")";
+            }
+
+            if (excludeRegularIds.Count > 0)
+            {
+                sql += " AND ra.regular_fk_id NOT IN (" + excludeRegularIds.ToCommaSeparatedValues<int>() + ")";
+            }
+
             if (from.HasValue && from.Value != DateTime.MinValue)
                 sql += " AND a.display_date >= @dateFrom ";
             if (to.HasValue && to.Value != DateTime.MinValue)
@@ -428,7 +438,7 @@ WHERE a2.publish = @publishFlag ";
             article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
         }
 
-        public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars)
+        public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars, List<int> excludeRegulars)
         {
             // TODO: regularIds
             PagedList<BOArticle> list = new PagedList<BOArticle>();
@@ -471,7 +481,7 @@ WHERE a2.publish = @publishFlag ";
                 ";
             sql += @" INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
 
-            if (regulars.Count > 0)
+            if (regulars.Count > 0 || excludeRegulars.Count > 0)
                 sql += @" INNER JOIN [dbo].[regular_has_articles] rha ON rha.article_fk_id = a.id AND rha.article_fk_publish = @publishFlag ";
 
             sql += @" WHERE a.publish=@publishFlag ";
@@ -489,15 +499,14 @@ WHERE a2.publish = @publishFlag ";
 
             if (regulars.Count > 0)
             {
-                sql += " AND rha.regular_fk_id IN (";
-                for (int i = 0; i < regulars.Count; i++)
-                {
-                    sql += regulars[i].ToString();
-                    sql += i == (regulars.Count - 1) ? "" : ", ";
-
-                }
-                sql += " ) ";
+                sql += " AND rha.regular_fk_id IN (" + regulars.ToCommaSeparatedValues<int>() + ")";
             }
+
+            if (excludeRegulars.Count > 0)
+            {
+                sql += " AND rha.regular_fk_id NOT IN (" + excludeRegulars.ToCommaSeparatedValues<int>() + ")";
+            }
+
             sql += @") SELECT *, (SELECT max(RowNumber) FROM ArticleCTE) AllRecords 
 FROM ArticleCTE 
 WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
@@ -520,9 +529,9 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             return list;            
         }
 
-        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId)
+        public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, List<int> excludeRegularIds)
         {
-            return ListPagedArticles(publishFlag, from, to, regularIds, state, languageId, null);
+            return ListPagedArticles(publishFlag, from, to, regularIds, state, languageId, null, excludeRegularIds);
         }
 
         public void DeleteRegular(int id)
