@@ -77,13 +77,14 @@ namespace One.Net.BLL
         public int AutoCreateHumanReadableUrlArticles(bool autoGeneratePartialLink = true)
         {
             var regulars = new List<int>();
+            var excludeRegulars = new List<int>();
             var state = new ListingState();
             state.RecordsPerPage = 10000;
 
             state.SortDirection = SortDir.Descending;
             state.SortField = "Id";
 
-            var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId);
+            var articles = articleDB.ListArticles(PublishFlag, null, null, regulars, state, LanguageId, excludeRegulars);
             var count = 0;
             foreach (var a in articles.Where(ar => string.IsNullOrWhiteSpace(ar.HumanReadableUrl)))
             {
@@ -270,21 +271,26 @@ namespace One.Net.BLL
             return article;
         }
 
-        public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, DateTime? from, DateTime? to, ListingState state, string titleSearch, List<int> excludeRegularIds)
         {
             log.Debug("ListArticles:" + regularIds.ToArray().ToString());
+
             PagedList<BOArticle> articles = null;
+
             if (string.IsNullOrEmpty(titleSearch))
-                articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId);
+            {
+                articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, excludeRegularIds);
+            }
             else
             {
-                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds);
+                articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds, excludeRegularIds);
             }
 
             foreach (BOArticle article in articles)
             {
                 article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
             }
+
             return articles;
         }
 
@@ -293,7 +299,7 @@ namespace One.Net.BLL
         /// Uses delegate SingleArticleGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public PagedList<BOArticle> ListArticles(List<int> regularIds, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear, List<int> excludeRegularIds)
         {
             DateTime? from = null;
             DateTime? to = null;
@@ -315,7 +321,7 @@ namespace One.Net.BLL
             }
 
             PagedList<BOArticle> articles = null;
-            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch; 
+            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch + ":" + string.Join<int>(",", excludeRegularIds); 
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
             bool useCache = PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
 
@@ -333,11 +339,11 @@ namespace One.Net.BLL
                 }
                 if (string.IsNullOrEmpty(titleSearch))
                 {
-                    articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId);
+                    articles = articleDB.ListArticles(PublishFlag, from, to, regularIds, state, LanguageId, excludeRegularIds);
                 }
                 else
                 {
-                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds);
+                    articles = articleDB.ListFilteredArticles(PublishFlag, from, to, state, LanguageId, titleSearch, regularIds, excludeRegularIds);
                 }
                 if (!isRandomSort)
                 {

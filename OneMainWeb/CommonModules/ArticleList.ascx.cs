@@ -28,6 +28,15 @@ namespace OneMainWeb.CommonModules
         #region Settings
 
         [Setting(SettingType.CSInteger)]
+        public List<int> ExcludeCategoriesList
+        {
+            get
+            {
+                return GetIntegerListSetting("ExcludeCategoriesList");
+            }
+        }
+
+        [Setting(SettingType.CSInteger)]
         public List<int> CategoriesList 
         { 
             get 
@@ -170,7 +179,7 @@ namespace OneMainWeb.CommonModules
                     SortByColumn);
             listingState.OffSet = OffSet;
 
-            var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear);
+            var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear, ExcludeCategoriesList);
 
             RepeaterArticles.DataSource = articles;
             RepeaterArticles.DataBind();
