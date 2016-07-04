@@ -126,9 +126,13 @@ namespace One.Net.BLL.Service
             var webSiteB = new BWebsite();
             var instance = webSiteB.GetModuleInstance(instanceId, false);
 
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Int32.Parse(postedContentTemplate.LanguageId));
+
             var templateId = 0;
             if (instance != null && instance.Settings != null && instance.Settings.ContainsKey("TemplateId"))
                 templateId = int.Parse(instance.Settings["TemplateId"].Value);
+            else
+                int.TryParse(postedContentTemplate.TemplateId, out templateId);
 
             var dtoTemplate = this.GetTemplate(templateId);
 
@@ -407,6 +411,12 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string ContentTemplateId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string TemplateId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string LanguageId { get; set; }
 
         [DataMember, JsonProperty]
         public string DateCreated { get; set; }

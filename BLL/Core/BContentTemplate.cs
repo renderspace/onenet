@@ -36,15 +36,17 @@ namespace One.Net.BLL
             var instance = webSiteB.GetModuleInstance(moduleInstanceId);
 
             var contentTemplateId = 0;
-            if (instance.Settings.ContainsKey("ContentTemplateId"))
+            if (instance != null && instance.Settings != null && instance.Settings.ContainsKey("ContentTemplateId"))
+            {
                 contentTemplateId = Int32.Parse(instance.Settings["ContentTemplateId"].Value.ToString());
 
-            if (instance != null && instance.Settings != null && contentTemplateId <= 0)
-            {
-                instance.Settings["ContentTemplateId"] = new BOSetting("ContentTemplateId", SettingTypeEnum.Int, contentTemplate.Id.Value.ToString(), VisibilityEnum.SPECIAL);
-            }
+                if (contentTemplateId < 1)
+                {
+                    instance.Settings["ContentTemplateId"] = new BOSetting("ContentTemplateId", SettingTypeEnum.Int, contentTemplate.Id.Value.ToString(), VisibilityEnum.SPECIAL);
+                }
 
-            webSiteB.ChangeModuleInstance(instance);
+                webSiteB.ChangeModuleInstance(instance);
+            }
         }
 
         public void ChangeContentTemplate(BOContentTemplate contentTemplate)

@@ -739,6 +739,7 @@ $(document).ready(function () {
 
             contentTemplate['InstanceId'] = $(".j_control_content_template_instance_id").val();
             contentTemplate['TemplateId'] = $(".j_control_template_id").val();
+            contentTemplate['LanguageId'] = languageId;
             contentTemplate['PrincipalModified'] = $('.j_control_principal').val();
 
             var contentFields = [];
