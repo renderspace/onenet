@@ -1460,6 +1460,11 @@ namespace One.Net.BLL
                                         instance.Settings[key].Value = instance.Settings[key].Value.Remove(0, fromPageUri.Length);
                                     }
                                 }
+                                else if (key == "ContentTemplateId")
+                                {
+                                    // for template content module, copying is not allowed.
+                                    instance.Settings[key].Value = "0";
+                                }
                             }
                         }
 
