@@ -777,7 +777,7 @@ ORDER BY name ASC";
 
         public static DataTable ListTopModuleUsage(int id)
         {
-            var result = SqlHelper.ExecuteDataset(SqlHelper.ConnStringMain, CommandType.Text, @"SELECT TOP(20) pages_fk_id AS id
+            var result = SqlHelper.ExecuteDataset(SqlHelper.ConnStringMain, CommandType.Text, @"SELECT TOP(140) pages_fk_id AS id
                 FROM module_instance 
                 WHERE module_fk_id = @id AND pages_fk_publish = 0 AND pending_delete = 0", new SqlParameter("@id", id));
             return result.Tables[0];
