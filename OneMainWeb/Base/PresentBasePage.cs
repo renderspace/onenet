@@ -123,8 +123,8 @@ ga('set', 'anonymizeIp', true)
                     {
                         gaCode += "ga('require', 'displayfeatures')";
                     }
-                    gaCode += @"ga('send', 'pageview')
-
+                    gaCode += @"
+ga('send', 'pageview')
 </script>
 <!-- End Google Analytics -->";
                 }
