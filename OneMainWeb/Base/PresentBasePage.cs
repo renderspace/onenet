@@ -671,7 +671,6 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                         {
                             HtmlLink rssLink = new HtmlLink();
                             rssLink.Attributes.Add("rel", "alternate");
-                            rssLink.Attributes.Add("description", feed.Title);
                             rssLink.Attributes.Add("type", "application/rss+xml");
                             rssLink.Href = pagePath + feed.Id;
                             Page.Header.Controls.Add(rssLink);
