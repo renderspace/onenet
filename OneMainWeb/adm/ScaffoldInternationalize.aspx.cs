@@ -127,6 +127,7 @@ namespace OneMainWeb.adm
             table.Columns.Add(new DataColumn { ColumnName = "Id", Caption = "Id", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ColumnType", Caption = "ColumnType", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ShowOnList", Caption = "ShowOnList", ReadOnly = false });
+            table.Columns.Add(new DataColumn { ColumnName = "EnableSearch", Caption = "EnableSearch", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "IsWysiwyg", Caption = "Wysiwyg", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "IsMultiLanguageContent", Caption = "Multilanguage", ReadOnly = false });
 
@@ -139,6 +140,7 @@ namespace OneMainWeb.adm
                 row["Id"] = column.Id;
                 row["ColumnType"] = "virtual_column";
                 row["ShowOnList"] = column.ShowOnList;
+                row["EnableSearch"] = column.EnableSearch;
                 row["IsWysiwyg"] = column.IsWysiwyg;
                 row["IsMultiLanguageContent"] = column.IsMultiLanguageContent;
                 table.Rows.Add(row);

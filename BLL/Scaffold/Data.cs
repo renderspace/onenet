@@ -49,6 +49,7 @@ namespace One.Net.BLL.Scaffold
 
                 // TODO: probably exclude this one from select, too
                 column.ExtendedProperties.Add("ShowOnList", field.ShowOnList);
+                column.ExtendedProperties.Add("EnableSearch", field.EnableSearch);
 
                 if (field.IsMultiLanguageContent && field.IsPartOfUserView && field.ShowOnList)
                 {
@@ -125,6 +126,7 @@ namespace One.Net.BLL.Scaffold
                 };
                 // TODO: this was a hack
                 column.ExtendedProperties.Add("ShowOnList", relation.ShowOnList);
+
                 column.ExtendedProperties.Add("Relation", true);
                 table.Columns.Add(column);
             }

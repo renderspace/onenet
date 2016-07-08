@@ -137,6 +137,11 @@
                                     <asp:CheckBox ID="CheckBoxShowOnList" runat="server" Checked='<%# bool.Parse((string)Eval("ShowOnList")) %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>                    
+                            <asp:TemplateField HeaderText="Enable search">
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="CheckBoxEnableSearch" runat="server" Checked='<%# bool.Parse((string)Eval("EnableSearch")) %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField HeaderText="Id" DataField="Id" />
                             <asp:BoundField HeaderText="Column type" DataField="ColumnType" /> 
                             <asp:TemplateField>

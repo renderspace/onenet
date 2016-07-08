@@ -169,6 +169,13 @@ namespace OneMainWeb.adm
             SelectItem(primaryKey, id);
         }
 
+        protected void ButtonDisplayBySearchable_Click(object sender, EventArgs e)
+        {
+            var searchText = TextBoxSearchable.Text;
+
+
+        }
+
         protected void ButtonDisplayById_Click(object sender, EventArgs e)
         {
             var id = 0;
