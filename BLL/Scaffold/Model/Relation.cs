@@ -9,6 +9,7 @@ namespace One.Net.BLL.Scaffold.Model
     {
         public int Id { get; set; }
         public bool ShowOnList { get; set; }
+        public bool EnableSearch { get; set; }
 
         private string friendlyName = "";
         public string FriendlyName

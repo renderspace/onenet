@@ -117,8 +117,10 @@ namespace OneMainWeb.adm
             table.Columns.Add(new DataColumn { ColumnName = "Id", Caption = "Id", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ColumnType", Caption = "ColumnType", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "ShowOnList", Caption = "ShowOnList", ReadOnly = false });
+            table.Columns.Add(new DataColumn { ColumnName = "EnableSearch", Caption = "EnableSearch", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "IsWysiwyg", Caption = "Wysiwyg", ReadOnly = false });
             table.Columns.Add(new DataColumn { ColumnName = "IsMultiLanguageContent", Caption = "Multilanguage", ReadOnly = false });
+            table.Columns.Add(new DataColumn { ColumnName = "IsPartOfPrimaryKey", Caption = "IsPartOfPrimaryKey", ReadOnly = false });
 
             /*
             var dataKeyNames = new List<string>();
@@ -131,28 +133,36 @@ namespace OneMainWeb.adm
             foreach (var column in virtualTable.VirtualColumns.Where(v => v.IsPartOfUserView == true))
             {
                 var row = table.NewRow();
+
                 row["Description"] = column.Description;
                 row["FriendlyName"] = column.FriendlyName;
                 row["DbType"] = column.DbType;
                 row["Id"] = column.Id;
                 row["ColumnType"] = "virtual_column";
                 row["ShowOnList"] = column.ShowOnList;
+                row["EnableSearch"] = column.EnableSearch;
                 row["IsWysiwyg"] = column.IsWysiwyg;
                 row["IsMultiLanguageContent"] = column.IsMultiLanguageContent;
+                row["IsPartOfPrimaryKey"] = column.IsPartOfPrimaryKey;
+
                 table.Rows.Add(row);
             }
 
             foreach (var relation in virtualTable.Relations)
             {
                 var row = table.NewRow();
+
                 row["Description"] = relation.Description;
                 row["FriendlyName"] = relation.FriendlyName;
                 row["DbType"] = "";
                 row["Id"] = relation.Id;
                 row["ColumnType"] = "virtual_relation";
                 row["ShowOnList"] = relation.ShowOnList;
+                row["EnableSearch"] = relation.EnableSearch;
                 row["IsWysiwyg"] = false;
                 row["IsMultiLanguageContent"] = false;
+                row["IsPartOfPrimaryKey"] = false;
+
                 table.Rows.Add(row);
             }
 
@@ -343,11 +353,12 @@ namespace OneMainWeb.adm
             {
                 var CmdDelete = row.FindControl("CmdDelete") as IButtonControl;
                 var CheckBoxShowOnList = row.FindControl("CheckBoxShowOnList") as CheckBox;
+                var CheckBoxEnableSearch = row.FindControl("CheckBoxEnableSearch") as CheckBox;
                 var CheckBoxWysiwyg = row.FindControl("CheckBoxWysiwyg") as CheckBox;
                 var TextBoxFriendlyName = row.FindControl("TextBoxFriendlyName") as TextBox;
                 var CheckBoxIsMultiLanguageContent = row.FindControl("CheckBoxIsMultiLanguageContent") as CheckBox;
 
-                if (CmdDelete != null && CheckBoxShowOnList != null && TextBoxFriendlyName != null)
+                if (CmdDelete != null && CheckBoxEnableSearch != null && CheckBoxShowOnList != null && TextBoxFriendlyName != null)
                 {
                     var idRaw = CmdDelete.CommandArgument.ToString(); // the command argument is given in {id, type} form in this case
                     var indexOfComma = idRaw.IndexOf(',');
@@ -363,6 +374,7 @@ namespace OneMainWeb.adm
                         {
                             virtualColumn.FriendlyName = TextBoxFriendlyName.Text;
                             virtualColumn.ShowOnList = CheckBoxShowOnList.Checked;
+                            virtualColumn.EnableSearch = CheckBoxEnableSearch.Checked;
                             virtualColumn.IsWysiwyg = CheckBoxWysiwyg.Checked;
                             virtualColumn.IsMultiLanguageContent = CheckBoxIsMultiLanguageContent.Checked;
                             Schema.ChangeVirtualColumn(virtualColumn);
@@ -386,12 +398,23 @@ namespace OneMainWeb.adm
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                DropDownList DropDownListDbType = e.Row.FindControl("DropDownListDbType") as DropDownList;
-                DataRow row = e.Row.DataItem as DataRow;
+                // DropDownList DropDownListDbType = e.Row.FindControl("DropDownListDbType") as DropDownList;
+                DataRow row = ((DataRowView)e.Row.DataItem).Row;
+                CheckBox CheckBoxEnableSearch = e.Row.FindControl("CheckBoxEnableSearch") as CheckBox;
 
-                if (DropDownListDbType != null && row != null)
+                if (/*DropDownListDbType != null &&*/ row != null && CheckBoxEnableSearch != null)
                 {
-                    DropDownListDbType.Visible = row["ColumnType"].ToString() == "virtual_column";
+                    // DropDownListDbType.Visible = row["ColumnType"].ToString() == "virtual_column";
+                    if (row["ColumnType"].ToString() == "virtual_column") {
+                        var isPartOfPrimaryKey = bool.Parse(row["IsPartOfPrimaryKey"].ToString());
+                        var isMultiLanguageContent = bool.Parse(row["IsMultiLanguageContent"].ToString());
+                        var dbType = (DataType)Enum.Parse(typeof(DataType), row["DbType"].ToString());
+
+                        CheckBoxEnableSearch.Visible = !isPartOfPrimaryKey && !isMultiLanguageContent && (dbType == DataType.Int || dbType == DataType.String);
+                    } else
+                    {
+                        CheckBoxEnableSearch.Visible = false;
+                    }
                 }
             }
         }
@@ -409,6 +432,7 @@ namespace OneMainWeb.adm
                 newVirtualColumn.VirtualTableId = SelectedVirtualTableId.Value;
                 newVirtualColumn.DbType = virtualColumn.DbType;
                 newVirtualColumn.ShowOnList = true;
+                newVirtualColumn.EnableSearch = false;
                 Schema.ChangeVirtualColumn(newVirtualColumn);
             }
             DataBindMultiView2Controls();
@@ -431,6 +455,7 @@ namespace OneMainWeb.adm
                 newVirtualColumn.VirtualTableId = SelectedVirtualTableId.Value;
                 newVirtualColumn.DbType = virtualColumn.DbType;
                 newVirtualColumn.ShowOnList = true;
+                newVirtualColumn.EnableSearch = false;
                 Schema.ChangeVirtualColumn(newVirtualColumn);
 
                 DataBindMultiView2Controls();

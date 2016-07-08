@@ -19,6 +19,10 @@
                 <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID" CssClass="required digits "></asp:TextBox>
                 <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" CssClass="btn btn-info causesValidation" />
 			</div>
+			<div class="col-md-6 validationGroup">
+                <asp:TextBox ID="TextBoxSearchable" runat="server" placeholder="Search by searchable fields" CssClass="required digits "></asp:TextBox>
+                <asp:LinkButton ID="ButtonDisplayBySearchable" runat="server" Text="Display by searchable" OnClick="ButtonDisplayBySearchable_Click" CssClass="btn btn-info causesValidation" />
+			</div>
 			<div class="col-md-2">
                 <asp:LinkButton ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="Export to Excel" CssClass="btn btn-info" />
 			 </div>

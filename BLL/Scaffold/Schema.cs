@@ -66,6 +66,7 @@ namespace One.Net.BLL.Scaffold
                             newVirtualColumn.IsWysiwyg = virtualColumn.IsWysiwyg;
                             newVirtualColumn.IsMultiLanguageContent = true;
                             newVirtualColumn.ShowOnList = virtualColumn.ShowOnList;
+                            newVirtualColumn.EnableSearch = virtualColumn.EnableSearch;
 
                             Schema.ChangeVirtualColumn(newVirtualColumn);
                         }
@@ -204,7 +205,7 @@ namespace One.Net.BLL.Scaffold
             {
                 var physicalColumns = virtualTable.VirtualColumns;
                 using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTable.Id)))
+                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, enable_search, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTable.Id)))
                 {
                     while (reader.Read())
                     {
@@ -225,6 +226,7 @@ namespace One.Net.BLL.Scaffold
                         virtualColumn.IsPartOfUserView = true;
 
                         virtualColumn.ShowOnList = (bool)reader["show_on_list"];
+                        virtualColumn.EnableSearch = (bool)reader["enable_search"];
                     }
                 }
             }
@@ -268,7 +270,7 @@ namespace One.Net.BLL.Scaffold
             if (physicalColumns.Count() > 0)
             {
                 using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text,
-                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTableId)))
+                    "SELECT id, col_name, form_type, friendly_name, is_multilanguage_content, show_on_list, enable_search, is_wysiwyg FROM _virtual_col WHERE virtual_table_id = @Id", new SqlParameter("@Id", virtualTableId)))
                 {
                     while (reader.Read())
                     {
@@ -284,6 +286,7 @@ namespace One.Net.BLL.Scaffold
                         virtualColumn.IsPartOfUserView = true;
 
                         virtualColumn.ShowOnList = (bool)reader["show_on_list"];
+                        virtualColumn.EnableSearch = (bool)reader["enable_search"];
                     }
                 }
             }
@@ -338,6 +341,7 @@ namespace One.Net.BLL.Scaffold
 				new SqlParameter("@FormType", virtualColumn.DbType.ToString()),
                 new SqlParameter("@IsMultilanguageContent", virtualColumn.IsMultiLanguageContent),
                 new SqlParameter("@ShowOnList", virtualColumn.ShowOnList),
+                new SqlParameter("@EnableSearch", virtualColumn.EnableSearch),
                 new SqlParameter("@FriendlyName", virtualColumn.FriendlyName),
                 new SqlParameter("@Wysiwyg", virtualColumn.IsWysiwyg)
 			};
@@ -346,8 +350,8 @@ namespace One.Net.BLL.Scaffold
                 p[0].Direction = ParameterDirection.Output;
 
             var sql = virtualColumn.Id > 0
-                          ? "UPDATE _virtual_col SET is_wysiwyg = @Wysiwyg, friendly_name = @FriendlyName, virtual_table_id = @VirtualTableId, col_name = @Name, form_type = @FormType, is_multilanguage_content = @IsMultilanguageContent, show_on_list=@ShowOnList WHERE id = @Id"
-                          : "INSERT INTO _virtual_col (is_wysiwyg, friendly_name, virtual_table_id,col_name,form_type,is_multilanguage_content, show_on_list) VALUES (@Wysiwyg, @FriendlyName, @VirtualTableId, @Name, @FormType, @IsMultilanguageContent, @ShowOnList); SET @Id = (SELECT @@IDENTITY) ";
+                          ? "UPDATE _virtual_col SET is_wysiwyg = @Wysiwyg, friendly_name = @FriendlyName, virtual_table_id = @VirtualTableId, col_name = @Name, form_type = @FormType, is_multilanguage_content = @IsMultilanguageContent, show_on_list=@ShowOnList, enable_search=@EnableSearch WHERE id = @Id"
+                          : "INSERT INTO _virtual_col (is_wysiwyg, friendly_name, virtual_table_id,col_name,form_type,is_multilanguage_content, show_on_list, enable_search) VALUES (@Wysiwyg, @FriendlyName, @VirtualTableId, @Name, @FormType, @IsMultilanguageContent, @ShowOnList, @EnableSearch); SET @Id = (SELECT @@IDENTITY) ";
 
             var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text, sql, p);
 
@@ -364,7 +368,7 @@ namespace One.Net.BLL.Scaffold
                 new SqlParameter("@Id", relation.Id),
 				new SqlParameter("@FriendlyName", relation.FriendlyName),
                 new SqlParameter("@ShowOnList", relation.ShowOnList)
-			};
+            };
 
             var result = SqlHelper.ExecuteNonQuery(Schema.ConnectionString, CommandType.Text,
              "UPDATE _virtual_relation SET friendly_name = @FriendlyName, show_on_list = @ShowOnList WHERE id = @Id", p);
@@ -497,7 +501,6 @@ namespace One.Net.BLL.Scaffold
                 FriendlyName = (string)reader["friendly_name"],
                 ShowOnList = (bool)reader["show_on_list"]
             };
-
 
             var primaryKeysOnForeignKeySourcTable = ListPrimaryKeys(relation.PrimaryKeySourceTableName);
 
