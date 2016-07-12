@@ -54,7 +54,7 @@ namespace One.Net.BLL.Scaffold
                     column.DataType = typeof(DateTime);
                 }
 
-                if (field.IsMultiLanguageContent && field.IsPartOfUserView && field.ShowOnList)
+                if (field.IsMultiLanguageContent && ((field.IsPartOfUserView && field.ShowOnList) || typedOutput))
                 {
                     field.Ordinal = i++;
                     var contentAlias = "cds" + field.Ordinal;
@@ -78,7 +78,7 @@ namespace One.Net.BLL.Scaffold
                     dataKeyNames.Add(field.FQName);
                     table.Columns.Add(column);
                 }
-                else if (field.IsPartOfUserView && field.ShowOnList)
+                else if ((field.IsPartOfUserView && field.ShowOnList) || typedOutput)
                 {
                     field.Ordinal = i++;
                     table.Columns.Add(column);
