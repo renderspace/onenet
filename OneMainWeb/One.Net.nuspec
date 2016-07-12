@@ -28,7 +28,7 @@
           <dependency id="MsSqlDBUtility"  />
           <dependency id="CKFinder.library"  />
           <dependency id="NLog" version="4.0.0" />
-  
+
         </dependencies>
     </metadata>
     <files>
