@@ -36,7 +36,7 @@ namespace OneMainWeb.Utils
                     FirstRecordIndex = (p - 1) * c
                 };
 
-                var table = Data.ListItems(vtId, state);
+                var table = Data.ListItems(vtId, state, null, true);
 
                 foreach (DataColumn col in table.Columns)
                 {
@@ -47,6 +47,8 @@ namespace OneMainWeb.Utils
                 {
                     var output = Serialize(table);
                     context.Response.ContentType = "application/json";
+
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:3000");
                     context.Response.Write(output);
                 }
             }

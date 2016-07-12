@@ -20,7 +20,7 @@ namespace One.Net.BLL.Scaffold
 
         static readonly BInternalContent intContentB = new BInternalContent();
 
-        public static DataTable ListItems(int virtualTableId, ListingState state, ForeignKeyFilter filter = null)
+        public static DataTable ListItems(int virtualTableId, ListingState state, ForeignKeyFilter filter = null, bool typedOutput = false)
         {
             var virtualTable = Schema.GetVirtualTable(virtualTableId);
             var table = (virtualTable == null) ? new DataTable() : new DataTable(virtualTable.StartingPhysicalTable);
@@ -49,12 +49,15 @@ namespace One.Net.BLL.Scaffold
 
                 // TODO: probably exclude this one from select, too
                 column.ExtendedProperties.Add("ShowOnList", field.ShowOnList);
+                if (typedOutput && field.DbType == DataType.DateTime)
+                {
+                    column.DataType = typeof(DateTime);
+                }
 
                 if (field.IsMultiLanguageContent && field.IsPartOfUserView && field.ShowOnList)
                 {
                     field.Ordinal = i++;
                     var contentAlias = "cds" + field.Ordinal;
-
                     table.Columns.Add(column);
                     mainSql += contentAlias + ".[html], ";
                     cteFieldsList += field.Name + ", ";
@@ -207,20 +210,44 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                                 else
                                 {
                                     var d = (DateTime)f;
-                                    var formattedDate = "";
-                                    formattedDate = d.ToShortDateString();
-                                    if (d.ToShortTimeString() != "00:00")
-                                        formattedDate += " " + d.ToShortTimeString();
-                                    row[field.FQName] = formattedDate;
+                                    
+                                    if (typedOutput)
+                                    {
+                                        row[field.FQName] = d; //.UnixTicks().ToString();
+                                    }
+                                    else
+                                    {
+                                        var formattedDate = "";
+                                        formattedDate = d.ToShortDateString();
+                                        if (d.ToShortTimeString() != "00:00")
+                                            formattedDate += " " + d.ToShortTimeString();
+                                        row[field.FQName] = formattedDate;
+                                    }
+                                    
                                 }
                             }
                             if (field.DbType == DataType.Date)
                             {
-                                row[field.FQName] = ((DateTime) f).ToShortDateString();
+                                if (typedOutput)
+                                {
+                                    row[field.FQName] = ((DateTime)f);
+                                }
+                                else
+                                {
+                                    row[field.FQName] = ((DateTime)f).ToShortDateString();
+                                }
+                                
                             }
                             if (field.DbType == DataType.Time)
                             {
-                                row[field.FQName] = ((TimeSpan)f).ToString(@"hh\:mm");
+                                if (typedOutput)
+                                {
+                                    row[field.FQName] = ((TimeSpan)f);
+                                }
+                                else
+                                {
+                                    row[field.FQName] = ((TimeSpan)f).ToString(@"hh\:mm");
+                                }
                             }
                         }
                     }
