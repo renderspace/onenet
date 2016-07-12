@@ -95,7 +95,7 @@ namespace One.Net.BLL
 
         public static string GetHtmlAttributeValue(string str, string name)
         {
-            string regex = @"[\s]{1}" + @name + @"=""[\w\d\s=@\-\#/\.:;?_,\(\)&]*""";
+            string regex = @"[\s]{1}" + @name + @"=""[\w\d\s=@\-\#/\.:;?_,\(\)&^\x00-\x80]*""";
             Regex finder = new Regex(regex, RegexOptions.IgnoreCase);
             MatchCollection matches = finder.Matches(str);
             if (matches.Count < 1)
