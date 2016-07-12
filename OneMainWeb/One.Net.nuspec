@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.3.50</version>
+        <version>3.3.51</version>
         <title>One.NET</title>
         <authors>samof</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -20,7 +20,7 @@
           <dependency id="Microsoft.Owin.Security.OAuth" version="3.0.1" />
           <dependency id="Microsoft.Owin.Security.Cookies" version="3.0.1" />
           
-          <dependency id="Newtonsoft.Json" version="7.0.0.0" />
+          <dependency id="Newtonsoft.Json" version="9.0.1" />
           <dependency id="Microsoft.Web.Administration" version="7.0.0" />
           <dependency id="StackExchange.Redis" version="1.0" />
         
