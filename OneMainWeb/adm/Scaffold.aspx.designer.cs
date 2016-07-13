@@ -49,22 +49,22 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonInsert;
         
         /// <summary>
-        /// TextBoxId control.
+        /// TextBoxSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxId;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxSearch;
         
         /// <summary>
-        /// ButtonDisplayById control.
+        /// ButtonSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        protected global::System.Web.UI.WebControls.LinkButton ButtonSearch;
         
         /// <summary>
         /// ButtonExportToExcel control.
