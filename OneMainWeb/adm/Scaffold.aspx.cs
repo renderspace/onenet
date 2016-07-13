@@ -230,7 +230,7 @@ namespace OneMainWeb.adm
         public void PostbackPager1_Command(object sender, CommandEventArgs e)
         {
             PostbackPager1.SelectedPage = Convert.ToInt32(e.CommandArgument);
-            GridViewItemsDataBind();
+            GridViewItemsDataBind(TextBoxSearch.Text.Trim());
         }
 
         protected void DynamicEditor1_Canceled(object sender, EventArgs e)
