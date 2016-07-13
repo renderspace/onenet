@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.3.53</version>
+        <version>3.4.1</version>
         <title>One.NET</title>
         <authors>samof</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -24,8 +24,8 @@
           <dependency id="Microsoft.Web.Administration" version="7.0.0" />
           <dependency id="StackExchange.Redis" version="1.0" />
         
-          <dependency id="AdaptedCSSFriendly"  />
-          <dependency id="MsSqlDBUtility"  />
+          <dependency id="AdaptedCSSFriendly" version="1.1.1"  />
+          <dependency id="MsSqlDBUtility" version="1.1.1"  />
           <dependency id="CKFinder.library"  />
           <dependency id="NLog" version="4.0.0" />
 

@@ -48,6 +48,14 @@ namespace One.Net.BLL.Scaffold.Model
             }
         }
 
+        public bool HasSearchColumns
+        {
+            get
+            {
+                return VirtualColumns.Where(vc => vc.EnableSearch).Count() > 0;
+            }
+        }
+
         public List<VirtualColumn> VirtualColumns { get; set; }
         public List<Relation> Relations { get; set; }
 

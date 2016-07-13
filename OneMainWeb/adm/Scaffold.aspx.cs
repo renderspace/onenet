@@ -57,7 +57,7 @@ namespace OneMainWeb.adm
             }
         }
 
-        private void GridViewItemsDataBind()
+        private void GridViewItemsDataBind(string searchTerm = "")
         {
             ButtonInsert.Visible = ButtonInsert.Enabled = ButtonExportToExcel.Visible =
                 ButtonDeleteSelected.Visible = PostbackPager1.Visible = false;
@@ -68,6 +68,15 @@ namespace OneMainWeb.adm
 
                 if (virtualTable != null)
                 {
+
+                    var searchableFields = virtualTable.VirtualColumns.Where(vc => vc.EnableSearch);
+                    var placholder = "Search by: ID, ";
+                    foreach (var field in searchableFields)
+                    {
+                        placholder += field.Name + ", ";
+                    }
+                    TextBoxSearch.Attributes["placeholder"] = placholder.Substring(0, placholder.Length - 2);
+
                     var state = new ListingState
                     {
                         RecordsPerPage = virtualTable.HasPager ? PostbackPager1.RecordsPerPage : 10000,
@@ -92,7 +101,7 @@ namespace OneMainWeb.adm
                         ButtonInsert.Visible = false;
                     }
 
-                    var items = Data.ListItems(VirtualTableId, state);
+                    var items = Data.ListItems(VirtualTableId, state, null, false, searchTerm);
 
                     GridViewItems.Columns.Clear();
                     GridViewItems.DataSource = items;
@@ -171,10 +180,15 @@ namespace OneMainWeb.adm
 
         protected void ButtonSearch_Click(object sender, EventArgs e)
         {
+            var searchTerm = TextBoxSearch.Text.Trim();
+            if (searchTerm.Length > 0)
+            {
+                GridViewItemsDataBind(searchTerm);
+            }
+
             // var searchText = TextBoxSearchable.Text;
 
-            var id = 0;
-            int.TryParse(TextBoxSearch.Text.Trim(), out id);
+            /*
 
             if (id < 1 || GridViewItems.DataKeys.Count < 1)
                 return;
@@ -186,7 +200,7 @@ namespace OneMainWeb.adm
             {
                 primaryKey = partOfPrimaryKey.ToString();
             }
-            SelectItem(primaryKey, id);
+            SelectItem(primaryKey, id); */
         }
 
         protected void SelectItem(string primaryKeyName, int primaryKeyNameValue)
