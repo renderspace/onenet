@@ -36,7 +36,7 @@ namespace OneMainWeb.Utils
                     SortField = ""
                 };
 
-                var items = Data.ListItems(virtualTableId, state);
+                var items = Data.ListItems(virtualTableId, state, null, true);
 
                 sb.Append("<html xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:x=\"urn:schemas-microsoft-com:office:excel\" xmlns=\"http://www.w3.org/TR/REC-html40\">");
                 sb.Append("<head>");

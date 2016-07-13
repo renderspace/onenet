@@ -8,7 +8,7 @@
         <owners>Renderspace d.o.o.</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A simple enterprise content management system</description>
-        <copyright>Copyright © Renderspace d.o.o. 2015</copyright>
+        <copyright>Copyright © Renderspace d.o.o. 2016</copyright>
         <dependencies>
           
           <dependency id="Kentor.OwinCookieSaver" version="1.0.2" />

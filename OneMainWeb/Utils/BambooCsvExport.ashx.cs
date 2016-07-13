@@ -39,7 +39,7 @@ namespace OneMainWeb.Utils
                     SortField = ""
                 };
 
-                var items = Data.ListItems(virtualTableId, state);
+                var items = Data.ListItems(virtualTableId, state, null, true);
 
                 var columns = "";
                 foreach (DataColumn col in items.Columns)
