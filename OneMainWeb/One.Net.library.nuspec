@@ -8,9 +8,9 @@
         <owners>Renderspace d.o.o.</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Files required for building custom modules.</description>
-        <copyright>Copyright © Renderspace d.o.o. 2015</copyright>
+        <copyright>Copyright © Renderspace d.o.o. 2016</copyright>
         <dependencies>
-          <dependency id="Newtonsoft.Json" version="7.0.0.0" />
+          <dependency id="Newtonsoft.Json" version="9.0.1" />
           <dependency id="AdaptedCSSFriendly"  />
           <dependency id="MsSqlDBUtility"  />
           <dependency id="NLog" version="4.0.0.0" />
