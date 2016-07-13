@@ -171,6 +171,8 @@ namespace OneMainWeb.adm
 
         protected void ButtonSearch_Click(object sender, EventArgs e)
         {
+            // var searchText = TextBoxSearchable.Text;
+
             var id = 0;
             int.TryParse(TextBoxSearch.Text.Trim(), out id);
 

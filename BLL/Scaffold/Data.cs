@@ -53,6 +53,7 @@ namespace One.Net.BLL.Scaffold
                 {
                     column.DataType = typeof(DateTime);
                 }
+                column.ExtendedProperties.Add("EnableSearch", field.EnableSearch);
 
                 if (field.IsMultiLanguageContent && ((field.IsPartOfUserView && field.ShowOnList) || typedOutput))
                 {
@@ -128,6 +129,7 @@ namespace One.Net.BLL.Scaffold
                 };
                 // TODO: this was a hack
                 column.ExtendedProperties.Add("ShowOnList", relation.ShowOnList);
+
                 column.ExtendedProperties.Add("Relation", true);
                 table.Columns.Add(column);
             }

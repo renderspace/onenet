@@ -36,6 +36,11 @@
                             <asp:CheckBox Enabled="false"  ID="CheckBoxShowOnList" runat="server" Checked='<%# bool.Parse((string)Eval("ShowOnList")) %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Enable search">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="CheckBoxEnableSearch" runat="server" Checked='<%# bool.Parse((string)Eval("EnableSearch")) %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton ID="CmdInternationalize" runat="server" Text="Internationalize" CommandArgument='<%# Eval("Id") %>' CommandName="internationalize" CssClass="btn btn-danger btn-xs" />
