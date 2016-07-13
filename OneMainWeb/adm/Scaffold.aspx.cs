@@ -169,10 +169,10 @@ namespace OneMainWeb.adm
             SelectItem(primaryKey, id);
         }
 
-        protected void ButtonDisplayById_Click(object sender, EventArgs e)
+        protected void ButtonSearch_Click(object sender, EventArgs e)
         {
             var id = 0;
-            int.TryParse(TextBoxId.Text.Trim(), out id);
+            int.TryParse(TextBoxSearch.Text.Trim(), out id);
 
             if (id < 1 || GridViewItems.DataKeys.Count < 1)
                 return;

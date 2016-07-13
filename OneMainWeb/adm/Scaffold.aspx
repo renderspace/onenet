@@ -16,8 +16,8 @@
                 <asp:LinkButton ID="ButtonInsert" runat="server" onclick="ButtonInsert_Click"  text="<span class='glyphicon glyphicon-plus'></span> Add" CssClass="btn btn-success" />
 			</div>
 			<div class="col-md-6 validationGroup">
-                <asp:TextBox ID="TextBoxId" runat="server" placeholder="Search by ID" CssClass="required digits "></asp:TextBox>
-                <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Display by id" OnClick="ButtonDisplayById_Click" CssClass="btn btn-info causesValidation" />
+                <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search by ID" CssClass="required"></asp:TextBox>
+                <asp:LinkButton ID="ButtonSearch" runat="server" Text="Searcg" OnClick="ButtonSearch_Click" CssClass="btn btn-info causesValidation" />
 			</div>
 			<div class="col-md-2">
                 <asp:LinkButton ID="ButtonExportToExcel" runat="server" onclick="ButtonExportToExcel_Click" Text="Export to Excel" CssClass="btn btn-info" />
