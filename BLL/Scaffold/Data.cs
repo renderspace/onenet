@@ -20,7 +20,7 @@ namespace One.Net.BLL.Scaffold
 
         static readonly BInternalContent intContentB = new BInternalContent();
 
-        public static DataTable ListItems(int virtualTableId, ListingState state, ForeignKeyFilter filter = null, bool typedOutput = false)
+        public static DataTable ListItems(int virtualTableId, ListingState state, ForeignKeyFilter filter = null, bool typedOutput = false, string searchTerm = "")
         {
             var virtualTable = Schema.GetVirtualTable(virtualTableId);
             var table = (virtualTable == null) ? new DataTable() : new DataTable(virtualTable.StartingPhysicalTable);
@@ -156,6 +156,15 @@ namespace One.Net.BLL.Scaffold
     FROM " + virtualTable.StartingPhysicalTable;
             sql += innerJoinSql;
             sql += "\n    WHERE 1=1 " + virtualTable.Condition;
+            var numberOfSearchTerms = 0;
+            if (searchTerm.Length > 0 && virtualTable.HasSearchColumns)
+            {
+                foreach (var vc in virtualColumns.Where(vc => vc.EnableSearch && !vc.IsMultiLanguageContent))
+                {
+                    sql += (numberOfSearchTerms++ == 0 ? "AND " : "OR ") + vc.FQName + " LIKE @searchTerm ";
+                }
+            }
+
             if (filter != null)
             {
                 var foreignKeyColumnName = PhysicalSchema.GetForeignKeyColumnName(filter.PrimaryKeySourceTableName, virtualTable.StartingPhysicalTable);
@@ -177,18 +186,23 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             var debugSql = sql + "\n--------------\n";
 
             table.ExtendedProperties["DataKeyNames"] = dataKeyNames.ToArray();
-            var prm = new SqlParameter[filter != null ? 3 : 2];
-            prm[0] = new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex);
-            prm[1] = new SqlParameter("@toRecordIndex", state.DbToRecordIndex);
 
+
+            var prm = new List<SqlParameter>();
+            prm.Add(new SqlParameter("@fromRecordIndex", state.DbFromRecordIndex));
+            prm.Add(new SqlParameter("@toRecordIndex", state.DbToRecordIndex));
             if (filter != null)
             {
-                prm[2] = new SqlParameter("@PrimaryKeyValue", filter.PrimaryKeyValue);
+                prm.Add(new SqlParameter("@PrimaryKeyValue", filter.PrimaryKeyValue));
             } 
+            if (searchTerm.Length > 0 && virtualTable.HasSearchColumns)
+            {
+                prm.Add(new SqlParameter("@searchTerm", "%" + searchTerm + "%"));
+            }
 
             //try
             //{
-            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, prm))
+            using (var reader = SqlHelper.ExecuteReader(Schema.ConnectionString, CommandType.Text, sql, prm.ToArray()))
             {
                 while (reader.Read())
                 {
