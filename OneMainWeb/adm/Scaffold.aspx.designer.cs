@@ -67,6 +67,15 @@ namespace OneMainWeb.adm {
         protected global::System.Web.UI.WebControls.LinkButton ButtonSearch;
         
         /// <summary>
+        /// ButtonDisplayById control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
+        
+        /// <summary>
         /// ButtonExportToExcel control.
         /// </summary>
         /// <remarks>

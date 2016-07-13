@@ -178,21 +178,12 @@ namespace OneMainWeb.adm
             SelectItem(primaryKey, id);
         }
 
-        protected void ButtonSearch_Click(object sender, EventArgs e)
+        protected void ButtonDisplayById_Click(object sender, EventArgs e)
         {
-            var searchTerm = TextBoxSearch.Text.Trim();
-            if (searchTerm.Length > 0)
-            {
-                GridViewItemsDataBind(searchTerm);
-            }
-
-            // var searchText = TextBoxSearchable.Text;
-
-            /*
-
+            var id = 0;
+            int.TryParse(TextBoxSearch.Text.Trim(), out id);
             if (id < 1 || GridViewItems.DataKeys.Count < 1)
                 return;
-
 
             var primaryKey = "";
             var primaryKeys = (OrderedDictionary)GridViewItems.DataKeys[0].Values;
@@ -200,7 +191,16 @@ namespace OneMainWeb.adm
             {
                 primaryKey = partOfPrimaryKey.ToString();
             }
-            SelectItem(primaryKey, id); */
+            SelectItem(primaryKey, id);
+        }
+
+        protected void ButtonSearch_Click(object sender, EventArgs e)
+        {
+            var searchTerm = TextBoxSearch.Text.Trim();
+            if (searchTerm.Length > 0)
+            {
+                GridViewItemsDataBind(searchTerm);
+            }
         }
 
         protected void SelectItem(string primaryKeyName, int primaryKeyNameValue)
