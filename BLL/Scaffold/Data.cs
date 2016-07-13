@@ -156,6 +156,7 @@ namespace One.Net.BLL.Scaffold
     FROM " + virtualTable.StartingPhysicalTable;
             sql += innerJoinSql;
             sql += "\n    WHERE 1=1 " + virtualTable.Condition;
+
             var numberOfSearchTerms = 0;
             if (searchTerm.Length > 0 && virtualTable.HasSearchColumns)
             {
@@ -163,6 +164,13 @@ namespace One.Net.BLL.Scaffold
                 {
                     sql += (numberOfSearchTerms++ == 0 ? "AND " : "OR ") + vc.FQName + " LIKE @searchTerm ";
                 }
+            }
+
+            var searchById = 0;
+            int.TryParse(searchTerm, out searchById);
+            if (searchById > 0 && virtualTable.PrimaryKeys.Count() > 0)
+            {
+                sql += "OR " + virtualTable.PrimaryKeys.FirstOrDefault() + "=@searchById";
             }
 
             if (filter != null)
@@ -198,6 +206,10 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             if (searchTerm.Length > 0 && virtualTable.HasSearchColumns)
             {
                 prm.Add(new SqlParameter("@searchTerm", "%" + searchTerm + "%"));
+            }
+            if (searchById > 0 && virtualTable.PrimaryKeys.Count() > 0)
+            {
+                prm.Add(new SqlParameter("@searchById", searchById));
             }
 
             //try
