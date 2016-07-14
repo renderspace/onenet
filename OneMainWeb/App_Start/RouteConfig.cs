@@ -12,7 +12,7 @@ namespace OneMainWeb
 {
     public static class RouteConfig
     {
-        private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
+        //private static readonly ServiceRoute FormService = new ServiceRoute("FormService", new WebServiceHostFactory(), typeof(FormService));
         private static readonly ServiceRoute AdminService = new ServiceRoute("AdminService", new WebServiceHostFactory(), typeof(AdminService));
         private static readonly ServiceRoute ScaffoldService = new ServiceRoute("ScaffoldService", new WebServiceHostFactory(), typeof(ScaffoldService));
 
@@ -25,7 +25,7 @@ namespace OneMainWeb
                 routes.Clear();
                 if (!PresentBasePage.ReadPublishFlag())
                 {
-                    routes.Add(FormService);
+                    //routes.Add(FormService);
                     routes.Add(AdminService);
                     routes.Add(ScaffoldService);
                 }
