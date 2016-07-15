@@ -15,7 +15,6 @@ namespace OneMainWeb.CommonModules
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
-        protected BOArticle RequestedArticle;
 
         [Setting(SettingType.CSInteger)]
         public List<int> HiddenTagsList
@@ -87,9 +86,8 @@ namespace OneMainWeb.CommonModules
                 ListImages = originalArticle.Images;
 
                 var article = (BOArticle)originalArticle.Clone();
-                RequestedArticle = article;
 
-                foreach (BOIntContImage image in article.Images.Where(i => i.CssClass.Equals("display-in-gallery", StringComparison.CurrentCultureIgnoreCase)))
+                foreach (BOIntContImage image in ListImages.Where(i => i.CssClass.Equals("display-in-gallery", StringComparison.CurrentCultureIgnoreCase)))
                 {
                     article.RemoveImages.Add(image);
                 }
