@@ -44,9 +44,6 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.String, DefaultValue = "dd.MM.yy")]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
-        [Setting(SettingType.Bool, DefaultValue = "false")]
-        public bool HideImages { get { return GetBooleanSetting("HideImages"); } }
-
         [Setting(SettingType.ImageTemplate, DefaultValue = "0")]
         public BOImageTemplate ThumbTemplate { get { return GetImageTemplate("ThumbTemplate"); } }
 
@@ -92,12 +89,9 @@ namespace OneMainWeb.CommonModules
                 var article = (BOArticle)originalArticle.Clone();
                 RequestedArticle = article;
 
-                if (HideImages)
+                foreach (BOIntContImage image in article.Images.Where(i => i.CssClass.Equals("display-in-gallery", StringComparison.CurrentCultureIgnoreCase)))
                 {
-                    foreach (BOIntContImage image in article.Images)
-                    {
-                        article.RemoveImages.Add(image);
-                    }
+                    article.RemoveImages.Add(image);
                 }
 
                 if (DivTeaserImage != null && ThumbTemplate != null && ListImages.Count > 0)
