@@ -809,6 +809,9 @@
     </None>
     <None Include="Properties\PublishProfiles\intranet.renderspace.si.pubxml" />
     <None Include="Properties\PublishProfiles\prirocnik.renderspace.net.pubxml" />
+    <Content Include="SiteDefault\403.html" />
+    <Content Include="SiteDefault\404.html" />
+    <Content Include="SiteDefault\500.html" />
     <Content Include="SiteDefault\aspx_templates\demo.aspx" />
     <Content Include="SiteDefault\ck.css" />
     <Content Include="SiteDefault\ckstyles.js" />
