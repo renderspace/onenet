@@ -1,4 +1,4 @@
-<%@ Page Language="C#" ValidateRequest="false" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="Forms.adm.Forms" Title="One.NET Forms"  EnableEventValidation="false" %>
+<%@ Page Language="C#" ValidateRequest="false" MasterPageFile="~/OneMain.Master" AutoEventWireup="true" CodeBehind="Forms.aspx.cs" Inherits="OneMainWeb.Forms" Title="One.NET Forms"  EnableEventValidation="false" %>
 <%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Register TagPrefix="one" TagName="Notifier" Src="~/AdminControls/Notifier.ascx" %>
 <%@ Import Namespace="One.Net.BLL"%>
@@ -143,7 +143,7 @@
                                         ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
                                             CssClass="form-control" />
                                     <asp:ObjectDataSource ID="FormTypesSource" runat="server"
-                                        SelectMethod="ListFormTypes" TypeName="Forms.adm.FormHelper">
+                                        SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
                                     </asp:ObjectDataSource>
@@ -158,7 +158,7 @@
                                         ID="ddlUpdateSectionTypes" OnDataBound="ddlUpdateSectionTypes_DataBound" runat="server" DataSourceID="SectionTypesSource"
                                             CssClass="form-control" />
                                     <asp:ObjectDataSource ID="SectionTypesSource" runat="server"
-                                        SelectMethod="ListSectionTypes" TypeName="Forms.adm.FormHelper">
+                                        SelectMethod="ListSectionTypes" TypeName="OneMainWeb.FormHelper">
                                         <SelectParameters>
                                         </SelectParameters>
                                     </asp:ObjectDataSource>
@@ -310,11 +310,19 @@
                                     </div>   
                                 </asp:PlaceHolder>
 
-                                <asp:Panel runat="server" ID="PanelAnswersList" class="form-group">
-                                        <label class="col-sm-3 control-label">Answers one per line</label>
-                                        <div class="col-sm-9">
-                                            <asp:TextBox formnovalidate="formnovalidate" ID="txtAnswers" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
+                                <asp:Panel runat="server" ID="PanelAnswersList" class="row">
+                                        <div class="form-group col-sm-6">
+                                            <label class="col-sm-3 control-label">Answers one per line</label>
+                                            <div class="col-sm-9">
+                                                <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxAnswers" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
+                                            </div>
                                         </div>
+                                        <asp:Panel runat="server" ID="PanelWeights" CssClass="form-group col-sm-6">
+                                            <label class="col-sm-3 control-label">Weights one per line</label>    
+                                            <div class="col-sm-9">
+                                                <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxWeights" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
+                                            </div>
+                                        </asp:Panel>
                                     </asp:Panel>                        
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
