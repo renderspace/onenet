@@ -123,6 +123,15 @@
     <Compile Include="DAL\DbRssFeed.cs" />
     <Compile Include="DAL\DbRSSProviderSql.cs" />
     <Compile Include="DAL\DbWebsite.cs" />
+    <Compile Include="Forms\BForm.cs" />
+    <Compile Include="Forms\BOForm.cs" />
+    <Compile Include="Forms\DbForm.cs" />
+    <Compile Include="Forms\DTOAnswer.cs" />
+    <Compile Include="Forms\DTOForm.cs" />
+    <Compile Include="Forms\DTOQuestion.cs" />
+    <Compile Include="Forms\DTOSection.cs" />
+    <Compile Include="Forms\FormService.cs" />
+    <Compile Include="Forms\IFormService.cs" />
     <Compile Include="Model\Attributes\Setting.cs" />
     <Compile Include="Model\BOArticle.cs" />
     <Compile Include="Model\BOCategory.cs" />
