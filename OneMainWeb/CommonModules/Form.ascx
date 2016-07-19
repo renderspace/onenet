@@ -1,9 +1,9 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Form.ascx.cs" Inherits="OneMainWeb.CommonModules.Form" %>
-<%@ Register TagPrefix="two" Namespace="Forms" Assembly="Forms" %>
+<%@ Register TagPrefix="two" Namespace="One.Net.BLL.WebControls" Assembly="One.Net.BLL" %>
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="One.Net.BLL" %>
-<%@ Import Namespace="Forms.BLL" %>
+<%@ Import Namespace="One.Net.Forms" %>
 
 <script>
 
