@@ -54,47 +54,35 @@ namespace OneMainWeb.CommonModules
             if (!HasHumanReadableUrlParameter)
                 return;
 
-            int articleId = 0;
+            BOArticle article = null;
 
-            BOArticle originalArticle = null;
-
-            if (Request[REQUEST_ARTICLE_ID] != null)
+            if (HasHumanReadableUrlParameter)
             {
-                int.TryParse(Request[REQUEST_ARTICLE_ID], out articleId);
-                originalArticle = articleB.GetArticle(articleId);
-                if (originalArticle != null && !string.IsNullOrWhiteSpace(originalArticle.HumanReadableUrl))
+                var originalArticle = articleB.GetArticle(HumanReadableUrlParameter);
+                if (originalArticle != null)
                 {
-                    var redirectTo = new UrlBuilder(Page);
-                    if (redirectTo.Path.Trim('/').Contains("/"))
-                    {
-                        redirectTo.QueryString.Remove(REQUEST_ARTICLE_ID);
-                        redirectTo.Path = redirectTo.Path.Substring(0, redirectTo.Path.LastIndexOf("/") + 1).Trim('/') + "/" + originalArticle.HumanReadableUrl;
-                        redirectTo.RedirectPermanent();
-                    }
+                    article = originalArticle.Clone() as BOArticle;
                 }
-            } 
-            else if (HasHumanReadableUrlParameter)
-            {
-                originalArticle = articleB.GetArticle(HumanReadableUrlParameter);
             }
 
-            if (originalArticle != null)
+            if (article != null)
             {
+                ListImages = new List<BOIntContImage>();
+
                 if (MultiView1 != null)
                     MultiView1.ActiveViewIndex = 1;
 
-                ListImages = originalArticle.Images;
+                this.Attributes.Add("data-article-id", article.Id.ToString());
 
-                var article = (BOArticle)originalArticle.Clone();
-
-                foreach (BOIntContImage image in ListImages.Where(i => i.CssClass.Equals("display-in-gallery", StringComparison.CurrentCultureIgnoreCase)))
+                foreach (var img in article.ImagesForGallery.ToList())
                 {
-                    article.RemoveImages.Add(image);
+                    ListImages.Add(img);
+                    article.RemoveImages.Add(img);
                 }
 
-                if (DivTeaserImage != null && ThumbTemplate != null && ListImages.Count > 0)
+                if (DivTeaserImage != null && ThumbTemplate != null && article.ImagesNotForGallery.Count() > 0)
                 {
-                    var image = ListImages.FirstOrDefault();
+                    var image = article.ImagesNotForGallery.FirstOrDefault();
                     article.RemoveImages.Add(image);
 
                     DivTeaserImage.Visible = true;
