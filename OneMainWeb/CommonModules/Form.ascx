@@ -28,6 +28,13 @@
 </script>
 
 <div class="validationGroup">
+    <asp:Panel runat="server" CssClass="liner" ID="PanelProgress">
+        <ul>
+            <asp:Literal runat="server" ID="LiteralProgressSteps"/>
+        </ul>
+        
+        <div class="colorliner"><asp:Literal runat="server" ID="LiteralProgress"></asp:Literal></div>
+    </asp:Panel>
     <asp:PlaceHolder ID="PlaceHolderAcutalForm" runat="server" />
     <asp:PlaceHolder ID="PlaceHolderResults" runat="server">
         <h2 runat="server" id="DivFormTitle"></h2>
@@ -43,7 +50,7 @@
 
     <asp:Panel ID="PanelCommands" runat="server" CssClass="form-group form-submit" noid="True">
         <asp:Button ID="cmdPrev" runat="server" Text="prev" OnClick="cmdPrev_Click" CssClass="btn btn-prev" />    
-        <asp:Button ID="cmdNext" runat="server" Text="next" OnClick="cmdNext_Click" CssClass="btn btn-next causesValidation" />    
+        <asp:Button ID="ButtonNext" runat="server" Text="next" OnClick="ButtonNext_Click" CssClass="btn btn-next causesValidation" />    
         <asp:Button ID="cmdSubmit" runat="server" Text="submit" OnClick="cmdSubmit_Click" CssClass="btn btn-submit causesValidation" />    
     </asp:Panel>
 </div>

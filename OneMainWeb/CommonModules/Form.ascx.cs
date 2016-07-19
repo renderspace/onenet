@@ -17,6 +17,7 @@ using One.Net.BLL.Utility;
 using NLog;
 using System.Threading;
 using One.Net.BLL.Model.Attributes;
+using System.Globalization;
 
 namespace OneMainWeb.CommonModules
 {
@@ -128,7 +129,7 @@ namespace OneMainWeb.CommonModules
 
                 cmdSubmit.Text = Translate(cmdSubmit.Text);
                 cmdPrev.Text = Translate(cmdPrev.Text);
-                cmdNext.Text = Translate(cmdNext.Text);
+                ButtonNext.Text = Translate(ButtonNext.Text);
             }
         }
 
@@ -218,9 +219,9 @@ namespace OneMainWeb.CommonModules
         {
             if (FormId > -1 && SessionForm != null)
             {
-                PanelError.Visible = PlaceHolderAcutalForm.Visible = PlaceHolderResults.Visible = false;
-                cmdPrev.Visible = cmdNext.Visible = cmdSubmit.Visible = false;
-                cmdPrev.ValidationGroup = cmdNext.ValidationGroup = cmdSubmit.ValidationGroup = "FormID" + FormId + InstanceId;
+                PanelProgress.Visible = PanelError.Visible = PlaceHolderAcutalForm.Visible = PlaceHolderResults.Visible = false;
+                cmdPrev.Visible = ButtonNext.Visible = cmdSubmit.Visible = false;
+                cmdPrev.ValidationGroup = ButtonNext.ValidationGroup = cmdSubmit.ValidationGroup = "FormID" + FormId + InstanceId;
 
                 if (FormSubmission != null && FormSubmission.CurrentSectionId.HasValue && FormCookie.Value == "1")
                 {
@@ -248,8 +249,8 @@ namespace OneMainWeb.CommonModules
                         PlaceHolderAcutalForm.Controls.Add(h2);
                     }
 
-                    if (!string.IsNullOrEmpty(SessionForm.Description) && 
-                        !FormSubmission.PreviousSectionId.HasValue )
+                    if (!string.IsNullOrEmpty(SessionForm.Description) &&
+                        !FormSubmission.PreviousSectionId.HasValue)
                     {
                         HtmlGenericControl DivDescription = new HtmlGenericControl("div");
                         DivDescription.Attributes.Add("class", "form-desc");
@@ -262,14 +263,14 @@ namespace OneMainWeb.CommonModules
                     // hide show form buttons
                     PanelCommands.Visible = true;
                     cmdPrev.Visible = FormSubmission.PreviousSectionId.HasValue && SessionForm.AllowModifyInSubmission;
-                    cmdNext.Visible = FormSubmission.NextSectionId.HasValue;
+                    ButtonNext.Visible = FormSubmission.NextSectionId.HasValue;
                     if (FormSubmission.NextSectionId.HasValue)
                     {
                         if (SessionForm.Sections.ContainsKey(FormSubmission.CurrentSectionId.Value) &&
                             !string.IsNullOrEmpty(
                                 SessionForm.Sections[FormSubmission.CurrentSectionId.Value].OnClientClick))
                         {
-                            cmdNext.OnClientClick =
+                            ButtonNext.OnClientClick =
                                 SessionForm.Sections[FormSubmission.CurrentSectionId.Value].OnClientClick;
                         }
                     }
@@ -283,7 +284,7 @@ namespace OneMainWeb.CommonModules
                                 SessionForm.Sections[FormSubmission.CurrentSectionId.Value].OnClientClick;
                         }
                     }
-                    cmdSubmit.Visible = !cmdNext.Visible;
+                    cmdSubmit.Visible = !ButtonNext.Visible;
                 }
                 else
                 {
@@ -292,6 +293,11 @@ namespace OneMainWeb.CommonModules
                     DivFormTitle.Visible = true;
                     PanelThankYouNote.Visible = false;
                     DivFormTitle.InnerHtml = SessionForm.Title;
+                    if (SessionForm.FirstSection != null && SessionForm.FirstSection.SectionType == SectionTypes.MultiPage)
+                    {
+                        PanelProgress.Visible = true;
+                        DisplayProgress();
+                    }
 
                     switch (SessionForm.FormType)
                     {
@@ -655,7 +661,7 @@ namespace OneMainWeb.CommonModules
             }   
         }
 
-        protected void cmdNext_Click(object sender, EventArgs e)
+        protected void ButtonNext_Click(object sender, EventArgs e)
         {
             if (IsValidPost())
             {
@@ -675,8 +681,44 @@ namespace OneMainWeb.CommonModules
 
                     PlaceHolderAcutalForm.Controls.Clear();
                     CreateFormControls(false, false);
+                    DisplayProgress();
                 }
             }
+        }
+
+        protected void DisplayProgress()
+        {
+            int progress = 0;
+            if (SessionForm == null)
+                return;
+
+            var currentSectionIdx = SessionForm.GetSectionOrder(FormSubmission.CurrentSectionId.Value);
+
+            if (FormSubmission == null || SessionForm.Sections == null || SessionForm.Sections.Count < 1 || !FormSubmission.CurrentSectionId.HasValue)
+            {
+                progress = 0;
+            }
+            else
+            {
+                progress = (int) (Math.Ceiling((double) currentSectionIdx / SessionForm.Sections.Count)) * 100;
+            }
+
+            var idx = 0;
+            foreach (var s in SessionForm.Sections)
+            {
+                idx++;
+                var currentStepHtml = "";
+                if (idx < currentSectionIdx)
+                {
+                    currentStepHtml = "<li class=\"passed\">" + s.Value.Title + "</li>";
+                }
+                else
+                {
+                    currentStepHtml = "<li>" + s.Value.Title + "</li>";
+                }
+                LiteralProgressSteps.Text += currentStepHtml;
+            }
+            LiteralProgress.Text = string.Format("<span style=\"width: {0} %; \"></span>", progress);
         }
 
         protected void cmdPrev_Click(object sender, EventArgs e)
@@ -719,21 +761,6 @@ namespace OneMainWeb.CommonModules
                     PlaceHolderAcutalForm.Controls.Clear();
                     CreateFormControls(true, submissionOk);
 
-                    // once you show the results... clear the form and the submission
-                    // so if user clicks back they cannot resubmit
-                    if (submissionOk)
-                    {
-                        if (SessionForm.AllowMultipleSubmissions)
-                        {
-                            FormSubmission = null;
-                            SessionForm = null;
-                        }
-                        else
-                        {
-                            FormCookie.Value = "0";
-                        }
-                    }
-
                     if (!string.IsNullOrEmpty(SessionForm.CompletionRedirect) &&
                         (SessionForm.CompletionRedirect.StartsWith("http") ||
                          SessionForm.CompletionRedirect.StartsWith("/")))
@@ -751,10 +778,25 @@ namespace OneMainWeb.CommonModules
 
                         if (SessionForm.FormType == FormTypes.WeightedQuiz)
                         {
-                            builder.QueryString["we"] = FormSubmission.WeightsSum.ToString("N2");
+                            builder.QueryString["we"] = FormSubmission.WeightsSum.ToString(CultureInfo.CreateSpecificCulture("en-GB"));
                         }
 
                         Response.Redirect(builder.ToString(), true);
+                    }
+
+                    // once you show the results... clear the form and the submission
+                    // so if user clicks back they cannot resubmit
+                    if (submissionOk)
+                    {
+                        if (SessionForm.AllowMultipleSubmissions)
+                        {
+                            FormSubmission = null;
+                            SessionForm = null;
+                        }
+                        else
+                        {
+                            FormCookie.Value = "0";
+                        }
                     }
                 }
             }

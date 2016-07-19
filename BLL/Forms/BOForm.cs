@@ -56,6 +56,17 @@ namespace One.Net.Forms
         public DateTime? FirstSubmissionDate { get; set; }
         public DateTime? LastSubmissionDate { get; set; }
 
+        public BOSection FirstSection
+        {
+            get
+            {
+                if (!FirstSectionKey.HasValue)
+                    return null;
+                else
+                    return Sections[FirstSectionKey.Value];
+            }
+        }
+
         public int? FirstSectionKey
         {
             get
@@ -164,7 +175,19 @@ namespace One.Net.Forms
             return null;
         }
 
-
+        public int GetSectionOrder(int sectionId)
+        {
+            var idx = 0;
+            foreach (BOSection section in Sections.Values)
+            {
+                idx++;
+                if (section.Id.Value == sectionId)
+                {
+                    return idx;
+                }
+            }
+            return idx;
+        }
     }
 
     [Serializable]
