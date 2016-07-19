@@ -173,17 +173,7 @@ namespace One.Net.Forms
             paramsToPass[0] = new SqlParameter("@Id", answer.Id);
             paramsToPass[0].Direction = ParameterDirection.Output;
             paramsToPass[0].DbType = DbType.Int32;
-
-            string answerType = "";
-            switch (answer.AnswerType)
-            {
-                case AnswerTypes.Checkbox: answerType = BOAnswer.ANSWER_TYPE_CHECKBOX; break;
-                case AnswerTypes.DropDown: answerType = BOAnswer.ANSWER_TYPE_DROPDOWN; break;
-                case AnswerTypes.Radio: answerType = BOAnswer.ANSWER_TYPE_RADIO; break;
-                case AnswerTypes.SingleFile: answerType = BOAnswer.ANSWER_TYPE_SINGLE_FILE; break;
-                case AnswerTypes.SingleText: answerType = BOAnswer.ANSWER_TYPE_SINGLE_TEXT; break;
-            }
-            paramsToPass[1] = new SqlParameter("@AnswerType", answerType);
+            paramsToPass[1] = new SqlParameter("@AnswerType", Enum.GetName(typeof(AnswerTypes), answer.AnswerType));
 
             string additionalFieldType = "";
             switch (answer.AdditionalFieldType)
@@ -666,16 +656,7 @@ namespace One.Net.Forms
             answer.ParentId = (int)reader["nform_question_fk_id"];
             answer.Title = (string)reader["title"];
             answer.Description = reader["description"] != DBNull.Value ? (string)reader["description"] : "";
-
-            string answerType = (string)reader["answer_type"];
-            switch (answerType)
-            {
-                case BOAnswer.ANSWER_TYPE_CHECKBOX: answer.AnswerType = AnswerTypes.Checkbox; break;
-                case BOAnswer.ANSWER_TYPE_DROPDOWN: answer.AnswerType = AnswerTypes.DropDown; break;
-                case BOAnswer.ANSWER_TYPE_RADIO: answer.AnswerType = AnswerTypes.Radio; break;
-                case BOAnswer.ANSWER_TYPE_SINGLE_FILE: answer.AnswerType = AnswerTypes.SingleFile; break;
-                case BOAnswer.ANSWER_TYPE_SINGLE_TEXT: answer.AnswerType = AnswerTypes.SingleText; break;
-            }
+            answer.AnswerType = (AnswerTypes)Enum.Parse(typeof(AnswerTypes), (string)reader["answer_type"]);
 
             string additionalFieldType = (string)reader["additional_field_type"];
             switch (additionalFieldType)

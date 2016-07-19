@@ -751,9 +751,8 @@ namespace OneMainWeb.CommonModules
 
                         if (SessionForm.FormType == FormTypes.WeightedQuiz)
                         {
-                            //builder.Query
+                            builder.QueryString["we"] = FormSubmission.WeightsSum.ToString("N2");
                         }
-
 
                         Response.Redirect(builder.ToString(), true);
                     }

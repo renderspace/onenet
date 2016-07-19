@@ -102,25 +102,6 @@ namespace One.Net.Forms
             return null;
         }
 
-        public decimal WeightsSum
-        {
-            get
-            {
-                decimal sum = 0;
-                foreach (BOSection s in Sections.Values)
-                {
-                    foreach (BOQuestion q in Questions)
-                    {
-                        foreach (BOAnswer a in q.Answers.Values)
-                        {
-                            sum += a.Weight;
-                        }
-                    }
-                }
-                return sum;
-            }
-        }
-
         public static BOAnswer FindAnswer(BOForm form, int answerId)
         {
             if (form != null)
@@ -264,11 +245,6 @@ namespace One.Net.Forms
     [Serializable]
     public class BOAnswer : BOElement
     {
-        public const string ANSWER_TYPE_CHECKBOX = "Checkbox";
-        public const string ANSWER_TYPE_SINGLE_TEXT = "SingleText";
-        public const string ANSWER_TYPE_SINGLE_FILE = "SingleFile";
-        public const string ANSWER_TYPE_RADIO = "Radio";
-        public const string ANSWER_TYPE_DROPDOWN = "DropDown";
         public const string ADDITIONAL_FIELD_TYPE_FILE = "File";
         public const string ADDITIONAL_FIELD_TYPE_TEXT = "Text";
         public const string ADDITIONAL_FIELD_TYPE_NONE = "None";
@@ -313,6 +289,22 @@ namespace One.Net.Forms
         public int? Id { get; set; }
         public DateTime? Finished { get; set; }
         public Dictionary<int, BOSubmittedQuestion> SubmittedQuestions { get { return submittedQuestions; } set { submittedQuestions = value; } }
+
+        public decimal WeightsSum
+        {
+            get
+            {
+                decimal sum = 0;
+                foreach (var q in SubmittedQuestions.Values)
+                {
+                    foreach (var a in q.SubmittedAnswers.Values)
+                    {
+                        sum += a.Answer.Weight;
+                    }
+                }
+                return sum;
+            }
+        }
     }
 
     [Serializable]
