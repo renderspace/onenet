@@ -4,7 +4,7 @@ using One.Net.BLL;
 
 namespace One.Net.Forms
 {
-    public enum FormTypes { Polll = 1, Questionaire }
+    public enum FormTypes { Questionaire = 2, WeightedQuiz }
     public enum AnswerTypes { Checkbox = 1, Radio, DropDown, SingleText, SingleFile }
     public enum AdditionalFieldTypes { Text = 1, File, None }
     public enum SectionTypes { SinglePage = 1, MultiPage }
@@ -27,12 +27,9 @@ namespace One.Net.Forms
         public string ThankYouNote { get; set; }
         public string SubTitle { get; set; }
 
-        public const string FORM_TYPE_QUESTIONAIRE = "Questionaire";
-
-        private FormTypes formType = FormTypes.Questionaire;
         private Dictionary<int, BOSection> sections = new Dictionary<int, BOSection>();
 
-        public FormTypes FormType { get { return formType; } set { formType = value; } }
+        public FormTypes FormType { get; set; }
         public Dictionary<int, BOSection> Sections { get { return sections; } set { sections = value; } }
 
         public bool AllowMultipleSubmissions { get; set; }
@@ -103,6 +100,25 @@ namespace One.Net.Forms
             }
 
             return null;
+        }
+
+        public decimal WeightsSum
+        {
+            get
+            {
+                decimal sum = 0;
+                foreach (BOSection s in Sections.Values)
+                {
+                    foreach (BOQuestion q in Questions)
+                    {
+                        foreach (BOAnswer a in q.Answers.Values)
+                        {
+                            sum += a.Weight;
+                        }
+                    }
+                }
+                return sum;
+            }
         }
 
         public static BOAnswer FindAnswer(BOForm form, int answerId)
@@ -262,7 +278,7 @@ namespace One.Net.Forms
 
         public BOAnswer() { }
 
-        public BOAnswer(int id, int? parentId, int idx, string title, AnswerTypes answerType, int maxChars, int numberOfRows, AdditionalFieldTypes additionalFieldType, bool isFakeAnswer)
+        public BOAnswer(int id, int? parentId, int idx, string title, AnswerTypes answerType, int maxChars, int numberOfRows, AdditionalFieldTypes additionalFieldType, bool isFakeAnswer, decimal weight)
         {
             this.Id = id;
             this.ParentId = parentId;
@@ -273,6 +289,7 @@ namespace One.Net.Forms
             this.NumberOfRows = (numberOfRows <= 0 ? (int?)null : numberOfRows);
             this.AdditionalFieldType = additionalFieldType;
             this.IsFake = isFakeAnswer;
+            this.Weight = weight;
         }
 
         public int? MaxChars { get; set; }

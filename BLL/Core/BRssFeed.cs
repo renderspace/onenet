@@ -229,11 +229,9 @@ namespace One.Net.BLL
             }
             catch (Exception ex)
             {
-                return CreateErrorDocument("Exception loading RSS channel:'" + ex.Message + "'");
                 log.Error(ex, "loading RSS channel");
+                return CreateErrorDocument("Exception loading RSS channel:'" + ex.Message + "'");
             }
-
-            return null;
         }
 
         private static string GetMimeType(string fileName)

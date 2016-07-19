@@ -247,13 +247,13 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Label lblFormTypes;
         
         /// <summary>
-        /// ddlFormTypes control.
+        /// DropDownListFormType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFormTypes;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownListFormType;
         
         /// <summary>
         /// FormTypesSource control.
