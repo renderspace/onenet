@@ -13,6 +13,33 @@ namespace OneMainWeb.CommonModules {
     public partial class Form {
         
         /// <summary>
+        /// PanelProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelProgress;
+        
+        /// <summary>
+        /// LiteralProgressSteps control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LiteralProgressSteps;
+        
+        /// <summary>
+        /// LiteralProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LiteralProgress;
+        
+        /// <summary>
         /// PlaceHolderAcutalForm control.
         /// </summary>
         /// <remarks>
@@ -94,13 +121,13 @@ namespace OneMainWeb.CommonModules {
         protected global::System.Web.UI.WebControls.Button cmdPrev;
         
         /// <summary>
-        /// cmdNext control.
+        /// ButtonNext control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cmdNext;
+        protected global::System.Web.UI.WebControls.Button ButtonNext;
         
         /// <summary>
         /// cmdSubmit control.
