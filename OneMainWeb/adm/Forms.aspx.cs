@@ -221,12 +221,12 @@ namespace OneMainWeb
                     plhAddSection.Visible = true;
                 }
 
-                // Now load Session values
+                DropDownListFormType.SelectedValue = Enum.GetName(typeof(FormTypes), SessionForm.FormType);
                 switch (SessionForm.FormType)
                 {
+                    case FormTypes.WeightedQuiz:
                     case FormTypes.Questionaire:
-                        {
-                            ddlFormTypes.SelectedValue = BOForm.FORM_TYPE_QUESTIONAIRE;
+                        {            
                             txtFormThankYouNote.Text = SessionForm.ThankYouNote;
                             txtFormThankYouNote.Visible = true;
 
@@ -249,18 +249,17 @@ namespace OneMainWeb
                 chkAllowMultipleSubmissions.Checked = SessionForm.AllowMultipleSubmissions;
                 InputCompletionRedirect.Text = SessionForm.CompletionRedirect;
 
-                ddlFormTypes.Enabled = (SessionForm.Sections.Count == 0 && SessionForm.SubmissionCount == 0);
+                DropDownListFormType.Enabled = (SessionForm.SubmissionCount == 0);
                 ddlUpdateSectionTypes.Enabled = (SessionForm.Sections.Count <= 1 && SessionForm.SubmissionCount == 0);
             }
         }
 
-        protected void ddlFormTypes_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DropDownListFormType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FormTypes type = FormTypes.Questionaire;
-            // type = (ddlFormTypes.SelectedValue == FormTypes.Poll.ToString() ? FormTypes.Poll : FormTypes.Questionaire);
-
+            var type = (FormTypes)Enum.Parse(typeof(FormTypes), DropDownListFormType.SelectedValue);
             switch (type)
             {
+                case FormTypes.WeightedQuiz:
                 case FormTypes.Questionaire:
                     {
                         txtFormThankYouNote.Visible = true;
@@ -343,57 +342,57 @@ namespace OneMainWeb
                     chkFirstAnswerIsFake.Enabled = true;
                 }
 
-                if (SessionForm.FormType == FormTypes.Questionaire)
+
+                PanelWeights.Visible = SessionForm.FormType == FormTypes.WeightedQuiz;
+
+                divFrontEndQuestionTypes.Visible = true;
+
+                if (radFrontEndQuestionTypes.Items.Count == 0)
                 {
-                    divFrontEndQuestionTypes.Visible = true;
+                    radFrontEndQuestionTypes.DataSource = FormHelper.ListFrontEndQuestionTypes();
+                    radFrontEndQuestionTypes.DataValueField = "Key";
+                    radFrontEndQuestionTypes.DataTextField = "Value";
+                    radFrontEndQuestionTypes.DataBind();
+                    radFrontEndQuestionTypes.SelectedIndex = 0;
+                }
 
-                    if (radFrontEndQuestionTypes.Items.Count == 0)
-                    {
-                        radFrontEndQuestionTypes.DataSource = FormHelper.ListFrontEndQuestionTypes();
-                        radFrontEndQuestionTypes.DataValueField = "Key";
-                        radFrontEndQuestionTypes.DataTextField = "Value";
-                        radFrontEndQuestionTypes.DataBind();
-                        radFrontEndQuestionTypes.SelectedIndex = 0;
-                    }
+                if (radFrontEndQuestionTypes.Items.FindByValue(((int)userQuestionType).ToString()) != null)
+                {
+                    radFrontEndQuestionTypes.SelectedValue = ((int)userQuestionType).ToString();
+                }
 
-                    if (radFrontEndQuestionTypes.Items.FindByValue(((int)userQuestionType).ToString()) != null)
-                    {
-                        radFrontEndQuestionTypes.SelectedValue = ((int)userQuestionType).ToString();
-                    }
-
-                    switch (userQuestionType)
-                    {
-                        case FormHelper.FrontEndQuestionTypes.SingleLineOfText:
+                switch (userQuestionType)
+                {
+                    case FormHelper.FrontEndQuestionTypes.SingleLineOfText:
+                        {
+                            ShowSingleTextLineControls(question);
+                            break;
+                        } 
+                    case FormHelper.FrontEndQuestionTypes.MultiLineText:
+                        {
+                            ShowMultiTextLineControls(question);
+                            break;
+                        } 
+                    case FormHelper.FrontEndQuestionTypes.MenuToChooseFrom:
+                        {
+                            FormHelper.FrontEndMenuTypes presentationType = FormHelper.FrontEndMenuTypes.CheckBox;
+                            if (question.FirstAnswerKey.HasValue && question.FirstAnswerKey.HasValue)
                             {
-                                ShowSingleTextLineControls(question);
-                                break;
-                            } 
-                        case FormHelper.FrontEndQuestionTypes.MultiLineText:
-                            {
-                                ShowMultiTextLineControls(question);
-                                break;
-                            } 
-                        case FormHelper.FrontEndQuestionTypes.MenuToChooseFrom:
-                            {
-                                FormHelper.FrontEndMenuTypes presentationType = FormHelper.FrontEndMenuTypes.CheckBox;
-                                if (question.FirstAnswerKey.HasValue && question.FirstAnswerKey.HasValue)
+                                switch (question.Answers[question.FirstAnswerKey.Value].AnswerType)
                                 {
-                                    switch (question.Answers[question.FirstAnswerKey.Value].AnswerType)
-                                    {
-                                        case AnswerTypes.Checkbox: presentationType = FormHelper.FrontEndMenuTypes.CheckBox; break;
-                                        case AnswerTypes.DropDown: presentationType = FormHelper.FrontEndMenuTypes.DropDown; break;
-                                        case AnswerTypes.Radio: presentationType = FormHelper.FrontEndMenuTypes.Radio; break;
-                                    }
-                                    ShowMenuToChooseFromControls(question, presentationType);
+                                    case AnswerTypes.Checkbox: presentationType = FormHelper.FrontEndMenuTypes.CheckBox; break;
+                                    case AnswerTypes.DropDown: presentationType = FormHelper.FrontEndMenuTypes.DropDown; break;
+                                    case AnswerTypes.Radio: presentationType = FormHelper.FrontEndMenuTypes.Radio; break;
                                 }
-                                break;
-                            } 
-                        case FormHelper.FrontEndQuestionTypes.FileUpload:
-                            {
-                                ShowFileUploadControls(question);
-                                break;
-                            } 
-                    }
+                                ShowMenuToChooseFromControls(question, presentationType);
+                            }
+                            break;
+                        } 
+                    case FormHelper.FrontEndQuestionTypes.FileUpload:
+                        {
+                            ShowFileUploadControls(question);
+                            break;
+                        } 
                 }
             }
         }
@@ -526,14 +525,6 @@ namespace OneMainWeb
         #endregion Initialization
 
         #region First tab methods
-
-        protected void ddlFormTypes_DataBound(object sender, EventArgs e)
-        {
-            foreach (ListItem item in ddlFormTypes.Items)
-            {
-                item.Text = item.Text;
-            }
-        }
 
         protected void ddlUpdateSectionTypes_DataBound(object sender, EventArgs e)
         {
@@ -909,6 +900,7 @@ namespace OneMainWeb
                         answerForSaving.ParentId = questionForSaving.Id;
                         answerForSaving.Id = null;
                         answerForSaving.IsFake = answer.IsFake;
+                        answerForSaving.Weight = answer.Weight;
 
                         questionForSaving.Answers.Add(answer.Id.Value, answerForSaving);
                     }
@@ -988,7 +980,7 @@ namespace OneMainWeb
                 SessionForm.ThankYouNote = txtFormThankYouNote.Text;
                 SessionForm.Description = txtFormDescription.Text;
                 SessionForm.SendToString = txtSendTo.Text;
-                SessionForm.FormType = (FormTypes)Enum.Parse(typeof(FormTypes), ddlFormTypes.SelectedValue);
+                SessionForm.FormType = (FormTypes)Enum.Parse(typeof(FormTypes), DropDownListFormType.SelectedValue);
                 SessionForm.AllowModifyInSubmission = chkAllowModifyInSubmission.Checked;
                 SessionForm.AllowMultipleSubmissions = chkAllowMultipleSubmissions.Checked;
                 SessionForm.CompletionRedirect = InputCompletionRedirect.Text;
@@ -1073,7 +1065,7 @@ namespace OneMainWeb
                 rand = new Random(question.Id.Value);
 
                 // add default answer
-                BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 255, 0, AdditionalFieldTypes.None, false);
+                BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 255, 0, AdditionalFieldTypes.None, false, 0);
                 question.Answers.Add(answer.Id.Value, answer);
                 section.Questions.Add(question.Id.Value, question);
                 txtAddQuestion.Text = "";
@@ -1179,7 +1171,7 @@ namespace OneMainWeb
                                 foreach (string answerText in answerStrings)
                                 {
                                     rand = (question.LastAnswerKey.HasValue ? new Random(question.LastAnswerKey.Value) : new Random());
-                                    BOAnswer answer = new BOAnswer(rand.Next(), question.Id, question.Answers.Count + 1, answerText, answerType, 0, 0, AdditionalFieldTypes.None, false);
+                                    BOAnswer answer = new BOAnswer(rand.Next(), question.Id, question.Answers.Count + 1, answerText, answerType, 0, 0, AdditionalFieldTypes.None, false, 0);
                                     if (weights.Length >= question.Answers.Count + 1)
                                     {
                                         var currentWeight = 0;
@@ -1210,19 +1202,19 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.SingleLineOfText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.MultiLineText:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), FormatTool.GetInteger(txtNumberOfRows.Text), AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, FormatTool.GetInteger(txtMaxChars.Text), FormatTool.GetInteger(txtNumberOfRows.Text), AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.FileUpload:
                         {
                             question.ValidationType = ValidationTypes.None;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleFile, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleFile, 0, 0, AdditionalFieldTypes.None, false, 0);
                             answer.MaxFileSize = (FormatTool.GetInteger(txtMaximumFileSize.Text) <= 0 ? (int?)null : FormatTool.GetInteger(txtMaximumFileSize.Text));
                             foreach (ListItem item in chkAllowedMimeTypes.Items)
                             {
@@ -1237,31 +1229,31 @@ namespace OneMainWeb
                     case FormHelper.FrontEndQuestionTypes.NumericalValue:
                         {
                             question.ValidationType = ValidationTypes.Numeric;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.DateTime:
                         {
                             question.ValidationType = ValidationTypes.DateTime;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Time:
                         {
                             question.ValidationType = ValidationTypes.Time;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Email:
                         {
                             question.ValidationType = ValidationTypes.Email;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                     case FormHelper.FrontEndQuestionTypes.Integer:
                         {
                             question.ValidationType = ValidationTypes.Integer;
-                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false);
+                            BOAnswer answer = new BOAnswer(rand.Next(), question.Id, 1, "", AnswerTypes.SingleText, 0, 0, AdditionalFieldTypes.None, false, 0);
                             question.Answers.Add(answer.Id.Value, answer);
                         } break;
                 }
@@ -1486,7 +1478,7 @@ namespace OneMainWeb
             return formB.GetFormSubmission(submissionId);
         }
 
-        public static List<string> ListFormTypes()
+        public static string[] ListFormTypes()
         {
             return BForm.ListFormTypes();
         }

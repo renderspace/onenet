@@ -458,11 +458,9 @@ namespace One.Net.Forms
             return isSubmissionComplete;
         }
 
-        public static List<string> ListFormTypes()
+        public static string[] ListFormTypes()
         {
-            List<string> types = new List<string>();
-            types.Add(BOForm.FORM_TYPE_QUESTIONAIRE);
-            return types;
+            return Enum.GetNames(typeof(FormTypes));
         }
 
         public static List<string> ListSectionTypes()

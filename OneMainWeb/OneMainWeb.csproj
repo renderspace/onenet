@@ -354,6 +354,20 @@
     <Compile Include="CommonModules\ArticleSingle.ascx.designer.cs">
       <DependentUpon>ArticleSingle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\Form.ascx.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\Form.ascx.designer.cs">
+      <DependentUpon>Form.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\FormSelector.ascx.cs">
+      <DependentUpon>FormSelector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\FormSelector.ascx.designer.cs">
+      <DependentUpon>FormSelector.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\MagnificGallery.ascx.cs">
       <DependentUpon>MagnificGallery.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -509,6 +523,8 @@
     </Content>
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
+    <Content Include="CommonModules\Form.ascx" />
+    <Content Include="CommonModules\FormSelector.ascx" />
     <Content Include="CommonModules\MagnificGallery.ascx" />
     <Content Include="CommonModules\Menu.ascx" />
     <Content Include="CommonModules\NavigatePages.ascx" />

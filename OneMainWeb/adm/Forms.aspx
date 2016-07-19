@@ -136,11 +136,11 @@
 		                        
 		                
                                     <div class="form-group">
-                                    <asp:Label AssociatedControlID="ddlFormTypes" runat="server" ID="lblFormTypes" CssClass="col-sm-3 control-label"
+                                    <asp:Label AssociatedControlID="DropDownListFormType" runat="server" ID="lblFormTypes" CssClass="col-sm-3 control-label"
                                         Text="Form type" />
                                         <div class="col-sm-9">
-                                    <asp:DropDownList AppendDataBoundItems="False" 
-                                        ID="ddlFormTypes" runat="server" OnDataBound="ddlFormTypes_DataBound" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="ddlFormTypes_SelectedIndexChanged"
+                                    <asp:DropDownList 
+                                        ID="DropDownListFormType" runat="server" DataSourceID="FormTypesSource" AutoPostBack="true" OnSelectedIndexChanged="DropDownListFormType_SelectedIndexChanged"
                                             CssClass="form-control" />
                                     <asp:ObjectDataSource ID="FormTypesSource" runat="server"
                                         SelectMethod="ListFormTypes" TypeName="OneMainWeb.FormHelper">
@@ -311,18 +311,20 @@
                                 </asp:PlaceHolder>
 
                                 <asp:Panel runat="server" ID="PanelAnswersList" class="row">
-                                        <div class="form-group col-sm-6">
-                                            <label class="col-sm-3 control-label">Answers one per line</label>
-                                            <div class="col-sm-9">
-                                                <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxAnswers" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
+                                    <label class="col-sm-3 control-label">Answers one per line</label>
+                                    <div class="col-sm-9">
+                                            <div class="row">
+                                                <div class="form-group col-sm-7">
+                                                        <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxAnswers" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
+                                                </div>
+                                                <asp:Panel runat="server" ID="PanelWeights" CssClass="form-group col-sm-5">
+                                                    <label class="col-sm-3 control-label">Weights one per line</label>    
+                                                    <div class="col-sm-9">
+                                                        <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxWeights" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control" />
+                                                    </div>
+                                                </asp:Panel>
                                             </div>
                                         </div>
-                                        <asp:Panel runat="server" ID="PanelWeights" CssClass="form-group col-sm-6">
-                                            <label class="col-sm-3 control-label">Weights one per line</label>    
-                                            <div class="col-sm-9">
-                                                <asp:TextBox formnovalidate="formnovalidate" ID="TextBoxWeights" runat="server" Rows="5" TextMode="MultiLine" CssClass="form-control required" />
-                                            </div>
-                                        </asp:Panel>
                                     </asp:Panel>                        
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">

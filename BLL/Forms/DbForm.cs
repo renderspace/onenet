@@ -19,14 +19,7 @@ namespace One.Net.Forms
             paramsToPass[0] = SqlHelper.GetNullable("@Id", form.Id);
             paramsToPass[0].Direction = ParameterDirection.InputOutput;
             paramsToPass[0].DbType = DbType.Int32;
-
-            string formType = "";
-            switch (form.FormType)
-            {
-                case FormTypes.Questionaire: formType = BOForm.FORM_TYPE_QUESTIONAIRE; break;
-            }
-
-            paramsToPass[1] = new SqlParameter("@FormType", formType);
+            paramsToPass[1] = new SqlParameter("@FormType", Enum.GetName(typeof(FormTypes), form.FormType));
             paramsToPass[2] = SqlHelper.GetNullable("@SendTo", form.SendToString); 
             paramsToPass[3] = new SqlParameter("@AllowModifyInSubmission", form.AllowModifyInSubmission);
             paramsToPass[4] = new SqlParameter("@AllowMultipleSubmissions", form.AllowMultipleSubmissions);
@@ -342,20 +335,12 @@ namespace One.Net.Forms
         private BOForm PopulateForm(IDataRecord reader)
         {
             var form = new BOForm();
-
             form.Id = (int)reader["form_id"];
             form.Title = (string)reader["title"];
             form.Description = reader["description"] != DBNull.Value ? (string)reader["description"] : "";
             form.SubTitle = reader["sub_title"] != DBNull.Value ? (string)reader["sub_title"] : "";
             form.ThankYouNote = reader["thank_you_note"] != DBNull.Value ? (string)reader["thank_you_note"] : "";
-
-            switch ((string)reader["form_type"])
-            {
-                case BOForm.FORM_TYPE_QUESTIONAIRE: 
-                    form.FormType = FormTypes.Questionaire; 
-                    break;
-            }
-
+            form.FormType = (FormTypes) Enum.Parse(typeof(FormTypes), (string)reader["form_type"]);
             form.SendToString = (reader["send_to"] == DBNull.Value ? "" : (string)reader["send_to"]);
             form.SubmissionCount = (int)reader["submission_count"];
             form.FirstSubmissionDate = reader["first_submission_date"] == DBNull.Value ? (DateTime?)null : (DateTime?)reader["first_submission_date"];
@@ -363,7 +348,6 @@ namespace One.Net.Forms
             form.AllowMultipleSubmissions = (bool)reader["allow_multiple_submissions"];
             form.AllowModifyInSubmission = (bool)reader["allow_modify_in_submission"];
             form.CompletionRedirect = reader["completion_redirect"] == DBNull.Value ? "" : (string)reader["completion_redirect"];
-
             return form;
         }
 
