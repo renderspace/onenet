@@ -28,12 +28,12 @@
 </script>
 
 <div class="validationGroup">
-    <asp:Panel runat="server" CssClass="liner" ID="PanelProgress">
+    <asp:Panel runat="server" CssClass="liner" ID="PanelProgress" EnableViewState="false">
         <ul>
-            <asp:Literal runat="server" ID="LiteralProgressSteps"/>
+            <asp:Literal runat="server" ID="LiteralProgressSteps" EnableViewState="false"/>
         </ul>
         
-        <div class="colorliner"><asp:Literal runat="server" ID="LiteralProgress"></asp:Literal></div>
+        <div class="colorliner"><asp:Literal runat="server" ID="LiteralProgress" EnableViewState="false"></asp:Literal></div>
     </asp:Panel>
     <asp:PlaceHolder ID="PlaceHolderAcutalForm" runat="server" />
     <asp:PlaceHolder ID="PlaceHolderResults" runat="server">

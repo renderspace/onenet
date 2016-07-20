@@ -223,6 +223,12 @@ namespace OneMainWeb.CommonModules
                 cmdPrev.Visible = ButtonNext.Visible = cmdSubmit.Visible = false;
                 cmdPrev.ValidationGroup = ButtonNext.ValidationGroup = cmdSubmit.ValidationGroup = "FormID" + FormId + InstanceId;
 
+                if (SessionForm.FirstSection != null && SessionForm.FirstSection.SectionType == SectionTypes.MultiPage)
+                {
+                    PanelProgress.Visible = true;
+                    DisplayProgress();
+                }
+
                 if (FormSubmission != null && FormSubmission.CurrentSectionId.HasValue && FormCookie.Value == "1")
                 {
                     PlaceHolderAcutalForm.Visible = true;
@@ -293,11 +299,6 @@ namespace OneMainWeb.CommonModules
                     DivFormTitle.Visible = true;
                     PanelThankYouNote.Visible = false;
                     DivFormTitle.InnerHtml = SessionForm.Title;
-                    if (SessionForm.FirstSection != null && SessionForm.FirstSection.SectionType == SectionTypes.MultiPage)
-                    {
-                        PanelProgress.Visible = true;
-                        DisplayProgress();
-                    }
 
                     switch (SessionForm.FormType)
                     {
@@ -688,22 +689,22 @@ namespace OneMainWeb.CommonModules
 
         protected void DisplayProgress()
         {
-            int progress = 0;
             if (SessionForm == null)
                 return;
 
-            var currentSectionIdx = SessionForm.GetSectionOrder(FormSubmission.CurrentSectionId.Value);
+            
 
             if (FormSubmission == null || SessionForm.Sections == null || SessionForm.Sections.Count < 1 || !FormSubmission.CurrentSectionId.HasValue)
             {
-                progress = 0;
-            }
-            else
-            {
-                progress = (int) (Math.Ceiling((double) currentSectionIdx / SessionForm.Sections.Count)) * 100;
+                return;
             }
 
+            LiteralProgressSteps.Text = "";
+            LiteralProgress.Text = "";
+
+            var currentSectionIdx = SessionForm.GetSectionOrder(FormSubmission.CurrentSectionId.Value);
             var idx = 0;
+            var passed = 0;
             foreach (var s in SessionForm.Sections)
             {
                 idx++;
@@ -711,6 +712,7 @@ namespace OneMainWeb.CommonModules
                 if (idx < currentSectionIdx)
                 {
                     currentStepHtml = "<li class=\"passed\">" + s.Value.Title + "</li>";
+                    passed++;
                 }
                 else
                 {
@@ -718,7 +720,10 @@ namespace OneMainWeb.CommonModules
                 }
                 LiteralProgressSteps.Text += currentStepHtml;
             }
+            var progress = (int)((double)passed / SessionForm.Sections.Count * 100);
             LiteralProgress.Text = string.Format("<span style=\"width: {0} %; \"></span>", progress);
+
+            
         }
 
         protected void cmdPrev_Click(object sender, EventArgs e)
