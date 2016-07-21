@@ -47,8 +47,25 @@ namespace OneMainWeb.Utils
                 {
                     var output = Serialize(table);
                     context.Response.ContentType = "application/json";
-
-                    context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:3000");
+                    var origin = context.Request.Headers.Get("Origin");
+                    var isLocal = origin.Contains("://localhost");
+                    if (!string.IsNullOrWhiteSpace(origin))
+                    {
+                        if (isLocal)
+                        {
+                            context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
+                        }
+                        else
+                        {
+                            BWebsite website = new BWebsite();
+                            var websites = website.List();
+                            var address = (from w in websites select w.PreviewUrl).Concat(from w in websites select w.ProductionUrl).ToList();
+                            if (address.Contains(origin.Trim()))
+                            {
+                                context.Response.Headers.Add("Access-Control-Allow-Origin", origin);
+                            }
+                        }
+                    }
                     context.Response.Write(output);
                 }
             }

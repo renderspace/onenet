@@ -79,7 +79,7 @@ namespace One.Net.BLL.Scaffold
                     dataKeyNames.Add(field.FQName);
                     table.Columns.Add(column);
                 }
-                else if ((field.IsPartOfUserView && field.ShowOnList) || typedOutput)
+                else if ((field.IsPartOfUserView && field.ShowOnList) || (typedOutput && !(field.IsModifiedField || field.IsCreatedField) ))
                 {
                     field.Ordinal = i++;
                     table.Columns.Add(column);
@@ -222,7 +222,10 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                             {
                                 if (f == DBNull.Value && field.IsNullable)
                                 {
-                                    row[field.FQName] = "";
+                                    if (!typedOutput)
+                                    {
+                                        row[field.FQName] = "";
+                                    }
                                 }
                                 else
                                 {
