@@ -115,7 +115,7 @@ function files_databind(selectedFolderId) {
                     console.log("got it");
                 }
                 r += '><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
-                r += '<a href="#" class="btn btn-xs btn-primary copy-button" data-clipboard-text="' + item.Uri + ' " title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
+                r += '<a href="#" class="btn btn-xs btn-primary copy-button" data-clipboard-text="' + item.Uri + '" title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
                 r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB';
                 r += ' <br/><a href="#" class="btn btn-xs btn-warning openFileReplace"  data-file-id="' + item.Id + '">Replace file</a>';
                 r += ' </td><td>';
