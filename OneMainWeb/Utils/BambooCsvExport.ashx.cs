@@ -83,7 +83,7 @@ namespace OneMainWeb.Utils
             }
         }
 
-        private static string SanitizeValuesForCSV(object value, string delimeter)
+        public static string SanitizeValuesForCSV(object value, string delimeter)
         {
             string output;
 
