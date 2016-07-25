@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET.API</id>
-        <version>3.5.5</version>
+        <version>3.5.6</version>
         <title>One.NET.API</title>
         <authors>samof</authors>
         <owners>Renderspace d.o.o.</owners>
