@@ -119,11 +119,6 @@ namespace OneMainWeb
             {
                 formIsNewlyAdded = ElementMap["Form" + SessionForm.Id.Value].NewlyAdded;
             }
-
-            /*
-            tabMultiview.Views[1].Selectable = (tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible);
-            tabMultiview.Views[2].Selectable = tabMultiview.Views[3].Selectable = tabMultiview.Views[4].Selectable = ((tabMultiview.Views[1].Visible || tabMultiview.Views[2].Visible || tabMultiview.Views[3].Visible || tabMultiview.Views[4].Visible || tabMultiview.Views[5].Visible ) && SessionForm != null && !formIsNewlyAdded);
-            tabMultiview.Views[5].Selectable = tabMultiview.Views[5].Visible && SessionForm != null && !formIsNewlyAdded;*/
         }
 
         private void GridViewForms_DataBind()
@@ -325,7 +320,7 @@ namespace OneMainWeb
                 {
                     radAnswerPresentationTypes.Enabled = false;
                     radFrontEndQuestionTypes.Enabled = false;
-                    TextBoxAnswers.ReadOnly = true;
+                    TextBoxWeights.ReadOnly = TextBoxAnswers.ReadOnly = true;
                     cmdUnDeleteQuestion.Visible = false;
                     cmdDeleteQuestion.Visible = false;
                     chkAllowBlankAnswersInMenu.Enabled = false;
@@ -335,7 +330,7 @@ namespace OneMainWeb
                 {
                     radAnswerPresentationTypes.Enabled = true;
                     radFrontEndQuestionTypes.Enabled = true;
-                    TextBoxAnswers.ReadOnly = false;
+                    TextBoxWeights.ReadOnly = TextBoxAnswers.ReadOnly = false;
                     cmdUnDeleteQuestion.Visible = ElementMap[ElementStringId].PendingDelete;
                     cmdDeleteQuestion.Visible = !ElementMap[ElementStringId].PendingDelete;
                     chkAllowBlankAnswersInMenu.Enabled = true;
@@ -629,7 +624,7 @@ namespace OneMainWeb
                             answerValue.InnerText = SessionSubmission.SubmittedQuestions[answer.ParentId.Value].SubmittedAnswers[answer.Id.Value].SubmittedFile.Name;
                             if (SessionSubmission.SubmittedQuestions[answer.ParentId.Value].SubmittedAnswers[answer.Id.Value].SubmittedFile.Folder == null )
                             {
-                                answerValue.InnerText = "$file_removed_from_folder" + " " + answerValue.InnerText;
+                                answerValue.InnerText = "File removed from folder " + answerValue.InnerText;
                             }
                         }
                     }
@@ -824,21 +819,34 @@ namespace OneMainWeb
             MultiView1.ActiveViewIndex = 0;
         }
 
+        protected void cmdSaveFormAndClose_Click(object sender, EventArgs e)
+        {
+            if (SessionForm != null)
+            {
+                Save();
+                MultiView1.ActiveViewIndex = 0;
+            }
+        }
+
         protected void cmdSaveForm_Click(object sender, EventArgs e)
         {
             if (SessionForm != null)
             {
-                BOForm formForSaving = PrepareSessionFormForSaving();
-                helper.Change(formForSaving);
-
-                ClearSessionValues();
-                SessionForm = helper.Get(formForSaving.Id.Value);
+                var formId = Save();
+                SessionForm = helper.Get(formId);
                 ElementStringId = "Form" + SessionForm.Id.Value;
-
                 PopulateElementMap(SessionForm);
                 FormTree_DataBind();
                 LoadFormTabControls();
             }
+        }
+
+        private int Save()
+        {
+            BOForm formForSaving = PrepareSessionFormForSaving();
+            helper.Change(formForSaving);
+            ClearSessionValues();
+            return formForSaving.Id.Value;
         }
 
         private BOForm PrepareSessionFormForSaving()
@@ -918,20 +926,6 @@ namespace OneMainWeb
             }
 
             return formForSaving;
-        }
-
-        protected void cmdSaveFormAndClose_Click(object sender, EventArgs e)
-        {
-            if (SessionForm != null)
-            {
-                BOForm formForSaving = PrepareSessionFormForSaving();
-
-                helper.Change(formForSaving);
-
-                ClearSessionValues();
-
-                MultiView1.ActiveViewIndex = 0;
-            }
         }
 
         public void FormTree_SelectedNodeChanged(object sender, EventArgs e)

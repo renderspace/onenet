@@ -692,8 +692,6 @@ namespace OneMainWeb.CommonModules
             if (SessionForm == null)
                 return;
 
-            
-
             if (FormSubmission == null || SessionForm.Sections == null || SessionForm.Sections.Count < 1 || !FormSubmission.CurrentSectionId.HasValue)
             {
                 return;
