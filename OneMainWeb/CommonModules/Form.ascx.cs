@@ -720,8 +720,9 @@ namespace OneMainWeb.CommonModules
                 }
                 LiteralProgressSteps.Text += currentStepHtml;
             }
+            passed--;
             var progress = (int)((double)passed / SessionForm.Sections.Count * 100);
-            LiteralProgress.Text = string.Format("<span style=\"width: {0} %; \"></span>", progress);
+            LiteralProgress.Text = string.Format("<span style=\"width: {0}%; \"></span>", progress);
 
             
         }
