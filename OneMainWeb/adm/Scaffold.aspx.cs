@@ -207,9 +207,26 @@ namespace OneMainWeb.adm
         {
             if (GridViewItems.DataKeyNames.Count() > 0)
             {
-
                 var primaryKeys = new OrderedDictionary();
                 primaryKeys.Add(primaryKeyName, primaryKeyNameValue);
+
+                Notifier1.Warning = "";
+
+                var item = Data.GetItem(VirtualTableId, primaryKeys);
+                if (item == null || item.Columns == null || !item.Columns.ContainsKey(primaryKeyName) || (string.IsNullOrEmpty(item.Columns[primaryKeyName].Value) || item.Columns[primaryKeyName].Value == "0"))
+                {
+                    Notifier1.Warning = "NoItemWithIdExists";
+                    return;
+                }
+                //else if (item.PrimaryKeys.Count == 1)
+                //{
+                //    if (string.IsNullOrEmpty(item.Columns[item.PrimaryKeys[0]].Value))
+                //    {
+                //        Notifier1.Warning = "NoItemWithIdExists";
+                //        return;
+                //    }
+                //}
+
                 DynamicEditor1.Clear();
                 DynamicEditor1.VirtualTableId = VirtualTableId;
                 DynamicEditor1.PrimaryKeys = primaryKeys;
