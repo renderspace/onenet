@@ -25,6 +25,10 @@ namespace One.Net.BLL.Service
         [Description("GetFolderTree")]
         string GetFolderTree(int selectedId, int languageId);
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFolders?parentId={parentId}&languageId={languageId}")]
+        [Description("GetFolders")]
+        string GetFolders(int parentId, int languageId);
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListFiles?folderId={folderId}&languageId={languageId}")]
         [Description("List<DTOFile> ListFiles(int folderId)")]
         List<DTOFile> ListFiles(int folderId, int languageId);
