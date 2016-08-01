@@ -1,2 +1,2 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TemplateContent.ascx.cs" Inherits="OneMainWeb.CommonModules.TemplateContent" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TemplateContent.ascx.cs" Inherits="OneMainWeb.CommonModules.TemplateContent" EnableViewState="false" %>
 <asp:Literal runat="server" ID="LiteralTemplateOutput" />
