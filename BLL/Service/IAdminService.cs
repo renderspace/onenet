@@ -29,10 +29,6 @@ namespace One.Net.BLL.Service
         [Description("GetFolders")]
         string GetFolders(int parentId, int languageId);
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFolderFiles?folderId={folderId}&languageId={languageId}")]
-        [Description("GetFolderFiles")]
-        string GetFolderFiles(int folderId, int languageId);
-
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListFiles?folderId={folderId}&languageId={languageId}")]
         [Description("List<DTOFile> ListFiles(int folderId)")]
         List<DTOFile> ListFiles(int folderId, int languageId);
