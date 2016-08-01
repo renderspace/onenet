@@ -303,6 +303,7 @@ namespace One.Net.BLL.Service
             return JsonConvert.SerializeObject(childrenIEnumerable.ToList<BOCategory>());
         }
 
+
         public string GetFolderFiles(int folderId, int languageId)
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
