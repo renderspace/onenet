@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using NLog;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using One.Net.BLL.Utility;
 
 namespace One.Net.BLL.Service
@@ -274,13 +275,29 @@ namespace One.Net.BLL.Service
 
             var result = new StringBuilder();
             result.Append(@"[ {""text"": """ + rootFolder.Title.Replace('"', ' ') + "\", \"id\": \"" + rootFolder.Id + "\", " + (selectedId == rootFolder.Id ? "\"selected\":\"true\"," : "") + "  \"nodes\": [");
-
             
             AddChildren(rootFolder, folders, result, selectedId);
             result.Append("] } ]");
 
             var temp = result.ToString();
             return temp;
+        }
+
+        public string GetFolders(int parentId, int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+
+            var fileB = new BFileSystem();
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var folders = fileB.ListFolders();
+
+            var childrenIEnumerable = folders.Where(f => f.ParentId.HasValue && f.ParentId.Value == parentId);
+
+            var parentFolder = folders.Where(f => f.Id.HasValue && f.Id.Value == parentId).FirstOrDefault();
+            if (parentFolder == null)
+                return "";
+
+            return JsonConvert.SerializeObject(childrenIEnumerable.ToList<BOCategory>());
         }
 
         private static void AddChildren(BOCategory parent, List<BOCategory> categories, StringBuilder result, int selectedId)
