@@ -11,8 +11,7 @@ using System.Threading;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using NLog;
-using System.IO;
-using Newtonsoft.Json.Converters;
+using System.ServiceModel;
 using System.ServiceModel.Web;
 using One.Net.BLL.Utility;
 
@@ -242,8 +241,6 @@ namespace One.Net.BLL.Service
 
         public List<DTOFile> ListFiles(int folderId, int languageId)
         {
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-
             var fileB = new BFileSystem();
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
 
@@ -298,29 +295,10 @@ namespace One.Net.BLL.Service
 
             var parentFolder = folders.Where(f => f.Id.HasValue && f.Id.Value == parentId).FirstOrDefault();
             if (parentFolder == null)
-                return "";            
+                return "";
 
             return JsonConvert.SerializeObject(childrenIEnumerable.ToList<BOCategory>());
         }
-
-        public string GetFolderFiles(int folderId, int languageId)
-        {
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-
-            var fileB = new BFileSystem();
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
-
-            var files = fileB.List(folderId);
-
-            var result = new List<DTOFile>();
-            foreach (var f in files.OrderByDescending(f => f.Created))
-            {
-                result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString(), Uri = "/_files/" + f.Id.Value + "/" + f.Name });
-            }
-
-            return JsonConvert.SerializeObject(result);
-        }
-
 
         private static void AddChildren(BOCategory parent, List<BOCategory> categories, StringBuilder result, int selectedId)
         {
