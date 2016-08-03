@@ -315,7 +315,7 @@ namespace One.Net.BLL.Service
             var result = new List<DTOFile>();
             foreach (var f in files.OrderByDescending(f => f.Created))
             {
-                result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString(), Uri = "/_files/" + f.Id.Value + "/" + f.Name });
+                result.Add(new DTOFile { Id = f.Id.Value.ToString(), Name = f.Name, Size = (f.Size / 1024).ToString(), Icon = GenerateFileIcon(f, 60), ContentId = (f.ContentId.HasValue ? f.ContentId.Value : 0).ToString(), Uri = "/_files/" + f.Id.Value + "/" + f.Name, Title = f.Title });
             }
 
             return JsonConvert.SerializeObject(result);
@@ -395,6 +395,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string Uri { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Title { get; set; }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
