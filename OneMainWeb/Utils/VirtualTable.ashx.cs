@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.IO;
 using One.Net.BLL.Scaffold;
+using System.Threading;
 
 namespace OneMainWeb.Utils
 {
@@ -23,7 +24,17 @@ namespace OneMainWeb.Utils
             if (context.Request.QueryString["vtId"] != null)
             {
                 var vtId = FormatTool.GetInteger(context.Request.QueryString["vtId"]);
-                
+
+                var lcid = Thread.CurrentThread.CurrentCulture.LCID;
+                if (context.Request.QueryString["lcid"] != null)
+                {
+                    lcid = FormatTool.GetInteger(context.Request.QueryString["lcid"]);
+                }
+                if (lcid != Thread.CurrentThread.CurrentCulture.LCID)
+                {
+                    Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lcid);
+                }
+
                 var p = FormatTool.GetInteger(context.Request.QueryString["p"]);
                 p = p > 0 ? p : 1;
 
