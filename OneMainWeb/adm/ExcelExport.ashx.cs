@@ -118,7 +118,7 @@ namespace Forms.adm
                         </tr>
                         <tr>
                             <td class=""generalsmall"" align=""center"">Form title</td>
-                            <td class=""general"" align=""right"">" + HttpUtility.HtmlEncode(form.Title) + @"</td>
+                            <td class=""general"" align=""right"">" + HttpUtility.HtmlEncode(form.Title.StripHtmlTags()) + @"</td>
                         </tr>
                         <tr>
                             <td class=""generalsmall"" align=""center"">Form type</td>
@@ -185,7 +185,7 @@ namespace Forms.adm
                     strw.GetStringBuilder().Append(
                         @"<tr>
                                 <td class=""general"" align=""center"">[" + section.Idx.ToString() + @"]/[" + question.Idx.ToString() + @"]</td>
-                                <td class=""question"" align=""center"">" + HttpUtility.HtmlEncode(question.Title) + @"</td>
+                                <td class=""question"" align=""center"">" + HttpUtility.HtmlEncode(question.Title.StripHtmlTags()) + @"</td>
                                 <td class=""general"" align=""center"">" + question.TimesAnswered + @"</td>
                                 <td align=""center"">");
 
@@ -203,7 +203,7 @@ namespace Forms.adm
                         }
                         else
                         {
-                            answerTitle = answer.Title;
+                            answerTitle = answer.Title.StripHtmlTags();
                         }
 
                         string answerCssClass = "";
@@ -287,9 +287,9 @@ namespace Forms.adm
             strw.GetStringBuilder().Append(
                 @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
                       <head>
-                            <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
-                            <meta name=ProgId content=Excel.Sheet>
-                            <meta name=Generator content=""Microsoft Excel 11"">
+                            <meta http-equiv=""Content-Type"" content=""text/html; charset=windows-1250"">
+                            <meta name=""ProgId"" content=""Excel.Sheet"">
+                            <meta name=""Generator"" content=""Microsoft Excel 11"">
                             <style>
                                 <!-- 
 
@@ -303,7 +303,7 @@ namespace Forms.adm
                                 -->
                             </style>
                       </head>
-                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
+                      <body><div id=""STI_5961"" align=""center"" x:publishsource=""Excel"">");
             // END head
 
             // START DETAIL
@@ -329,7 +329,7 @@ namespace Forms.adm
             strw.GetStringBuilder().Append(@"<th class=""generalsmall"">Date submitted</th>");
             foreach (var question in form.Questions)
             {
-                strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + question.Title + @"</th>");
+                strw.GetStringBuilder().Append(@"<th class=""generalsmall"">" + HttpUtility.HtmlEncode(question.Title.StripHtmlTags()) + @"</th>");
             }
             strw.GetStringBuilder().Append("</tr>");
 
@@ -367,7 +367,7 @@ namespace Forms.adm
                             if (submittedAnswer.Answer.AnswerType == AnswerTypes.SingleText ||
                                 submittedAnswer.Answer.AdditionalFieldType == AdditionalFieldTypes.Text)
                             {
-                                strw.GetStringBuilder().Append(submittedAnswer.SubmittedText);
+                                strw.GetStringBuilder().Append(HttpUtility.HtmlEncode(submittedAnswer.SubmittedText));
                             }
                             else if (submittedAnswer.Answer.AnswerType == AnswerTypes.SingleFile && submittedAnswer.SubmittedFile != null)
                             {
@@ -375,7 +375,7 @@ namespace Forms.adm
                             }
                             else
                             {
-                                strw.GetStringBuilder().Append(submittedAnswer.Answer.Title);
+                                strw.GetStringBuilder().Append(HttpUtility.HtmlEncode(submittedAnswer.Answer.Title.StripHtmlTags()));
                             }
 
                             strw.GetStringBuilder().Append(@"</td></tr>");
