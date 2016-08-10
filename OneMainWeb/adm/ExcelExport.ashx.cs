@@ -72,8 +72,8 @@ namespace Forms.adm
                 @"<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">
                       <head>
                             <meta http-equiv=Content-Type content=""text/html; charset=windows-1250"">
-                            <meta name=ProgId content=Excel.Sheet>
-                            <meta name=Generator content=""Microsoft Excel 11"">
+                            <meta name=""ProgId"" content=""Excel.Sheet"">
+                            <meta name=""Generator"" content=""Microsoft Excel 11"">
                             <style>
                                 <!-- 
                                 
@@ -87,7 +87,7 @@ namespace Forms.adm
                                 -->
                             </style>
                       </head>
-                      <body><div id=""STI_5961"" align=center x:publishsource=""Excel"">");
+                      <body><div id=""STI_5961"" align=""center"" x:publishsource=""Excel"">");
             // END head
 
             // START DETAIL
@@ -118,7 +118,7 @@ namespace Forms.adm
                         </tr>
                         <tr>
                             <td class=""generalsmall"" align=""center"">Form title</td>
-                            <td class=""general"" align=""right"">" + form.Title + @"</td>
+                            <td class=""general"" align=""right"">" + HttpUtility.HtmlEncode(form.Title) + @"</td>
                         </tr>
                         <tr>
                             <td class=""generalsmall"" align=""center"">Form type</td>
@@ -185,7 +185,7 @@ namespace Forms.adm
                     strw.GetStringBuilder().Append(
                         @"<tr>
                                 <td class=""general"" align=""center"">[" + section.Idx.ToString() + @"]/[" + question.Idx.ToString() + @"]</td>
-                                <td class=""question"" align=""center"">" + question.Title + @"</td>
+                                <td class=""question"" align=""center"">" + HttpUtility.HtmlEncode(question.Title) + @"</td>
                                 <td class=""general"" align=""center"">" + question.TimesAnswered + @"</td>
                                 <td align=""center"">");
 
@@ -223,7 +223,7 @@ namespace Forms.adm
 
                         if (!answer.IsFake)
                         {
-                            strw.GetStringBuilder().Append(@"<tr><td class=""" + answerCssClass + @""">" + answerTitle + @"</td></tr>");
+                            strw.GetStringBuilder().Append(@"<tr><td class=""" + answerCssClass + @""">" + HttpUtility.HtmlEncode(answerTitle) + @"</td></tr>");
                         }
                     }
                     strw.GetStringBuilder().Append("</table>");
