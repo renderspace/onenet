@@ -12,6 +12,7 @@
                 <input type="hidden" class="j_control_language_id" />
                 <input type="hidden" class="j_control_content_id" />
                 <input type="hidden" class="j_control_file_id" />
+                <input type="hidden" class="j_control_instance_id" />
                 
                 <div class="form-group sessionTimeoutError" style="display:none">
                     <p class="alert alert-danger col-sm-10 col-sm-offset-1">
@@ -61,6 +62,7 @@
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 <a href="#" Class="btn btn-success modal-save">Save</a>
                 <a href="#" Class="btn btn-success modal-save-close">Save and close</a>
+                <a href="#" Class="btn btn-danger modal-revert-to-published">Revert to published</a>
             </div>
             <div class="loading"></div>
         </div>

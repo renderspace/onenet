@@ -154,7 +154,34 @@ namespace One.Net.BLL.Service
 
             return true;
         }
-        
+
+        public bool RevertTextContent(DTOContent content)
+        {
+            if (content == null || string.IsNullOrWhiteSpace(content.InstanceId))
+            {
+                log.Error("RevertTextContent null content");
+                return false;
+            }
+
+            var contentId = 0;
+            int.TryParse(content.ContentId, out contentId);
+
+            var instanceId = 0;
+            int.TryParse(content.InstanceId, out instanceId);
+
+            var textContentB = new BTextContent();
+
+            var onlineContent = textContentB.GetTextContent(instanceId, true);
+
+            if (onlineContent != null)
+            {
+                // TODO: after content is reverted to published version, the offline content should no longer be marked as changed? 
+                textContentB.ChangeTextContent(instanceId, onlineContent.Title, onlineContent.SubTitle, onlineContent.Teaser, onlineContent.Html);
+            }
+
+            return true;
+        }
+
         public bool ChangeContent(DTOContent content)
         {
             if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))
@@ -514,6 +541,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string ContentId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string InstanceId { get; set; }
 
         [DataMember, JsonProperty]
         public string LanguageId { get; set; }

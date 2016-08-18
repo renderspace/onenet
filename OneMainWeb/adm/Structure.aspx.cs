@@ -371,6 +371,7 @@ namespace OneMainWeb.adm
                     {
                         ButtonModalEdit.Attributes.Add("data-content-id", textContentModel.ContentId.Value.ToString());
                         ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.ModuleName == "TextContent" ? "true" : "false");
+                        ButtonModalEdit.Attributes.Add("data-instance-id", moduleInstance.Id.ToString());
                     }
                 }
                 if (moduleInstance.ModuleName == "TextContent" || moduleInstance.ModuleName == "SpecialContent")
