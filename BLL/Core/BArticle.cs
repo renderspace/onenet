@@ -368,6 +368,10 @@ namespace One.Net.BLL
                 var toReturn = articles.OrderBy(x => Guid.NewGuid()).Skip(randomSortFromRecord).Take(randomSortRecordsPerPage);
                 var temp = new PagedList<BOArticle>(toReturn);
                 temp.AllRecords = articles.AllRecords;
+                foreach (BOArticle article in temp)
+                {
+                    article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
+                }
                 return temp;
             }
             return articles;
