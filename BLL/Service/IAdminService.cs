@@ -45,6 +45,10 @@ namespace One.Net.BLL.Service
         [Description("bool ChangeContent(DTOContent content)")]
         bool ChangeContent(DTOContent content);
 
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "RevertTextContent")]
+        [Description("bool RevertTextContent(DTOContent content)")]
+        bool RevertTextContent(DTOContent content);
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContent?id={id}&languageId={languageId}")]
         [Description("DTOContent GetContent(int id, int languageId)")]
         DTOContent GetContent(int id, int languageId);

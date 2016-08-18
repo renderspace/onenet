@@ -637,6 +637,45 @@ $(document).ready(function () {
         }
     });
 
+    $('#text-content-modal a.btn-danger.modal-revert-to-published').on('click', function (e) {
+
+        var start = window.performance.now();
+
+        $(".loading").show();
+
+        $('#text-content-modal').modal('show');
+
+        trace("Reverting content from modal window.");
+
+        var saveButton = $(this);
+        var content = new Object();
+
+        content['LanguageId'] = $(".j_control_language_id").val();
+        content['ContentId'] = $(".j_control_content_id").val();
+        content['InstanceId'] = $('.j_control_instance_id').val();
+
+        $.ajax({
+            url: "/AdminService/RevertTextContent",
+            data: JSON.stringify(content),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "POST",
+            success: function (data) {
+
+                $(".modal-body").hide();
+                $(".modal-footer").hide();
+                $('#text-content-modal').modal('hide');
+                $(".loading").hide();
+
+                var end = window.performance.now();
+                trace('console.time RevertTextContent done ' + (end - start));
+                window.location.href = "/adm/Structure.aspx";
+            },
+            error: handleAjaxError
+        });
+
+    });
+
     $('#text-content-modal a.btn-success').on('click', function (e) {
 
         var start = window.performance.now();
@@ -826,6 +865,10 @@ $(document).ready(function () {
         $(".modal-body textarea").val("");
         var contentId = $(button).data('content-id');
         trace("contentId:" + contentId);
+
+        var instanceId = $(button).data('instance-id');
+        $(".j_control_instance_id").val(instanceId);
+
         var fileId = $(button).data('file-id');
         $(".j_control_file_id").val(fileId);
         var me = $(this);
