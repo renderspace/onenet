@@ -59,10 +59,14 @@
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <a href="#" Class="btn btn-success modal-save">Save</a>
-                <a href="#" Class="btn btn-success modal-save-close">Save and close</a>
-                <a href="#" Class="btn btn-danger modal-revert-to-published">Revert to published</a>
+                <div class="col-sm-1">
+                    <a href="#" Class="btn btn-sm btn-danger modal-revert-to-published" style="display:none">Revert to published</a>
+                </div> 
+                <div class="col-sm-11">               
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>                
+                    <a href="#" Class="btn btn-success modal-save">Save</a>
+                    <a href="#" Class="btn btn-success modal-save-close">Save and close</a>
+                </div>
             </div>
             <div class="loading"></div>
         </div>
