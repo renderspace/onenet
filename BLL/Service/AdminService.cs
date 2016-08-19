@@ -163,6 +163,11 @@ namespace One.Net.BLL.Service
                 return false;
             }
 
+            var languageId = 0;
+            int.TryParse(content.LanguageId, out languageId);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+
             var contentId = 0;
             int.TryParse(content.ContentId, out contentId);
 
