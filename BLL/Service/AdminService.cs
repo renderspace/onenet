@@ -187,6 +187,16 @@ namespace One.Net.BLL.Service
             return true;
         }
 
+        public bool IsTextContentPublished(int instanceId)
+        {
+            if (instanceId == 0)
+                return false;
+            var textContentB = new BTextContent();
+            var instance = textContentB.GetTextContent(instanceId, true);
+
+            return instance != null;
+        }
+
         public bool ChangeContent(DTOContent content)
         {
             if (content == null || string.IsNullOrWhiteSpace(content.LanguageId))

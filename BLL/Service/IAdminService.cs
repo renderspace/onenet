@@ -49,6 +49,10 @@ namespace One.Net.BLL.Service
         [Description("bool RevertTextContent(DTOContent content)")]
         bool RevertTextContent(DTOContent content);
 
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "IsTextContentPublished?instanceId={instanceId}")]
+        [Description("bool IsTextContentPublished(int instanceId)")]
+        bool IsTextContentPublished(int instanceId);
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetContent?id={id}&languageId={languageId}")]
         [Description("DTOContent GetContent(int id, int languageId)")]
         DTOContent GetContent(int id, int languageId);

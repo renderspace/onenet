@@ -175,6 +175,28 @@ function files_databind(selectedFolderId) {
     });
 };
 
+function toggleRevertTextContentButton(instanceId) {
+
+    if (instanceId > 0) {
+        $.ajax({
+            url: "/AdminService/IsTextContentPublished?instanceId=" + instanceId,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            success: function (result) {
+                if (result) {
+                    $('.modal-revert-to-published').show();
+                } else {
+                    $('.modal-revert-to-published').hide();
+                }
+            },
+            error: handleAjaxError
+        });
+    } else {
+        $('.modal-revert-to-published').hide();
+    }
+}
+
 function getContent(contentId, languageId, enableHtml, enableCk) {
 
     $(".loading").show();
@@ -868,6 +890,8 @@ $(document).ready(function () {
 
         var instanceId = $(button).data('instance-id');
         $(".j_control_instance_id").val(instanceId);
+
+        toggleRevertTextContentButton(instanceId);
 
         var fileId = $(button).data('file-id');
         $(".j_control_file_id").val(fileId);
