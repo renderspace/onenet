@@ -762,6 +762,8 @@ namespace OneMainWeb.CommonModules
                     PlaceHolderAcutalForm.Controls.Clear();
                     CreateFormControls(true, submissionOk);
 
+                    var completionRedirectUri = "";
+                    
                     if (!string.IsNullOrEmpty(SessionForm.CompletionRedirect) &&
                         (SessionForm.CompletionRedirect.StartsWith("http") ||
                          SessionForm.CompletionRedirect.StartsWith("/")))
@@ -782,7 +784,7 @@ namespace OneMainWeb.CommonModules
                             builder.QueryString["we"] = FormSubmission.WeightsSum.ToString(CultureInfo.CreateSpecificCulture("en-GB"));
                         }
 
-                        Response.Redirect(builder.ToString(), true);
+                        completionRedirectUri = builder.ToString();
                     }
 
                     // once you show the results... clear the form and the submission
@@ -798,6 +800,11 @@ namespace OneMainWeb.CommonModules
                         {
                             FormCookie.Value = "0";
                         }
+                    }
+
+                    if (!string.IsNullOrEmpty(completionRedirectUri))
+                    {
+                        Response.Redirect(completionRedirectUri, true);
                     }
                 }
             }
