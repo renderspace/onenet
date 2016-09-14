@@ -64,7 +64,7 @@ namespace One.Net.BLL
             }
             if (fromRecordIndex < 0)
                 fromRecordIndex = 0;
-            if (toRecordIndex < (fromRecordIndex+ RecordsPerPage.Value - 1))
+            if (RecordsPerPage.HasValue && toRecordIndex < (fromRecordIndex + RecordsPerPage.Value - 1))
                 toRecordIndex = fromRecordIndex + RecordsPerPage.Value - 1;
         }
 
