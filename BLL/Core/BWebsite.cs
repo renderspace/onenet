@@ -77,6 +77,7 @@ namespace One.Net.BLL
                             placeHolder.ModuleInstances[i] = GetModuleInstance(placeHolder.ModuleInstances[i].Id);
                             placeHolder.ModuleInstances[i].IsInherited = isInherited;
                         }
+                        placeHolder.ModuleInstances = placeHolder.ModuleInstances.OrderBy(x => x.Order).ToList<BOModuleInstance>();
                     }
                     lock (cacheLockingPage)
                     {
@@ -107,8 +108,11 @@ namespace One.Net.BLL
                         placeHolder.ModuleInstances[i] = GetModuleInstance(placeHolder.ModuleInstances[i].Id);
                         placeHolder.ModuleInstances[i].IsInherited = isInherited;
                     }
+
+                    placeHolder.ModuleInstances = placeHolder.ModuleInstances.OrderBy(x => x.Order).ToList<BOModuleInstance>();
                 }
             }
+
             return page;
         }
 
