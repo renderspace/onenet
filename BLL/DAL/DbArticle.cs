@@ -187,7 +187,7 @@ namespace One.Net.BLL.DAL
             return article;
         }
 
-        public DateTime? GetFirstDateWithArticles(bool publishFlag, List<int> regularIDs, int fromYear, int fromMonth, int languageId)
+        public DateTime? GetFirstDateWithArticles(bool publishFlag, List<int> regularIDs, int fromYear, int fromMonth, int languageId, bool? excludePast)
         {
             DateTime? result = null;
             string regularIdString = string.Join(",",  regularIDs);
@@ -203,6 +203,11 @@ namespace One.Net.BLL.DAL
                 sql += " AND ra.regular_fk_id IN (" + regularIdString + ") ";
 
             sql += " AND ((YEAR(a.display_date) = @year AND MONTH(a.display_date) >= @month) OR (YEAR(a.display_date) > @year)) ";
+
+            if (excludePast.HasValue && excludePast.Value)
+            {
+                sql += " AND a.display_date > getdate() ";
+            }
 
             var paramsToPass = new SqlParameter[4];
 
