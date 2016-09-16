@@ -377,9 +377,9 @@ namespace One.Net.BLL
             return articles;
         }
 
-        public DateTime? GetFirstDateWithArticles(string regularIds, int fromYear, int fromMonth)
+        public DateTime? GetFirstDateWithArticles(string regularIds, int fromYear, int fromMonth, bool? excludePast)
         {
-            return articleDB.GetFirstDateWithArticles(PublishFlag, StringTool.SplitStringToIntegers(regularIds), fromYear, fromMonth, LanguageId);
+            return articleDB.GetFirstDateWithArticles(PublishFlag, StringTool.SplitStringToIntegers(regularIds), fromYear, fromMonth, LanguageId, excludePast);
         }
 
         public List<BOArticleMonthDay> ListArticleMonthDays(string regularIds, bool showArticleCount, int year, int month)
