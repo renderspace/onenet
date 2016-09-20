@@ -359,13 +359,13 @@ namespace One.Net.Forms
                     var message = new MailMessage();
                     var encoding = Encoding.UTF8;
 
-                    formBody.Append("\n\r");
-                    formBody.Append("Form : " + form.Title + "\n\r");
-                    formBody.Append("Finished at : " + submission.Finished.Value.ToString() + "\n\r\n\r");
+                    //formBody.Append("\n\r");
+                    formBody.Append("Form : " + form.Title + "; ");
+                    formBody.Append("Finished at : " + submission.Finished.Value.ToString() + "\n\r");
 
                     foreach (BOSection section in form.Sections.Values)
                     {
-                        formBody.Append("--------------- " + section.Title + " ---------------\n\r\n\r");
+                        formBody.Append("--------------- " + section.Title + " ---------------\n\r");
                         foreach (BOQuestion question in section.Questions.Values)
                         {
                             formBody.Append("" + question.Title + " ");
@@ -381,29 +381,27 @@ namespace One.Net.Forms
                                     {
                                         if (!answer.IsFake)
                                         {
-                                            formBody.Append("" + answer.Title);
+                                            formBody.Append(answer.Title);
                                             if (submittedQuestion.SubmittedAnswers[answer.Id.Value].SubmittedText !=
                                                 null)
                                             {
-                                                formBody.Append(" " +
+                                                formBody.Append(": " +
                                                                 submittedQuestion.SubmittedAnswers[answer.Id.Value].
-                                                                    SubmittedText + "");
+                                                                    SubmittedText.Trim().TrimEnd('\r').TrimEnd('\n'));
                                             }
                                             if (submittedQuestion.SubmittedAnswers[answer.Id.Value].SubmittedFile !=
                                                 null &&
                                                 submittedQuestion.SubmittedAnswers[answer.Id.Value].SubmittedFile.Id.
                                                     HasValue)
                                             {
-                                                BOFile submittedFile =
-                                                    submittedQuestion.SubmittedAnswers[answer.Id.Value].SubmittedFile;
+                                                var submittedFile = submittedQuestion.SubmittedAnswers[answer.Id.Value].SubmittedFile;
                                                 MemoryStream fileStream = new MemoryStream(submittedFile.File);
                                                 Attachment att = new Attachment(fileStream, submittedFile.Name);
                                                 att.ContentType.MediaType = submittedFile.MimeType;
                                                 att.ContentType.Name = submittedFile.Name;
                                                 message.Attachments.Add(att);
-                                                formBody.Append("\n\r# Submitted File : " + submittedFile.Id.Value + "\n\r");
+                                                formBody.Append("\n\r# Submitted File : " + submittedFile.Id.Value);
                                             }
-                                            formBody.Append("\n\r");
                                         }
                                     }
                                 }
