@@ -460,7 +460,7 @@ namespace OneMainWeb.CommonModules
                 if (!string.IsNullOrEmpty(section.Title))
                 {
                     var h3 = new HtmlGenericControl("h3");
-                    h3.InnerText = section.Title;
+                    h3.InnerHtml = section.Title;
                     sectionDiv.Controls.Add(h3);
                 }
 
