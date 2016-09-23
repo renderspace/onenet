@@ -367,7 +367,7 @@ namespace OneMainWeb.adm
                 if (moduleInstance.ModuleName == "TextContent" || moduleInstance.ModuleName == "SpecialContent")
                 {
                     textContentModel = textContentB.GetTextContent(moduleInstance.Id);
-                    if (textContentModel.IsComplete)
+                    if (textContentModel != null && textContentModel.IsComplete)
                     {
                         ButtonModalEdit.Attributes.Add("data-content-id", textContentModel.ContentId.Value.ToString());
                         ButtonModalEdit.Attributes.Add("data-ck", moduleInstance.ModuleName == "TextContent" ? "true" : "false");
