@@ -120,8 +120,8 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data">
       <HintPath>..\packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MsSqlDBUtility, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MsSqlDBUtility.1.1.1\lib\net45\MsSqlDBUtility.dll</HintPath>
+    <Reference Include="MsSqlDBUtility, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MsSqlDBUtility.1.1.2\lib\net45\MsSqlDBUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

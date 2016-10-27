@@ -66,12 +66,12 @@ namespace OneMainWeb
                     }
                     else
                     {
-                        Notifier1.Warning = "$failed_to_load_module";
+                        Notifier1.Warning = "Failed to load module";
                     }
                 }
                 else
                 {
-                    Notifier1.Warning = "$module_does_not_exist";
+                    Notifier1.Warning = "Module does not exist";
                 }
             }
             else
