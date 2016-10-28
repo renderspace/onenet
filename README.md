@@ -13,10 +13,7 @@ There are a few way to install One.NET, but the most typical is to install it as
 
 1. Open Visual studio 2015
 2. File -> New -> Project -> ASP.NET Web Application -> (choose name and folder) -> (select "Empty" template)
-3. Add One.NET package in Package Manager Console
-        ```Powershell
-        Install-Package One.NET 
-        ```
+3. Add One.NET package in Package Manager Console ``` Install-Package One.NET ```
 4. Create folder where specific site files (like css, templates,...) will be stored. By Convention the name of the folder should start with "Site". If you just need to get started fast, use default folder "site_specific".
 5. "SiteDefault" folder contains sensible examples and starting files. Ideally you should copy them to your new "site" folder and then modify them. There are two exceptions:
 - gitignore.template is just a typical .gitignore file for Visual studio and you should copy it to root if desired
