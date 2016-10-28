@@ -10,6 +10,7 @@ An old CMS written in old technology, but still works quite well for tree based 
 
 ### Installation
 There are a few way to install One.NET, but the most typical is to install it as a nuget module in a blank Visual Studio project, where you will add project specific code and files.
+
 1. Open Visual studio 2015
 2. File -> New -> Project -> ASP.NET Web Application -> (choose name and folder) -> (select "Empty" template)
 3. Add One.NET package in Package Manager Console
@@ -40,5 +41,7 @@ Just send a pull request.
 ## License
 
 One.NET is licensed under GNU GPL 3.0 as of ___ ___ ___ as approved by CEO of Renderspace. 
+
 Copyright 2006-2016 [Renderspace d.o.o.](https://www.renderspace.si)
+
 [![GNU GPL v3.0](http://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl.html)
