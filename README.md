@@ -37,7 +37,7 @@ Just send a pull request.
 
 ## License
 
-One.NET is licensed under GNU GPL 3.0 as of ___ ___ ___ as approved by CEO of Renderspace. 
+One.NET is licensed under GNU GPL 3.0 as of 28/10/2016 as approved by CEO of Renderspace. 
 
 Copyright 2006-2016 [Renderspace d.o.o.](https://www.renderspace.si)
 
