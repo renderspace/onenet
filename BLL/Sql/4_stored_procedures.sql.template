@@ -148,44 +148,6 @@ CREATE PROCEDURE [dbo].[Acc_CharList2Table]
 GO
 
 
-CREATE PROCEDURE [dbo].[ChangeEvent]
-	@publishFlag bit,
-	@changed bit,
-	@contentId int,
-	@markedForDeletion bit,
-	@begin_date datetime,
-	@end_date datetime=null,
-	@locationId int=null,
-	@id int=null output
-AS
-
-	IF ( @id is null )
-	BEGIN
-		EXEC [dbo].[nextval] 'event', @id out		
-
-		INSERT INTO [dbo].[event] ( id, publish, changed, content_fk_id, marked_for_deletion, begin_date, end_date, event_location_fk_id)
-		VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @begin_date, @end_date, @locationId)
-	END
-	ELSE
-	BEGIN
-		DECLARE @Exists int
-		SELECT @Exists = count(*) FROM [dbo].[event] WHERE id=@id AND publish=@publishFlag
-
-		IF ( @Exists = 0 )
-		BEGIN
-			INSERT INTO [dbo].[event] ( id, publish, changed, content_fk_id, marked_for_deletion, begin_date, end_date, event_location_fk_id)
-			VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @begin_date, @end_date, @locationId)
-		END
-		ELSE
-		BEGIN
-			UPDATE [dbo].[event]
-			SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, begin_date = @begin_date, end_date = @end_date, event_location_fk_id=@locationId
-			WHERE id=@id AND publish=@publishFlag
-		END
-	END
-
-GO
-
 CREATE PROCEDURE [dbo].[email_modify] 
 @email varchar(255) = null,
 @emailId int = null output

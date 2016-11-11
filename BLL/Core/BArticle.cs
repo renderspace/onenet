@@ -577,14 +577,14 @@ namespace One.Net.BLL
             // publish articles in all languages
             List<int> languages = ListLanguages();
 
-            foreach (int i in languages)
+            foreach (int lang in languages)
             {
-                BOArticle articleOffline = articleDB.GetArticle(id, false, i);
-                BOArticle articleOnline = articleDB.GetArticle(id, true, i);
+                BOArticle articleOffline = articleDB.GetArticle(id, false, lang);
+                BOArticle articleOnline = articleDB.GetArticle(id, true, lang);
 
                 if (articleOffline != null)
                 {
-                    articleOffline.Regulars = articleDB.ListArticleRegulars(id, false, i);
+                    articleOffline.Regulars = articleDB.ListArticleRegulars(id, false, lang);
 
                     if (articleOffline.MarkedForDeletion)
                     {
