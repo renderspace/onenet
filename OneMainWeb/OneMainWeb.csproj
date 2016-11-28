@@ -839,9 +839,6 @@
     <Content Include="Utils\MenuGroups.asmx" />
     <Content Include="Utils\OneClear.aspx" />
     <Content Include="Utils\TestException.aspx" />
-    <Content Include="web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Web.sitemap">
       <SubType>Designer</SubType>
     </Content>
