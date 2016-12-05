@@ -689,23 +689,28 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="instanceOne"></param>
         /// <param name="instanceTwo"></param>
-        public void SwapModuleInstances(BOModuleInstance instanceOne, BOModuleInstance instanceTwo)
+        public void SwapModuleInstances(BOModuleInstance instance, BOModuleInstance instanceAdjacent)
         {
-            if (instanceOne.PlaceHolderId == instanceTwo.PlaceHolderId && instanceOne.PageId == instanceTwo.PageId)
+            if (instance.PlaceHolderId == instanceAdjacent.PlaceHolderId)
             {
-                int tempIdx = instanceOne.Order;
-                instanceOne.Order = instanceTwo.Order;
-                if (tempIdx == instanceOne.Order)
+                int tempIdx = instance.Order;
+                instance.Order = instanceAdjacent.Order;
+                if (tempIdx == instance.Order)
                 {
-                    instanceTwo.Order = webSiteDb.GetMaxModuleInstanceIdx(instanceOne.PageId, instanceOne.PublishFlag, instanceOne.PlaceHolderId) + 1;
+                    instanceAdjacent.Order = webSiteDb.GetMaxModuleInstanceIdx(instance.PageId, instance.PublishFlag, instance.PlaceHolderId) + 1;
                 }
                 else
                 {
-                    instanceTwo.Order = tempIdx;
+                    instanceAdjacent.Order = tempIdx;
                 }
                 
-                this.ChangeModuleInstance(instanceOne, LanguageId, false);
-                this.ChangeModuleInstance(instanceTwo, LanguageId, false);
+                this.ChangeModuleInstance(instance, LanguageId, false);
+
+                // only change the adjacent module instance idx if not inherited.
+                if (instance.PageId == instanceAdjacent.PageId)
+                {
+                    this.ChangeModuleInstance(instanceAdjacent, LanguageId, false);
+                }
             }
         }
 
