@@ -4,7 +4,7 @@
         <id>One.NET.API</id>
         <version>3.7.14</version>
         <title>One.NET.API</title>
-        <authors>samof</authors>
+        <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Files required for building custom modules.</description>

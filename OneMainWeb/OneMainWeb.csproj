@@ -851,6 +851,8 @@
     <Content Include="Utils\Favicon.ashx" />
     <Content Include="Utils\BambooCsvExport.ashx" />
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
+    <Content Include="SiteDefault\gitignore.template" />
+    <Content Include="SiteDefault\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Structure.aspx" />
