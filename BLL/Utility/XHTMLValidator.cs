@@ -298,7 +298,8 @@ namespace One.Net.BLL.Utility
             {"polygon", true },
             {"polyline", true },
             {"rect", true },
-            {"use", true }
+            {"use", true },
+            {"stop", true }
         };
     }
 }
