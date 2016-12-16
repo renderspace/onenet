@@ -290,7 +290,15 @@ namespace One.Net.BLL.Utility
             {"br", true},
             {"area", true},
             {"hr", true},
-            {"param", true} // we are forcing <param> to be solo
+            {"param", true}, // we are forcing <param> to be solo
+            {"circle", true },
+            {"ellipse", true },
+            {"line", true },
+            {"path", true },
+            {"polygon", true },
+            {"polyline", true },
+            {"rect", true },
+            {"use", true }
         };
     }
 }

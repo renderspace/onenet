@@ -537,7 +537,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 throw new Exception("Please add or replace <html> tag on all Master templates with this one: <html runat=\"server\" id=\"html\">. Also check if tag is properly closed.");
             html.Attributes.Add("lang", Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
             html.Attributes.Add("xml:lang", Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName);
-            html.Attributes.Add("xmlns", "http://www.w3.org/1999/xhtml");
+            html.Attributes.Add("xmlns", "//www.w3.org/1999/xhtml");
             html.Attributes.Add("noid", "true");
         }
 
