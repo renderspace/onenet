@@ -6,23 +6,10 @@ function handleAjaxError(XMLHttpRequest, textStatus, errorThrown) {
     logError(XMLHttpRequest, textStatus, errorThrown);
 }
 
-function trace(msg, style) {
-    if (typeof (tracing) === 'undefined' || (tracing !== true)) {
-        return;
-    }
-    try {
-        if (typeof (style) === 'undefined') {
-            console.log(msg);
-        } else {
-            console.log(msg, style);
-        }
-    } catch (ex) { }
-}
-
 function logError(XMLHttpRequest, textStatus, errorThrown) {
     var errorToLog = "textStatus: " + textStatus + " errorThrown: " + errorThrown;
-    trace(errorToLog);
-    trace(XMLHttpRequest);
+    console.log(errorToLog);
+    console.log(XMLHttpRequest);
     if (XMLHttpRequest.responseText.indexOf("Access is denied") == -1) {
         bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
     }
@@ -106,7 +93,7 @@ function files_databind(selectedFolderId) {
         dataType: 'json',
         type: "GET",
         success: function (data) {
-            trace("ListFiles success");
+            console.log("ListFiles success");
             $('#files-table tbody').empty();
             $.map(data, function (item) {
                 var r = '<tr';
@@ -147,7 +134,7 @@ function files_databind(selectedFolderId) {
                             console.log(e);
                             if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                                 var selectedFolderId = $('#HiddenSelectedFolderId').val();
-                                trace("complete: " + selectedFolderId);
+                                console.log("complete: " + selectedFolderId);
                                 files_databind(selectedFolderId);
                                 $(".adminSection").before('<div class="alert alert-success"><p><span>Replaced file. Please double check if the file was really replaced.</span></p></div>');
                                 $("#previews").empty();
@@ -282,7 +269,7 @@ function generateRegularParLink(title) {
 }
 
 function setUpHtmlEditing(enableHtml, enableCk, html) {
-    trace("setUpHtmlEditing");
+    console.log("setUpHtmlEditing");
     $("#form-title").show();
     $("#form-subtitle").show();
     $("#form-teaser").show();
@@ -290,7 +277,7 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
     var $contenthtml = $("#content-html");
     $contenthtml.val(html);
     if (enableCk === true) {
-        trace("enableCk... ignoring enableHtml");
+        console.log("enableCk... ignoring enableHtml");
         $(".ckbox").show();
         replaceCKEditor(document.getElementById('content-html'));
     } else {
@@ -299,7 +286,7 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
                 lineNumbers: true,
                 mode: "htmlembedded"
             });
-            trace("html not enabled...");
+            console.log("html not enabled...");
             $("#form-title").hide();
             $("#form-subtitle").hide();
             $("#form-teaser").hide();
@@ -307,7 +294,7 @@ function setUpHtmlEditing(enableHtml, enableCk, html) {
 
             $('#content-html').data('CodeMirrorInstance', myCodeMirror);
         } else {
-            trace("enableCk false ... enableHtml false");
+            console.log("enableCk false ... enableHtml false");
             $(".ckbox").hide();
         }
     }
@@ -449,7 +436,7 @@ VALIDATION
 */
 
 $.validator.addMethod("absrelurl", function (value, element) {
-    trace("absrelurl");
+    console.log("absrelurl");
     return this.optional(element) || /(http:\/)?(\/[\w\.\-]+)+\/?/.test(value);
 }, "Please enter valid URL");
 
@@ -469,7 +456,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {
 function replaceCKEditor(id) {
 
     CKEDITOR.replace(id, {
-        customConfig: '',
+        customConfig: ''/*,
         entities_greek: false,
         forcePasteAsPlainText: true,
         entities: false,
@@ -483,35 +470,25 @@ function replaceCKEditor(id) {
 	{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
 	{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
 	{ name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] }
-        ]
-        /*[
-['Maximize', 'ShowBlocks', 'About', '-', 'Cut', 'Copy', 'Paste', '-', 'Bold', 'Italic', 'NumberedList', 'BulletedList', 'Indent', '-', 'Link', 'Unlink', 'Anchor', '-', 'Image', 'Table', 'HorizontalRule'],
-['Templates', 'CreateDiv', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'Styles', 'Format', 'RemoveFormat', 'Source'],
-    ]*/,
-
+        ],
         filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
         filebrowserWindowWidth: '830',
         filebrowserWindowHeight: '600',
-
         filebrowserImageBrowseLinkUrl: '/ckfinder/ckfinder.html?type:Images',
         filebrowserImageWindowWidth: '830',
         filebrowserImageWindowHeight: '600',
-
         filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type:Flash',
         filebrowserFlashWindowWidth: '830',
         filebrowserFlashWindowHeight: '600',
-
         stylesSet: 'ck_styles:/site_specific/ckstyles.js',
-
         disableObjectResizing: true,
-        // stylesCombo_stylesSet: 'one_default_styles',
         templates: 'one_default_templates',
         contentsCss: '/site_specific/ck.css',
         height: 350,
         disableObjectResizing: true,
         resize_enabled: false,
-        allowedContent: true, //,extraPlugins: 'youtube'
-        skin: 'bootstrapck'
+        allowedContent: true, 
+        skin: 'bootstrapck'*/
     });
 }
 
@@ -557,19 +534,19 @@ $(document).ready(function () {
     });
 
     $('.ckeditor4').each(function (index) {
-        trace("CKEDITOR " + index + ": " + this.id);
+        console.log("CKEDITOR " + index + ": " + this.id);
         replaceCKEditor(this.id);
-        trace(this.id);
+        console.log(this.id);
     });
 
     $("#form1").validate({
         onsubmit: false,
         highlight: function (element) {
-            trace('highlight');
+            console.log('highlight');
             $(element).closest('.form-group').addClass('has-error');
         },
         unhighlight: function (element) {
-            trace('unhighlight');
+            console.log('unhighlight');
             $(element).closest('.form-group').removeClass('has-error');
         },
         errorElement: 'span',
@@ -590,7 +567,7 @@ $(document).ready(function () {
             // one in which the enter key was pressed.
             var $nextInput = $(this).nextAll(':input:first');
             var $nextLinkButton = $(this).nextAll('a:first');
-            trace($nextLinkButton);
+            console.log($nextLinkButton);
             // If the next input is a submit button, go into validation.
             // Else, focus the next form element as if enter == tab.
             if ($nextLinkButton.is('.causesValidation')) {
@@ -609,13 +586,13 @@ $(document).ready(function () {
 
     $('input.imageFileUploadWithPreview').on('change', function (e) {
         e.preventDefault();
-        trace('input.imageFileUploadWithPreview.onchange');
+        console.log('input.imageFileUploadWithPreview.onchange');
         var myId = $(this).attr('id');
         var currentFileInput = $(this);
 
         var reader = new FileReader();
         reader.onload = function (event) {
-            trace('reader.onload');
+            console.log('reader.onload');
             var img = new Image();
             img.src = event.target.result;
             if (img.width > 100) {
@@ -629,11 +606,11 @@ $(document).ready(function () {
 
     $('#tree').on('nodeSelected', function (event, node) {
         var folderId = node.id;
-        trace("folderId " + folderId);
-        trace(node);
+        console.log("folderId " + folderId);
+        console.log(node);
         if (folderId > 0) {
             files_databind(folderId);
-            trace("nodeSelected:" + folderId);
+            console.log("nodeSelected:" + folderId);
             $('#HiddenSelectedFolderId').val(folderId);
             $('#LabelFolderId').text(folderId);
 
@@ -667,7 +644,7 @@ $(document).ready(function () {
 
         $('#text-content-modal').modal('show');
 
-        trace("Reverting content from modal window.");
+        console.log("Reverting content from modal window.");
 
         var saveButton = $(this);
         var content = new Object();
@@ -690,7 +667,7 @@ $(document).ready(function () {
                 $(".loading").hide();
 
                 var end = window.performance.now();
-                trace('console.time RevertTextContent done ' + (end - start));
+                console.log('console.time RevertTextContent done ' + (end - start));
                 window.location.href = "/adm/Structure.aspx";
             },
             error: handleAjaxError
@@ -711,16 +688,16 @@ $(document).ready(function () {
         content['Title'] = $("#content-title").val();
         content['Subtitle'] = $("#content-subtitle").val();
         content['Teaser'] = $("#content-teaser").val();
-        trace("Saving content from modal window. Title: " + content['Title']);
+        console.log("Saving content from modal window. Title: " + content['Title']);
         var ckEditor = CKEDITOR.instances["content-html"];
         var myCodeMirror = $('#content-html').data('CodeMirrorInstance');
 
         if (ckEditor !== undefined) {
-            trace("ckEditor !== undefined");
+            console.log("ckEditor !== undefined");
             content['Html'] = ckEditor.getData();
         }
         else if (myCodeMirror !== undefined) {
-            trace("myCodeMirror !== undefined");
+            console.log("myCodeMirror !== undefined");
             content['Html'] = myCodeMirror.getValue();
         }
         else {
@@ -765,7 +742,7 @@ $(document).ready(function () {
                                     } else {
 
                                         var end = window.performance.now();
-                                        trace('console.time ChangeContent done ' + (end - start));
+                                        console.log('console.time ChangeContent done ' + (end - start));
                                         window.location.href = "/adm/structure.aspx";
                                     }
                                 } else {
@@ -796,7 +773,7 @@ $(document).ready(function () {
             var contentTemplate = new Object();
             var $saveButton = $(this);
 
-            trace("saving:");
+            console.log("saving:");
 
             contentTemplate['InstanceId'] = $(".j_control_content_template_instance_id").val();
             contentTemplate['TemplateId'] = $(".j_control_template_id").val();
@@ -823,7 +800,7 @@ $(document).ready(function () {
 
             contentTemplate['ContentFields'] = contentFields;
 
-            trace(contentTemplate);
+            console.log(contentTemplate);
 
             $.ajax({
                 url: "/AdminService/ChangeContentTemplate",
@@ -843,7 +820,7 @@ $(document).ready(function () {
                         }
                     }
                     else {
-                        trace("data:" + data);
+                        console.log("data:" + data);
                     }
                 },
                 error: handleAjaxError
@@ -861,8 +838,8 @@ $(document).ready(function () {
         $(".modal-footer .btn-success").hide();
         var instanceId = $(button).data('content-template-instance-id');
         var templateId = $(button).data('template-id');
-        trace("instanceId:" + instanceId);
-        trace("templateId:" + templateId);
+        console.log("instanceId:" + instanceId);
+        console.log("templateId:" + templateId);
 
         var me = $(this);
 
@@ -886,7 +863,7 @@ $(document).ready(function () {
         $(".modal-body input").val("");
         $(".modal-body textarea").val("");
         var contentId = $(button).data('content-id');
-        trace("contentId:" + contentId);
+        console.log("contentId:" + contentId);
 
         var instanceId = $(button).data('instance-id');
         $(".j_control_instance_id").val(instanceId);
@@ -897,16 +874,16 @@ $(document).ready(function () {
         $(".j_control_file_id").val(fileId);
         var me = $(this);
         var languageId = me.data('language-id');
-        trace("languageId:" + languageId);
+        console.log("languageId:" + languageId);
         $(".j_control_language_id").val(languageId);
         $(".j_control_content_id").val("");
         $(".j_control_language").html(me.data('language'));
 
         var enableCk = $(button).data('ck');
-        trace(enableCk);
+        console.log(enableCk);
 
         var enableHtml = me.data('html') === true;
-        trace("enableHtml:" + enableHtml);
+        console.log("enableHtml:" + enableHtml);
 
         $('#content-title').focus();
 
@@ -917,7 +894,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 type: "GET",
                 success: function (data) {
-                    trace("GetFileForEditing success");
+                    console.log("GetFileForEditing success");
                     getContent(data.ContentId, languageId, false, false);
                     $(".j_control_file").empty().append(data.Icon);
                 },
@@ -944,7 +921,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 type: "GET",
                 success: function (data) {
-                    trace("GetContentHistory success");
+                    console.log("GetContentHistory success");
 
                     $('#audit-history-table tbody').empty();
                     $.map(data, function (item) {
@@ -974,7 +951,7 @@ $(document).ready(function () {
             anchor.addClass('nolink');
         }
     });
-    trace("%cOne.NET DOM ready.", "color:green; background-color:yellow");
+    console.log("%cOne.NET DOM ready.", "color:green; background-color:yellow");
 
     if (window.TextBoxHumanReadableUrlClientId && window.TextBoxHumanReadableUrlClientId.length > 0 && window.TextBoxTitleClientId && window.TextBoxTitleClientId.length > 0) {
 
@@ -1005,7 +982,7 @@ $(document).ready(function () {
 });
 
 function Validate(evt) {
-    trace('Validate evt');
+    console.log('Validate evt');
     var $group = $(this).closest('.validationGroup');
     var isValid = true;
     $group.find(':input').each(function (i, item) {
@@ -1018,13 +995,13 @@ function Validate(evt) {
     });
     if (!isValid)
         evt.preventDefault();
-    trace(isValid);
+    console.log(isValid);
     return isValid;
 }
 
 if (typeof window.FileReader === 'undefined') {
     $('.imageFileUploadStatus').html('File API MISSING!!');
-    trace('FileReader === undefined');
+    console.log('FileReader === undefined');
 }
 
 
@@ -1053,7 +1030,7 @@ function populateForeignKeyOptions(virtualTableId, v, whenSelected) {
                 $(v.InputId + 'a').autocomplete({
                     source: '/_ashx/BambooOneToManyData.ashx?virtualTableId=' + virtualTableId + '&columnId=' + v.Id,
                     select: function (event, ui) {
-                        trace("autocomplete: " + ui.item.id);
+                        console.log("autocomplete: " + ui.item.id);
                         return whenSelected(event, ui);
                     }
                 });
@@ -1064,14 +1041,14 @@ function populateForeignKeyOptions(virtualTableId, v, whenSelected) {
                 });
                 $(v.InputId + 's').append(optionsHtml);
                 $(v.InputId + 's').change(function (event) {
-                    trace("select changed to: " + $(this).val() + "/" + $(this).children("option").filter(":selected").text());
+                    console.log("select changed to: " + $(this).val() + "/" + $(this).children("option").filter(":selected").text());
                     var ui = {
                         item: {
                             id: $(this).val(),
                             label: $(this).children("option").filter(":selected").text()
                         }
                     };
-                    trace("select changed to: " + ui.item.id + "/" + ui.item.label);
+                    console.log("select changed to: " + ui.item.id + "/" + ui.item.label);
                     return whenSelected(event, ui);
                 });
             }
@@ -1088,11 +1065,11 @@ function loadAllToManyRelationships() {
         var virtualTableId = $me.data('virtual-table-id');
         var foreignKeyColumnName = $me.data('foreignKeyColumnName');
         var friendlyName = $me.data('friendly-name');
-        trace(relationId);
-        trace(pk);
-        trace(virtualTableId);
-        trace("foreignKeyColumnName;" + foreignKeyColumnName);
-        trace($me.data());
+        console.log(relationId);
+        console.log(pk);
+        console.log(virtualTableId);
+        console.log("foreignKeyColumnName;" + foreignKeyColumnName);
+        console.log($me.data());
         if (relationId > 0) {
             $.ajax({
                 url: "/ScaffoldService/ListItemsForRelation",
@@ -1138,7 +1115,7 @@ function loadAllToManyRelationships() {
 
 
 function endToManyModal(message) {
-    trace(message);
+    console.log(message);
     $('#to-many-modal').modal('hide');
     $('#to-many-modal .form-horizontal').html('');
     $('#to-many-modal a').removeData();
@@ -1159,15 +1136,15 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
     var virtualTableId = $(button).data('virtual-table-id');
     var friendlyName = $(button).data('friendly-name');
 
-    trace("pk:" + primaryKey);
-    trace("relationId:" + relationId);
-    trace("forceFkValue:" + forceFkValue);
-    trace("forceFkColumn:" + forceFkColumn);
-    trace("virtualTableId:" + virtualTableId);
+    console.log("pk:" + primaryKey);
+    console.log("relationId:" + relationId);
+    console.log("forceFkValue:" + forceFkValue);
+    console.log("forceFkColumn:" + forceFkColumn);
+    console.log("virtualTableId:" + virtualTableId);
 
     var me = $(this);
 
-    trace("ItemEditor bind to virtualTableId: " + virtualTableId);
+    console.log("ItemEditor bind to virtualTableId: " + virtualTableId);
 
     $.ajax({
         url: "/ScaffoldService/GetItem",
@@ -1197,29 +1174,29 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     '" data-backend-type="' + v.BackendType +
                     '" data-fq-name="' + v.FQName +
                     '"></div></div>');
-                trace(v.BackendType);
+                console.log(v.BackendType);
                 if (v.BackendType == "Display") {
                     $(v.InputId).append('<input type="text" class="form-control" readonly="true" />');
                     $(v.InputId + " input").val(v.Value);
                 }
                 else if (v.BackendType == "OneToMany") {
                     if (v.FQName == forceFkColumn) {
-                        trace("Got forced forceFkColumn");
+                        console.log("Got forced forceFkColumn");
                         $(v.InputId).append('<input type="number" class="form-control digits" readonly="true" />');
                         $(v.InputId + " input").val(forceFkValue);
                     } else {
-                        trace("OneToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
+                        console.log("OneToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
                         /* populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
-                            trace("OneToMany selected value:" + ui.item.id);
+                            console.log("OneToMany selected value:" + ui.item.id);
                             $(v.InputId).val(ui.item.id);
                             return true;
                         });*/
                     }
                 } else if (v.BackendType == "ManyToMany") {
-                    trace("ManyToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
+                    console.log("ManyToMany populateForeignKeyOptions NOT IMPLEMENTED YET. " + v.FQName);
                     /*
                     populateForeignKeyOptions(virtualTableId, v, function (event, ui) {
-                        trace(ui.item);
+                        console.log(ui.item);
                         $(v.InputId).append($('<option>', {
                             value: ui.item.id,
                             text: ui.item.label
@@ -1234,16 +1211,16 @@ $('#to-many-modal').on('shown.bs.modal', function (e) {
                     $(v.InputId).timepicker();
                 } else if (v.BackendType == "Checkbox") {
                     $(v.InputId).append('<input type="checkbox" />');
-                    trace(v.Value);
+                    console.log(v.Value);
                     if (v.Value === "True") {
-                        trace(v.Value);
+                        console.log(v.Value);
                         $(v.InputId + " input").prop('checked', true);
                     }
                 } else if (v.BackendType == "Integer") {
                     $(v.InputId).append('<input class="form-control digits required" maxlength="11" type="number" />');
                     $(v.InputId + " input").val(v.Value);
                 } else {
-                    trace("m" + v.InputId + " " + v.Value + " (" + v.BackendType + ")");
+                    console.log("m" + v.InputId + " " + v.Value + " (" + v.BackendType + ")");
                     $(v.InputId).append('<input type="text" class="form-control" />');
                     $(v.InputId + " input").val(v.Value);
                 }
@@ -1268,7 +1245,7 @@ $('#to-many-modal a.btn-danger').on('click', function (e) {
                     endToManyModal("Successfully deleted");
                 } else {
                     logError(null, null, "Could not delete the item.");
-                    trace(data);
+                    console.log(data);
                 }
             },
             error: logError
@@ -1286,12 +1263,12 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
     var pk = $(this).data('pk');
     var forceFkValue = $(this).data('force-fk-value');
     var forceFkColumn = $(this).data('force-fk-column');
-    trace("Save item called with: ");
-    trace($(this).data());
+    console.log("Save item called with: ");
+    console.log($(this).data());
     var json = {
         Columns: []/*, __type: "DTOItem" */
     };
-    trace(pk);
+    console.log(pk);
     if (pk == undefined)
         pk = 0;
 
@@ -1302,7 +1279,7 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
         json.Columns.push(columnFk);
     }
     else {
-        trace("#to-many-modal was called with incorrect parameteres");
+        console.log("#to-many-modal was called with incorrect parameteres");
     }
     $("#to-many-modal .form-horizontal div div").each(function (i, v) {
         $v = $(v);
@@ -1320,14 +1297,14 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
 
             column['InputId'] = $v.attr('id');
             if (backendType == "ManyToMany") {
-                trace($v.attr('id') + " > option");
+                console.log($v.attr('id') + " > option");
                 column['Value'] = "";
                 var items = $($v.attr('id') + " > option").map(function () {
                     column['Value'] += $(this).val() + ",";
                 });
             } else if (backendType == "Checkbox") {
                 column['Value'] = $input.prop('checked');
-                trace("Checkbox");
+                console.log("Checkbox");
             }
             else {
                 column['Value'] = $input.val();
@@ -1347,7 +1324,7 @@ $('#to-many-modal a.btn-success').on('click', function (e) {
                 endToManyModal("Item saved.");
             } else {
                 logError(null, null, "Could not save the item.");
-                trace(data);
+                console.log(data);
             }
         },
         error: handleAjaxError

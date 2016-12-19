@@ -546,7 +546,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="JavaScript\dropzone\dropzone.min.js" />
-    <Content Include="JavaScript\jquery-2.1.3.min.js" />
+    <Content Include="JavaScript\jquery-3.1.1.min.js" />
     <Content Include="JavaScript\jquery-ui.autocomplete.min.js" />
     <Content Include="JavaScript\jquery.details.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -782,6 +782,7 @@
     </Content>
     <Content Include="LocalRewrite.config" />
     <Content Include="adm\ExcelExport.ashx" />
+    <Content Include="JavaScript\jquery-3.1.1.min.map" />
     <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config" />
@@ -819,7 +820,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="adm\css\bootstrap.css.map" />
-    <Content Include="JavaScript\jquery-2.1.3.min.map" />
     <None Include="One.Net.library.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -853,6 +853,13 @@
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <Content Include="SiteDefault\gitignore.template" />
     <Content Include="SiteDefault\Web.config" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Structure.aspx" />
