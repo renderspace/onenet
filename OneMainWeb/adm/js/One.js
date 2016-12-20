@@ -456,11 +456,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {
 function replaceCKEditor(id) {
 
     CKEDITOR.replace(id, {
-        customConfig: ''/*,
-        entities_greek: false,
-        forcePasteAsPlainText: true,
-        entities: false,
-        entities_latin: false,
+        customConfig: '',
         toolbar: [
     { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
 	{ name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
@@ -471,15 +467,16 @@ function replaceCKEditor(id) {
 	{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
 	{ name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] }
         ],
+        entities_greek: false,
+        forcePasteAsPlainText: true,
+        entities: false,
+        entities_latin: false,
         filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
         filebrowserWindowWidth: '830',
         filebrowserWindowHeight: '600',
         filebrowserImageBrowseLinkUrl: '/ckfinder/ckfinder.html?type:Images',
         filebrowserImageWindowWidth: '830',
         filebrowserImageWindowHeight: '600',
-        filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type:Flash',
-        filebrowserFlashWindowWidth: '830',
-        filebrowserFlashWindowHeight: '600',
         stylesSet: 'ck_styles:/site_specific/ckstyles.js',
         disableObjectResizing: true,
         templates: 'one_default_templates',
@@ -487,8 +484,7 @@ function replaceCKEditor(id) {
         height: 350,
         disableObjectResizing: true,
         resize_enabled: false,
-        allowedContent: true, 
-        skin: 'bootstrapck'*/
+        allowedContent: true
     });
 }
 

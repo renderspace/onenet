@@ -58,6 +58,7 @@ namespace OneMainWeb
                     {
                         Notifier1.ExceptionName = ex.GetType().Name;
                         Notifier1.ExceptionMessage = ex.Message;
+                        Notifier1.ExceptionMessage += ex.StackTrace;
                     }
 
                     if (control != null)
