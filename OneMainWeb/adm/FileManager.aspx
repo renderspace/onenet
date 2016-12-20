@@ -68,41 +68,72 @@
     #PanelUpload:hover { background-color: #eee;  }
 
   </style>
-    <script>
+   <script>
+        // Helper function to get parameters from the query string.
+        function getUrlParam( paramName ) {
+            var reParam = new RegExp( '(?:[\?&]|&)' + paramName + '=([^&]+)', 'i' );
+            var match = window.location.search.match( reParam );
+
+            return ( match && match.length > 1 ) ? match[1] : null;
+        }
+        // Simulate user action of selecting a file to be returned to CKEditor.
+        function returnFileUrl(fileUrl) {
+            if (fileUrl != null && fileUrl.length) {
+                var funcNum = getUrlParam('CKEditorFuncNum');
+                if (funcNum != null) {
+                    window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+                    window.close();
+                }
+            }
+        }
+    
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
+            var fromCK = getUrlParam('CKEditorFuncNum');
+            if (fromCK) {
+                $("#files-table").on("click", "a", function () {
+                    returnFileUrl($(this).data('clipboard-text'));
+                });
+            }
+
             var previewNode = document.querySelector("#template");
             previewNode.id = "";
             globalPreviewTemplate = previewNode.parentNode.innerHTML;
             previewNode.parentNode.removeChild(previewNode);
-
-            var myDropzone = new Dropzone("div#PanelUpload", {
-                url: "/adm/FileManager.aspx",
-                autoProcessQueue: true,
-                thumbnailWidth: 80,
-                thumbnailHeight: 80,
-                parallelUploads: 20,
-                previewTemplate: globalPreviewTemplate,
-                clickable: ".fileinput-button",
-                previewsContainer: "#previews" // Define the container to display the previews
-            });
-
-            myDropzone.on("sending", function (file, xhr, formData) {
-                var selectedFolderId = $('#HiddenSelectedFolderId').val();
-                trace("sending to: " + selectedFolderId);
-                formData.append("SelectedFolderId", selectedFolderId);
-            });
-
-            myDropzone.on("complete", function (file) {
-                trace("complete");
-                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+            if (!fromCK) {
+                var cb = document.getElementsByClassName('copy-button');
+                var client = new ZeroClipboard(cb);
+                client.on("ready", function (readyEvent) {
+                    client.on("aftercopy", function (event) {
+                        event.target.innerHTML = '<span class="glyphicon glyphicon-copy"></span> Copied';
+                    });
+                });
+                var myDropzone = new Dropzone("div#PanelUpload", {
+                    url: "/adm/FileManager.aspx",
+                    autoProcessQueue: true,
+                    thumbnailWidth: 80,
+                    thumbnailHeight: 80,
+                    parallelUploads: 20,
+                    previewTemplate: globalPreviewTemplate,
+                    clickable: ".fileinput-button",
+                    previewsContainer: "#previews" // Define the container to display the previews
+                });
+                myDropzone.on("sending", function (file, xhr, formData) {
                     var selectedFolderId = $('#HiddenSelectedFolderId').val();
-                    trace("complete: " + selectedFolderId);
-                    files_databind(selectedFolderId);
-                    $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
-                    $("#previews").empty();
-                }
-            });
+                    trace("sending to: " + selectedFolderId);
+                    formData.append("SelectedFolderId", selectedFolderId);
+                });
+                myDropzone.on("complete", function (file) {
+                    trace("complete");
+                    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                        var selectedFolderId = $('#HiddenSelectedFolderId').val();
+                        trace("complete: " + selectedFolderId);
+                        files_databind(selectedFolderId);
+                        $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
+                        $("#previews").empty();
+                    }
+                });
+            }
         });
     </script>
 
@@ -111,22 +142,22 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         
 <one:Notifier runat="server" ID="Notifier1" />
-    <div class="adminSection">
+    <asp:Panel runat="server" ID="PanelDrop" CssClass="adminSection">
 		<div class="row">
-		<div class="col-md-4 validationGroup">
-            <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
-            <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
-            <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
+		    <div class="col-md-4 validationGroup">
+                <asp:Label ID="lblSearchMessage" runat="server" CssClass="warning"></asp:Label>
+                <asp:TextBox ID="TextBoxSearch" runat="server" placeholder="Search ID" CssClass="digits required"></asp:TextBox>
+                <asp:LinkButton ID="ButtonDisplayById" runat="server" Text="Search"  CssClass="btn btn-info causesValidation" OnClick="cmdSearch_Click"  />
+		    </div>
+		    <div class="col-md-8">
+		    <asp:Panel ID="PanelUpload" runat="server" ClientIDMode="static">
+               <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+		    </asp:Panel>
+		    </div>
 		</div>
-		<div class="col-md-8">
-		<asp:Panel ID="PanelUpload" runat="server" ClientIDMode="static">
-           <div class="fallback">
-                <input name="file" type="file" multiple />
-            </div>
-		</asp:Panel>
-		</div>
-		</div>
-    </div>
+    </asp:Panel>
 
     <div class="table table-striped files" id="previews">
 

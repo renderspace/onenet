@@ -11,7 +11,7 @@ function logError(XMLHttpRequest, textStatus, errorThrown) {
     console.log(errorToLog);
     console.log(XMLHttpRequest);
     if (XMLHttpRequest.responseText.indexOf("Access is denied") == -1) {
-        bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
+        //bootbox.alert({ title: "Error has occured", message: "<h4>If a problem persists, please contact the system administrator.</h4><p>The following information might be of some use to the administrator:</p> <code>errorThrown: " + errorThrown + "</code>" });
     }
     if (typeof (ga) !== 'undefined') {
         ga('send', 'event', 'JS logError', 'error', errorToLog);
@@ -93,7 +93,8 @@ function files_databind(selectedFolderId) {
         dataType: 'json',
         type: "GET",
         success: function (data) {
-            console.log("ListFiles success");
+            var fromCK = getUrlParam('CKEditorFuncNum');
+            console.log("ListFiles success.. " + (fromCK ? 'from CK' : ''));
             $('#files-table tbody').empty();
             $.map(data, function (item) {
                 var r = '<tr';
@@ -102,7 +103,7 @@ function files_databind(selectedFolderId) {
                     console.log("got it");
                 }
                 r += '><td><input type="checkbox" name="fileIdToDelete" value="' + item.Id + '"  /></td><td>';
-                r += '<a href="#" class="btn btn-xs btn-primary copy-button" data-clipboard-text="' + item.Uri + '" title="Click to copy path."><span class="glyphicon glyphicon-copy"></span> Copy path to Clipboard</a> ';
+                r += '<a href="#" class="btn btn-xs btn-primary copybutton" data-clipboard-text="' + item.Uri + '" title="Click to copy path."><span class="glyphicon glyphicon-copy"></span>' + (fromCK ? 'Select file' : 'Copy path to Clipboard') + '</a> ';
                 r += '</td><td>' + item.Icon + '</td><td>' + item.Size + 'kB';
                 r += ' <br/><a href="#" class="btn btn-xs btn-warning openFileReplace"  data-file-id="' + item.Id + '">Replace file</a>';
                 r += ' </td><td>';
@@ -110,14 +111,15 @@ function files_databind(selectedFolderId) {
                 r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                     '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                 $('#files-table tbody').append(r);
-            });
-
-            var cb = document.getElementsByClassName('copy-button');
-            var client = new ZeroClipboard(cb);
-            client.on("ready", function (readyEvent) {
-                client.on("aftercopy", function (event) {
-                    event.target.innerHTML = '<span class="glyphicon glyphicon-copy"></span> Copied';
-                });
+                if (fromCK) {
+                    $("#files-table tr th:nth-child(1), table tr td:nth-child(1)").hide();
+                    $("#files-table tr th:nth-child(4), table tr td:nth-child(4)").hide();
+                    // 
+                    $("#files-table tr th:last-child, table tr td:last-child").hide();
+                    $('.btn-danger').hide();
+                    $('.addStuff').hide();
+                    $('#ButtonDelete').hide();
+                }
             });
 
             $('.openFileReplace').each(function (e) {
@@ -177,7 +179,10 @@ function toggleRevertTextContentButton(instanceId) {
                     $('.modal-revert-to-published').hide();
                 }
             },
-            error: handleAjaxError
+            error: function (a, b, c) {
+                $('.modal-revert-to-published').hide();
+                handleAjaxError(a, b, c);
+            }
         });
     } else {
         $('.modal-revert-to-published').hide();
@@ -209,7 +214,10 @@ function getContent(contentId, languageId, enableHtml, enableCk) {
 
                 setUpHtmlEditing(enableHtml, enableCk, content.Html);
             },
-            error: handleAjaxError
+            error: function(a, b, c) {
+                handleAjaxError(a, b, c);
+            }
+                
         });
     } else {
         setUpHtmlEditing(enableHtml, enableCk, "");
@@ -454,7 +462,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {
 };
 
 function replaceCKEditor(id) {
-
+    console.log('replace CK to id:' + id)
     CKEDITOR.replace(id, {
         customConfig: '',
         toolbar: [
@@ -471,11 +479,11 @@ function replaceCKEditor(id) {
         forcePasteAsPlainText: true,
         entities: false,
         entities_latin: false,
-        filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-        filebrowserWindowWidth: '830',
+        filebrowserBrowseUrl: '/adm/FileManager.aspx',
+        filebrowserWindowWidth: '980',
         filebrowserWindowHeight: '600',
-        filebrowserImageBrowseLinkUrl: '/ckfinder/ckfinder.html?type:Images',
-        filebrowserImageWindowWidth: '830',
+        filebrowserImageBrowseLinkUrl: '/adm/FileManager.aspx?type:Images',
+        filebrowserImageWindowWidth: '980',
         filebrowserImageWindowHeight: '600',
         stylesSet: 'ck_styles:/site_specific/ckstyles.js',
         disableObjectResizing: true,

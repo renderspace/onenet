@@ -37,8 +37,7 @@
 <body>
     <form id="form1" runat="server">
 
-		
-		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<asp:Panel runat="server" ID="PanelNavbar" CssClass="navbar navbar-inverse navbar-fixed-top">
 		  <div class="container-fluid">
 			<div class="navbar-header">
 			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -63,10 +62,10 @@
 			  </ul>
 			</div>
 		  </div>
-		</div>
+		</asp:Panel>
    <div class="container-fluid">
       <div class="row">
-        <div class="sidebar">
+        <asp:Panel CssClass="sidebar" runat="server" ID="PanelSideBar">
            <nav>
 				<asp:Menu ID="Menu1" runat="server" DataSourceID="SiteMapDataSource1" CssClass="nav nav-sidebar" RenderingMode="List"
                     ItemWrap="True" StaticDisplayLevels="3" IncludeStyleBlock="false" EnableViewState="false" SkipLinkText="" />
@@ -82,10 +81,10 @@
             <div class="clear-cache">
                 <asp:Literal runat="server" ID="LiteralClearProductionCache"></asp:Literal>
             </div>
-        </div>
-        <div class="main main-right-bar">
+        </asp:Panel>
+          <asp:Panel CssClass="sidebar" runat="server" ID="PanelMain">
             <asp:contentplaceholder id="MainContent" runat="server" />
-        </div>
+        </asp:Panel>
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" ShowStartingNode="false" />
 	 </div>
     </div>

@@ -47,13 +47,14 @@ namespace OneMainWeb
             set
             {
                 LabelFolderId.Text = "Folder ID: <strong>" + value.ToString() + "</strong> ";
-                LabelFolderId.Text += "<a href=\"#\" class=\"btn btn-xs btn-default copy-button\" data-clipboard-text=\"" + value.ToString() + "\" title=\"Click to copy folder ID.\"><span class=\"glyphicon glyphicon-copy\"></span> Copy ID to Clipboard</a>";
+                LabelFolderId.Text += "<a href=\"#\" class=\"btn btn-xs btn-default copybutton\" data-clipboard-text=\"" + value.ToString() + "\" title=\"Click to copy folder ID.\"><span class=\"glyphicon glyphicon-copy\"></span> Copy ID to Clipboard</a>";
                 HiddenSelectedFolderId.Value = value.ToString();
             }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            PanelDrop.Visible = Request["CKEditor"] == null;
             if (SelectedWebsite == null)
             {
                 Notifier1.Warning = "You don't have permissions for any site or there are no websites defined in database.";

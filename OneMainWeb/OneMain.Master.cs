@@ -71,7 +71,16 @@ namespace OneMainWeb
 
         protected void Page_Init(object sender, EventArgs e)
         {
+            PanelNavbar.Visible = PanelSideBar.Visible = Request["CKEditor"] == null;
+            if (Request["CKEditor"] == null)
+            {
+                PanelMain.CssClass = "main main-right-bar";
+            } else
+            {
+                PanelMain.CssClass = "main";
+            }
             
+
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
