@@ -1,3 +1,5 @@
+$.ajaxSetup({ cache: false });
+
 function handleAjaxError(XMLHttpRequest, textStatus, errorThrown) {
     if (XMLHttpRequest.responseText.indexOf("Access is denied") > -1) {
         $('.sessionTimeoutError').show();
