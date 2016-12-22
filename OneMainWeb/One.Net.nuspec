@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.7.15</version>
-        <releaseNotes>Module instance up-down fix</releaseNotes>
+        <version>3.8.0</version>
+        <releaseNotes>replaced CkFinder with home grown version. IE 11 CMS fixes.</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
