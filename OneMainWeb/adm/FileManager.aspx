@@ -120,14 +120,11 @@
                 });
                 myDropzone.on("sending", function (file, xhr, formData) {
                     var selectedFolderId = $('#HiddenSelectedFolderId').val();
-                    trace("sending to: " + selectedFolderId);
                     formData.append("SelectedFolderId", selectedFolderId);
                 });
                 myDropzone.on("complete", function (file) {
-                    trace("complete");
                     if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                         var selectedFolderId = $('#HiddenSelectedFolderId').val();
-                        trace("complete: " + selectedFolderId);
                         files_databind(selectedFolderId);
                         $(".adminSection").before('<div class="alert alert-success"><p><span>Uploaded files.</span></p></div>');
                         $("#previews").empty();

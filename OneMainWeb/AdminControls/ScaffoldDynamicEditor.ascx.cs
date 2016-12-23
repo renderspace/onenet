@@ -659,7 +659,7 @@ jQuery.validator.addMethod(
     source: ""/Utils/BambooOneToManyData.ashx?limit=10&relationId=" + column.PartOfRelationId + @""",
     minLength: 2,
     select: function( event, ui ) {
-        trace(ui.item);
+        console.log(ui.item);
                     $(""." + suggestIdentification + @" input[type=hidden]"").val(ui.item.value);
                     $(""." + suggestIdentification + @" .suggest"").val(ui.item.label);
                     return false;

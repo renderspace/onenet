@@ -45,8 +45,7 @@ function saveCkeditorData(instance, moduleInstanceId, pageIdd) {
     newData = instance.getData();
     if (newData !== savedData) {
         savedData = newData;
-        trace('saveCkeditorData new data on mi: ' + moduleInstanceId);
-
+        
         $.ajax({
             type: "POST",
             url: "/adm/ManagementWebService.asmx/ChangeTextContent",
