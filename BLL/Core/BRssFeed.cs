@@ -182,7 +182,13 @@ namespace One.Net.BLL
                                         xmlItem.AppendChild(itemGuid);
 
                                         XmlElement itemLink = doc.CreateElement("link");
-                                        itemLink.InnerText = feed.LinkToSingle + item.Id;
+                                        if (!string.IsNullOrWhiteSpace(item.UrlPart))
+                                        {
+                                            itemLink.InnerText = feed.LinkToSingle + item.UrlPart;                                        }
+                                        else
+                                        {
+                                            itemLink.InnerText = feed.LinkToSingle + item.Id;
+                                        }
                                         xmlItem.AppendChild(itemLink);
 
                                         XmlElement itemPubDate = doc.CreateElement("pubDate");

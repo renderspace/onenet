@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.8.1</version>
-        <releaseNotes>File upload fix.</releaseNotes>
+        <version>3.8.2</version>
+        <releaseNotes>RSS links now support human readable URLs</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>

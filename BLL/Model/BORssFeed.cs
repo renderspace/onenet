@@ -47,6 +47,7 @@ namespace One.Net.BLL.Model
         public string Html { get { return html; } set { html = value; } }
         public string ImageUrl { get { return imageUrl; } set { imageUrl = value; } }
         public DateTime PubDate { get { return pubDate; } set { pubDate = value; } }
+        public string UrlPart { get; set; }
     }
 
     [Serializable]

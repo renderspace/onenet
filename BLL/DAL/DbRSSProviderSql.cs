@@ -34,6 +34,10 @@ namespace One.Net.BLL.DAL
                     item.Teaser = reader.GetString(3);
                     item.Html = reader.GetString(4);
                     item.PubDate = reader.GetDateTime(5);
+                    if (ColumnExists(reader, "url_part"))
+                    {
+                        item.UrlPart = reader["url_part"].ToString();
+                    }
 
                     if (ColumnExists(reader, "image_url"))
                         item.ImageUrl = reader["image_url"] != DBNull.Value ? (string)reader["image_url"] : "";
