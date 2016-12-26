@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.8.2</version>
-        <releaseNotes>RSS links now support human readable URLs</releaseNotes>
+        <version>3.8.3</version>
+        <releaseNotes>Update dependencies</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -13,7 +13,7 @@
         <tags>web asp.net webforms CMS</tags>
         <dependencies>
           
-          <dependency id="Kentor.OwinCookieSaver" version="1.0.2" />
+          <dependency id="Kentor.OwinCookieSaver" version="1.1.1" />
           <dependency id="Microsoft.AspNet.Identity.EntityFramework" version="2.2.1" />
           <dependency id="Microsoft.AspNet.Identity.Owin" version="2.2.1" />
           <dependency id="Microsoft.Owin.Host.SystemWeb" version="3.0.1" />
@@ -27,9 +27,9 @@
           <dependency id="StackExchange.Redis" version="1.0" />
         
           <dependency id="AdaptedCSSFriendly" version="1.1.1"  />
-          <dependency id="MsSqlDBUtility" version="1.1.1"  />
+          <dependency id="MsSqlDBUtility" version="1.1.2"  />
           <dependency id="CKFinder.library"  />
-          <dependency id="NLog" version="4.0.0" />
+          <dependency id="NLog" version="4.4.1" />
 
         </dependencies>
     </metadata>
