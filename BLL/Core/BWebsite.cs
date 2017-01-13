@@ -695,6 +695,24 @@ namespace One.Net.BLL
             {
                 int tempIdx = instance.Order;
                 instance.Order = instanceAdjacent.Order;
+
+                if (instance.PageId != instanceAdjacent.PageId)
+                {
+                    // we are dealing with an inherited adjacent instance
+                    // if we don't do the operations below, the moved instance will 
+                    // never go above or below the order of the inherited instance.
+                    if (tempIdx > instance.Order)
+                    {
+                        // pressed up
+                        instance.Order--;
+                    }
+                    else if (tempIdx < instance.Order)
+                    {
+                        // pressed down
+                        instance.Order++;
+                    }
+                }
+
                 if (tempIdx == instance.Order)
                 {
                     instanceAdjacent.Order = webSiteDb.GetMaxModuleInstanceIdx(instance.PageId, instance.PublishFlag, instance.PlaceHolderId) + 1;
