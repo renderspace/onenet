@@ -330,7 +330,7 @@
                 controlHtml += '<input type="text" maxlength="255" class="form-control" id="' + fieldId + '" name="' + fieldId + '" />';
             else if (fieldType == 'repeatedinput') {
                 controlHtml += '<input type="hidden" class="repeatedinput_count" id="' + fieldId + '_count" name="' + fieldId + '_count" value="1" />';
-                controlHtml += '<div class="repeated-controls">';
+                controlHtml += '<div class="repeated-controls repeated-controls-' + fieldId + '">';
                 controlHtml += '<div class="inputs">';
                 controlHtml += '<div><input type="text" maxlength="255" class="form-control form-repeated-control" id="' + fieldId + '_repeated_0" name="' + fieldId + '_repeated_0" /></div>';
                 controlHtml += '</div>';
@@ -470,16 +470,16 @@
                                 var repeatedCount = parseInt($('[name=' + fieldId + '_count]').val());
                                 if (repeatedCount > 0) {
 
-                                    var repeatedLineControls = '<div class="repeated-controls">';
+                                    var repeatedLineControls = '<div class="repeated-controls repeated-controls-' + fieldId + '">';
                                     repeatedLineControls += '<div class="inputs">';
                                     for (i = 0; i < repeatedCount; i++) {
                                         var inputValue = (typeof repeatedValues[i] !== 'undefined' ? repeatedValues[i] : '');
-                                        repeatedLineControls += '<div><input type="text" maxlength="255" class="form-control form-repeated-control" id="' + fieldId + '_repeated_' + i + '" name="' + fieldId + '_repeated_' + i + '" value="' + escape(inputValue) + '" /><a class="removeRepeatedInput" href="#">Remove</a></div>';
+                                        repeatedLineControls += '<div><input type="text" maxlength="255" class="form-control form-repeated-control" id="' + fieldId + '_repeated_' + i + '" name="' + fieldId + '_repeated_' + i + '" value="' + inputValue + '" /><a class="removeRepeatedInput" href="#">Remove</a></div>';
                                     }
                                     repeatedLineControls += '</div>';
                                     repeatedLineControls += '<a href="#" class="addRepeatedInput">Add</a>';
                                     repeatedLineControls += '</div>';
-                                    $('.content-fields .repeated-controls').remove();
+                                    $('.content-fields .repeated-controls.repeated-controls-' + fieldId).remove();
                                     $('[name=' + fieldId + '_count]').after(repeatedLineControls);
                                     bindFormControlEvents();
                                 }
