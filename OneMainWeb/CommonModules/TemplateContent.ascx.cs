@@ -80,15 +80,26 @@ namespace OneMainWeb.CommonModules
                                 {
                                     valueToReplaceWith = HttpUtility.UrlEncode(CurrentUri);
                                 }
+                                    
                                 LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", valueToReplaceWith);
                             }
                             else if (contentTemplate.ContentFields.ContainsKey(field.Key))
                             {
                                 if (string.IsNullOrEmpty(field.Value))
+                                {
                                     LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "}", contentTemplate.ContentFields[field.Key]);
+                                }
                                 else
                                 {
-                                    LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", contentTemplate.ContentFields[field.Key]);
+                                    if (field.Value == "repeatedinput")
+                                    {
+                                        var value = contentTemplate.ContentFields[field.Key].Replace("|||", ""); // remove ||| we use for repeated fields.
+                                        LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", value);
+                                    }
+                                    else
+                                    {
+                                        LiteralTemplateOutput.Text = LiteralTemplateOutput.Text.Replace("{" + field.Key + "," + field.Value + "}", contentTemplate.ContentFields[field.Key]);
+                                    }
                                 }
                             }
                         }

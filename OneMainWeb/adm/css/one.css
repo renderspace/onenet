@@ -512,6 +512,13 @@ details .form-group select {width: 100%;}
 	box-shadow: none;
 }
 
+.form-control.form-repeated-control {
+    width: 90%;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
 .modal-dialog .cke_contents {
     height: 320px !important;
 }
