@@ -1,4 +1,4 @@
-(function($) {
+
 
     $.ajaxSetup({ cache: false });
 
@@ -1452,4 +1452,3 @@
         });
     });
 
-})(jQuery);
