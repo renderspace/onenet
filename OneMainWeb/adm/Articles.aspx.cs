@@ -271,66 +271,36 @@ namespace OneMainWeb
                 }
                 else
                 {
-                    var errors = new List<ValidatorError>();
-
-                    Validator.CheckHtml(TextContentEditor.Html, ref errors);
-                    var hasErrors = errors.Count > 0;
-
-                    if (!hasErrors)
+                    SelectedArticle.HumanReadableUrl = humanReadableUrl;
+                    SelectedArticle.Title = TextContentEditor.Title;
+                    SelectedArticle.SubTitle = TextContentEditor.SubTitle;
+                    SelectedArticle.Teaser = TextContentEditor.Teaser;
+                    SelectedArticle.Html = TextContentEditor.Html;
+                    SelectedArticle.DisplayDate = d;
+                    SelectedArticle.IsChanged = true;
+                    SelectedArticle.MarkedForDeletion = false;
+                    SelectedArticle.PublishFlag = false;
+                    SelectedArticle.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+                        
+                    SelectedArticle.Regulars.Clear();
+                    foreach (ListItem item in ListBoxAssignedToArticle.Items)
                     {
-                        Validator.CheckHtml(TextContentEditor.Teaser, ref errors);
-                        hasErrors = errors.Count > 0;
+                        BORegular regular = new BORegular();
+                        regular.Id = Int32.Parse(item.Value);
+                        regular.Title = item.Text;
+                        SelectedArticle.Regulars.Add(regular);
                     }
+                    articleB.ChangeArticle(SelectedArticle);
+                    Notifier1.Message = "Article saved";
 
-                    if (hasErrors)
+                    if (close)
                     {
-                        if (hasErrors)
-                            Notifier1.Warning += "<h3>" + "Warning:" + "</h3><ul>";
-
-                        foreach (var validatorError in errors)
-                        {
-                            Notifier1.Warning += "<li>" + validatorError.Error;
-                            if (!string.IsNullOrEmpty(validatorError.Tag))
-                                Notifier1.Warning += " <span>" + validatorError.Tag + "</span>";
-                            Notifier1.Warning += "</li>";
-                        }
-
-                        if (hasErrors)
-                            Notifier1.Warning += "</ul>";
+                        SelectedArticle = null;
+                        Multiview1.ActiveViewIndex = 0;
                     }
                     else
                     {
-                        SelectedArticle.HumanReadableUrl = humanReadableUrl;
-                        SelectedArticle.Title = TextContentEditor.Title;
-                        SelectedArticle.SubTitle = TextContentEditor.SubTitle;
-                        SelectedArticle.Teaser = TextContentEditor.Teaser;
-                        SelectedArticle.Html = TextContentEditor.Html;
-                        SelectedArticle.DisplayDate = d;
-                        SelectedArticle.IsChanged = true;
-                        SelectedArticle.MarkedForDeletion = false;
-                        SelectedArticle.PublishFlag = false;
-                        SelectedArticle.LanguageId = Thread.CurrentThread.CurrentCulture.LCID;
-                        
-                        SelectedArticle.Regulars.Clear();
-                        foreach (ListItem item in ListBoxAssignedToArticle.Items)
-                        {
-                            BORegular regular = new BORegular();
-                            regular.Id = Int32.Parse(item.Value);
-                            regular.Title = item.Text;
-                            SelectedArticle.Regulars.Add(regular);
-                        }
-                        articleB.ChangeArticle(SelectedArticle);
-                        Notifier1.Message = "Article saved";
-
-                        if (close)
-                        {
-                            SelectedArticle = null;
-                            Multiview1.ActiveViewIndex = 0;
-                        }
-                        else
-                        {
-                            Multiview1.ActiveViewIndex = 1;
-                        }
+                        Multiview1.ActiveViewIndex = 1;
                     }
                 }
             }

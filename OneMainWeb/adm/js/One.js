@@ -797,57 +797,32 @@
             content['FileId'] = $(".j_control_file_id").val();
 
             $.ajax({
-                url: "/AdminService/ValidateHtml",
-                data: JSON.stringify(content['Html']),
+                url: "/AdminService/ChangeContent",
+                data: JSON.stringify(content),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: "POST",
-                success: function (result) {
+                success: function (data) {
+                    if (data === true) {
+                        if ($saveButton.hasClass("modal-save-close")) {
+                            if (content['FileId'].length > 0) {
+                                $('#text-content-modal').modal('hide');
+                                $(".loading").hide();
+                            } else {
 
-                    $(".modal-body").hide();
-                    $(".modal-footer").hide();
-
-                    if (result !== "OK") {
-                        console.log(result);
-                        $(".modal-body .alert").remove();
-                        $(".modal-body").show();
-                        $(".modal-body").prepend('<div class="alert alert-warning" role="alert">' + result + '</div>');
-                        $(".modal-footer").show();
-                        $(".loading").hide();
+                                var end = window.performance.now();
+                                console.log('console.time ChangeContent done ' + (end - start));
+                                window.location.href = "/adm/structure.aspx";
+                            }
+                        } else {
+                            $(".modal-body").show();
+                            $(".modal-footer").show();
+                            $(".loading").hide();
+                        }
                     }
                     else {
-                        $.ajax({
-                            url: "/AdminService/ChangeContent",
-                            data: JSON.stringify(content),
-                            contentType: 'application/json; charset=utf-8',
-                            dataType: 'json',
-                            type: "POST",
-                            success: function (data) {
-                                if (data === true) {
-                                    if ($saveButton.hasClass("modal-save-close")) {
-                                        if (content['FileId'].length > 0) {
-                                            $('#text-content-modal').modal('hide');
-                                            $(".loading").hide();
-                                        } else {
-
-                                            var end = window.performance.now();
-                                            console.log('console.time ChangeContent done ' + (end - start));
-                                            window.location.href = "/adm/structure.aspx";
-                                        }
-                                    } else {
-                                        $(".modal-body").show();
-                                        $(".modal-footer").show();
-                                        $(".loading").hide();
-                                    }
-                                }
-                                else {
-                                    logError(null, null, "error while saving - content not saved");
-                                }
-                            },
-                            error: handleAjaxError
-                        });
+                        logError(null, null, "error while saving - content not saved");
                     }
-                
                 },
                 error: handleAjaxError
             });

@@ -205,7 +205,6 @@
     <Compile Include="Utility\LoosyFormatter.cs" />
     <Compile Include="Utility\StringTool.cs" />
     <Compile Include="Utility\UrlBuilder.cs" />
-    <Compile Include="Utility\XHTMLValidator.cs" />
     <Compile Include="WebConfig\RssConfiguration.cs" />
     <Compile Include="WebConfig\RssConfigProvider.cs" />
     <Compile Include="WebConfig\RssConfigProviderCollection.cs" />

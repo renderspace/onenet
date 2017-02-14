@@ -29,37 +29,6 @@ namespace One.Net.BLL.Service
             return "AdminService:" + Thread.CurrentPrincipal.Identity.Name;
         }
 
-        public string ValidateHtml(string html)
-        {
-            var errors = new List<ValidatorError>();
-
-            Validator.CheckHtml(html, ref errors);
-            var hasErrors = errors.Count > 0;
-            var ret = "";
-
-            if (hasErrors)
-            {
-                if (hasErrors)
-                    ret += "<h3>" + "Errors:" + "</h3><ul>";
-
-                foreach (var validatorError in errors)
-                {
-                    ret  += "<li>" + validatorError.Error;
-                    if (!string.IsNullOrEmpty(validatorError.Tag))
-                        ret  += " <span>" + validatorError.Tag + "</span>";
-                    ret  += "</li>";
-                }
-
-                if (hasErrors)
-                    ret += "</ul>";
-            }
-            else 
-            {
-                ret = "OK";
-            }
-            return ret;
-        }
-
         public string GenerateArticleParLink(string title)
         {
             return articleB.GenerateHumanReadableArticleUrl(title);

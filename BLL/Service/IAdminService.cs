@@ -76,9 +76,5 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GenerateRegularParLink?title={title}")]
         [Description("string GenerateRegularParLink(string title)")]
         string GenerateRegularParLink(string title);
-
-        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ValidateHtml")]
-        [Description("string ValidateHtml(string html)")]
-        string ValidateHtml(string html);
     }
 }
