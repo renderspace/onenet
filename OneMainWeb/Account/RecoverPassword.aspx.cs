@@ -120,7 +120,7 @@ namespace OneMainWeb.Account
                         {
                             manager.SendEmail(user.Id, "Password has been reset", "Your password was successfully reset.");
                         }
-                        catch ()
+                        catch
                         {
                             // don't really want to do anything here, because we are only sending out an email to let the user know that their password was reset ok.
                         }

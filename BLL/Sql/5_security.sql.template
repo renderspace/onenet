@@ -51,7 +51,7 @@ GRANT EXECUTE ON nextval TO [One.Net.BackEnd]
 GRANT EXECUTE ON Acc_Str2Number TO [One.Net.BackEnd]  
 GRANT EXECUTE ON Acc_IntList2Table TO [One.Net.BackEnd]  
 GRANT EXECUTE ON Acc_CharList2Table TO [One.Net.BackEnd]  
-GRANT EXECUTE ON ChangeEvent TO [One.Net.BackEnd]  
+
 GRANT EXECUTE ON email_modify TO [One.Net.BackEnd]  
 GRANT EXECUTE ON newsletter_subscription_get TO [One.Net.BackEnd]  
 
