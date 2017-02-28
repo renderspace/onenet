@@ -115,6 +115,7 @@
                     r += '</td><td><a href="#" data-toggle="modal" data-target="#text-content-modal" data-file-id="' + item.Id +
                         '"  class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a></td></tr>';
                     $('#files-table tbody').append(r);
+
                     if (fromCK) {
                         $("#files-table tr th:nth-child(1), table tr td:nth-child(1)").hide();
                         $("#files-table tr th:nth-child(4), table tr td:nth-child(4)").hide();
@@ -125,6 +126,8 @@
                         $('#ButtonDelete').hide();
                     }
                 });
+
+                bindCopyButtons();
 
                 $('.openFileReplace').each(function (e) {
                     var fileId = $(this).data("file-id");
@@ -167,6 +170,15 @@
             error: handleAjaxError
         });
     };
+
+    function bindCopyButtons() {
+        $(".copybutton").off('click');
+        $(".copybutton").on('click', function (e) {
+            var path = $(this).data('clipboard-text');
+            copyToClipboard(path);
+            e.preventDefault();
+        });
+    }
 
     function toggleRevertTextContentButton(instanceId) {
 
@@ -1427,3 +1439,31 @@
         });
     });
 
+    // Copies a string to the clipboard. Must be called from within an 
+    // event handler such as click. May return false if it failed, but
+    // this is not always possible. Browser support for Chrome 43+, 
+    // Firefox 42+, Safari 10+, Edge and IE 10+.
+    // IE: The clipboard feature may be disabled by an administrator. By
+    // default a prompt is shown the first time the clipboard is 
+    // used (per session).
+    function copyToClipboard(text) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            // IE specific code path to prevent textarea being shown while dialog is visible.
+            return clipboardData.setData("Text", text);
+
+        } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return false;
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
