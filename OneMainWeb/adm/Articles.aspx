@@ -15,7 +15,7 @@
 
             <div class="adminSection">
 			    <div class="col-md-2">
-			        <asp:LinkButton ID="cmdAddArticle" runat="server" text="<span class='glyphicon glyphicon-plus'></span> Add" OnClick="cmdAddArticle_Click" CssClass="btn btn-success" />			
+			        <asp:LinkButton ID="cmdAddArticle" runat="server" text="<span class='glyphicon glyphicon-plus'></span> Add" OnClick="cmdAddArticle_Click" CssClass="btn btn-success" />
 			    </div>
 			    <div class="col-md-6 validationGroup">
                     <asp:TextBox runat="server" ID="TextBoxShowById" placeholder="Search by ID or title" CssClass="required"></asp:TextBox>

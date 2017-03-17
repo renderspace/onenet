@@ -11,7 +11,7 @@
         <asp:MultiView runat="server" ID="MultiView1" OnActiveViewChanged="TabMultiview_OnViewIndexChanged" ActiveViewIndex="0">
             <asp:View ID="View1" runat="server">
                 <div class="adminSection">
-			        <asp:Button ID="AddRssFeed" runat="server" Text="Add RSS feed" OnClick="AddRssFeed_Click" />
+			        <asp:LinkButton ID="AddRssFeed" runat="server" OnClick="AddRssFeed_Click" text="<span class='glyphicon glyphicon-plus'></span> Add RSS" CssClass="btn btn-success" />			
 			    </div>
 
 			    <div class="centerFull">
@@ -19,8 +19,8 @@
 
 			            <asp:GridView ID="FeedsGridView" runat="server" PageSize="25" PageIndex="0"
 				            PagerSettings-Mode="NumericFirstLast"
-				            PagerSettings-LastPageText="$last"
-				            PagerSettings-FirstPageText="$first"
+				            PagerSettings-LastPageText="Last"
+				            PagerSettings-FirstPageText="First"
 				            PagerSettings-PageButtonCount="7"
 				            AllowSorting="True"
 				            AutoGenerateColumns="False"
@@ -63,28 +63,54 @@
                 </div>
             </asp:View>
             <asp:View ID="View2" runat="server">
-                <div class="centerFull">
-			        <div class="contentEntry">
-			            <asp:TextBox ID="InputTitle" runat="server" Text="$title" />
-			            <asp:TextBox ID="InputDescription" Rows="4" TextMode="MultiLine" runat="server" Text="$description" />
-			            <asp:TextBox ID="InputLinkToList" runat="server" Text="$link_to_list" />
-			            <asp:TextBox ID="InputLinkToSingle" runat="server" Text="$link_to_single" />
-			            <div class="select">
-			                <asp:Label ID="lblProviders" runat="server" Text="$providers" AssociatedControlID="ddlProviders" />
-			                <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlProviders_SelectedIndexChanged" ID="ddlProviders" runat="server" />
-			            </div>
-			            <div class="checkboxlist">
-			                <asp:Label ID="lblCategories" runat="server" Text="$categories" AssociatedControlID="chlCategories" />
-			                <asp:CheckBoxList ID="chlCategories" runat="server" />
-			            </div>
-			            <div class="form-group">
-				            <asp:Button ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" />
-				            <asp:Button ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" />
-			            </div>
+                <div class="adminSection form-horizontal validationGroup">
+
+                    <div class="form-group">
+                         <asp:Label AssociatedControlID="InputTitle" runat="server" ID="LabelInputTitle" Text="Title" Cssclass="col-sm-3 control-label"></asp:Label>
+                         <div class="col-sm-9">
+			                <asp:TextBox ID="InputTitle" runat="server" Text="" ClientIDMode="Static" CssClass="form-control" />
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label AssociatedControlID="InputDescription" runat="server" ID="Label1" Text="Description" Cssclass="col-sm-3 control-label"></asp:Label>
+                        <div class="col-sm-9">
+                            <asp:TextBox ID="InputDescription" Rows="4" TextMode="MultiLine" runat="server" CssClass="form-control"></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label AssociatedControlID="InputLinkToList" runat="server" ID="Label2" Text="Link to list" Cssclass="col-sm-3 control-label"></asp:Label>
+                        <div class="col-sm-9">
+                            <asp:TextBox ID="InputLinkToList" runat="server" CssClass="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <asp:Label AssociatedControlID="InputLinkToSingle" runat="server" ID="Label3" Text="Link to single" Cssclass="col-sm-3 control-label"></asp:Label>
+                        <div class="col-sm-9">
+                             <asp:TextBox ID="InputLinkToSingle" runat="server"  CssClass="form-control" />
+                        </div>
+                    </div>
+
+			        <div class="form-group">
+                        <asp:Label ID="lblProviders" runat="server" Text="Providers" AssociatedControlID="ddlProviders" CssClass="col-sm-3 control-label" />            
+                        <div class="col-sm-9">
+                            <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlProviders_SelectedIndexChanged" ID="ddlProviders" runat="server" CssClass="form-control" />
+                        </div>
 			        </div>
-			    </div>	
+			        <div class="form-group">
+                        <label class="col-sm-3 control-label">Categories</label>
+                        <div class="col-sm-9">
+                            <asp:CheckBoxList ID="chlCategories" runat="server" />
+                        </div>
+			        </div>
+			        <div class="form-group">
+                        <div class="col-sm-12">
+				            <asp:LinkButton ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click" CssClass="btn btn-success causesValidation" Text="Save" />
+				            <asp:LinkButton  ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" Text="Save and close" />
+                        </div>
+			        </div>
+                    
+                </div>
+			        
             </asp:View>
-            <asp:View ID="View3" runat="server"></asp:View>
-            <asp:View ID="View4" runat="server"></asp:View>
         </asp:MultiView>
 </asp:Content>

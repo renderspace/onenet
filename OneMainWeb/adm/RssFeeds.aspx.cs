@@ -188,17 +188,6 @@ namespace OneMainWeb
                         InputLinkToList.Text = SelectedRssFeed.LinkToList;
                         InputDescription.Text = SelectedRssFeed.Description;
                     }
-
-                    if (SelectedRssFeed != null && SelectedRssFeed.Id.HasValue)
-                    {
-                        InsertUpdateButton.Text = "$update_rss_feed";
-                        InsertUpdateCloseButton.Text = "$update_rss_feed_and_close";
-                    }
-                    else
-                    {
-                        InsertUpdateButton.Text = "$add_rss_feed";
-                        InsertUpdateCloseButton.Text = "$add_rss_feed_and_close";
-                    }
                 }
             }
             catch (Exception ex)
@@ -239,7 +228,7 @@ namespace OneMainWeb
         protected void InsertUpdateButton_Click(object sender, EventArgs e)
         {
             SaveRssFeed();
-            Notifier1.Message = "$item_saved";
+            Notifier1.Message = "Saved";
 
             MultiView1.ActiveViewIndex = 1;
         }
@@ -248,7 +237,7 @@ namespace OneMainWeb
         {
             SaveRssFeed();
 
-            Notifier1.Message = "$item_saved";
+            Notifier1.Message = "Saved";
 
             SelectedRssFeed = null;
             MultiView1.ActiveViewIndex = 0;

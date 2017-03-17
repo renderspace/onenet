@@ -46,7 +46,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddRssFeed;
+        protected global::System.Web.UI.WebControls.LinkButton AddRssFeed;
         
         /// <summary>
         /// FeedsGridView control.
@@ -76,6 +76,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.View View2;
         
         /// <summary>
+        /// LabelInputTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LabelInputTitle;
+        
+        /// <summary>
         /// InputTitle control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox InputTitle;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// InputDescription control.
@@ -94,6 +112,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.TextBox InputDescription;
         
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
         /// InputLinkToList control.
         /// </summary>
         /// <remarks>
@@ -101,6 +128,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox InputLinkToList;
+        
+        /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// InputLinkToSingle control.
@@ -130,15 +166,6 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.DropDownList ddlProviders;
         
         /// <summary>
-        /// lblCategories control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCategories;
-        
-        /// <summary>
         /// chlCategories control.
         /// </summary>
         /// <remarks>
@@ -154,7 +181,7 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateButton;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateButton;
         
         /// <summary>
         /// InsertUpdateCloseButton control.
@@ -163,24 +190,6 @@ namespace OneMainWeb {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button InsertUpdateCloseButton;
-        
-        /// <summary>
-        /// View3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View3;
-        
-        /// <summary>
-        /// View4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View View4;
+        protected global::System.Web.UI.WebControls.LinkButton InsertUpdateCloseButton;
     }
 }
