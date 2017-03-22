@@ -60,5 +60,37 @@ namespace One.Net.BLL
                 return DateTime.Now.Subtract(DateCreated).TotalMinutes < 2;
             }
         }
+
+        public string Color
+        {
+            get
+            {
+                switch(PlaceHolderId % 10)
+                {
+                    case 0:
+                        return "#d3adad";
+                    case 1:
+                        return "#d3ccad";
+                    case 2:
+                        return "#b9d3ad";
+                    case 3:
+                        return "#adcdd3";
+                    case 4:
+                        return "#d3adad";
+                    case 5:
+                        return "#adbbd3";
+                    case 6:
+                        return "#b9add3";
+                    case 7:
+                        return "#d3adbf";
+                    case 8:
+                        return "#8995a3";
+                    case 9:
+                        return "#a39e89";
+                    default:
+                        return "#89a39a";
+                }
+            }
+        }
     }
 }

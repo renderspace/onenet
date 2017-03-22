@@ -208,7 +208,7 @@
                     <FooterTemplate>
                     </FooterTemplate>
 		            <ItemTemplate>
-                        <div class="moduleInstance <%# (bool) Eval("IsVeryRecent") ? "very-recent" : "" %>">
+                        <div class="moduleInstance <%# (bool) Eval("IsVeryRecent") ? "very-recent" : "" %>" style='background-color: <%# Eval("Color")%>'>
                             <h4 class="row">
                                 <asp:HyperLink data-keyboard="true" data-backdrop="false" ID="ButtonModalEdit"  runat="server" data-toggle="modal" data-target="#text-content-modal" CssClass="btn btn-info">
                                     <span class="glyphicon glyphicon-pencil"></span> Edit</asp:HyperLink>
