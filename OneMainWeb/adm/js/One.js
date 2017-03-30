@@ -55,7 +55,7 @@
         var theBox = (parentCheckBox.type == "checkbox") ? parentCheckBox : parentCheckBox.children.item[0];
         var checkboxes = theBox.form.elements;
         for (i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == "checkbox" && checkboxes[i].id != "gvProducts_ctl01_chkAll") {
+            if (checkboxes[i].type == "checkbox" && checkboxes[i].id != "gvProducts_ctl01_chkAll" && checkboxes[i].parentElement.className.indexOf('doNotAllCheck') == -1) {
                 if (checkboxes[i].checked) {
                     checkboxes[i].checked = false;
                 }
