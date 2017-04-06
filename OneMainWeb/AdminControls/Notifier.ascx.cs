@@ -67,17 +67,17 @@ namespace OneMainWeb.AdminControls
                 Label5.Text = ExceptionName;
                 Label6.Text = ExceptionMessage;
             }
-            if (!string.IsNullOrEmpty(Title))
+            if (!string.IsNullOrEmpty(Title) || !string.IsNullOrEmpty(Message))
             {
                 PanelNotifierSuccess.Visible = true;
-                Label1.Text = Title;
-                Label2.Text = Message;
+                Label1.Text = !string.IsNullOrEmpty(Title) ? Title : "";
+                Label2.Text = !string.IsNullOrEmpty(Message) ? Message : "";
             }
-            if (!string.IsNullOrEmpty(Warning))
+            if (!string.IsNullOrEmpty(Warning) || !string.IsNullOrEmpty(Message))
             {
                 PanelNotifierWarning.Visible = true;
-                Label3.Text = Warning;
-                Label4.Text = Message;
+                Label3.Text = !string.IsNullOrEmpty(Warning) ? Warning : "";;
+                Label4.Text = !string.IsNullOrEmpty(Message) ? Message : "";;
             }
             base.OnPreRender(e);
         }
