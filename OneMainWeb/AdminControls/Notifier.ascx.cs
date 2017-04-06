@@ -76,8 +76,8 @@ namespace OneMainWeb.AdminControls
             if (!string.IsNullOrEmpty(Warning) || !string.IsNullOrEmpty(Message))
             {
                 PanelNotifierWarning.Visible = true;
-                Label3.Text = !string.IsNullOrEmpty(Warning) ? Warning : "";;
-                Label4.Text = !string.IsNullOrEmpty(Message) ? Message : "";;
+                Label3.Text = !string.IsNullOrEmpty(Title) ? Title : "";
+                Label4.Text = !string.IsNullOrEmpty(Warning) ? Warning : "";;
             }
             base.OnPreRender(e);
         }
