@@ -279,7 +279,7 @@ namespace OneMainWeb.CommonModules
                         regulars.RemoveAll(r => HiddenTagsList.Contains(r.Id.Value));
                     }
 
-                    RepeaterCategories.DataSource = regulars;
+                    RepeaterCategories.DataSource = regulars.OrderBy(r => r.Id);
                     RepeaterCategories.DataBind();
                 }
             }
