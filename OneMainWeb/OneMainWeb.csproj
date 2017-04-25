@@ -81,6 +81,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -354,6 +355,20 @@
     <Compile Include="CommonModules\ArticleSingle.ascx.designer.cs">
       <DependentUpon>ArticleSingle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="CommonModules\AzureSearchForm.ascx.cs">
+      <DependentUpon>AzureSearchForm.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\AzureSearchForm.ascx.designer.cs">
+      <DependentUpon>AzureSearchForm.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CommonModules\AzureSearchResults.ascx.cs">
+      <DependentUpon>AzureSearchResults.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommonModules\AzureSearchResults.ascx.designer.cs">
+      <DependentUpon>AzureSearchResults.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CommonModules\Form.ascx.cs">
       <DependentUpon>Form.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -523,6 +538,8 @@
     </Content>
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
+    <Content Include="CommonModules\AzureSearchForm.ascx" />
+    <Content Include="CommonModules\AzureSearchResults.ascx" />
     <Content Include="CommonModules\Form.ascx" />
     <Content Include="CommonModules\FormSelector.ascx" />
     <Content Include="CommonModules\MagnificGallery.ascx" />
