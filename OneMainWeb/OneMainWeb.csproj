@@ -54,7 +54,7 @@
       <HintPath>..\packages\AdaptedCSSFriendly.1.1.1\lib\net45\AdaptedCSSFriendly.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CKFinder">
+    <Reference Include="CKFinder, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CKFinder.library.1.4.0.0\lib\net45\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
