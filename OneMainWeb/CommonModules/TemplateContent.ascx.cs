@@ -25,6 +25,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Int, DefaultValue = "-1", Visibility=SettingVisibility.SPECIAL)]
         public int ContentTemplateId { get { throw new Exception("not intended for direct access"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool ShowOnlyOnProduction { get { return GetBooleanSetting("ShowOnlyOnProduction"); } }
+
         protected string CurrentUri
         {
             get
@@ -37,7 +40,13 @@ namespace OneMainWeb.CommonModules
         protected void Page_Load(object sender, EventArgs e)
         {
             LiteralTemplateOutput.Text = "";
-            if (TemplateId > 0)
+            var showMe = true;
+            if (ShowOnlyOnProduction && !PublishFlag)
+            {
+                showMe = false;
+            }
+
+            if (TemplateId > 0 && showMe)
             {
                 var templateFields = new Dictionary<string, string>();
 
