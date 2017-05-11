@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Globalization;
 using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
@@ -41,10 +44,11 @@ namespace OneMainWeb.CommonModules
                 var queryString = HttpUtility.ParseQueryString(string.Empty);
 
                 // Request parameters
-                queryString["q"] = q + " site:" + SearchDomain;
+                var cleanQ = RemoveDiacritics(q);
+
+                queryString["q"] = cleanQ + " site:" + SearchDomain;
                 queryString["count"] = RecordsPerPage.ToString();
                 queryString["offset"] = ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
-                // queryString["mkt"] = "sl-si";
                 queryString["safesearch"] = "Moderate";
 
                 var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString);
@@ -54,7 +58,8 @@ namespace OneMainWeb.CommonModules
                 var response = request.GetResponse();
                 var sr = new StreamReader(response.GetResponseStream());
 
-                dynamic result = JObject.Parse(sr.ReadToEnd());
+                var raw = sr.ReadToEnd();
+                dynamic result = JObject.Parse(raw);
 
                 if (result != null && result.webPages != null && result.webPages.totalEstimatedMatches != null && result.webPages.totalEstimatedMatches > 0 && result.webPages.value != null)
                 {
@@ -67,6 +72,23 @@ namespace OneMainWeb.CommonModules
                     PagerResults.Visible = result.webPages.totalEstimatedMatches > RecordsPerPage;
                 }
             }
+        }
+
+        static string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC).Replace("Đ", "D").Replace("đ", "");
         }
     }
 }
