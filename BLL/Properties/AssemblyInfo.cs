@@ -17,5 +17,5 @@ using System.Security;
 [assembly: AssemblyCopyright("Copyright 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("3.9.4")]
+[assembly: AssemblyVersion("3.9.14")]
 [assembly: AssemblyKeyName("")]

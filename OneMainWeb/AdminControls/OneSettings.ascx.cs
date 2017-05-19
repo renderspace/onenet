@@ -136,7 +136,6 @@ namespace OneMainWeb.AdminControls
                 var CheckBox1 = e.Item.FindControl("CheckBox1") as CheckBox;
                 var TextBox1 = e.Item.FindControl("TextBox1") as TextBox;
                 var LiteralKey = e.Item.FindControl("LiteralKey") as Literal;
-
                 
                 var LabelKey = e.Item.FindControl("LabelKey") as Label;
                 var LabelValue = e.Item.FindControl("LabelValue") as Label;
@@ -154,21 +153,46 @@ namespace OneMainWeb.AdminControls
                     PanelCheckbox.Visible = false;
                     PanelInput.Visible = false;
 
-
                     BOSetting setting = ((KeyValuePair<string, BOSetting>)e.Item.DataItem).Value;
                     TextBox1.Text = setting.Value;
                     LabelValue.Text = setting.Value;
 
                     if (setting.UserVisibility != VisibilityEnum.SPECIAL && setting.UserVisibility != VisibilityEnum.MULTILINE)
                     {
-                        if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate)
+                        if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate || (setting.Name == "TemplateId" && this.Mode == SettingMode.Module))
                         {
                             PanelInput.Visible = true;
                             DropDownList1.Visible = true;
-                            if (setting.Type == SettingTypeEnum.ImageTemplate)
+
+                            if (setting.Name == "TemplateId" && this.Mode == SettingMode.Module)
+                            {
+                                var instance = webSiteB.GetModuleInstance(this.ItemId);
+
+                                if (instance != null)
+                                {
+                                    List<BOTemplate> templates = null;
+
+                                    if (instance.ModuleName == "TemplateContent")
+                                        templates = BWebsite.ListTemplates("ContentTemplate");
+                                    else
+                                        templates = BWebsite.ListTemplates("3");
+
+                                    if (templates != null)
+                                    {
+                                        templates.Insert(0, new BOTemplate { Name = "No template", Id = 0 });
+
+                                        DropDownList1.DataSource = templates;
+                                        DropDownList1.DataTextField = "Name";
+                                        DropDownList1.DataValueField = "Id";
+                                        if (templates.Where(t => t.Id.ToString() == setting.Value).FirstOrDefault() != null)
+                                            DropDownList1.SelectedValue = setting.Value;
+                                    }
+                                }
+                            }
+                            else if (setting.Type == SettingTypeEnum.ImageTemplate)
                             {
                                 var templates = BWebsite.ListTemplates("ImageTemplate");
-                                templates.Add(new BOTemplate { Name = "No image", Id = 0 });
+                                templates.Insert(0, new BOTemplate { Name = "No image", Id = 0 });
                                 DropDownList1.DataSource = templates;
                                 DropDownList1.DataTextField = "Name";
                                 DropDownList1.DataValueField = "Id";
@@ -182,11 +206,11 @@ namespace OneMainWeb.AdminControls
                                 DropDownList1.DataValueField = "Key";
                                 if (setting.Options.ContainsKey(setting.Value))
                                     DropDownList1.SelectedValue = setting.Value;
-                            }
-                            
+                            }                            
 
                             LabelHiddenInfo.Text = setting.Value;
                             DropDownList1.DataBind();
+
                             if (string.IsNullOrWhiteSpace(DropDownList1.SelectedValue))
                                 DropDownList1.Attributes.Add("style", "background-color: #FF8485");
                         } 
@@ -279,51 +303,56 @@ namespace OneMainWeb.AdminControls
 
                     if (setting.UserVisibility != VisibilityEnum.SPECIAL && setting.UserVisibility != VisibilityEnum.MULTILINE)
                     {
-                        switch (setting.Type)
+                        if (setting.Name == "TemplateId" && this.Mode == SettingMode.Module)
                         {
-                            case SettingTypeEnum.Int:
-                                {
-                                    if (setting.HasOptions)
+                            setting.Value = DropDownList1.SelectedValue;
+                        } else {
+                            switch (setting.Type)
+                            {
+                                case SettingTypeEnum.Int:
                                     {
-                                        if (setting.Options.ContainsKey(DropDownList1.SelectedValue))
-                                            setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
-                                    }
-                                    else
-                                    { 
-                                        var val = FormatTool.GetLong(TextBox1.Text);
-                                        setting.Value = val.ToString();
-                                    }
-                                    break;
-                                }
-                            case SettingTypeEnum.Bool:
-                                {
-                                    setting.Value = CheckBox1.Checked.ToString();
-                                    break;
-                                }
-                            case SettingTypeEnum.Image:
-                                {
-#warning this will not work for multiple images on same page.
-                                    if (Request.Files.Count > 0 && Request.Files[0] != null)
-                                    {
-                                        var postedFile = Request.Files[0];
-                                        if (postedFile.InputStream.Length > 0)
-                                        { 
-                                            byte[] fileData = new Byte[postedFile.InputStream.Length];
-                                            postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
-                                            postedFile.InputStream.Close();
-                                            setting.Value = Convert.ToBase64String(fileData);
+                                        if (setting.HasOptions)
+                                        {
+                                            if (setting.Options.ContainsKey(DropDownList1.SelectedValue))
+                                                setting.Value = FormatTool.GetInteger(DropDownList1.SelectedValue).ToString();
                                         }
+                                        else
+                                        {
+                                            var val = FormatTool.GetLong(TextBox1.Text);
+                                            setting.Value = val.ToString();
+                                        }
+                                        break;
                                     }
-                                    break;
-                                }
-                            default:
-                                {
-                                    if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate)
-                                        setting.Value = DropDownList1.SelectedValue;
-                                    else
-                                        setting.Value = TextBox1.Text;
-                                    break;
-                                }
+                                case SettingTypeEnum.Bool:
+                                    {
+                                        setting.Value = CheckBox1.Checked.ToString();
+                                        break;
+                                    }
+                                case SettingTypeEnum.Image:
+                                    {
+#warning this will not work for multiple images on same page.
+                                        if (Request.Files.Count > 0 && Request.Files[0] != null)
+                                        {
+                                            var postedFile = Request.Files[0];
+                                            if (postedFile.InputStream.Length > 0)
+                                            {
+                                                byte[] fileData = new Byte[postedFile.InputStream.Length];
+                                                postedFile.InputStream.Read(fileData, 0, (int)postedFile.InputStream.Length);
+                                                postedFile.InputStream.Close();
+                                                setting.Value = Convert.ToBase64String(fileData);
+                                            }
+                                        }
+                                        break;
+                                    }
+                                default:
+                                    {
+                                        if (setting.HasOptions || setting.Type == SettingTypeEnum.ImageTemplate)
+                                            setting.Value = DropDownList1.SelectedValue;
+                                        else
+                                            setting.Value = TextBox1.Text;
+                                        break;
+                                    }
+                            }
                         }
                     }
                     else if (setting.UserVisibility == VisibilityEnum.MULTILINE)

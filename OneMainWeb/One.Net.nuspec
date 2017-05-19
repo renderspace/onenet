@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.9.4</version>
-        <releaseNotes>Fixed RSS</releaseNotes>
+        <version>3.9.14</version>
+        <releaseNotes>Azure searc module added</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -28,7 +28,7 @@
         
           <dependency id="AdaptedCSSFriendly" version="1.1.1"  />
           <dependency id="MsSqlDBUtility" version="1.1.2"  />
-          <dependency id="CKFinder.library"  />
+          <dependency id="CKFinder.library" version="1.4.0.1"  />
           <dependency id="NLog" version="4.4.1" />
 
         </dependencies>
