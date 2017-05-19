@@ -380,6 +380,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                                     mod.WebSiteTitle = CurrentWebsite.Title;
                                     mod.Settings = module.Settings;
                                     mod.RelativePageUri = CurrentPage.URI;
+                                    mod.CurrentPage = CurrentPage;
+                                    mod.CurrentWebsite = CurrentWebsite;
                                     if (!string.IsNullOrEmpty(mod.ExtraCssClass))
                                         p.CssClass += " " + mod.ExtraCssClass;
 

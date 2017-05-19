@@ -10,6 +10,9 @@ namespace One.Net.BLL.Web
 {
     public abstract class MModule : UserControl
     {
+        public BOPage CurrentPage { get; set; }
+        public BOWebSite CurrentWebsite { get; set; }
+
         public SiteMapNode CurrentSiteMapNode
         {
             get

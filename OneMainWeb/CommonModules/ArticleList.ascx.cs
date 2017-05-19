@@ -190,6 +190,12 @@ namespace OneMainWeb.CommonModules
 
             var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear, ExcludeCategoriesList);
 
+            foreach (BOArticle article in articles)
+            {
+                var websiteUri = PublishFlag ? CurrentWebsite.ProductionUrl : CurrentWebsite.PreviewUrl;
+                article.Permalink = websiteUri  + SingleArticleUri + "/" + article.HumanReadableUrl;
+            }
+
             RepeaterArticles.DataSource = articles;
             RepeaterArticles.DataBind();
 

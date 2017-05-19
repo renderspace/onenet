@@ -52,6 +52,8 @@ namespace One.Net.BLL
 
         public string HumanReadableUrl { get; set; }
 
+        public string Permalink { get; set; }
+
         #endregion Properties
 
         public BOArticle()
@@ -91,6 +93,7 @@ namespace One.Net.BLL
             article.PublishFlag = this.PublishFlag;
             article.DisplayDate = this.DisplayDate;
             article.HumanReadableUrl = this.HumanReadableUrl;
+            article.Permalink = this.Permalink;
 
             foreach (BORegular regular in Regulars)
             {
