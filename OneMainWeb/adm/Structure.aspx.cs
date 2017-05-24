@@ -25,6 +25,17 @@ namespace OneMainWeb.adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request["spid"] != null)
+            {
+                var pId = FormatTool.GetInteger(Request["spid"]);
+                var p = webSiteB.GetPage(pId);
+                if (p != null)
+                {
+                    SelectedPage = p;
+                    SelectedPageId = pId;
+                }
+            }
+
             SelectedWebsite_ValidateDataBind();
             TreeViewPages_DataBind();
             if (!IsPostBack)

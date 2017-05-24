@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>3.9.16</version>
+        <version>3.9.17</version>
         <releaseNotes>Azure searc module added</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>

@@ -25,11 +25,18 @@
                         </asp:Panel>
                         <asp:Panel runat="server" ID="PanelAddSubPage" CssClass="addStuff validationGroup">
 						    <div class="form-inline fi-top">
-                            <div class="form-group">
-                                <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
+                                <div class="form-group">
+                                    <asp:TextBox runat="server" ID="TextBoxSubPage" placeholder="Add new page" CssClass="required"></asp:TextBox>
+						        </div>
+						        <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
 						    </div>
-						    <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
-						    </div>
+                        </asp:Panel>
+                        <asp:Panel runat="server" ID="PanelSearchPageContent" CssClass="addStuff">
+                            <div class="form-inline fi-top">
+                                <div class="form-group">
+                                    <asp:TextBox runat="server" ID="TextBoxSearchContent" placeholder="Search page content" CssClass="textBoxSearchContent required"></asp:TextBox>
+						        </div>
+                            </div>
                         </asp:Panel>
                         <asp:Panel runat="server" ID="PanelMove">
                             <span class="pull-left movePage">Move current page:</span>

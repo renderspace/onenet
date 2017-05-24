@@ -384,6 +384,25 @@ namespace One.Net.BLL.Service
 
             return ret;
         }
+
+        public List<DTOSearchableItem> SearchPageContent(string keyword, int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+
+            var result = new List<DTOSearchableItem>();
+
+            var webSiteB = new BWebsite();
+
+            var dict = webSiteB.FindPages(keyword);
+            foreach (var page in dict)
+            {
+                var item = new DTOSearchableItem() { Id = page.Key.ToString(), Title = page.Value };
+                result.Add(item);
+            }
+
+            return result;
+        }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
@@ -561,5 +580,15 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string DisplayLastChanged { get; set; }
+    }
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOSearchableItem
+    {
+        [DataMember, JsonProperty]
+        public string Id { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Title { get; set; }
     }
 }

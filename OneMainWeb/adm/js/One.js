@@ -1014,6 +1014,41 @@
             }
         });
 
+        var searchTypingTimer;                //timer identifier
+        var searchDoneTypingInterval = 1000;
+
+        $('.textBoxSearchContent').on('keyup', function (e) {
+            clearTimeout(searchTypingTimer);
+            var keyword = $('input.textBoxSearchContent').val();
+            if (keyword.length > 0) {
+                searchTypingTimer = setTimeout(searchPageContentDelegate, searchDoneTypingInterval);
+            }
+        });
+
+        function searchPageContentDelegate() {
+
+            var keyword = $('input.textBoxSearchContent').val();
+
+            $.ajax({
+                url: "/AdminService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    console.log("textBoxSearchContent success");
+                    $('.pageContentSearchResults').remove();
+                    var html = '<ul class="pageContentSearchResults">';
+                    $.each(data, function (index, item) {
+                        html += '<li><a href="/adm/Structure.aspx?spid=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>';
+                    });
+                    html += '</ul>';
+                    $('#ctl00_MainContent_PanelSearchPageContent').append(html);
+                },
+                error: handleAjaxError
+            });
+
+        }
+
         $('#audit-history').on('show.bs.modal', function (e) {
 
             $('.loading').show();

@@ -7,12 +7,59 @@ using System.Web.Caching;
 using MsSqlDBUtility;
 using System.Security;
 using One.Net.BLL.Model.Attributes;
+using System.Threading;
+using System.Linq;
 // for old stuff
 
 namespace One.Net.BLL.DAL
 {
 	public class DbWebsite
 	{
+        public Dictionary<int, string> FindPages(string keyword)
+        {
+            Dictionary<int, string> pageIds = new Dictionary<int, string>();
+
+            var paramsToPass = new SqlParameter[2];
+            paramsToPass[0] = new SqlParameter("@titleSearch", SqlDbType.NVarChar, 255);
+            paramsToPass[0].Value = "%" + keyword + "%";
+            paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
+
+            // search page content first
+            var sql = @"SELECT DISTINCT p.id pageId, cds.title pageTitle
+                        FROM pages p
+                        INNER JOIN content_data_store cds ON cds.content_fk_id=p.content_fk_id
+                        WHERE p.publish=0 AND cds.language_fk_id=@languageId";
+            sql += " AND (cds.title LIKE @titleSearch OR cds.teaser LIKE @titleSearch OR cds.html LIKE @titleSearch) ";
+
+            // now also search TextContent module instances within pages.
+            // note that UNION operator removes duplicates
+            sql += @"UNION
+                    SELECT DISTINCT mi.pages_fk_id pageId, pcds.title pageTitle
+                    FROM module_instance mi
+                    INNER JOIN pages p ON p.id=mi.pages_fk_id AND p.publish=mi.pages_fk_publish
+                    INNER JOIN content_data_store pcds ON pcds.content_fk_id=p.content_fk_id AND pcds.language_fk_id=@languageId
+                    INNER JOIN module m ON mi.module_fk_id=m.id
+                    INNER JOIN module_settings ms ON ms.module_instance_fk_pages_fk_publish = 0 AND ms.module_instance_fk_id=mi.id AND ms.settings_list_fk_id = (SELECT id FROM settings_list WHERE subsystem='TextContent' AND name='ContentId')
+                    INNER JOIN content_data_store cds ON cds.content_fk_id=ms.value
+                    WHERE m.name='TextContent' AND mi.pages_fk_publish=0 ";
+
+            sql += @" AND (cds.title LIKE @titleSearch OR cds.teaser LIKE @titleSearch OR cds.html LIKE @titleSearch)
+                ORDER BY pageTitle ASC ";
+
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
+            {
+                while (reader.Read())
+                {
+                    var pageId = (int)reader["pageId"];
+                    var title = (string)reader["pageTitle"];
+
+                    pageIds.Add(pageId, title);
+                }
+            }
+
+            return pageIds;
+        }
+
         public PagedList<BOPage> ListPages(int webSiteId, int languageId, bool publishFlag, bool filterChanged = false)
         {
             PagedList<BOPage> pages = new PagedList<BOPage>();

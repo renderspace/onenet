@@ -76,5 +76,9 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GenerateRegularParLink?title={title}")]
         [Description("string GenerateRegularParLink(string title)")]
         string GenerateRegularParLink(string title);
+
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchPageContent?keyword={keyword}&languageId={languageId}")]
+        [Description("List<DTOSearchableItem> SearchPageContent(string keyword, int languageId)")]
+        List<DTOSearchableItem> SearchPageContent(string keyword, int languageId);
     }
 }

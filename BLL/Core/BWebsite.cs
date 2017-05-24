@@ -1380,6 +1380,11 @@ namespace One.Net.BLL
             return DbWebsite.UpdateModuleSettings(module.Name, settings);
         }
 
+        public Dictionary<int, string> FindPages(string keyword)
+        {
+            return webSiteDb.FindPages(keyword);
+        }
+
         #region Old Stuff
 
         public bool ValidateParLinkAgainstDB(int? parentPageId, int pageId, string parLink, int websiteId)
