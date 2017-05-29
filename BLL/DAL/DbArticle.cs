@@ -360,7 +360,7 @@ WHERE a2.publish = @publishFlag ";
             string sql = 
             
             @"  SELECT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
-                @") AS rownum, NEWID() as random
+                @") AS rownum
                 INTO #pagedlist 
                 FROM (
                     SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
@@ -368,9 +368,11 @@ WHERE a2.publish = @publishFlag ";
 				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
 
             if (publishFlag)
-                sql += " 1 countPublished ";
+                sql += " 1 countPublished, ";
             else
-                sql += " (select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished ";
+                sql += " (select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, ";
+
+            sql += " NEWID() as random ";
 
             sql += 
                 @"  FROM [dbo].[article] a
@@ -488,7 +490,7 @@ WHERE a2.publish = @publishFlag ";
             else
                 sql += " ORDER BY a.id";
 
-            sql += @") AS RowNumber
+            sql += @") AS RowNumber, NEWID() as random
 		                    FROM [dbo].[article] a
 		                    INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
                 ";
