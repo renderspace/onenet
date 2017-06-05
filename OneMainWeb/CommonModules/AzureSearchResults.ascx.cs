@@ -44,7 +44,7 @@ namespace OneMainWeb.CommonModules
                 var queryString = HttpUtility.ParseQueryString(string.Empty);
 
                 // Request parameters
-                var cleanQ = RemoveDiacritics(q);
+                var cleanQ = q; // RemoveDiacritics(q);
 
                 queryString["q"] = cleanQ + " site:" + SearchDomain;
                 queryString["count"] = RecordsPerPage.ToString();
