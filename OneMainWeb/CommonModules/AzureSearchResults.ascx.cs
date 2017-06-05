@@ -41,24 +41,19 @@ namespace OneMainWeb.CommonModules
 
                 var q = Request["q"];
 
-                var queryString = HttpUtility.ParseQueryString(string.Empty);
-
-                // Request parameters
-                var cleanQ = q; // RemoveDiacritics(q);
-
-                queryString["q"] = cleanQ + " site:" + SearchDomain;
-                queryString["count"] = RecordsPerPage.ToString();
-                queryString["offset"] = ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
-                queryString["safesearch"] = "Moderate";
+                var queryString = "q=" + HttpUtility.UrlEncode(q) + " site:" + SearchDomain;
+                queryString += "&count=" + RecordsPerPage.ToString();
+                queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
 
                 var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString);
 
                 request.Headers.Add("Ocp-Apim-Subscription-Key", AzureApiKey);
 
                 var response = request.GetResponse();
-                var sr = new StreamReader(response.GetResponseStream());
 
+                var sr = new StreamReader(response.GetResponseStream());
                 var raw = sr.ReadToEnd();
+
                 dynamic result = JObject.Parse(raw);
 
                 if (result != null && result.webPages != null && result.webPages.totalEstimatedMatches != null && result.webPages.totalEstimatedMatches > 0 && result.webPages.value != null)
