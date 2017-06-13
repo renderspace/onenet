@@ -162,7 +162,7 @@ ga('send', 'pageview')
     FB.init({
       appId      : '" + CurrentWebsite.FacebookApplicationID.ToString() + @"',
       xfbml      : true,
-      version    : 'v2.1'
+      version    : 'v2.9'
     });
   };
 
