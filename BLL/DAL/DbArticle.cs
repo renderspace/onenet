@@ -477,7 +477,8 @@ WHERE a2.publish = @publishFlag ";
             string sql =
                 @"
                     ;WITH ArticleCTE(title, subtitle, teaser, html, principal_created_by, date_created, principal_modified_by, 
-                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, human_readable_url, countPublished, RowNumber)
+                    date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, 
+                    human_readable_url, countPublished, RowNumber, random)
                     AS
                     (
 		                    SELECT	DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
