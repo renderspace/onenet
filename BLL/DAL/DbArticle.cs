@@ -357,9 +357,9 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[3] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
             paramsToPass[4] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
 
-            string sql = 
-            
-            @"  SELECT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
+            string sql =
+
+            @"  SELECT DISTINCT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
                 @") AS rownum
                 INTO #pagedlist 
                 FROM (
