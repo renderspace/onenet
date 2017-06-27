@@ -357,8 +357,8 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[3] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
             paramsToPass[4] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
 
-            string sql =
-
+            string sql = 
+            
             @"  SELECT DISTINCT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
                 @") AS rownum
                 INTO #pagedlist 
@@ -372,7 +372,10 @@ WHERE a2.publish = @publishFlag ";
             else
                 sql += " (select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished, ";
 
-            sql += " NEWID() as random ";
+            if (sortField == "random")
+                sql += @" NEWID() as random ";
+            else
+                sql += @" 0 AS random ";
 
             sql += 
                 @"  FROM [dbo].[article] a
@@ -491,8 +494,14 @@ WHERE a2.publish = @publishFlag ";
             else
                 sql += " ORDER BY a.id";
 
-            sql += @") AS RowNumber, NEWID() as random
-		                    FROM [dbo].[article] a
+            sql += @") AS RowNumber, ";
+
+            if (state.SortField == "random")
+                sql += " NEWID() as random ";
+            else
+                sql += " 0 AS random ";
+
+            sql += @"       FROM [dbo].[article] a
 		                    INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
                 ";
             sql += @" INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
