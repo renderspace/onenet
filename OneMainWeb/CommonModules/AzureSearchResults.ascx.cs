@@ -36,6 +36,7 @@ namespace OneMainWeb.CommonModules
             PagerResults.RecordsPerPage = RecordsPerPage;
             PagerResults.SelectedPage = 1;
             PagerResults.Visible = false;
+            PanelError.Visible = false;
 
             try
             {
@@ -78,7 +79,10 @@ namespace OneMainWeb.CommonModules
                 if (!PublishFlag)
                     throw ex;
                 else
+                {
+                    PanelError.Visible = true;
                     logger.Error(ex);
+                }
             }
         }
 

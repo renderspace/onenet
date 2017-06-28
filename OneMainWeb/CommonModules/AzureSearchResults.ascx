@@ -12,3 +12,7 @@
 </asp:Repeater>
 
 <two:Pager id="PagerResults" runat="server" MaxColsPerRow="11" NumPagesShown="10" />
+
+<asp:Panel runat="server" ID="PanelError">
+    <%=TranslateComplex("azure_search_error") %>
+</asp:Panel>
