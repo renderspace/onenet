@@ -14,11 +14,14 @@ using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
 using Newtonsoft.Json.Linq;
 using One.Net.BLL.WebControls;
+using NLog;
 
 namespace OneMainWeb.CommonModules
 {
     public partial class AzureSearchResults : MModule
     {
+        static Logger logger = LogManager.GetCurrentClassLogger();
+
         [Setting(SettingType.String, DefaultValue = "")]
         public string AzureApiKey { get { return GetStringSetting("AzureApiKey"); } }
 
@@ -34,38 +37,48 @@ namespace OneMainWeb.CommonModules
             PagerResults.SelectedPage = 1;
             PagerResults.Visible = false;
 
-            if (Request["q"] != null)
+            try
             {
-                if (Request[Pager.REQUEST_PAGE_ID + PagerResults.ID] != null)
-                    PagerResults.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerResults.ID]);
-
-                var q = Request["q"];
-
-                var queryString = "q=" + HttpUtility.UrlEncode(q) + " site:" + SearchDomain;
-                queryString += "&count=" + RecordsPerPage.ToString();
-                queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
-
-                var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString);
-
-                request.Headers.Add("Ocp-Apim-Subscription-Key", AzureApiKey);
-
-                var response = request.GetResponse();
-
-                var sr = new StreamReader(response.GetResponseStream());
-                var raw = sr.ReadToEnd();
-
-                dynamic result = JObject.Parse(raw);
-
-                if (result != null && result.webPages != null && result.webPages.totalEstimatedMatches != null && result.webPages.totalEstimatedMatches > 0 && result.webPages.value != null)
+                if (Request["q"] != null)
                 {
-                    RepeaterResults.DataSource = result.webPages.value;
-                    RepeaterResults.DataBind();
+                    if (Request[Pager.REQUEST_PAGE_ID + PagerResults.ID] != null)
+                        PagerResults.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerResults.ID]);
 
-                    PagerResults.TotalRecords = result.webPages.totalEstimatedMatches;
-                    PagerResults.DetermineData();
+                    var q = Request["q"];
 
-                    PagerResults.Visible = result.webPages.totalEstimatedMatches > RecordsPerPage;
+                    var queryString = "q=" + HttpUtility.UrlEncode(q) + " site:" + SearchDomain;
+                    queryString += "&count=" + RecordsPerPage.ToString();
+                    queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
+
+                    var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString);
+
+                    request.Headers.Add("Ocp-Apim-Subscription-Key", AzureApiKey);
+
+                    var response = request.GetResponse();
+
+                    var sr = new StreamReader(response.GetResponseStream());
+                    var raw = sr.ReadToEnd();
+
+                    dynamic result = JObject.Parse(raw);
+
+                    if (result != null && result.webPages != null && result.webPages.totalEstimatedMatches != null && result.webPages.totalEstimatedMatches > 0 && result.webPages.value != null)
+                    {
+                        RepeaterResults.DataSource = result.webPages.value;
+                        RepeaterResults.DataBind();
+
+                        PagerResults.TotalRecords = result.webPages.totalEstimatedMatches;
+                        PagerResults.DetermineData();
+
+                        PagerResults.Visible = result.webPages.totalEstimatedMatches > RecordsPerPage;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                if (!PublishFlag)
+                    throw ex;
+                else
+                    logger.Error(ex);
             }
         }
 
