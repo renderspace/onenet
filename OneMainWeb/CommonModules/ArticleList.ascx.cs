@@ -245,10 +245,10 @@ namespace OneMainWeb.CommonModules
                     LiteralTeaserImage.Text = ImageTemplate.RenderHtml("", article.Images[0].FullUri, "");
                 }
 
-                if (H1Title != null && !article.NoSingleView)
-                    H1Title.Visible = ShowTitle;
-                if (H1NoLinkTitle != null && article.NoSingleView)
-                    H1NoLinkTitle.Visible = ShowTitle;
+                if (H1Title != null)
+                    H1Title.Visible = ShowTitle && !article.NoSingleView;
+                if (H1NoLinkTitle != null)
+                    H1NoLinkTitle.Visible = ShowTitle && article.NoSingleView;
 
                 if (H2SubTitle != null)
                     H2SubTitle.Visible = ShowSubTitle;
