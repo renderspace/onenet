@@ -258,8 +258,8 @@ namespace OneMainWeb.CommonModules
                     SectionTeaser.Visible = ShowTeaser;
                 if (SectionHtml != null)
                     SectionHtml.Visible = ShowHtml;
-                if (DivReadon != null && !article.NoSingleView)
-                    DivReadon.Visible = ShowMore;
+                if (DivReadon != null)
+                    DivReadon.Visible = ShowMore && !article.NoSingleView;
                 if (Time1 != null)
                 {
                     Time1.Visible = ShowDate;
