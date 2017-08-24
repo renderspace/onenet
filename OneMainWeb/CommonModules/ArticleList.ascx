@@ -9,7 +9,12 @@
             </div>
 			<header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
-			    <h3 class="entry-title" id="H1Title" runat="server" noid="True"><a href="<%# RenderLink((string)Eval("HumanReadableUrl"))  %>"><%# Eval("Title") %></a></h3>
+			    <h3 class="entry-title" id="H1Title" runat="server" noid="True">
+                    <a href="<%# RenderLink((string)Eval("HumanReadableUrl"))  %>"><%# Eval("Title") %></a>
+			    </h3>
+			    <h3 class="entry-title" id="H1NoLinkTitle" runat="server" noid="True">
+                    <%# Eval("Title") %>
+			    </h3>
 			    <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"><%# Eval("SubTitle") %></h4>
                 <time class="published" id="Time2" runat="server" noid="True"><%# Eval("DisplayDate") %></time>
 			</header>

@@ -226,6 +226,7 @@ namespace OneMainWeb.CommonModules
                 var Header1 = e.Item.FindControl("Header1") as HtmlGenericControl;
                 var SectionHtml = e.Item.FindControl("SectionHtml") as HtmlGenericControl;
                 var H1Title = e.Item.FindControl("H1Title") as HtmlGenericControl;
+                var H1NoLinkTitle = e.Item.FindControl("H1NoLinkTitle") as HtmlGenericControl;
                 var H2SubTitle = e.Item.FindControl("H2SubTitle") as HtmlGenericControl;
                 var DivReadon = e.Item.FindControl("DivReadon") as HtmlGenericControl;
 
@@ -244,8 +245,10 @@ namespace OneMainWeb.CommonModules
                     LiteralTeaserImage.Text = ImageTemplate.RenderHtml("", article.Images[0].FullUri, "");
                 }
 
-                if (H1Title != null)
+                if (H1Title != null && !article.NoSingleView)
                     H1Title.Visible = ShowTitle;
+                if (H1NoLinkTitle != null && article.NoSingleView)
+                    H1NoLinkTitle.Visible = ShowTitle;
 
                 if (H2SubTitle != null)
                     H2SubTitle.Visible = ShowSubTitle;
@@ -255,7 +258,7 @@ namespace OneMainWeb.CommonModules
                     SectionTeaser.Visible = ShowTeaser;
                 if (SectionHtml != null)
                     SectionHtml.Visible = ShowHtml;
-                if (DivReadon != null)
+                if (DivReadon != null && !article.NoSingleView)
                     DivReadon.Visible = ShowMore;
                 if (Time1 != null)
                 {

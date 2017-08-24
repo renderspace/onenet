@@ -153,6 +153,8 @@ namespace OneMainWeb
 
                     TextBoxHumanReadableUrl.Text = string.IsNullOrEmpty(SelectedArticle.HumanReadableUrl) ? "" : SelectedArticle.HumanReadableUrl;
 
+                    CheckBoxNoSingleView.Checked = SelectedArticle.NoSingleView;
+
                     TextContentEditor.Title = SelectedArticle.Title;
                     TextContentEditor.SubTitle = SelectedArticle.SubTitle;
                     TextContentEditor.Teaser = SelectedArticle.Teaser;
@@ -254,6 +256,7 @@ namespace OneMainWeb
 
                 var humanReadableUrl = TextBoxHumanReadableUrl.Text.Trim();
 
+
                 if (ListBoxAssignedToArticle.Items.Count == 0)
                 {
                     Notifier1.Warning = "You need to select at least one category/regular. Use the 'right' botton below.";
@@ -271,6 +274,7 @@ namespace OneMainWeb
                 }
                 else
                 {
+                    SelectedArticle.NoSingleView = CheckBoxNoSingleView.Checked;
                     SelectedArticle.HumanReadableUrl = humanReadableUrl;
                     SelectedArticle.Title = TextContentEditor.Title;
                     SelectedArticle.SubTitle = TextContentEditor.SubTitle;

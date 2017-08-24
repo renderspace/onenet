@@ -135,9 +135,15 @@
                 </div>
                 <one:TextContentControl TabIndex="6" ID="TextContentEditor" runat="server" />
                 <div class="form-group">
+                    <asp:Label runat="server" Text="Has no single view" Cssclass="col-sm-3 control-label"></asp:Label>
+                    <div class="col-sm-9">
+                        <asp:CheckBox TabIndex="10" runat="server" ID="CheckBoxNoSingleView" CssClass="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
-                        <asp:TextBox TabIndex="10" runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="human-readable-url-input form-control" />
+                        <asp:TextBox TabIndex="11" runat="server" ClientIDMode="Static" ID="TextBoxHumanReadableUrl" CssClass="human-readable-url-input form-control" />
                     </div>
                 </div>
 			    <div class="form-group">
@@ -146,8 +152,8 @@
                     </div>
                     <div class="col-sm-9">
 			            <span>Id: </span><asp:Label CssClass="articleId" ID="LabelId" runat=server></asp:Label>
-				        <asp:LinkButton TabIndex="11" ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
-				        <asp:LinkButton TabIndex="12" ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="12" ID="InsertUpdateButton" runat="server" CausesValidation="True" OnClick="InsertUpdateButton_Click"  CssClass="btn btn-success causesValidation" />
+				        <asp:LinkButton TabIndex="13" ID="InsertUpdateCloseButton" runat="server" CausesValidation="True" OnClick="InsertUpdateCloseButton_Click" CssClass="btn btn-success causesValidation" />
                     </div>
 			    </div>
             </div>         

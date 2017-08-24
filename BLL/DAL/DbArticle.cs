@@ -72,7 +72,7 @@ namespace One.Net.BLL.DAL
                 new SqlParameter("@publishFlag", article.PublishFlag) )
                 ) > 0;
 
-            SqlParameter[] paramsToPass = new SqlParameter[7];
+            SqlParameter[] paramsToPass = new SqlParameter[8];
             paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id);
             paramsToPass[1] = new SqlParameter("@publishFlag", article.PublishFlag);
             paramsToPass[2] = new SqlParameter("@changed", article.IsChanged);
@@ -80,18 +80,19 @@ namespace One.Net.BLL.DAL
             paramsToPass[4] = new SqlParameter("@markedForDeletion", article.MarkedForDeletion);
             paramsToPass[5] = new SqlParameter("@displayDate", article.DisplayDate);
             paramsToPass[6] = new SqlParameter("@hru", article.HumanReadableUrl);
+            paramsToPass[7] = new SqlParameter("@noSingleView", article.NoSingleView);
 
             var sql = "";
             if (exists)
             {
                 sql = @"UPDATE [dbo].[article]
-			                    SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@hru 
+			                    SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@hru, no_single_view=@noSingleView
 			                    WHERE id=@id AND publish=@publishFlag";
             }
             else
             {
-                sql = @"INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url)
-			                VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @hru)";
+                sql = @"INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url, no_single_view)
+			                VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @hru, @noSingleView)";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
@@ -130,7 +131,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -163,7 +164,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -365,7 +366,7 @@ WHERE a2.publish = @publishFlag ";
                 FROM (
                     SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 			        c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
+				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
 
             if (publishFlag)
                 sql += " 1 countPublished, ";
@@ -449,6 +450,7 @@ WHERE a2.publish = @publishFlag ";
             article.IsNew = reader.GetInt32(17) == 0;
 
             article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
+            article.NoSingleView = reader["no_single_view"] == DBNull.Value ? false : bool.Parse(reader["no_single_view"].ToString());
         }
 
         public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars, List<int> excludeRegulars)
@@ -481,12 +483,12 @@ WHERE a2.publish = @publishFlag ";
                 @"
                     ;WITH ArticleCTE(title, subtitle, teaser, html, principal_created_by, date_created, principal_modified_by, 
                     date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, 
-                    human_readable_url, countPublished, RowNumber, random)
+                    human_readable_url, no_single_view, countPublished, RowNumber, random)
                     AS
                     (
 		                    SELECT	DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 				                    c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url,
+				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view,
                                     ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished,
                                     ROW_NUMBER() OVER (";
             if (!string.IsNullOrWhiteSpace(state.SortField))
