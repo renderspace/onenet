@@ -133,13 +133,13 @@
                         </div>
                     </div>
                 </div>
-                <one:TextContentControl TabIndex="6" ID="TextContentEditor" runat="server" />
                 <div class="form-group">
                     <asp:Label runat="server" Text="Has no single view" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
-                        <asp:CheckBox TabIndex="10" runat="server" ID="CheckBoxNoSingleView" CssClass="form-control" />
+                        <asp:CheckBox TabIndex="6" runat="server" ID="CheckBoxNoSingleView" CssClass="" />
                     </div>
                 </div>
+                <one:TextContentControl TabIndex="7" ID="TextContentEditor" runat="server" />
                 <div class="form-group">
                     <asp:Label AssociatedControlID="TextBoxHumanReadableUrl" runat="server" ID="LabelHumanReadableUrl" Text="Human readable url" Cssclass="col-sm-3 control-label"></asp:Label>
                     <div class="col-sm-9">
