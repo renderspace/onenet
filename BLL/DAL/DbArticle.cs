@@ -447,7 +447,7 @@ WHERE a2.publish = @publishFlag ";
             article.DisplayDate = reader.GetDateTime(13);
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
-            article.IsNew = reader.GetInt32(17) == 0;
+            article.IsNew = reader.GetInt32(18) == 0;
 
             article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
             article.NoSingleView = reader["no_single_view"] == DBNull.Value ? false : bool.Parse(reader["no_single_view"].ToString());
