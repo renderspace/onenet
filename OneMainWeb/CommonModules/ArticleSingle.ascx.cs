@@ -40,6 +40,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowTeaser { get { return GetBooleanSetting("ShowTeaser"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "false")]
+        public bool HideHtml { get { return GetBooleanSetting("HideHtml"); } }
+
         [Setting(SettingType.String, DefaultValue = "dd.MM.yy")]
         public string DateFormatString { get { return GetStringSetting("DateFormatString"); } }
 
@@ -140,6 +143,8 @@ namespace OneMainWeb.CommonModules
                 {
                     SectionHtml.InnerHtml = article.ProcessedHtml;
                 }
+
+                SectionHtml.Visible = !HideHtml;
 
                 if (DivReadon != null)
                 {
