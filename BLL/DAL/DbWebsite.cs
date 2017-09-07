@@ -25,7 +25,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
 
             // search page content first
-            var sql = @"SELECT DISTINCT TOP(20) p.id pageId, cds.title pageTitle
+            var sql = @"SELECT DISTINCT TOP(10) p.id pageId, cds.title pageTitle
                         FROM pages p
                         INNER JOIN content_data_store cds ON cds.content_fk_id=p.content_fk_id
                         WHERE p.publish=0 AND cds.language_fk_id=@languageId";
@@ -34,15 +34,11 @@ namespace One.Net.BLL.DAL
             // now also search TextContent module instances within pages.
             // note that UNION operator removes duplicates
             sql += @"UNION
-                    SELECT DISTINCT mi.pages_fk_id pageId, pcds.title pageTitle
-                    FROM module_instance mi
-                    INNER JOIN pages p ON p.id=mi.pages_fk_id AND p.publish=mi.pages_fk_publish
-                    INNER JOIN content_data_store pcds ON pcds.content_fk_id=p.content_fk_id AND pcds.language_fk_id=@languageId
-                    INNER JOIN module m ON mi.module_fk_id=m.id
-                    INNER JOIN module_settings ms ON ms.module_instance_fk_pages_fk_publish = 0 AND ms.module_instance_fk_id=mi.id AND ms.settings_list_fk_id = (SELECT id FROM settings_list WHERE subsystem='TextContent' AND name='ContentId')
-                    INNER JOIN content_data_store cds ON cds.content_fk_id=ms.value
-                    WHERE m.name='TextContent' AND mi.pages_fk_publish=0 ";
-
+                    SELECT DISTINCT TOP(10) mi.pages_fk_id pageId, cds.title pageTitle
+	                FROM module_instance mi
+	                INNER JOIN module_settings ms ON ms.module_instance_fk_pages_fk_publish = 0 AND ms.module_instance_fk_id=mi.id AND ms.settings_list_fk_id = (SELECT id FROM settings_list WHERE subsystem='TextContent' AND name='ContentId')
+	                INNER JOIN content_data_store cds ON cds.content_fk_id=ms.value
+                    WHERE mi.pages_fk_publish=0 ";
             sql += @" AND (cds.title LIKE @titleSearch OR cds.teaser LIKE @titleSearch OR cds.html LIKE @titleSearch)
                 ORDER BY pageTitle ASC ";
 
