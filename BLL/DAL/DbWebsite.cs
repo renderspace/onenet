@@ -25,7 +25,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
 
             // search page content first
-            var sql = @"SELECT DISTINCT p.id pageId, cds.title pageTitle
+            var sql = @"SELECT DISTINCT TOP(20) p.id pageId, cds.title pageTitle
                         FROM pages p
                         INNER JOIN content_data_store cds ON cds.content_fk_id=p.content_fk_id
                         WHERE p.publish=0 AND cds.language_fk_id=@languageId";
