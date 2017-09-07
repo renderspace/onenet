@@ -1,16 +1,13 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
+﻿using One.Net.BLL;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Data;
 using System.Linq;
 using System.Threading;
-using System.Globalization;
-using One.Net.BLL;
+using System.Web;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 
 namespace OneMainWeb.adm
@@ -25,17 +22,6 @@ namespace OneMainWeb.adm
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request["spid"] != null)
-            {
-                var pId = FormatTool.GetInteger(Request["spid"]);
-                var p = webSiteB.GetPage(pId);
-                if (p != null)
-                {
-                    SelectedPage = p;
-                    SelectedPageId = pId;
-                }
-            }
-
             SelectedWebsite_ValidateDataBind();
             TreeViewPages_DataBind();
             if (!IsPostBack)
@@ -65,6 +51,17 @@ namespace OneMainWeb.adm
                 return;
             }
             // SELECTED PAGE
+            if (Request["spid"] != null)
+            {
+                
+                var requestedPageId = FormatTool.GetInteger(Request["spid"]);
+                
+                if (requestedPageId != SelectedPageId)
+                {
+                    /* NOT SIMPLE */
+                }
+                
+            }
             if (SelectedPageId < 1)
                 SelectedPageId = RootNodeID.Value;
 

@@ -25,7 +25,8 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@languageId", Thread.CurrentThread.CurrentCulture.LCID);
 
             // search page content first
-            var sql = @"SELECT DISTINCT TOP(10) p.id pageId, cds.title pageTitle
+            var sql = @"SELECT DISTINCT * FROM (
+                        SELECT DISTINCT TOP(10) p.id pageId, cds.title pageTitle
                         FROM pages p
                         INNER JOIN content_data_store cds ON cds.content_fk_id=p.content_fk_id
                         WHERE p.publish=0 AND cds.language_fk_id=@languageId";
@@ -40,6 +41,7 @@ namespace One.Net.BLL.DAL
 	                INNER JOIN content_data_store cds ON cds.content_fk_id=ms.value
                     WHERE mi.pages_fk_publish=0 ";
             sql += @" AND (cds.title LIKE @titleSearch OR cds.teaser LIKE @titleSearch OR cds.html LIKE @titleSearch)
+                    ) t
                 ORDER BY pageTitle ASC ";
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass))
@@ -48,8 +50,11 @@ namespace One.Net.BLL.DAL
                 {
                     var pageId = (int)reader["pageId"];
                     var title = (string)reader["pageTitle"];
-
-                    pageIds.Add(pageId, title);
+                    try
+                    {
+                        pageIds.Add(pageId, title);
+                    }
+                    catch { }
                 }
             }
 

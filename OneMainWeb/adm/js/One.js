@@ -1028,13 +1028,15 @@
         function searchPageContentDelegate() {
 
             var keyword = $('input.textBoxSearchContent').val();
-
+            
+            $('.content-search .loading').show();
             $.ajax({
                 url: "/AdminService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: "GET",
                 success: function (data) {
+                    $('.content-search .loading').hide();
                     console.log("textBoxSearchContent success");
                     $('.pageContentSearchResults').remove();
                     var html = '<ul class="pageContentSearchResults">';
@@ -1044,7 +1046,10 @@
                     html += '</ul>';
                     $('#ctl00_MainContent_PanelSearchPageContent').append(html);
                 },
-                error: handleAjaxError
+                error: function (err) {
+                    $('.content-search .loading').hide();
+                    handleAjaxError(err)
+                }
             });
 
         }

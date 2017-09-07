@@ -33,8 +33,9 @@
                         </asp:Panel>
                         <asp:Panel runat="server" ID="PanelSearchPageContent" CssClass="addStuff">
                             <div class="form-inline fi-top">
-                                <div class="form-group">
-                                    <asp:TextBox runat="server" ID="TextBoxSearchContent" placeholder="Search page content" CssClass="textBoxSearchContent required"></asp:TextBox>
+                                <div class="form-group content-search">
+                                    <input placeholder="Search page content" class="textBoxSearchContent required" />
+                                    <div class="loading" style="display: none;"></div>
 						        </div>
                             </div>
                         </asp:Panel>
