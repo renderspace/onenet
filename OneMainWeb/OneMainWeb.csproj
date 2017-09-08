@@ -871,6 +871,13 @@
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <Content Include="SiteDefault\gitignore.template" />
     <Content Include="SiteDefault\Web.config" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="adm\Structure.aspx" />

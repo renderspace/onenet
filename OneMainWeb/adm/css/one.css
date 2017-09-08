@@ -128,11 +128,9 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 
 .noImages ul li a {padding: 4px 0;}
 
-.treeview ul.cct-Show {}
 .treeview ul.cct-Hide {display:none;}
 
 .treeHolder {margin-right: 20px;}
-.treeHolder .cct {}
 .treeHolder ul {width: 300px;margin:0;padding:10px 0;list-style:none;float:left;}
 .treeHolder ul ul {width:auto;padding: 2px 0 2px 0;margin-bottom:4px;}
 .treeHolder ul ul ul {border-bottom: 1px solid #e3e2da;}
@@ -160,8 +158,6 @@ table tr th {border-top: 4px #9e9e98 solid; margin: 10px; padding: 10px; backgro
 .treeHolder ul li span.expand {position:absolute;top:0px;left:0px;display:block;width:13px;height:19px;background-position: -4px center;cursor:pointer;}
 .treeHolder ul li.sel > a {background-color:#9E9E98; color: #FFF;}
 .treeHolder ul li.sel li  a {background:none;}
-
-.treeHolder ul.cct-Show {}
 .treeHolder ul.cct-Hide {display:none;}
 
 /**/
@@ -667,3 +663,30 @@ tr.very-recent td {
 }
 
 .pbtns .btn {margin-left: 6px;}
+
+.content-search {
+    float: left;
+    margin: 0;
+}
+
+.content-search input {
+    margin-top: 3px;
+    color: #000 !important;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid #ccc;
+    height: 28px;
+    padding: 5px;
+    margin: 11px 0 0 10px;
+}
+
+.pageContentSearchResults {
+    overflow: auto;
+    position: absolute;
+    width: 300px;
+    background: #fff;
+    padding: 15px;
+    top: 45px;
+}

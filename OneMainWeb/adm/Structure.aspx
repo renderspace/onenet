@@ -31,14 +31,6 @@
 						        <asp:LinkButton ID="ButtonAddPage" runat="server"  ValidationGroup="AddPage" text="<span class='glyphicon glyphicon-plus'></span> Add page" onclick="ButtonAddPage_Click" CssClass="btn btn-success causesValidation" />
 						    </div>
                         </asp:Panel>
-                        <asp:Panel runat="server" ID="PanelSearchPageContent" CssClass="addStuff">
-                            <div class="form-inline fi-top">
-                                <div class="form-group content-search">
-                                    <input placeholder="Search page content" class="textBoxSearchContent required" />
-                                    <div class="loading" style="display: none;"></div>
-						        </div>
-                            </div>
-                        </asp:Panel>
                         <asp:Panel runat="server" ID="PanelMove">
                             <span class="pull-left movePage">Move current page:</span>
                             <div class="upDown">

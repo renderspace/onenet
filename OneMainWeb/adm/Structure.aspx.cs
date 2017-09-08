@@ -51,16 +51,14 @@ namespace OneMainWeb.adm
                 return;
             }
             // SELECTED PAGE
-            if (Request["spid"] != null)
+            if (!IsPostBack && Request["spid"] != null)
             {
-                
-                var requestedPageId = FormatTool.GetInteger(Request["spid"]);
-                
+                var requestedPageId = FormatTool.GetInteger(Request["spid"]);   
                 if (requestedPageId != SelectedPageId)
                 {
                     /* NOT SIMPLE */
+                    SelectedPageId = requestedPageId;
                 }
-                
             }
             if (SelectedPageId < 1)
                 SelectedPageId = RootNodeID.Value;

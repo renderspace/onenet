@@ -50,6 +50,10 @@
                 
 
 			  <a class="navbar-brand" href="/adm"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><asp:Literal runat="server" ID="LiteralAppVersion1"></asp:Literal></a>
+                <div class="form-group content-search">
+                    <input placeholder="Search page content" class="textBoxSearchContent required" />
+                    <div class="loading" style="display: none;"></div>
+				</div>
 			</div>
 			<div class="navbar-collapse collapse">
 			  <ul class="nav navbar-nav navbar-right">

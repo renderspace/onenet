@@ -1044,7 +1044,7 @@
                         html += '<li><a href="/adm/Structure.aspx?spid=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>';
                     });
                     html += '</ul>';
-                    $('#ctl00_MainContent_PanelSearchPageContent').append(html);
+                    $('.content-search').append(html);
                 },
                 error: function (err) {
                     $('.content-search .loading').hide();
