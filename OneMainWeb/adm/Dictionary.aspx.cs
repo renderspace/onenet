@@ -45,6 +45,13 @@ namespace OneMainWeb
                 TextBoxSearch.Text = "";
                 MultiView1.ActiveViewIndex = 0;
             }
+
+            if (!IsPostBack && Request["keyword"] != null)
+            {
+                TextBoxSearch.Text = Request["keyword"].ToString();
+                TwoPostbackPager1.SelectedPage = 1;
+                LoadAll(true);
+            }
         }
 
         protected void tabMultiview_OnViewIndexChanged(object sender, EventArgs e)

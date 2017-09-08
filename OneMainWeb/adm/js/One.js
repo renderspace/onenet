@@ -1030,6 +1030,27 @@
             var keyword = $('input.textBoxSearchContent').val();
             
             $('.content-search .loading').show();
+            $('.pageContentSearchResults').remove();
+            var html = '<ul class="pageContentSearchResults"></ul>';
+            $('.content-search').append(html);
+            $pageContentSearchResults = $('.pageContentSearchResults');
+
+            $.ajax({
+                url: "/AdminService/SearchDictionary?keyword=" + keyword + "&languageId=" + languageId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    $('.content-search .loading').hide();
+                    $.each(data, function (index, item) {
+                        $pageContentSearchResults.append('<li><a href="/adm/Dictionary.aspx?keyword=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>');
+                    });
+                },
+                error: function (err) {
+                    $('.content-search .loading').hide();
+                    handleAjaxError(err)
+                }
+            });
             $.ajax({
                 url: "/AdminService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
                 contentType: 'application/json; charset=utf-8',
@@ -1037,14 +1058,10 @@
                 type: "GET",
                 success: function (data) {
                     $('.content-search .loading').hide();
-                    console.log("textBoxSearchContent success");
-                    $('.pageContentSearchResults').remove();
-                    var html = '<ul class="pageContentSearchResults">';
+                    console.log("SearchPageContent success");
                     $.each(data, function (index, item) {
-                        html += '<li><a href="/adm/Structure.aspx?spid=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>';
+                        $pageContentSearchResults.append('<li><a href="/adm/Structure.aspx?spid=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>');
                     });
-                    html += '</ul>';
-                    $('.content-search').append(html);
                 },
                 error: function (err) {
                     $('.content-search .loading').hide();

@@ -403,6 +403,28 @@ namespace One.Net.BLL.Service
 
             return result;
         }
+
+        public List<DTOSearchableItem> SearchDictionary(string keyword, int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var result = new List<DTOSearchableItem>();
+            var contentB = new BContent();
+            var state = new ListingState();
+            state.RecordsPerPage = 10;
+            state.SortDirection = SortDir.Descending;
+            state.FirstRecordIndex = 0;
+            state.SortField = "title";
+            PagedList<BODictionaryEntry> entries = contentB.ListDictionaryEntries(state, false, keyword);
+
+            foreach (var entry in entries)
+            {
+                var item = new DTOSearchableItem() { Id = entry.KeyWord, Title = entry.Title };
+                result.Add(item);
+            }
+
+            return result;
+        }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]

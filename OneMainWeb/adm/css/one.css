@@ -685,7 +685,7 @@ tr.very-recent td {
 .pageContentSearchResults {
     overflow: auto;
     position: absolute;
-    width: 300px;
+    width: 550px;
     background: #fff;
     padding: 15px;
     top: 45px;
