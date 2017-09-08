@@ -51,7 +51,7 @@
 
 			  <a class="navbar-brand" href="/adm"><img src="../res/one-net.png" alt="One.NET" style="float: left;" /><asp:Literal runat="server" ID="LiteralAppVersion1"></asp:Literal></a>
                 <div class="form-group content-search">
-                    <input placeholder="Search page content" class="textBoxSearchContent required" />
+                    <input placeholder="Search page content, articles, dictionary" class="textBoxSearchContent required" />
                     <div class="loading" style="display: none;"></div>
 				</div>
 			</div>

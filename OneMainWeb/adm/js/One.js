@@ -1035,22 +1035,9 @@
             $('.content-search').append(html);
             $pageContentSearchResults = $('.pageContentSearchResults');
 
-            $.ajax({
-                url: "/AdminService/SearchDictionary?keyword=" + keyword + "&languageId=" + languageId,
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                type: "GET",
-                success: function (data) {
-                    $('.content-search .loading').hide();
-                    $.each(data, function (index, item) {
-                        $pageContentSearchResults.append('<li><a href="/adm/Dictionary.aspx?keyword=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>');
-                    });
-                },
-                error: function (err) {
-                    $('.content-search .loading').hide();
-                    handleAjaxError(err)
-                }
-            });
+            
+
+            
             $.ajax({
                 url: "/AdminService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
                 contentType: 'application/json; charset=utf-8',
@@ -1068,7 +1055,36 @@
                     handleAjaxError(err)
                 }
             });
-
+            $.ajax({
+                url: "/AdminService/SearchArticles?keyword=" + keyword + "&languageId=" + languageId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $pageContentSearchResults.append('<li><a href="/adm/Articles.aspx?keyword=' + item.Id + '">[ARTICLE ' + item.Id + '] ' + item.Title + '</a></li>');
+                    });
+                },
+                error: function (err) {
+                    $('.content-search .loading').hide();
+                    handleAjaxError(err)
+                }
+            });
+            $.ajax({
+                url: "/AdminService/SearchDictionary?keyword=" + keyword + "&languageId=" + languageId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: "GET",
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $pageContentSearchResults.append('<li><a href="/adm/Dictionary.aspx?keyword=' + item.Id + '">[' + item.Id + '] ' + item.Title + '</a></li>');
+                    });
+                },
+                error: function (err) {
+                    $('.content-search .loading').hide();
+                    handleAjaxError(err)
+                }
+            });
         }
 
         $('#audit-history').on('show.bs.modal', function (e) {

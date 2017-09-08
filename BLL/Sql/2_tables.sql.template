@@ -195,7 +195,6 @@ CREATE TABLE [dbo].[article](
 	[display_date] [datetime] NOT NULL,
 	[marked_for_deletion] [bit] NOT NULL,
 	[human_readable_url] [varchar](255) NOT NULL,
-	[no_single_view] [bit] NOT NULL CONSTRAINT [DF_article_no_single_view] DEFAULT ((0)),
  CONSTRAINT [PK_article] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC,

@@ -425,6 +425,30 @@ namespace One.Net.BLL.Service
 
             return result;
         }
+
+        public List<DTOSearchableItem> SearchArticles(string keyword, int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var result = new List<DTOSearchableItem>();
+            var contentB = new BContent();
+            var state = new ListingState();
+            state.RecordsPerPage = 10;
+            state.SortDirection = SortDir.Descending;
+            state.FirstRecordIndex = 0;
+            state.SortField = "title";
+            PagedList<BOArticle> articles = articleB.ListArticles(new List<int>(), null, null, state, keyword, new List<int>());
+
+            foreach (var article in articles)
+            {
+                var item = new DTOSearchableItem() { Id = article.Id.Value.ToString(), Title = article.Title };
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+        
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]

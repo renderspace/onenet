@@ -54,7 +54,12 @@ namespace OneMainWeb
                 {
                     Multiview1.ActiveViewIndex = 2;
                 }
-            }            
+            }
+            if (!IsPostBack && Request["keyword"] != null)
+            {
+                TextBoxShowById.Text = Request["keyword"];
+                cmdShowById_Click(null, null);
+            }
         }
 
         private void PrepareEmptyArticle()
@@ -152,9 +157,6 @@ namespace OneMainWeb
                     }
 
                     TextBoxHumanReadableUrl.Text = string.IsNullOrEmpty(SelectedArticle.HumanReadableUrl) ? "" : SelectedArticle.HumanReadableUrl;
-
-                    CheckBoxNoSingleView.Checked = SelectedArticle.NoSingleView;
-
                     TextContentEditor.Title = SelectedArticle.Title;
                     TextContentEditor.SubTitle = SelectedArticle.SubTitle;
                     TextContentEditor.Teaser = SelectedArticle.Teaser;
@@ -274,7 +276,6 @@ namespace OneMainWeb
                 }
                 else
                 {
-                    SelectedArticle.NoSingleView = CheckBoxNoSingleView.Checked;
                     SelectedArticle.HumanReadableUrl = humanReadableUrl;
                     SelectedArticle.Title = TextContentEditor.Title;
                     SelectedArticle.SubTitle = TextContentEditor.SubTitle;

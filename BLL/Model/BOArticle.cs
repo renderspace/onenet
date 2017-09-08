@@ -50,8 +50,6 @@ namespace One.Net.BLL
             }
         }
 
-        public bool NoSingleView { get; set; }
-
         public string HumanReadableUrl { get; set; }
 
         public string Permalink { get; set; }
@@ -96,7 +94,6 @@ namespace One.Net.BLL
             article.DisplayDate = this.DisplayDate;
             article.HumanReadableUrl = this.HumanReadableUrl;
             article.Permalink = this.Permalink;
-            article.NoSingleView = this.NoSingleView;
 
             foreach (BORegular regular in Regulars)
             {

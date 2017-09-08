@@ -667,6 +667,7 @@ tr.very-recent td {
 .content-search {
     float: left;
     margin: 0;
+    width: 300px;
 }
 
 .content-search input {

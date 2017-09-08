@@ -54,25 +54,25 @@ namespace One.Net.BLL.DAL
                 return;
 
             if (!article.Id.HasValue || article.Id.Value < 1)
-            { 
+            {
                 var idParam = new SqlParameter();
                 idParam.ParameterName = "@sequence_id";
                 idParam.Value = 0;
                 idParam.Direction = ParameterDirection.Output;
                 SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.StoredProcedure, "[dbo].[nextval]", new SqlParameter("@sequence", "articles"), idParam);
-                article.Id = (int) idParam.Value;
+                article.Id = (int)idParam.Value;
                 if (article.Id.Value < 1)
                     throw new Exception("Database returned negative next id for articles");
             }
 
-            var exists = ((int) SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain,
-                CommandType.Text, 
-                "SELECT count(*) FROM [dbo].[article] WHERE id=@id AND publish=@publishFlag", 
-                new SqlParameter("@id", article.Id.Value), 
-                new SqlParameter("@publishFlag", article.PublishFlag) )
+            var exists = ((int)SqlHelper.ExecuteScalar(SqlHelper.ConnStringMain,
+                CommandType.Text,
+                "SELECT count(*) FROM [dbo].[article] WHERE id=@id AND publish=@publishFlag",
+                new SqlParameter("@id", article.Id.Value),
+                new SqlParameter("@publishFlag", article.PublishFlag))
                 ) > 0;
 
-            SqlParameter[] paramsToPass = new SqlParameter[8];
+            SqlParameter[] paramsToPass = new SqlParameter[7];
             paramsToPass[0] = SqlHelper.GetNullable("@id", article.Id);
             paramsToPass[1] = new SqlParameter("@publishFlag", article.PublishFlag);
             paramsToPass[2] = new SqlParameter("@changed", article.IsChanged);
@@ -80,19 +80,18 @@ namespace One.Net.BLL.DAL
             paramsToPass[4] = new SqlParameter("@markedForDeletion", article.MarkedForDeletion);
             paramsToPass[5] = new SqlParameter("@displayDate", article.DisplayDate);
             paramsToPass[6] = new SqlParameter("@hru", article.HumanReadableUrl);
-            paramsToPass[7] = new SqlParameter("@noSingleView", article.NoSingleView);
 
             var sql = "";
             if (exists)
             {
                 sql = @"UPDATE [dbo].[article]
-			                    SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@hru, no_single_view=@noSingleView
+			                    SET changed=@changed, content_fk_id=@contentID, marked_for_deletion=@markedForDeletion, display_date=@displayDate, human_readable_url=@hru 
 			                    WHERE id=@id AND publish=@publishFlag";
             }
             else
             {
-                sql = @"INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url, no_single_view)
-			                VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @hru, @noSingleView)";
+                sql = @"INSERT INTO [dbo].[article] ( id, publish, changed, content_fk_id, marked_for_deletion, display_date, human_readable_url)
+			                VALUES (@id, @publishFlag, @changed, @contentId, @markedForDeletion, @displayDate, @hru)";
             }
 
             SqlHelper.ExecuteNonQuery(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass);
@@ -122,7 +121,7 @@ namespace One.Net.BLL.DAL
             }
         }
 
-        public BOArticle GetArticle(string humanReadableUrl, bool publishFlag, int languageId) 
+        public BOArticle GetArticle(string humanReadableUrl, bool publishFlag, int languageId)
         {
             BOArticle article = null;
 
@@ -131,7 +130,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -164,7 +163,7 @@ namespace One.Net.BLL.DAL
             paramsToPass[1] = new SqlParameter("@publishFlag", publishFlag);
             paramsToPass[2] = new SqlParameter("@languageId", languageId);
 
-            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
+            string sql = DbHelper.CONTENT_SELECT_PART + @" a.id, a.publish, a.content_fk_id, a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
             if (publishFlag)
                 sql += " 1 ";
             else
@@ -191,7 +190,7 @@ namespace One.Net.BLL.DAL
         public DateTime? GetFirstDateWithArticles(bool publishFlag, List<int> regularIDs, int fromYear, int fromMonth, int languageId, bool? excludePast)
         {
             DateTime? result = null;
-            string regularIdString = string.Join(",",  regularIDs);
+            string regularIdString = string.Join(",", regularIDs);
             string sql = @"SELECT MIN(a.display_date) date_day ";
 
             sql += @"   FROM [dbo].[article] a
@@ -306,13 +305,13 @@ WHERE a2.publish = @publishFlag ";
                     sql += @" AND ra.regular_fk_id IN (" + regularIdString + @") ";
                 sql += @" AND Month(a2.display_date)=Month(a.display_date) AND Year(a2.display_date)=Year(a.display_date)) cnt ";
             }
-		    
+
             sql += @"      FROM [dbo].[article] a
 		                   INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id
 		                   INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish
 		                   INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId 
 		                   WHERE a.publish = @publishFlag ";
-            
+
             if (!string.IsNullOrEmpty(regularIdString))
                 sql += " AND ra.regular_fk_id IN (" + regularIdString + ")";
 
@@ -358,15 +357,15 @@ WHERE a2.publish = @publishFlag ";
             paramsToPass[3] = from.HasValue && from.Value != DateTime.MinValue ? new SqlParameter("@dateFrom", from.Value) : new SqlParameter("@dateFrom", DBNull.Value);
             paramsToPass[4] = to.HasValue && to.Value != DateTime.MinValue ? new SqlParameter("@dateTo", to.Value) : new SqlParameter("@dateTo", DBNull.Value);
 
-            string sql = 
-            
+            string sql =
+
             @"  SELECT DISTINCT articles.*, ROW_NUMBER() OVER (ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC") +
                 @") AS rownum
                 INTO #pagedlist 
                 FROM (
                     SELECT DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 			        c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view, ";
+				    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, ";
 
             if (publishFlag)
                 sql += " 1 countPublished, ";
@@ -378,7 +377,7 @@ WHERE a2.publish = @publishFlag ";
             else
                 sql += @" 0 AS random ";
 
-            sql += 
+            sql +=
                 @"  FROM [dbo].[article] a
 		            INNER JOIN [dbo].[content] c ON c.id=a.content_fk_id ";
 
@@ -386,7 +385,7 @@ WHERE a2.publish = @publishFlag ";
             {
                 sql += @" INNER JOIN [dbo].[regular_has_articles] ra ON ra.article_fk_id=a.id and ra.article_fk_publish=a.publish";
             }
-            
+
             sql += " INNER JOIN [dbo].[content_data_store] cds ON cds.content_fk_id=c.id AND cds.language_fk_id=@languageId ";
             sql += " WHERE a.publish = " + (publishFlag ? "1" : "0");
 
@@ -415,7 +414,7 @@ WHERE a2.publish = @publishFlag ";
             {
                 sql += " ORDER BY " + sortField + " " + (state.SortDirection == SortDir.Ascending ? "ASC" : "DESC");
             }
-            
+
             sql += @";  SELECT *
 						FROM #pagedlist
 						WHERE rownum BETWEEN @fromRecordIndex AND @toRecordIndex
@@ -447,10 +446,9 @@ WHERE a2.publish = @publishFlag ";
             article.DisplayDate = reader.GetDateTime(13);
             article.MarkedForDeletion = reader.GetBoolean(14);
             article.IsChanged = reader.GetBoolean(15);
-            article.IsNew = reader.GetInt32(18) == 0;
+            article.IsNew = reader.GetInt32(17) == 0;
 
             article.HumanReadableUrl = reader["human_readable_url"] == DBNull.Value ? "" : reader["human_readable_url"].ToString();
-            article.NoSingleView = reader["no_single_view"] == DBNull.Value ? false : bool.Parse(reader["no_single_view"].ToString());
         }
 
         public PagedList<BOArticle> ListFilteredArticles(bool publishFlag, DateTime? from, DateTime? to, ListingState state, int languageId, string titleSearch, List<int> regulars, List<int> excludeRegulars)
@@ -472,23 +470,23 @@ WHERE a2.publish = @publishFlag ";
             var searchParam = new SqlParameter("@titleSearch", SqlDbType.NVarChar, 255);
             searchParam.Value = "%" + titleSearch + "%";
             paramsToPass.Add(searchParam);
-            
+
             if (from.HasValue && from.Value != DateTime.MinValue)
                 paramsToPass.Add(new SqlParameter("@dateFrom", from));
 
-            if ( to.HasValue && to.Value != DateTime.MinValue )
+            if (to.HasValue && to.Value != DateTime.MinValue)
                 paramsToPass.Add(new SqlParameter("@dateTo", to));
 
             string sql =
                 @"
                     ;WITH ArticleCTE(title, subtitle, teaser, html, principal_created_by, date_created, principal_modified_by, 
                     date_modified, votes, score, article_id, publish, content_id, display_date, marked_for_deletion, changed, 
-                    human_readable_url, no_single_view, countPublished, RowNumber, random)
+                    human_readable_url, countPublished, RowNumber, random)
                     AS
                     (
 		                    SELECT	DISTINCT cds.title, cds.subtitle, cds.teaser, cds.html, c.principal_created_by, c.date_created, 
 				                    c.principal_modified_by, c.date_modified, c.votes, c.score, a.id, a.publish, a.content_fk_id,
-				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url, a.no_single_view,
+				                    a.display_date, a.marked_for_deletion, a.changed, a.human_readable_url,
                                     ( select count(a2.id) FROM [dbo].[article] a2 WHERE a2.id=a.id AND a2.publish=1) countPublished,
                                     ROW_NUMBER() OVER (";
             if (!string.IsNullOrWhiteSpace(state.SortField))
@@ -513,8 +511,8 @@ WHERE a2.publish = @publishFlag ";
 
             sql += @" WHERE a.publish=@publishFlag ";
 
-            #warning TODO: from and to don't work particulary well with other things
-            
+#warning TODO: from and to don't work particulary well with other things
+
             if (from.HasValue && to.HasValue)
                 sql += @" AND a.display_date BETWEEN @dateFrom AND @dateTo ";
             else if (from.HasValue && from.Value != DateTime.MinValue)
@@ -543,7 +541,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             list.AllRecords = 0;
 
             using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, CommandType.Text, sql, paramsToPass.ToArray()))
-            {                
+            {
                 while (reader.Read())
                 {
                     BOArticle article = new BOArticle();
@@ -555,7 +553,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                 }
             }
 
-            return list;            
+            return list;
         }
 
         public PagedList<BOArticle> ListArticles(bool publishFlag, DateTime? from, DateTime? to, List<int> regularIds, ListingState state, int languageId, List<int> excludeRegularIds)
@@ -612,11 +610,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             }
         }
 
-        public BORegular GetRegular(int id, bool showUntranslated )
+        public BORegular GetRegular(int id, bool showUntranslated)
         {
             return GetRegular(id, "", showUntranslated);
         }
-        
+
         public BORegular GetRegular(string humanReadableUrl, bool showUntranslated)
         {
             return GetRegular(0, humanReadableUrl, showUntranslated);
@@ -644,11 +642,11 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
                     DbHelper.PopulateContent(reader, regular, Thread.CurrentThread.CurrentCulture.LCID);
                 }
             }
-            return regular;        
+            return regular;
         }
 
         public List<BORegular> ListArticleRegulars(int articleId, bool publish, int languageId)
-        { 
+        {
             var paramsToPass = new SqlParameter[3];
             paramsToPass[0] = new SqlParameter("@languageId", languageId);
             paramsToPass[1] = SqlHelper.GetNullable("@articleId", articleId);
@@ -698,8 +696,8 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
             SqlParameter[] paramsToPass = new SqlParameter[3];
             paramsToPass[0] = new SqlParameter("@sortBy", state.SortField);
             paramsToPass[1] = new SqlParameter("@languageId", languageId);
-            paramsToPass[2] = new SqlParameter("@publishFlag", publish); 
-            
+            paramsToPass[2] = new SqlParameter("@publishFlag", publish);
+
             string sql = REGULAR_SELECT_PART;
             sql += showUntranslated ? "LEFT" : "INNER";
 
@@ -717,7 +715,7 @@ WHERE RowNumber BETWEEN @fromRecordIndex AND @toRecordIndex ";
 
             sql += state.SortDirection == SortDir.Descending ? " DESC" : " ASC";
 
-            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain, 
+            using (var reader = SqlHelper.ExecuteReader(SqlHelper.ConnStringMain,
                 CommandType.Text, sql, paramsToPass))
             {
                 while (reader.Read())

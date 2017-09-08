@@ -246,9 +246,9 @@ namespace OneMainWeb.CommonModules
                 }
 
                 if (H1Title != null)
-                    H1Title.Visible = ShowTitle && !article.NoSingleView;
+                    H1Title.Visible = ShowTitle;
                 if (H1NoLinkTitle != null)
-                    H1NoLinkTitle.Visible = ShowTitle && article.NoSingleView;
+                    H1NoLinkTitle.Visible = ShowTitle;
 
                 if (H2SubTitle != null)
                     H2SubTitle.Visible = ShowSubTitle;
@@ -259,7 +259,7 @@ namespace OneMainWeb.CommonModules
                 if (SectionHtml != null)
                     SectionHtml.Visible = ShowHtml;
                 if (DivReadon != null)
-                    DivReadon.Visible = ShowMore && !article.NoSingleView;
+                    DivReadon.Visible = ShowMore;
                 if (Time1 != null)
                 {
                     Time1.Visible = ShowDate;
