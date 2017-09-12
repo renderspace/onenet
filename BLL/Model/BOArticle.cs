@@ -54,6 +54,14 @@ namespace One.Net.BLL
 
         public string Permalink { get; set; }
 
+        public bool HasHtml
+        {
+            get
+            {
+                return base.Html.Trim().Length > 0;
+            }
+        }
+
         #endregion Properties
 
         public BOArticle()

@@ -10,7 +10,7 @@
 			<header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
 			    <h3 class="entry-title" id="H1Title" runat="server" noid="True">
-                    <a href="<%# RenderLink((string)Eval("HumanReadableUrl"))  %>"><%# Eval("Title") %></a>
+                    <%# (bool)Eval("HasHtml") ? RenderLink((string)Eval("HumanReadableUrl"), Eval("Title")) : Eval("Title")  %>
 			    </h3>
 			    <h3 class="entry-title" id="H1NoLinkTitle" runat="server" noid="True">
                     <%# Eval("Title") %>

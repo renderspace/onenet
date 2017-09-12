@@ -212,9 +212,10 @@ namespace OneMainWeb.CommonModules
             }
         }
 
-        protected string RenderLink(string humanReadableUrl)
+        protected string RenderLink(string humanReadableUrl, string title)
         {
-            return SingleArticleUri + "/" + humanReadableUrl;
+            var link = SingleArticleUri + "/" + humanReadableUrl;
+            return String.Format("<a href='{0}' title='{1}'>{2}</a>", link, title, title);
         }
 
         protected void RepeaterArticles_ItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -259,7 +260,7 @@ namespace OneMainWeb.CommonModules
                 if (SectionHtml != null)
                     SectionHtml.Visible = ShowHtml;
                 if (DivReadon != null)
-                    DivReadon.Visible = ShowMore;
+                    DivReadon.Visible = ShowMore && article.HasHtml;
                 if (Time1 != null)
                 {
                     Time1.Visible = ShowDate;
