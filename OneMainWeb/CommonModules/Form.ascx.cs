@@ -15,7 +15,6 @@ using System.Text;
 using One.Net.BLL.WebControls;
 using One.Net.BLL.Utility;
 using NLog;
-using System.Threading;
 using One.Net.BLL.Model.Attributes;
 using System.Globalization;
 
@@ -54,6 +53,20 @@ namespace OneMainWeb.CommonModules
 
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool UseLabels { get { return GetBooleanSetting("UseLabels"); } }
+
+        [Setting(SettingType.String, DefaultValue = "")]
+        public string GoogleRecaptchaKey { get { return GetStringSetting("GoogleRecaptchaKey"); } }
+
+        [Setting(SettingType.String, DefaultValue = "")]
+        public string GoogleRecaptchaSecret { get { return GetStringSetting("GoogleRecaptchaSecret"); } }
+
+        public bool UseGoogleRecaptcha
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(GoogleRecaptchaKey) && !string.IsNullOrWhiteSpace(GoogleRecaptchaSecret);
+            }
+        }
 
         #endregion Settings
 
@@ -121,6 +134,17 @@ namespace OneMainWeb.CommonModules
 
             Type cstype = this.GetType();
 
+            if (DivContainerGoogleRecaptcha != null)
+            {
+                DivContainerGoogleRecaptcha.Visible = UseGoogleRecaptcha;
+                if (UseGoogleRecaptcha)
+                {
+                    var LiteralRecaptchaApiUri = new Literal() { Text = @"<script src='https://www.google.com/recaptcha/api.js'></script>" };
+                    Page.Header.Controls.Add(LiteralRecaptchaApiUri);
+                    DivGoogleRecaptcha.Attributes["data-sitekey"] = GoogleRecaptchaKey;
+                }
+            }
+
             if (!IsPostBack)
             {
                 // these values are used to determine validity of POST ( to ignore F5 refresh )
@@ -131,6 +155,14 @@ namespace OneMainWeb.CommonModules
                 cmdPrev.Text = Translate(cmdPrev.Text);
                 ButtonNext.Text = Translate(ButtonNext.Text);
             }
+        }
+
+        private GoogleReCaptcha RetrieveGoogleRecaptchaResponse(string encodedResponse)
+        {
+            var client = new System.Net.WebClient();
+            var googleReply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}&remoteip={2}", GoogleRecaptchaSecret, encodedResponse, HttpContext.Current.Request.UserHostAddress));
+            var captchaResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<GoogleReCaptcha>(googleReply);
+            return captchaResponse;
         }
 
         /// <summary>
@@ -324,6 +356,12 @@ namespace OneMainWeb.CommonModules
             {
                 DisplayError("FormId is not set");
             }
+        }
+
+        private void ToggleCaptchaError(bool display)
+        {
+            LiteralCaptchaErrorMessage.Visible = display;
+            LiteralCaptchaErrorMessage.Text = Translate("google_captcha_error");
         }
 
         private void DisplayError(string message)
@@ -669,6 +707,15 @@ namespace OneMainWeb.CommonModules
                 if (SessionForm != null && FormSubmission != null)
                 {
                     bool valid = RetreiveSubmittedAnswers();
+                    bool captchaValid = false;
+
+                    if (UseGoogleRecaptcha)
+                    {
+                        string captcha = Request.Form["g-recaptcha-response"];
+                        var resp = RetrieveGoogleRecaptchaResponse(captcha);
+                        captchaValid = resp.Success == "true";
+                        valid = valid && captchaValid;
+                    }
 
                     if (valid)
                     {
@@ -682,6 +729,9 @@ namespace OneMainWeb.CommonModules
 
                     PlaceHolderAcutalForm.Controls.Clear();
                     CreateFormControls(false, false);
+
+                    ToggleCaptchaError(UseGoogleRecaptcha && !captchaValid);
+
                     DisplayProgress();
                 }
             }
@@ -746,7 +796,18 @@ namespace OneMainWeb.CommonModules
                 if (SessionForm != null && FormSubmission != null)
                 {
                     bool valid = RetreiveSubmittedAnswers();
+                    bool captchaValid = false;
+
+                    if (UseGoogleRecaptcha)
+                    {
+                        string captcha = Request.Form["g-recaptcha-response"];
+                        var resp = RetrieveGoogleRecaptchaResponse(captcha);
+                        captchaValid = resp.Success == "true";
+                        valid = valid && captchaValid;
+                    }
+
                     bool submissionOk = false;
+
 
                     if (valid && FormSubmission.CurrentSectionId.HasValue)
                     {
@@ -761,6 +822,8 @@ namespace OneMainWeb.CommonModules
 
                     PlaceHolderAcutalForm.Controls.Clear();
                     CreateFormControls(true, submissionOk);
+
+                    ToggleCaptchaError(UseGoogleRecaptcha && !captchaValid);
 
                     var completionRedirectUri = "";
                     
@@ -800,11 +863,11 @@ namespace OneMainWeb.CommonModules
                         {
                             FormCookie.Value = "0";
                         }
-                    }
 
-                    if (!string.IsNullOrEmpty(completionRedirectUri))
-                    {
-                        Response.Redirect(completionRedirectUri, true);
+                        if (!string.IsNullOrEmpty(completionRedirectUri))
+                        {
+                            Response.Redirect(completionRedirectUri, true);
+                        }
                     }
                 }
             }

@@ -131,6 +131,7 @@
     <Compile Include="Forms\DTOQuestion.cs" />
     <Compile Include="Forms\DTOSection.cs" />
     <Compile Include="Forms\FormService.cs" />
+    <Compile Include="Forms\GoogleReCaptcha.cs" />
     <Compile Include="Forms\IFormService.cs" />
     <Compile Include="Model\Attributes\Setting.cs" />
     <Compile Include="Model\BOArticle.cs" />

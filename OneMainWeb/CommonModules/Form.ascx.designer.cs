@@ -103,6 +103,33 @@ namespace OneMainWeb.CommonModules {
         protected global::System.Web.UI.WebControls.Literal LiteralErrorMessage;
         
         /// <summary>
+        /// DivContainerGoogleRecaptcha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivContainerGoogleRecaptcha;
+        
+        /// <summary>
+        /// LiteralCaptchaErrorMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LiteralCaptchaErrorMessage;
+        
+        /// <summary>
+        /// DivGoogleRecaptcha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivGoogleRecaptcha;
+        
+        /// <summary>
         /// PanelCommands control.
         /// </summary>
         /// <remarks>

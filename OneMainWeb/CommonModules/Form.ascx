@@ -48,6 +48,11 @@
         <p style="color: red;"><asp:Literal runat="server" ID="LiteralErrorMessage"></asp:Literal></p>
     </asp:Panel>
 
+    <div class="google-recaptcha" id="DivContainerGoogleRecaptcha" runat="server">
+        <asp:Literal runat="server" ID="LiteralCaptchaErrorMessage"></asp:Literal>
+        <div ID="DivGoogleRecaptcha" runat="server" class="g-recaptcha"></div>
+    </div>
+
     <asp:Panel ID="PanelCommands" runat="server" CssClass="form-group form-submit" noid="True">
         <asp:Button ID="cmdPrev" runat="server" Text="prev" OnClick="cmdPrev_Click" CssClass="btn btn-prev" />    
         <asp:Button ID="ButtonNext" runat="server" Text="next" OnClick="ButtonNext_Click" CssClass="btn btn-next causesValidation" />    
