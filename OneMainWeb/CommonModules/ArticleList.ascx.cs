@@ -212,7 +212,7 @@ namespace OneMainWeb.CommonModules
             }
         }
 
-        protected string RenderLink(string humanReadableUrl, string title)
+        protected string RenderLink(string humanReadableUrl, string title = "")
         {
             var link = SingleArticleUri + "/" + humanReadableUrl;
             return String.Format("<a href='{0}' title='{1}'>{2}</a>", link, title, title);
