@@ -268,6 +268,12 @@ namespace One.Net.BLL.Service
             return result;
         }
 
+        public bool DeleteFile (int fileId)
+        {
+            var fileB = new BFileSystem();
+            return fileB.Delete(fileId);
+        }
+
         public DTOFile GetFileForEditing(int id, int languageId)
         {
             var fileB = new BFileSystem();

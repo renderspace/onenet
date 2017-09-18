@@ -37,6 +37,10 @@ namespace One.Net.BLL.Service
         [Description("List<DTOFile> ListFiles(int folderId)")]
         List<DTOFile> ListFiles(int folderId, int languageId);
 
+        [WebInvoke(Method = "DELETE", ResponseFormat = WebMessageFormat.Json, UriTemplate = "DeleteFile?fileId={fileId}")]
+        [Description("boolean DeleteFile(int fileId)")]
+        bool DeleteFile(int fileId);
+
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetFileForEditing?id={id}&languageId={languageId}")]
         [Description("DTOFile GetFileForEditing(int id, int languageId)")]
         DTOFile GetFileForEditing(int id, int languageId);
