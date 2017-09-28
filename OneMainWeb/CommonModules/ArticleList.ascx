@@ -5,12 +5,12 @@
     <ItemTemplate>
 		<article id="HtmlArticle" runat="server" noid="True">
             <div class="teaser-image" id="TeaserImage1" runat="server" noid="True" visible="false">
-                <a href="<%# RenderLink((string)Eval("HumanReadableUrl"), (string)Eval("Title"))  %>"><asp:Literal runat="server" ID="LiteralTeaserImage"></asp:Literal></a>
+                <a href="<%# RenderLink((string)Eval("HumanReadableUrl"))  %>"><asp:Literal runat="server" ID="LiteralTeaserImage"></asp:Literal></a>
             </div>
 			<header runat="server" id="Header1" noid="True">
                 <time class="published" id="Time1" runat="server"  noid="True"><%# Eval("DisplayDate") %></time>
 			    <h3 class="entry-title" id="H1Title" runat="server" noid="True">
-                    <%# (bool)Eval("HasHtml") ? RenderLink((string)Eval("HumanReadableUrl"), (string)Eval("Title")) : Eval("Title")  %>
+                    <%# (bool)Eval("HasHtml") ? "<a href='" + RenderLink((string)Eval("HumanReadableUrl")) + "'>" + Eval("Title") + "</a>" : Eval("Title")  %>
 			    </h3>
 			    <h4 class="entry-subtitle" id="H2SubTitle" runat="server" noid="True"><%# Eval("SubTitle") %></h4>
                 <time class="published" id="Time2" runat="server" noid="True"><%# Eval("DisplayDate") %></time>
@@ -31,7 +31,7 @@
 				<%# Eval("ProcessedHtml") %>
 			</div>
 			<div class="read-on" id="DivReadon" runat="server" noid="True">
-				<a href="<%# RenderLink((string)Eval("HumanReadableUrl"), (string)Eval("Title"))  %>" class="more"><%= Translate("article_more") %></a>
+				<a href="<%# RenderLink((string)Eval("HumanReadableUrl"))  %>" class="more"><%= Translate("article_more") %></a>
 			</div>
 		</article>
     </ItemTemplate>
