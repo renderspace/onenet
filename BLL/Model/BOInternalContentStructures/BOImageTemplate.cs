@@ -154,9 +154,7 @@ namespace One.Net.BLL
             if (string.IsNullOrWhiteSpace(link))
                 return "";
             string result = "<img src=\"" + RenderImageLink(link) + "\" " + (!string.IsNullOrWhiteSpace(rel) ? ("rel=\"" + rel + "\"") : "");
-            result += (!string.IsNullOrEmpty(alt.Trim())) ?
-                            (" alt=\"" + HttpUtility.HtmlEncode(alt) + "\"" +
-                            " title=\"" + HttpUtility.HtmlEncode(alt)) + "\"" : "";
+            result += (!string.IsNullOrWhiteSpace(alt)) ? (" alt=\"" + HttpUtility.HtmlEncode(alt) + "\"" + " title=\"" + HttpUtility.HtmlEncode(alt)) + "\"" : "";
             if (string.IsNullOrWhiteSpace(cssClass))
                 result += " />";
             else
