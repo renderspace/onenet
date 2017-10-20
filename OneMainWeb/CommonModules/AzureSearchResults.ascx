@@ -5,9 +5,7 @@
 <asp:Repeater runat="server" ID="RepeaterResults">
     <ItemTemplate>
         <div class="item">
-            <a target="_blank" href="<%# Eval("url") %>">
-				<%# Eval("name") %>
-			</a>
+            <a <%# OpenLinksInNewWindow ? "target='_blank'" : "" %> href="<%# Eval("url") %>"><%# Eval("name") %></a>
 			<span class="url"><%# Eval("displayUrl") %></span>			
             <p><%# Eval("snippet") %></p>
         </div>

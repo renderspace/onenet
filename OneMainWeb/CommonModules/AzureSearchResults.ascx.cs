@@ -31,6 +31,9 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Int, DefaultValue = "10")]
         public int RecordsPerPage { get { return GetIntegerSetting("RecordsPerPage"); } }
 
+        [Setting(SettingType.Bool, DefaultValue = "True")]
+        public bool OpenLinksInNewWindow { get { return GetBooleanSetting("OpenLinksInNewWindow"); } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             PagerResults.RecordsPerPage = RecordsPerPage;
