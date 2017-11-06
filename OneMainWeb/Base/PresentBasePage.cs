@@ -131,16 +131,25 @@ ga('send', 'pageview')
                 customHeadCode += gaCode;
             }
 
-
-            if (CurrentWebsite.Settings.ContainsKey("CustomBodyJs"))
-            {
-                customBodyCode += CurrentWebsite.Settings["CustomBodyJs"].Value;
-            }
-
             if (CurrentPage.Settings.ContainsKey("CustomCss") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["CustomCss"].Value))
             {
                 customHeadCode += "<link rel=\"stylesheet\" href=\"" + CurrentPage.Settings["CustomCss"].Value + "\" type=\"text/css\" />";
             }
+			
+            if (CurrentPage.Settings.ContainsKey("CustomBodyJs") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["CustomBodyJs"].Value))
+            {
+                customBodyCode += CurrentPage.Settings["CustomBodyJs"].Value;
+            }			
+			
+            if (CurrentPage.Settings.ContainsKey("CustomHeadJs") && !string.IsNullOrWhiteSpace(CurrentPage.Settings["CustomHeadJs"].Value))
+            {
+                customHeadCode += CurrentPage.Settings["CustomHeadJs"].Value;
+            }			
+			
+            if (CurrentWebsite.Settings.ContainsKey("CustomBodyJs"))
+            {
+                customBodyCode += CurrentWebsite.Settings["CustomBodyJs"].Value;
+            }			
 
             if (CurrentWebsite.Settings.ContainsKey("CustomHeadJs"))
             {
