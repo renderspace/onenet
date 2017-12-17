@@ -11,7 +11,7 @@
                 <asp:Button ID="ButtonAddUser" runat="server" Text="Add user" OnClick="ButtonAddUser_Click" />
                 <asp:Button ID="ButtonUpdateRoles" runat="server" Text="Update roles" OnClick="ButtonUpdateRoles_Click" />
             </div>
-            <asp:GridView ID="GridViewUsers"
+            <asp:GridView ID="GridViewUsers" OnRowCommand="GridViewUsers_RowCommand"
                 runat="server"
                 CssClass="table table-hover table-clickable-row"
                 AutoGenerateColumns="false"
@@ -32,6 +32,7 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("UserName") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
+                            <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Enable 2FA' CommandName="Enable2FA" CommandArgument='<%# Eval("UserName") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs  " />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -102,6 +103,34 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                         <asp:LinkButton ValidationGroup="add_user" ID="ButtonSaveUser" runat="server" OnClick="ButtonSaveUser_Click" Text="Save" CssClass="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </asp:View>
+        <asp:View runat="server">
+            <div class="adminSection form-horizontal edit-users">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Username</label>
+                    <div class="col-sm-9">
+                        <asp:Label runat="server" ID="LabelUsername2"></asp:Label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Code</label>
+                    <div class="col-sm-9">
+                        <asp:Literal runat="server" ID="LiteralCode"></asp:Literal>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Code returned by authenticator</label>
+                    <div class="col-sm-9">
+                        <asp:TextBox runat="server" ID="TextBox2FACode"></asp:TextBox>
+                        <asp:RequiredFieldValidator runat="server" ID="RequiredFieldValidator5" ControlToValidate="TextBoxUsername" Text="" ErrorMessage="*" ValidationGroup="2fa"></asp:RequiredFieldValidator>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <asp:LinkButton ValidationGroup="2fa" ID="LinkButtonEnable2FA" runat="server" OnClick="LinkButtonEnable2FA_Click" Text="Enable 2FA for this user" CssClass="btn btn-success"  />
                     </div>
                 </div>
             </div>

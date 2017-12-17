@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using NLog;
 using One.Net.BLL;
+using OtpSharp;
+using Base32;
 
 namespace OneMainWeb.adm
 {
@@ -24,6 +26,18 @@ namespace OneMainWeb.adm
             set 
             {
                 ViewState["SelectedUser"] = value;
+            }
+        }
+
+        protected string SecretKey
+        {
+            get
+            {
+                return ViewState["SecretKey"] != null ? (string)ViewState["SecretKey"] : "";
+            }
+            set
+            {
+                ViewState["SecretKey"] = value;
             }
         }
 
@@ -269,6 +283,65 @@ namespace OneMainWeb.adm
                         CheckBoxDelete.Visible = false;
                     }
                 }
+            }
+        }
+
+        protected void GridViewUsers_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Enable2FA")
+            {
+                MultiView1.ActiveViewIndex = 3;
+                SelectedUser = e.CommandArgument.ToString();
+                LabelUsername2.Text = SelectedUser;
+
+                byte[] secretKey = KeyGeneration.GenerateRandomKey(20);
+                SecretKey = Base32Encoder.Encode(secretKey);
+                string barcodeUrl = KeyUrl.GetTotpUrl(secretKey, SelectedUser) + "&issuer=OneNet";
+
+                LiteralCode.Text = string.Format("<img src=\"http://qrcode.kaywa.com/img.php?s=4&d={0}\"/>", barcodeUrl);
+            }
+        }
+
+        protected void LinkButtonEnable2FA_Click(object sender, EventArgs e)
+        {
+            var manager = new UserManager();
+            var user = manager.FindByName(SelectedUser);
+            if (!string.IsNullOrWhiteSpace(TextBox2FACode.Text) && !string.IsNullOrWhiteSpace(SelectedUser) && user != null)
+            {
+                byte[] secretKey = Base32Encoder.Decode(SecretKey);
+
+                long timeStepMatched = 0;
+                var otp = new Totp(secretKey);
+                if (otp.VerifyTotp(TextBox2FACode.Text, out timeStepMatched, new VerificationWindow(2, 2)))
+                {
+                    user.GoogleAuthenticatorSecretKey = SecretKey;
+                    user.IsGoogleAuthenticatorEnabled = true;
+                    var result = manager.Update(user);
+                    Notifier1.Title = "2FA Authentication";
+
+                    if (result.Succeeded)
+                    {
+                        MultiView1.ActiveViewIndex = 0;
+                        Notifier1.Message = "2FA Enabled";
+                    }
+                    else
+                    {
+                        Notifier1.Warning = "2FA Failed";
+                        foreach (var error in result.Errors)
+                        {
+                            Notifier1.Warning += "<br />";
+                            Notifier1.Warning += error;
+                        }
+                    }
+                }
+                else
+                {
+                    Notifier1.Warning = "VerifyTotp Failed";
+                }
+            }
+            else
+            {
+                throw new Exception("empty code or SelectedUser?");
             }
         }
     }
