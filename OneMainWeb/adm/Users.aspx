@@ -32,7 +32,8 @@
                     <asp:TemplateField>
                         <ItemTemplate>
                             <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Edit' CommandName="Select" CommandArgument='<%# Eval("UserName") %>' ID="cmdEdit" runat="server" CssClass="btn btn-info btn-xs  " />
-                            <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Enable 2FA' CommandName="Enable2FA" CommandArgument='<%# Eval("UserName") %>' ID="LinkButton1" runat="server" CssClass="btn btn-info btn-xs  " />
+                            <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Enable 2FA' CommandName="Enable2FA" CommandArgument='<%# Eval("UserName") %>' ID="LinkButton2FA" runat="server" CssClass="btn btn-info btn-xs  " />
+                            <asp:LinkButton Text='<span class="glyphicon glyphicon-pencil"></span> Disable 2FA' CommandName="Disable2FA" CommandArgument='<%# Eval("UserName") %>' ID="LinkButtonDisable2FA" runat="server" CssClass="btn btn-danger btn-xs  " Visible="false" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

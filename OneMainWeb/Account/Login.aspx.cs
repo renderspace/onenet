@@ -10,6 +10,7 @@ using OneMainWeb.Models;
 using NLog;
 using OtpSharp;
 using Base32;
+using System.Configuration;
 
 namespace OneMainWeb.Account
 {
@@ -17,15 +18,15 @@ namespace OneMainWeb.Account
     {
         protected static Logger log = LogManager.GetCurrentClassLogger();
 
-        protected string SelectedUser
+        protected bool Has2FA
         {
             get
             {
-                return ViewState["SelectedUser"] != null ? (string)ViewState["SelectedUser"] : "";
-            }
-            set
-            {
-                ViewState["SelectedUser"] = value;
+                if (ConfigurationManager.AppSettings["Enabled2FA"] == null)
+                {
+                    return false;
+                }
+                return bool.Parse(ConfigurationManager.AppSettings["Enabled2FA"].ToString());
             }
         }
 
@@ -40,6 +41,11 @@ namespace OneMainWeb.Account
             {
                 RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
                 RecoverPasswordHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
+            }
+            
+            if (!IsPostBack)
+            {
+                Panel2FA.Visible = Has2FA;
             }
         }
 
@@ -56,10 +62,22 @@ namespace OneMainWeb.Account
                     FailureText.Text = "Invalid username or password.";
                     ErrorMessage.Visible = true;
                 }
-                else if (user.IsGoogleAuthenticatorEnabled)
+                else if (user.IsGoogleAuthenticatorEnabled && this.Has2FA)
                 {
-                    MultiView1.ActiveViewIndex = 1;
-                    SelectedUser = user.Id;
+                    long timeStepMatched = 0;
+                    var otp = new Totp(Base32Encoder.Decode(user.GoogleAuthenticatorSecretKey));
+                    bool valid = otp.VerifyTotp(TextBoxCode.Text, out timeStepMatched, new VerificationWindow(2, 2));
+                    if (valid)
+                    {
+                        IdentityHelper.SignIn(manager, user, RememberMe.Checked);
+                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    }
+                    else
+                    {
+                        log.Info("Two factor authentication code is not valid. ");
+                        FailureText.Text = "Two factor authentication code is not valid. Please try again!";
+                        ErrorMessage.Visible = true;
+                    }
                 }
                 else
                 {
@@ -67,27 +85,6 @@ namespace OneMainWeb.Account
                     IdentityHelper.SignIn(manager, user, RememberMe.Checked);
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                 }
-            }
-        }
-
-        protected void Button2FA_Click(object sender, EventArgs e)
-        {
-            var manager = new UserManager();
-            OneNetUser user = manager.FindById(SelectedUser);
-
-            long timeStepMatched = 0;
-
-            var otp = new Totp(Base32Encoder.Decode(user.GoogleAuthenticatorSecretKey));
-            bool valid = otp.VerifyTotp(TextBoxCode.Text, out timeStepMatched, new VerificationWindow(2, 2));
-
-            if(valid)
-            {
-                IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            }
-            else
-            {
-                throw new Exception("not valid");
             }
         }
     }

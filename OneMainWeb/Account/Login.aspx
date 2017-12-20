@@ -33,6 +33,14 @@
                                     <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
                                 </div>
                             </div>
+                            <asp:Panel runat="server" ID="Panel2FA" CssClass="form-horizontal">
+                                <div class="form-group">
+                                    <asp:Label runat="server" AssociatedControlID="TextBoxCode" CssClass="col-md-2 control-label">Two factor authentication code</asp:Label>
+                                    <div class="col-md-10">
+                                        <asp:TextBox runat="server" ID="TextBoxCode" CssClass="form-control" />
+                                    </div>
+                                </div>
+                            </asp:Panel>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <div class="checkbox">
@@ -63,25 +71,6 @@
                         <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />
                     </section>
                 </div>
-             </asp:View>
-             <asp:View runat="server">
-                  <div class="col-md-8">
-                        <section id="loginForm">
-                            <div class="form-horizontal">
-                                <div class="form-group">
-                                    <asp:Label runat="server" AssociatedControlID="TextBoxCode" CssClass="col-md-2 control-label">Code</asp:Label>
-                                    <div class="col-md-10">
-                                        <asp:TextBox runat="server" ID="TextBoxCode" CssClass="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <asp:Button runat="server" ID="Button2FA" OnClick="Button2FA_Click"  Text="2FA Log in" CssClass="btn btn-success btn-lg" />
-                                </div>
-                            </div>
-                        </section>
-                    </div>
              </asp:View>
          </asp:MultiView>
     </div>

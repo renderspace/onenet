@@ -12,11 +12,25 @@ using NLog;
 using One.Net.BLL;
 using OtpSharp;
 using Base32;
+using System.Configuration;
 
 namespace OneMainWeb.adm
 {
     public partial class Users : OneBasePage
     {
+
+        protected bool Has2FA
+        {
+            get
+            {
+                if (ConfigurationManager.AppSettings["Enabled2FA"] == null)
+                {
+                    return false;
+                }
+                return bool.Parse(ConfigurationManager.AppSettings["Enabled2FA"].ToString());
+            }
+        }
+
         protected string SelectedUser
         {
             get 
@@ -273,16 +287,29 @@ namespace OneMainWeb.adm
             {
                 var CheckBoxDelete = e.Row.FindControl("CheckBoxDelete") as CheckBox;
                 var LiteralUserId = e.Row.FindControl("LiteralUserId") as Literal;
+                var LinkButton2FA = e.Row.FindControl("LinkButton2FA") as LinkButton;
+                var LinkButtonDisable2FA = e.Row.FindControl("LinkButtonDisable2FA") as LinkButton;
 
-                if (CheckBoxDelete != null && LiteralUserId != null)
+                var manager = new UserManager();
+                OneNetUser user = null;
+                if (LiteralUserId != null)
                 {
-                    var manager = new UserManager();
-
-                    if (manager.IsInRole(LiteralUserId.Text, "admin")) 
-                    {
-                        CheckBoxDelete.Visible = false;
-                    }
+                    user = manager.FindById(LiteralUserId.Text);
                 }
+                
+                if (CheckBoxDelete != null && LiteralUserId != null && manager.IsInRole(LiteralUserId.Text, "admin"))
+                {
+                    CheckBoxDelete.Visible = false;
+                }
+                if (LinkButton2FA != null && user != null && Has2FA)
+                {
+                    LinkButton2FA.Visible = !user.IsGoogleAuthenticatorEnabled;
+                    LinkButtonDisable2FA.Visible = user.IsGoogleAuthenticatorEnabled;
+                }  else
+                {
+                    LinkButton2FA.Visible = LinkButtonDisable2FA.Visible = false;
+                }
+
             }
         }
 
@@ -298,7 +325,14 @@ namespace OneMainWeb.adm
                 SecretKey = Base32Encoder.Encode(secretKey);
                 string barcodeUrl = KeyUrl.GetTotpUrl(secretKey, SelectedUser) + "&issuer=OneNet";
 
-                LiteralCode.Text = string.Format("<img src=\"http://qrcode.kaywa.com/img.php?s=4&d={0}\"/>", barcodeUrl);
+                LiteralCode.Text = string.Format("<img src=\"https://qrcode.kaywa.com/img.php?s=4&d={0}\"/>", barcodeUrl);
+            }
+            else if (e.CommandName == "Disable2FA")
+            {
+                var manager = new UserManager();
+                var user = manager.FindByName(e.CommandArgument.ToString());
+                user.GoogleAuthenticatorSecretKey = SecretKey;
+                user.IsGoogleAuthenticatorEnabled = true;
             }
         }
 
