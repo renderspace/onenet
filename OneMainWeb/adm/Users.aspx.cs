@@ -333,6 +333,22 @@ namespace OneMainWeb.adm
                 var user = manager.FindByName(e.CommandArgument.ToString());
                 user.GoogleAuthenticatorSecretKey = SecretKey;
                 user.IsGoogleAuthenticatorEnabled = true;
+                var result = manager.Update(user);
+                Notifier1.Title = "2FA Authentication";
+                if (result.Succeeded)
+                {
+                    MultiView1.ActiveViewIndex = 0;
+                    Notifier1.Message = "2FA Disabled";
+                }
+                else
+                {
+                    Notifier1.Warning = "2FA disable Failed";
+                    foreach (var error in result.Errors)
+                    {
+                        Notifier1.Warning += "<br />";
+                        Notifier1.Warning += error;
+                    }
+                }
             }
         }
 

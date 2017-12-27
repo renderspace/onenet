@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET.API</id>
-        <version>4.0.1</version>
+        <version>4.0.2</version>
         <title>One.NET.API</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
@@ -10,10 +10,10 @@
         <description>Files required for building custom modules.</description>
         <copyright>Copyright © Renderspace d.o.o. 2016</copyright>
         <dependencies>
-          <dependency id="Newtonsoft.Json" version="9.0.1" />
+          <dependency id="Newtonsoft.Json" version="10.0.3" />
           <dependency id="AdaptedCSSFriendly"  />
           <dependency id="MsSqlDBUtility"  />
-          <dependency id="NLog" version="4.0.1.0" />
+          <dependency id="NLog" version="4.4.12" />
         </dependencies>
     </metadata>
     <files>
