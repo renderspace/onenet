@@ -332,11 +332,12 @@ namespace OneMainWeb.adm
                 var manager = new UserManager();
                 var user = manager.FindByName(e.CommandArgument.ToString());
                 user.GoogleAuthenticatorSecretKey = SecretKey;
-                user.IsGoogleAuthenticatorEnabled = true;
+                user.IsGoogleAuthenticatorEnabled = false;
                 var result = manager.Update(user);
                 Notifier1.Title = "2FA Authentication";
                 if (result.Succeeded)
                 {
+                    Users_DataBind();
                     MultiView1.ActiveViewIndex = 0;
                     Notifier1.Message = "2FA Disabled";
                 }
@@ -371,6 +372,7 @@ namespace OneMainWeb.adm
 
                     if (result.Succeeded)
                     {
+                        Users_DataBind();
                         MultiView1.ActiveViewIndex = 0;
                         Notifier1.Message = "2FA Enabled";
                     }
