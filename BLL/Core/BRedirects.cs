@@ -71,7 +71,7 @@ namespace One.Net.BLL
                     redirect = list.Find(
                         delegate(BORedirect r)
                         {
-                            return r.FromLink == fromLink;
+                            return r.FromLink.ToLower() == fromLink.ToLower();
                         }
                     );
                     if (redirect != null)
