@@ -22,6 +22,15 @@ namespace OneMainWeb {
         protected global::System.Web.UI.WebControls.Literal LiteralHead;
         
         /// <summary>
+        /// PanelHeadJavascript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelHeadJavascript;
+        
+        /// <summary>
         /// Head control.
         /// </summary>
         /// <remarks>
@@ -146,6 +155,15 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SiteMapDataSource SiteMapDataSource1;
+        
+        /// <summary>
+        /// PanelFooterJavascript control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelFooterJavascript;
         
         /// <summary>
         /// LiteralAppVersion2 control.

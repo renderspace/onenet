@@ -22,7 +22,7 @@ using OneMainWeb.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using OneMainWeb.adm;
 using NLog;
-
+using One.Net.BLL.Service;
 
 namespace OneMainWeb
 {
@@ -172,30 +172,9 @@ namespace OneMainWeb
         }
 
 
-        protected string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
+        public string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
         {
-
-            string title = "";
-            string strReturn = "";
-            if (objIsChanged != null && objMarkedForDeletion != null)
-            {
-                if (bool.Parse(objMarkedForDeletion.ToString()))
-                {
-                    strReturn = "/Res/brisanje.png";
-                    title = "Marked for deletion";
-                }
-                else if (bool.Parse(objIsChanged.ToString()))
-                {
-                    strReturn = "/Res/objava.png";
-                    title = "Changes waiting for publish";
-                }
-                else
-                {
-                    strReturn = "/Res/objavljeno.png";
-                    title = "Published";
-                }
-            }
-            return "<img data-toggle='tooltip' data-placement='left' src='" + strReturn + "' alt='' title='" + title + "' />"; ;
+            return AdminService.RenderStatusIcons(objMarkedForDeletion, objIsChanged);
         }
 
         protected static void AddEmptyItem(System.Web.UI.WebControls.DropDownList ddl)

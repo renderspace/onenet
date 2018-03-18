@@ -40,6 +40,14 @@ namespace OneMainWeb
             }
         }
 
+        protected bool HideAllScripts
+        {
+            get
+            {
+                return Page.AppRelativeVirtualPath.Contains("Articles2.aspx");
+            }
+        }
+
         protected int SelectedWebSiteId
         {
             get
@@ -79,7 +87,9 @@ namespace OneMainWeb
             {
                 PanelMain.CssClass = "main";
             }
-            
+
+            PanelHeadJavascript.Visible = !HideAllScripts;
+            PanelFooterJavascript.Visible = !HideAllScripts;
 
             // The code below helps to protect against XSRF attacks
             var requestCookie = Request.Cookies[AntiXsrfTokenKey];

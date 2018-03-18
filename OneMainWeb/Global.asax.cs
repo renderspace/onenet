@@ -73,6 +73,7 @@ namespace OneMainWeb
             System.Web.Hosting.HostingEnvironment.RegisterVirtualPathProvider(pathProvider);
 
             var serializerSettings = new JsonSerializerSettings();
+            serializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
             serializerSettings.Converters.Add(new IsoDateTimeConverter());
 
             RouteConfig.ReloadRoutes(RouteTable.Routes);

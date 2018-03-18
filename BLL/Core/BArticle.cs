@@ -290,7 +290,6 @@ namespace One.Net.BLL
             {
                 article.Regulars = articleDB.ListArticleRegulars(article.Id.Value, article.PublishFlag, LanguageId);
             }
-
             return articles;
         }
 

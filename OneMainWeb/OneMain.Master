@@ -17,21 +17,24 @@
     	.browser-link { display: block;padding: 4px;padding-top: 110px;background-repeat: no-repeat;background-position: center top;text-decoration: none;text-align: center; }
     	.browser-logos { padding-top: 20px; }
     </style>
-    <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/jquery-ui.autocomplete.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/dropzone/dropzone.min.js"></script>
-    <script type="text/javascript" src="/JavaScript/ZeroClipboard.min.js"></script>
 
-    <link href="/adm/css/dropzone.min.css" rel="stylesheet"/>
-    <link href="/adm/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
-    <link href="/adm/css/one.css" rel="stylesheet"/>
-    <link href="/adm/css/dashboard.css" rel="stylesheet"/>
-    <link href="/adm/codemirror/codemirror.css" rel="stylesheet"/>
-
+    <asp:Panel runat="server" ID="PanelHeadJavascript">
+        <script 
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/JavaScript/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/JavaScript/jquery-ui.autocomplete.min.js"></script>
+        <script type="text/javascript" src="/JavaScript/dropzone/dropzone.min.js"></script>
+        <script type="text/javascript" src="/JavaScript/ZeroClipboard.min.js"></script>
+        <link href="/adm/css/dropzone.min.css" rel="stylesheet"/>
+        <link href="/adm/codemirror/codemirror.css" rel="stylesheet"/>
+    </asp:Panel>
+    
+        <link href="/adm/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+        <link href="/adm/css/one.css" rel="stylesheet"/>
+        <link href="/adm/css/dashboard.css" rel="stylesheet"/>
+        
     <asp:contentplaceholder id="Head" runat="server" />
 </head>
 <body>
@@ -92,41 +95,45 @@
         <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" SiteMapProvider="AspNetXmlSiteMapProvider" ShowStartingNode="false" />
 	 </div>
     </div>
-    <script src="/ckeditor4/ckeditor.js"></script>
-    <%-- this code is replicated in account master page !  --%>
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        ga('create', 'UA-62942900-1', 'auto');
-        ga('send', 'pageview');
+    <asp:Panel ID="PanelFooterJavascript" runat="server">
+            <script src="/ckeditor4/ckeditor.js"></script>
+            <%-- this code is replicated in account master page !  --%>
+            <script>
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    </script>
+                ga('create', 'UA-62942900-1', 'auto');
+                ga('send', 'pageview');
+
+            </script>
 
 
-    <script type="text/javascript" src="/adm/codemirror/codemirror.js"></script>
-    <script type="text/javascript" src="/adm/codemirror/mode/htmlembedded/htmlembedded.js"></script>
-    <script type="text/javascript" src="/adm/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script type="text/javascript" src="/adm/codemirror/mode/javascript/javascript.js"></script>
-    <script type="text/javascript" src="/adm/codemirror/mode/xml/xml.js"></script>
-    <script type="text/javascript" src="/adm/codemirror/mode/css/css.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/codemirror.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/mode/javascript/javascript.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/mode/xml/xml.js"></script>
+            <script type="text/javascript" src="/adm/codemirror/mode/css/css.js"></script>
 
-    <script type="text/javascript" src="/JavaScript/jquery.details.js"></script>
+            <script type="text/javascript" src="/JavaScript/jquery.details.js"></script>
 
     
-    <script type="text/javascript" src="/JavaScript/moment.min.js"></script>
+            <script type="text/javascript" src="/JavaScript/moment.min.js"></script>
 
-    <script type="text/javascript" src="/JavaScript/bootstrap.js"></script>
-    <script type="text/javascript" src="/JavaScript/bootbox.js"></script>
-    <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
-    <script type="text/javascript" src="/JavaScript/bootstrap-treeview.js"></script>
-    <script type="text/javascript" src="/JavaScript/bootstrap-datetimepicker.min.js"></script>
+            <script type="text/javascript" src="/JavaScript/bootstrap.js"></script>
+            <script type="text/javascript" src="/JavaScript/bootbox.js"></script>
+            <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
+            <script type="text/javascript" src="/JavaScript/bootstrap-treeview.js"></script>
+            <script type="text/javascript" src="/JavaScript/bootstrap-datetimepicker.min.js"></script>
+    
         
     <asp:Literal runat="server" ID="LiteralAppVersion2"></asp:Literal>
+        </asp:Panel>
 
     </form>
 </body>

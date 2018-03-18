@@ -265,6 +265,13 @@
     <Compile Include="AdminControls\TextContentModal.ascx.designer.cs">
       <DependentUpon>TextContentModal.ascx</DependentUpon>
     </Compile>
+    <Compile Include="adm\Articles2.aspx.cs">
+      <DependentUpon>Articles2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="adm\Articles2.aspx.designer.cs">
+      <DependentUpon>Articles2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="adm\AuthorizationHelper.cs" />
     <Compile Include="adm\ExcelExport.ashx.cs">
       <DependentUpon>ExcelExport.ashx</DependentUpon>
@@ -478,6 +485,7 @@
     <Content Include="AdminControls\ScaffoldVirtualTableList.ascx" />
     <Content Include="AdminControls\ContentTemplateModal.ascx" />
     <Content Include="AdminControls\TextContentModal.ascx" />
+    <Content Include="adm\Articles2.aspx" />
     <Content Include="adm\codemirror\mode\css\css.js" />
     <Content Include="adm\codemirror\mode\css\index.html" />
     <Content Include="adm\codemirror\mode\css\less.html" />

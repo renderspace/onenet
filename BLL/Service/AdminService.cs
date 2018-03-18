@@ -454,7 +454,64 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        
+        public static string RenderStatusIcons(object objMarkedForDeletion, object objIsChanged)
+        {
+            string title = "";
+            string strReturn = "";
+            if (objIsChanged != null && objMarkedForDeletion != null)
+            {
+                if (bool.Parse(objMarkedForDeletion.ToString()))
+                {
+                    strReturn = "/Res/brisanje.png";
+                    title = "Marked for deletion";
+                }
+                else if (bool.Parse(objIsChanged.ToString()))
+                {
+                    strReturn = "/Res/objava.png";
+                    title = "Changes waiting for publish";
+                }
+                else
+                {
+                    strReturn = "/Res/objavljeno.png";
+                    title = "Published";
+                }
+            }
+            return "<img data-toggle='tooltip' data-placement='left' src='" + strReturn + "' alt='' title='" + title + "' />";
+        }
+
+        public List<DTOArticleSearch> ListArticles(int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var result = new List<DTOArticleSearch>();
+            var contentB = new BContent();
+            var state = new ListingState();
+            state.RecordsPerPage = 10;
+            state.SortDirection = SortDir.Descending;
+            state.FirstRecordIndex = 0;
+            state.SortField = "title";
+            PagedList<BOArticle> articles = articleB.ListArticles(new List<int>(), null, null, state, "", new List<int>());
+
+            foreach (var a in articles)
+            {
+                var item = new DTOArticleSearch() {
+                    Id = a.Id.Value.ToString(),
+                    Status = RenderStatusIcons(a.MarkedForDeletion, a.IsChanged),
+                    Title = a.Title,
+                    HumanReadableUrl = a.HumanReadableUrl,
+                    DisplayDate = a.DisplayDate,
+                    Categories = a.RegularsList
+                };
+                result.Add(item);
+            }
+
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", articles.AllRecords.ToString());
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", articles.CurrentPage.ToString());
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-RecordsPerPage", state.RecordsPerPage.ToString());
+            return result;
+        }
+
+
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
@@ -642,5 +699,27 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string Title { get; set; }
+    }
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOArticleSearch
+    {
+        [DataMember, JsonProperty]
+        public string Id { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Status { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Title { get; set; }
+
+        [DataMember, JsonProperty]
+        public string HumanReadableUrl { get; set; }
+
+        [DataMember, JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        public DateTime DisplayDate { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Categories { get; set; }
     }
 }
