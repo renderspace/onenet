@@ -2,7 +2,7 @@
   <div>
     <div class="adminSection">
       <div class="col-md-2">
-        <a><span class="glyphicon glyphicon-plus"></span> Add</a>
+        <a class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a>
       </div>
     </div>
 
@@ -36,14 +36,7 @@
     </div>
     <div class="text-center">
       <ul class="pagination">
-        <li class="active"><a>1</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','2')">2</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','3')">3</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','4')">4</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','5')">5</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','6')">6</a></li>
-        <li class="disabled"><a>...</a></li>
-        <li><a href="javascript:__doPostBack('ctl00$MainContent$TwoPostbackPager1','105')">{{ lastPage }}</a></li>
+         <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" v-on:change="loadArticles" hide-ellipsis limit="10"></b-pagination>
       </ul>
     </div>
   </div>
@@ -55,20 +48,25 @@ export default {
   data () {
     return {
       articles: [],
-      lastPage: null
+      perPage: 10,
+      currentPage: 1,
+      totalRows: null,
     }
   },
   mounted() {
     this.loadArticles()
   },
   methods: {
-    loadArticles() {
-      this.$axios.get(`/AdminService/articles?languageId=1060`)
+    loadArticles(p) {
+      if (p) {
+        this.currentPage = p
+      }
+      console.log(p)
+      console.log(this.currentPage)
+      this.$axios.get(`/AdminService/articles?languageId=${languageId}&page=${this.currentPage}`)
       .then(response => {
-        console.log(response)
-        let allRecords = response.headers["x-onenet-allrecords"]
-        let recordsPerPage = response.headers["x-onenet-recordsperpage"]
-        this.lastPage = Math.floor(allRecords / recordsPerPage)
+        // console.log(response)
+        this.totalRows = response.headers["x-onenet-allrecords"]
         this.articles = response.data.map( a => {
           a.DisplayDate = new Date(parseInt(a.DisplayDate.substr(6)))
           return a

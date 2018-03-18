@@ -479,7 +479,7 @@ namespace One.Net.BLL.Service
             return "<img data-toggle='tooltip' data-placement='left' src='" + strReturn + "' alt='' title='" + title + "' />";
         }
 
-        public List<DTOArticleSearch> ListArticles(int languageId)
+        public List<DTOArticleSearch> ListArticles(int languageId, int page)
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
@@ -488,7 +488,8 @@ namespace One.Net.BLL.Service
             var state = new ListingState();
             state.RecordsPerPage = 10;
             state.SortDirection = SortDir.Descending;
-            state.FirstRecordIndex = 0;
+            int firstRecordIndex = (page * state.RecordsPerPage.Value) - state.RecordsPerPage.Value;
+            state.FirstRecordIndex = firstRecordIndex < 0 ? 0 : firstRecordIndex;
             state.SortField = "title";
             PagedList<BOArticle> articles = articleB.ListArticles(new List<int>(), null, null, state, "", new List<int>());
 
@@ -716,7 +717,7 @@ namespace One.Net.BLL.Service
         [DataMember, JsonProperty]
         public string HumanReadableUrl { get; set; }
 
-        [DataMember, JsonConverter(typeof(DateFormatConverter), "yyyy-MM-dd")]
+        [DataMember, JsonProperty]
         public DateTime DisplayDate { get; set; }
 
         [DataMember, JsonProperty]

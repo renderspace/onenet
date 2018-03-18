@@ -95,8 +95,8 @@ namespace One.Net.BLL.Service
 
         /* -------- */
 
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "articles?languageId={languageId}")]
-        List<DTOArticleSearch> ListArticles(int languageId);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "articles?languageId={languageId}&page={page}")]
+        List<DTOArticleSearch> ListArticles(int languageId, int page);
 
 
     }
