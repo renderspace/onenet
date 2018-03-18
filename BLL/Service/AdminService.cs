@@ -210,7 +210,7 @@ namespace One.Net.BLL.Service
             var existingContent = (file != null && file.Content != null) ? file.Content : contentB.GetUnCached(contentId, languageId);
             if (existingContent == null)
                 existingContent = new BOInternalContent();
-            
+
             existingContent.LanguageId = languageId;
             existingContent.Title = content.Title;
             existingContent.SubTitle = content.Subtitle;
@@ -227,7 +227,7 @@ namespace One.Net.BLL.Service
                 {
                     log.Error(" contentB.Change returned false");
                 }
-                
+
                 var instanceIds = DbContent.GetTextContentInstanceId(existingContent.ContentId.Value);
                 int i = 0;
                 int pageId = 0;
@@ -268,7 +268,7 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        public bool DeleteFile (int fileId)
+        public bool DeleteFile(int fileId)
         {
             var fileB = new BFileSystem();
             return fileB.Delete(fileId);
@@ -295,7 +295,7 @@ namespace One.Net.BLL.Service
 
             var result = new StringBuilder();
             result.Append(@"[ {""text"": """ + rootFolder.Title.Replace('"', ' ') + "\", \"id\": \"" + rootFolder.Id + "\", " + (selectedId == rootFolder.Id ? "\"selected\":\"true\"," : "") + "  \"nodes\": [");
-            
+
             AddChildren(rootFolder, folders, result, selectedId);
             result.Append("] } ]");
 
@@ -315,7 +315,7 @@ namespace One.Net.BLL.Service
 
             var parentFolder = folders.Where(f => f.Id.HasValue && f.Id.Value == parentId).FirstOrDefault();
             if (parentFolder == null)
-                return "";            
+                return "";
 
             return JsonConvert.SerializeObject(childrenIEnumerable.ToList<BOCategory>());
         }
@@ -373,7 +373,7 @@ namespace One.Net.BLL.Service
             {
                 lastChanged = "title=\"" + file.LastChanged.ToString() + "\"";
             }
-            
+
             string extension = file.Extension.ToLower().Replace(".", "");
             string ret;
 
@@ -509,6 +509,55 @@ namespace One.Net.BLL.Service
             WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", articles.AllRecords.ToString());
             WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", articles.CurrentPage.ToString());
             WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-RecordsPerPage", state.RecordsPerPage.ToString());
+            return result;
+        }
+
+        public List<DTORegular> ListRegulars(int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            var state = new ListingState();
+            state.SortDirection = SortDir.Ascending;
+            state.SortField = "id";
+            var regulars = articleB.ListRegulars(state);
+            var result = new List<DTORegular>();
+            foreach(var r in regulars)
+            {
+                result.Add(new DTORegular { Id = r.Id.Value, Title = r.Title });
+            }
+            return result;
+        }
+
+        public DTOArticle GetArticle(string rawId, int languageId)
+        {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
+            int id = 0;
+            int.TryParse(rawId, out id);
+            var a = articleB.GetArticle(id);
+            if (a == null)
+            {
+                WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.NotFound;
+                return null;
+            }
+
+            var result = new DTOArticle()
+            {
+                Id = a.Id.Value.ToString(),
+                Status = RenderStatusIcons(a.MarkedForDeletion, a.IsChanged),
+                Title = a.Title,
+                SubTitle = a.SubTitle,
+                Teaser = a.Teaser,
+                HumanReadableUrl = a.HumanReadableUrl,
+                DisplayDate = a.DisplayDate,
+                Categories = a.RegularsList,
+                DisplayLastChanged = a.DisplayLastChanged
+            };
+            result.Regulars = new List<DTORegular>();
+            foreach(var r in a.Regulars)
+            {
+                result.Regulars.Add(new DTORegular { Id = r.Id.Value, Title = r.Title });
+            }
             return result;
         }
 
@@ -723,4 +772,30 @@ namespace One.Net.BLL.Service
         [DataMember, JsonProperty]
         public string Categories { get; set; }
     }
-}
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTOArticle : DTOArticleSearch
+    {
+        [DataMember, JsonProperty]
+        public string SubTitle { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Teaser { get; set; }
+
+        [DataMember, JsonProperty]
+        public List<DTORegular> Regulars { get; set; }
+
+        [DataMember, JsonProperty]
+        public string DisplayLastChanged { get; set; }
+    }
+
+    [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
+    public class DTORegular
+    {
+        [DataMember, JsonProperty]
+        public int Id { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Title { get; set; }
+    }
+    }

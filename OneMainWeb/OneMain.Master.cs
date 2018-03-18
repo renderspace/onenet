@@ -149,6 +149,8 @@ namespace OneMainWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             var currentLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            List<int> languages = new List<int>();
+            languages.Add(currentLanguageId);
             LiteralAppVersion1.Text =  AppVersion;
             LiteralAppVersion2.Text = "<script type='text/javascript' src='/adm/js/one.js?v=" + AppVersion + "'></script>";
             if (!IsPostBack)
@@ -166,6 +168,10 @@ namespace OneMainWeb
                         currentLanguageId = webSite.LanguageId;
                     }
                     DropDownListWebSiteCombined.Items.Add(DDListItem);
+                    if (!languages.Contains(webSite.LanguageId))
+                    {
+                        languages.Add(webSite.LanguageId);
+                    }
                 }
                 DropDownListWebSiteCombined.DataBind();
 
@@ -206,10 +212,12 @@ namespace OneMainWeb
                     } 
                 }       
             }
+            var concatedLanguage = string.Join(",", languages.Select(x => x.ToString()).ToArray());
             LiteralHead.Text += @"
     <script>
         tracing = " + TracingFlag + @"; 
         languageId = " + currentLanguageId.ToString() + @";
+        oneNetLanguages = [" + concatedLanguage + @"];
     </script>";
         }
 

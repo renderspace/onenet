@@ -65,8 +65,6 @@ export default {
       if (p) {
         this.currentPage = p
       }
-      console.log(p)
-      console.log(this.currentPage)
       this.$axios.get(`/AdminService/articles?languageId=${languageId}&page=${this.currentPage}`)
       .then(response => {
         // console.log(response)
