@@ -1,20 +1,30 @@
 <template>
   <div id="app">
-      <articlesList />
 
+      <articleSingle @cancel="canceled" v-if="articleId" :articleId="articleId"  />
+      <articlesList @select="articleSelected" v-else />
   </div><!-- app -->
 </template>
 
 <script>
 
 import ArticlesList from './Components/ArticlesList.vue'
+import ArticleSingle from './Components/ArticleSingle.vue'
 
 export default {
   name: 'app',
-  components: { ArticlesList },
+  components: { ArticlesList, ArticleSingle },
   data () {
     return {
-     // articlesList
+      articleId: 0
+    }
+  },
+  methods: {
+    articleSelected(article) {
+      this.articleId = article.Id
+    },
+    canceled() {
+      this.articleId = 0
     }
   }
 }

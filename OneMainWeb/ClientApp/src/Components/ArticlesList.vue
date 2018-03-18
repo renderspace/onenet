@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-bind:key="a.id" v-for="a in articles">
+          <tr v-bind:key="a.id" v-for="a in articles" @click="articleSelected(a)">
             <td><input type="checkbox"  /></td>
             <td>{{ a.Id }}</td>
             <td v-html="a.Status"></td>
@@ -57,6 +57,10 @@ export default {
     this.loadArticles()
   },
   methods: {
+    articleSelected(a) {
+      console.log('articleSelected')
+      this.$emit('select', a)
+    },
     loadArticles(p) {
       if (p) {
         this.currentPage = p
