@@ -486,7 +486,7 @@ namespace One.Net.BLL.Service
             var result = new List<DTOArticleSearch>();
             var contentB = new BContent();
             var state = new ListingState();
-            state.RecordsPerPage = 10;
+            state.RecordsPerPage = 15;
             state.SortDirection = SortDir.Descending;
             int firstRecordIndex = (page * state.RecordsPerPage.Value) - state.RecordsPerPage.Value;
             state.FirstRecordIndex = firstRecordIndex < 0 ? 0 : firstRecordIndex;

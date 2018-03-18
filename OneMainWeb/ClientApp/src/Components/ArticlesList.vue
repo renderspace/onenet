@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       articles: [],
-      perPage: 10,
+      perPage: 15,
       currentPage: 1,
       totalRows: null,
     }
