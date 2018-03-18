@@ -148,15 +148,9 @@ namespace OneMainWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            var currentLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
             LiteralAppVersion1.Text =  AppVersion;
             LiteralAppVersion2.Text = "<script type='text/javascript' src='/adm/js/one.js?v=" + AppVersion + "'></script>";
-
-            LiteralHead.Text += @"
-    <script>
-        tracing = " + TracingFlag + @"; 
-        languageId = " + Thread.CurrentThread.CurrentCulture.LCID.ToString() + @";
-    </script>";
-
             if (!IsPostBack)
             {
                 var webSiteList = authorizationHelper.ListAllowedWebsites();
@@ -169,6 +163,7 @@ namespace OneMainWeb
                     {
                         DDListItem.Selected = webSiteIsSelected = true;
                         selectedWebsite = webSite;
+                        currentLanguageId = webSite.LanguageId;
                     }
                     DropDownListWebSiteCombined.Items.Add(DDListItem);
                 }
@@ -211,6 +206,11 @@ namespace OneMainWeb
                     } 
                 }       
             }
+            LiteralHead.Text += @"
+    <script>
+        tracing = " + TracingFlag + @"; 
+        languageId = " + currentLanguageId.ToString() + @";
+    </script>";
         }
 
         protected void DropDownListWebSiteCombined_SelectedIndexChanged(object sender, EventArgs e)
