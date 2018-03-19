@@ -15,11 +15,37 @@
           </div>
           <div	class="col-sm-6">
             <label>Categories assigned to current article:</label>
-            <select size="5"  tabindex="1" class="form-control" v-if="article">
-              <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in article.Regulars" >{{ r.Title }}</option>
+            <select size="5"  tabindex="1" class="form-control" v-if="hasArticle">
+              <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in articles[0].Regulars" >{{ r.Title }}</option>
             </select>
           </div>
         </div>
+    </div>
+    
+
+    <div class="Full" v-if="hasArticle">
+      <div class="form-group" >
+        <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
+        <div class="col-sm-9">
+          <b-input-group>
+            <b-form-input id="TextBoxDate" type="text" placeholder="" v-model="articles[0].DisplayDate"></b-form-input>
+              <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
+          </b-input-group>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="TextBoxHumanReadableUrl" class="col-sm-3 control-label">Human readable url</label>
+        <div class="col-sm-9">
+          <b-form-input v-model="articles[0].HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input form-control">
+        </div>
+      </div>
+
+
+      
+    </div>
+
+    <div class="form-group">
+      
     </div>
     <div class="row">
       <div class="col-sm-3">
@@ -41,13 +67,19 @@ export default {
     return {
       articleId: null,
       article: null,
-      regulars: []
+      regulars: [],
+      articles: []
     }
   },
   mounted() {
     this.languages = oneNetLanguages
     this.loadArticle()
     this.loadRegulars()
+  },
+  computed: {
+    hasArticle() {
+      return this.articles.length > 0
+    }
   },
   methods: {
     loadRegulars() {
@@ -63,8 +95,14 @@ export default {
       Promise.all(promises)
       .then(r => {
         console.log('++++')
-        console.log(r)
-        console.log('++++')
+
+        this.articles = r.filter(a => { return a !== undefined }).map(response => {
+          let article = response.data
+          article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))  
+          return article
+        })
+        console.log(this.articles)
+        console.log('Got ' + this.articles.length + ' language versions of the article.')
       } )
       .catch(e => {
         console.log('------------')
@@ -75,12 +113,7 @@ export default {
     loadArticleByLang(langId) {
       console.log(langId)
       return this.$axios.get(`/AdminService/articles/${this.articleId}?languageId=${langId}`)
-      /*.then(response => {
-        console.log('got one')
-        this.article = response.data
-        this.article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))
-      })*/
-      .catch(e => { console.log('silent') })
+      .catch(e => { /* you see 404 error anyhow */ })
     },
     cancel() {
       this.$emit('cancel')
