@@ -14,7 +14,10 @@
     "axios": "^0.18.0",
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap-vue": "^2.0.0-rc.2",
-    "vue": "^2.5.16"
+    "ckeditor": "^4.9.0",
+    "lcid": "^1.0.0",
+    "vue": "^2.5.16",
+    "vue-ckeditor2": "^1.25.0"
   },
   "browserslist": [
     "> 1%",

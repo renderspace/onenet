@@ -548,12 +548,14 @@ namespace One.Net.BLL.Service
                 Title = a.Title,
                 SubTitle = a.SubTitle,
                 Teaser = a.Teaser,
+                Html = a.Html,
                 HumanReadableUrl = a.HumanReadableUrl,
                 DisplayDate = a.DisplayDate,
                 Categories = a.RegularsList,
                 DisplayLastChanged = a.DisplayLastChanged,
                 LanguageId = a.LanguageId,
                 ThreeLetterISOLanguageName = ci.ThreeLetterISOLanguageName
+
             };
             result.Regulars = new List<DTORegular>();
             foreach(var r in a.Regulars)
@@ -783,6 +785,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string Teaser { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Html { get; set; }
 
         [DataMember, JsonProperty]
         public List<DTORegular> Regulars { get; set; }

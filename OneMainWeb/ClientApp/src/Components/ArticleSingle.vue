@@ -57,6 +57,11 @@
             <b-form-textarea v-model="a.Teaser" :rows="5"></b-form-textarea>
         </div>
       </div>
+      <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
+        <div class="col-sm-12"> 
+          <ckeditor v-model="a.Html" config="config" ></ckeditor>
+        </div>
+      </div>
       
     </div>
 
@@ -77,20 +82,28 @@
 <script>
 
 import lcid from 'lcid'
+import Ckeditor from 'vue-ckeditor2'
 
 export default {
   name: 'articlesSingle',
   props: [ 'articleId'],
+  components: { Ckeditor },
   data () {
     return {
       articleId: null,
       article: null,
       regulars: [],
-      articles: []
+      articles: [],
+      config: {
+        toolbar: [
+          [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ]
+        ],
+        height: 300
+      }
     }
   },
   mounted() {
-    this.languages = [1033, 1060] /* fixed for debug.. oneNetLanguages */
+    this.languages = [1033, 1060] /* , fixed for debug.. oneNetLanguages */
     this.loadArticle()
     this.loadRegulars()
   },
