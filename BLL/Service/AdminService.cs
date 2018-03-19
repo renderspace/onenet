@@ -540,7 +540,7 @@ namespace One.Net.BLL.Service
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.NotFound;
                 return null;
             }
-
+            var ci = new CultureInfo(a.LanguageId);
             var result = new DTOArticle()
             {
                 Id = a.Id.Value.ToString(),
@@ -551,7 +551,9 @@ namespace One.Net.BLL.Service
                 HumanReadableUrl = a.HumanReadableUrl,
                 DisplayDate = a.DisplayDate,
                 Categories = a.RegularsList,
-                DisplayLastChanged = a.DisplayLastChanged
+                DisplayLastChanged = a.DisplayLastChanged,
+                LanguageId = a.LanguageId,
+                ThreeLetterISOLanguageName = ci.ThreeLetterISOLanguageName
             };
             result.Regulars = new List<DTORegular>();
             foreach(var r in a.Regulars)
@@ -787,6 +789,12 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string DisplayLastChanged { get; set; }
+
+        [DataMember, JsonProperty]
+        public int LanguageId { get; set; }
+
+        [DataMember, JsonProperty]
+        public string ThreeLetterISOLanguageName { get; set; }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]

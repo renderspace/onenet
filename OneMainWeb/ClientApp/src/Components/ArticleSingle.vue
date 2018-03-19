@@ -36,11 +36,27 @@
       <div class="form-group">
         <label for="TextBoxHumanReadableUrl" class="col-sm-3 control-label">Human readable url</label>
         <div class="col-sm-9">
-          <b-form-input v-model="articles[0].HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input form-control">
+          <b-form-input v-model="articles[0].HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input">
         </div>
       </div>
-
-
+  	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
+        <label class="col-sm-3 control-label">Title  [{{ a.Language }}]</label>
+        <div class="col-sm-9">
+          <b-form-input v-model="a.Title" maxlength="4000">
+        </div>
+      </div>
+      <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
+        <label class="col-sm-3 control-label">Subtitle  [{{ a.Language }}]</label>
+        <div class="col-sm-9">
+          <b-form-input v-model="a.SubTitle" maxlength="255">
+        </div>
+      </div>
+      <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
+        <label class="col-sm-3 control-label">Teaser  [{{ a.Language }}]</label>
+        <div class="col-sm-9">
+            <b-form-textarea v-model="a.Teaser" :rows="5"></b-form-textarea>
+        </div>
+      </div>
       
     </div>
 
@@ -60,6 +76,8 @@
 </template>
 <script>
 
+import lcid from 'lcid'
+
 export default {
   name: 'articlesSingle',
   props: [ 'articleId'],
@@ -72,7 +90,7 @@ export default {
     }
   },
   mounted() {
-    this.languages = oneNetLanguages
+    this.languages = [1033, 1060] /* fixed for debug.. oneNetLanguages */
     this.loadArticle()
     this.loadRegulars()
   },
@@ -98,6 +116,8 @@ export default {
 
         this.articles = r.filter(a => { return a !== undefined }).map(response => {
           let article = response.data
+          console.log(response)
+          article.Language = lcid.from(response.data.LanguageId)
           article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))  
           return article
         })
@@ -113,7 +133,11 @@ export default {
     loadArticleByLang(langId) {
       console.log(langId)
       return this.$axios.get(`/AdminService/articles/${this.articleId}?languageId=${langId}`)
-      .catch(e => { /* you see 404 error anyhow */ })
+      .catch(e => { 
+        if (e && e.response && e.response.status === 404) {
+          return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '' }}
+        }
+      })
     },
     cancel() {
       this.$emit('cancel')
