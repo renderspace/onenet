@@ -21,7 +21,7 @@
           </div>
         </div>
     </div>
-    
+
 
     <div class="Full" v-if="hasArticle">
       <div class="form-group" >
@@ -58,22 +58,25 @@
         </div>
       </div>
       <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
-        <div class="col-sm-12"> 
-          <ckeditor v-model="a.Html" config="config" ></ckeditor>
+        <label class="col-sm-1 control-label">Html  [{{ a.Language }}]</label>
+        <div class="col-sm-11">
+          <ckeditor v-model="a.Html" :config="config" ></ckeditor>
         </div>
       </div>
-      
+
     </div>
 
     <div class="form-group">
-      
+
     </div>
     <div class="row">
       <div class="col-sm-3">
         <div class="lastChange" v-if="article">{{ article.DisplayLastChanged }}</div>
       </div>
       <div class="col-sm-9">
-        <span>Id: {{ articleId }}</span>
+        <span>Id: </span><span class="articleId">{{ articleId }}</span>
+        <b-button variant="success" @click="save">Save</b-button>
+        <b-button variant="success" @click="saveAndClose">Save & Close</b-button>
         <b-button @click="cancel">Cancel</b-button>
       </div>
     </div>
@@ -95,10 +98,35 @@ export default {
       regulars: [],
       articles: [],
       config: {
+        customConfig: '',
         toolbar: [
-          [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ]
+          { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
+          { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
+          { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo'] },
+          '/',
+          { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+          { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+          { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+          { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] }
         ],
-        height: 300
+        entities_greek: false,
+        forcePasteAsPlainText: true,
+        entities: false,
+        entities_latin: false,
+        filebrowserBrowseUrl: '/adm/FileManager.aspx',
+        filebrowserWindowWidth: '980',
+        filebrowserWindowHeight: '600',
+        filebrowserImageBrowseLinkUrl: '/adm/FileManager.aspx?type:Images',
+        filebrowserImageWindowWidth: '980',
+        filebrowserImageWindowHeight: '600',
+        stylesSet: 'ck_styles:/site_specific/ckstyles.js',
+        disableObjectResizing: true,
+        templates: 'one_default_templates',
+        contentsCss: '/site_specific/ck.css',
+        height: 350,
+        disableObjectResizing: true,
+        resize_enabled: false,
+        allowedContent: true
       }
     }
   },
@@ -131,7 +159,7 @@ export default {
           let article = response.data
           console.log(response)
           article.Language = lcid.from(response.data.LanguageId)
-          article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))  
+          article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))
           return article
         })
         console.log(this.articles)
@@ -146,7 +174,7 @@ export default {
     loadArticleByLang(langId) {
       console.log(langId)
       return this.$axios.get(`/AdminService/articles/${this.articleId}?languageId=${langId}`)
-      .catch(e => { 
+      .catch(e => {
         if (e && e.response && e.response.status === 404) {
           return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '' }}
         }
