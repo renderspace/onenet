@@ -554,7 +554,7 @@ namespace One.Net.BLL.Service
                 Categories = a.RegularsList,
                 DisplayLastChanged = a.DisplayLastChanged,
                 LanguageId = a.LanguageId,
-                ThreeLetterISOLanguageName = ci.ThreeLetterISOLanguageName
+                HasTranslationInCurrentLanguage = a.HasTranslationInCurrentLanguage
 
             };
             result.Regulars = new List<DTORegular>();
@@ -799,7 +799,7 @@ namespace One.Net.BLL.Service
         public int LanguageId { get; set; }
 
         [DataMember, JsonProperty]
-        public string ThreeLetterISOLanguageName { get; set; }
+        public bool HasTranslationInCurrentLanguage { get; set; }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]

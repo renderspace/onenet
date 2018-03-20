@@ -16,7 +16,7 @@
           <div	class="col-sm-6">
             <label>Categories assigned to current article:</label>
             <select size="5"  tabindex="1" class="form-control" v-if="hasArticle">
-              <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in articles[0].Regulars" >{{ r.Title }}</option>
+              <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in article.Regulars" >{{ r.Title }}</option>
             </select>
           </div>
         </div>
@@ -28,7 +28,7 @@
         <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
         <div class="col-sm-9">
           <b-input-group>
-            <b-form-input id="TextBoxDate" type="text" placeholder="" v-model="articles[0].DisplayDate"></b-form-input>
+            <b-form-input id="TextBoxDate" type="text" placeholder="" v-model="article.DisplayDate"></b-form-input>
               <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
           </b-input-group>
         </div>
@@ -36,7 +36,7 @@
       <div class="form-group">
         <label for="TextBoxHumanReadableUrl" class="col-sm-3 control-label">Human readable url</label>
         <div class="col-sm-9">
-          <b-form-input v-model="articles[0].HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input">
+          <b-form-input v-model="article.HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input">
         </div>
       </div>
   	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
@@ -155,11 +155,15 @@ export default {
       .then(r => {
         console.log('++++')
 
-        this.articles = r.filter(a => { return a !== undefined }).map(response => {
+        this.articles = r.map(response => {
           let article = response.data
-          console.log(response)
           article.Language = lcid.from(response.data.LanguageId)
           article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))
+          console.log(article.HasTranslationInCurrentLanguage)
+          if (article.HasTranslationInCurrentLanguage === true) {
+            console.log('HasTranslationInCurrentLanguage')
+            this.article = article
+          }
           return article
         })
         console.log(this.articles)
@@ -176,7 +180,10 @@ export default {
       return this.$axios.get(`/AdminService/articles/${this.articleId}?languageId=${langId}`)
       .catch(e => {
         if (e && e.response && e.response.status === 404) {
-          return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '' }}
+          return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false }}
+        } else {
+          console.error(e)
+          return null // to make it blow up upper
         }
       })
     },
