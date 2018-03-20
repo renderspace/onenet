@@ -550,6 +550,7 @@
     <Content Include="App_Data\blank.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ClientApp\dist\build.js" />
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
     <Content Include="CommonModules\AzureSearchForm.ascx" />
@@ -816,7 +817,9 @@
     <Content Include="JavaScript\jquery-3.1.1.min.map" />
     <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
-    <Content Include="Account\Web.config" />
+    <Content Include="Account\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Account\Account.Master" />
     <Content Include="adm\fonts\glyphicons-halflings-regular.eot">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -884,7 +887,9 @@
     <Content Include="SiteDefault\ProjectName.wpp.targets" />
     <Content Include="SiteDefault\gitignore.template" />
     <Content Include="SiteDefault\Web.config" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
