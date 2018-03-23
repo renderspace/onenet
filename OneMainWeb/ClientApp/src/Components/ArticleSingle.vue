@@ -142,10 +142,18 @@ export default {
     }
   },
   methods: {
+    handleError(e) {
+      if (e.response) {
+        this.$emit('error', { status: e.response.status, message: e.response.data })
+      } else {
+        this.$emit('error', 'unhandeled error!')
+        console.log(e)
+      }
+    },
     loadRegulars() {
       this.$axios.get(`/AdminService/regulars?languageId=${languageId}`)
       .then(response => { this.regulars = response.data })
-      .catch(e => { console.log(e) })
+      .catch(e => { this.handleError(e) })
     },
     loadArticle() {
       let promises = this.languages.map(id => {
@@ -164,9 +172,7 @@ export default {
         })
         console.log('Got ' + this.articles.length + ' language versions of the article.')
       } )
-      .catch(e => {
-        console.log(e)
-      })
+      .catch(e => { this.handleError(e) })
     },
     loadArticleByLang(langId) {
       console.log(langId)
@@ -175,7 +181,7 @@ export default {
         if (e && e.response && e.response.status === 404) {
           return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false }}
         } else {
-          console.error(e)
+          this.handleError(e)
           return null // to make it blow up upper
         }
       })
@@ -190,18 +196,32 @@ export default {
         return
       }
       let displayDate = this.article.DisplayDate.getTime()
+      let axiosPromises = []
       this.articles.forEach(a => {
         let articleForSave = Object.assign({}, a)
         articleForSave.Id = this.article.Id
         articleForSave.DisplayDate = `\/Date(${displayDate}-0100)\/`
         articleForSave.HumanReadableUrl = this.article.HumanReadableUrl
         articleForSave.Regulars = this.article.Regulars
-        this.$axios.post(`/AdminService/articles`, articleForSave)
-        .then(r => {
-
-        })
-        .catch(e => { console.log(e) })
+        axiosPromises.push(this.$axios.post(`/AdminService/articles`, articleForSave)
+        .catch(e => { this.handleError(e) })
+        )
       })
+      Promise.all(axiosPromises)
+      .then(results => {
+        let successes = 0
+        results.forEach(r => {
+          if (r && r.data === true) {
+            successes++
+          }
+        })
+        if (successes > 0) {
+          this.$emit('success', 'Article saved! ' + successes)
+        } else {
+          this.$emit('error', 'Article NOT saved!')
+        }
+      })
+      .catch(e => { this.handleError(e) })
     },
     saveAndClose() {
       this.save(true)

@@ -145,11 +145,15 @@ namespace One.Net.BLL.Service
                 log.Error("ChangeContent NOT authenticated.");
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(article.Title) &&
-                string.IsNullOrWhiteSpace(article.SubTitle) &&
+            if (string.IsNullOrWhiteSpace(article.SubTitle) &&
                 string.IsNullOrWhiteSpace(article.Teaser) &&
                 string.IsNullOrWhiteSpace(article.Html))
             {
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(article.Title))
+            {
+                log.Error("Null title");
                 return false;
             }
             if (article.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))
