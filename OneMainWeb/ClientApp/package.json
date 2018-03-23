@@ -17,7 +17,8 @@
     "ckeditor": "^4.9.0",
     "lcid": "^1.0.0",
     "vue": "^2.5.16",
-    "vue-ckeditor2": "^1.25.0"
+    "vue-ckeditor2": "^1.25.0",
+    "vuejs-datepicker": "^0.9.29"
   },
   "browserslist": [
     "> 1%",

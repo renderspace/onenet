@@ -28,8 +28,8 @@
         <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
         <div class="col-sm-9">
           <b-input-group>
-            <b-form-input id="TextBoxDate" type="text" placeholder="" v-model="article.DisplayDate"></b-form-input>
-              <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
+            <datepicker v-model="article.DisplayDate" language="sl-si" input-class="form-control"></datepicker>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
           </b-input-group>
         </div>
       </div>
@@ -74,9 +74,9 @@
         <div class="lastChange" v-if="article">{{ article.DisplayLastChanged }}</div>
       </div>
       <div class="col-sm-9">
-        <span>Id: </span><span class="articleId">{{ articleId }}</span>
+        <span>Id: </span><span class="articleId" v-if="article">{{ article.Id }}</span>
         <b-button variant="success" @click="save">Save</b-button>
-        <b-button variant="success" @click="saveAndClose">Save & Close</b-button>
+        <b-button variant="success" @click="saveAndClose">Save &amp; Close</b-button>
         <b-button @click="cancel">Cancel</b-button>
       </div>
     </div>
@@ -86,11 +86,12 @@
 
 import lcid from 'lcid'
 import Ckeditor from 'vue-ckeditor2'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   name: 'articlesSingle',
   props: [ 'articleId'],
-  components: { Ckeditor },
+  components: { Ckeditor, Datepicker },
   data () {
     return {
       articleId: null,
@@ -147,32 +148,24 @@ export default {
       .catch(e => { console.log(e) })
     },
     loadArticle() {
-
       let promises = this.languages.map(id => {
         return this.loadArticleByLang(id)
       });
       Promise.all(promises)
       .then(r => {
-        console.log('++++')
-
         this.articles = r.map(response => {
           let article = response.data
           article.Language = lcid.from(response.data.LanguageId)
           article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))
-          console.log(article.HasTranslationInCurrentLanguage)
           if (article.HasTranslationInCurrentLanguage === true) {
-            console.log('HasTranslationInCurrentLanguage')
             this.article = article
           }
           return article
         })
-        console.log(this.articles)
         console.log('Got ' + this.articles.length + ' language versions of the article.')
       } )
       .catch(e => {
-        console.log('------------')
         console.log(e)
-        console.log('------------')
       })
     },
     loadArticleByLang(langId) {
@@ -186,6 +179,32 @@ export default {
           return null // to make it blow up upper
         }
       })
+    },
+    save(close) {
+      if (!this.article || !this.articles.length) {
+        console.log('empty article..')
+        return
+      }
+      if (this.article.Id < 1) {
+        console.log('new article, insert one first..')
+        return
+      }
+      let displayDate = this.article.DisplayDate.getTime()
+      this.articles.forEach(a => {
+        let articleForSave = Object.assign({}, a)
+        articleForSave.Id = this.article.Id
+        articleForSave.DisplayDate = `\/Date(${displayDate}-0100)\/`
+        articleForSave.HumanReadableUrl = this.article.HumanReadableUrl
+        articleForSave.Regulars = this.article.Regulars
+        this.$axios.post(`/AdminService/articles`, articleForSave)
+        .then(r => {
+
+        })
+        .catch(e => { console.log(e) })
+      })
+    },
+    saveAndClose() {
+      this.save(true)
     },
     cancel() {
       this.$emit('cancel')
