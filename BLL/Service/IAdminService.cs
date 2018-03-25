@@ -105,6 +105,6 @@ namespace One.Net.BLL.Service
         DTOArticle GetArticle(string rawId, int languageId);
 
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "articles")]
-        bool SaveArticle(DTOArticle article);
+        int SaveArticle(DTOArticle article);
     }
 }

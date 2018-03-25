@@ -25,7 +25,7 @@
       <div class="form-group" >
         <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
         <div class="col-sm-9">
-          <b-input-group>
+          <b-input-group v-bind:class="{ 'is-invalid': $v.article.DisplayDate.$invalid }">
             <datepicker v-model="article.DisplayDate" language="sl-si" input-class="form-control"></datepicker>
             <span class="input-group-addon"><span class="glyphicon glyphicon-hourglass"></span></span>
           </b-input-group>
@@ -101,8 +101,12 @@ export default {
   },
   mounted() {
     this.languages = [1033, 1060] /* , fixed for debug.. oneNetLanguages */
-    this.loadArticle()
     this.loadRegulars()
+    if (this.articleId === -1) {
+      this.newArticle()
+    } else {
+      this.loadArticle()
+    }
   },
   computed: {
   },
@@ -120,6 +124,15 @@ export default {
       .then(response => { this.regulars = response.data })
       .catch(e => { this.handleError(e) })
     },
+    newArticle() {
+      this.article = {
+        Id: this.articleId,
+        Regulars: []
+      }
+      this.articles = this.languages.map(langId => {
+        return { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false, Language: lcid.from(langId) }
+      });
+    },
     loadArticle() {
       let promises = this.languages.map(id => {
         return this.loadArticleByLang(id)
@@ -128,7 +141,6 @@ export default {
       .then(r => {
         this.articles = r.map(response => {
           let article = response.data
-          article.Language = lcid.from(response.data.LanguageId)
           article.DisplayDate = new Date(parseInt(response.data.DisplayDate.substr(6)))
           if (article.HasTranslationInCurrentLanguage === true) {
             this.article = article
@@ -140,16 +152,37 @@ export default {
       .catch(e => { this.handleError(e) })
     },
     loadArticleByLang(langId) {
-      console.log(langId)
       return this.$axios.get(`/AdminService/articles/${this.articleId}?languageId=${langId}`)
       .catch(e => {
         if (e && e.response && e.response.status === 404) {
-          return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false }}
+          return { data: { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false, Language: lcid.from(langId) }}
         } else {
           this.handleError(e)
           return null // to make it blow up upper
         }
       })
+    },
+    decodeArticleSaveError(e) {
+      switch(e) {
+        case -1:
+          return 'article was null'
+        case -2:
+          return '403: not authenticted'
+        case -3:
+          return 'empty article'
+        case -4:
+          return 'empty title'
+        case -5:
+          return 'no translation tag'
+        case -6:
+          return 'no regulars'
+        case -7:
+          return 'no HumanReadableUrl'
+        case -8:
+          return 'no Id after save'
+        default:
+          return e
+      }
     },
     save(close) {
       if (!this.article || !this.articles.length) {
@@ -160,24 +193,28 @@ export default {
         console.log('new article, insert one first..')
         return
       }
-      let displayDate = this.article.DisplayDate.getTime()
       let axiosPromises = []
       this.articles.forEach(a => {
         let articleForSave = Object.assign({}, a)
+        let displayDate = this.article.DisplayDate.getTime()
         articleForSave.Id = this.article.Id
         articleForSave.DisplayDate = `\/Date(${displayDate}-0100)\/`
         articleForSave.HumanReadableUrl = this.article.HumanReadableUrl
         articleForSave.Regulars = this.article.Regulars
-        axiosPromises.push(this.$axios.post(`/AdminService/articles`, articleForSave)
-        .catch(e => { this.handleError(e) })
+        axiosPromises.push(
+          this.$axios.post(`/AdminService/articles`, articleForSave)
+          .catch(e => { this.handleError(e) })
         )
       })
       Promise.all(axiosPromises)
       .then(results => {
         let successes = 0
+        console.log(results)
         results.forEach(r => {
-          if (r && r.data === true) {
+          if (r && r.data > 0) {
             successes++
+          } else if (r) {
+            console.log('Article save not successful: ' + this.decodeArticleSaveError(r.data))
           }
         })
         if (successes > 0) {
@@ -208,10 +245,13 @@ export default {
   },
   validations: {
     article: {
-      HumanReadableUrl: {
+      Regulars: {
         required
       },
-      Regulars: {
+      DisplayDate: {
+        required
+      },
+      HumanReadableUrl: {
         required
       }
     }
@@ -219,5 +259,5 @@ export default {
 }
 </script>
 <style>
-.is-invalid select, input.is-invalid { border: 2px solid red !important}
+.is-invalid .vdp-datepicker input, .is-invalid select, input.is-invalid { border: 2px solid red !important}
 </style>

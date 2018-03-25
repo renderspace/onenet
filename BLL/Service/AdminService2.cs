@@ -123,7 +123,8 @@ namespace One.Net.BLL.Service
                 DisplayLastChanged = a.DisplayLastChanged,
                 LanguageId = a.LanguageId,
                 ContentId = a.ContentId.Value,
-                HasTranslationInCurrentLanguage = a.HasTranslationInCurrentLanguage
+                HasTranslationInCurrentLanguage = a.HasTranslationInCurrentLanguage,
+                Language = CultureInfo.GetCultureInfo(a.LanguageId).IetfLanguageTag
 
             };
             result.Regulars = new List<DTORegular>();
@@ -134,32 +135,32 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        public bool SaveArticle(DTOArticle article)
+        public int SaveArticle(DTOArticle article)
         {
             if(article == null)
             {
-                return false;
+                return -1;
             }
             if (!Thread.CurrentPrincipal.Identity.IsAuthenticated)
             {
                 log.Error("ChangeContent NOT authenticated.");
-                return false;
+                return -2;
             } 
             if (string.IsNullOrWhiteSpace(article.SubTitle) &&
                 string.IsNullOrWhiteSpace(article.Teaser) &&
                 string.IsNullOrWhiteSpace(article.Html))
             {
-                return false;
+                return -3;
             }
             if (string.IsNullOrWhiteSpace(article.Title))
             {
                 log.Error("Null title");
-                return false;
+                return -4;
             }
             if (article.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))
             {
                 log.Error("ChangeContent NO_TRANSLATION_TAG");
-                return false;
+                return -5;
             }
             if (article.DisplayDate < SqlDateTime.MinValue.Value)
             {
@@ -167,11 +168,11 @@ namespace One.Net.BLL.Service
             }
             if (article.Regulars == null || article.Regulars.Count() < 1)
             {
-                return false;
+                return -6;
             }
             if (string.IsNullOrEmpty(article.HumanReadableUrl))
             {
-                return false;
+                return -7;
             }
             int id = 0;
             int.TryParse(article.Id, out id);
@@ -196,7 +197,14 @@ namespace One.Net.BLL.Service
                 a.Regulars.Add(new BORegular { Id = r.Id, Title = r.Title });
             }
             articleB.ChangeArticle(a);
-            return true;
+            if (!a.Id.HasValue)
+            {
+                return -8;
+            }
+            else
+            {
+                return a.Id.Value;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
   <div>
     <div class="adminSection">
       <div class="col-md-2">
-        <a class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add</a>
+        <a class="btn btn-success" @click="add"><span class="glyphicon glyphicon-plus"></span> Add</a>
       </div>
     </div>
 
@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     articleSelected(a) {
-      console.log('articleSelected')
       this.$emit('select', a)
     },
     loadArticles(p) {
@@ -67,7 +66,6 @@ export default {
       }
       this.$axios.get(`/AdminService/articles?languageId=${languageId}&page=${this.currentPage}`)
       .then(response => {
-        // console.log(response)
         this.totalRows = response.headers["x-onenet-allrecords"]
         this.articles = response.data.map( a => {
           a.DisplayDate = new Date(parseInt(a.DisplayDate.substr(6)))
@@ -75,6 +73,9 @@ export default {
         })
       })
       .catch(e => { console.log(e) })
+    },
+    add() {
+      this.$emit('select', { Id: -1 })
     }
   }
 }

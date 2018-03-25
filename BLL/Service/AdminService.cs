@@ -686,6 +686,9 @@ namespace One.Net.BLL.Service
         public int LanguageId { get; set; }
 
         [DataMember, JsonProperty]
+        public string Language { get; set; }
+
+        [DataMember, JsonProperty]
         public int ContentId { get; set; }
 
         [DataMember, JsonProperty]
