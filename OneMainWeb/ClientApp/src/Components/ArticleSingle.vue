@@ -5,7 +5,7 @@
         <div class="col-sm-9 col-sm-offset-3 jumbotron jumbo-less-padding">
           <div	class="col-sm-5">
               <label>Choose from possible categories:</label>
-              <select size="5"  tabindex="1" class="form-control">
+              <select size="5" class="form-control" v-model="selectedRegularAssign">
                   <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in regulars" >{{ r.Title }}</option>
               </select>
           </div>
@@ -13,17 +13,15 @@
             <b-button variant="info" @click="assign"><span class="glyphicon glyphicon-arrow-right"></span></b-button>
             <b-button variant="info" @click="remove"><span class="glyphicon glyphicon-arrow-left"></span></b-button>
           </div>
-          <div	class="col-sm-6">
+          <div	class="col-sm-6" v-bind:class="{ 'is-invalid': $v.article.Regulars.$invalid }">
             <label>Categories assigned to current article:</label>
-            <select size="5"  tabindex="1" class="form-control" v-if="hasArticle">
+            <select size="5" class="form-control" v-if="article" v-model="selectedRegularRemove">
               <option v-bind:key="r.Id" v-bind:value="r.Id" v-for="r in article.Regulars" >{{ r.Title }}</option>
             </select>
           </div>
         </div>
     </div>
-
-
-    <div class="Full" v-if="hasArticle">
+    <div class="Full" v-if="article">
       <div class="form-group" >
         <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
         <div class="col-sm-9">
@@ -36,8 +34,9 @@
       <div class="form-group">
         <label for="TextBoxHumanReadableUrl" class="col-sm-3 control-label">Human readable url</label>
         <div class="col-sm-9">
-          <b-form-input v-model="article.HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input">
+            <b-form-input v-model="article.HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input" :state="!$v.article.HumanReadableUrl.$invalid">
         </div>
+
       </div>
   	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
         <label class="col-sm-3 control-label">Title  [{{ a.Language }}]</label>
@@ -63,11 +62,6 @@
           <ckeditor v-model="a.Html" :config="config" ></ckeditor>
         </div>
       </div>
-
-    </div>
-
-    <div class="form-group">
-
     </div>
     <div class="row">
       <div class="col-sm-3">
@@ -75,8 +69,8 @@
       </div>
       <div class="col-sm-9">
         <span>Id: </span><span class="articleId" v-if="article">{{ article.Id }}</span>
-        <b-button variant="success" @click="save">Save</b-button>
-        <b-button variant="success" @click="saveAndClose">Save &amp; Close</b-button>
+        <b-button variant="success" @click="save" :disabled="$v.article.$invalid">Save</b-button>
+        <b-button variant="success" @click="saveAndClose" :disabled="$v.article.$invalid">Save &amp; Close</b-button>
         <b-button @click="cancel">Cancel</b-button>
       </div>
     </div>
@@ -84,9 +78,11 @@
 </template>
 <script>
 
+import { required } from 'vuelidate/lib/validators'
 import lcid from 'lcid'
 import Ckeditor from 'vue-ckeditor2'
 import Datepicker from 'vuejs-datepicker'
+import { oneNetCkConfig } from '../ckconfig.js'
 
 export default {
   name: 'articlesSingle',
@@ -94,41 +90,13 @@ export default {
   components: { Ckeditor, Datepicker },
   data () {
     return {
+      selectedRegularAssign: null,
+      selectedRegularRemove: null,
       articleId: null,
       article: null,
       regulars: [],
       articles: [],
-      config: {
-        customConfig: '',
-        toolbar: [
-          { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
-          { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
-          { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo'] },
-          '/',
-          { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
-          { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-          { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-          { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] }
-        ],
-        entities_greek: false,
-        forcePasteAsPlainText: true,
-        entities: false,
-        entities_latin: false,
-        filebrowserBrowseUrl: '/adm/FileManager.aspx',
-        filebrowserWindowWidth: '980',
-        filebrowserWindowHeight: '600',
-        filebrowserImageBrowseLinkUrl: '/adm/FileManager.aspx?type:Images',
-        filebrowserImageWindowWidth: '980',
-        filebrowserImageWindowHeight: '600',
-        stylesSet: 'ck_styles:/site_specific/ckstyles.js',
-        disableObjectResizing: true,
-        templates: 'one_default_templates',
-        contentsCss: '/site_specific/ck.css',
-        height: 350,
-        disableObjectResizing: true,
-        resize_enabled: false,
-        allowedContent: true
-      }
+      config: oneNetCkConfig
     }
   },
   mounted() {
@@ -137,9 +105,6 @@ export default {
     this.loadRegulars()
   },
   computed: {
-    hasArticle() {
-      return this.articles.length > 0
-    }
   },
   methods: {
     handleError(e) {
@@ -223,12 +188,36 @@ export default {
       })
       .catch(e => { this.handleError(e) })
     },
+    assign() {
+      if (this.selectedRegularAssign && !this.article.Regulars.filter(r => r.Id === this.selectedRegularAssign).length) {
+        let regularToAssign = this.regulars.filter(r => r.Id === this.selectedRegularAssign)
+        if (regularToAssign.length) {
+          this.article.Regulars.push(regularToAssign[0])
+        }
+      }
+    },
+    remove() {
+      this.article.Regulars = this.article.Regulars.filter(r => r.Id !== this.selectedRegularRemove)
+    },
     saveAndClose() {
       this.save(true)
     },
     cancel() {
       this.$emit('cancel')
     }
+  },
+  validations: {
+    article: {
+      HumanReadableUrl: {
+        required
+      },
+      Regulars: {
+        required
+      }
+    }
   }
 }
 </script>
+<style>
+.is-invalid select, input.is-invalid { border: 2px solid red !important}
+</style>

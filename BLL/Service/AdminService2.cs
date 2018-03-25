@@ -144,7 +144,7 @@ namespace One.Net.BLL.Service
             {
                 log.Error("ChangeContent NOT authenticated.");
                 return false;
-            }
+            } 
             if (string.IsNullOrWhiteSpace(article.SubTitle) &&
                 string.IsNullOrWhiteSpace(article.Teaser) &&
                 string.IsNullOrWhiteSpace(article.Html))

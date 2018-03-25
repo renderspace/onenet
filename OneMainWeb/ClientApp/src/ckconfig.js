@@ -1,0 +1,31 @@
+export const oneNetCkConfig = {
+  customConfig: '',
+  toolbar: [
+    { name: 'tools', items: ['Maximize', 'ShowBlocks', '-', 'Styles'] },
+    { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source', '-'] },
+    { name: 'clipboard', groups: ['clipboard', 'undo'], items: ['Cut', 'Copy', 'Paste', '-', 'Undo', 'Redo'] },
+    '/',
+    { name: 'basicstyles', groups: ['basicstyles', 'cleanup'], items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
+    { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'], items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+    { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+    { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] }
+  ],
+  entities_greek: false,
+  forcePasteAsPlainText: true,
+  entities: false,
+  entities_latin: false,
+  filebrowserBrowseUrl: '/adm/FileManager.aspx',
+  filebrowserWindowWidth: '980',
+  filebrowserWindowHeight: '600',
+  filebrowserImageBrowseLinkUrl: '/adm/FileManager.aspx?type:Images',
+  filebrowserImageWindowWidth: '980',
+  filebrowserImageWindowHeight: '600',
+  stylesSet: 'ck_styles:/site_specific/ckstyles.js',
+  disableObjectResizing: true,
+  templates: 'one_default_templates',
+  contentsCss: '/site_specific/ck.css',
+  height: 350,
+  disableObjectResizing: true,
+  resize_enabled: false,
+  allowedContent: true
+}
