@@ -104,7 +104,7 @@ export default {
     }
   },
   mounted() {
-    this.languages = [1033, 1060] /* , fixed for debug.. oneNetLanguages */
+    this.languages = oneNetLanguages
     this.loadRegulars()
     if (this.articleId === -1) {
       this.newArticle()
