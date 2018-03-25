@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>4.0.4</version>
-        <releaseNotes>4.0 release with 2FA authentication</releaseNotes>
+        <version>4.0.5</version>
+        <releaseNotes>4.0.5 with vue articles</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>

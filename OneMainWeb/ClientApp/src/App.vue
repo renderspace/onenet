@@ -3,7 +3,7 @@
 
       <b-alert variant="danger" dismissible :show="errors.length > 0" @dismissed="clearErrors">
         <ul>
-          <li v-for="error in errors">{{ error }}</li>
+          <li v-for="error in errors" v-html="error"></li>
         </ul>
       </b-alert>
 
@@ -14,7 +14,7 @@
             @dismissed="clearSuccess">
             <h3>Success!</h3>
             <ul>
-              <li v-for="success in successes">{{ success }}</li>
+              <li v-for="success in successes" v-html="success"></li>
             </ul>
       </b-alert>
 
@@ -53,9 +53,11 @@ export default {
       this.dismissCountDown = 0
     },
     handleError(e) {
+      this.$scrollTo("#app")
       this.errors.push(e)
     },
     handleSuccess(e) {
+      this.$scrollTo("#app")
       this.successes.push(e)
       this.dismissCountDown = 5
     },

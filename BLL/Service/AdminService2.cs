@@ -96,6 +96,12 @@ namespace One.Net.BLL.Service
             return result;
         }
 
+        public bool CheckArticleHumanReadableUrl(string humanReadableUrl, int articleId)
+        {
+            var a = articleB.GetArticle(humanReadableUrl);
+            return (a != null && a.Id.HasValue && a.Id.Value != articleId);
+        }
+
         public DTOArticle GetArticle(string rawId, int languageId)
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
@@ -146,15 +152,9 @@ namespace One.Net.BLL.Service
                 log.Error("ChangeContent NOT authenticated.");
                 return -2;
             } 
-            if (string.IsNullOrWhiteSpace(article.SubTitle) &&
-                string.IsNullOrWhiteSpace(article.Teaser) &&
-                string.IsNullOrWhiteSpace(article.Html))
+            if (string.IsNullOrWhiteSpace(article.Title) || article.Teaser == null || article.Html == null)
             {
-                return -3;
-            }
-            if (string.IsNullOrWhiteSpace(article.Title))
-            {
-                log.Error("Null title");
+                log.Error("Null somewhere..");
                 return -4;
             }
             if (article.Title.Contains(BOInternalContent.NO_TRANSLATION_TAG))

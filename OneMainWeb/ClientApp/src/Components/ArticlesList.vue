@@ -6,11 +6,10 @@
       </div>
     </div>
 
-    <div class="cc-gv">
+    <div class="cc-gv" v-if="articles">
       <table cellpadding="0" cellspacing="0" summary="" class="table table-hover table-clickable-row">
         <thead>
           <tr>
-            <th scope="col"><input type="checkbox" /></th>
             <th scope="col">Id</th>
             <th scope="col">Status</th>
             <th scope="col">Title</th>
@@ -22,7 +21,6 @@
         </thead>
         <tbody>
           <tr v-bind:key="a.id" v-for="a in articles" @click="articleSelected(a)">
-            <td><input type="checkbox"  /></td>
             <td>{{ a.Id }}</td>
             <td v-html="a.Status"></td>
             <td>{{ a.Title }}</td>
@@ -35,19 +33,23 @@
       </table>
     </div>
     <div class="text-center">
-      <ul class="pagination">
+      <spinner v-if="!articles">
+      <ul class="pagination" v-if="articles">
          <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" v-on:change="loadArticles" hide-ellipsis limit="10"></b-pagination>
       </ul>
     </div>
   </div>
 </template>
 <script>
-
+import Spinner from './Spinner.vue'
 export default {
   name: 'articlesList',
+  components: {
+    Spinner
+  },
   data () {
     return {
-      articles: [],
+      articles: null,
       perPage: 15,
       currentPage: 1,
       totalRows: null,

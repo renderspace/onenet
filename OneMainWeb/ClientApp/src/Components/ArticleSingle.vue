@@ -1,7 +1,7 @@
 
 <template>
   <div class="adminSection form-horizontal validationGroup">
-    <div class="form-group">
+    <div class="form-group" v-if="articles.length">
         <div class="col-sm-9 col-sm-offset-3 jumbotron jumbo-less-padding">
           <div	class="col-sm-5">
               <label>Choose from possible categories:</label>
@@ -21,7 +21,10 @@
           </div>
         </div>
     </div>
-    <div class="Full" v-if="article">
+    <div class="Full text-center" v-if="!articles.length">
+      <spinner>
+    </div>
+    <div class="Full" v-if="articles.length">
       <div class="form-group" >
         <label for="TextBoxDate" class="col-sm-3 control-label">Display date</label>
         <div class="col-sm-9">
@@ -38,7 +41,7 @@
         </div>
 
       </div>
-  	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
+  	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles" v-bind:class="{ 'is-invalid': !completeArticle }">
         <label class="col-sm-3 control-label">Title  [{{ a.Language }}]</label>
         <div class="col-sm-9">
           <b-form-input v-model="a.Title" maxlength="4000">
@@ -83,11 +86,12 @@ import lcid from 'lcid'
 import Ckeditor from 'vue-ckeditor2'
 import Datepicker from 'vuejs-datepicker'
 import { oneNetCkConfig } from '../ckconfig.js'
+import Spinner from './Spinner.vue'
 
 export default {
   name: 'articlesSingle',
   props: [ 'articleId'],
-  components: { Ckeditor, Datepicker },
+  components: { Ckeditor, Datepicker, Spinner },
   data () {
     return {
       selectedRegularAssign: null,
@@ -109,6 +113,14 @@ export default {
     }
   },
   computed: {
+    completeArticle: function() {
+      var articlesWithTitle = this.articles.filter(a => { return a && a.Title && a.Title.length })
+      if (articlesWithTitle && articlesWithTitle.length > 0) {
+        return articlesWithTitle[0]
+      } else {
+        return null
+      }
+    }
   },
   methods: {
     handleError(e) {
@@ -147,8 +159,7 @@ export default {
           }
           return article
         })
-        console.log('Got ' + this.articles.length + ' language versions of the article.')
-      } )
+      })
       .catch(e => { this.handleError(e) })
     },
     loadArticleByLang(langId) {
@@ -184,32 +195,56 @@ export default {
           return e
       }
     },
-    save(close) {
+    prepareArticleForSave(a) {
+      let articleForSave = Object.assign({}, a)
+      let displayDate = this.article.DisplayDate.getTime()
+      articleForSave.Id = this.article.Id
+      articleForSave.DisplayDate = `\/Date(${displayDate}-0100)\/`
+      articleForSave.HumanReadableUrl = this.article.HumanReadableUrl
+      articleForSave.Regulars = this.article.Regulars
+      if(!a.Teaser) {
+        articleForSave.Teaser = ''
+      }
+      if(!a.Html) {
+        articleForSave.Html = ''
+      }
+      return articleForSave
+    },
+    async save(close) {
       if (!this.article || !this.articles.length) {
         console.log('empty article..')
         return
       }
-      if (this.article.Id < 1) {
-        console.log('new article, insert one first..')
+      if (this.article.Id < 1 && !this.completeArticle) {
+        this.$emit('error', 'Trying to save a new article, but no title was provided')
+        return
+      } else if (this.article.Id < 1) {
+        await this.$axios.post(`/AdminService/articles`, this.prepareArticleForSave(this.completeArticle))
+          .then((r) => {
+            if (r && r.data > 0) {
+              this.article.Id = r.data
+            } else {
+              if (r) { console.log('Article save not successful: ' + this.decodeArticleSaveError(r.data)) }
+              this.handleError('Save new article not successful')
+            }
+          })
+          .catch(e => { this.handleError(e) })
+      }
+      if (this.article.Id < 1){
+        // still no article ID?
         return
       }
+      console.warn('next ' + this.article.Id)
       let axiosPromises = []
       this.articles.forEach(a => {
-        let articleForSave = Object.assign({}, a)
-        let displayDate = this.article.DisplayDate.getTime()
-        articleForSave.Id = this.article.Id
-        articleForSave.DisplayDate = `\/Date(${displayDate}-0100)\/`
-        articleForSave.HumanReadableUrl = this.article.HumanReadableUrl
-        articleForSave.Regulars = this.article.Regulars
         axiosPromises.push(
-          this.$axios.post(`/AdminService/articles`, articleForSave)
+          this.$axios.post(`/AdminService/articles`, this.prepareArticleForSave(a))
           .catch(e => { this.handleError(e) })
         )
       })
       Promise.all(axiosPromises)
       .then(results => {
         let successes = 0
-        console.log(results)
         results.forEach(r => {
           if (r && r.data > 0) {
             successes++
@@ -218,7 +253,7 @@ export default {
           }
         })
         if (successes > 0) {
-          this.$emit('success', 'Article saved! ' + successes)
+          this.$emit('success', 'Number of language variants: <strong>' + successes + '</strong>')
         } else {
           this.$emit('error', 'Article NOT saved!')
         }
@@ -252,12 +287,17 @@ export default {
         required
       },
       HumanReadableUrl: {
-        required
+        required,
+        exists: function (hru) {
+          return this.$axios.get(`/AdminService/articles/exists/${hru}?excludeArticleId=${this.article.Id}`)
+          .then(r => { return r && r.data === false })
+          .catch(e => { this.handleError(e) })
+        }
       }
     }
   }
 }
 </script>
 <style>
-.is-invalid .vdp-datepicker input, .is-invalid select, input.is-invalid { border: 2px solid red !important}
+.is-invalid input, .is-invalid .vdp-datepicker input, .is-invalid select, input.is-invalid { border: 2px solid red !important}
 </style>
