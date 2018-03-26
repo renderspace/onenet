@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>4.0.8</version>
-        <releaseNotes>4.0.8 with vue articles</releaseNotes>
+        <version>4.0.9</version>
+        <releaseNotes>4.0.9 with vue articles</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>

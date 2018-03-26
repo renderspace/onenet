@@ -33,8 +33,8 @@
       </table>
     </div>
     <div class="text-center">
-      <spinner v-if="!articles">
-      <ul class="pagination" v-if="articles">
+      <spinner v-if="!articles" />
+      <ul class="pagination" v-else>
          <b-pagination size="md" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" v-on:change="loadArticles" hide-ellipsis limit="10"></b-pagination>
       </ul>
     </div>
