@@ -109,7 +109,7 @@ namespace One.Net.BLL.Service
             Thread.CurrentThread.CurrentCulture = new CultureInfo(languageId);
             int id = 0;
             int.TryParse(rawId, out id);
-            var a = articleB.GetArticle(id);
+            var a = articleB.GetUnCachedArticle(id, false);
             if (a == null)
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.NotFound;
@@ -183,6 +183,7 @@ namespace One.Net.BLL.Service
                 Id = id,
                 HumanReadableUrl = article.HumanReadableUrl,
                 Title = article.Title,
+                SubTitle = article.SubTitle,
                 Teaser = article.Teaser,
                 Html = article.Html,
                 DisplayDate = article.DisplayDate,

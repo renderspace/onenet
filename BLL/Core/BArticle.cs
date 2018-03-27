@@ -247,7 +247,7 @@ namespace One.Net.BLL
         /// <param name="id"></param>
         /// <param name="publish"></param>
         /// <returns></returns>
-        private BOArticle GetUnCachedArticle(int id, bool publish)
+        internal BOArticle GetUnCachedArticle(int id, bool publish)
         {
             BOArticle article = articleDB.GetArticle(id, publish, LanguageId);
 

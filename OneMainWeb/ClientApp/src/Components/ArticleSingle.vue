@@ -253,7 +253,10 @@ export default {
           }
         })
         if (successes > 0) {
-          this.$emit('success', 'Number of language variants: <strong>' + successes + '</strong>')
+          if (close) {
+            this.$emit('cancel')
+          }
+          this.$emit('success', 'Saved <strong>' + successes + '</strong> language variants.')
         } else {
           this.$emit('error', 'Article NOT saved!')
         }
