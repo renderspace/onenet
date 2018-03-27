@@ -57,7 +57,8 @@ namespace One.Net.BLL.Service
             state.SortDirection = SortDir.Descending;
             int firstRecordIndex = (page * state.RecordsPerPage.Value) - state.RecordsPerPage.Value;
             state.FirstRecordIndex = firstRecordIndex < 0 ? 0 : firstRecordIndex;
-            state.SortField = "title";
+            state.SortField = "id";
+            state.SortDirection = SortDir.Descending;
             PagedList<BOArticle> articles = articleB.ListArticles(new List<int>(), null, null, state, "", new List<int>());
 
             foreach (var a in articles)
