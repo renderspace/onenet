@@ -427,8 +427,13 @@ namespace One.Net.BLL
             return dates;
         }
 
-        public List<BOArticleMonth> ListArticleMonths(string regularIds, bool showArticleCount)
+        public List<BOArticleMonth> ListArticleMonths(string regularIds, bool showArticleCount, int overrideLanguageId = 0)
         {
+            var originalLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(overrideLanguageId);
+            }
             List<BOArticleMonth> dates = null;
             string LIST_CACHE_ID = "LAD_" + LanguageId + regularIds + PublishFlag + showArticleCount;
 
@@ -449,7 +454,10 @@ namespace One.Net.BLL
                     }
                 }
             }
-
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(originalLanguageId);
+            }
             return dates;
         }
 

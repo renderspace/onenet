@@ -27,7 +27,7 @@ namespace OneMainWeb.CommonModules
 
         #region Settings
 
-        [Setting(SettingType.CSInteger, DefaultValue = "0")]
+        [Setting(SettingType.Int, DefaultValue = "0")]
         public int OverrideLanguageId
         {
             get

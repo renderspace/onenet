@@ -16,7 +16,7 @@ namespace OneMainWeb.CommonModules
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
 
-        [Setting(SettingType.CSInteger, DefaultValue = "0")]
+        [Setting(SettingType.Int, DefaultValue = "0")]
         public int OverrideLanguageId
         {
             get
