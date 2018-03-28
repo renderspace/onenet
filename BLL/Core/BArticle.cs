@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Transactions;
 using One.Net.BLL.DAL;
 using System.Linq;
+using System.Threading;
+using System.Globalization;
 
 namespace One.Net.BLL
 {
@@ -181,8 +183,15 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="humanReadableUrl"></param>
         /// <returns></returns>
-        public BOArticle GetArticle(string humanReadableUrl)
+        public BOArticle GetArticle(string humanReadableUrl, int overrideLanguageId = 0)
         {
+
+            var originalLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(overrideLanguageId);
+            }
+
             BOArticle article = null;
             bool useCache = PublishFlag;
             string cacheKey = CACHE_LANG_PREFIX + ARTICLE_CACHE_ID(humanReadableUrl, PublishFlag);
@@ -203,7 +212,10 @@ namespace One.Net.BLL
                     }
                 }
             }
-
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(originalLanguageId);
+            }
             return article;
         }
 
@@ -298,8 +310,14 @@ namespace One.Net.BLL
         /// Uses delegate SingleArticleGet to retrieve individual objects. 
         /// Caching of individual objects is based on publish flag.
         /// </summary>
-        public PagedList<BOArticle> ListArticles(List<int> regularIds, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear, List<int> excludeRegularIds)
+        public PagedList<BOArticle> ListArticles(List<int> regularIds, ListingState state, string titleSearch, DateTime? requestedMonth, DateTime? requestedYear, List<int> excludeRegularIds, int overrideLanguageId = 0)
         {
+            var originalLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(overrideLanguageId);
+            }
+
             DateTime? from = null;
             DateTime? to = null;
 
@@ -371,7 +389,10 @@ namespace One.Net.BLL
                 articles = new PagedList<BOArticle>(temp);
                 articles.AllRecords = fetchedArticles.AllRecords;
             }
-
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(originalLanguageId);
+            }
             return articles;
         }
 
@@ -499,8 +520,13 @@ namespace One.Net.BLL
         /// </summary>
         /// <param name="humanReadableParameter"></param>
         /// <returns></returns>
-        public BORegular GetRegular(string humanReadableParameter)
+        public BORegular GetRegular(string humanReadableParameter, int overrideLanguageId = 0)
         {
+            var originalLanguageId = Thread.CurrentThread.CurrentCulture.LCID;
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(overrideLanguageId);
+            }
             BORegular regular = cache.Get<BORegular>(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(humanReadableParameter));
             if (regular == null)
             {
@@ -510,6 +536,10 @@ namespace One.Net.BLL
                 {
                     cache.Put(CACHE_LANG_PREFIX + REGULAR_CACHE_ID(humanReadableParameter), regular);
                 }
+            }
+            if (overrideLanguageId > 0)
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(originalLanguageId);
             }
             return regular;
         }

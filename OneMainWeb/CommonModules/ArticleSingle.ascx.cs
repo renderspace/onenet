@@ -16,6 +16,15 @@ namespace OneMainWeb.CommonModules
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
 
+        [Setting(SettingType.CSInteger, DefaultValue = "0")]
+        public int OverrideLanguageId
+        {
+            get
+            {
+                return GetIntegerSetting("OverrideLanguageId");
+            }
+        }
+
         [Setting(SettingType.CSInteger)]
         public List<int> HiddenTagsList
         {
@@ -61,7 +70,7 @@ namespace OneMainWeb.CommonModules
 
             if (HasHumanReadableUrlParameter)
             {
-                var originalArticle = articleB.GetArticle(HumanReadableUrlParameter);
+                var originalArticle = articleB.GetArticle(HumanReadableUrlParameter, OverrideLanguageId);
                 if (originalArticle != null)
                 {
                     article = originalArticle.Clone() as BOArticle;

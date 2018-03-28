@@ -27,6 +27,15 @@ namespace OneMainWeb.CommonModules
 
         #region Settings
 
+        [Setting(SettingType.CSInteger, DefaultValue = "0")]
+        public int OverrideLanguageId
+        {
+            get
+            {
+                return GetIntegerSetting("OverrideLanguageId");
+            }
+        }
+
         [Setting(SettingType.CSInteger)]
         public List<int> HiddenTagsList
         {
@@ -63,7 +72,7 @@ namespace OneMainWeb.CommonModules
                 }
                 else if (result.Count == 0 && HasHumanReadableUrlParameter)
                 {
-                    var regular = articleB.GetRegular(HumanReadableUrlParameter);
+                    var regular = articleB.GetRegular(HumanReadableUrlParameter, OverrideLanguageId);
                     if (regular != null)
                         result.Add(regular.Id.Value);
                 }
@@ -188,7 +197,7 @@ namespace OneMainWeb.CommonModules
                     SortByColumn);
             listingState.OffSet = OffSet;
 
-            var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear, ExcludeCategoriesList);
+            var articles = articleB.ListArticles(CategoriesList, listingState, requestedArticleTextSearch, requestedMonth, requestedYear, ExcludeCategoriesList, OverrideLanguageId);
 
             foreach (BOArticle article in articles)
             {
