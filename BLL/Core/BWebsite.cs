@@ -8,7 +8,6 @@ using One.Net.BLL.DAL;
 using One.Net.BLL.Utility;
 using System.Threading;
 using System.Globalization;
-using Microsoft.Web.Administration;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
@@ -954,6 +953,7 @@ namespace One.Net.BLL
             return result != null;
         }
 
+        /*
         public enum AddWebSiteResult { Error, IisError, NotAllowed, SameNameExistsIis, SameNameExistsDatabase, FileSystemError, CreateDatabaseError, Success }
 
         public AddWebSiteResult AddWebSite(BOWebSite website, bool newDatabase, DirectoryInfo currentPhysicalRootPath, string connectString)
@@ -1049,7 +1049,7 @@ namespace One.Net.BLL
             }
             return AddWebSiteResult.Success;
         }
-
+        */
         public bool CreateNewDatabase(string connString)
         {
             var builder = new SqlConnectionStringBuilder(connString);

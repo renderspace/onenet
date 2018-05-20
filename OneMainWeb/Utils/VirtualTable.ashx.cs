@@ -49,13 +49,13 @@ namespace OneMainWeb.Utils
 
                 var table = Data.ListItems(vtId, state, null, true);
 
-                foreach (DataColumn col in table.Columns)
-                {
-                    col.ColumnName = col.ColumnName.Replace("[dbo].", "").Replace("[", "").Replace("]", "").Replace('.', '_').Replace('-', '_');
-                }
-
                 if (table != null)
                 {
+                    foreach (DataColumn col in table.Columns)
+                    {
+                        col.ColumnName = col.ColumnName.Replace("[dbo].", "").Replace("[", "").Replace("]", "").Replace('.', '_').Replace('-', '_');
+                    }
+
                     var output = Serialize(table);
                     context.Response.ContentType = "application/json";
                     var origin = context.Request.Headers.Get("Origin");
@@ -85,7 +85,7 @@ namespace OneMainWeb.Utils
             }
         }
 
-        private string Serialize(DataTable value)
+        private string Serialize(DataTable table)
         {
             Newtonsoft.Json.JsonSerializer json = new Newtonsoft.Json.JsonSerializer();
 
@@ -102,7 +102,23 @@ namespace OneMainWeb.Utils
             writer.Formatting = Formatting.Indented;
 
             writer.QuoteChar = '"';
-            json.Serialize(writer, value);
+
+            var columns2Remove = new List<string>();
+
+            foreach(DataColumn c in table.Columns)
+            {
+                if (!(bool) c.ExtendedProperties["ShowOnList"])
+                {
+                    columns2Remove.Add(c.ColumnName);
+                }
+            }
+
+            foreach (var c in columns2Remove)
+            {
+                table.Columns.Remove(c);
+            }   
+
+            json.Serialize(writer, table);
 
             string output = sw.ToString();
             writer.Close();

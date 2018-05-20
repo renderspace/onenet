@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using NLog;
-using Microsoft.Web.Administration;
+// using Microsoft.Web.Administration;
 
 namespace One.Net.BLL.Utility
 {

@@ -8,7 +8,6 @@ using One.Net.BLL.DAL;
 using One.Net.BLL.Utility;
 using System.Threading;
 using System.Globalization;
-using Microsoft.Web.Administration;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;

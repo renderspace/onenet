@@ -106,6 +106,11 @@ namespace OneMainWeb.adm
             website.ProductionUrl = TextBoxProductionUrl.Text;
             website.PrincipalCreated = User.Identity.Name;
 
+            websiteB.ChangeWebsite(website);
+            Notifier1.Title = "Created";
+            MultiView1.ActiveViewIndex = 0;
+
+            /*
             BWebsite.AddWebSiteResult result = BWebsite.AddWebSiteResult.Error;
             if (PanelEmptyDatabase.Visible || CheckboxManualCopy.Checked) // we have an empty database
             {
@@ -126,7 +131,7 @@ namespace OneMainWeb.adm
             {
                 Notifier1.ExceptionName = "Failed";
                 Notifier1.ExceptionMessage = result.ToString();
-            }
+            }*/
         }
 
         protected void ButtonStartWizard_Click(object sender, EventArgs e)

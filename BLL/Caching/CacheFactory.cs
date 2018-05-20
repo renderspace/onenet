@@ -17,7 +17,8 @@ namespace One.Net.BLL.Caching
                 case "memcached":
                     throw new NotImplementedException("memcached");
                 case "redis":
-                    return new RedisCacheProvider();
+                    throw new NotImplementedException("redis");
+                    // return new RedisCacheProvider();
                 case "netmemory":
                 default:
                     return new NetMemoryCacheProvider();
