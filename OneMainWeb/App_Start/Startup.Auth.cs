@@ -60,6 +60,7 @@ namespace OneMainWeb
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
 
+            /*
             var FacebookAppId = ConfigurationManager.AppSettings["FacebookAppId"];
             var FacebookAppSecret = ConfigurationManager.AppSettings["FacebookAppSecret"];
             if (!string.IsNullOrWhiteSpace(FacebookAppId) && !string.IsNullOrWhiteSpace(FacebookAppSecret))
@@ -80,22 +81,22 @@ namespace OneMainWeb
                     ClientId = GoogleClientId,
                     ClientSecret = GoogleClientSecret,
                     CallbackPath = new PathString("/callbacks/google"), // /callbacks/google this is never called by MVC 
-                    /*
-                    Provider = new GoogleOAuth2AuthenticationProvider
-                    {
-                        OnAuthenticated = (context) =>
-                        {
-                            context.Identity.AddClaim(new Claim("picture", context.User.GetValue("picture").ToString()));
-                            context.Identity.AddClaim(new Claim("profile", context.User.GetValue("profile").ToString()));
-                            return Task.FromResult(0);
-                        }
+                    
+                    //Provider = new GoogleOAuth2AuthenticationProvider
+                    //{
+                    //    OnAuthenticated = (context) =>
+                    //    {
+                    //        context.Identity.AddClaim(new Claim("picture", context.User.GetValue("picture").ToString()));
+                    //        context.Identity.AddClaim(new Claim("profile", context.User.GetValue("profile").ToString()));
+                    //        return Task.FromResult(0);
+                    //    }
 
-                    }*/
+                    //}
                 };
 
                 googleOptions.Scope.Add("email");
                 app.UseGoogleAuthentication(googleOptions);
-            }
+            } */
         }
     }
 }

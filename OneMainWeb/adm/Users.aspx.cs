@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using OneMainWeb.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
+// using Microsoft.AspNet.Identity.Owin;
 using NLog;
 using One.Net.BLL;
 using OtpSharp;
