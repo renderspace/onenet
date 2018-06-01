@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="Full text-center" v-if="!articles.length">
-      <spinner>
+      <spinner />
     </div>
     <div class="Full" v-if="articles.length">
       <div class="form-group" >
@@ -34,23 +34,22 @@
           </b-input-group>
         </div>
       </div>
+      <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles" v-bind:class="{ 'is-invalid': !completeArticle }">
+        <label class="col-sm-3 control-label">Title [{{ a.Language }}]</label>
+        <div class="col-sm-9">
+          <b-form-input v-model="a.Title" maxlength="4000" @change="onTitleChange" />
+        </div>
+      </div>
       <div class="form-group">
         <label for="TextBoxHumanReadableUrl" class="col-sm-3 control-label">Human readable url</label>
         <div class="col-sm-9">
-            <b-form-input v-model="article.HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input" :state="!$v.article.HumanReadableUrl.$invalid">
-        </div>
-
-      </div>
-  	  <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles" v-bind:class="{ 'is-invalid': !completeArticle }">
-        <label class="col-sm-3 control-label">Title  [{{ a.Language }}]</label>
-        <div class="col-sm-9">
-          <b-form-input v-model="a.Title" maxlength="4000">
+            <b-form-input :readonly="loadingHumanReadableUrl" v-model="article.HumanReadableUrl" id="TextBoxHumanReadableUrl" class="human-readable-url-input" :state="!$v.article.HumanReadableUrl.$invalid" />
         </div>
       </div>
       <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
         <label class="col-sm-3 control-label">Subtitle  [{{ a.Language }}]</label>
         <div class="col-sm-9">
-          <b-form-input v-model="a.SubTitle" maxlength="255">
+          <b-form-input v-model="a.SubTitle" maxlength="255" />
         </div>
       </div>
       <div class="form-group" v-bind:key="a.LanguageId" v-for="a in articles">
@@ -96,6 +95,7 @@ export default {
     return {
       selectedRegularAssign: null,
       selectedRegularRemove: null,
+      loadingHumanReadableUrl: false,
       articleId: null,
       article: null,
       regulars: [],
@@ -131,6 +131,20 @@ export default {
         console.log(e)
       }
     },
+    onTitleChange(newTitle) {
+      if (this.article && !this.article.HumanReadableUrl && newTitle) {
+        this.loadingHumanReadableUrl = true
+        this.$axios.get(`/AdminService/GenerateArticleParLink?title=${newTitle}`)
+          .then(response => {
+            this.article.HumanReadableUrl = response.data
+            this.loadingHumanReadableUrl = false
+          })
+          .catch(e => {
+            this.loadingHumanReadableUrl = false
+            this.handleError(e)
+          })
+      }
+    },
     loadRegulars() {
       this.$axios.get(`/AdminService/regulars?languageId=${languageId}`)
       .then(response => { this.regulars = response.data })
@@ -139,7 +153,8 @@ export default {
     newArticle() {
       this.article = {
         Id: this.articleId,
-        Regulars: []
+        Regulars: [],
+        HumanReadableUrl: ''
       }
       this.articles = this.languages.map(langId => {
         return { Id: this.articleId, LanguageId: langId, DisplayDate: '', HasTranslationInCurrentLanguage: false, Language: lcid.from(langId) }
