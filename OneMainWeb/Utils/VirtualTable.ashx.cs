@@ -11,6 +11,7 @@ using Newtonsoft.Json.Converters;
 using System.IO;
 using One.Net.BLL.Scaffold;
 using System.Threading;
+using System.Collections.Specialized;
 
 namespace OneMainWeb.Utils
 {
@@ -24,30 +25,17 @@ namespace OneMainWeb.Utils
             if (context.Request.QueryString["vtId"] != null)
             {
                 var vtId = FormatTool.GetInteger(context.Request.QueryString["vtId"]);
+                DataTable table = null;
 
-                var lcid = Thread.CurrentThread.CurrentCulture.LCID;
-                if (context.Request.QueryString["lcid"] != null)
+                if (context.Request.QueryString["id"] != null)
                 {
-                    lcid = FormatTool.GetInteger(context.Request.QueryString["lcid"]);
+                    var pk = FormatTool.GetInteger(context.Request.QueryString["id"]);
+                    table = VirtualTableSingle(context, vtId, pk);
                 }
-                if (lcid != Thread.CurrentThread.CurrentCulture.LCID)
+                else
                 {
-                    Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lcid);
+                    table = VirtualTableList(context, vtId);
                 }
-
-                var p = FormatTool.GetInteger(context.Request.QueryString["p"]);
-                p = p > 0 ? p : 1;
-
-                var c = FormatTool.GetInteger(context.Request.QueryString["c"]);
-                c = c > 0 ? c : 10000;
-
-                var state = new ListingState
-                {
-                    RecordsPerPage = c,
-                    FirstRecordIndex = (p - 1) * c
-                };
-
-                var table = Data.ListItems(vtId, state, null, true);
 
                 if (table != null)
                 {
@@ -82,7 +70,67 @@ namespace OneMainWeb.Utils
                     }
                     context.Response.Write(output);
                 }
+                else
+                {
+                    context.Response.Write("nothing here");
+                }
             }
+        }
+
+        public DataTable VirtualTableSingle(HttpContext context, int vtId, int primaryKey)
+        {
+            var dataKeys = new OrderedDictionary();
+            dataKeys.Add("id", primaryKey);
+            var item = Data.GetItem(vtId, dataKeys);
+            if (item == null)
+                return null;
+
+            var virtualTable = Schema.GetVirtualTable(vtId);
+            var table = new DataTable(virtualTable.StartingPhysicalTable);
+
+            foreach (var field in virtualTable.VirtualColumns)
+            {
+                var column = new DataColumn { ColumnName = field.FQName, Caption = field.FriendlyName, ReadOnly = true };
+                column.ExtendedProperties["ShowOnList"] = true; // display all
+                table.Columns.Add(column);
+            }
+
+            foreach (var field in virtualTable.VirtualColumns)
+            {
+                DataRow row = table.NewRow();
+                row[field.FQName] = item.Columns[field.FQName].Value;
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
+        public DataTable VirtualTableList(HttpContext context, int vtId)
+        {
+            var lcid = Thread.CurrentThread.CurrentCulture.LCID;
+            if (context.Request.QueryString["lcid"] != null)
+            {
+                lcid = FormatTool.GetInteger(context.Request.QueryString["lcid"]);
+            }
+            if (lcid != Thread.CurrentThread.CurrentCulture.LCID)
+            {
+                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(lcid);
+            }
+
+            var p = FormatTool.GetInteger(context.Request.QueryString["p"]);
+            p = p > 0 ? p : 1;
+
+            var c = FormatTool.GetInteger(context.Request.QueryString["c"]);
+            c = c > 0 ? c : 10000;
+
+            var state = new ListingState
+            {
+                RecordsPerPage = c,
+                FirstRecordIndex = (p - 1) * c
+            };
+
+            var table = Data.ListItems(vtId, state, null, true);
+            return table;
         }
 
         private string Serialize(DataTable table)
