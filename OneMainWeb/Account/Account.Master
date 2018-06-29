@@ -45,7 +45,6 @@
         ga('send', 'pageview');
 
     </script>
-    <script src="/ckeditor4/ckeditor.js"></script>
     <script type="text/javascript" src="/JavaScript/bootstrap.js"></script>
     <script type="text/javascript" src="/JavaScript/jquery.details.js"></script>
     <script type="text/javascript" src="/JavaScript/bootstrap-confirmation.js"></script>
