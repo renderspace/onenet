@@ -49,7 +49,7 @@
                                 <asp:TextBox ID="TextBoxPageTitle" runat="server"></asp:TextBox>
                                 <asp:LinkButton ID="LinkButtonNewPage" runat="server" onclick="LinkButtonNewPage_Click" CssClass="button">Create</asp:LinkButton>
                             </div>
-                            <script src="/ckeditor4/ckeditor.js" type="text/javascript" ></script>
+                            <script src="/ckeditor5/ckeditor.js" type="text/javascript" ></script>
                             <script src="/JavaScript/AdminWikiMenu.js"></script>
                         </ContentTemplate>
                 </asp:RoleGroup>

@@ -30,7 +30,7 @@ namespace OneMainWeb.AdminControls
             get { return useCkEditor; }
             set {
                 useCkEditor = value;
-                TextBoxHtml.CssClass = useCkEditor ? "form-control ckeditor4" : "form-control";
+                TextBoxHtml.CssClass = useCkEditor ? "form-control ckeditor5" : "form-control";
             }
         }
 

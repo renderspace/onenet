@@ -537,6 +537,7 @@
     <Content Include="App_Data\blank.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ckeditor5\ckeditor.js" />
     <Content Include="ClientApp\dist\build.js" />
     <Content Include="CommonModules\ArticleList.ascx" />
     <Content Include="CommonModules\ArticleSingle.ascx" />
@@ -802,6 +803,7 @@
     <Content Include="LocalRewrite.config" />
     <Content Include="adm\ExcelExport.ashx" />
     <Content Include="JavaScript\jquery-3.1.1.min.map" />
+    <Content Include="ckeditor5\ckeditor.js.map" />
     <None Include="OneMainWeb.wpp.targets" />
     <None Include="packages.config" />
     <Content Include="Account\Web.config">

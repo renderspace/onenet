@@ -691,3 +691,7 @@ tr.very-recent td {
     padding: 15px;
     top: 45px;
 }
+
+.ck-content {
+    min-height: 250px;
+}

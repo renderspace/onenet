@@ -590,7 +590,7 @@ jQuery.validator.addMethod(
             };
 
             if (column.IsWysiwyg)
-                Input6.CssClass += " ckeditor4";
+                Input6.CssClass += " ckeditor5";
 
             panelField.Controls.Add(Input6);
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
@@ -621,7 +621,7 @@ jQuery.validator.addMethod(
             }
             Input6.CssClass = "form-control";
             if (column.IsWysiwyg)
-                Input6.CssClass += " ckeditor4";
+                Input6.CssClass += " ckeditor5";
             panelField.Controls.Add(Input6);
             validationJQueryRules += CreateValidateRule(false, "", Input6.UniqueID);
         }
