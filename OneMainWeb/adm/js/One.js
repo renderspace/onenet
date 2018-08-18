@@ -1,6 +1,9 @@
 
 var ckEditor5Options = {
     toolbar: ["undo", "redo", "bold", "italic", "blockQuote", "imageTextAlternative", "imageUpload", "heading", "imageStyle:full", "imageStyle:side", "link", "numberedList", "bulletedList"],
+    ckfinder: {
+        uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+    }
 };
 
 contentHtmlEditor = null;
