@@ -34,13 +34,16 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "True")]
         public bool OpenLinksInNewWindow { get { return GetBooleanSetting("OpenLinksInNewWindow"); } }
 
+        [Setting(SettingType.String, DefaultValue = "")]
+        public string CustomConfigId { get { return GetStringSetting("CustomConfigId"); } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             PagerResults.RecordsPerPage = RecordsPerPage;
             PagerResults.SelectedPage = 1;
             PagerResults.Visible = false;
             PanelError.Visible = false;
-
+            string url = "";
             try
             {
                 if (Request["q"] != null)
@@ -49,12 +52,25 @@ namespace OneMainWeb.CommonModules
                         PagerResults.SelectedPage = FormatTool.GetInteger(Request[Pager.REQUEST_PAGE_ID + PagerResults.ID]);
 
                     var q = Request["q"];
+                    string queryString;
+                    if (true)
+                    {
+                        queryString = "q=" + HttpUtility.UrlEncode(q) + " site:" + SearchDomain;
+                        queryString += "&count=" + RecordsPerPage.ToString();
+                        queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
+                        url = "https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString;
+                    }
+                    else
+                    {
+                        // this doesn't really work (yet)
+                        queryString = "q=" + HttpUtility.UrlEncode(q);
+                        queryString += "&customconfig=" + CustomConfigId;
+                        queryString += "&count=" + RecordsPerPage.ToString();
+                        queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
+                        url = "https://api.cognitive.microsoft.com/bingcustomsearch/v7.0/search?" + queryString;
+                    }
 
-                    var queryString = "q=" + HttpUtility.UrlEncode(q) + " site:" + SearchDomain;
-                    queryString += "&count=" + RecordsPerPage.ToString();
-                    queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
-
-                    var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v7.0/search?" + queryString);
+                    var request = (HttpWebRequest)WebRequest.Create(url);
 
                     request.Headers.Add("Ocp-Apim-Subscription-Key", AzureApiKey);
 
@@ -80,7 +96,7 @@ namespace OneMainWeb.CommonModules
             catch (Exception ex)
             {
                 if (!PublishFlag)
-                    throw ex;
+                    throw new Exception("URL: " + url, ex);
                 else
                 {
                     PanelError.Visible = true;
