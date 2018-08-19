@@ -54,7 +54,7 @@ namespace OneMainWeb.CommonModules
                     queryString += "&count=" + RecordsPerPage.ToString();
                     queryString += "&offset=" + ((PagerResults.SelectedPage - 1) * RecordsPerPage).ToString();
 
-                    var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v5.0/search?" + queryString);
+                    var request = (HttpWebRequest)WebRequest.Create("https://api.cognitive.microsoft.com/bing/v7.0/search?" + queryString);
 
                     request.Headers.Add("Ocp-Apim-Subscription-Key", AzureApiKey);
 

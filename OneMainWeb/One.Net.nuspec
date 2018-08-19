@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>4.1.0</version>
-        <releaseNotes>Upgrade to ckeditor 4.10</releaseNotes>
+        <version>4.1.1</version>
+        <releaseNotes>Upgrade bing</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>
