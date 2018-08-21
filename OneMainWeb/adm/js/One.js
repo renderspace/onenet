@@ -559,11 +559,7 @@
     };
 
     function replaceCKEditor(id) {
-        console.log('replace CK to id__:' + id)
-        if (typeof (CKEDITOR) === 'undefined') { 
-            alert('Missing CKEDITOR. Broken installation of One.NET. Please contact administrator');
-            return;
-        }
+        console.log('replace CK to id:' + id)
         CKEDITOR.replace(id, {
             customConfig: '',
             toolbar: [
