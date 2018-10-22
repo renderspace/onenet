@@ -413,6 +413,7 @@
     </Compile>
     <Compile Include="CommonModules\SimpleSearch.ascx.cs">
       <DependentUpon>SimpleSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CommonModules\SimpleSearch.ascx.designer.cs">
       <DependentUpon>SimpleSearch.ascx</DependentUpon>
