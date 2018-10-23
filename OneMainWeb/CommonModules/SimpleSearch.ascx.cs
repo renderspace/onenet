@@ -10,6 +10,7 @@ using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.WebControls;
+using One.Net.BLL.Utility;
 
 namespace OneMainWeb.CommonModules
 {
@@ -20,17 +21,6 @@ namespace OneMainWeb.CommonModules
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request["q"] != null)
-            {
-                var searchTerm = Request["q"].ToString();
-                var uri = "/AdminService/SearchPageContent?keyword=" + searchTerm + "&languageId=" + Thread.CurrentThread.CurrentCulture.LCID;
-
-                var client = new WebClient();
-                string response = client.DownloadString(uri);
-
-                Response.Write(response);
-                Response.End();
-            }
         }
     }
 }
