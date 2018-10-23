@@ -403,7 +403,8 @@ namespace One.Net.BLL.Service
             var dict = webSiteB.FindPages(keyword);
             foreach (var page in dict)
             {
-                var item = new DTOSearchableItem() { Id = page.Key.ToString(), Title = page.Value };
+                var pageObj = webSiteB.GetPage(page.Key);
+                var item = new DTOSearchableItem() { Id = page.Key.ToString(), Title = page.Value, Url = pageObj.URI };
                 result.Add(item);
             }
 
@@ -640,6 +641,9 @@ namespace One.Net.BLL.Service
 
         [DataMember, JsonProperty]
         public string Title { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Url { get; set; }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
