@@ -187,7 +187,9 @@
     <Compile Include="Scaffold\Schema.cs" />
     <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\AdminService2.cs" />
+    <Compile Include="Service\FrontendService.cs" />
     <Compile Include="Service\IAdminService.cs" />
+    <Compile Include="Service\IFrontendService.cs" />
     <Compile Include="Service\IScaffoldService.cs" />
     <Compile Include="Service\MembershipAuthorizationPolicy.cs" />
     <Compile Include="Service\ScaffoldService.cs" />

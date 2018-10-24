@@ -58,7 +58,7 @@
                 $pageContentSearchResults = $('.pageContentSearchResults');
 
                 $.ajax({
-                    url: "/AdminService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
+                    url: "/FrontendService/SearchPageContent?keyword=" + keyword + "&languageId=" + languageId,
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     type: "GET",
@@ -71,7 +71,7 @@
                     },
                     error: function (err) {
                         $('.content-search .loading').hide();
-                        handleAjaxError(err)
+                        console.log(err)
                     }
                 });
             }
