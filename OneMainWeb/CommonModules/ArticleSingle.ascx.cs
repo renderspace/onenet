@@ -15,6 +15,7 @@ namespace OneMainWeb.CommonModules
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
+        private string _ogImageUrl;
 
         [Setting(SettingType.Int, DefaultValue = "0")]
         public int OverrideLanguageId
@@ -90,6 +91,12 @@ namespace OneMainWeb.CommonModules
                 {
                     ListImages.Add(img);
                     article.RemoveImages.Add(img);
+                }
+
+                var firstImage = article.Images.FirstOrDefault();
+                if (firstImage != null)
+                {
+                    _ogImageUrl = firstImage.FullUri; 
                 }
 
                 if (DivTeaserImage != null && ThumbTemplate != null && article.ImagesNotForGallery.Count() > 0)
@@ -191,11 +198,7 @@ namespace OneMainWeb.CommonModules
             set;
         }
 
-        public string OgImageUrl
-        {
-            get;
-            set;
-        }
+        public string OgImageUrl { get => _ogImageUrl; }
 
         public List<BOIntContImage> ListImages
         {
