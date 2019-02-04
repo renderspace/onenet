@@ -146,6 +146,7 @@
     <Compile Include="Model\BOSetting.cs" />
     <Compile Include="Model\BOTemplate.cs" />
     <Compile Include="Model\BOWebsite.cs" />
+    <Compile Include="Model\Web\IArticle.cs" />
     <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />

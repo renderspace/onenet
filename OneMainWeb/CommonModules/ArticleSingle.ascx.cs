@@ -8,10 +8,11 @@ using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.Utility;
+using One.Net.BLL.Model.Web;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class ArticleSingle : MModule, IBasicSEOProvider, IImageListProvider
+    public partial class ArticleSingle : MModule, IBasicSEOProvider, IImageListProvider, IArticle
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
@@ -61,6 +62,8 @@ namespace OneMainWeb.CommonModules
 
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowCategories { get { return GetBooleanSetting("ShowCategories"); } }
+
+        public bool IsArticle { get { return true; } }
 
         protected void Page_Load(object sender, EventArgs e)
         {
