@@ -875,7 +875,8 @@
     <Content Include="SiteDefault\gitignore.template" />
     <Content Include="SiteDefault\Web.config" />
     <Content Include="web.config">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </Content>
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
