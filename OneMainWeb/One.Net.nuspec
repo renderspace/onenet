@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>One.NET</id>
-        <version>4.0.17</version>
-        <releaseNotes>Human readable url articles</releaseNotes>
+        <version>4.2.1</version>
+        <releaseNotes>Revert ckeditor to 4.5</releaseNotes>
         <title>One.NET</title>
         <authors>samo4</authors>
         <owners>Renderspace d.o.o.</owners>

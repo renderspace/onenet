@@ -15,7 +15,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -146,6 +146,7 @@
     <Compile Include="Model\BOSetting.cs" />
     <Compile Include="Model\BOTemplate.cs" />
     <Compile Include="Model\BOWebsite.cs" />
+    <Compile Include="Model\Web\IArticle.cs" />
     <Compile Include="Model\Web\IContent.cs" />
     <Compile Include="Model\Web\IImageListConsumer.cs" />
     <Compile Include="Model\Web\ILeadImageProvider.cs" />
@@ -187,7 +188,9 @@
     <Compile Include="Scaffold\Schema.cs" />
     <Compile Include="Service\AdminService.cs" />
     <Compile Include="Service\AdminService2.cs" />
+    <Compile Include="Service\FrontendService.cs" />
     <Compile Include="Service\IAdminService.cs" />
+    <Compile Include="Service\IFrontendService.cs" />
     <Compile Include="Service\IScaffoldService.cs" />
     <Compile Include="Service\MembershipAuthorizationPolicy.cs" />
     <Compile Include="Service\ScaffoldService.cs" />

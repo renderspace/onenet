@@ -22,7 +22,7 @@ using One.Net.BLL.WebConfig;
 using OneMainWeb.Base;
 using One.Net.BLL.Utility;
 using NLog;
-
+using OneMainWeb.CommonModules;
 
 namespace OneMainWeb
 {
@@ -436,6 +436,8 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             Dictionary<string, string> providedLinkTags = new Dictionary<string, string>();
             Dictionary<string, string> providedMetaTags = new Dictionary<string, string>();
 
+            var hasArticleSingleModule = false;
+
             foreach (MModule mod in activeModules)
             {
                 // only take the information from the first IBasicSEOProvider. Ignore the rest.
@@ -493,6 +495,11 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                         }
                     }
                 }
+
+                if (mod is IArticle)
+                {
+                    hasArticleSingleModule = (mod as IArticle).IsArticle;
+                }
             }
 
             foreach (MModule mod in activeModules)
@@ -507,7 +514,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             RenderDescription(providedDescription);
             RenderTitle(providedPageName);
             RenderOgImage(providedOgImage);
-            RenderMetaData();
+            RenderMetaData(hasArticleSingleModule);
             RenderKeywords(providedKeywords);
             RenderLanguage();
 
@@ -638,7 +645,7 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
             AddMetaTag("description", description);
         }
 
-        protected void RenderMetaData()
+        protected void RenderMetaData(bool isArticle)
         {
             log.Debug("-OnInit (add Meta Data)");
             if(CurrentPage != null)
@@ -651,8 +658,14 @@ Background: transparent;Filter: Alpha(Opacity=60);-moz-opacity:.60;opacity:.60; 
                 AddMetaProperty("og:site_name", CurrentWebsite.Title);
                 AddMetaProperty("og:locale", Thread.CurrentThread.CurrentCulture.Name.Replace('-', '_'));
                 AddMetaProperty("og:url", Request.Url.AbsoluteUri);
-                AddMetaProperty("og:type", "website");
-
+                if (isArticle)
+                {
+                    AddMetaProperty("og:type", "article");
+                }
+                else
+                {
+                    AddMetaProperty("og:type", "website");
+                }
 
                 if (CurrentWebsite.FacebookApplicationID > 0)
                 {

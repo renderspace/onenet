@@ -44,7 +44,10 @@ namespace OneMainWeb
             Notifier1.Visible = true;
             if (!IsPostBack)
             {
-                
+
+                Multiview1.ActiveViewIndex = 0;
+                Regulars_DataBind(DropDownListRegularFilter);
+                /*
                 try
                 {
                     Multiview1.ActiveViewIndex = 0;
@@ -53,7 +56,7 @@ namespace OneMainWeb
                 catch
                 {
                     Multiview1.ActiveViewIndex = 2;
-                }
+                }*/
             }
             if (!IsPostBack && Request["keyword"] != null)
             {

@@ -8,13 +8,15 @@ using One.Net.BLL;
 using One.Net.BLL.Web;
 using One.Net.BLL.Model.Attributes;
 using One.Net.BLL.Utility;
+using One.Net.BLL.Model.Web;
 
 namespace OneMainWeb.CommonModules
 {
-    public partial class ArticleSingle : MModule, IBasicSEOProvider, IImageListProvider
+    public partial class ArticleSingle : MModule, IBasicSEOProvider, IImageListProvider, IArticle
     {
         public const string REQUEST_ARTICLE_ID = "aid";
         private static readonly BArticle articleB = new BArticle();
+        private string _ogImageUrl;
 
         [Setting(SettingType.Int, DefaultValue = "0")]
         public int OverrideLanguageId
@@ -61,6 +63,8 @@ namespace OneMainWeb.CommonModules
         [Setting(SettingType.Bool, DefaultValue = "false")]
         public bool ShowCategories { get { return GetBooleanSetting("ShowCategories"); } }
 
+        public bool IsArticle { get { return true; } }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!HasHumanReadableUrlParameter)
@@ -90,6 +94,12 @@ namespace OneMainWeb.CommonModules
                 {
                     ListImages.Add(img);
                     article.RemoveImages.Add(img);
+                }
+
+                var firstImage = article.Images.FirstOrDefault();
+                if (firstImage != null)
+                {
+                    _ogImageUrl = firstImage.FullUri; 
                 }
 
                 if (DivTeaserImage != null && ThumbTemplate != null && article.ImagesNotForGallery.Count() > 0)
@@ -191,11 +201,7 @@ namespace OneMainWeb.CommonModules
             set;
         }
 
-        public string OgImageUrl
-        {
-            get;
-            set;
-        }
+        public string OgImageUrl { get => _ogImageUrl; }
 
         public List<BOIntContImage> ListImages
         {

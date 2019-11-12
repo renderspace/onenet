@@ -341,7 +341,8 @@ namespace One.Net.BLL
             }
 
             PagedList<BOArticle> articles = null;
-            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch + ":" + string.Join<int>(",", excludeRegularIds); 
+            string LIST_CACHE_ID = "LA_" + LanguageId + state.GetCacheIdentifier() + string.Join<int>(",", regularIds) + (requestedMonth.HasValue ? requestedMonth.Value.ToString() : "") + ":" + titleSearch + ":" + string.Join<int>(",", excludeRegularIds);
+            LIST_CACHE_ID += requestedYear.HasValue ? requestedYear.Value.ToString() : "";
             // Only cache 1st page of online articles, don't cache on admin and don't cache searches
             bool useCache = PublishFlag && state.FirstRecordIndex < state.RecordsPerPage && string.IsNullOrEmpty(titleSearch);
 

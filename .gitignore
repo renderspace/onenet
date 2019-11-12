@@ -55,3 +55,6 @@ packages/
 
 *.nupkg
 web.config
+
+node_modules
+package-lock.json
