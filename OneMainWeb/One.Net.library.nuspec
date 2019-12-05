@@ -8,7 +8,7 @@
         <owners>Renderspace d.o.o.</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Files required for building custom modules.</description>
-        <copyright>Copyright © Renderspace d.o.o. 2018</copyright>
+        <copyright>Copyright © Renderspace d.o.o. 2020</copyright>
         <dependencies>
           <dependency id="Newtonsoft.Json" version="10.0.3" />
           <dependency id="AdaptedCSSFriendly" version="1.1.1"  />

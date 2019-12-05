@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Renderspace d.o.o.")]
 [assembly: AssemblyProduct("One.NET MainWeb")]
-[assembly: AssemblyCopyright("Copyright © Renderspace d.o.o. 2018")]
+[assembly: AssemblyCopyright("Copyright © Renderspace d.o.o. 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
