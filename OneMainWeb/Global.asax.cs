@@ -64,6 +64,7 @@ namespace OneMainWeb
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             Version version = this.GetType().BaseType.Assembly.GetName().Version;
             log.Info("-------------- One.NET " + version.Major + "." + version.Minor + "." + version.Build + "." + version.Revision + " Application START --------------");
             Database.SetInitializer<ApplicationDbContext>(null);
