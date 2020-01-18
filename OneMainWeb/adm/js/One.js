@@ -241,29 +241,24 @@
     }
 
     function generateArticleParLink(title) {
+      var parLink = "";
+      if (title.length > 0) {
+        $.ajax({
+            url: "/AdminService/GenerateArticleParLink?title=" + title,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "GET",
+            async: false,
+            success: function (content) {
 
-        var parLink = "";
-        $(".loading").show();
-
-        if (title.length > 0) {
-            $.ajax({
-                url: "/AdminService/GenerateArticleParLink?title=" + title,
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                type: "GET",
-                async: false,
-                success: function (content) {
-
-                    parLink = content;
-                },
-                error: handleAjaxError
-            });
-        } else {
-            setUpHtmlEditing(enableHtml, enableCk, "");
-        }
-
-        $(".loading").show();
-        return parLink;
+                parLink = content;
+            },
+            error: handleAjaxError
+        });
+      } else {
+        setUpHtmlEditing(enableHtml, enableCk, "");
+      }
+      return parLink;
     }
 
     function generateRegularParLink(title) {
