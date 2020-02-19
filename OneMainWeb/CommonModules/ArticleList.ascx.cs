@@ -59,15 +59,22 @@ namespace OneMainWeb.CommonModules
         { 
             get 
             {
-                List<int> result = GetIntegerListSetting("CategoriesList");
-
+                List<int> databaseCategories = GetIntegerListSetting("CategoriesList");
+                var result = new List<int>();
+                result.AddRange(databaseCategories);
                 if (Request[REQUEST_ARTICLE_REGULAR_ID] != null)
                 {
-                    var categoriesFilter = FormatTool.GetInteger(Request[REQUEST_ARTICLE_REGULAR_ID]);
-                    if (result.Contains(categoriesFilter))
+                    var categoriesFilter = StringTool.SplitStringToIntegers(Request[REQUEST_ARTICLE_REGULAR_ID]);
+                    if (categoriesFilter.Any())
                     {
                         result.Clear();
-                        result.Add(categoriesFilter);
+                    }
+                    foreach (var c in categoriesFilter)
+                    {
+                        if (databaseCategories.Contains(c))
+                        {
+                            result.Add(c);
+                        }
                     }
                 }
                 else if (result.Count == 0 && HasHumanReadableUrlParameter)
