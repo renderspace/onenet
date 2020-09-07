@@ -98,11 +98,16 @@
             </asp:View>
             <asp:View ID="View3" runat="server">
                 <div class="adminSection">
-	                <asp:Button ID="CmdExport" runat="server" Text="$export_dictionary" OnClick="CmdExport_Click" />
+	                <asp:Button ID="CmdExport" runat="server" Text="Export dictionary" OnClick="CmdExport_Click" />
                 </div>
 	            <div class="adminSection">
+                    <p>
+                        <asp:Label AssociatedControlID="OnlyCurrentLanguage" Text="Only current language" runat="server"></asp:Label>
+                        <asp:CheckBox ID="OnlyCurrentLanguage" runat="server" />
+                    </p>
+
                     <asp:FileUpload ID="FileUploadImport" runat="server" />	        
-	                <asp:Button ID="CmdImport" runat="server" Text="$import_dictionary" OnClick="CmdImport_Click" />
+	                <asp:Button ID="CmdImport" runat="server" Text="Import dictionary" OnClick="CmdImport_Click" />
 	                <div class="radio">
 	                    <asp:RadioButtonList ID="RadioButtonListWriteTypes" runat="server" />
 	                </div>

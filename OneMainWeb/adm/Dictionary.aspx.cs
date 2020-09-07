@@ -17,6 +17,7 @@ using One.Net.BLL;
 
 using OneMainWeb.AdminControls;
 using System.Globalization;
+using System.Linq;
 
 namespace OneMainWeb
 {
@@ -444,51 +445,47 @@ namespace OneMainWeb
             XmlElement dictionary = doc.CreateElement("dictionary");
             doc.AppendChild(dictionary);
 
-            List<List<BODictionaryEntry>> entries = contentB.ListAllDictionaryEntries();
-
-            if (entries.Count > 0)
+            foreach (List<BODictionaryEntry> innerList in contentB.ListAllDictionaryEntries())
             {
-                foreach (List<BODictionaryEntry> innerList in entries)
+                XmlElement entry = doc.CreateElement("entry");
+                bool keywordSet = false;
+
+                var oneEntry = OnlyCurrentLanguage.Checked ? innerList.Where(e => e.LanguageId == Thread.CurrentThread.CurrentCulture.LCID) : innerList;
+                foreach (BODictionaryEntry e in oneEntry)
                 {
-                    XmlElement entry = doc.CreateElement("entry");
-                    bool keywordSet = false;
-
-                    foreach (BODictionaryEntry e in innerList)
+                    if (!keywordSet)
                     {
-                        if (!keywordSet)
-                        {
-                            entry.SetAttribute("keyword", e.KeyWord);
-                            keywordSet = true;
-                        }
-
-                        XmlElement translation = doc.CreateElement("translation");
-                        translation.SetAttribute("language_id", e.LanguageId.ToString());
-
-                        XmlElement title = doc.CreateElement("description");
-                        XmlText translationText1 = doc.CreateTextNode(e.Title);
-                        title.AppendChild(translationText1);
-                        translation.AppendChild(title);
-
-                        XmlElement subTitle = doc.CreateElement("subtitle");
-                        XmlText translationText3 = doc.CreateTextNode(e.SubTitle);
-                        subTitle.AppendChild(translationText3);
-                        translation.AppendChild(subTitle);
-
-                        XmlElement teaser = doc.CreateElement("teaser");
-                        XmlText translationText2 = doc.CreateTextNode(e.Teaser);
-                        teaser.AppendChild(translationText2);
-                        translation.AppendChild(teaser);
-
-                        XmlElement html = doc.CreateElement("html");
-                        XmlText translationText4 = doc.CreateTextNode(e.Html);
-                        html.AppendChild(translationText4);
-                        translation.AppendChild(html);
-
-                        entry.AppendChild(translation);
+                        entry.SetAttribute("keyword", e.KeyWord);
+                        keywordSet = true;
                     }
 
-                    dictionary.AppendChild(entry);
+                    XmlElement translation = doc.CreateElement("translation");
+                    translation.SetAttribute("language_id", e.LanguageId.ToString());
+
+                    XmlElement title = doc.CreateElement("description");
+                    XmlText translationText1 = doc.CreateTextNode(e.Title);
+                    title.AppendChild(translationText1);
+                    translation.AppendChild(title);
+
+                    XmlElement subTitle = doc.CreateElement("subtitle");
+                    XmlText translationText3 = doc.CreateTextNode(e.SubTitle);
+                    subTitle.AppendChild(translationText3);
+                    translation.AppendChild(subTitle);
+
+                    XmlElement teaser = doc.CreateElement("teaser");
+                    XmlText translationText2 = doc.CreateTextNode(e.Teaser);
+                    teaser.AppendChild(translationText2);
+                    translation.AppendChild(teaser);
+
+                    XmlElement html = doc.CreateElement("html");
+                    XmlText translationText4 = doc.CreateTextNode(e.Html);
+                    html.AppendChild(translationText4);
+                    translation.AppendChild(html);
+
+                    entry.AppendChild(translation);
                 }
+
+                dictionary.AppendChild(entry);
             }
 
             return doc;

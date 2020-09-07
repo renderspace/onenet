@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OneMainWeb {
-    
-    
-    public partial class Dictionary {
-        
+namespace OneMainWeb
+{
+
+
+    public partial class Dictionary
+    {
+
         /// <summary>
         /// Notifier1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.Notifier Notifier1;
-        
+
         /// <summary>
         /// MultiView1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.MultiView MultiView1;
-        
+
         /// <summary>
         /// View1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View View1;
-        
+
         /// <summary>
         /// ButtonInsert control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonInsert;
-        
+
         /// <summary>
         /// TextBoxSearch control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxSearch;
-        
+
         /// <summary>
         /// ButtonDisplayById control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonDisplayById;
-        
+
         /// <summary>
         /// LinkButtonExport control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton LinkButtonExport;
-        
+
         /// <summary>
         /// PanelNoResults control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelNoResults;
-        
+
         /// <summary>
         /// GridViewEntries control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewEntries;
-        
+
         /// <summary>
         /// TwoPostbackPager1 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::One.Net.BLL.WebControls.PostbackPager TwoPostbackPager1;
-        
+
         /// <summary>
         /// ButtonDelete control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton ButtonDelete;
-        
+
         /// <summary>
         /// View2 control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View View2;
-        
+
         /// <summary>
         /// LabelKeyword control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelKeyword;
-        
+
         /// <summary>
         /// txtKeyword control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeyword;
-        
+
         /// <summary>
         /// LabelLanguage control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelLanguage;
-        
+
         /// <summary>
         /// txtTextContent control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.TextContentControl txtTextContent;
-        
+
         /// <summary>
         /// LastChangeAndHistory1 control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::OneMainWeb.AdminControls.LastChangeAndHistory LastChangeAndHistory1;
-        
+
         /// <summary>
         /// InsertUpdateButton control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton InsertUpdateButton;
-        
+
         /// <summary>
         /// InsertUpdateCloseButton control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton InsertUpdateCloseButton;
-        
+
         /// <summary>
         /// View3 control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.View View3;
-        
+
         /// <summary>
         /// CmdExport control.
         /// </summary>
@@ -200,7 +202,16 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CmdExport;
-        
+
+        /// <summary>
+        /// OnlyCurrentLanguage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox OnlyCurrentLanguage;
+
         /// <summary>
         /// FileUploadImport control.
         /// </summary>
@@ -209,7 +220,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileUploadImport;
-        
+
         /// <summary>
         /// CmdImport control.
         /// </summary>
@@ -218,7 +229,7 @@ namespace OneMainWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CmdImport;
-        
+
         /// <summary>
         /// RadioButtonListWriteTypes control.
         /// </summary>
