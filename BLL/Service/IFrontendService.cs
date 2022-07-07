@@ -20,5 +20,9 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchPageContent?keyword={keyword}&languageId={languageId}")]
         [Description("List<DTOSearchableItem> SearchPageContent(string keyword, int languageId)")]
         List<DTOSearchableItem> SearchPageContent(string keyword, int languageId);
+
+        /* ---- */
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListArticles?page={page}&recordsPerPage={recordsPerPage}&year={year}&regids={regids}&sortBy={sortBy}&and={and}")]
+        List<DTOArticleSearch> ListArticles(int page, int recordsPerPage, int year, string regids, string sortBy, bool and);
     }
 }

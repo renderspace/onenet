@@ -80,44 +80,6 @@ namespace One.Net.BLL.Service
             return result;
         }
 
-        public List<DTOArticleSearch> ListArticles2(int page, int recordsPerPage, int year, string regids, string sortBy)
-        {
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            var result = new List<DTOArticleSearch>();
-            var state = new ListingState();
-            state.RecordsPerPage = recordsPerPage;
-            state.SortDirection = SortDir.Descending;
-            int firstRecordIndex = (page * state.RecordsPerPage.Value) - state.RecordsPerPage.Value;
-            state.FirstRecordIndex = firstRecordIndex < 0 ? 0 : firstRecordIndex;
-            state.SortField = string.IsNullOrWhiteSpace(sortBy) || sortBy.Length > 30 ? "id" : sortBy;
-            state.SortDirection = SortDir.Descending;
-            var categoriesFilter = StringTool.SplitStringToIntegers(regids);
-            var articles = articleB.ListArticles(categoriesFilter, state, "", null, year > 1900 ? (DateTime?)new DateTime(year, 1, 1) : null, null);
-
-            foreach (var a in articles)
-            {
-                var item = new DTOArticleSearch()
-                {
-                    Id = a.Id.Value.ToString(),
-                    Status = RenderStatusIcons(a.MarkedForDeletion, a.IsChanged),
-                    Title = a.Title,
-                    SubTitle = a.SubTitle,
-                    Teaser = a.ProcessedTeaser,
-                    Html = a.Html,
-                    HumanReadableUrl = a.HumanReadableUrl,
-                    DisplayDate = a.DisplayDate,
-                    Categories = a.RegularsList
-                };
-                result.Add(item);
-            }
-
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentCulture", Thread.CurrentThread.CurrentCulture.LCID.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", articles.AllRecords.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", articles.CurrentPage.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-RecordsPerPage", state.RecordsPerPage.ToString());
-            return result;
-        }
-
         public List<DTORegular> ListRegulars(int languageId)
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");

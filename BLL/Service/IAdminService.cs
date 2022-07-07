@@ -110,8 +110,5 @@ namespace One.Net.BLL.Service
         [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json, UriTemplate = "articles")]
         int SaveArticle(DTOArticle article);
 
-        /* ---- */
-        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "ListArticles2?page={page}&recordsPerPage={recordsPerPage}&year={year}&regids={regids}&sortBy={sortBy}")]
-        List<DTOArticleSearch> ListArticles2(int page, int recordsPerPage, int year, string regids, string sortBy);
     }
 }

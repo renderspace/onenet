@@ -674,7 +674,13 @@ namespace One.Net.BLL.Service
         public DateTime DisplayDate { get; set; }
 
         [DataMember, JsonProperty]
+        public string FormattedDate { get; set; }
+
+        [DataMember, JsonProperty]
         public string Categories { get; set; }
+
+        [DataMember, JsonProperty]
+        public string[] Regulars { get; set; }
     }
 
     [DataContract, Newtonsoft.Json.JsonObject(MemberSerialization = Newtonsoft.Json.MemberSerialization.OptIn)]
