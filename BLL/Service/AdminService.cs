@@ -659,6 +659,15 @@ namespace One.Net.BLL.Service
         public string Title { get; set; }
 
         [DataMember, JsonProperty]
+        public string SubTitle { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Teaser { get; set; }
+
+        [DataMember, JsonProperty]
+        public string Html { get; set; }
+
+        [DataMember, JsonProperty]
         public string HumanReadableUrl { get; set; }
 
         [DataMember, JsonProperty]
