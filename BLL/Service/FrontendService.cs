@@ -52,6 +52,8 @@ namespace One.Net.BLL.Service
         public List<DTOArticleSearch> ListArticles(int page, int recordsPerPage, int year, string regids, string sortBy, bool and)
         {
             WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentCulture", Thread.CurrentThread.CurrentCulture.LCID.ToString());
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-RecordsPerPage", recordsPerPage.ToString());
             var result = new List<DTOArticleSearch>();
             var state = new ListingState();
             state.RecordsPerPage = recordsPerPage;
@@ -59,23 +61,47 @@ namespace One.Net.BLL.Service
             int firstRecordIndex = (page * state.RecordsPerPage.Value) - state.RecordsPerPage.Value;
             state.FirstRecordIndex = firstRecordIndex < 0 ? 0 : firstRecordIndex;
             state.SortField = string.IsNullOrWhiteSpace(sortBy) || sortBy.Length > 30 ? "id" : sortBy;
-            state.SortDirection = SortDir.Descending;
+
+            if (and) // dirty hack.. SQL would have to be completely rewritten to support AND
+            {
+                state.RecordsPerPage = 10000;
+                state.FirstRecordIndex = 0;
+            }
+
             var categoriesFilter = StringTool.SplitStringToIntegers(regids);
             var articles = articleB.ListArticles(categoriesFilter, state, "", null, year > 1900 ? (DateTime?)new DateTime(year, 1, 1) : null, new List<int>());
 
-            var filteredArtices = articles.Where(a => {
-                var regulars = a.Regulars.Select(r => r.Id);
-                foreach(var c in categoriesFilter)
-                {
-                    if (!a.Regulars.Where(r => r.Id.HasValue && r.Id.Value == c).Any())
+            if (and)
+            {
+                var filteredArtices = articles.Where(a => {
+                    var regulars = a.Regulars.Select(r => r.Id);
+                    foreach (var c in categoriesFilter)
                     {
-                        return false;
+                        if (!a.Regulars.Where(r => r.Id.HasValue && r.Id.Value == c).Any())
+                        {
+                            return false;
+                        }
                     }
-                }
-                return true;
-            });
+                    return true;
+                }).Select(a => MapArticle(a)).ToList();
 
-            result = (and ? filteredArtices : articles).Select(a => new DTOArticleSearch()
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", filteredArtices.Count.ToString());
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", page.ToString());
+
+                return filteredArtices.Skip((page - 1) * recordsPerPage).Take(recordsPerPage).ToList();
+            }
+            else 
+            {
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", articles.AllRecords.ToString());
+                WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", articles.CurrentPage.ToString());
+                return articles.Select(a => MapArticle(a)).ToList();
+            }
+            
+        }
+
+        private static DTOArticleSearch MapArticle(BOArticle a)
+        {
+            var result = new DTOArticleSearch()
             {
                 Id = a.Id.Value.ToString(),
                 Title = a.Title,
@@ -86,13 +112,7 @@ namespace One.Net.BLL.Service
                 DisplayDate = a.DisplayDate,
                 FormattedDate = a.DisplayDate.ToShortDateString(),
                 Regulars = a.Regulars.Select(r => r.Title).ToArray()
-            }).ToList();
-
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-And", and.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentCulture", Thread.CurrentThread.CurrentCulture.LCID.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-AllRecords", articles.AllRecords.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-CurrentPage", articles.CurrentPage.ToString());
-            WebOperationContext.Current.OutgoingResponse.Headers.Add("X-OneNet-RecordsPerPage", state.RecordsPerPage.ToString());
+            };
             return result;
         }
     }

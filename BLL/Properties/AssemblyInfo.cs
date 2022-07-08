@@ -17,5 +17,5 @@ using System.Security;
 [assembly: AssemblyCopyright("Copyright 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("4.3.2")]
+[assembly: AssemblyVersion("4.3.3")]
 [assembly: AssemblyKeyName("")]
