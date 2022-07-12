@@ -29,8 +29,8 @@ namespace OneMainWeb
                     routes.Add(FormService);
                     routes.Add(AdminService);
                     routes.Add(ScaffoldService);
-                    routes.Add(FrontendService);
                 }
+                routes.Add(FrontendService);
                 routes.Add(new Route("sitemap.xml", new HttpHandlerRoute("~/Utils/SiteMapHandler.ashx")));
                 routes.Add(new Route("robots.txt", new HttpHandlerRoute("~/Utils/Robots.ashx")));
                 routes.Add(new Route("favicon.ico", new HttpHandlerRoute("~/Utils/Favicon.ashx")));
