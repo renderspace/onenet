@@ -258,7 +258,7 @@ namespace OneMainWeb.CommonModules
                 {
                     TeaserImage1.Visible = true;
                     var LiteralTeaserImage = e.Item.FindControl("LiteralTeaserImage") as Literal;
-                    LiteralTeaserImage.Text = ImageTemplate.RenderHtml("", article.Images[0].FullUri, "");
+                    LiteralTeaserImage.Text = ImageTemplate.RenderHtml(article.Images[0].Alt, article.Images[0].FullUri, "tii1");
                 }
 
                 if (H1Title != null)
